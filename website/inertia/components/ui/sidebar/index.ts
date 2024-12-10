@@ -45,7 +45,7 @@ export const sidebarMenuButtonVariants = cva(
       variant: 'default',
       size: 'default',
     },
-  },
+  }
 )
 
 export type SidebarMenuButtonVariants = VariantProps<typeof sidebarMenuButtonVariants>

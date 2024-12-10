@@ -3,7 +3,7 @@ import type { WithClassAsProps } from './interface'
 import { Button } from '~/components/ui/button'
 import { cn } from '~/lib/utils'
 import { ArrowLeftIcon } from '@radix-icons/vue'
-import { useCarousel } from './useCarousel'
+import { useCarousel } from './use_carousel'
 
 const props = defineProps<WithClassAsProps>()
 

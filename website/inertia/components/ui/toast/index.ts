@@ -9,7 +9,7 @@ export { default as Toaster } from './Toaster.vue'
 export { default as ToastProvider } from './ToastProvider.vue'
 export { default as ToastTitle } from './ToastTitle.vue'
 export { default as ToastViewport } from './ToastViewport.vue'
-export { toast, useToast } from './use-toast'
+export { toast, useToast } from './use_toast'
 
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -20,13 +20,13 @@ export const toastVariants = cva(
       variant: {
         default: 'border bg-background text-foreground',
         destructive:
-                    'destructive group border-destructive bg-destructive text-destructive-foreground',
+          'destructive group border-destructive bg-destructive text-destructive-foreground',
       },
     },
     defaultVariants: {
       variant: 'default',
     },
-  },
+  }
 )
 
 type ToastVariants = VariantProps<typeof toastVariants>

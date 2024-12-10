@@ -2,7 +2,7 @@
 import { cn } from '~/lib/utils'
 import { useId } from 'radix-vue'
 import { type HTMLAttributes, provide } from 'vue'
-import { FORM_ITEM_INJECTION_KEY } from './injectionKeys'
+import { FORM_ITEM_INJECTION_KEY } from './injection_keys'
 
 const props = defineProps<{
   class?: HTMLAttributes['class']
