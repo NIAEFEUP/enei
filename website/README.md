@@ -27,6 +27,7 @@ To get started with the website, follow these steps:
     ```
 
     > [!NOTE]
+    >
     > If you don't have `pnpm` installed, you can run `corepack enable` to install it.
 
 4. Copy the `.env.example` file to a new file called `.env` and update the values as needed.
