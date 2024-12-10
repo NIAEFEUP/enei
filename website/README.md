@@ -8,6 +8,13 @@ Here you can find the source code of the website, which is built using the [Adon
 
 To get started with the website, follow these steps:
 
+> [!CAUTION]
+>
+> You will need to have [Node.js 22.x](https://nodejs.org/) or later installed on your machine.
+> 
+> Furthermore, you will also need to have [pnpm](https://pnpm.io/) installed.
+> If you don't have `pnpm` installed, you can run `corepack enable` to install it.
+
 1. Clone the repository:
 
     ```bash
@@ -25,10 +32,6 @@ To get started with the website, follow these steps:
     ```bash
     pnpm install
     ```
-
-    > [!NOTE]
-    >
-    > If you don't have `pnpm` installed, you can run `corepack enable` to install it.
 
 4. Copy the `.env.example` file to a new file called `.env` and update the values as needed.
 
