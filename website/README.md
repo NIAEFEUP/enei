@@ -41,7 +41,13 @@ To get started with the website, follow these steps:
    node ace migration:run
    ```
 
-6. Start the development server:
+6. Create an app key to sign the session cookies:
+
+   ```bash
+   node ace generate:key
+   ```
+
+7. Start the development server:
 
    ```bash
    pnpm run dev
