@@ -1,21 +1,21 @@
 import { defineConfig } from 'vite'
 import { getDirname } from '@adonisjs/core/helpers'
 import inertia from '@adonisjs/inertia/client'
-import vue from '@vitejs/plugin-vue'
+import react from '@vitejs/plugin-react'
 import adonisjs from '@adonisjs/vite/client'
+import tailwindcss from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
-import tailwind from 'tailwindcss'
 
 export default defineConfig({
   css: {
     postcss: {
-      plugins: [tailwind(), autoprefixer()],
+      plugins: [tailwindcss(), autoprefixer()],
     },
   },
   plugins: [
-    inertia({ ssr: { enabled: true, entrypoint: 'inertia/app/ssr.ts' } }),
-    vue(),
-    adonisjs({ entrypoints: ['inertia/app/app.ts'], reload: ['resources/views/**/*.edge'] }),
+    inertia({ ssr: { enabled: true, entrypoint: 'inertia/app/ssr.tsx' } }),
+    react(),
+    adonisjs({ entrypoints: ['inertia/app/app.tsx'], reload: ['resources/views/**/*.edge'] }),
   ],
 
   /**
