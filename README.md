@@ -11,3 +11,4 @@ The event is organized in a joint initiative between [NIAEFEUP](https://www.niae
 This repository contains the following folders:
 
 - [website](website): the website of the event, which is available at [eneiconf.pt](https://eneiconf.pt).
+
