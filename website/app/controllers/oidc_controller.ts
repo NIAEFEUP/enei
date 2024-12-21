@@ -75,11 +75,18 @@ export default class OIDCController {
       ; ({ sub } = claims)
 
     let userInfo = await client.fetchUserInfo(resolvedConfig, access_token, sub)
-
-    let user = await User.firstOrCreate({ email: userInfo.email });
+    
+    let user = await User.firstOrCreate(
+    { 
+      username: userInfo.preferred_username,
+    });
 
     await auth.use('web').login(user);
 
-    return response.redirect().toPath('/');
+    return response
+      .cookie('access_token', tokens.access_token, { expires: new Date((new Date()).getTime() + (tokens.expires_in)) })
+      .cookie('refresh_token', tokens.refresh_token, { expires: new Date((new Date()).getTime() + (tokens.expires_in)) })
+      .redirect()
+      .toPath('/');
   }
 }
