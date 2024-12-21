@@ -9,6 +9,8 @@ export default class extends BaseSchema {
       table.integer('user_id').notNullable()
       table.integer('product_id').notNullable()
       table.integer('quantity').notNullable()
+      table.integer('nif').notNullable()
+      table.string('address').notNullable()
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })
