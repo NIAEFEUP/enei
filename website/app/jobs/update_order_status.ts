@@ -11,11 +11,9 @@ export default class UpdateOrderStatus extends Job {
   async handle({ requestId }: UpdateOrderStatusPayload) {
     try {
       this.logger.info(`Processing status update for requestId: ${requestId}`);
-      console.log(`Processing status update for requestId: ${requestId}`);
 
       // Fetch the order based on the requestId
       const order = await Order.query().where('request_id', requestId).first();
-      console.log(order)
       if (!order) {
         this.logger.error(`Order with requestId ${requestId} not found`);
         console.error(`Order with requestId ${requestId} not found`);
@@ -24,18 +22,14 @@ export default class UpdateOrderStatus extends Job {
 
       if (order.status !== 'Pending') {
         this.logger.info(`Order status is no longer pending: ${order.status}`);
-        console.log(`Order status is no longer pending: ${order.status}`);
         return; // Exit if the status is no longer "Pending"
       }
-      console.log(env.get('IFTHENPAY_MBWAY_KEY'))
       const apiResponse = await axios.get(
         `https://api.ifthenpay.com/spg/payment/mbway/status?mbWayKey=${env.get('IFTHENPAY_MBWAY_KEY')}&requestId=${requestId}`
       );
-      console.log(`Received response from API: ${apiResponse.status}`);
+
       if (apiResponse.status === 200) {
         const status = apiResponse.data.Message;
-        console.log(`Received status: ${status}`);
-
         if (status) {
             if (status === 'Pending') {
                 await UpdateOrderStatus.dispatch({ requestId }, { delay: 10000 }); // Retry after 5 seconds
@@ -44,11 +38,9 @@ export default class UpdateOrderStatus extends Job {
             order.status = status;
             await order.save();
             this.logger.info(`Order status updated to: ${order.status}`);
-            console.log(`Order status updated to: ${order.status}`);
           
          
         } else {
-          console.log(`No status received from API, requeuing job.`);
           await UpdateOrderStatus.dispatch({ requestId }, { delay: 10000 }); // Retry after 5 seconds
         }
       } else {
@@ -60,7 +52,6 @@ export default class UpdateOrderStatus extends Job {
       this.logger.error(`Error updating order status: ${error.message}`);
       console.error(`Error updating order status: ${error.message}`);
       
-      // Requeue the job to retry on error
       await UpdateOrderStatus.dispatch({ requestId }, { delay: 10000 });
     }
   }

@@ -27,9 +27,7 @@ export default class OrdersController {
               description,
             }           
             const apiResponse = await axios.post('https://api.ifthenpay.com/spg/payment/mbway', data)
-            console.log("after axios")
             if (apiResponse.status === 200) {
-                console.log("Starting update")
                 const responseData = apiResponse.data
                 order.request_id = responseData.RequestId
                 order.status = "Pending"
