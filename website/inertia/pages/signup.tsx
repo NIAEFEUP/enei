@@ -4,7 +4,7 @@ import {
 } from "react"
 import {
   toast
-} from "sonner"
+} from "~/hooks/use_toast"
 import {
   useForm
 } from "react-hook-form"
@@ -55,7 +55,7 @@ import {
   SelectValue
 } from "~/components/ui/select"
 import LocationSelector from "~/components/ui/location-input"
-import { DayPicker } from "react-day-picker"
+import BaseLayout from "~/components/layouts/base"
 
 const formSchema = z.object({
   firstName: z.string(),
@@ -85,19 +85,20 @@ export default function Signup() {
 
   function onSubmit(values: z.infer < typeof formSchema > ) {
     try {
-      console.log(values);
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      );
+      toast({
+        title: "Form submitted",
+        description: (<pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+        <code className="text-white">{JSON.stringify(values, null, 2)}</code>
+      </pre>)
+      });
     } catch (error) {
       console.error("Form submission error", error);
-      toast.error("Failed to submit the form. Please try again.");
+      toast({ title: "Error", description: "Failed to submit the form. Please try again." });
     }
   }
 
   return (
+    <BaseLayout>
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
         
@@ -369,5 +370,6 @@ export default function Signup() {
         <Button type="submit">Submit</Button>
       </form>
     </Form>
+    </BaseLayout>
   )
 }
