@@ -2,36 +2,34 @@ import User from '#models/user';
 import * as client from 'openid-client'
 import { HttpContext } from '@adonisjs/core/http'
 
+async function createConfig() {
+  return await client.discovery(
+    new URL(process.env.OIDC_DISCOVERY_ENDPOINT),
+    process.env.OIDC_CLIENT_ID,
+    process.env.OIDC_CLIENT_SECRET,
+    undefined,
+    {
+      execute: process.env.NODE_ENV === "development" ? [client.allowInsecureRequests] : []
+    }
+  );
+}
+
+const config = createConfig();
+
 /**
  * This controller is reponsible for handling the OpenID Connect flow with a configured KeyCloak instance.
  */
 export default class OIDCController {
-  private static config: client.Configuration;
   private static code_verifier: string;
-  private static nonce: string;
-
-  async createConfig() {
-    return await client.discovery(
-      new URL(process.env.OIDC_DISCOVERY_ENDPOINT),
-      process.env.OIDC_CLIENT_ID,
-      process.env.OIDC_CLIENT_SECRET,
-      undefined,
-      {
-        execute: Number(process.env.PROD) === 0 ? [client.allowInsecureRequests] : []
-      }
-    );
-  }
 
   /**
    *  Starts the OpenID Connect flow by redirecting to the KeyCloak login page according to the OIDC protocol.
    */
   public async initFlow({ response }: HttpContext) {
-    OIDCController.config = await this.createConfig();
-    console.log("CONFIG2: ", OIDCController.config);
-
+    let resolvedConfig = await config
     let code_challenge_method = 'S256'
-    OIDCController.code_verifier = client.randomPKCECodeVerifier()
-    let code_challenge = await client.calculatePKCECodeChallenge(OIDCController.code_verifier)
+    let code_verifier = client.randomPKCECodeVerifier()
+    let code_challenge = await client.calculatePKCECodeChallenge(code_verifier)
 
     let redirect_uri = `${process.env.OIDC_REDIRECT_URI}`;
     let parameters: Record<string, string> = {
@@ -46,15 +44,14 @@ export default class OIDCController {
      * of PKCE is backwards compatible even if the AS doesn't support it which is
      * why we're using it regardless.
      */
-    if (!OIDCController.config.serverMetadata().supportsPKCE()) {
-      OIDCController.nonce = client.randomNonce();
-      parameters.nonce = OIDCController.nonce;
+    if (!resolvedConfig.serverMetadata().supportsPKCE()) {
+      throw new Error("PKCE not supported");
     }
 
-    let redirectTo = client.buildAuthorizationUrl(OIDCController.config, parameters)
+    let redirectTo = client.buildAuthorizationUrl(resolvedConfig, parameters)
 
     // redirect to redirectTo.href in adonisjs controller
-    return response.redirect().toPath(redirectTo.href);
+    return response.cookie('pkce_code_verifier', code_verifier).redirect().toPath(redirectTo.href);
   }
 
   /**
@@ -62,12 +59,14 @@ export default class OIDCController {
    * handle the response and if sucessful either login or create the user
    */
   public async callback({ request, response, auth }: HttpContext) {
+    const resolvedConfig = await config;
+    const code_verifier = request.cookie('pkce_code_verifier');
+
     let sub: string;
     let access_token: string;
 
-    let tokens = await client.authorizationCodeGrant(OIDCController.config, new URL(request.completeUrl(true)), {
-      pkceCodeVerifier: OIDCController.code_verifier,
-      expectedNonce: OIDCController.nonce,
+    let tokens = await client.authorizationCodeGrant(resolvedConfig, new URL(request.completeUrl(true)), {
+      pkceCodeVerifier: code_verifier,
       idTokenExpected: true,
     });
 
@@ -75,9 +74,7 @@ export default class OIDCController {
     let claims = tokens.claims()!
       ; ({ sub } = claims)
 
-    let userInfo = await client.fetchUserInfo(OIDCController.config, access_token, sub)
-
-    //console.log('UserInfo Response', userInfo);
+    let userInfo = await client.fetchUserInfo(resolvedConfig, access_token, sub)
 
     let user = await User.firstOrCreate({ email: userInfo.email });
 
