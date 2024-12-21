@@ -27,27 +27,33 @@ To get started with the website, follow these steps:
    cd enei/website
    ```
 
-3. Install the dependencies:
+3. Install `pnpm`:
+
+   ```bash
+   corepack enable
+   ```
+
+4. Install the dependencies:
 
    ```bash
    pnpm install
    ```
 
-4. Copy the `.env.example` file to a new file called `.env` and update the values as needed.
+5. Copy the `.env.example` file to a new file called `.env` and update the values as needed.
 
-5. Create an app key to sign the session cookies:
+6. Create an app key to sign the session cookies:
 
    ```bash
    node ace generate:key
    ```
 
-6. Run the database migrations to create the database:
+7. Run the database migrations to create the database:
 
    ```bash
    node ace migration:run
    ```
 
-7. Start the development server:
+8. Start the development server:
 
    ```bash
    pnpm run dev
