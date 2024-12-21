@@ -3,6 +3,7 @@ import env from '#start/env'
 import axios from 'axios'
 import Order from '#models/order'
 import Product from '#models/product'
+import UpdateOrderStatus from '../jobs/update_order_status.js'
 
 export default class OrdersController {
 
@@ -10,7 +11,6 @@ export default class OrdersController {
         try{
             const { user_id, product_id,quantity, nif, address, mobileNumber } = request.all()
             const order = await Order.create({ user_id, product_id, quantity, nif, address })
-            console.log(order)
             const product = await Product.find(product_id)
             if(!product){
                 return response.status(404).json({
@@ -27,12 +27,14 @@ export default class OrdersController {
               description,
             }           
             const apiResponse = await axios.post('https://api.ifthenpay.com/spg/payment/mbway', data)
+            console.log("after axios")
             if (apiResponse.status === 200) {
                 console.log("Starting update")
                 const responseData = apiResponse.data
                 order.request_id = responseData.RequestId
                 order.status = "Pending"
                 await order.save()
+                await UpdateOrderStatus.dispatch({ requestId: order.request_id }, { delay: 10000});
                 return response.status(200).json({
                     order,
                     message: 'Payment initiated successfully',

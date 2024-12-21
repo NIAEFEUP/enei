@@ -6,7 +6,7 @@ export default class Order extends BaseModel {
   declare id: number
 
   @column()
-  declare request_id: number
+  declare request_id: string
 
   @column()
   declare user_id: number
