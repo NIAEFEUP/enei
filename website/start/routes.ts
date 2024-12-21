@@ -8,11 +8,11 @@
 */
 
 import router from '@adonisjs/core/services/router'
-import KeycloakController from '../app/controllers/keycloak_controller.ts'
+import OIDCController from '#controllers/oidc_controller'
 
 router.on('/').renderInertia('home')
 
 router.group(() => {
-    router.get('/', 'KeycloakController.initFlow')
-    router.get('/callback', 'KeycloakController.callback')
+    router.get('/', [OIDCController, 'initFlow'])
+    router.get('/callback', [OIDCController, 'callback'])
 }).prefix('/keycloak')
