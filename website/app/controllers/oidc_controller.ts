@@ -17,7 +17,7 @@ export default class OIDCController {
       process.env.OIDC_CLIENT_SECRET,
       undefined,
       {
-        execute: [client.allowInsecureRequests],
+        execute: Number(process.env.PROD) === 0 ? [client.allowInsecureRequests] : []
       }
     );
   }
@@ -33,7 +33,7 @@ export default class OIDCController {
     OIDCController.code_verifier = client.randomPKCECodeVerifier()
     let code_challenge = await client.calculatePKCECodeChallenge(OIDCController.code_verifier)
 
-    let redirect_uri = "http://localhost:3333/keycloak/callback"
+    let redirect_uri = `${process.env.OIDC_REDIRECT_URI}`;
     let parameters: Record<string, string> = {
       redirect_uri,
       scope: 'openid email',
