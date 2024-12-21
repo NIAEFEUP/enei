@@ -18,6 +18,9 @@ export default class Product extends BaseModel {
   declare stock: number
 
   @column()
+  declare currency: string
+
+  @column()
   declare max_order: number
 
   @column.dateTime({ autoCreate: true })

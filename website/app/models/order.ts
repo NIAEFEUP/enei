@@ -6,6 +6,9 @@ export default class Order extends BaseModel {
   declare id: number
 
   @column()
+  declare request_id: number
+
+  @column()
   declare user_id: number
 
   @column()
@@ -13,7 +16,16 @@ export default class Order extends BaseModel {
 
   @column()
   declare quantity: number
-  
+
+  @column()
+  declare nif: number
+
+  @column()
+  declare address: string
+
+  @column()
+  declare status: string
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
