@@ -20,8 +20,6 @@ const config = createConfig();
  * This controller is reponsible for handling the OpenID Connect flow with a configured KeyCloak instance.
  */
 export default class OIDCController {
-  private static code_verifier: string;
-
   /**
    *  Starts the OpenID Connect flow by redirecting to the KeyCloak login page according to the OIDC protocol.
    */
