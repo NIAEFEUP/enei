@@ -47,7 +47,8 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         day_outside:
           'DAY_OUTSIDE day-outside text-muted-foreground aria-selected:bg-accent/50 aria-selected:text-muted-foreground',
         day_disabled: 'DAY_DISABLED text-muted-foreground opacity-50',
-        day_range_middle: 'DAY_RANGE_MIDDLE aria-selected:bg-accent aria-selected:text-accent-foreground',
+        day_range_middle:
+          'DAY_RANGE_MIDDLE aria-selected:bg-accent aria-selected:text-accent-foreground',
         day_hidden: 'DAY_HIDDEN invisible',
         ...classNames,
       }}

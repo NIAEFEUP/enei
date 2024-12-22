@@ -1,62 +1,62 @@
 [
-    {
-        "year": 2005,
-        "location": "Coimbra"
-    },
-    {
-        "year": 2006,
-        "location": "Évora"
-    },
-    {
-        "year": 2007,
-        "location": "Guarda"
-    },
-    {
-        "year": 2008,
-        "location": "Aveiro"
-    },
-    {
-        "year": 2010,
-        "location": "Coimbra"
-    },
-    {
-        "year": 2011,
-        "location": "Vila Real"
-    },
-    {
-        "year": 2012,
-        "location": "Lisboa"
-    },
-    {
-        "year": 2013,
-        "location": "Porto"
-    },
-    {
-        "year": 2014,
-        "location": "Aveiro"
-    },
-    {
-        "year": 2015,
-        "location": "Coimbra"
-    },
-    {
-        "year": 2016,
-        "location": "Aveiro"
-    },
-    {
-        "year": 2018,
-        "location": "Porto"
-    },
-    {
-        "year": 2019,
-        "location": "Coimbra"
-    },
-    {
-        "year": 2020,
-        "location": "Braga"
-    },
-    {
-        "year": 2023,
-        "location": "Aveiro"
-    }
+  {
+    "year": 2005,
+    "location": "Coimbra"
+  },
+  {
+    "year": 2006,
+    "location": "Évora"
+  },
+  {
+    "year": 2007,
+    "location": "Guarda"
+  },
+  {
+    "year": 2008,
+    "location": "Aveiro"
+  },
+  {
+    "year": 2010,
+    "location": "Coimbra"
+  },
+  {
+    "year": 2011,
+    "location": "Vila Real"
+  },
+  {
+    "year": 2012,
+    "location": "Lisboa"
+  },
+  {
+    "year": 2013,
+    "location": "Porto"
+  },
+  {
+    "year": 2014,
+    "location": "Aveiro"
+  },
+  {
+    "year": 2015,
+    "location": "Coimbra"
+  },
+  {
+    "year": 2016,
+    "location": "Aveiro"
+  },
+  {
+    "year": 2018,
+    "location": "Porto"
+  },
+  {
+    "year": 2019,
+    "location": "Coimbra"
+  },
+  {
+    "year": 2020,
+    "location": "Braga"
+  },
+  {
+    "year": 2023,
+    "location": "Aveiro"
+  }
 ]
