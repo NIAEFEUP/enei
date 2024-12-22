@@ -8,8 +8,8 @@ services:
       - "3333:3333"
 
   website-nginx:
-    image: nginx:1-alpine
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.nginx
     ports:
       - "80:80"
-    volumes:
-      - ./deploy/nginx-website.conf:/etc/nginx/nginx.conf
