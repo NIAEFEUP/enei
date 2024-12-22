@@ -1,12 +1,13 @@
 import User from '#models/user';
 import * as client from 'openid-client'
 import { HttpContext } from '@adonisjs/core/http'
+import env from '#start/env'
 
 async function createConfig() {
   return await client.discovery(
-    new URL(process.env.OIDC_DISCOVERY_ENDPOINT),
-    process.env.OIDC_CLIENT_ID,
-    process.env.OIDC_CLIENT_SECRET,
+    new URL(env.get('OIDC_DISCOVERY_ENDPOINT')),
+    env.get('OIDC_CLIENT_ID'),
+    env.get('OIDC_CLIENT_SECRET'),
     undefined,
     {
       execute: process.env.NODE_ENV === "development" ? [client.allowInsecureRequests] : []
@@ -81,9 +82,13 @@ export default class OIDCController {
 
     await auth.use('web').login(user);
 
+    if(!tokens.expires_in || !tokens.refresh_expires_in) {
+      return response.abort("Expiration parameter not found in tokens given by oidc provider", 500);
+    }
+
     return response
       .cookie('access_token', tokens.access_token, { expires: new Date((new Date()).getTime() + (tokens.expires_in)) })
-      .cookie('refresh_token', tokens.refresh_token, { expires: new Date((new Date()).getTime() + (tokens.expires_in)) })
+      .cookie('refresh_token', tokens.refresh_token, { expires: new Date((new Date()).getTime() + Number((tokens.refresh_expires_in))) })
       .redirect()
       .toPath('/');
   }

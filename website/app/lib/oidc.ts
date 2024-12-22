@@ -1,5 +1,7 @@
+import env from '#start/env'
+
 export async function oidcRenewTokens(refresh_token: string) {
-    return await fetch(`${process.env.OIDC_TOKEN_ENDPOINT}`, {
+    return fetch(`${env.get('OIDC_TOKEN_ENDPOINT')}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
