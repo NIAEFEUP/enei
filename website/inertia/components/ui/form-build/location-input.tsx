@@ -17,8 +17,8 @@ import {
 } from '~/components/ui/popover'
 import { cn } from '~/lib/utils'
 
-import countries from '~/data/countries.json'
-import states from '~/data/states.json'
+import countries from '~/data/location-input/countries.json'
+import states from '~/data/location-input/states.json'
 
 interface Timezone {
   zoneName: string
