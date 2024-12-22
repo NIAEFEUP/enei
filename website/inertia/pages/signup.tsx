@@ -44,22 +44,26 @@ import * as enei from '~/lib/enei'
 
 const previousEditions = enei.getPreviousEditions()
 
+const errorMapPt = {
+  required_error: "Obrigatório",
+}
+
 const formSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-  dateOfBirth: z.coerce.date(),
-  phone: z.string(),
-  cityOfOrigin: z.string(),
-  university: z.string(),
-  major: z.string(),
-  curricularYear: z.tuple([z.string(), z.string().optional()]),
-  tshirtSize: z.string(),
-  dietType: z.string(),
-  dietaryRestrictions: z.string(),
-  transport: z.string(),
-  infoSource: z.string(),
-  reasonForSignup: z.string(),
-  previousParticipations: z.array(z.string()),
+  firstName: z.string(errorMapPt),
+  lastName: z.string(errorMapPt),
+  dateOfBirth: z.coerce.date(errorMapPt),
+  phone: z.string(errorMapPt),
+  cityOfOrigin: z.string(errorMapPt),
+  university: z.string(errorMapPt),
+  major: z.string(errorMapPt),
+  curricularYear: z.tuple([z.string(errorMapPt), z.string().optional()]),
+  tshirtSize: z.string(errorMapPt),
+  dietType: z.string(errorMapPt),
+  dietaryRestrictions: z.string(errorMapPt),
+  transport: z.string(errorMapPt),
+  infoSource: z.string(errorMapPt),
+  reasonForSignup: z.string(errorMapPt),
+  previousParticipations: z.array(z.string(errorMapPt)),
 })
 
 export default function Signup() {
@@ -94,8 +98,8 @@ export default function Signup() {
     <BaseLayout>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
-          <div className="grid grid-cols-12 gap-4">
-            <div className="col-span-6">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
               <FormField
                 control={form.control}
                 name="firstName"
@@ -105,6 +109,7 @@ export default function Signup() {
                     <FormControl>
                       <Input placeholder="Joca" type="text" {...field} />
                     </FormControl>
+
                     <FormDescription>
                       O teu primeiro e último nome vão ser visíveis no teu perfil.
                     </FormDescription>
@@ -113,7 +118,7 @@ export default function Signup() {
                 )}
               />
             </div>
-            <div className="col-span-6">
+            <div>
               <FormField
                 control={form.control}
                 name="lastName"
@@ -123,7 +128,6 @@ export default function Signup() {
                     <FormControl>
                       <Input placeholder="Costa" type="text" {...field} />
                     </FormControl>
-                    {/* <FormDescription>This is your public display name.</FormDescription> */}
                     <FormMessage />
                   </FormItem>
                 )}
@@ -161,6 +165,7 @@ export default function Signup() {
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
+                      locale={pt}
                       initialFocus
                     />
                   </PopoverContent>
