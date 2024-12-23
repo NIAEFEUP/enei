@@ -17,8 +17,7 @@ export default class ExampleENotification extends BaseMail {
    * The "prepare" method is called automatically when
    * the email is sent or queued.
    */
-  prepare() {
-    console.log(this.userEmail);
-    this.message.to(this.userEmail).subject(this.subject)
+  async prepare() {
+    this.message.to(this.userEmail).subject(this.subject).htmlView('emails/example_email_html').textView('emails/example_email_text')
   }
 }
