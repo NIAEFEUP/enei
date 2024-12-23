@@ -7,6 +7,7 @@ import { Button } from '~/components/ui/button'
 import { Separator } from '~/components/ui/separator'
 import { useState } from 'react'
 import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group'
+import PhoneNumberModal from '~/components/payments/phone-modal'
 
 const item = {
   title: 'Bilhete - Com alojamento',
@@ -16,26 +17,21 @@ const item = {
   image: 'favicon.svg',
 }
 
-
 export default function TicketSalePage() {
   const [enableBillingAddress, setEnableBillingAddress] = useState(true)
   const [paymentMethod, setPaymentMethod] = useState<string>('mbway')
   const [phoneModalOpen, setPhoneModalOpen] = useState(false)
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('')
 
   const handlePaymentClick = () => {
-    setPhoneModalOpen(true);
+    setPhoneModalOpen(true)
   }
 
-  const handleModalClose = () => {
-    setPhoneModalOpen(false);
+  const handleModalSubmit = (number: string) => {
+    setPhoneNumber(number)
+    console.log('Phone number: ', phoneNumber)
+    setPhoneModalOpen(false)
   }
-
-  const handleModalSubmit = () => {
-    console.log("Phone number: ", phoneNumber);
-    handleModalClose();
-  }
-
 
   return (
     <div className="container mx-auto p-4">
@@ -128,9 +124,15 @@ export default function TicketSalePage() {
 
           <Separator />
 
-          <Button onClick={() => {}} disabled={!paymentMethod} className="w-full">
+          <Button onClick={handlePaymentClick} disabled={!paymentMethod} className="w-full">
             Pagar
           </Button>
+
+          <PhoneNumberModal
+            isOpen={phoneModalOpen}
+            onClose={() => setPhoneModalOpen(false)}
+            onSubmit={handleModalSubmit}
+          />
         </CardContent>
       </Card>
     </div>
