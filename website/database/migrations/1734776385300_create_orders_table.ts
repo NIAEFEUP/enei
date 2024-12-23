@@ -9,8 +9,8 @@ export default class extends BaseSchema {
       table.integer('request_id')
       table.string('status')
       table.integer('user_id').notNullable()
-      table.integer('nif').notNullable()
-      table.string('address').notNullable()
+      table.integer('nif')
+      table.string('address')
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })
@@ -20,3 +20,4 @@ export default class extends BaseSchema {
     this.schema.dropTable(this.tableName)
   }
 }
+

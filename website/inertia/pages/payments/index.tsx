@@ -12,7 +12,7 @@ import axios from 'axios'
 const item = {
   title: 'Bilhete - Com alojamento',
   description:
-    'Inclui:<br />Pequenos-almoços, almoços e jantares durante o período do evento<br>Acesso a coffee breaks e sessão de cocktails.<br />Acesso a workshops, palestras e outros.<br />Acesso a festas noturnas e outras atividades recreativas (exceto Rally Tascas).<br />Alojamento em Pavilhão',
+    'Inclui:<br />• Pequenos-almoços, almoços e jantares durante o período do evento<br />• Acesso a coffee breaks e sessão de cocktails<br />• Acesso a workshops, palestras e outros<br />• Acesso a festas noturnas e outras atividades recreativas (exceto Rally Tascas) <br />• Alojamento em Pavilhão',
   price: 35,
   image: 'favicon.svg',
 }
@@ -52,10 +52,12 @@ export default function TicketSalePage() {
       setPhoneModalOpen(false)
     }
     try {
-      await axios.post('/payment/process', {
-        phoneNumber: number,
-        paymentMethod: paymentMethod,
-        billingInfo: enableBillingInfo ? billingInfo : null,
+      await axios.post('/payment/mbway', {
+        user_id: 1,
+        products: [{ product_id: 1, quantity: 1 }],
+        nif: enableBillingInfo ? billingInfo.vat : null,
+        address: enableBillingInfo ? billingInfo.address : null,
+        mobileNumber: number,
       })
     } catch (error) {
       console.error('Error processing the payment', error)
