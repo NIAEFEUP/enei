@@ -12,7 +12,7 @@ import axios from 'axios'
 const item = {
   title: 'Bilhete - Com alojamento',
   description:
-    'Inclui: Pequenos-almoços, almoços e jantares durante o período do evento<br>Acesso a coffee breaks e sessão de cocktails\nAcesso a workshops, palestras e outros\nAcesso a festas noturnas e outras atividades recreativas (exceto Rally Tascas)\nAlojamento em Pavilhão',
+    'Inclui:<br />Pequenos-almoços, almoços e jantares durante o período do evento<br>Acesso a coffee breaks e sessão de cocktails.<br />Acesso a workshops, palestras e outros.<br />Acesso a festas noturnas e outras atividades recreativas (exceto Rally Tascas).<br />Alojamento em Pavilhão',
   price: 35,
   image: 'favicon.svg',
 }

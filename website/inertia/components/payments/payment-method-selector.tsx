@@ -20,6 +20,7 @@ export default function PaymentMethodSelector({
             <img src="/images/mbway.svg" alt="MB Way" className={`w-20 h-20 m-1 p-1`} />
           </Label>
         </div>
+        {/*
         <div className="flex items-center space-x-2 mt-2">
           <RadioGroupItem value="atm" id="atm" />
           <Label htmlFor="atm">
@@ -30,10 +31,8 @@ export default function PaymentMethodSelector({
             />
           </Label>
         </div>
-        <div className="flex items-center space-x-2 mt-2">
-          <RadioGroupItem value="extra" id="extra" disabled />
-          <p>Mais métodos de pagamento em breve...</p>
-        </div>
+        */}
+        <p className="text-gray-500 text-sm">Mais métodos de pagamento em breve...</p>
       </RadioGroup>
     </section>
   )
