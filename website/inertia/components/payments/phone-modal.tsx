@@ -1,0 +1,66 @@
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogHeader,
+  DialogFooter,
+  DialogDescription,
+} from '~/components/ui/dialog'
+import { Button } from '~/components/ui/button'
+import { useState } from 'react'
+import { PhoneInput } from '~/components/ui/phone-input'
+
+interface PhoneNumberModalProps {
+  isOpen: boolean
+  onClose: () => void
+  onSubmit: (phoneNumber: string) => void
+}
+
+function PhoneNumberModal({ isOpen, onClose, onSubmit }: PhoneNumberModalProps) {
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [error, setError] = useState('')
+
+  function handleSubmit() {
+    // TODO improve this validation
+    if (!phoneNumber || phoneNumber.length < 9 || phoneNumber.length > 16) {
+      setError('Por favor, insere um número de telemóvel válido')
+      return
+    }
+    setError('')
+    onSubmit(phoneNumber)
+  }
+
+  if (!isOpen) {
+    return null
+  }
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Confirmação</DialogTitle>
+        </DialogHeader>
+        <DialogDescription>Por favor, insire o teu número de telemóvel:</DialogDescription>
+        <PhoneInput
+          defaultCountry="PT"
+          countries={['PT']}
+          onChange={(value) => {
+            setPhoneNumber(value || '')
+            setError('')
+          }}
+          value={phoneNumber}
+          placeholder="Número de telemóvel"
+        />
+        {error && <p className="text-sm text-red-500 mt-2">{error}</p>}
+        <DialogFooter className="mt-4">
+          <Button variant="secondary" onClick={onClose}>
+            Cancelar
+          </Button>
+          <Button onClick={handleSubmit}>Confirmar</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+export default PhoneNumberModal
