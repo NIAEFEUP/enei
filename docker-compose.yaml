@@ -1,15 +1,7 @@
 services:
-  website:
-    build:
-      context: .
-      dockerfile: deploy/Dockerfile.website
-    container_name: enei-website
+  mailpit:
+    image: axllent/mailpit
+    container_name: enei-mailpit
     ports:
-      - "3333:3333"
-
-  website-nginx:
-    build:
-      context: .
-      dockerfile: deploy/Dockerfile.nginx
-    ports:
-      - "80:80"
+      - "1025:1025"
+      - "8025:8025"
