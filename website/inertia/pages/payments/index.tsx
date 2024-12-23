@@ -1,17 +1,9 @@
 'use client'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '~/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import { Checkbox } from '~/components/ui/checkbox'
 import { Label } from '~/components/ui/label'
 import { Input } from '~/components/ui/input'
 import { Button } from '~/components/ui/button'
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '~/components/ui/collapsible'
 import { Separator } from '~/components/ui/separator'
 import { useState } from 'react'
 import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group'
@@ -24,9 +16,26 @@ const item = {
   image: 'favicon.svg',
 }
 
+
 export default function TicketSalePage() {
   const [enableBillingAddress, setEnableBillingAddress] = useState(true)
   const [paymentMethod, setPaymentMethod] = useState<string>('mbway')
+  const [phoneModalOpen, setPhoneModalOpen] = useState(false)
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const handlePaymentClick = () => {
+    setPhoneModalOpen(true);
+  }
+
+  const handleModalClose = () => {
+    setPhoneModalOpen(false);
+  }
+
+  const handleModalSubmit = () => {
+    console.log("Phone number: ", phoneNumber);
+    handleModalClose();
+  }
+
 
   return (
     <div className="container mx-auto p-4">
@@ -97,11 +106,7 @@ export default function TicketSalePage() {
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="mbway" id="mbway" />
                 <Label htmlFor="mbway">
-                  <img
-                    src="/images/mbway.svg"
-                    alt="MB Way"
-                    className={`w-20 h-20 m-1 p-1 ${paymentMethod === 'mbway' ? 'border-2 rounded-lg border-white' : ''}`}
-                  />
+                  <img src="/images/mbway.svg" alt="MB Way" className={`w-20 h-20 m-1 p-1`} />
                 </Label>
               </div>
               <div className="flex items-center space-x-2 mt-2">
@@ -110,9 +115,13 @@ export default function TicketSalePage() {
                   <img
                     src="/images/multibanco.svg"
                     alt="Referência Multibanco"
-                    className={`w-16 h-16 p-1 ${paymentMethod === 'atm' ? 'border-2 rounded-lg border-white' : ''}`}
+                    className={`w-16 h-16 p-1`}
                   />
                 </Label>
+              </div>
+              <div className="flex items-center space-x-2 mt-2">
+                <RadioGroupItem value="extra" id="extra" className="disabled" />
+                <p>Mais métodos de pagamento em breve...</p>
               </div>
             </RadioGroup>
           </section>
