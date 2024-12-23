@@ -1,13 +1,13 @@
 'use client'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
-import { Checkbox } from '~/components/ui/checkbox'
-import { Label } from '~/components/ui/label'
-import { Input } from '~/components/ui/input'
 import { Button } from '~/components/ui/button'
 import { Separator } from '~/components/ui/separator'
 import { useState } from 'react'
-import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group'
 import PhoneNumberModal from '~/components/payments/phone-modal'
+import PurchaseSummary from '~/components/payments/purchase-summary'
+import BillingInformationForm from '~/components/payments/billing-information-form'
+import PaymentMethodSelector from '~/components/payments/payment-method-selector'
+import axios from 'axios'
 
 const item = {
   title: 'Bilhete - Com alojamento',
@@ -18,19 +18,43 @@ const item = {
 }
 
 export default function TicketSalePage() {
-  const [enableBillingAddress, setEnableBillingAddress] = useState(true)
+  const [enableBillingInfo, setEnableBillingInfo] = useState(true)
   const [paymentMethod, setPaymentMethod] = useState<string>('mbway')
   const [phoneModalOpen, setPhoneModalOpen] = useState(false)
   const [phoneNumber, setPhoneNumber] = useState('')
+  const [billingInfo, setBillingInfo] = useState({
+    name: '',
+    vat: '',
+    address: '',
+  })
 
   const handlePaymentClick = () => {
-    setPhoneModalOpen(true)
+    if (paymentMethod === 'mbway') {
+      setPhoneModalOpen(true)
+    } else {
+      handleModalSubmit('')
+    }
   }
 
-  const handleModalSubmit = (number: string) => {
+  const handleModalSubmit = async (number: string) => {
     setPhoneNumber(number)
-    console.log('Phone number: ', phoneNumber)
     setPhoneModalOpen(false)
+    try {
+      await axios.post('/payment/process', {
+        phoneNumber: phoneNumber,
+        paymentMethod: paymentMethod,
+        billingInfo: enableBillingInfo ? billingInfo : null,
+      })
+    } catch (error) {
+      console.error('Error processing the payment', error)
+    }
+  }
+
+  const handleBillingInfoChange = (key: string, value: string) => {
+    setBillingInfo({
+      ...billingInfo,
+      [key]: value,
+    })
   }
 
   return (
@@ -41,86 +65,22 @@ export default function TicketSalePage() {
           <CardDescription>Revê o teu bilhete e procede para o pagamento</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <section>
-            <h2 className="text-xl font-semibold mb-4">1. Revê a tua compra</h2>
-            <div className="flex items-start space-x-4">
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-[150px] h-[100px] object-cover rounded-md"
-              />
-              <div>
-                <h3 className="text-lg font-semibold">{item.title}</h3>
-                <p className="text-sm text-gray-500">{item.description}</p>
-                <p className="text-lg font-bold mt-2">{item.price.toFixed(2)}€</p>
-              </div>
-            </div>
-          </section>
+          <PurchaseSummary item={item} />
 
           <Separator />
 
-          <section>
-            {/* Checkbox */}
-            <h2 className="text-xl font-semibold mb-4">2. Dados de faturação</h2>
-            <div className="flex items-center space-x-2 mb-4">
-              <Checkbox
-                id="billingAddress"
-                checked={enableBillingAddress}
-                onCheckedChange={(checked) => setEnableBillingAddress(checked as boolean)}
-              />
-              <Label htmlFor="billingAddress">Incluir dados de faturação</Label>
-            </div>
+          <BillingInformationForm
+            enableBillingInfo={enableBillingInfo}
+            setEnableBillingInfo={setEnableBillingInfo}
+            onBillingInfoChange={handleBillingInfoChange}
+          />
 
-            {/* Billing information form */}
-            <div className="grid gap-4">
-              <div className="grid gap-2">
-                <Label htmlFor="name">Nome</Label>
-                <Input id="name" placeholder="Nome completo" disabled={!enableBillingAddress} />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="vat">NIF</Label>
-                <Input
-                  id="vat"
-                  placeholder="Número de identificação fiscal"
-                  disabled={!enableBillingAddress}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="address">Morada</Label>
-                <Input
-                  id="address"
-                  placeholder="Insere a tua morada"
-                  disabled={!enableBillingAddress}
-                />
-              </div>
-            </div>
-          </section>
           <Separator />
-          <section>
-            <h2 className="text-xl font-semibold mb-4">3. Método de pagamento</h2>
-            <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="mbway" id="mbway" />
-                <Label htmlFor="mbway">
-                  <img src="/images/mbway.svg" alt="MB Way" className={`w-20 h-20 m-1 p-1`} />
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2 mt-2">
-                <RadioGroupItem value="atm" id="atm" />
-                <Label htmlFor="atm">
-                  <img
-                    src="/images/multibanco.svg"
-                    alt="Referência Multibanco"
-                    className={`w-16 h-16 p-1`}
-                  />
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2 mt-2">
-                <RadioGroupItem value="extra" id="extra" className="disabled" />
-                <p>Mais métodos de pagamento em breve...</p>
-              </div>
-            </RadioGroup>
-          </section>
+
+          <PaymentMethodSelector
+            paymentMethod={paymentMethod}
+            setPaymentMethod={setPaymentMethod}
+          />
 
           <Separator />
 

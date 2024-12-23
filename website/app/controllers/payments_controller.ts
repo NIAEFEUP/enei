@@ -4,4 +4,15 @@ export default class PaymentsController {
   index({ inertia }: HttpContext) {
     return inertia.render('payments/index')
   }
+
+  public async process({ request, response }: HttpContext) {
+    const { phoneNumber, paymentMethod, billingInfo } = request.all()
+
+    // Process payment
+    console.log('Payment method:', paymentMethod)
+    console.log('Phone number:', phoneNumber)
+    console.log('Billing info:', billingInfo)
+
+    return response.ok({ success: true, message: 'Pagamento processado com sucesso!' })
+  }
 }

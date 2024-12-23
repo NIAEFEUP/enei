@@ -13,3 +13,4 @@ const PaymentsController = () => import('#controllers/payments_controller')
 router.on('/').renderInertia('home')
 
 router.get('/payment', [PaymentsController, 'index'])
+router.post('/payment/process', [PaymentsController, 'process'])
