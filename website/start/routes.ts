@@ -12,6 +12,6 @@ import router from '@adonisjs/core/services/router'
 router.on('/').renderInertia('home')
 
 router.group(() => {
-    router.post('/', [OrdersController, 'create'])
-    router.get('/:id', [OrdersController, 'show'])
-}).prefix('payment/mbway')
+  router.post('/mbway', [OrdersController, 'createMBWay'])
+  router.get('/:id', [OrdersController, 'show'])
+}).prefix('payment')

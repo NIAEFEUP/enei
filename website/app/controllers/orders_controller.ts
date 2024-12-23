@@ -2,15 +2,28 @@ import type { HttpContext } from '@adonisjs/core/http'
 import env from '#start/env'
 import axios from 'axios'
 import Order from '#models/order'
+import User from '#models/user'
 import OrderProduct from '#models/order_product'
 import Product from '#models/product'
 import UpdateOrderStatus from '../jobs/update_order_status.js'
 
 export default class OrdersController {
 
-      public async create({ request, response }: HttpContext) {
+      public async createMBWay({ request, response }: HttpContext) {
         try {
           const { user_id, products, nif, address, mobileNumber } = request.all()
+        if (!user_id || !products || !nif || !address || !mobileNumber) {
+            return response.status(400).json({
+            message: 'Missing required fields',
+            })
+        }
+
+        const user = await User.find(user_id)
+        if (!user) {
+            return response.status(404).json({
+            message: 'User not found',
+            })
+        }
           const order = await Order.create({ user_id, nif, address })
           let totalAmount = 0
           let description = 'Payment for order id ' + order.id
@@ -71,8 +84,8 @@ export default class OrdersController {
           })
         }
     }
-        
 
+    
     public async show({ params, response }: HttpContext) {
         const order = await Order.find(params.id)
         if (!order) {
