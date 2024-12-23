@@ -37,6 +37,12 @@ export default class OrdersController {
                 message: `Product with id ${product_id} not found`,
               })
             }
+            
+            if (quantity > product.max_order || product.stock < quantity) {
+              return response.status(400).json({
+                message: `Not enough stock for product ${product.name}`,
+              })
+            }
 
             const productTotal = product.price * quantity
             totalAmount += productTotal
