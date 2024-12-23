@@ -1,4 +1,4 @@
-const resources= {
+const resources = {
   en: {
     translation: {
       pages: {
@@ -265,7 +265,7 @@ const config = {
     escapeValue: false,
   },
   react: {
-    useSuspense: true,
+    useSuspense: false,
   },
 
   datetimeFormats: {

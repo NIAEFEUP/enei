@@ -1,11 +1,10 @@
 import { Head } from "@inertiajs/react";
 import React, { useLayoutEffect } from 'react';
-import i18n from 'i18next'
 
 import { useTranslation } from 'react-i18next'
 
 export default function Home() {
-  const { t, ready } = useTranslation('', { useSuspense: false });
+  const { t } = useTranslation();
 
   const [countdown, setCountdown] = React.useState({ days: 0, hours: 0, minutes: 0, seconds: 0, });
 
