@@ -1,0 +1,3 @@
+FROM nginx:alpine AS prod
+
+COPY deploy/nginx-website.conf /etc/nginx/nginx.conf
