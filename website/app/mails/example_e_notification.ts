@@ -18,6 +18,10 @@ export default class ExampleENotification extends BaseMail {
    * the email is sent or queued.
    */
   async prepare() {
-    this.message.to(this.userEmail).subject(this.subject).htmlView('emails/example_email_html').textView('emails/example_email_text')
+    this.message.to(this.userEmail).subject(this.subject).htmlView('emails/example_email_html', {
+      userEmail: this.userEmail
+    }).textView('emails/example_email_text', {
+      userEmail: this.userEmail
+    })
   }
 }
