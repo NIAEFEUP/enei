@@ -24,4 +24,21 @@ export default await Env.create(new URL('../', import.meta.url), {
   |----------------------------------------------------------
   */
   SESSION_DRIVER: Env.schema.enum(['cookie', 'memory'] as const),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring the mail package
+  |----------------------------------------------------------
+  */
+  FROM_EMAIL: Env.schema.string(),
+  SMTP_HOST: Env.schema.string(),
+  SMTP_PORT: Env.schema.string(),
+  //AWS_ACCESS_KEY_ID: Env.schema.string(),
+  //AWS_SECRET_ACCESS_KEY: Env.schema.string(),
+  //AWS_REGION: Env.schema.string(),
+  //MAILGUN_API_KEY: Env.schema.string(),
+  //MAILGUN_DOMAIN: Env.schema.string(),
+  //SPARKPOST_API_KEY: Env.schema.string(),
+  //RESEND_API_KEY: Env.schema.string(),
+  //BREVO_API_KEY: Env.schema.string()
 })
