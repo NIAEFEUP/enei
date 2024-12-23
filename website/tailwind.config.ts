@@ -11,6 +11,8 @@ export default {
         sans: ['Instrument Sans', 'sans-serif'],
       },
       colors: {
+        'enei-blue': '#0B4F6C',
+        'enei-beige': '#EFE3CA',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
