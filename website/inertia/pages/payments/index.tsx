@@ -2,7 +2,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import { Button } from '~/components/ui/button'
 import { Separator } from '~/components/ui/separator'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PhoneNumberModal from '~/components/payments/phone-modal'
 import PurchaseSummary from '~/components/payments/purchase-summary'
 import BillingInformationForm from '~/components/payments/billing-information-form'
@@ -18,16 +18,25 @@ const item = {
 }
 
 export default function TicketSalePage() {
-  const [enableBillingInfo, setEnableBillingInfo] = useState(true)
+  const [enableBillingInfo, setEnableBillingInfo] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState<string>('mbway')
   const [phoneModalOpen, setPhoneModalOpen] = useState(false)
-  const [phoneNumber, setPhoneNumber] = useState('')
   const [billingInfo, setBillingInfo] = useState({
     name: '',
     vat: '',
     address: '',
   })
 
+  // Clear billing info when the component mounts (to prevent stale data)
+  useEffect(() => {
+    setBillingInfo({
+      name: '',
+      vat: '',
+      address: '',
+    })
+  }, [])
+
+  // Handles the payment button click. If the payment method is MB Way, it opens the phone modal, otherwise it processes the payment
   const handlePaymentClick = () => {
     if (paymentMethod === 'mbway') {
       setPhoneModalOpen(true)
@@ -36,12 +45,15 @@ export default function TicketSalePage() {
     }
   }
 
+  // Closes the modal (if open) and processes the payment
   const handleModalSubmit = async (number: string) => {
-    setPhoneNumber(number)
-    setPhoneModalOpen(false)
+    if (phoneModalOpen) {
+      if (!number) return
+      setPhoneModalOpen(false)
+    }
     try {
       await axios.post('/payment/process', {
-        phoneNumber: phoneNumber,
+        phoneNumber: number,
         paymentMethod: paymentMethod,
         billingInfo: enableBillingInfo ? billingInfo : null,
       })
@@ -50,6 +62,7 @@ export default function TicketSalePage() {
     }
   }
 
+  // Updates the billing information when the user types
   const handleBillingInfoChange = (key: string, value: string) => {
     setBillingInfo({
       ...billingInfo,
@@ -72,6 +85,7 @@ export default function TicketSalePage() {
           <BillingInformationForm
             enableBillingInfo={enableBillingInfo}
             setEnableBillingInfo={setEnableBillingInfo}
+            billingInfo={billingInfo}
             onBillingInfoChange={handleBillingInfoChange}
           />
 

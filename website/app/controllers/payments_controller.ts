@@ -8,11 +8,10 @@ export default class PaymentsController {
   public async process({ request, response }: HttpContext) {
     const { phoneNumber, paymentMethod, billingInfo } = request.all()
 
-    // Process payment
     console.log('Payment method:', paymentMethod)
     console.log('Phone number:', phoneNumber)
     console.log('Billing info:', billingInfo)
 
-    return response.ok({ success: true, message: 'Pagamento processado com sucesso!' })
+    return response.ok({ success: true, message: 'Payment processed successfully!' })
   }
 }

@@ -5,14 +5,23 @@ import { Input } from '~/components/ui/input'
 interface BillingInformationFormProps {
   enableBillingInfo: boolean
   setEnableBillingInfo: (checked: boolean) => void
+  billingInfo: {
+    name: string
+    vat: string
+    address: string
+  }
   onBillingInfoChange: (field: string, value: string) => void
 }
 
 export default function BillingInformationForm({
   enableBillingInfo,
   setEnableBillingInfo,
+  billingInfo,
   onBillingInfoChange,
 }: BillingInformationFormProps) {
+  const handleInputChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    onBillingInfoChange(key, event.target.value)
+  }
   return (
     <section>
       {/* Checkbox */}
@@ -34,7 +43,8 @@ export default function BillingInformationForm({
             id="name"
             placeholder="Nome completo"
             disabled={!enableBillingInfo}
-            onChange={(e) => onBillingInfoChange('name', e.target.value)}
+            value={billingInfo.name}
+            onChange={handleInputChange('name')}
           />
         </div>
         <div className="grid gap-2">
@@ -43,7 +53,8 @@ export default function BillingInformationForm({
             id="vat"
             placeholder="Número de identificação fiscal"
             disabled={!enableBillingInfo}
-            onChange={(e) => onBillingInfoChange('vat', e.target.value)}
+            value={billingInfo.vat}
+            onChange={handleInputChange('vat')}
           />
         </div>
         <div className="grid gap-2">
@@ -52,7 +63,8 @@ export default function BillingInformationForm({
             id="address"
             placeholder="Insere a tua morada"
             disabled={!enableBillingInfo}
-            onChange={(e) => onBillingInfoChange('address', e.target.value)}
+            value={billingInfo.address}
+            onChange={handleInputChange('address')}
           />
         </div>
       </div>
