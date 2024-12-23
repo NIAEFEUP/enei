@@ -4,10 +4,11 @@ import {
   DialogTitle,
   DialogHeader,
   DialogFooter,
+  DialogDescription,
 } from '~/components/ui/dialog'
 import { Button } from '~/components/ui/button'
 import React from 'react'
-import { PhoneInput } from '../ui/phone-input'
+import { PhoneInput } from '~/components/ui/phone-input'
 
 interface PhoneNumberModalProps {
   isOpen: boolean
@@ -33,7 +34,7 @@ function PhoneNumberModal({ isOpen, onClose, onSubmit }: PhoneNumberModalProps) 
         <DialogHeader>
           <DialogTitle>Confirmação</DialogTitle>
         </DialogHeader>
-        <p>Por favor, insira o seu número de telemóvel:</p>
+        <DialogDescription>Por favor, insire o teu número de telemóvel:</DialogDescription>
         <PhoneInput
           onChange={(value) => setPhoneNumber(value || '')}
           value={phoneNumber}
