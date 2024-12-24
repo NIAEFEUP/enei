@@ -34,6 +34,16 @@ export default function TicketSalePage() {
       vat: '',
       address: '',
     })
+    const loginUser = async () => { //simulate login
+      try {
+        const response = await axios.get('http://localhost:3333/login/1')
+        console.log('Login successful:', response.data)
+      } catch (error) {
+        console.error('Error during login:', error)
+      }
+    }
+
+    loginUser()
   }, [])
 
   // Handles the payment button click. If the payment method is MB Way, it opens the phone modal, otherwise it processes the payment

@@ -7,7 +7,12 @@ import OrderProduct from '#models/order_product'
 import Product from '#models/product'
 import UpdateOrderStatus from '../jobs/update_order_status.js'
 
+
 export default class OrdersController {
+    index({ inertia }: HttpContext) {
+        return inertia.render('payments/index')
+      }
+
     public async createMBWay({ request, auth, response }:  HttpContext) {
         const authUser = auth.user
         try {

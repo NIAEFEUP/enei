@@ -14,13 +14,14 @@ router.on('/').renderInertia('home')
 
 router
   .group(() => {
+    router.get('/', [OrdersController, 'index'])
     router.post('/mbway', [OrdersController, 'createMBWay']).use(middleware.auth())
     router.get('/:id', [OrdersController, 'show'])
   })
   .prefix('payment')
 
 
-  router.get('login/:id', async ({ params, auth, response }) => { //dummy login to test stuff
+  router.get('login/:id', async ({ params, auth, response }) => {
     const userId = params.id
   
     const user = await User.find(userId)
@@ -32,7 +33,7 @@ router
     response.send('User logged in')
   })
 
-  router.get('logout', async ({ auth, response }) => { //dummy logout to test stuff
+  router.get('logout', async ({ auth, response }) => { //dummy logout to testz
     // Check if a user is logged in
     if (await auth.use('web').check()) {
       // Log out the user
