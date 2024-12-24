@@ -36,11 +36,16 @@ export default class OrdersController {
             message: `Product with id ${product_id} not found`,
           })
         }
-
-        if (quantity > product.max_order || product.stock < quantity) {
+        const productsUserHas = await OrderProduct.query().where('productId', product_id).where('orderId', order.id)
+        if ( product.stock < quantity) {
           return response.status(400).json({
             message: `Not enough stock for product ${product.name}`,
           })
+        }
+        if(quantity + productsUserHas.length > product.max_order ){
+            return response.status(400).json({
+                message: `You can only buy ${product.max_order} of product ${product.name}`,
+            })
         }
 
         const productTotal = product.price * quantity
