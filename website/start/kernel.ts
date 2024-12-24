@@ -28,7 +28,7 @@ server.use([
   () => import('@adonisjs/cors/cors_middleware'),
   () => import('@adonisjs/vite/vite_middleware'),
   () => import('@adonisjs/inertia/inertia_middleware'),
-  () => import('#middleware/oidc_token_refresher_middleware')
+  () => import('#middleware/oidc_token_refresher_middleware'),
 ])
 
 /**

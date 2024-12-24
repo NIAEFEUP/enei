@@ -1,4 +1,4 @@
-import User from '#models/user';
+import User from '#models/user'
 import * as client from 'openid-client'
 import { HttpContext } from '@adonisjs/core/http'
 import env from '#start/env'
@@ -10,12 +10,12 @@ async function createConfig() {
     env.get('OIDC_CLIENT_SECRET'),
     undefined,
     {
-      execute: process.env.NODE_ENV === "development" ? [client.allowInsecureRequests] : []
+      execute: process.env.NODE_ENV === 'development' ? [client.allowInsecureRequests] : [],
     }
-  );
+  )
 }
 
-const config = createConfig();
+const config = createConfig()
 
 /**
  * This controller is reponsible for handling the OpenID Connect flow with a configured KeyCloak instance.
@@ -26,16 +26,16 @@ export default class OIDCController {
    */
   public async initFlow({ response }: HttpContext) {
     let resolvedConfig = await config
-    let code_challenge_method = 'S256'
-    let code_verifier = client.randomPKCECodeVerifier()
-    let code_challenge = await client.calculatePKCECodeChallenge(code_verifier)
+    let codeChallengeMethod = 'S256'
+    let codeVerifier = client.randomPKCECodeVerifier()
+    let codeChallenge = await client.calculatePKCECodeChallenge(codeVerifier)
 
-    let redirect_uri = `${process.env.OIDC_REDIRECT_URI}`;
+    let redirectUri = `${process.env.OIDC_REDIRECT_URI}`
     let parameters: Record<string, string> = {
-      redirect_uri,
+      redirect_uri: redirectUri,
       scope: 'openid email',
-      code_challenge,
-      code_challenge_method,
+      code_challenge: codeChallenge,
+      code_challenge_method: codeChallengeMethod,
     }
 
     /**
@@ -44,13 +44,13 @@ export default class OIDCController {
      * why we're using it regardless.
      */
     if (!resolvedConfig.serverMetadata().supportsPKCE()) {
-      throw new Error("PKCE not supported");
+      throw new Error('PKCE not supported')
     }
 
     let redirectTo = client.buildAuthorizationUrl(resolvedConfig, parameters)
 
     // redirect to redirectTo.href in adonisjs controller
-    return response.cookie('pkce_code_verifier', code_verifier).redirect().toPath(redirectTo.href);
+    return response.cookie('pkce_code_verifier', codeVerifier).redirect().toPath(redirectTo.href)
   }
 
   /**
@@ -58,38 +58,45 @@ export default class OIDCController {
    * handle the response and if sucessful either login or create the user
    */
   public async callback({ request, response, auth }: HttpContext) {
-    const resolvedConfig = await config;
-    const code_verifier = request.cookie('pkce_code_verifier');
+    const resolvedConfig = await config
+    const codeVerifier = request.cookie('pkce_code_verifier')
 
-    let sub: string;
-    let access_token: string;
+    let sub: string
+    let accessToken: string
 
-    let tokens = await client.authorizationCodeGrant(resolvedConfig, new URL(request.completeUrl(true)), {
-      pkceCodeVerifier: code_verifier,
-      idTokenExpected: true,
-    });
+    let tokens = await client.authorizationCodeGrant(
+      resolvedConfig,
+      new URL(request.completeUrl(true)),
+      {
+        pkceCodeVerifier: codeVerifier,
+        idTokenExpected: true,
+      }
+    )
 
-      ; ({ access_token } = tokens)
+    ;({ access_token: accessToken } = tokens)
     let claims = tokens.claims()!
-      ; ({ sub } = claims)
+    ;({ sub } = claims)
 
-    let userInfo = await client.fetchUserInfo(resolvedConfig, access_token, sub)
-    
-    let user = await User.firstOrCreate(
-    { 
+    let userInfo = await client.fetchUserInfo(resolvedConfig, accessToken, sub)
+
+    let user = await User.firstOrCreate({
       username: userInfo.preferred_username,
-    });
+    })
 
-    await auth.use('web').login(user);
+    await auth.use('web').login(user)
 
-    if(!tokens.expires_in || !tokens.refresh_expires_in) {
-      return response.abort("Expiration parameter not found in tokens given by oidc provider", 500);
+    if (!tokens.expires_in || !tokens.refresh_expires_in) {
+      return response.abort('Expiration parameter not found in tokens given by oidc provider', 500)
     }
 
     return response
-      .cookie('access_token', tokens.access_token, { expires: new Date((new Date()).getTime() + (tokens.expires_in)) })
-      .cookie('refresh_token', tokens.refresh_token, { expires: new Date((new Date()).getTime() + Number((tokens.refresh_expires_in))) })
+      .cookie('access_token', tokens.access_token, {
+        expires: new Date(new Date().getTime() + tokens.expires_in),
+      })
+      .cookie('refresh_token', tokens.refresh_token, {
+        expires: new Date(new Date().getTime() + Number(tokens.refresh_expires_in)),
+      })
       .redirect()
-      .toPath('/');
+      .toPath('/')
   }
 }
