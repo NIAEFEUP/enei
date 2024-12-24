@@ -44,6 +44,7 @@ export default function Home() {
   return (
     <>
       <AppLayout title="Home" className="flex">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0B4F6C_7%] to-enei-beige h-[100vh]" />
         <div className="absolute inset-0 bg-[url('/images/background.jpeg')] bg-cover bg-no-repeat bg-bottom md:bg-center
         z-2 opacity-40 [mask:_linear-gradient(transparent_5%,_black,_transparent_92%)] top-48" />
         <section className="grow relative flex flex-col gap-8 px-6 overflow-x-hidden sm:px-12 md:px-24 lg:px-36 py-24 md:py-12 md:justify-evenly z-10">
