@@ -19,7 +19,7 @@ export default function AppLayout(
             scroll-behavior: smooth;
           }`}
       </style>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0B4F6C_7%] to-enei-beige">
         <Head title={title} />
         <div className="sticky left-0 right-0 top-0 z-30">
           <NavBar />
