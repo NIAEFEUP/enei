@@ -46,8 +46,8 @@ export default function Home() {
       <AppLayout title="Home" className="flex">
         <div className="absolute inset-0 bg-gradient-to-b from-[#0B4F6C_7%] to-enei-beige h-[100vh]" />
         <div className="absolute inset-0 bg-[url('/images/background.jpeg')] bg-cover bg-no-repeat bg-bottom md:bg-center
-        z-2 opacity-40 [mask:_linear-gradient(transparent_5%,_black,_transparent_92%)] top-48" />
-        <section className="grow relative flex flex-col gap-8 px-6 overflow-x-hidden sm:px-12 md:px-24 lg:px-36 py-24 md:py-12 md:justify-evenly z-10">
+        z-2 opacity-40 [mask:_linear-gradient(transparent_5%,_black,_transparent_92%)]" />
+        <section className="grow relative flex flex-col gap-8 px-6 overflow-x-hidden sm:px-12 md:px-24 lg:px-36 py-4 sm:py-24 lg:py-32 md:justify-between z-10">
           <div className="flex-grow md:flex-grow-0">
             <h1 className="w-3/12 text-justify font-space-grotesk text-5xl font-bold tracking-tight text-enei-beige leading-[60px] md:leading-[90px] md:text-7xl ">
               <div className="block gap-10 flex-row sm:flex sm:gap-0 md:block md:gap-10 lg:flex lg:gap-0">
@@ -120,8 +120,8 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="mx-auto">
-            <p className="mr-2 w-48 bg-enei-beige p-2.5 px-8 text-center font-space-grotesk text-lg font-bold text-enei-blue uppercase">
+          <div className="mx-auto h-full flex justify-center items-center">
+            <p className="w-48 h-fit bg-enei-beige p-2.5 px-8 text-center font-space-grotesk text-lg font-bold text-enei-blue uppercase rounded-md shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
               Brevemente
             </p>
           </div>
