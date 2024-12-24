@@ -44,46 +44,76 @@ export default function Home() {
   return (
     <>
       <AppLayout title="Home" className="flex">
-        <div className="absolute inset-0 bg-[url('/images/background.jpeg')] bg-cover bg-no-repeat bg-bottom md:bg-center z-2">
-        </div>
-        <div className="absolute inset-0 mix-blend-plus-darker bg-gradient-to-b from-[#0B4F6C_8%] to-[#EFE4CA_100%] opacity-[92%] z-0">
-        </div>
+        <div className="absolute inset-0 bg-[url('/images/background.jpeg')] bg-cover bg-no-repeat bg-bottom md:bg-center z-2 opacity-40" />
+        <div className="absolute inset-0 mix-blend-multiply bg-gradient-to-b from-[#0B4F6C_30%] to-[#EFE4CA_100%] z-0" />
 
-        <section className="grow relative flex flex-col gap-8 px-5 py-36 md:justify-evenly md:py-0 md:px-0 z-10">
-          <div className="mx-auto md:ml-36 flex-grow md:flex-grow-0">
-            <h1 className="w-3/12 text-justify font-space-grotesk text-5xl font-bold tracking-tight text-white md:text-7xl">
-              <p className="whitespace-nowrap lowercase">Encontro</p>
-              <p className="whitespace-nowrap lowercase">Nacional de</p>
-              <p className="whitespace-nowrap lowercase">Estudantes de</p>
-              <p className="whitespace-nowrap lowercase">Informática</p>
+        <section className="grow relative flex flex-col gap-8 px-6 sm:px-12 md:px-24 lg:px-36 py-24 md:py-12 md:justify-evenly z-10">
+          <div className="flex-grow md:flex-grow-0">
+            <h1 className="w-3/12 text-justify font-space-grotesk text-5xl font-bold tracking-tight text-white leading-[60px] md:leading-[90px] md:text-7xl ">
+              <div className="block gap-10 flex-row sm:flex sm:gap-0 md:block md:gap-10 lg:flex lg:gap-0">
+                <p className="whitespace-nowrap lowercase text-enei-beige">
+                  Encontro&nbsp;
+                </p>
+                <p className="whitespace-nowrap lowercase text-enei-beige">
+                  Nacional de
+                </p>
+              </div>
+
+              <div className="block gap-10 flex-row sm:flex sm:gap-0 md:block md:gap-10 lg:flex lg:gap-0">
+                <p className="whitespace-nowrap lowercase text-enei-beige">
+                  Estudantes de&nbsp;
+                </p>
+                <p className="whitespace-nowrap lowercase text-enei-beige">
+                  Informática
+                </p>
+              </div>
             </h1>
-            <p className="font-space-grotesk text-2xl text-white md:text-4xl uppercase">
-              Porto 2025
+            <p className="font-space-grotesk font-normal text-2xl text-enei-beige mt-2 md:text-4xl">
+              Porto 2025 | 11-14 de abril
             </p>
-            <div className=" flex space-x-4 mt-10 ">
-              <div className="flex flex-col items-center bg-enei-beige opacity-75 p-8 w-32">
-                <p className="text-enei-blue text-5xl font-bold ">
-                  {countdown.days}
+            <div className="grid grid-cols-2 sm:grid-cols-4 w-fit gap-4 mt-10">
+              <div className="bg-enei-beige opacity-75 w-24 md:w-32 text-center">
+                <p className="font-space-grotesk text-enei-blue text-3xl md:text-5xl font-bold mt-10">
+                  {countdown.days.toLocaleString("en-US", {
+                    minimumIntegerDigits: 2,
+                    useGrouping: false,
+                  })}
                 </p>
-                <p className="text-enei-blue text-xl font-bold mt-3">DIAS</p>
+                <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3">
+                  DIAS
+                </p>
               </div>
-              <div className="flex flex-col items-center bg-enei-beige opacity-75 p-8 w-32">
-                <p className="text-enei-blue text-5xl font-bold">
-                  {countdown.hours}
+              <div className="bg-enei-beige opacity-75 w-24 md:w-32 text-center">
+                <p className="font-space-grotesk text-enei-blue text-3xl md:text-5xl font-bold mt-10">
+                  {countdown.hours.toLocaleString("en-US", {
+                    minimumIntegerDigits: 2,
+                    useGrouping: false,
+                  })}
                 </p>
-                <p className="text-enei-blue text-xl font-bold mt-3">HORAS</p>
+                <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3">
+                  HORAS
+                </p>
               </div>
-              <div className="flex flex-col items-center bg-enei-beige opacity-75 p-8 w-32">
-                <p className="text-enei-blue text-5xl font-bold">
-                  {countdown.minutes}
+              <div className="bg-enei-beige opacity-75 w-24 md:w-32 text-center">
+                <p className="font-space-grotesk text-enei-blue text-3xl md:text-5xl font-bold mt-10">
+                  {countdown.minutes.toLocaleString("en-US", {
+                    minimumIntegerDigits: 2,
+                    useGrouping: false,
+                  })}
                 </p>
-                <p className="text-enei-blue text-xl font-bold mt-3">MINUTOS</p>
+                <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3">
+                  MINUTOS
+                </p>
               </div>
-              <div className="flex flex-col items-center bg-enei-beige opacity-75 p-8 w-32">
-                <p className="text-enei-blue text-5xl font-bold">
-                  {countdown.seconds}
+
+              <div className="bg-enei-beige opacity-75 w-24 md:w-32 text-center">
+                <p className="font-space-grotesk text-enei-blue text-3xl md:text-5xl font-bold mt-10">
+                  {countdown.seconds.toLocaleString("en-US", {
+                    minimumIntegerDigits: 2,
+                    useGrouping: false,
+                  })}
                 </p>
-                <p className="text-enei-blue text-xl font-bold mt-3">
+                <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3">
                   SEGUNDOS
                 </p>
               </div>

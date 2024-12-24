@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import { Head } from "@inertiajs/react";
+import NavBar from "../components/navbar";
 
 type Props = {
   title: string;
@@ -21,7 +22,7 @@ export default function AppLayout(
       <div className="min-h-screen flex flex-col">
         <Head title={title} />
         <div className="sticky left-0 right-0 top-0 z-30">
-          // Navbar
+          <NavBar />
         </div>
         <div className={"flex-1" + " " + className}>
           {children}

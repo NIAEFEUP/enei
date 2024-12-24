@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss'
 import tailwindcssAnimate from 'tailwindcss-animate'
+import defaultTheme from 'tailwindcss/defaultTheme'
 
 export default {
   darkMode: ['class'],
@@ -8,7 +9,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Instrument Sans', 'sans-serif'],
+          sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+          "space-grotesk": ["Space Grotesk", "sans-serif"],
       },
       colors: {
         'enei-blue': '#0B4F6C',
