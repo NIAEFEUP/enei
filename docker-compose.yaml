@@ -1,15 +1,13 @@
 services:
-  website:
-    build:
-      context: .
-      dockerfile: deploy/Dockerfile.website
-    container_name: enei-website
-    ports:
-      - "3333:3333"
-
-  website-nginx:
-    build:
-      context: .
-      dockerfile: deploy/Dockerfile.nginx
-    ports:
-      - "80:80"
+  keycloak:
+      image: quay.io/keycloak/keycloak:26.0.0
+      command: ["start-dev"]
+      container_name: keycloak
+      environment:
+        KC_BOOTSTRAP_ADMIN_USERNAME: admin
+        KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+        KEYCLOAK_USER: admin
+        KEYCLOAK_PASSWORD: admin
+        KEYCLOAK_IMPORT: /tmp/realm-export.json
+      ports:
+        - 8080:8080
