@@ -8,90 +8,96 @@ import Product from '#models/product'
 import UpdateOrderStatus from '../jobs/update_order_status.js'
 
 export default class OrdersController {
-  public async createMBWay({ request, response }: HttpContext) {
-    try {
-      const { user_id, products, nif, address, mobileNumber } = request.all()
-      if (!user_id || !products || !mobileNumber) {
-        return response.status(400).json({
-          message: 'Missing required fields',
-        })
-      }
-
-      const user = await User.find(user_id)
-      if (!user) {
-        return response.status(404).json({
-          message: 'User not found',
-        })
-      }
-      const order = await Order.create({ user_id, nif, address })
-      let totalAmount = 0
-      let description = 'Payment for order id ' + order.id
-
-      for (let productItem of products) {
-        const { product_id, quantity } = productItem
-        const product = await Product.find(product_id)
-
-        if (!product) {
-          return response.status(404).json({
-            message: `Product with id ${product_id} not found`,
-          })
+    public async createMBWay({ request, auth, response }:  HttpContext) {
+        const authUser = auth.user
+        try {
+        const { user_id, products, nif, address, mobileNumber } = request.all()
+        if(!authUser || authUser.id != user_id){
+            return response.status(401).json({
+                message: 'Unauthorized',
+            })
         }
-        const productsUserHas = await OrderProduct.query().where('productId', product_id).where('orderId', order.id)
-        if ( product.stock < quantity) {
-          return response.status(400).json({
-            message: `Not enough stock for product ${product.name}`,
-          })
-        }
-        if(quantity + productsUserHas.length > product.max_order ){
+        if (!user_id || !products || !mobileNumber) {
             return response.status(400).json({
-                message: `You can only buy ${product.max_order} of product ${product.name}`,
+            message: 'Missing required fields',
             })
         }
 
-        const productTotal = product.price * quantity
-        totalAmount += productTotal
-        await OrderProduct.create({
-          orderId: order.id,
-          productId: product_id,
-          quantity,
-        })
+        const user = await User.find(user_id)
+        if (!user) {
+            return response.status(404).json({
+            message: 'User not found',
+            })
+        }
+        const order = await Order.create({ user_id, nif, address })
+        let totalAmount = 0
+        let description = 'Payment for order id ' + order.id
 
-        description += `, ${product.name} x${quantity}`
-      }
+        for (let productItem of products) {
+            const { product_id, quantity } = productItem
+            const product = await Product.find(product_id)
 
-      const data = {
-        mbWayKey: env.get('IFTHENPAY_MBWAY_KEY'),
-        orderId: order.id,
-        amount: totalAmount.toFixed(2),
-        mobileNumber,
-        description,
-      }
+            if (!product) {
+            return response.status(404).json({
+                message: `Product with id ${product_id} not found`,
+            })
+            }
+            const productsUserHas = await OrderProduct.query().where('productId', product_id).where('orderId', order.id)
+            if ( product.stock < quantity) {
+            return response.status(400).json({
+                message: `Not enough stock for product ${product.name}`,
+            })
+            }
+            if(quantity + productsUserHas.length > product.max_order ){
+                return response.status(400).json({
+                    message: `You can only buy ${product.max_order} of product ${product.name}`,
+                })
+            }
 
-      const apiResponse = await axios.post('https://api.ifthenpay.com/spg/payment/mbway', data)
+            const productTotal = product.price * quantity
+            totalAmount += productTotal
+            await OrderProduct.create({
+            orderId: order.id,
+            productId: product_id,
+            quantity,
+            })
 
-      if (apiResponse.status === 200) {
-        const responseData = apiResponse.data
-        order.request_id = responseData.RequestId
-        order.status = 'Pending'
-        await order.save()
+            description += `, ${product.name} x${quantity}`
+        }
 
-        await UpdateOrderStatus.dispatch({ requestId: order.request_id }, { delay: 10000 })
+        const data = {
+            mbWayKey: env.get('IFTHENPAY_MBWAY_KEY'),
+            orderId: order.id,
+            amount: totalAmount.toFixed(2),
+            mobileNumber,
+            description,
+        }
 
-        return response.status(200).json({
-          order,
-          message: 'Payment initiated successfully',
-        })
-      } else {
+        const apiResponse = await axios.post('https://api.ifthenpay.com/spg/payment/mbway', data)
+
+        if (apiResponse.status === 200) {
+            const responseData = apiResponse.data
+            order.request_id = responseData.RequestId
+            order.status = 'Pending'
+            await order.save()
+
+            await UpdateOrderStatus.dispatch({ requestId: order.request_id }, { delay: 10000 })
+
+            return response.status(200).json({
+            order,
+            message: 'Payment initiated successfully',
+            })
+        } else {
+            return response.status(500).json({
+            message: 'Failed to initiate payment',
+            })
+        }
+        } catch (error) {
+        console.error(error)
         return response.status(500).json({
-          message: 'Failed to initiate payment',
+            message: 'An error occurred while initiating the payment',
         })
-      }
-    } catch (error) {
-      console.error(error)
-      return response.status(500).json({
-        message: 'An error occurred while initiating the payment',
-      })
-    }
+        }
   }
 
   public async show({ params, response }: HttpContext) {
