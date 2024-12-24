@@ -71,48 +71,49 @@ export default function Home() {
               Porto 2025 | 11-14 de abril
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 w-fit gap-4 mt-10">
-              <div className="bg-enei-beige opacity-75 w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
-                <p className="font-space-grotesk text-enei-blue text-3xl md:text-5xl font-bold mt-10">
+              <div className="bg-enei-beige bg-opacity-[62%] w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
+                <p className="font-space-grotesk text-enei-blue text-3xl md:text-5xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
                   {countdown.days.toLocaleString("en-US", {
                     minimumIntegerDigits: 2,
                     useGrouping: false,
                   })}
                 </p>
-                <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3">
+                <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
                   DIAS
                 </p>
               </div>
-              <div className="bg-enei-beige opacity-75 w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
-                <p className="font-space-grotesk text-enei-blue text-3xl md:text-5xl font-bold mt-10">
+              <div className="bg-enei-beige bg-opacity-[62%] w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
+                <p className="font-space-grotesk text-enei-blue text-3xl md:text-5xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
                   {countdown.hours.toLocaleString("en-US", {
                     minimumIntegerDigits: 2,
                     useGrouping: false,
                   })}
                 </p>
-                <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3">
+                <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
                   HORAS
                 </p>
               </div>
-              <div className="bg-enei-beige opacity-75 w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
-                <p className="font-space-grotesk text-enei-blue text-3xl md:text-5xl font-bold mt-10">
+
+              <div className="bg-enei-beige bg-opacity-[62%] w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
+                <p className="font-space-grotesk text-enei-blue text-3xl md:text-5xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
                   {countdown.minutes.toLocaleString("en-US", {
                     minimumIntegerDigits: 2,
                     useGrouping: false,
                   })}
                 </p>
-                <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3">
+                <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
                   MINUTOS
                 </p>
               </div>
 
-              <div className="bg-enei-beige opacity-75 w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
-                <p className="font-space-grotesk text-enei-blue text-3xl md:text-5xl font-bold mt-10">
+              <div className="bg-enei-beige bg-opacity-[62%] w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
+                <p className="font-space-grotesk text-enei-blue text-3xl md:text-5xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
                   {countdown.seconds.toLocaleString("en-US", {
                     minimumIntegerDigits: 2,
                     useGrouping: false,
                   })}
                 </p>
-                <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3">
+                <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
                   SEGUNDOS
                 </p>
               </div>
