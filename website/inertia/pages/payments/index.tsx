@@ -34,7 +34,8 @@ export default function TicketSalePage() {
       vat: '',
       address: '',
     })
-    const loginUser = async () => { //simulate login
+    const loginUser = async () => {
+      //simulate login
       try {
         const response = await axios.get('http://localhost:3333/login/1')
         console.log('Login successful:', response.data)

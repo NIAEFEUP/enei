@@ -9,7 +9,7 @@
 const OrdersController = () => import('#controllers/orders_controller')
 import router from '@adonisjs/core/services/router'
 import User from '#models/user'
-import {middleware} from '#start/kernel'
+import { middleware } from '#start/kernel'
 router.on('/').renderInertia('home')
 
 router
@@ -20,27 +20,26 @@ router
   })
   .prefix('payment')
 
+router.get('login/:id', async ({ params, auth, response }) => {
+  const userId = params.id
 
-  router.get('login/:id', async ({ params, auth, response }) => {
-    const userId = params.id
-  
-    const user = await User.find(userId)
-    if (!user) {
-      return response.status(404).send('User not found')
-    }
-  
-    await auth.use('web').login(user)
-    response.send('User logged in')
-  })
+  const user = await User.find(userId)
+  if (!user) {
+    return response.status(404).send('User not found')
+  }
 
-  router.get('logout', async ({ auth, response }) => { //dummy logout to testz
-    // Check if a user is logged in
-    if (await auth.use('web').check()) {
-      // Log out the user
-      await auth.use('web').logout();
-      response.send('User logged out');
-    } else {
-      response.status(401).send('No user is logged in');
-    }
-  });
-  
+  await auth.use('web').login(user)
+  response.send('User logged in')
+})
+
+router.get('logout', async ({ auth, response }) => {
+  //dummy logout to testz
+  // Check if a user is logged in
+  if (await auth.use('web').check()) {
+    // Log out the user
+    await auth.use('web').logout()
+    response.send('User logged out')
+  } else {
+    response.status(401).send('No user is logged in')
+  }
+})

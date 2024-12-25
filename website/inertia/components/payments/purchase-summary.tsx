@@ -19,7 +19,10 @@ export default function PurchaseSummary({ item }: PurchaseSummaryProps) {
         />
         <div>
           <h3 className="text-lg font-semibold">{item.title}</h3>
-          <div className="text-sm text-gray-500" dangerouslySetInnerHTML={{__html: item.description}} />
+          <div
+            className="text-sm text-gray-500"
+            dangerouslySetInnerHTML={{ __html: item.description }}
+          />
           <p className="text-lg font-bold mt-2">{item.price.toFixed(2)}€</p>
         </div>
       </div>
