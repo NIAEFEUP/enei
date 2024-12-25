@@ -83,11 +83,11 @@ export default class OrdersController {
 
       if (apiResponse.status === 200) {
         const responseData = apiResponse.data
-        order.request_id = responseData.RequestId
+        order.requestId = responseData.RequestId
         order.status = 'Pending'
         await order.save()
 
-        await UpdateOrderStatus.dispatch({ requestId: order.request_id }, { delay: 10000 })
+        await UpdateOrderStatus.dispatch({ requestId: order.requestId }, { delay: 10000 })
 
         return response.status(200).json({
           order,

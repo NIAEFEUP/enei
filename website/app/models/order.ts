@@ -6,10 +6,10 @@ export default class Order extends BaseModel {
   declare id: number
 
   @column()
-  declare request_id: string
+  declare requestId: string
 
   @column()
-  declare user_id: number
+  declare userId: number
 
   @column()
   declare nif: number
