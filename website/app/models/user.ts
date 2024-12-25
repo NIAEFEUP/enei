@@ -10,7 +10,7 @@ const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
 })
 
 export default class User extends compose(BaseModel, AuthFinder) {
-  @column({ isPrimary: true })
+    @column({ isPrimary: true })
   declare id: number
 
   @column()
