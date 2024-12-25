@@ -9,7 +9,7 @@ mkdir -p $HOOKS_DIR
 
 # Write the pre-commit hook script
 cat <<'EOF' > $PRE_COMMIT_FILE
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Navigate to the subfolder
 PROJECT_DIR="website"
