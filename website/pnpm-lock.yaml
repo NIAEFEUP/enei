@@ -161,6 +161,9 @@ importers:
       framer-motion:
         specifier: ^11.15.0
         version: 11.15.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      ifthenpay:
+        specifier: ^0.3.4
+        version: 0.3.4
       input-otp:
         specifier: ^1.4.1
         version: 1.4.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -3261,6 +3264,9 @@ packages:
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
+  ifthenpay@0.3.4:
+    resolution: {integrity: sha512-CKafqjnTZpLrtqlPp4JVfUBK0zXLS4Da5U2pv8Dm3g1CCZfb1zCvttB0k8MUu0XtajPyBYtWLcDyqRhLqhQIPw==}
+
   igniculus@1.5.0:
     resolution: {integrity: sha512-vhj2J/cSzNg2G5tcK4Z1KZdeYmQa5keoxFULUYAxctK/zHJb1oraO7noCqnJxKe1b2eZdiiaSL1IHPOFAI8UYQ==}
     engines: {node: '>=4.0.0'}
@@ -3863,6 +3869,9 @@ packages:
 
   package-manager-detector@0.2.7:
     resolution: {integrity: sha512-g4+387DXDKlZzHkP+9FLt8yKj8+/3tOkPv7DVTJGGRm00RkEWgqbFstX1mXJ4M0VDYhUqsTOiISqNOJnhAu3PQ==}
+
+  pad-start@1.0.2:
+    resolution: {integrity: sha512-EBN8Ez1SVRcZT1XsIE4WkdnZ5coLoaChkIgAET6gIlaLhXqCz9upVk0DQWFtOYkrpTVvbEppRUnqhTiJrBdkfw==}
 
   pako@0.2.9:
     resolution: {integrity: sha512-NUcwaKxUxWrZLpDG+z/xZaCgQITkA/Dv4V/T6bw7VON6l1Xz/VnrBqrYjZQ12TamKHzITTfOEIYUj48y2KXImA==}
@@ -8021,6 +8030,10 @@ snapshots:
 
   ieee754@1.2.1: {}
 
+  ifthenpay@0.3.4:
+    dependencies:
+      pad-start: 1.0.2
+
   igniculus@1.5.0: {}
 
   ignore@5.3.2: {}
@@ -8538,6 +8551,8 @@ snapshots:
   package-json-from-dist@1.0.1: {}
 
   package-manager-detector@0.2.7: {}
+
+  pad-start@1.0.2: {}
 
   pako@0.2.9: {}
 

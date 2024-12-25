@@ -15,39 +15,39 @@ export default class OrdersController {
   public async createMBWay({ request, auth, response }: HttpContext) {
     const authUser = auth.user
     try {
-      const { user_id, products, nif, address, mobileNumber } = request.all()
-      if (!authUser || authUser.id !== user_id) {
+      const { userId, products, nif, address, mobileNumber } = request.all()
+      if (!authUser || authUser.id !== userId) {
         return response.status(401).json({
           message: 'Unauthorized',
         })
       }
-      if (!user_id || !products || !mobileNumber) {
+      if (!userId || !products || !mobileNumber) {
         return response.status(400).json({
           message: 'Missing required fields',
         })
       }
 
-      const user = await User.find(user_id)
+      const user = await User.find(userId)
       if (!user) {
         return response.status(404).json({
           message: 'User not found',
         })
       }
-      const order = await Order.create({ user_id, nif, address })
+      const order = await Order.create({ userId, nif, address })
       let totalAmount = 0
       let description = 'Payment for order id ' + order.id
 
       for (let productItem of products) {
-        const { product_id, quantity } = productItem
-        const product = await Product.find(product_id)
+        const { productId, quantity } = productItem
+        const product = await Product.find(productId)
 
         if (!product) {
           return response.status(404).json({
-            message: `Product with id ${product_id} not found`,
+            message: `Product with id ${productId} not found`,
           })
         }
         const productsUserHas = await OrderProduct.query()
-          .where('productId', product_id)
+          .where('productId', productId)
           .where('orderId', order.id)
         if (product.stock < quantity) {
           return response.status(400).json({
@@ -64,7 +64,7 @@ export default class OrdersController {
         totalAmount += productTotal
         await OrderProduct.create({
           orderId: order.id,
-          productId: product_id,
+          productId: productId,
           quantity,
         })
 

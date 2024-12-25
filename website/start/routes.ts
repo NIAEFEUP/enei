@@ -33,7 +33,7 @@ router.get('login/:id', async ({ params, auth, response }) => {
 })
 
 router.get('logout', async ({ auth, response }) => {
-  //dummy logout to testz
+  // Dummy logout to test
   // Check if a user is logged in
   if (await auth.use('web').check()) {
     // Log out the user
