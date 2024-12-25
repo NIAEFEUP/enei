@@ -55,3 +55,17 @@ To get started with the website, follow these steps:
 
    This will start the development server on `http://localhost:3333`.
    The development server has hot-reloading enabled, so you can make changes to the code and see them reflected in the browser immediately.
+
+## How to use SSO authentication
+
+1. `docker compose up` will open keycloak at port 8080 (`localhost:8080`)
+
+2. Go to `localhost:8080`
+
+3. Login with username `admin` and password `admin`
+
+4. Top left corner click on the dropdown with the "master" realm and click on "Create realm"
+
+5. On the pop up that appears, put the json file in `keycloak/realm-exports.json` and write the name "enei" on the input asking for the name.
+
+6. Go to "Clients" and create a new client named `enei-website`. Then, after creation, go to "Credentials" tab and copy the secret and put into your `.env` file.
