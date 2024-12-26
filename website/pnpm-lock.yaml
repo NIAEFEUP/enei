@@ -267,9 +267,6 @@ importers:
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
-      prettier-edgejs:
-        specifier: ^0.2.34
-        version: 0.2.34
       shadcn:
         specifier: ^2.1.7
         version: 2.1.8(typescript@5.7.2)
