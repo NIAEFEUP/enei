@@ -1,11 +1,71 @@
 import AppLayout from '../layouts/applayout'
 import { TZDateMini } from '@date-fns/tz'
 import { useCountdown } from '~/hooks/use_countdown'
+import { TimeLeft } from '~/lib/countdown'
+import { cn } from '~/lib/utils'
 
 const utcTarget = new TZDateMini(
   import.meta.env.VITE_EVENT_COUNTDOWN_DATE,
   import.meta.env.VITE_TZ
 ).getTime()
+
+function Countdown({ timeLeft }: { timeLeft: TimeLeft | null }) {
+  return (
+    <div
+      className={cn(
+        'grid grid-cols-2 sm:grid-cols-4 w-fit gap-4 mt-10 transition-opacity duration-1000',
+        !timeLeft && 'opacity-0'
+      )}
+    >
+      <div className="bg-enei-beige bg-opacity-[62%] w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
+        <p className="font-space-grotesk text-enei-blue text-4xl md:text-6xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
+          {timeLeft?.days.toLocaleString('en-US', {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+          })}
+        </p>
+        <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
+          DIAS
+        </p>
+      </div>
+      <div className="bg-enei-beige bg-opacity-[62%] w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
+        <p className="font-space-grotesk text-enei-blue text-4xl md:text-6xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
+          {timeLeft?.hours.toLocaleString('en-US', {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+          })}
+        </p>
+        <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
+          HORAS
+        </p>
+      </div>
+
+      <div className="bg-enei-beige bg-opacity-[62%] w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
+        <p className="font-space-grotesk text-enei-blue text-4xl md:text-6xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
+          {timeLeft?.minutes.toLocaleString('en-US', {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+          })}
+        </p>
+        <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
+          MINUTOS
+        </p>
+      </div>
+
+      <div className="bg-enei-beige bg-opacity-[62%] w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
+        <p className="font-space-grotesk text-enei-blue text-4xl md:text-6xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
+          {timeLeft?.seconds.toLocaleString('en-US', {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+          })}
+        </p>
+        <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
+          SEGUNDOS
+        </p>
+      </div>
+    </div>
+  )
+}
 
 export default function Home() {
   const timeLeft = useCountdown({
@@ -44,54 +104,7 @@ export default function Home() {
             <p className="font-space-grotesk font-normal text-2xl text-enei-beige mt-2 [text-shadow:_0_4px_4px_rgb(0_0_0_/_25%)] md:text-4xl">
               Porto 2025 | 11-14 de abril
             </p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 w-fit gap-4 mt-10">
-              <div className="bg-enei-beige bg-opacity-[62%] w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
-                <p className="font-space-grotesk text-enei-blue text-4xl md:text-6xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
-                  {timeLeft.days.toLocaleString('en-US', {
-                    minimumIntegerDigits: 2,
-                    useGrouping: false,
-                  })}
-                </p>
-                <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
-                  DIAS
-                </p>
-              </div>
-              <div className="bg-enei-beige bg-opacity-[62%] w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
-                <p className="font-space-grotesk text-enei-blue text-4xl md:text-6xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
-                  {timeLeft.hours.toLocaleString('en-US', {
-                    minimumIntegerDigits: 2,
-                    useGrouping: false,
-                  })}
-                </p>
-                <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
-                  HORAS
-                </p>
-              </div>
-
-              <div className="bg-enei-beige bg-opacity-[62%] w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
-                <p className="font-space-grotesk text-enei-blue text-4xl md:text-6xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
-                  {timeLeft.minutes.toLocaleString('en-US', {
-                    minimumIntegerDigits: 2,
-                    useGrouping: false,
-                  })}
-                </p>
-                <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
-                  MINUTOS
-                </p>
-              </div>
-
-              <div className="bg-enei-beige bg-opacity-[62%] w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
-                <p className="font-space-grotesk text-enei-blue text-4xl md:text-6xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
-                  {timeLeft.seconds.toLocaleString('en-US', {
-                    minimumIntegerDigits: 2,
-                    useGrouping: false,
-                  })}
-                </p>
-                <p className="text-enei-blue text-base md:text-xl font-bold mt-5 mb-3 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
-                  SEGUNDOS
-                </p>
-              </div>
-            </div>
+            <Countdown timeLeft={timeLeft} />
           </div>
           {/* <div className="mx-auto h-full flex justify-center items-center">
             <p className="w-48 h-fit bg-enei-beige p-2.5 px-8 text-center font-space-grotesk text-lg font-bold text-enei-blue uppercase rounded-md shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">

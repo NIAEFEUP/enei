@@ -5,13 +5,7 @@ export function useCountdown({
   utcTarget,
   resolution = 1000,
 }: Omit<CreateCountdownOptions, 'onChange'>) {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-    miliseconds: 0,
-  })
+  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null)
 
   useEffect(() => {
     const countdown = createCountdown({ utcTarget, onChange: setTimeLeft, resolution })

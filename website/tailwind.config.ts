@@ -9,17 +9,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-          sans: ["Figtree", ...defaultTheme.fontFamily.sans],
-          "space-grotesk": ["Space Grotesk", "sans-serif"],
+        sans: ['Space Grotesk', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         'enei-blue': '#0B4F6C',
         'enei-beige': '#EFE3CA',
-        primary: {
+        'primary': {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
         },
-        sand: {
+        'sand': {
           '1': '#fdfdfc',
           '2': '#f9f9f8',
           '3': '#f1f0ef',
@@ -33,43 +32,43 @@ export default {
           '11': '#63635e',
           '12': '#21201c',
         },
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-        card: {
+        'background': 'hsl(var(--background))',
+        'foreground': 'hsl(var(--foreground))',
+        'card': {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-        popover: {
+        'popover': {
           DEFAULT: 'hsl(var(--popover))',
           foreground: 'hsl(var(--popover-foreground))',
         },
-        secondary: {
+        'secondary': {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
         },
-        muted: {
+        'muted': {
           DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted-foreground))',
         },
-        accent: {
+        'accent': {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
         },
-        destructive: {
+        'destructive': {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',
         },
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-        chart: {
+        'border': 'hsl(var(--border))',
+        'input': 'hsl(var(--input))',
+        'ring': 'hsl(var(--ring))',
+        'chart': {
           '1': 'hsl(var(--chart-1))',
           '2': 'hsl(var(--chart-2))',
           '3': 'hsl(var(--chart-3))',
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
-        sidebar: {
+        'sidebar': {
           'DEFAULT': 'hsl(var(--sidebar-background))',
           'foreground': 'hsl(var(--sidebar-foreground))',
           'primary': 'hsl(var(--sidebar-primary))',
