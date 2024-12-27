@@ -7,7 +7,7 @@
 |
 */
 
-import TicketsController from '#controllers/tickets_controller'
+const TicketsController = () => import('#controllers/tickets_controller')
 import router from '@adonisjs/core/services/router'
 router.on('/').renderInertia('home')
 router.get('/tickets', [TicketsController, 'index'])

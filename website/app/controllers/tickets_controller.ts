@@ -8,4 +8,3 @@ export default class TicketsController {
     return inertia.render('tickets', { ticketTypes })
   }
 }
-
