@@ -41,4 +41,12 @@ export default await Env.create(new URL('../', import.meta.url), {
   //SPARKPOST_API_KEY: Env.schema.string(),
   //RESEND_API_KEY: Env.schema.string(),
   //BREVO_API_KEY: Env.schema.string()
+
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring the homepage countdown
+  |----------------------------------------------------------
+  */
+  VITE_TZ: Env.schema.string(),
+  VITE_EVENT_COUNTDOWN_DATE: Env.schema.string(),
 })
