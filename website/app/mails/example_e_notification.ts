@@ -2,7 +2,7 @@ import env from '#start/env'
 import { BaseMail } from '@adonisjs/mail'
 
 export default class ExampleENotification extends BaseMail {
-  private userEmail: string;
+  private userEmail: string
 
   from = env.get('FROM_EMAIL')
   subject = 'This is an example email'
@@ -10,7 +10,7 @@ export default class ExampleENotification extends BaseMail {
   constructor(userEmail: string) {
     super()
 
-    this.userEmail = userEmail;
+    this.userEmail = userEmail
   }
 
   /**
@@ -18,10 +18,14 @@ export default class ExampleENotification extends BaseMail {
    * the email is sent or queued.
    */
   async prepare() {
-    this.message.to(this.userEmail).subject(this.subject).htmlView('emails/example_email_html', {
-      userEmail: this.userEmail
-    }).textView('emails/example_email_text', {
-      userEmail: this.userEmail
-    })
+    this.message
+      .to(this.userEmail)
+      .subject(this.subject)
+      .htmlView('emails/example_email_html', {
+        userEmail: this.userEmail,
+      })
+      .textView('emails/example_email_text', {
+        userEmail: this.userEmail,
+      })
   }
 }
