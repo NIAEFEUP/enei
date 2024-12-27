@@ -40,9 +40,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Setup Tuyau
-        run: node ace tuyau:generate
-
       - name: Run lint
         run: pnpm run lint
 
@@ -74,9 +71,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-
-      - name: Setup Tuyau
-        run: node ace tuyau:generate
 
       - name: Typecheck
         run: pnpm run typecheck
