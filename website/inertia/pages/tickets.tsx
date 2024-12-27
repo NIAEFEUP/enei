@@ -1,12 +1,11 @@
 'use client'
 
-import Ticket from '#models/ticket'
-import db from '@adonisjs/lucid/services/db'
+import { InferPageProps } from '@adonisjs/inertia/types'
+import { Link } from '@tuyau/inertia/react'
 import { Card, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
+import TicketsController from '#controllers/tickets_controller'
 
-const ticketTypes: Ticket[] = await db.from('tickets')
-
-export default function SelectTicketsPage() {
+export default function SelectTicketsPage(props: InferPageProps<TicketsController, 'index'>) {
   const imageSrc = `favicon.svg`
 
   return (
@@ -17,9 +16,9 @@ export default function SelectTicketsPage() {
       </p>
 
       <div className="grid gap-6 grid-cols-1 md:w-1/2">
-        {ticketTypes.map((ticket) => (
-          <a href={`/tickets/${ticket.id}/checkout`}>
-            <Card className="hover:shadow-lg" key={ticket.id}>
+        {props.ticketTypes.map((ticket) => (
+          <Link route="checkout" params={{ id: ticket.id }} key={ticket.id}>
+            <Card className="hover:shadow-lg">
               <div className="flex items-center justify-between p-6">
                 <CardHeader>
                   <CardTitle>{ticket.name}</CardTitle>
@@ -31,7 +30,7 @@ export default function SelectTicketsPage() {
                 <img className="hidden md:block" src={imageSrc} alt={ticket.name || undefined} />
               </div>
             </Card>
-          </a>
+          </Link>
         ))}
       </div>
     </div>
