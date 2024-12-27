@@ -24,4 +24,12 @@ export default await Env.create(new URL('../', import.meta.url), {
   |----------------------------------------------------------
   */
   SESSION_DRIVER: Env.schema.enum(['cookie', 'memory'] as const),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring the homepage countdown
+  |----------------------------------------------------------
+  */
+  VITE_TZ: Env.schema.string(),
+  VITE_EVENT_COUNTDOWN_DATE: Env.schema.string(),
 })

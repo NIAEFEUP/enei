@@ -67,6 +67,7 @@
     "@adonisjs/shield": "^8.1.1",
     "@adonisjs/static": "^1.1.1",
     "@adonisjs/vite": "^4.0.0",
+    "@date-fns/tz": "^1.2.0",
     "@hookform/resolvers": "^3.9.1",
     "@inertiajs/react": "^2.0.0",
     "@radix-ui/react-accordion": "^1.2.2",
