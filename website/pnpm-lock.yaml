@@ -125,6 +125,15 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.1.5
         version: 1.1.5(@types/react-dom@19.0.2(@types/react@19.0.1))(@types/react@19.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@tuyau/client':
+        specifier: ^0.2.2
+        version: 0.2.2
+      '@tuyau/core':
+        specifier: ^0.2.3
+        version: 0.2.3(@adonisjs/core@6.17.0(@adonisjs/assembler@7.8.2(typescript@5.7.2))(@vinejs/vine@3.0.0)(edge.js@6.2.0))
+      '@tuyau/inertia':
+        specifier: ^0.0.8
+        version: 0.0.8(@inertiajs/react@2.0.0(react@19.0.0))(@tuyau/client@0.2.2)(react@19.0.0)
       '@vinejs/vine':
         specifier: ^3.0.0
         version: 3.0.0
@@ -2083,6 +2092,33 @@ packages:
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
+  '@tuyau/client@0.2.2':
+    resolution: {integrity: sha512-R2QS6N3Mp5s8672mdsYt7k9nIFnG5CwIk0XpSNJXpgbvQmU71cUI4ngoZUyOYV2USOo69SSYw9OS4k7y3CCzKg==}
+
+  '@tuyau/core@0.2.3':
+    resolution: {integrity: sha512-iGqDpoB0ztqFzwIDQYiLp1V8J3AspgrGSTk/F3gB2agYIjd40UdZ1bkrArTpKpNQ1afdSxXVvL6LLqKhyCz/Pg==}
+    engines: {node: '>=20.6.0'}
+    peerDependencies:
+      '@adonisjs/core': ^6.2.0
+
+  '@tuyau/inertia@0.0.8':
+    resolution: {integrity: sha512-KAGx8s7CjruYkU1tJIS0Iq52IyM9zt/H/CweuLEN7Xtihs2xs47yy70+61NcHcuYJlCAGZzWVSL7FC2iK0HZVA==}
+    peerDependencies:
+      '@inertiajs/react': ^1.0.0 || ^2.0.0
+      '@inertiajs/vue3': ^1.0.0 || ^2.0.0
+      '@tuyau/client': 0.2.2
+      react: ^18.0.0 || ^19.0.0
+      vue: ^3.0.0
+    peerDependenciesMeta:
+      '@inertiajs/react':
+        optional: true
+      '@inertiajs/vue3':
+        optional: true
+      react:
+        optional: true
+      vue:
+        optional: true
+
   '@tuyau/utils@0.0.6':
     resolution: {integrity: sha512-X6teHJyGGyjkSHRvBf9tX13K54O6yxaDcNI/NbgXYb/yBdm4Esr4yRBYjOKEvaQYkAChQh/CXyEeGYNPdj+2Zg==}
 
@@ -3829,6 +3865,10 @@ packages:
       tedious:
         optional: true
 
+  ky@1.7.4:
+    resolution: {integrity: sha512-zYEr/gh7uLW2l4su11bmQ2M9xLgQLjyvx58UyNM/6nuqyWFHPX5ktMjvpev3F8QWdjSsHUpnWew4PBCswBNuMQ==}
+    engines: {node: '>=18'}
+
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -4109,6 +4149,9 @@ packages:
   object-keys@1.1.1:
     resolution: {integrity: sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==}
     engines: {node: '>= 0.4'}
+
+  object-to-formdata@4.5.1:
+    resolution: {integrity: sha512-QiM9D0NiU5jV6J6tjE1g7b4Z2tcUnKs1OPUi4iMb2zH+7jwlcUrASghgkFk9GtzqNNq8rTQJtT8AzjBAvLoNMw==}
 
   object.assign@4.1.5:
     resolution: {integrity: sha512-byy+U7gp+FVwmyzKPYhW2h5l3crpmGsxl7X2s8y43IgxvG4g3QZ6CffDtsNQy1WsmZpQbO+ybo0AlW7TY6DcBQ==}
@@ -7230,6 +7273,26 @@ snapshots:
 
   '@tsconfig/node16@1.0.4': {}
 
+  '@tuyau/client@0.2.2':
+    dependencies:
+      '@poppinss/matchit': 3.1.2
+      '@tuyau/utils': 0.0.6
+      ky: 1.7.4
+      object-to-formdata: 4.5.1
+
+  '@tuyau/core@0.2.3(@adonisjs/core@6.17.0(@adonisjs/assembler@7.8.2(typescript@5.7.2))(@vinejs/vine@3.0.0)(edge.js@6.2.0))':
+    dependencies:
+      '@adonisjs/core': 6.17.0(@adonisjs/assembler@7.8.2(typescript@5.7.2))(@vinejs/vine@3.0.0)(edge.js@6.2.0)
+      '@tuyau/utils': 0.0.6
+      ts-morph: 23.0.0
+
+  '@tuyau/inertia@0.0.8(@inertiajs/react@2.0.0(react@19.0.0))(@tuyau/client@0.2.2)(react@19.0.0)':
+    dependencies:
+      '@tuyau/client': 0.2.2
+    optionalDependencies:
+      '@inertiajs/react': 2.0.0(react@19.0.0)
+      react: 19.0.0
+
   '@tuyau/utils@0.0.6': {}
 
   '@types/babel__core@7.20.5':
@@ -9007,6 +9070,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  ky@1.7.4: {}
+
   levn@0.4.1:
     dependencies:
       prelude-ls: 1.2.1
@@ -9231,6 +9296,8 @@ snapshots:
   object-inspect@1.13.3: {}
 
   object-keys@1.1.1: {}
+
+  object-to-formdata@4.5.1: {}
 
   object.assign@4.1.5:
     dependencies:
