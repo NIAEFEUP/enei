@@ -1,0 +1,3 @@
+cd website
+pnpm lint-staged
+pnpm run typecheck
