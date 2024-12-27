@@ -30,24 +30,16 @@ To get started with the website, follow these steps:
 3. Install the dependencies:
 
    ```bash
-   pnpm install
+   pnpm install --frozen-lockfile
    ```
 
-4. Copy the `.env.example` file to a new file called `.env` and update the values as needed.
-
-5. Create an app key to sign the session cookies:
-
-   ```bash
-   node ace generate:key
-   ```
-
-6. Run the database migrations to create the database:
+4. Run the database migrations to create the database:
 
    ```bash
    node ace migration:run
    ```
 
-7. Start the development server:
+5. Start the development server:
 
    ```bash
    pnpm run dev
@@ -68,12 +60,5 @@ This is done with the command:
 ```bash
 node ace tuyau:generate
 ```
-
-> [!INFO]
-> This was added to the package.json command prepare, that has everything needed to setup the project. Run it using:
->
-> ```bash
-> pnpm prepare
-> ```
 
 More info here: [Tuyau - Installation](https://adonisjs.com/blog/introducing-tuyau#installation)
