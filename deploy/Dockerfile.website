@@ -1,0 +1,30 @@
+FROM node:22-slim AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+WORKDIR /app
+ADD website/package.json website/pnpm-lock.yaml ./
+RUN pnpm install
+
+FROM base AS prod-deps
+WORKDIR /app
+ADD website/package.json website/pnpm-lock.yaml ./
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+
+FROM base AS build
+WORKDIR /app
+COPY --from=base /app/node_modules /app/node_modules
+ADD ./website .
+RUN node ace build
+
+FROM base
+WORKDIR /app
+COPY --from=prod-deps /app/node_modules /app/node_modules
+RUN pnpm add pm2 --global
+COPY --from=build /app/build /app
+COPY --from=build /app/.env /app
+ENV NODE_ENV=production
+RUN node ace generate:key
+COPY --from=build /app/ecosystem.config.cjs /app
+EXPOSE 3333
+CMD [ "pm2-runtime", "ecosystem.config.cjs"]
