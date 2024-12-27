@@ -13,7 +13,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
-    "prepare": "cd .. && husky website/.husky && node ace tuyau:generate"
+    "prepare": "node ace tuyau:generate && cd .. && husky website/.husky"
   },
   "imports": {
     "#.adonisjs/*": "./.adonisjs/*.ts",
