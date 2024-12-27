@@ -9,7 +9,9 @@ const utcTarget = new TZDateMini(
   import.meta.env.VITE_TZ
 ).getTime()
 
-function Countdown({ timeLeft }: { timeLeft: TimeLeft | null }) {
+function Countdown() {
+  const timeLeft = useCountdown({ utcTarget, resolution: 1000 })
+
   return (
     <div
       className={cn(
@@ -68,11 +70,6 @@ function Countdown({ timeLeft }: { timeLeft: TimeLeft | null }) {
 }
 
 export default function Home() {
-  const timeLeft = useCountdown({
-    utcTarget,
-    resolution: 1000,
-  })
-
   return (
     <>
       <AppLayout title="Home" className="flex">
@@ -104,7 +101,7 @@ export default function Home() {
             <p className="font-space-grotesk font-normal text-2xl text-enei-beige mt-2 [text-shadow:_0_4px_4px_rgb(0_0_0_/_25%)] md:text-4xl">
               Porto 2025 | 11-14 de abril
             </p>
-            <Countdown timeLeft={timeLeft} />
+            <Countdown />
           </div>
           {/* <div className="mx-auto h-full flex justify-center items-center">
             <p className="w-48 h-fit bg-enei-beige p-2.5 px-8 text-center font-space-grotesk text-lg font-bold text-enei-blue uppercase rounded-md shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
