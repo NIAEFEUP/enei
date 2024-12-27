@@ -1,6 +1,6 @@
 import type { Config } from 'tailwindcss'
 import tailwindcssAnimate from 'tailwindcss-animate'
-import defaultTheme from 'tailwindcss/defaultTheme'
+import defaultTheme from 'tailwindcss/defaultTheme.js'
 
 export default {
   darkMode: ['class'],
