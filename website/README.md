@@ -55,3 +55,25 @@ To get started with the website, follow these steps:
 
    This will start the development server on `http://localhost:3333`.
    The development server has hot-reloading enabled, so you can make changes to the code and see them reflected in the browser immediately.
+
+## Defining Routes with Tuyau
+
+To use Tuyau in your routes, you need to update the API file each time you do certain actions, mainly:
+
+1. Adding a new route/controller to your project
+2. Adding a `request.validateUsing` call in your controller method
+
+This is done with the command:
+
+```bash
+node ace tuyau:generate
+```
+
+> [!INFO]
+> This was added to the package.json command prepare, that has everything needed to setup the project. Run it using:
+>
+> ```bash
+> pnpm prepare
+> ```
+
+More info here: [Tuyau - Installation](https://adonisjs.com/blog/introducing-tuyau#installation)
