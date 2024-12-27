@@ -8,7 +8,7 @@ export default class Ticket extends BaseModel {
   @column()
   declare name: string | null
 
-  @column({ serializeAs: null })
+  @column()
   declare description: string
 
   @column()
