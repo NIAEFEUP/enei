@@ -1,0 +1,40 @@
+{
+  "$id": "https://raw.githubusercontent.com/NIAEFEUP/enei/refs/heads/main/sso/ory/enei.traits.schema.jsonc",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Person",
+  "type": "object",
+  "properties": {
+    "traits": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "ory.sh/kratos": {
+            
+            "credentials": {
+              "password": {
+                "identifier": true
+              },
+              "passkey": {
+                "display_name": true
+              }
+            },
+
+            "verification": {
+              "via": "email"
+            },
+            
+            "recovery": {
+              "via": "email"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

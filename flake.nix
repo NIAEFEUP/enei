@@ -14,11 +14,22 @@
   in {
     formatter.${system} = pkgs.alejandra;
 
-    devShells.${system}.website = pkgs.mkShell {
-      packages = with pkgs; [
-        nodejs_22
-        corepack_22
-      ];
-    };
+    devShells.${system}.website = let
+      ory = {
+        kratos.version = "v1.3.0";
+        hydra.version = "v1.3.0";
+      };
+
+      kratos = pkgs.writeShellScriptBin "kratos" ''
+        docker run -it --rm -v "$(pwd):/home/ory" oryd/kratos:${ory.kratos.version} "$@"
+      '';
+    in
+      pkgs.mkShell {
+        packages = [
+          pkgs.nodejs_22
+          pkgs.corepack_22
+          kratos
+        ];
+      };
   };
 }

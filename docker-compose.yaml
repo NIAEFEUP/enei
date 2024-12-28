@@ -1,7 +1,32 @@
 services:
   mailpit:
-    image: axllent/mailpit
+    image: axllent/mailpit:v1.21
     container_name: enei-mailpit
     ports:
       - "1025:1025"
       - "8025:8025"
+
+  selfservice-ui:
+    build: ./sso/ui
+    ports:
+      - "3000:3000"
+
+    environment:
+      - KRATOS_PUBLIC_URL=http://kratos:4433/
+      - KRATOS_BROWSER_URL=http://127.0.0.1:4433/
+      - COOKIE_SECRET=changeme
+      - CSRF_COOKIE_NAME=ory_csrf_ui
+      - CSRF_COOKIE_SECRET=changeme
+    
+    
+
+  kratos:
+    image: oryd/kratos:v1.3.0
+    command: serve -c ./kratos.yml
+    depends_on:
+      - mailpit
+    volumes:
+      - ./sso/ory:/home/ory
+    ports:
+      - "4433:4433"
+      - "4434:4434"

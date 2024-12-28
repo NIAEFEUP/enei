@@ -1,0 +1,3 @@
+[submodule "sso/ui"]
+	path = sso/ui
+	url = git@github.com:ory/kratos-selfservice-ui-node.git

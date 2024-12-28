@@ -1,0 +1,156 @@
+version: v1.3.0
+
+dev: true
+dsn: memory
+
+serve:
+  public:
+    base_url: http://127.0.0.1:4433/
+    cors:
+      enabled: true
+  admin:
+    base_url: http://kratos:4434/
+
+identity:
+  default_schema_id: enei2025
+  schemas:
+    - id: enei2025
+      url: file://./schemas/enei2025.traits.schema.jsonc
+
+selfservice:
+  default_browser_return_url: http://127.0.0.1:3000/welcome
+  allowed_return_urls:
+    - http://127.0.0.1:3000
+  
+  methods:
+    # Authenticator Assurance Level 1
+    password:
+      enabled: true
+      config:
+        haveibeenpwned_host: api.pwnedpasswords.com
+        haveibeenpwned_enabled: true
+        max_breaches: 0
+        ignore_network_errors: true
+        min_password_length: 8
+        identifier_similarity_check_enabled: true
+    
+    oidc:
+      enabled: true
+      config:
+        providers:
+          - id: github
+            provider: github
+            client_id: Ov23liw7N48ZzfsvozNQ
+            client_secret: 9b66eab77c8811767a4df971876d512ed317f0a7
+            mapper_url: file://./mappers/github.jsonnet
+            scope:
+              - user:email
+
+    # Authenticator Assurance Level 2
+    passkey:
+      enabled: true
+      config:
+        rp:
+          id: 2025.eneiconf.pt
+          display_name: ENEI 2025
+
+    totp:
+      enabled: true
+      config:
+        issuer: ENEI 2025
+
+    lookup_secret:
+      enabled: true
+
+    # Recovery methods
+    code:
+      enabled: true
+      config:
+        lifespan: "15m"
+      # mfa_enabled: false
+      # passwordless_enabled: false
+
+  flows:
+    error:
+      ui_url: http://127.0.0.1:3000/error
+
+    settings:
+      ui_url: http://127.0.0.1:3000/settings
+      privileged_session_max_age: 15m
+      required_aal: highest_available
+
+    verification:
+      enabled: true
+      ui_url: http://127.0.0.1:3000/verification
+      use: code
+      after:
+        default_browser_return_url: http://127.0.0.1:3000/welcome
+
+    logout:
+      after:
+        default_browser_return_url: http://127.0.0.1:3000/login
+
+    login:
+      ui_url: http://127.0.0.1:3000/login
+      lifespan: 10m
+
+    registration:
+      lifespan: 10m
+      ui_url: http://127.0.0.1:3000/registration
+      after:
+        password:
+          hooks:
+            - hook: session
+            - hook: show_verification_ui
+
+    recovery:
+      enabled: true
+      ui_url: http://127.0.0.1:3000/recovery
+      use: code
+      lifespan: "15m"
+      notify_unknown_recipients: false
+      after:
+        hooks:
+          - hook: revoke_active_sessions
+
+log:
+  level: debug
+  format: text
+  leak_sensitive_values: true
+
+
+session:
+  whoami:
+    # Require 2FA if user has set it up in their profile to use the app.
+    required_aal: highest_available
+
+hashers:
+  algorithm: argon2
+
+  # The values below were obtained by running the following command
+  # with LOGINS_PER_MINUTE=10 on my machine:
+  #
+  #   $ kratos hashers argon2 calibrate <LOGINS_PER_MINUTE>
+  #
+  # Production values need to be determined by running the command
+  # in the production environment.
+  argon2:
+    memory: "640MB"
+    iterations: 1
+    parallelism: 32
+    salt_length: 16
+    key_length: 32
+    expected_duration: "500ms"
+    expected_deviation: "500ms"
+    dedicated_memory: "1GB"
+
+courier:
+  message_retries: 5
+  delivery_strategy: smtp
+  smtp:
+    from_address: no-reply@accounts.eneiconf.pt
+    local_name: localhost
+    connection_uri: smtp://user:pass@mailpit:1025?skip_ssl_verify=true
+
+feature_flags:
+  use_continue_with_transitions: true
