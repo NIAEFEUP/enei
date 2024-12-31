@@ -49,4 +49,14 @@ export default await Env.create(new URL('../', import.meta.url), {
   */
   VITE_TZ: Env.schema.string(),
   VITE_EVENT_COUNTDOWN_DATE: Env.schema.string(),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring the jobs package
+  |----------------------------------------------------------
+  */
+  REDIS_HOST: Env.schema.string(),
+  REDIS_PORT: Env.schema.number(),
+  REDIS_PASSWORD: Env.schema.string.optional(),
+  REDIS_QUEUE: Env.schema.string.optional(),
 })
