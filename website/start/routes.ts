@@ -6,11 +6,17 @@
 | The routes file is used for defining the HTTP routes.
 |
 */
-const OrdersController = () => import('#controllers/orders_controller')
 import router from '@adonisjs/core/services/router'
+
+const OrdersController = () => import('#controllers/orders_controller')
+const TicketsController = () => import('#controllers/tickets_controller')
+
 import User from '#models/user'
 import { middleware } from '#start/kernel'
+
 router.on('/').renderInertia('home')
+router.get('/tickets', [TicketsController, 'index'])
+router.on('/tickets/:id/checkout').renderInertia('payments').as('checkout')
 
 router
   .group(() => {

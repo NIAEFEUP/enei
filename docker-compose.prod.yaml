@@ -1,0 +1,15 @@
+services:
+  website:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.website
+    container_name: enei-website
+    ports:
+      - "3333:3333"
+
+  website-nginx:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.nginx
+    ports:
+      - "80:80"
