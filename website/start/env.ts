@@ -49,4 +49,14 @@ export default await Env.create(new URL('../', import.meta.url), {
   */
   VITE_TZ: Env.schema.string(),
   VITE_EVENT_COUNTDOWN_DATE: Env.schema.string(),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring ally package
+  |----------------------------------------------------------
+  */
+  GITHUB_CLIENT_ID: Env.schema.string(),
+  GITHUB_CLIENT_SECRET: Env.schema.string(),
+  GOOGLE_CLIENT_ID: Env.schema.string(),
+  GOOGLE_CLIENT_SECRET: Env.schema.string(),
 })
