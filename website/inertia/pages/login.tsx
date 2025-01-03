@@ -1,13 +1,21 @@
 'use client'
-import { authenticate } from '@/app/actions/auth'
+
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
-import { useActionState } from 'react'
 import { Github } from 'lucide-react'
+import { useForm } from '@inertiajs/react'
 
 export default function LoginPage() {
-  // const [errorMessage, dispatch] = useActionState(authenticate, undefined)
+  const { data, setData, post } = useForm({
+    email: "",
+    password: ""
+  });
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    post("/login")
+  }
 
   return (
     <div className="flex h-screen w-full items-center justify-center bg-gray-100">
@@ -15,7 +23,7 @@ export default function LoginPage() {
         <div className="text-center">
           <h2 className="mt-6 text-3xl font-bold text-gray-900">Entrar</h2>
         </div>
-        <form action={() => {}/*dispatch*/} className="mt-8 space-y-6">
+        <form method="POST" onSubmit={handleSubmit} className="mt-8 space-y-6">
           <div className="space-y-4 rounded-md shadow-sm">
             <div>
               <Label htmlFor="username" className="sr-only">
@@ -25,9 +33,11 @@ export default function LoginPage() {
                 id="username"
                 name="username"
                 type="text"
+                value={data.email}
+                onChange={e => setData('email', e.target.value)}
                 required
                 className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm border border-enei-blue"
-                placeholder="Username"
+                placeholder="Email"
               />
             </div>
             <div>
@@ -38,16 +48,14 @@ export default function LoginPage() {
                 id="password"
                 name="password"
                 type="password"
+                value={data.password}
+                onChange={e => setData('password', e.target.value)}
                 required
                 className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm border border-enei-blue"
                 placeholder="Password"
               />
             </div>
           </div>
-
-          {/* {errorMessage && (
-            <p className="text-center text-sm text-red-600">{errorMessage}</p>
-          )} */}
 
           <div>
             <Button type="submit" className="group relative flex w-full justify-center rounded-md border border-transparent bg-enei-blue py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -68,7 +76,6 @@ export default function LoginPage() {
 
           <div className="mt-6 grid grid-cols-2 gap-3">
             <Button
-              // onClick={() => signIn('github')}
               className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-1.5 text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0] hover:text-white border border-enei-blue"
             >
               <Github className="h-5 w-5" />
@@ -76,8 +83,7 @@ export default function LoginPage() {
             </Button>
 
             <Button
-              // onClick={() => signIn('google')}
-              className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-1.5 text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0] hover:text-white border border-enei-blue"
+              className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-1.5 text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0] hover:text-white border border-ene-blue"
             >
               <svg className="h-5 w-5" aria-hidden="true" viewBox="0 0 24 24">
                 <path

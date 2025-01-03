@@ -8,6 +8,7 @@
 */
 const GithubAccountsController = () => import('#controllers/github_accounts_controller')
 const GoogleAccountsController = () => import('#controllers/google_accounts_controller')
+const AccountsController = () => import('#controllers/accounts_controller')
 import router from '@adonisjs/core/services/router'
 
 const TicketsController = () => import('#controllers/tickets_controller')
@@ -17,6 +18,7 @@ router.get('/tickets', [TicketsController, 'index'])
 router.on('/tickets/:id/checkout').renderInertia('payments').as('checkout')
 
 router.on('/login').renderInertia('login')
+router.post('/login', [AccountsController, 'login'])
 
 router
   .group(() => {

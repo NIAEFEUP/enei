@@ -5,7 +5,7 @@ export default class GoogleAccountsController {
     ally.use('google').redirect()
   }
 
-  async callback({ ally }: HttpContext) {
+  async callback({}: HttpContext) {
     console.log('callback')
   }
 }

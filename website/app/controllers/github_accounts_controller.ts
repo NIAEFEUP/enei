@@ -5,7 +5,7 @@ export default class GithubAccountsController {
     ally.use('github').redirect()
   }
 
-  async callback({ ally }: HttpContext) {
+  async callback({}: HttpContext) {
     console.log('callback')
   }
 }
