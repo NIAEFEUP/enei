@@ -143,6 +143,9 @@ importers:
       '@tuyau/inertia':
         specifier: ^0.0.7
         version: 0.0.7(@inertiajs/react@2.0.0(react@19.0.0))(@tuyau/client@0.2.2)(react@19.0.0)
+      '@tuyau/utils':
+        specifier: ^0.0.6
+        version: 0.0.6
       '@vinejs/vine':
         specifier: ^3.0.0
         version: 3.0.0
