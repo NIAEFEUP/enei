@@ -1,7 +1,6 @@
 import AppLayout from '../layouts/applayout'
 import { TZDateMini } from '@date-fns/tz'
 import { useCountdown } from '~/hooks/use_countdown'
-import { TimeLeft } from '~/lib/countdown'
 import { cn } from '~/lib/utils'
 
 const utcTarget = new TZDateMini(
