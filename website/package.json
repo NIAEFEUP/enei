@@ -106,7 +106,7 @@
     "@radix-ui/react-tooltip": "^1.1.5",
     "@tuyau/client": "^0.2.2",
     "@tuyau/core": "^0.2.3",
-    "@tuyau/inertia": "^0.0.8",
+    "@tuyau/inertia": "^0.0.7",
     "@vinejs/vine": "^3.0.0",
     "better-sqlite3": "^11.7.0",
     "class-variance-authority": "^0.7.1",
