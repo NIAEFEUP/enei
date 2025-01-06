@@ -1,14 +1,20 @@
-import { Button } from '~/components/ui/button'
+import { Link } from '@tuyau/inertia/react'
+import { Button, buttonVariants } from '~/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import { Separator } from '~/components/ui/separator'
+import { useError } from '~/hooks/use_error'
+import { cn } from '~/lib/utils'
 
 export default function Login() {
+  const oauthError = useError('oauth')
+
   return (
+    // <AppLayout title="Iniciar Sessão">
     <div className="flex items-center justify-center w-full h-dvh">
       <div className="flex flex-col gap-6 max-w-sm">
-        <Card>
+        <Card className={cn(oauthError && 'border-red-600')}>
           <CardHeader>
             <CardTitle className="text-2xl">Iniciar Sessão</CardTitle>
             <CardDescription>
@@ -43,9 +49,29 @@ export default function Login() {
                     <p className="text-sm text-muted-foreground min-w-max">Ou</p>
                     <Separator className="shrink" />
                   </div>
-                  <Button variant="outline" className="w-full">
-                    Iniciar Sessão com o Google
-                  </Button>
+                  <div className="grid grid-cols-3 gap-2">
+                    <Link
+                      route="auth.google.initiate"
+                      className={cn(buttonVariants({ variant: 'outline' }), 'w-full')}
+                    >
+                      <span className="sr-only">Iniciar Sessão com o</span> Google
+                      {/* <Google className="h-5 w-5" /> */}
+                    </Link>
+                    <Link
+                      route="auth.github.initiate"
+                      className={cn(buttonVariants({ variant: 'outline' }), 'w-full')}
+                    >
+                      <span className="sr-only">Iniciar Sessão com o</span> Github
+                      {/* <Github className="h-5 w-5" /> */}
+                    </Link>
+                    <Link
+                      route="auth.linkedin.initiate"
+                      className={cn(buttonVariants({ variant: 'outline' }), 'w-full')}
+                    >
+                      <span className="sr-only">Iniciar Sessão com o</span> LinkedIn
+                      {/* <LinkedIn className="h-5 w-5" /> */}
+                    </Link>
+                  </div>
                 </div>
               </div>
               <div className="mt-4 text-center text-sm">
@@ -57,7 +83,9 @@ export default function Login() {
             </form>
           </CardContent>
         </Card>
+        {oauthError && <p className="text-sm text-red-600 text-center">{oauthError}</p>}
       </div>
     </div>
+    // </AppLayout>
   )
 }
