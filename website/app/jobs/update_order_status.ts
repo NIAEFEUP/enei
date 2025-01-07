@@ -2,13 +2,16 @@ import axios from 'axios'
 import Order from '#models/order'
 import env from '#start/env'
 import { Job } from 'adonisjs-jobs'
+import ConfirmPaymentNotification from '#mails/confirm_payment_notification'
+import mail from '@adonisjs/mail/services/main'
 
 type UpdateOrderStatusPayload = {
   requestId: string
+  email: string
 }
 
 export default class UpdateOrderStatus extends Job {
-  async handle({ requestId }: UpdateOrderStatusPayload) {
+  async handle({ requestId, email }: UpdateOrderStatusPayload) {
     try {
       this.logger.info(`Processing status update for requestId: ${requestId}`)
 
@@ -32,25 +35,27 @@ export default class UpdateOrderStatus extends Job {
         const status = apiResponse.data.Message
         if (status) {
           if (status === 'Pending') {
-            await UpdateOrderStatus.dispatch({ requestId }, { delay: 10000 }) // Retry after 5 seconds
+            await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 }) // Retry after 5 seconds
             this.logger.info(`Requeued job for requestId: ${requestId}`)
           }
           order.status = status
           await order.save()
+          this.logger.info(`OGonna send mail: ${order.status}`)
+          await mail.send(new ConfirmPaymentNotification(email))
           this.logger.info(`Order status updated to: ${order.status}`)
         } else {
-          await UpdateOrderStatus.dispatch({ requestId }, { delay: 10000 }) // Retry after 5 seconds
+          await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 }) // Retry after 5 seconds
         }
       } else {
         this.logger.error(`Failed to fetch payment status for requestId: ${requestId}`)
         console.error(`Failed to fetch payment status for requestId: ${requestId}`)
-        await UpdateOrderStatus.dispatch({ requestId }, { delay: 10000 }) // Retry after 5 seconds
+        await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 }) // Retry after 5 seconds
       }
     } catch (error) {
       this.logger.error(`Error updating order status: ${error.message}`)
       console.error(`Error updating order status: ${error.message}`)
 
-      await UpdateOrderStatus.dispatch({ requestId }, { delay: 10000 })
+      await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 })
     }
   }
 }

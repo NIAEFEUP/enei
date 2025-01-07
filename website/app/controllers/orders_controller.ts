@@ -87,7 +87,10 @@ export default class OrdersController {
         order.status = 'Pending'
         await order.save()
 
-        await UpdateOrderStatus.dispatch({ requestId: order.requestId }, { delay: 10000 })
+        await UpdateOrderStatus.dispatch(
+          { requestId: order.requestId, email: authUser.email },
+          { delay: 10000 }
+        )
 
         return response.status(200).json({
           order,
