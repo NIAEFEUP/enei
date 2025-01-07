@@ -63,7 +63,5 @@ export function createCountdown({
   // tick once so listeners are up-to-date
   tick()
 
-  return {
-    abort: controller.abort,
-  }
+  return { abort: AbortController.prototype.abort.bind(controller) }
 }
