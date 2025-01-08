@@ -115,6 +115,7 @@
     "date-fns": "^4.1.0",
     "edge.js": "^6.2.0",
     "embla-carousel-react": "^8.5.1",
+    "hashids": "^2.3.0",
     "input-otp": "^1.4.1",
     "lucide-react": "^0.468.0",
     "luxon": "^3.5.0",
