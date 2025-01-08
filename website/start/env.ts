@@ -12,11 +12,12 @@
 import { Env } from '@adonisjs/core/env'
 
 export default await Env.create(new URL('../', import.meta.url), {
-  NODE_ENV: Env.schema.enum(['development', 'production', 'test'] as const),
-  PORT: Env.schema.number(),
-  APP_KEY: Env.schema.string(),
-  HOST: Env.schema.string({ format: 'host' }),
+  TZ: Env.schema.string(),
   LOG_LEVEL: Env.schema.string(),
+  NODE_ENV: Env.schema.enum(['development', 'production', 'test'] as const),
+
+  // App-related variables
+  APP_KEY: Env.schema.string(),
 
   /*
   |----------------------------------------------------------
@@ -26,10 +27,10 @@ export default await Env.create(new URL('../', import.meta.url), {
   SESSION_DRIVER: Env.schema.enum(['cookie', 'memory'] as const),
 
   /*
-  |----------------------------------------------------------
-  | Variables for configuring the mail package
-  |----------------------------------------------------------
-  */
+ |----------------------------------------------------------
+ | Variables for configuring the mail package
+ |----------------------------------------------------------
+ */
   FROM_EMAIL: Env.schema.string(),
   SMTP_HOST: Env.schema.string(),
   SMTP_PORT: Env.schema.string(),
@@ -44,14 +45,6 @@ export default await Env.create(new URL('../', import.meta.url), {
 
   /*
   |----------------------------------------------------------
-  | Variables for configuring the homepage countdown
-  |----------------------------------------------------------
-  */
-  VITE_TZ: Env.schema.string(),
-  VITE_EVENT_COUNTDOWN_DATE: Env.schema.string(),
-
-  /*
-  |----------------------------------------------------------
   | Variables for configuring ally package
   |----------------------------------------------------------
   */
@@ -61,4 +54,13 @@ export default await Env.create(new URL('../', import.meta.url), {
   GOOGLE_CLIENT_SECRET: Env.schema.string(),
   LINKEDIN_CLIENT_ID: Env.schema.string(),
   LINKEDIN_CLIENT_SECRET: Env.schema.string(),
+
+  /*
+ |----------------------------------------------------------
+ | Variables for configuring the frontend
+ |----------------------------------------------------------
+ */
+  VITE_TZ: Env.schema.string(),
+  VITE_EVENT_COUNTDOWN_DATE: Env.schema.string(),
+  VITE_APP_URL: Env.schema.string({ format: 'url' }),
 })
