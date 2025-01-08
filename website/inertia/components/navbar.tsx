@@ -1,4 +1,4 @@
-import { Link } from "@inertiajs/react";
+import { Link } from '@inertiajs/react'
 
 /*
 import { Menu } from "lucide-react";
@@ -48,14 +48,9 @@ export default function NavBar() {
     <>
       <nav className="py-5 px-6 sm:px-12 md:px-24 lg:px-36 flex flex-row justify-between items-center flex-grow md:flex-grow-0">
         <Link href="/">
-          <img
-            className="w-28 max-md:w-24"
-            src="/images/logo-white.svg"
-            alt="Logótipo da SINF"
-          />
+          <img className="w-28 max-md:w-24" src="/images/logo-white.svg" alt="Logótipo da SINF" />
         </Link>
-        {
-          /*
+        {/*
         <NavigationMenu className="hidden sm:block">
           <NavigationMenuList className="gap-5">
             {routes.map(function (route, _) {
@@ -109,9 +104,8 @@ export default function NavBar() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-            */
-        }
+            */}
       </nav>
     </>
-  );
+  )
 }
