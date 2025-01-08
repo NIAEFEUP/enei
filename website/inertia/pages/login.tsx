@@ -5,7 +5,7 @@ import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import { Separator } from '~/components/ui/separator'
 import { useError } from '~/hooks/use_error'
-import { router, useForm } from '@inertiajs/react'
+import { useForm } from '@inertiajs/react'
 import { cn } from '~/lib/utils'
 
 export default function Login() {
