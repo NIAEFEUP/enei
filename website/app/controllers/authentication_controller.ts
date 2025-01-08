@@ -1,10 +1,22 @@
+import Account from '#models/account'
+import { socialAccountLoginValidator } from '#validators/account'
 import type { HttpContext } from '@adonisjs/core/http'
+
+async function getOrCreate(search: Pick<Account, 'provider' | 'providerId'>) {
+  const account = await Account.firstOrCreate({
+    provider: search.provider,
+    providerId: search.providerId,
+  })
+
+  return account
+}
 
 export default class AuthenticationController {
   async login() {}
 
   async initiateGithubLogin({ ally, inertia }: HttpContext) {
     const url = await ally.use('github').redirectUrl()
+    console.log(url)
     return inertia.location(url)
   }
 
@@ -12,7 +24,15 @@ export default class AuthenticationController {
     const github = ally.use('github')
     const user = await github.user()
 
-    return response.json({ user })
+    const data = await socialAccountLoginValidator.validate(user)
+    console.log(data)
+
+    const account = await getOrCreate({
+      provider: 'github',
+      providerId: data.id,
+    })
+
+    return response.json({ user, account: account.serialize() })
   }
 
   async initiateGoogleLogin({ ally, inertia }: HttpContext) {
