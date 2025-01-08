@@ -5,10 +5,22 @@ import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import { Separator } from '~/components/ui/separator'
 import { useError } from '~/hooks/use_error'
+import { router, useForm } from '@inertiajs/react'
 import { cn } from '~/lib/utils'
 
 export default function Login() {
   const oauthError = useError('oauth')
+
+  const { data, setData, post } = useForm({
+    email: '',
+    password: '',
+  })
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    post('/auth/login')
+  }
 
   return (
     // <AppLayout title="Iniciar Sessão">
@@ -16,17 +28,24 @@ export default function Login() {
       <div className="flex flex-col gap-6 max-w-sm">
         <Card className={cn(oauthError && 'border-red-600')}>
           <CardHeader>
-            <CardTitle className="text-2xl">Iniciar Sessão</CardTitle>
+            <CardTitle className="text-2xl text-enei-blue">Iniciar Sessão</CardTitle>
             <CardDescription>
               Introduz o teu e-mail e palavra-passe para iniciar sessão
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form>
+            <form onSubmit={handleSubmit} method="POST" action="/auth/login">
               <div className="flex flex-col gap-6">
                 <div className="grid gap-2">
                   <Label htmlFor="email">E-mail</Label>
-                  <Input id="email" type="email" placeholder="alice@eneiconf.pt" required />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="alice@eneiconf.pt"
+                    value={data.email}
+                    onChange={(e) => setData('email', e.target.value)}
+                    required
+                  />
                 </div>
                 <div className="grid gap-2">
                   <div className="flex items-center">
@@ -38,10 +57,17 @@ export default function Login() {
                       Esqueci-me da palavra-passe
                     </a>
                   </div>
-                  <Input id="password" type="password" placeholder="••••••••••••" required />
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="••••••••••••"
+                    value={data.password}
+                    onChange={(e) => setData('password', e.target.value)}
+                    required
+                  />
                 </div>
                 <div className="flex flex-col gap-4   ">
-                  <Button type="submit" className="w-full">
+                  <Button type="submit" className="w-full bg-enei-blue">
                     Iniciar Sessão
                   </Button>
                   <div className="flex gap-2 items-center">

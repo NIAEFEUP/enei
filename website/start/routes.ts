@@ -19,6 +19,8 @@ router.on('/tickets/:id/checkout').renderInertia('payments').as('checkout')
 
 router
   .group(() => {
+    router.post('/login', [AuthenticationController, 'login']).as('auth.login')
+
     // Github
     router
       .get('/github/initiate', [AuthenticationController, 'initiateGithubLogin'])

@@ -1,5 +1,6 @@
 import Account from '#models/account'
 import { socialAccountLoginValidator } from '#validators/account'
+import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
 
 async function getOrCreate(search: Pick<Account, 'provider' | 'providerId'>) {
@@ -12,7 +13,23 @@ async function getOrCreate(search: Pick<Account, 'provider' | 'providerId'>) {
 }
 
 export default class AuthenticationController {
-  async login() {}
+  async login({ request, auth, response, inertia }: HttpContext) {
+    const { email, password } = request.only(['email', 'password'])
+
+    try {
+      const user = await User.verifyCredentials(email, password)
+
+      await auth.use('web').login(user)
+
+      response.redirect('/')
+    } catch (error) {
+      return inertia.render('login', {
+        errors: {
+          oauth: 'Email ou palavra-passe incorretos',
+        },
+      })
+    }
+  }
 
   async initiateGithubLogin({ ally, inertia }: HttpContext) {
     const url = await ally.use('github').redirectUrl()
