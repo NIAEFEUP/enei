@@ -39,6 +39,7 @@
     "@adonisjs/eslint-config": "2.0.0-beta.7",
     "@adonisjs/prettier-config": "^1.4.0",
     "@adonisjs/tsconfig": "^1.4.0",
+    "@babel/plugin-syntax-import-assertions": "^7.26.0",
     "@japa/assert": "^3.0.0",
     "@japa/plugin-adonisjs": "^3.0.1",
     "@japa/runner": "^3.1.4",
@@ -63,6 +64,7 @@
     "vite": "^6.0.3"
   },
   "dependencies": {
+    "@adminjs/adonis": "^1.1.0",
     "@adonisjs/auth": "^9.2.4",
     "@adonisjs/core": "^6.17.0",
     "@adonisjs/cors": "^2.2.1",
@@ -109,6 +111,7 @@
     "@tuyau/inertia": "^0.0.7",
     "@tuyau/utils": "^0.0.6",
     "@vinejs/vine": "^3.0.0",
+    "adminjs": "^7.8.13",
     "better-sqlite3": "^11.7.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

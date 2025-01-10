@@ -45,6 +45,10 @@ export default defineConfig({
     () => import('@adonisjs/inertia/inertia_provider'),
     () => import('@adonisjs/mail/mail_provider'),
     () => import('@tuyau/core/tuyau_provider'),
+    {
+      file: () => import('@adminjs/adonis/adminjs_provider'),
+      environment: ['web'],
+    },
   ],
 
   /*
