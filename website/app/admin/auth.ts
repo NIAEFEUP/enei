@@ -25,6 +25,12 @@ const authenticate = async ({ email, password }: DefaultAuthenticatePayload) => 
     return null
   }
 
+  const isAdmin = user.isAdmin
+
+  if (!isAdmin) {
+    return null
+  }
+
   return { email: user.email, id: user.id }
 }
 const authProvider = new DefaultAuthProvider({
