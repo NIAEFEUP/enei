@@ -1,30 +1,35 @@
 FROM node:22-slim AS base
+
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
-WORKDIR /app
-ADD website/package.json website/pnpm-lock.yaml ./
-RUN pnpm install
 
-FROM base AS prod-deps
 WORKDIR /app
 ADD website/package.json website/pnpm-lock.yaml ./
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+
 
 FROM base AS build
-WORKDIR /app
-COPY --from=base /app/node_modules /app/node_modules
+
+RUN --mount=type=cache,id=build-pnpm,target=/pnpm/store pnpm install --frozen-lockfile --ignore-scripts
+
 ADD ./website .
+
+# Generate Tuyau types (website/scripts/prepare.sh)
+RUN node ace tuyau:generate
+RUN sed -i '1s/^/\/\/ @ts-nocheck\n/' .adonisjs/api.ts
+
 RUN node ace build
 
-FROM base
-WORKDIR /app
-COPY --from=prod-deps /app/node_modules /app/node_modules
-RUN pnpm add pm2 --global
+
+FROM base AS deploy
+
+RUN --mount=type=cache,id=deploy-pnpm,target=/pnpm/store pnpm add pm2 --global
+RUN --mount=type=cache,id=deploy-pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile --ignore-scripts
+
 COPY --from=build /app/build /app
-COPY --from=build /app/.env /app
-ENV NODE_ENV=production
-RUN node ace generate:key
 COPY --from=build /app/ecosystem.config.cjs /app
+
+ENV NODE_ENV=production
 EXPOSE 3333
+
 CMD [ "pm2-runtime", "ecosystem.config.cjs"]
