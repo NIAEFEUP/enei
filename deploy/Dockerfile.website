@@ -14,6 +14,10 @@ RUN --mount=type=cache,id=build-pnpm,target=/pnpm/store pnpm install --frozen-lo
 
 ADD ./website .
 
+# Create valid .env file (needed to run `node ace ...`)
+RUN cp .env.example .env
+RUN node ace generate:key
+
 # Generate Tuyau types (website/scripts/prepare.sh)
 RUN node ace tuyau:generate
 RUN sed -i '1s/^/\/\/ @ts-nocheck\n/' .adonisjs/api.ts
