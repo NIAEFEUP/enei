@@ -2,8 +2,8 @@
 
 set -e
 
-if [ "$NODE_ENV" = "production" ]; then
-  echo "Production environment detected. Skipping preparation."
+if [ -n "$SKIP_SCRIPTS" ]; then
+  echo "Skipping preparation script..."
   exit 0
 fi
 

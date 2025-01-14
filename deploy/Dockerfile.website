@@ -1,24 +1,33 @@
 FROM node:22-slim AS base
-ENV NODE_ENV=production
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
 WORKDIR /app
+ENV SKIP_SCRIPTS=true
+
 ADD website/package.json website/pnpm-lock.yaml ./
 ADD website/scripts/ ./scripts
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 
 FROM base AS build
 
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-
 ADD ./website .
 
-# Create valid .env file (needed to run `node ace ...`)
+# Create valid environment file (needed to run `node ace ...`)
 RUN cp .env.example .env
 RUN node ace generate:key
+RUN sed -i 's/VITE_.*//g' .env
+
+# Add build variables
+ARG VITE_TZ
+ENV VITE_TZ=${VITE_TZ}
+
+ARG VITE_EVENT_COUNTDOWN_DATE
+ENV VITE_EVENT_COUNTDOWN_DATE=${VITE_EVENT_COUNTDOWN_DATE}
 
 # Generate Tuyau types (website/scripts/prepare.sh)
 RUN node ace tuyau:generate
@@ -28,8 +37,9 @@ RUN node ace build
 
 
 FROM base AS deploy
+ENV NODE_ENV=production
 
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+RUN pnpm prune --prod
 
 COPY --from=build /app/build /app
 COPY --from=build /app/ecosystem.config.cjs /app
