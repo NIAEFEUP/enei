@@ -2,6 +2,11 @@
 
 set -e
 
+if [ "$NODE_ENV" = "production" ]; then
+  echo "Production environment detected. Skipping preparation."
+  exit 0
+fi
+
 # Change current working directory to the root of the repository
 
 cd "$(dirname "$0")"

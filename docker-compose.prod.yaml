@@ -6,6 +6,11 @@ services:
     container_name: enei-website
     ports:
       - "3333:3333"
+    environment:
+      # Override NODE_ENV defined in website/.env
+      - NODE_ENV=production
+    env_file:
+      - website/.env
 
   website-nginx:
     build:
