@@ -12,7 +12,7 @@ ADD website/scripts/ ./scripts
 
 FROM base AS build
 
-RUN --mount=type=cache,id=build-pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 ADD ./website .
 
@@ -29,8 +29,7 @@ RUN node ace build
 
 FROM base AS deploy
 
-RUN --mount=type=cache,id=deploy-pnpm,target=/pnpm/store pnpm add pm2 --global
-RUN --mount=type=cache,id=deploy-pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 
 COPY --from=build /app/build /app
 COPY --from=build /app/ecosystem.config.cjs /app
