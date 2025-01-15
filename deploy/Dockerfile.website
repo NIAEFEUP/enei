@@ -12,7 +12,6 @@ ADD website/scripts/ ./scripts
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
-
 FROM base AS build
 
 ADD ./website .
@@ -20,14 +19,6 @@ ADD ./website .
 # Create valid environment file (needed to run `node ace ...`)
 RUN cp .env.example .env
 RUN node ace generate:key
-RUN sed -i 's/VITE_.*//g' .env
-
-# Add build variables
-ARG VITE_TZ
-ENV VITE_TZ=${VITE_TZ}
-
-ARG VITE_EVENT_COUNTDOWN_DATE
-ENV VITE_EVENT_COUNTDOWN_DATE=${VITE_EVENT_COUNTDOWN_DATE}
 
 # Generate Tuyau types (website/scripts/prepare.sh)
 RUN node ace tuyau:generate
@@ -46,4 +37,4 @@ COPY --from=build /app/ecosystem.config.cjs /app
 
 EXPOSE 3333
 
-CMD [ "pm2-runtime", "ecosystem.config.cjs"]
+CMD [ "pnpm", "pm2-runtime", "ecosystem.config.cjs"]

@@ -2,15 +2,14 @@ services:
   website:
     build:
       context: .
-      target: build
       dockerfile: deploy/Dockerfile.website
-    command: ["sleep", "10000"]
     container_name: enei-website
     ports:
       - "3333:3333"
     environment:
       # Override NODE_ENV defined in website/.env
       - NODE_ENV=production
+      - HOST=0.0.0.0
     env_file:
       - website/.env
 
