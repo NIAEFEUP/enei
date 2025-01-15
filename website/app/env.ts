@@ -36,7 +36,7 @@ export async function defineEnv<
 
   const runtimeEnvEntries = keys
     .values()
-    .filter((key) => process.env[key])
+    .filter((key) => key in process.env)
     .map((key) => [key, process.env[key]])
 
   const runtimeEnv = Object.fromEntries(runtimeEnvEntries)
