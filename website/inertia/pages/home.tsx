@@ -1,14 +1,17 @@
 import AppLayout from '../layouts/applayout'
 import { TZDateMini } from '@date-fns/tz'
 import { useCountdown } from '~/hooks/use_countdown'
+import { useEnvironment } from '~/hooks/use_env'
 import { cn } from '~/lib/utils'
 
-const utcTarget = new TZDateMini(
-  import.meta.env.VITE_EVENT_COUNTDOWN_DATE,
-  import.meta.env.VITE_TZ
-).getTime()
+function useUtcTarget() {
+  return useEnvironment((env) =>
+    new TZDateMini(env.INERTIA_PUBLIC_EVENT_COUNTDOWN_DATE, env.INERTIA_PUBLIC_TZ).getTime()
+  )
+}
 
 function Countdown() {
+  const utcTarget = useUtcTarget()
   const timeLeft = useCountdown({ utcTarget, resolution: 1000 })
 
   return (

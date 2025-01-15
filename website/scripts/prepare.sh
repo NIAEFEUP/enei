@@ -2,6 +2,11 @@
 
 set -e
 
+if [ -n "$SKIP_SCRIPTS" ]; then
+  echo "Skipping preparation script..."
+  exit 0
+fi
+
 # Change current working directory to the root of the repository
 
 cd "$(dirname "$0")"

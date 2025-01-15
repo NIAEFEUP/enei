@@ -1,3 +1,4 @@
+import env from '#start/env'
 import { defineConfig } from '@adonisjs/inertia'
 import type { InferSharedProps } from '@adonisjs/inertia/types'
 
@@ -12,6 +13,7 @@ const inertiaConfig = defineConfig({
    */
   sharedData: {
     errors: (ctx) => ctx.session?.flashMessages.get('errors'),
+    environment: env.public(),
   },
 
   /**
