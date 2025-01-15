@@ -1,6 +1,6 @@
 import ReactDOMServer from 'react-dom/server'
 import { createInertiaApp } from '@inertiajs/react'
-import { Wrapper } from './wrapper'
+import { TuyauWrapper } from './tuyau'
 
 export default function render(page: any) {
   return createInertiaApp({
@@ -14,9 +14,9 @@ export default function render(page: any) {
       <>
         <App {...props}>
           {(page) => (
-            <Wrapper>
+            <TuyauWrapper>
               <page.Component key={page.key} {...page.props} />
-            </Wrapper>
+            </TuyauWrapper>
           )}
         </App>
       </>

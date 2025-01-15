@@ -7,7 +7,7 @@ import '../css/app.css'
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import { createInertiaApp } from '@inertiajs/react'
 import { hydrateRoot } from 'react-dom/client'
-import { Wrapper } from './wrapper'
+import { TuyauWrapper } from './tuyau'
 
 const appName = import.meta.env.VITE_APP_NAME || 'ENEI'
 
@@ -26,9 +26,9 @@ createInertiaApp({
       <>
         <App {...props}>
           {(page) => (
-            <Wrapper>
+            <TuyauWrapper>
               <page.Component key={page.key} {...page.props} />
-            </Wrapper>
+            </TuyauWrapper>
           )}
         </App>
       </>
