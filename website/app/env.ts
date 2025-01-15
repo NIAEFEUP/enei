@@ -1,6 +1,5 @@
 import vine from '@vinejs/vine'
 import { ConstructableSchema, SchemaTypes } from '@vinejs/vine/types'
-
 import { EnvProcessor, Env as AdonisEnv } from '@adonisjs/core/env'
 
 type Primitives = string | number | boolean
@@ -44,7 +43,16 @@ export async function defineEnv<
   const env = Object.assign({}, staticEnv, runtimeEnv)
 
   const validator = vine.compile(schema)
-  const validatedEnv = await validator.validate(env)
+
+  const [error, validatedEnv] = await validator.tryValidate(env)
+
+  if (error) {
+    const messages = error.messages as { message: string }[]
+    const reason = messages.map(({ message }) => `- ${message}`).join('\n')
+
+    throw new Error(`Environment validation failure\n\n${reason}`)
+  }
+
   return new PublicPrivateEnv(validatedEnv, publicPrefix)
 }
 
