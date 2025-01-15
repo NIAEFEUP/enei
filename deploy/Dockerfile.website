@@ -30,10 +30,14 @@ RUN node ace build
 FROM base AS deploy
 ENV NODE_ENV=production
 
+# Create tmp directory
+RUN mkdir -p /app/tmp
+
 RUN pnpm prune --prod
 
 COPY --from=build /app/build /app
 COPY --from=build /app/ecosystem.config.cjs /app
+
 
 EXPOSE 3333
 
