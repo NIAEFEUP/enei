@@ -1,6 +1,6 @@
 import { Link } from '@tuyau/inertia/react'
 import { Button, buttonVariants } from '~/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import { Separator } from '~/components/ui/separator'
@@ -14,24 +14,22 @@ export default function Login() {
   const { data, setData, post } = useForm({
     email: '',
     password: '',
+    confirm_password: '',
   })
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    post('/auth/login')
+    post('/auth/register')
   }
 
   return (
-    // <AppLayout title="Iniciar Sessão">
+    // <AppLayout title="Criar conta">
     <div className="flex items-center justify-center w-full h-dvh">
       <div className="flex flex-col gap-6 max-w-sm">
         <Card className={cn(oauthError && 'border-red-600')}>
           <CardHeader>
-            <CardTitle className="text-2xl text-enei-blue">Iniciar Sessão</CardTitle>
-            <CardDescription>
-              Introduz o teu e-mail e palavra-passe para iniciar sessão
-            </CardDescription>
+            <CardTitle className="text-2xl text-enei-blue">Criar conta</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} method="POST" action="/auth/login">
@@ -50,12 +48,6 @@ export default function Login() {
                 <div className="grid gap-2">
                   <div className="flex items-center">
                     <Label htmlFor="password">Palavra-passe</Label>
-                    <a
-                      href="/forgot-password"
-                      className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                    >
-                      Esqueci-me da palavra-passe
-                    </a>
                   </div>
                   <Input
                     id="password"
@@ -66,9 +58,23 @@ export default function Login() {
                     required
                   />
                 </div>
+                <div className="grid gap-2">
+                  <div className="flex items-center">
+                    <Label htmlFor="password">Confirmar palavra-passe</Label>
+                  </div>
+                  <Input
+                    id="confirm-password"
+                    type="password"
+                    placeholder="••••••••••••"
+                    value={data.confirm_password}
+                    onChange={(e) => setData('confirm_password', e.target.value)}
+                    required
+                  />
+                </div>
+
                 <div className="flex flex-col gap-4   ">
                   <Button type="submit" className="w-full bg-enei-blue">
-                    Iniciar Sessão
+                    Criar conta
                   </Button>
                   <div className="flex gap-2 items-center">
                     <Separator className="shrink" />
@@ -99,12 +105,6 @@ export default function Login() {
                     </Link>
                   </div>
                 </div>
-              </div>
-              <div className="mt-4 text-center text-sm">
-                Ainda não tens conta?{' '}
-                <Link route="view.register">
-                  <span className="underline">Regista-te</span>
-                </Link>
               </div>
             </form>
           </CardContent>

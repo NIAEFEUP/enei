@@ -12,7 +12,7 @@ export default class extends BaseSchema {
       table.string('provider_id').notNullable()
       table.primary(['provider', 'provider_id'])
 
-      table.json('provider_data')
+      table.string('password')
 
       table.integer('user_id').references('id').inTable('users')
     })

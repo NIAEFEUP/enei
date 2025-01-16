@@ -13,21 +13,42 @@ async function getOrCreate(search: Pick<Account, 'provider' | 'providerId'>) {
 }
 
 export default class AuthenticationController {
-  async login({ request, auth, response, inertia }: HttpContext) {
+  async login({ request, auth, response, session }: HttpContext) {
     const { email, password } = request.only(['email', 'password'])
 
     try {
-      const user = await User.verifyCredentials(email, password)
+      const account = await Account.verifyCredentials(email, password)
+
+      const user = await User.query().where('id', account.user_id).first()
+      if (user) await auth.use('web').login(user)
+
+      response.redirect('/')
+    } catch (error) {
+      console.log(error)
+      session.flash('errorsBag', { oauth: 'Email ou palavra-passe incorretos' })
+
+      response.redirect().back()
+    }
+  }
+
+  async register({ request, auth, response }: HttpContext) {
+    const { email, password } = request.only(['email', 'password'])
+
+    try {
+      const user = await User.create({ email })
+
+      await Account.create({
+        provider: 'credentials',
+        providerId: email,
+        password: password,
+        user_id: user.id,
+      })
 
       await auth.use('web').login(user)
 
       response.redirect('/')
     } catch (error) {
-      return inertia.render('login', {
-        errors: {
-          oauth: 'Email ou palavra-passe incorretos',
-        },
-      })
+      console.log(error)
     }
   }
 
