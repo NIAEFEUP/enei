@@ -24,15 +24,27 @@ export default class AuthenticationController {
 
       response.redirect('/')
     } catch (error) {
-      console.log(error)
       session.flash('errorsBag', { oauth: 'Email ou palavra-passe incorretos' })
-
       response.redirect().back()
     }
   }
 
-  async register({ request, auth, response }: HttpContext) {
-    const { email, password } = request.only(['email', 'password'])
+  async register({ request, auth, response, session }: HttpContext) {
+    const { email, password, confirmPassword } = request.only([
+      'email',
+      'password',
+      'confirmPassword',
+    ])
+
+    if (await User.query().where('email', email).first()) {
+      session.flash('errorsBag', { oauth: 'Este e-mail já está em uso' })
+      response.redirect().back()
+    }
+
+    if (confirmPassword !== password) {
+      session.flash('errorsBag', { oauth: 'Palavras-passes não coincidem' })
+      response.redirect().back()
+    }
 
     try {
       const user = await User.create({ email })
