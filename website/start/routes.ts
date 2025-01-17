@@ -13,13 +13,27 @@ const AuthenticationController = () => import('#controllers/authentication_contr
 const TicketsController = () => import('#controllers/tickets_controller')
 
 router.on('/').renderInertia('home')
-router.on('/login').renderInertia('login')
 router.get('/tickets', [TicketsController, 'index'])
 router.on('/tickets/:id/checkout').renderInertia('payments').as('checkout')
 
+router.on('/login').renderInertia('login').use(middleware.redirectIfAuthenticated())
+router
+  .on('/register')
+  .renderInertia('register')
+  .use(middleware.redirectIfAuthenticated())
+  .as('view.register')
+
 router
   .group(() => {
-    router.post('/login', [AuthenticationController, 'login']).as('auth.login')
+    router
+      .post('/login', [AuthenticationController, 'login'])
+      .as('auth.login')
+      .use(middleware.redirectIfAuthenticated())
+
+    router
+      .post('/register', [AuthenticationController, 'register'])
+      .as('auth.register')
+      .use(middleware.redirectIfAuthenticated())
 
     // Github
     router
