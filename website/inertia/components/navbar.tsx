@@ -1,4 +1,5 @@
 import { Link } from '@inertiajs/react'
+import { Button } from '~/components/ui/button'
 
 /*
 import { Menu } from "lucide-react";
@@ -50,6 +51,11 @@ export default function NavBar() {
         <Link href="/">
           <img className="w-28 max-md:w-24" src="/images/logo-white.svg" alt="Logótipo da SINF" />
         </Link>
+        <Button className="bg-enei-beige text-enei-blue">
+          <Link href="/login">
+            <span>Login</span>
+          </Link>
+        </Button>
         {/*
         <NavigationMenu className="hidden sm:block">
           <NavigationMenuList className="gap-5">

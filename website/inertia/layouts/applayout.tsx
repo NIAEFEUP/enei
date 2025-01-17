@@ -18,7 +18,7 @@ export default function AppLayout({ title, children, className }: Props) {
             scroll-behavior: smooth;
           }`}
       </style>
-      <div className="min-h-screen flex flex-col bg-enei-beige">
+      <div className="min-h-screen flex flex-col bg-enei-blue">
         <Head title={title} />
         <div className="sticky left-0 right-0 top-0 z-30">
           <NavBar />

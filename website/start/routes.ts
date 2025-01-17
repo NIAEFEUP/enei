@@ -16,7 +16,12 @@ router.on('/').renderInertia('home')
 router.get('/tickets', [TicketsController, 'index'])
 router.on('/tickets/:id/checkout').renderInertia('payments').as('checkout')
 
-router.on('/login').renderInertia('login').use(middleware.redirectIfAuthenticated())
+router
+  .on('/login')
+  .renderInertia('login')
+  .use(middleware.redirectIfAuthenticated())
+  .as('view.login')
+
 router
   .on('/register')
   .renderInertia('register')
