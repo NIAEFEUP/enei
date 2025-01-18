@@ -1,5 +1,6 @@
 /// <reference path="../../adonisrc.ts" />
 /// <reference path="../../config/inertia.ts" />
+/// <reference path="../../config/auth.ts" />
 
 import '../css/app.css'
 

@@ -1,7 +1,6 @@
 import AppLayout from '../layouts/applayout'
 import { TZDateMini } from '@date-fns/tz'
 import { useCountdown } from '~/hooks/use_countdown'
-import { TimeLeft } from '~/lib/countdown'
 import { cn } from '~/lib/utils'
 
 const utcTarget = new TZDateMini(
@@ -20,7 +19,7 @@ function Countdown() {
       )}
     >
       <div className="bg-enei-beige bg-opacity-[62%] w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
-        <p className="font-space-grotesk text-enei-blue text-4xl md:text-6xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
+        <p className="tabular-nums font-space-grotesk text-enei-blue text-4xl md:text-6xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
           {timeLeft?.days.toLocaleString('en-US', {
             minimumIntegerDigits: 2,
             useGrouping: false,
@@ -31,7 +30,7 @@ function Countdown() {
         </p>
       </div>
       <div className="bg-enei-beige bg-opacity-[62%] w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
-        <p className="font-space-grotesk text-enei-blue text-4xl md:text-6xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
+        <p className="tabular-nums font-space-grotesk text-enei-blue text-4xl md:text-6xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
           {timeLeft?.hours.toLocaleString('en-US', {
             minimumIntegerDigits: 2,
             useGrouping: false,
@@ -43,7 +42,7 @@ function Countdown() {
       </div>
 
       <div className="bg-enei-beige bg-opacity-[62%] w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
-        <p className="font-space-grotesk text-enei-blue text-4xl md:text-6xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
+        <p className="tabular-nums font-space-grotesk text-enei-blue text-4xl md:text-6xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
           {timeLeft?.minutes.toLocaleString('en-US', {
             minimumIntegerDigits: 2,
             useGrouping: false,
@@ -55,7 +54,7 @@ function Countdown() {
       </div>
 
       <div className="bg-enei-beige bg-opacity-[62%] w-24 md:w-32 text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
-        <p className="font-space-grotesk text-enei-blue text-4xl md:text-6xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
+        <p className="tabular-nums font-space-grotesk text-enei-blue text-4xl md:text-6xl font-bold mt-10 [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca]">
           {timeLeft?.seconds.toLocaleString('en-US', {
             minimumIntegerDigits: 2,
             useGrouping: false,
