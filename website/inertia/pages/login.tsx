@@ -1,9 +1,8 @@
 import { Link } from '@tuyau/inertia/react'
-import { Button, buttonVariants } from '~/components/ui/button'
+import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
-import { Separator } from '~/components/ui/separator'
 import { useError } from '~/hooks/use_error'
 import { useForm } from '@inertiajs/react'
 import { cn } from '~/lib/utils'
@@ -27,7 +26,7 @@ export default function Login() {
     <AppLayout title="Iniciar Sessão">
       <div className="flex items-center justify-center w-full mt-16">
         <div className="flex flex-col gap-6 max-w-sm">
-          <Card className={cn(oauthError && 'border-red-600')}>
+          <Card className={cn(oauthError && 'border-2 border-red-600')}>
             <CardHeader>
               <CardTitle className="text-2xl text-enei-blue">Iniciar Sessão</CardTitle>
               <CardDescription>
@@ -51,12 +50,12 @@ export default function Login() {
                   <div className="grid gap-2">
                     <div className="flex items-center">
                       <Label htmlFor="password">Palavra-passe</Label>
-                      <a
+                      {/* <a
                         href="/forgot-password"
                         className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                       >
                         Esqueci-me da palavra-passe
-                      </a>
+                      </a> */}
                     </div>
                     <Input
                       id="password"
@@ -71,34 +70,34 @@ export default function Login() {
                     <Button type="submit" className="w-full bg-enei-blue">
                       Iniciar Sessão
                     </Button>
-                    <div className="flex gap-2 items-center">
-                      <Separator className="shrink" />
-                      <p className="text-sm text-muted-foreground min-w-max">Ou</p>
-                      <Separator className="shrink" />
-                    </div>
-                    <div className="grid grid-cols-3 gap-2">
-                      <Link
-                        route="auth.google.initiate"
-                        className={cn(buttonVariants({ variant: 'outline' }), 'w-full')}
-                      >
-                        <span className="sr-only">Iniciar Sessão com o</span> Google
-                        {/* <Google className="h-5 w-5" /> */}
-                      </Link>
-                      <Link
-                        route="auth.github.initiate"
-                        className={cn(buttonVariants({ variant: 'outline' }), 'w-full')}
-                      >
-                        <span className="sr-only">Iniciar Sessão com o</span> Github
-                        {/* <Github className="h-5 w-5" /> */}
-                      </Link>
-                      <Link
-                        route="auth.linkedin.initiate"
-                        className={cn(buttonVariants({ variant: 'outline' }), 'w-full')}
-                      >
-                        <span className="sr-only">Iniciar Sessão com o</span> LinkedIn
-                        {/* <LinkedIn className="h-5 w-5" /> */}
-                      </Link>
-                    </div>
+                    {/* <div className="flex gap-2 items-center"> */}
+                    {/*   <Separator className="shrink" /> */}
+                    {/*   <p className="text-sm text-muted-foreground min-w-max">Ou</p> */}
+                    {/*   <Separator className="shrink" /> */}
+                    {/* </div> */}
+                    {/* <div className="grid grid-cols-3 gap-2"> */}
+                    {/* <Link */}
+                    {/*   route="auth.google.initiate" */}
+                    {/*   className={cn(buttonVariants({ variant: 'outline' }), 'w-full')} */}
+                    {/* > */}
+                    {/*   <span className="sr-only">Iniciar Sessão com o</span> Google */}
+                    {/*   {/* <Google className="h-5 w-5" /> */}
+                    {/* </Link> */}
+                    {/* <Link */}
+                    {/*   route="auth.github.initiate" */}
+                    {/*   className={cn(buttonVariants({ variant: 'outline' }), 'w-full')} */}
+                    {/* > */}
+                    {/*   <span className="sr-only">Iniciar Sessão com o</span> Github */}
+                    {/*   {/* <Github className="h-5 w-5" /> */}
+                    {/* </Link> */}
+                    {/* <Link */}
+                    {/*   route="auth.linkedin.initiate" */}
+                    {/*   className={cn(buttonVariants({ variant: 'outline' }), 'w-full')} */}
+                    {/* > */}
+                    {/*   <span className="sr-only">Iniciar Sessão com o</span> LinkedIn */}
+                    {/*   {/* <LinkedIn className="h-5 w-5" /> */}
+                    {/* </Link> */}
+                    {/* </div> */}
                   </div>
                 </div>
                 <div className="mt-4 text-center text-sm">
@@ -108,9 +107,9 @@ export default function Login() {
                   </Link>
                 </div>
               </form>
+              {oauthError && <p className="text-sm text-red-600 text-center mt-4">{oauthError}</p>}
             </CardContent>
           </Card>
-          {oauthError && <p className="text-sm text-red-600 text-center">{oauthError}</p>}
         </div>
       </div>
     </AppLayout>

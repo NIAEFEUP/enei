@@ -2,6 +2,7 @@ import Account from '#models/account'
 import { socialAccountLoginValidator } from '#validators/account'
 import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
+import { createUserValidator, createUserValidatorErrorMessage } from '#validators/authentication'
 
 async function getOrCreate(search: Pick<Account, 'provider' | 'providerId'>) {
   const account = await Account.firstOrCreate({
@@ -25,25 +26,23 @@ export default class AuthenticationController {
       response.redirect('/')
     } catch (error) {
       session.flash('errorsBag', { oauth: 'Email ou palavra-passe incorretos' })
-      response.redirect().back()
+      return response.redirect().back()
     }
   }
 
   async register({ request, auth, response, session }: HttpContext) {
-    const { email, password, confirmPassword } = request.only([
-      'email',
-      'password',
-      'confirmPassword',
-    ])
+    try {
+      await request.validateUsing(createUserValidator)
+    } catch (error) {
+      session.flash('errorsBag', { oauth: createUserValidatorErrorMessage(error) })
+      return response.redirect().toRoute('view.register')
+    }
+
+    const { email, password } = request.only(['email', 'password'])
 
     if (await User.query().where('email', email).first()) {
       session.flash('errorsBag', { oauth: 'Este e-mail já está em uso' })
-      response.redirect().back()
-    }
-
-    if (confirmPassword !== password) {
-      session.flash('errorsBag', { oauth: 'Palavras-passes não coincidem' })
-      response.redirect().back()
+      return response.redirect().toRoute('view.register')
     }
 
     try {
@@ -60,7 +59,8 @@ export default class AuthenticationController {
 
       response.redirect('/')
     } catch (error) {
-      console.log(error)
+      session.flash('errorsBag', { oauth: 'Ocorreu um erro no registo' })
+      return response.redirect().toRoute('view.register')
     }
   }
 
