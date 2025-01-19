@@ -40,9 +40,11 @@ export default class UpdateOrderStatus extends Job {
           }
           order.status = status
           await order.save()
-          this.logger.info(`OGonna send mail: ${order.status}`)
-          await mail.send(new ConfirmPaymentNotification(email))
           this.logger.info(`Order status updated to: ${order.status}`)
+          if (status === 'Success') {
+            this.logger.info(`Gonna send mail: ${order.status}`)
+            await mail.send(new ConfirmPaymentNotification(email))
+          }
         } else {
           await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 }) // Retry after 5 seconds
         }

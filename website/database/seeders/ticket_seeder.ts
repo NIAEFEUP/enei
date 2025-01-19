@@ -8,14 +8,14 @@ export default class extends BaseSeeder {
         name: 'Bilhete - Com Alojamento',
         description:
           'Inclui:\n• Pequenos-almoços, almoços e jantares durante o período do evento\n• Acesso a coffee breaks e sessão de cocktails\n• Acesso a workshops, palestras e outros\n• Acesso a festas noturnas e outras atividades recreativas (exceto Rally Tascas) \n• Alojamento em Pavilhão',
-        price: 35,
+        price: 0.01,
         stock: 150,
       },
       {
         name: 'Bilhete - Sem Alojamento',
         description:
           'Inclui:\n• Pequenos-almoços, almoços e jantares durante o período do evento\n• Acesso a coffee breaks e sessão de cocktails\n• Acesso a workshops, palestras e outros\n• Acesso a festas noturnas e outras atividades recreativas (exceto Rally Tascas)',
-        price: 30,
+        price: 0.01,
         stock: 50,
       },
     ])

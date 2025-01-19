@@ -5,6 +5,7 @@ import Order from '#models/order'
 import User from '#models/user'
 import OrderProduct from '#models/order_product'
 import Product from '#models/product'
+import { createMBWayOrderValidator } from '#validators/order'
 
 import UpdateOrderStatus from '../jobs/update_order_status.js'
 export default class OrdersController {
@@ -16,18 +17,15 @@ export default class OrdersController {
     const authUser = auth.user
 
     try {
-      // Extract request data
+      // Validate input format
+      await request.validateUsing(createMBWayOrderValidator)
+
       const { userId, products, nif, address, mobileNumber } = request.all()
 
       // Validate authentication
 
       if (!authUser || authUser.id !== userId) {
         return response.status(401).json({ message: 'Unauthorized' })
-      }
-
-      // Validate required fields
-      if (!userId || !products || !mobileNumber) {
-        return response.status(400).json({ message: 'Missing required fields' })
       }
 
       // Validate user existence
