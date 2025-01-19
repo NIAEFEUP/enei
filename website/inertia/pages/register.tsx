@@ -13,7 +13,7 @@ export default function Login() {
   const { data, setData, post } = useForm({
     email: '',
     password: '',
-    confirmPassword: '',
+    password_confirmation: '',
   })
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -68,8 +68,8 @@ export default function Login() {
                       id="confirm-password"
                       type="password"
                       placeholder="••••••••••••"
-                      value={data.confirmPassword}
-                      onChange={(e) => setData('confirmPassword', e.target.value)}
+                      value={data.password_confirmation}
+                      onChange={(e) => setData('password_confirmation', e.target.value)}
                       required
                     />
                   </div>
