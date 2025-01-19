@@ -12,6 +12,7 @@ ADD website/scripts/ ./scripts
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
+
 FROM base AS build
 
 ADD ./website .
@@ -38,7 +39,9 @@ RUN pnpm prune --prod
 COPY --from=build /app/build /app
 COPY --from=build /app/ecosystem.config.cjs /app
 
-
 EXPOSE 3333
+
+COPY deploy/website/entrypoint.sh /entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
 
 CMD [ "pnpm", "pm2-runtime", "ecosystem.config.cjs"]
