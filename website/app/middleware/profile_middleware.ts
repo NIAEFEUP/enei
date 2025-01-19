@@ -9,7 +9,7 @@ export default class ProfileMiddleware {
     const user = ctx.auth.user
 
     if (!user?.profileId) {
-      ctx.response.redirect().toRoute('profile.create')
+      ctx.response.redirect().toRoute('/signup')
     }
 
     /**
