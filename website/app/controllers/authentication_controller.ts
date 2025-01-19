@@ -25,7 +25,7 @@ export default class AuthenticationController {
 
       response.redirect('/')
     } catch (error) {
-      session.flash('errorsBag', { oauth: 'Email ou palavra-passe incorretos' })
+      session.flash('errors', { oauth: 'Email ou palavra-passe incorretos' })
       return response.redirect().back()
     }
   }
@@ -34,14 +34,14 @@ export default class AuthenticationController {
     try {
       await request.validateUsing(createUserValidator)
     } catch (error) {
-      session.flash('errorsBag', { oauth: createUserValidatorErrorMessage(error) })
+      session.flash('errors', { oauth: createUserValidatorErrorMessage(error) })
       return response.redirect().toRoute('view.register')
     }
 
     const { email, password } = request.only(['email', 'password'])
 
     if (await User.query().where('email', email).first()) {
-      session.flash('errorsBag', { oauth: 'Este e-mail já está em uso' })
+      session.flash('errors', { oauth: 'Este e-mail já está em uso' })
       return response.redirect().toRoute('view.register')
     }
 
@@ -59,7 +59,7 @@ export default class AuthenticationController {
 
       response.redirect('/')
     } catch (error) {
-      session.flash('errorsBag', { oauth: 'Ocorreu um erro no registo' })
+      session.flash('errors', { oauth: 'Ocorreu um erro no registo' })
       return response.redirect().toRoute('view.register')
     }
   }

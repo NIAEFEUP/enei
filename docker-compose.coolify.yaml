@@ -1,0 +1,22 @@
+services:
+  website:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.website
+    volumes:
+      - website-db:/app/tmp/db.sqlite3
+    expose:
+      - "3333"
+    environment:
+      - "HOST=0.0.0.0"
+      - "PORT=3333"
+      - "TZ=${TZ:-UTC}"
+      - "LOG_LEVEL=${LOG_LEVEL:-info}"
+      - "APP_KEY=${APP_KEY}"
+      - "SESSION_DRIVER=${SESSION_DRIVER:-cookie}"
+      - "FROM_EMAIL=${FROM_EMAIL:-noreply@eneiconf.pt}"
+      - "SMTP_HOST=${SMTP_HOST}"
+      - "SMTP_PORT=${SMTP_PORT}"
+      - "INERTIA_PUBLIC_TZ=${INERTIA_PUBLIC_TZ:-Europe/Lisbon}"
+      - "INERTIA_PUBLIC_EVENT_COUNTDOWN_DATE=${INERTIA_PUBLIC_EVENT_COUNTDOWN_DATE:-2025-04-11}"
+      - "INERTIA_PUBLIC_APP_URL=${INERTIA_PUBLIC_APP_URL}"
