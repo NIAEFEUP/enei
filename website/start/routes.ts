@@ -16,7 +16,7 @@ import { middleware } from '#start/kernel'
 
 router.on('/').renderInertia('home')
 router.get('/tickets', [TicketsController, 'index'])
-router.on('/tickets/:id/checkout').renderInertia('payments/index').as('checkout')
+router.get('/tickets/:id/checkout', [TicketsController, 'showPayment']).as('checkout')
 
 router
   .group(() => {

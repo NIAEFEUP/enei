@@ -3,21 +3,22 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/com
 import { Button } from '~/components/ui/button'
 import { Separator } from '~/components/ui/separator'
 import { useState, useEffect } from 'react'
+import { InferPageProps } from '@adonisjs/inertia/types'
+import TicketsController from '#controllers/tickets_controller'
 import PhoneNumberModal from '~/components/payments/phone-modal'
 import PurchaseSummary from '~/components/payments/purchase-summary'
 import BillingInformationForm from '~/components/payments/billing-information-form'
 import PaymentMethodSelector from '~/components/payments/payment-method-selector'
 import axios from 'axios'
 
-const item = {
-  title: 'Bilhete - Com alojamento',
-  description:
-    'Inclui:<br />• Pequenos-almoços, almoços e jantares durante o período do evento<br />• Acesso a coffee breaks e sessão de cocktails<br />• Acesso a workshops, palestras e outros<br />• Acesso a festas noturnas e outras atividades recreativas (exceto Rally Tascas) <br />• Alojamento em Pavilhão',
-  price: 35,
-  image: 'favicon.svg',
+interface Ticket {
+  name: string;
+  description: string;
+  price: number;
+  image: string;
 }
 
-export default function TicketSalePage() {
+export default function TicketSalePage(props: InferPageProps<TicketsController, 'showPayment'> & { ticket: Ticket }) {
   const [enableBillingInfo, setEnableBillingInfo] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState<string>('mbway')
   const [phoneModalOpen, setPhoneModalOpen] = useState(false)
@@ -26,6 +27,7 @@ export default function TicketSalePage() {
     vat: '',
     address: '',
   })
+  const item = props.ticket
 
   // Clear billing info when the component mounts (to prevent stale data)
   useEffect(() => {
@@ -91,8 +93,11 @@ export default function TicketSalePage() {
           <CardDescription>Revê o teu bilhete e procede para o pagamento</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <PurchaseSummary item={item} />
-
+          {item ? (
+            <PurchaseSummary item={item} />
+          ) : (
+            <p>Loading ticket details...</p>
+          )}
           <Separator />
 
           <BillingInformationForm

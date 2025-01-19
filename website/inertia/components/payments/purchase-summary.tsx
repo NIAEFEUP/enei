@@ -1,6 +1,6 @@
 interface PurchaseSummaryProps {
   item: {
-    title: string
+    name: string
     description: string
     price: number
     image: string
@@ -14,11 +14,11 @@ export default function PurchaseSummary({ item }: PurchaseSummaryProps) {
       <div className="flex items-center space-x-4">
         <img
           src={item.image}
-          alt={item.title}
+          alt={item.name}
           className="hidden md:block w-[150px] h-[100px] object-contain rounded-md"
         />
         <div>
-          <h3 className="text-lg font-semibold">{item.title}</h3>
+          <h3 className="text-lg font-semibold">{item.name}</h3>
           <div
             className="text-sm text-gray-500"
             dangerouslySetInnerHTML={{ __html: item.description }}
