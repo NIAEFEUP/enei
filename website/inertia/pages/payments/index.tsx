@@ -84,7 +84,7 @@ export default function TicketSalePage() {
   }
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 lg:my-10 ">
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle>Completa a tua compra</CardTitle>

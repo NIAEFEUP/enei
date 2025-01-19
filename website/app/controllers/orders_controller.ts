@@ -5,8 +5,8 @@ import Order from '#models/order'
 import User from '#models/user'
 import OrderProduct from '#models/order_product'
 import Product from '#models/product'
-import UpdateOrderStatus from '../jobs/update_order_status.js'
 
+import UpdateOrderStatus from '../jobs/update_order_status.js'
 export default class OrdersController {
   index({ inertia }: HttpContext) {
     return inertia.render('payments/index')
@@ -14,62 +14,83 @@ export default class OrdersController {
 
   public async createMBWay({ request, auth, response }: HttpContext) {
     const authUser = auth.user
+
     try {
+      // Extract request data
       const { userId, products, nif, address, mobileNumber } = request.all()
+
+      // Validate authentication
+
       if (!authUser || authUser.id !== userId) {
-        return response.status(401).json({
-          message: 'Unauthorized',
-        })
+        return response.status(401).json({ message: 'Unauthorized' })
       }
+
+      // Validate required fields
       if (!userId || !products || !mobileNumber) {
-        return response.status(400).json({
-          message: 'Missing required fields',
-        })
+        return response.status(400).json({ message: 'Missing required fields' })
       }
+
+      // Validate user existence
 
       const user = await User.find(userId)
-      if (!user) {
-        return response.status(404).json({
-          message: 'User not found',
-        })
-      }
-      const order = await Order.create({ userId, nif, address })
-      let totalAmount = 0
-      let description = 'Payment for order id ' + order.id
 
-      for (let productItem of products) {
+      if (!user) {
+        return response.status(404).json({ message: 'User not found' })
+      }
+
+      let totalAmount = 0
+      let description = ''
+
+      const productDetails = []
+
+      for (const productItem of products) {
         const { productId, quantity } = productItem
         const product = await Product.find(productId)
-
         if (!product) {
-          return response.status(404).json({
-            message: `Product with id ${productId} not found`,
-          })
+          return response.status(404).json({ message: `Product with id ${productId} not found` })
         }
-        const productsUserHas = await OrderProduct.query()
-          .where('productId', productId)
-          .where('orderId', order.id)
+
+        const successfulOrdersOfGivenProduct = await OrderProduct.query()
+          .join('orders', 'order_products.order_id', 'orders.id')
+          .where('orders.user_id', userId)
+          .where('order_products.product_id', productId)
+          .where('orders.status', 'Success')
+
+        const totalQuantity = successfulOrdersOfGivenProduct.reduce(
+          (acc, orderProduct) => acc + orderProduct.quantity,
+          0
+        )
+
         if (product.stock < quantity) {
-          return response.status(400).json({
-            message: `Not enough stock for product ${product.name}`,
-          })
+          return response
+            .status(400)
+            .json({ message: `Not enough stock for product ${product.name}` })
         }
-        if (quantity + productsUserHas.length > product.max_order) {
+
+        if (quantity + totalQuantity > product.max_order) {
           return response.status(400).json({
             message: `You can only buy ${product.max_order} of product ${product.name}`,
           })
         }
+        productDetails.push({ product, quantity })
+        totalAmount += product.price * quantity
+        description += `${product.name} x${quantity}, `
+      }
 
-        const productTotal = product.price * quantity
-        totalAmount += productTotal
+      description = `Payment for order: ${description.slice(0, -2)}`
+
+      // Create the order and associated products
+      const order = await Order.create({ userId, nif, address })
+
+      for (const { product, quantity } of productDetails) {
         await OrderProduct.create({
           orderId: order.id,
-          productId: productId,
+          productId: product.id,
           quantity,
         })
-
-        description += `, ${product.name} x${quantity}`
       }
+
+      // Prepare payment data
 
       const data = {
         mbWayKey: env.get('IFTHENPAY_MBWAY_KEY'),
@@ -79,6 +100,7 @@ export default class OrdersController {
         description,
       }
 
+      // Call payment API
       const apiResponse = await axios.post('https://api.ifthenpay.com/spg/payment/mbway', data)
 
       if (apiResponse.status === 200) {
@@ -87,6 +109,7 @@ export default class OrdersController {
         order.status = 'Pending'
         await order.save()
 
+        // Dispatch background job to update order status
         await UpdateOrderStatus.dispatch(
           { requestId: order.requestId, email: authUser.email },
           { delay: 10000 }
@@ -97,9 +120,7 @@ export default class OrdersController {
           message: 'Payment initiated successfully',
         })
       } else {
-        return response.status(500).json({
-          message: 'Failed to initiate payment',
-        })
+        return response.status(500).json({ message: 'Failed to initiate payment' })
       }
     } catch (error) {
       console.error(error)
