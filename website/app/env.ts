@@ -33,7 +33,8 @@ export async function defineEnv<
   const { keys, object } = createObjectInterceptor()
   const schema = builder({ object })
 
-  const runtimeEnvEntries = Object.keys(keys)
+  const runtimeEnvEntries = keys
+    .values()
     .filter((key) => key in process.env)
     .map((key) => [key, process.env[key]])
 
