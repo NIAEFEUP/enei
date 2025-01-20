@@ -2,35 +2,33 @@ import * as z from "zod"
 
 import { useForm } from "react-hook-form"
 import { useStepper } from "../ui/stepper"
-import { toast } from "~/hooks/use_toast"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
 import StepperFormActions from "./actions"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../ui/select"
 
 const PersonalInfoSchema = z.object({
     firstName: z.string().min(2, {
-        message: "First name must be at least 2 characters.",
+        message: "O primeiro nome deve ter pelo menos 2 caracteres.",
     }),
     lastName: z.string().min(2, {
-        message: "Last name must be at least 2 characters.",
+        message: "O último nome deve ter pelo menos 2 caracteres.",
     }),
     email: z.string().email({
-        message: "Please enter a valid email address.",
+        message: "Insere um email válido",
     }),
     birthDate: z
         .string()
         .refine((value) => !isNaN(Date.parse(value)), {
-            message: "Please enter a valid date.",
+            message: "Insere uma data válida",
         }),
     phone: z
         .string()
         .regex(/^\+?[0-9\s-]{9,15}$/, {
-            message: "Please enter a valid phone number.",
+            message: "Insere um número de telemóvel válido",
         }),
-    municipality: z.string().min(2, {
-        message: "Please enter a valid municipality.",
-    }),
+    municipality: z.string(),
 })
 
 const PersonalInfoForm = () => {
@@ -50,9 +48,6 @@ const PersonalInfoForm = () => {
 
     function onSubmit() {
         nextStep()
-        toast({
-            title: "First step submitted!",
-        })
     }
 
     return (
@@ -63,7 +58,7 @@ const PersonalInfoForm = () => {
                     name="firstName"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>First Name</FormLabel>
+                            <FormLabel>Primeiro Nome*</FormLabel>
                             <FormControl>
                                 <Input placeholder="John" {...field} />
                             </FormControl>
@@ -76,7 +71,7 @@ const PersonalInfoForm = () => {
                     name="lastName"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Last Name</FormLabel>
+                            <FormLabel>Último Nome*</FormLabel>
                             <FormControl>
                                 <Input placeholder="Doe" {...field} />
                             </FormControl>
@@ -89,9 +84,9 @@ const PersonalInfoForm = () => {
                     name="email"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Email</FormLabel>
+                            <FormLabel>Email*</FormLabel>
                             <FormControl>
-                                <Input placeholder="example@email.com" {...field} />
+                                <Input placeholder="participante@eneiconf.pt" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -102,7 +97,8 @@ const PersonalInfoForm = () => {
                     name="birthDate"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Date of Birth</FormLabel>
+                            {/* TODO: Melhorar */}
+                            <FormLabel>Data de Nascimento*</FormLabel>
                             <FormControl>
                                 <Input placeholder="YYYY-MM-DD" {...field} />
                             </FormControl>
@@ -115,9 +111,10 @@ const PersonalInfoForm = () => {
                     name="phone"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Phone</FormLabel>
+                            {/* TODO: Melhorar */}
+                            <FormLabel>Número de Telemóvel*</FormLabel>
                             <FormControl>
-                                <Input placeholder="+351 123 456 789" {...field} />
+                                <Input placeholder="+351 923 456 789" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -128,9 +125,40 @@ const PersonalInfoForm = () => {
                     name="municipality"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Municipality</FormLabel>
+                            <FormLabel>Natural de</FormLabel>
                             <FormControl>
-                                <Input placeholder="Lisbon" {...field} />
+                                <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Selecionar distrito/região autónoma" />
+                                    </SelectTrigger>
+
+                                    <SelectContent>
+                                        <SelectItem value="Aveiro">Aveiro</SelectItem>
+                                        <SelectItem value="Beja">Beja</SelectItem>
+                                        <SelectItem value="Braga">Braga</SelectItem>
+                                        <SelectItem value="Bragança">Bragança</SelectItem>
+                                        <SelectItem value="Castelo Branco">Castelo Branco</SelectItem>
+                                        <SelectItem value="Coimbra">Coimbra</SelectItem>
+                                        <SelectItem value="Évora">Évora</SelectItem>
+                                        <SelectItem value="Faro">Faro</SelectItem>
+                                        <SelectItem value="Guarda">Guarda</SelectItem>
+                                        <SelectItem value="Leiria">Leiria</SelectItem>
+                                        <SelectItem value="Lisboa">Lisboa</SelectItem>
+                                        <SelectItem value="Portalegre">Portalegre</SelectItem>
+                                        <SelectItem value="Porto">Porto</SelectItem>
+                                        <SelectItem value="Santarém">Santarém</SelectItem>
+                                        <SelectItem value="Setúbal">Setúbal</SelectItem>
+                                        <SelectItem value="Viana do Castelo">Viana do Castelo</SelectItem>
+                                        <SelectItem value="Vila Real">Vila Real</SelectItem>
+                                        <SelectItem value="Viseu">Viseu</SelectItem>
+                                        <SelectItem value="Açores">Açores</SelectItem>
+                                        <SelectItem value="Madeira">Madeira</SelectItem>
+                                        <SelectItem value="Madeira">Estrangeiro</SelectItem>
+                                    </SelectContent>
+                                </Select>
                             </FormControl>
                             <FormMessage />
                         </FormItem>

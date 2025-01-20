@@ -686,7 +686,7 @@ const HorizontalStep = React.forwardRef<HTMLDivElement, StepSharedProps>(
                     "flex items-center relative transition-all duration-200",
                     "[&:not(:last-child)]:flex-1",
                     "[&:not(:last-child)]:after:transition-all [&:not(:last-child)]:after:duration-200",
-                    "[&:not(:last-child)]:after:content-[''] [&:not(:last-child)]:after:h-[2px] [&:not(:last-child)]:after:bg-border",
+                    "[&:not(:last-child)]:after:content-[''] [&:not(:last-child)]:after:h-[2px] [&:not(:last-child)]:after:bg-enei-beige",
                     "data-[completed=true]:[&:not(:last-child)]:after:bg-primary",
                     "data-[invalid=true]:[&:not(:last-child)]:after:bg-destructive",
                     variant === "circle-alt" &&
@@ -779,10 +779,10 @@ const StepButtonContainer = ({
                 "stepper__step-button-container",
                 "rounded-full p-0 pointer-events-none",
                 "w-[var(--step-icon-size)] h-[var(--step-icon-size)]",
-                "border-2 flex rounded-full justify-center items-center",
+                "border-2 flex rounded-full justify-center items-center border-enei-beige",
                 "data-[clickable=true]:pointer-events-auto",
                 "data-[active=true]:bg-primary data-[active=true]:border-primary data-[active=true]:text-primary-foreground",
-                "data-[current=true]:border-primary data-[current=true]:bg-secondary",
+                "data-[current=true]:border-enei-beige data-[current=true]:bg-enei-beige data-[current=true]:text-enei-blue",
                 "data-[invalid=true]:bg-destructive data-[invalid=true]:border-destructive data-[invalid=true]:text-destructive-foreground",
                 styles?.["step-button-container"]
             )}

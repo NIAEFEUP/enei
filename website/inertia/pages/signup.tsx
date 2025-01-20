@@ -31,7 +31,6 @@ export default function SignUpPage() {
               {index === 3 && <CommunicationInfoForm />}
             </Step>
           ))}
-
         </Stepper>
       </div>
 

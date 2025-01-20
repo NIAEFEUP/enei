@@ -2,18 +2,16 @@ import * as z from "zod"
 
 import { useForm } from "react-hook-form"
 import { useStepper } from "../ui/stepper"
-import { toast } from "~/hooks/use_toast"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import { Input } from "../ui/input"
 import StepperFormActions from "./actions"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { Checkbox } from "../ui/checkbox"
 
 const StudentInfoSchema = z.object({
-    university: z.string().min(1, { message: "Please select a university." }),
-    course: z.string().min(1, { message: "Please select a course." }),
-    year: z.string().min(1, { message: "Please select a year." }),
+    university: z.string().min(1, { message: "Seleciona uma universidade/faculdade" }),
+    course: z.string().min(1, { message: "Seleciona um curso" }),
+    year: z.number().int().min(1).max(5),
     completedCourse: z.boolean(),
     graduationYear: z
         .number()
@@ -31,15 +29,14 @@ const StudentInfoForm = () => {
         defaultValues: {
             university: "",
             course: "",
-            year: "1",
+            year: 1,
             completedCourse: false,
-            graduationYear: undefined,
+            graduationYear: 2024, //TODO: remove this if completedCourse is false ig on submmited
         },
     })
 
     function onSubmit() {
         nextStep()
-        toast({ title: "First step submitted!" })
     }
 
     return (
@@ -51,11 +48,11 @@ const StudentInfoForm = () => {
                     name="university"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>University</FormLabel>
+                            <FormLabel>Universidade/Faculdade*</FormLabel>
                             <FormControl>
                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Select a university" />
+                                        <SelectValue placeholder="Seleciona a tua universidade/faculdade" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="University A">University A</SelectItem>
@@ -72,14 +69,14 @@ const StudentInfoForm = () => {
                     name="course"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Course</FormLabel>
+                            <FormLabel>Curso*</FormLabel>
                             <FormControl>
                                 <Select
                                     onValueChange={field.onChange}
                                     defaultValue={field.value}
                                 >
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Select a course" />
+                                        <SelectValue placeholder="Seleciona o teu curso" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="Course A">Course A</SelectItem>
@@ -96,14 +93,14 @@ const StudentInfoForm = () => {
                     name="year"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Ano Curricular</FormLabel>
+                            <FormLabel>Ano Curricular*</FormLabel>
                             <FormControl>
                                 <Select
-                                    onValueChange={field.onChange}
+                                    onValueChange={(value) => field.onChange(parseInt(value))}
                                     defaultValue={field.value.toString()}
                                 >
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Select a course" />
+                                        <SelectValue placeholder="Seleciona o teu ano" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="1">1ª Ano</SelectItem>
@@ -111,7 +108,6 @@ const StudentInfoForm = () => {
                                         <SelectItem value="3">3ª Ano</SelectItem>
                                         <SelectItem value="4">4ª Ano</SelectItem>
                                         <SelectItem value="5">5ª Ano</SelectItem>
-                                        <SelectItem value="6">6ª Ano</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </FormControl>
@@ -124,9 +120,11 @@ const StudentInfoForm = () => {
                     name="completedCourse"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>
-                                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                                Completed Course
+                            <FormLabel className="flex gap-2 items-center">
+                                <FormControl>
+                                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                                </FormControl>
+                                <p>Já terminei o curso</p>
                             </FormLabel>
                             <FormMessage />
                         </FormItem>
@@ -138,9 +136,24 @@ const StudentInfoForm = () => {
                         name="graduationYear"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Graduation Year</FormLabel>
+                                <FormLabel>Ano de conclusão</FormLabel>
                                 <FormControl>
-                                    <Input type="number" placeholder="2025" {...field} />
+                                    <Select
+                                        onValueChange={(value) => field.onChange(parseInt(value))}
+                                        defaultValue={field.value?.toString() ?? "2024"}
+                                    >
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="XXXX" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {Array.from({ length: 75 }, (_, i) => 2024 - i).map((year) => (
+                                                <SelectItem key={year} value={year.toString()}>
+                                                    {year}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

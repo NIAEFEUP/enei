@@ -19,14 +19,16 @@ function StepperFormActions() {
                 </Button>
             ) : (
                 <>
-                    <Button
-                        disabled={isDisabledStep}
-                        onClick={prevStep}
-                        size="sm"
-                        variant="secondary"
-                    >
-                        Anterior
-                    </Button>
+                    {!isDisabledStep &&
+                        <Button
+                            disabled={isDisabledStep}
+                            onClick={prevStep}
+                            size="sm"
+                            variant="secondary"
+                        >
+                            Anterior
+                        </Button>
+                    }
                     <Button size="sm">
                         {isLastStep ? "Registar-me na 16ªedição do ENEI" : isOptionalStep ? "Passar" : "Próximo"}
                     </Button>
