@@ -22,7 +22,10 @@ export default function SelectTicketsPage(props: InferPageProps<TicketsControlle
                 <CardHeader>
                   <CardTitle>{ticket.name}</CardTitle>
                   <CardDescription className="whitespace-pre-wrap">
-                    {ticket.description}
+                  <div
+                    className="text-sm text-gray-500"
+                    dangerouslySetInnerHTML={{ __html: ticket.description }}
+                  />
                   </CardDescription>
                   <p className="text-2xl font-bold">{ticket.price}€</p>
                 </CardHeader>

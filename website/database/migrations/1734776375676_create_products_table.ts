@@ -12,6 +12,7 @@ export default class extends BaseSchema {
       table.integer('stock').notNullable()
       table.integer('max_order').notNullable()
       table.string('currency').notNullable()
+      table.string('image').notNullable
 
       table.timestamp('created_at')
       table.timestamp('updated_at')

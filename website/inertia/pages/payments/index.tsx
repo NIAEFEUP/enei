@@ -86,7 +86,7 @@ export default function TicketSalePage(props: InferPageProps<TicketsController, 
   }
 
   return (
-    <div className="container mx-auto p-4 lg:my-10 ">
+    <div className="min-h-screen flex items-center justify-center m-5">
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle>Completa a tua compra</CardTitle>

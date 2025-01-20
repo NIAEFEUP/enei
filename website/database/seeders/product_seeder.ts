@@ -10,6 +10,7 @@ export default class ProductSeeder extends BaseSeeder {
       stock: 150,
       currency: 'EUR',
       max_order: 1,
+      image: '/favicon.svg',
     })
     await Product.create({
       name: 'Bilhete - Sem Alojamento',
@@ -19,6 +20,7 @@ export default class ProductSeeder extends BaseSeeder {
       stock: 50,
       currency: 'EUR',
       max_order: 1,
+      image: '/favicon.svg',
     })
   }
 }
