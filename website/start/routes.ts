@@ -22,7 +22,7 @@ router
   .group(() => {
     router.get('/', [OrdersController, 'index'])
     router.post('/mbway', [OrdersController, 'createMBWay']).use(middleware.auth())
-    router.get('/:id', [OrdersController, 'show'])
+    router.get('/:id', [OrdersController, 'show']).as('payment.show')
   })
   .prefix('payment')
 

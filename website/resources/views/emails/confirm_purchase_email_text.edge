@@ -1,0 +1,13 @@
+Hi {{ userEmail }}!
+Thank you so much for enrolling in ENEI!
+
+Order Summary:
+@each(product in products)
+- {{ product.name }} - ${{ product.price }} x {{ product.quantity }}
+@endeach
+
+Total: ${{ total }}
+
+Order ID: {{ orderId }}
+
+Thank you for your purchase!

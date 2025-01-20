@@ -11,6 +11,7 @@ export default class extends BaseSchema {
       table.integer('user_id').notNullable()
       table.integer('nif')
       table.string('address')
+      table.float('total')
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })

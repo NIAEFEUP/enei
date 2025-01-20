@@ -20,6 +20,9 @@ export default class Order extends BaseModel {
   @column()
   declare status: string
 
+  @column()
+  declare total: number
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

@@ -4,6 +4,7 @@ import env from '#start/env'
 import { Job } from 'adonisjs-jobs'
 import ConfirmPaymentNotification from '#mails/confirm_payment_notification'
 import mail from '@adonisjs/mail/services/main'
+import db from '@adonisjs/lucid/services/db'
 
 type UpdateOrderStatusPayload = {
   requestId: string
@@ -37,13 +38,22 @@ export default class UpdateOrderStatus extends Job {
           if (status === 'Pending') {
             await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 }) // Retry after 5 seconds
             this.logger.info(`Requeued job for requestId: ${requestId}`)
+            return
           }
           order.status = status
           await order.save()
           this.logger.info(`Order status updated to: ${order.status}`)
-          if (status === 'Success') {
+          if (order.status === 'Success') {
             this.logger.info(`Gonna send mail: ${order.status}`)
-            await mail.send(new ConfirmPaymentNotification(email))
+            const products = await db
+              .from('products')
+              .join('order_products', 'products.id', 'order_products.product_id')
+              .where('order_products.order_id', order.id)
+              .select('products.*', 'order_products.quantity as quantity')
+
+            const total = order.total
+            const orderId = order.id
+            await mail.send(new ConfirmPaymentNotification(email, products, total, orderId))
           }
         } else {
           await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 }) // Retry after 5 seconds

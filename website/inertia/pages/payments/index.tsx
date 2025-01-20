@@ -11,6 +11,7 @@ import BillingInformationForm from '~/components/payments/billing-information-fo
 import PaymentMethodSelector from '~/components/payments/payment-method-selector'
 import axios from 'axios'
 
+
 interface Ticket {
   name: string;
   description: string;
@@ -65,13 +66,15 @@ export default function TicketSalePage(props: InferPageProps<TicketsController, 
       setPhoneModalOpen(false)
     }
     try {
-      await axios.post('/payment/mbway', {
+        await axios.post('/payment/mbway', {
         userId: 1,
         products: [{ productId: 1, quantity: 1 }],
         nif: enableBillingInfo ? billingInfo.vat : null,
         address: enableBillingInfo ? billingInfo.address : null,
         mobileNumber: number,
       })
+
+
     } catch (error) {
       console.error('Error processing the payment', error)
     }

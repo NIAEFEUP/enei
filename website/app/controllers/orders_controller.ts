@@ -6,7 +6,6 @@ import User from '#models/user'
 import OrderProduct from '#models/order_product'
 import Product from '#models/product'
 import { createMBWayOrderValidator } from '#validators/order'
-
 import UpdateOrderStatus from '../jobs/update_order_status.js'
 export default class OrdersController {
   index({ inertia }: HttpContext) {
@@ -105,6 +104,7 @@ export default class OrdersController {
         const responseData = apiResponse.data
         order.requestId = responseData.RequestId
         order.status = 'Pending'
+        order.total = totalAmount
         await order.save()
 
         // Dispatch background job to update order status
@@ -128,15 +128,13 @@ export default class OrdersController {
     }
   }
 
-  public async show({ params, response }: HttpContext) {
+  public async show({ inertia, params, response }: HttpContext) {
     const order = await Order.find(params.id)
     if (!order) {
       return response.status(404).json({
         message: 'Order not found',
       })
     }
-    return response.status(200).json({
-      order,
-    })
+    return inertia.render('payments/show', { order })
   }
 }
