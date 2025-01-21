@@ -1,7 +1,8 @@
+import Ticket from '#models/ticket'
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'tickets'
+  protected tableName = Ticket.table
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {

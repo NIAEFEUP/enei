@@ -3,14 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '~/com
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import { useError } from '~/hooks/use_error'
-import { useForm } from '@inertiajs/react'
 import { cn } from '~/lib/utils'
 import AppLayout from '~/layouts/applayout'
+import { useForm } from '@inertiajs/react'
 
 export default function Login() {
   const oauthError = useError('oauth')
 
-  const { data, setData, post } = useForm({
+  const { data, setData, post, errors } = useForm({
     email: '',
     password: '',
     password_confirmation: '',
@@ -46,11 +46,10 @@ export default function Login() {
                       onChange={(e) => setData('email', e.target.value)}
                       required
                     />
+                    {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
                   </div>
                   <div className="grid gap-2">
-                    <div className="flex items-center">
-                      <Label htmlFor="password">Palavra-passe</Label>
-                    </div>
+                    <Label htmlFor="password">Palavra-passe</Label>
                     <Input
                       id="password"
                       type="password"
@@ -59,11 +58,10 @@ export default function Login() {
                       onChange={(e) => setData('password', e.target.value)}
                       required
                     />
+                    {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
                   </div>
                   <div className="grid gap-2">
-                    <div className="flex items-center">
-                      <Label htmlFor="password">Confirmar palavra-passe</Label>
-                    </div>
+                    <Label htmlFor="password">Confirmar palavra-passe</Label>
                     <Input
                       id="confirm-password"
                       type="password"
@@ -72,9 +70,10 @@ export default function Login() {
                       onChange={(e) => setData('password_confirmation', e.target.value)}
                       required
                     />
+                    {errors.password_confirmation && <p className="text-sm text-red-600">{errors.password_confirmation}</p>}
                   </div>
 
-                  <div className="flex flex-col gap-4   ">
+                  <div className="flex flex-col gap-4">
                     <Button type="submit" className="w-full bg-enei-blue">
                       Criar conta
                     </Button>

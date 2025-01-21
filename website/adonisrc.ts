@@ -57,7 +57,7 @@ export default defineConfig({
   | List of modules to import before starting the application.
   |
   */
-  preloads: [() => import('#start/routes'), () => import('#start/kernel'), () => import('#start/events')],
+  preloads: [() => import('#start/routes'), () => import('#start/kernel'), () => import('#start/events'), () => import('#start/validator')],
 
   /*
   |--------------------------------------------------------------------------
