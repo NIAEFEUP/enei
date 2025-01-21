@@ -45,6 +45,13 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
 
     /*
     |----------------------------------------------------------
+    | Variables for configuring the limiter package
+    |----------------------------------------------------------
+    */
+    LIMITER_STORE: vine.enum(['redis', 'memory'] as const),
+
+    /*
+    |----------------------------------------------------------
     | Variables for configuring the social authentication
     |----------------------------------------------------------
     */

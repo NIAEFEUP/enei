@@ -1,5 +1,6 @@
-import { Link } from '@inertiajs/react'
-import { Button } from '~/components/ui/button'
+import { Link } from '@tuyau/inertia/react'
+import { Button, buttonVariants } from '~/components/ui/button'
+import { cn } from '~/lib/utils'
 
 /*
 import { Menu } from "lucide-react";
@@ -28,6 +29,7 @@ type PageRoute = {
 */
 
 export default function NavBar() {
+  
   /*
   const navButtonStyle =
     "font-space-grotesk uppercase group inline-flex h-9 w-max items-center justify-center text-base font-bold text-enei-beige focus:outline-none disabled:pointer-events-none";
@@ -48,14 +50,12 @@ export default function NavBar() {
   return (
     <>
       <nav className="py-5 px-6 sm:px-12 md:px-24 lg:px-36 flex flex-row justify-between items-center flex-grow md:flex-grow-0">
-        <Link href="/">
+        <Link route="pages:home">
           <img className="w-28 max-md:w-24" src="/images/logo-white.svg" alt="Logótipo da SINF" />
         </Link>
-        <Button className="bg-enei-beige text-enei-blue">
-          <Link href="/login">
-            <span>Login</span>
-          </Link>
-        </Button>
+        <Link route="pages:auth.login" className={cn(buttonVariants(), "bg-enei-beige text-enei-blue")}>
+          <span>Login</span>
+        </Link>
         {/*
         <NavigationMenu className="hidden sm:block">
           <NavigationMenuList className="gap-5">

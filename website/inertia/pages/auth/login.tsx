@@ -102,7 +102,7 @@ export default function Login() {
                 </div>
                 <div className="mt-4 text-center text-sm">
                   Ainda não tens conta?{' '}
-                  <Link route="view.register">
+                  <Link route="pages:auth.register">
                     <span className="underline">Regista-te</span>
                   </Link>
                 </div>

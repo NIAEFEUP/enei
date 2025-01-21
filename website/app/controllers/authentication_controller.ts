@@ -2,18 +2,9 @@ import Account from '#models/account'
 import { socialAccountLoginValidator } from '#validators/account'
 import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
-import { registerWithCredentialsValidator, createUserValidatorErrorMessage } from '#validators/authentication'
-import type { UserService } from '#services/user_service'
+import { registerWithCredentialsValidator } from '#validators/authentication'
+import { UserService } from '#services/auth_service'
 import { inject } from '@adonisjs/core'
-
-// async function getOrCreate(search: Pick<Account, 'provider' | 'providerId'>) {
-//   const account = await Account.firstOrCreate({
-//     provider: search.provider,
-//     providerId: search.providerId,
-//   })
-
-//   return account
-// }
 
 export default class AuthenticationController {
   async login({ request, auth, response, session }: HttpContext) {
@@ -33,33 +24,17 @@ export default class AuthenticationController {
   }
 
   @inject()
-  async register({ request, auth, response, session }: HttpContext, userService: UserService) {
+  async register({ request, auth, response }: HttpContext, userService: UserService) {
     const { email, password } = await request.validateUsing(registerWithCredentialsValidator)
 
-    userService.createUserWithCredentials(email, password)
-    const accountWithEmail = await Account.findByCredentials(email)
-    if (accountWithEmail) {
-      session.flash('errors', { oauth: 'Este e-mail já está em uso' })
-      return response.redirect().toRoute('view.register')
-    }
+    const user = await userService.createUserWithCredentials(email, password)
+    await auth.use('web').login(user)
 
-    try {
-      
-      const user = await User.create({ email })
+    return response.redirect().toRoute('auth.email-confirmation.show')
+  }
 
-      // await Account.create({
-      //   id: email,
-      //   password: password,
-      //   user_id: user.id,
-      // })
-
-      await auth.use('web').login(user)
-
-      response.redirect('/')
-    } catch (error) {
-      session.flash('errors', { oauth: 'Ocorreu um erro no registo' })
-      return response.redirect().toRoute('view.register')
-    }
+  async showEmailConfirmation({ inertia }: HttpContext) {
+    return inertia.render('email_confirmation')
   }
 
   async verify({ request, view }: HttpContext) {
