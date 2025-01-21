@@ -1,21 +1,17 @@
-import Account from '#models/account'
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class extends BaseSchema {
-  protected tableName = Account.table
+  protected tableName = 'accounts'
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.timestamp('created_at')
       table.timestamp('updated_at')
 
-      table.string('provider').notNullable()
-      table.string('provider_id').notNullable()
-      table.primary(['provider', 'provider_id'])
-
+      table.string('id').primary()
       table.string('password')
 
-      table.integer('user_id').references('id').inTable('users')
+      table.integer('user_id').references('id').inTable('users').notNullable()
     })
   }
 

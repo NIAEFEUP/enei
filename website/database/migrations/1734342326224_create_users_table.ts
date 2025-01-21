@@ -1,8 +1,7 @@
-import User from '#models/user'
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class extends BaseSchema {
-  protected tableName = User.table
+  protected tableName = 'users'
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {

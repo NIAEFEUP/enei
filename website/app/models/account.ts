@@ -29,7 +29,7 @@ export default class Account extends compose(BaseModel, AuthFinder) {
   declare password: string
 
   @column()
-  declare user_id: number
+  declare userId: number
 
   @hasOne(() => User)
   declare user: HasOne<typeof User>

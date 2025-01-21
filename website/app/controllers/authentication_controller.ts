@@ -13,7 +13,7 @@ export default class AuthenticationController {
     try {
       const account = await Account.verifyCredentials(email, password)
 
-      const user = await User.query().where('id', account.user_id).first()
+      const user = await User.query().where('id', account.userId).first()
       if (user) await auth.use('web').login(user)
 
       response.redirect('/')

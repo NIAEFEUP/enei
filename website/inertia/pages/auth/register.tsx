@@ -4,8 +4,8 @@ import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import { useError } from '~/hooks/use_error'
 import { cn } from '~/lib/utils'
-import AppLayout from '~/layouts/applayout'
 import { useForm } from '@inertiajs/react'
+import AppLayout from '~/layouts/applayout'
 
 export default function Login() {
   const oauthError = useError('oauth')
