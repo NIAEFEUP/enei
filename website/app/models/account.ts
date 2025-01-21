@@ -1,16 +1,19 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
 import type { HasOne } from '@adonisjs/lucid/types/relations'
-import { SocialProviders } from '@adonisjs/ally/types'
+import type { SocialProviders } from '@adonisjs/ally/types'
 import { compose } from '@adonisjs/core/helpers'
 import hash from '@adonisjs/core/services/hash'
-import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import User from './user.js'
+import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
-  uids: ['provider', 'providerId'],
+  uids: ['id'],
   passwordColumnName: 'password',
 })
+
+type AccountProvider = 'credentials' | keyof SocialProviders
+type AccountId = `${AccountProvider}:${string}`
 
 export default class Account extends compose(BaseModel, AuthFinder) {
   @column.dateTime({ autoCreate: true })
@@ -19,11 +22,8 @@ export default class Account extends compose(BaseModel, AuthFinder) {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
-  @column()
-  declare provider: 'credentials' | keyof SocialProviders
-
-  @column()
-  declare providerId: string
+  @column({ isPrimary: true })
+  declare id: AccountId
 
   @column({ serializeAs: null })
   declare password: string
@@ -33,4 +33,8 @@ export default class Account extends compose(BaseModel, AuthFinder) {
 
   @hasOne(() => User)
   declare user: HasOne<typeof User>
+
+  static findByCredentials(email: string) {
+    return this.findForAuth(['id'], `credentials:${email}`)
+  }
 }

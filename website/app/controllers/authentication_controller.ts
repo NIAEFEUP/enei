@@ -2,16 +2,18 @@ import Account from '#models/account'
 import { socialAccountLoginValidator } from '#validators/account'
 import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
-import { createUserValidator, createUserValidatorErrorMessage } from '#validators/authentication'
+import { registerWithCredentialsValidator, createUserValidatorErrorMessage } from '#validators/authentication'
+import type { UserService } from '#services/user_service'
+import { inject } from '@adonisjs/core'
 
-async function getOrCreate(search: Pick<Account, 'provider' | 'providerId'>) {
-  const account = await Account.firstOrCreate({
-    provider: search.provider,
-    providerId: search.providerId,
-  })
+// async function getOrCreate(search: Pick<Account, 'provider' | 'providerId'>) {
+//   const account = await Account.firstOrCreate({
+//     provider: search.provider,
+//     providerId: search.providerId,
+//   })
 
-  return account
-}
+//   return account
+// }
 
 export default class AuthenticationController {
   async login({ request, auth, response, session }: HttpContext) {
@@ -30,30 +32,26 @@ export default class AuthenticationController {
     }
   }
 
-  async register({ request, auth, response, session }: HttpContext) {
-    try {
-      await request.validateUsing(createUserValidator)
-    } catch (error) {
-      session.flash('errors', { oauth: createUserValidatorErrorMessage(error) })
-      return response.redirect().toRoute('view.register')
-    }
+  @inject()
+  async register({ request, auth, response, session }: HttpContext, userService: UserService) {
+    const { email, password } = await request.validateUsing(registerWithCredentialsValidator)
 
-    const { email, password } = request.only(['email', 'password'])
-
-    if (await User.query().where('email', email).first()) {
+    userService.createUserWithCredentials(email, password)
+    const accountWithEmail = await Account.findByCredentials(email)
+    if (accountWithEmail) {
       session.flash('errors', { oauth: 'Este e-mail já está em uso' })
       return response.redirect().toRoute('view.register')
     }
 
     try {
+      
       const user = await User.create({ email })
 
-      await Account.create({
-        provider: 'credentials',
-        providerId: email,
-        password: password,
-        user_id: user.id,
-      })
+      // await Account.create({
+      //   id: email,
+      //   password: password,
+      //   user_id: user.id,
+      // })
 
       await auth.use('web').login(user)
 
@@ -62,6 +60,11 @@ export default class AuthenticationController {
       session.flash('errors', { oauth: 'Ocorreu um erro no registo' })
       return response.redirect().toRoute('view.register')
     }
+  }
+
+  async verify({ request, view }: HttpContext) {
+    if (request.method() === 'POST') return request.toJSON()
+    return view.render('automatic_submit')
   }
 
   async initiateGithubLogin({ ally, inertia }: HttpContext) {
@@ -77,12 +80,12 @@ export default class AuthenticationController {
     const data = await socialAccountLoginValidator.validate(user)
     console.log(data)
 
-    const account = await getOrCreate({
-      provider: 'github',
-      providerId: data.id,
-    })
+    // const account = await getOrCreate({
+    //   provider: 'github',
+    //   providerId: data.id,
+    // })
 
-    return response.json({ user, account: account.serialize() })
+    // return response.json({ user, account: account.serialize() })
   }
 
   async initiateGoogleLogin({ ally, inertia }: HttpContext) {

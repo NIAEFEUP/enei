@@ -40,6 +40,10 @@ router
       .as('auth.register')
       .use(middleware.redirectIfAuthenticated())
 
+    router
+      .route('/verify', ['GET', 'POST'], [AuthenticationController, 'verify'])
+      .middleware(middleware.automaticSubmit())
+
     // Github
     router
       .get('/github/initiate', [AuthenticationController, 'initiateGithubLogin'])

@@ -31,6 +31,7 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     |----------------------------------------------------------
     */
     FROM_EMAIL: vine.string(),
+    REPLY_TO_EMAIL: vine.string().optional(),
     SMTP_HOST: vine.string(),
     SMTP_PORT: vine.string(),
     //AWS_ACCESS_KEY_ID: vine.string(),

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Por favor aguarde...
+    </title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+  </head>
+  <body>
+    <form method="post">
+      {{ csrfField() }}
+      @each((value, key) in request.qs())
+        <input type="hidden" name="{{ key }}" value="{{ value }}" />
+      @end
+      <button type="submit">Continuar</button>
+    </form>
+    <script type="text/javascript">
+      document.forms[0].submit();
+    </script>
+  </body>
+</html>
