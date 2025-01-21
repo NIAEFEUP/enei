@@ -48,7 +48,7 @@ export default class AuthenticationController {
     return inertia.location(url)
   }
 
-  async callbackForGithubLogin({ response, ally }: HttpContext) {
+  async callbackForGithubLogin({ ally }: HttpContext) {
     const github = ally.use('github')
     const user = await github.user()
 
