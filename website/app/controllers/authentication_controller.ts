@@ -3,7 +3,7 @@ import { socialAccountLoginValidator } from '#validators/account'
 import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
 import { registerWithCredentialsValidator } from '#validators/authentication'
-import { UserService } from '#services/auth_service'
+import { UserService } from '#services/user_service'
 import { inject } from '@adonisjs/core'
 
 export default class AuthenticationController {
