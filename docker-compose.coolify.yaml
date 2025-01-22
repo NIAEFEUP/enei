@@ -1,13 +1,15 @@
 services:
   website:
-    build:
-      context: .
-      dockerfile: deploy/Dockerfile.website
+    image: ghcr.io/niaefeup/enei-website:${IMAGE_TAG:-main}
     volumes:
       - website-tmp:/app/tmp/
     expose:
       - "3333"
     environment:
+      # Coolify magic variables
+      - "SERVICE_FQDN_WEBSITE_3333"
+      # Image environment variables
+      - "IMAGE_TAG=${IMAGE_TAG:-main}"
       # Entrypoint environment variables
       - "ON_STARTUP_ENSURE_APP_KEY=${ON_STARTUP_ENSURE_APP_KEY:-false}"
       - "ON_STARTUP_MIGRATE=${ON_STARTUP_MIGRATE:-false}"
@@ -23,6 +25,7 @@ services:
       - "SMTP_PORT=${SMTP_PORT}"
       - "INERTIA_PUBLIC_TZ=${INERTIA_PUBLIC_TZ:-Europe/Lisbon}"
       - "INERTIA_PUBLIC_EVENT_COUNTDOWN_DATE=${INERTIA_PUBLIC_EVENT_COUNTDOWN_DATE:-2025-04-11}"
+      - "INERTIA_PUBLIC_APP_URL=${SERVICE_FQDN_WEBSITE_3333}"
 
 volumes:
   website-tmp:

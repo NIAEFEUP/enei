@@ -1,0 +1,89 @@
+name: Infrastructure
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: "niaefeup/enei-website"
+  COOLIFY_API: https://dashboard.limwa.pt/api
+
+concurrency:
+  group: infrastructure
+
+jobs:
+  determine-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.determine-tag.outputs.tag }}
+    steps:
+      - name: Determine tag (pull request)
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "TAG=pr-${{ github.event.number }}" >> $GITHUB_ENV
+
+      - name: Determine tag (push)
+        if: github.event_name == 'push'
+        run: |
+          echo "TAG=${{ github.ref_name }}" >> $GITHUB_ENV
+
+      - name: Output tag
+        id: determine-tag
+        run: |
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+  create-application:
+    runs-on: ubuntu-latest
+    needs: determine-tag
+    steps:
+      - name: Exit if event is not wanted
+        if: ${{ github.event_name != 'pull_request' || !contains(fromJson('["opened", "reopened"]'), github.event.action) }}
+        run: |
+            curl --request GET '${{ env.COOLIFY_API }}/v1/deploy?tag=enei-website-$TAG&force=true' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+  deploy-image:
+    runs-on: ubuntu-latest
+
+    needs: determine-tag
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to ghcr.io
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.TOKEN  }}
+
+      - name: Build image and push to registry
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: deploy/Dockerfile.website
+          platforms: linux/amd64
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.determine-tag.outputs.tag }}
+    
+    
+
+      - name: Deploy to Coolify
+        run: |
+          curl --request GET '${{ env.COOLIFY_WEBHOOK }}?tag=enei-website-$TAG&force=true' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
