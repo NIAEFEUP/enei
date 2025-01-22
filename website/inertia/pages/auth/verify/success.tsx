@@ -1,15 +1,25 @@
 import { Link } from '@tuyau/inertia/react'
+import { buttonVariants } from '~/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import BaseLayout from '~/layouts/base'
+import CardLayout from '~/layouts/card'
 
 export default function EmailVerification() {
   return (
     <BaseLayout title="E-mail confirmado">
-      <div className="flex flex-col items-center justify-center gap-4 py-12">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold">O teu e-mail foi confirmado!</h1>
-          <p className="text-gray-500">Podes carregar <Link route="pages:home">aqui</Link> para ir para a página inicial.</p>
-        </div>
-      </div>
+      <CardLayout>
+        <Card>
+          <CardHeader>
+            <CardTitle>O teu e-mail foi confirmado!</CardTitle>
+            <CardDescription>Obrigado por confirmares o teu e-mail no ENEI 2025!</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link route="pages:home" className={buttonVariants()}>
+              Ir para a página inicial
+            </Link>
+          </CardContent>
+        </Card>
+      </CardLayout>
     </BaseLayout>
   )
 }
