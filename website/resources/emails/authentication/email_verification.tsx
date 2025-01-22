@@ -35,7 +35,7 @@ const EmailVerification = ({ logoUrl, email, verificationLink }: EmailVerificati
               Este e-mail foi enviado automaticamente para: <span className='underline'>{email}</span>.
               <br />
               Se não criaste uma conta em{' '}
-              <Link href="https://eneiconf.pt">eneiconf.pt</Link>, podes ignorar este
+              <Link href="https://eneiconf.pt" className='text-inherit underline'>eneiconf.pt</Link>, podes ignorar este
               e-mail.
             </Text>
           </Section>
