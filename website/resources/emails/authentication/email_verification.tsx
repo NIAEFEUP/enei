@@ -12,7 +12,7 @@ const EmailVerification = ({ logoUrl, email, verificationLink }: EmailVerificati
     <BaseLayout>
       <Body>
         <Container>
-          <Section className="p-[16px_32px_32px] bg-primary font-sans font-medium text-primary-foreground rounded-xl">
+          <Section className="p-[16px_32px_32px] bg-primary font-medium text-primary-foreground rounded-xl">
             <Img src={logoUrl} alt="Logótipo do ENEI 2025" height={50} />
             <Heading className="mt-[32px] text-[24px]">Confirma o teu e-mail!</Heading>
             <Text>
