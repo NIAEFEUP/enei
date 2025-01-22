@@ -39,6 +39,7 @@ router.use([
   () => import('@adonisjs/session/session_middleware'),
   () => import('@adonisjs/shield/shield_middleware'),
   () => import('@adonisjs/auth/initialize_auth_middleware'),
+  () => import('#middleware/logout_if_authentication_disabled_middleware'),
 ])
 
 /**
@@ -46,6 +47,7 @@ router.use([
  * the routes or the routes group.
  */
 export const middleware = router.named({
+  requireAuthenticationEnabled: () => import('#middleware/require_authentication_enabled_middleware'),
   verifyUrlSignature: () => import('#middleware/verify_url_signature_middleware'),
   automaticSubmit: () => import('#middleware/automatic_submit_middleware'),
   redirectIfAuthenticated: () => import('#middleware/redirect_if_authenticated_middleware'),

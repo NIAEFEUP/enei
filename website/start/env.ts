@@ -32,7 +32,7 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     */
     FROM_EMAIL: vine.string(),
     REPLY_TO_EMAIL: vine.string().optional(),
-    
+
     SMTP_HOST: vine.string(),
     SMTP_PORT: vine.string(),
     //AWS_ACCESS_KEY_ID: vine.string(),
@@ -82,6 +82,10 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     INERTIA_PUBLIC_TZ: vine.string(),
     INERTIA_PUBLIC_EVENT_COUNTDOWN_DATE: vine.string(),
     INERTIA_PUBLIC_APP_URL: vine.string(),
+    INERTIA_PUBLIC_AUTHENTICATION_ENABLED: vine
+      .boolean({ strict: false })
+      .optional()
+      .transform((val) => val ?? false),
   })
 })
 

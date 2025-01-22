@@ -62,9 +62,7 @@ export default class AuthenticationController {
     return response.redirect().toRoute('pages:auth.verify')
   }
 
-  async callbackForEmailVerification({ request, view, response }: HttpContext) {
-    if (request.method() !== 'POST') return view.render('automatic_submit')
-
+  async callbackForEmailVerification({ request, response }: HttpContext) {
     const { email } = await request.validateUsing(emailVerificationCallbackValidator)
     await this.userService.verifyEmail(email)
 

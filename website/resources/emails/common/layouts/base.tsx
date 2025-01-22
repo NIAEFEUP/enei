@@ -11,7 +11,7 @@ export const BaseLayout = ({
 }) => {
   return (
     <Tailwind>
-      <Html className={cn("mt-[16px] font-sans bg-secondary", className)}>{children}</Html>
+      <Html className={cn("mt-[16px] font-sans", className)}>{children}</Html>
     </Tailwind>
   )
 }

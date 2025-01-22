@@ -98,4 +98,5 @@ router
     //   .middleware(middleware.verifySocialCallback({ provider: 'linkedin' }))
     //   .as('actions:auth.linkedin.callback')
   })
+  .middleware(middleware.requireAuthenticationEnabled())
   .prefix('/auth')
