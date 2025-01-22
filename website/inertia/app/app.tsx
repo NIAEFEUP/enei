@@ -1,13 +1,13 @@
 /// <reference path="../../adonisrc.ts" />
 /// <reference path="../../config/inertia.ts" />
+/// <reference path="../../config/auth.ts" />
 
 import '../css/app.css'
 
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import { createInertiaApp } from '@inertiajs/react'
-import { TuyauProvider } from '@tuyau/inertia/react'
 import { hydrateRoot } from 'react-dom/client'
-import { tuyau } from './tuyau'
+import { TuyauWrapper } from './tuyau'
 
 const appName = import.meta.env.VITE_APP_NAME || 'ENEI'
 
@@ -24,9 +24,13 @@ createInertiaApp({
     hydrateRoot(
       el,
       <>
-        <TuyauProvider client={tuyau}>
-          <App {...props} />
-        </TuyauProvider>
+        <App {...props}>
+          {(page) => (
+            <TuyauWrapper>
+              <page.Component key={page.key} {...page.props} />
+            </TuyauWrapper>
+          )}
+        </App>
       </>
     )
   },

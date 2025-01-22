@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { Head } from "@inertiajs/react";
 import NavBar from "../components/navbar";
 

@@ -51,9 +51,11 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         ...classNames,
       }}
       components={{
+        // @ts-ignore fixed in another branch
         IconLeft: ({ className, ...props }) => (
           <ChevronLeft className={cn('h-4 w-4', className)} {...props} />
         ),
+        // @ts-ignore fixed in another branch
         IconRight: ({ className, ...props }) => (
           <ChevronRight className={cn('h-4 w-4', className)} {...props} />
         ),

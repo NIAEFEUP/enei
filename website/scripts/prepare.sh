@@ -2,6 +2,11 @@
 
 set -e
 
+if [ -n "$SKIP_SCRIPTS" ]; then
+  echo "Skipping preparation script..."
+  exit 0
+fi
+
 # Change current working directory to the root of the repository
 
 cd "$(dirname "$0")"
@@ -26,6 +31,9 @@ fi
 
 echo "Generating Tuyau types..."
 node ace tuyau:generate
+
+# Prepend "// @ts-nocheck" to .adonsjs/api.ts
+sed -i '1s/^/\/\/ @ts-nocheck\n/' .adonisjs/api.ts
 
 # Preparation is complete
 
