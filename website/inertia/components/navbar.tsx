@@ -3,7 +3,6 @@ import { Link } from '@tuyau/inertia/react'
 import { Button, buttonVariants } from '~/components/ui/button'
 import { useAuth } from '~/hooks/use_auth'
 import { useTuyau } from '~/hooks/use_tuyau'
-import { cn } from '~/lib/utils'
 
 /*
 import { Menu } from "lucide-react";
@@ -33,7 +32,7 @@ type PageRoute = {
 
 function LoginButton() {
   return (
-    <Link route="pages:auth.login" className={cn(buttonVariants(), 'bg-enei-beige text-enei-blue')}>
+    <Link route="pages:auth.login" className={buttonVariants({ variant: "secondary" })}>
       Login
     </Link>
   )
@@ -50,7 +49,7 @@ function LogoutButton() {
 
   return (
     <form onSubmit={onSubmit} method="post">
-      <Button type="submit" className="bg-enei-beige text-enei-blue">
+      <Button type="submit" variant="secondary">
         Logout
       </Button>
     </form>

@@ -1,32 +1,68 @@
 import { useForm } from '@inertiajs/react'
 import { Button } from '~/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
+import { useAuth } from '~/hooks/use_auth'
+import { useCooldown } from '~/hooks/use_cooldown'
+import { useToast } from '~/hooks/use_toast'
 import { useTuyau } from '~/hooks/use_tuyau'
-import AppLayout from '~/layouts/applayout'
+import BaseLayout from '~/layouts/base'
+import CardLayout from '~/layouts/card'
 
 export default function EmailVerification() {
   const tuyau = useTuyau()
+  const auth = useAuth()
+  if (!auth.authenticated) {
+    throw new Error('How did you get here?')
+  }
 
   const { post } = useForm()
 
+  const { toast } = useToast()
+
+  const cooldown = useCooldown({
+    seconds: 60,
+    onThrottledActivation: () => {
+      toast({ title: 'Por favor aguarde...', description: <p>Hey</p> })
+    },
+  })
+
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    post(tuyau.$url('actions:auth.verify.send'))
+    post(tuyau.$url('actions:auth.verify.send'), {
+      onSuccess: () => {
+        toast({
+          title: 'E-mail reenviado!',
+          description: 'Por favor, verifica a tua caixa de entrada, incluindo o spam!',
+          duration: 5000,
+        })
+      },
+    })
   }
 
   return (
-    <AppLayout title="Registo bem-sucedido">
-      <div className="flex flex-col items-center justify-center gap-4 py-12">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold">Confirmação de E-mail</h1>
-          <p className="text-gray-500">Um e-mail de confirmação foi enviado para você.</p>
-          <p className="text-gray-500">Por favor, siga o link para confirmar seu e-mail.</p>
-        </div>
-      </div>
-      <form onSubmit={onSubmit} method="post">
-        <Button type="submit" className="w-full bg-enei-blue">
-          Confirmar E-mail
-        </Button>
-      </form>
-    </AppLayout>
+    <BaseLayout title="Registo bem-sucedido">
+      <CardLayout>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl">Confirmação de e-mail</CardTitle>
+            <CardDescription>
+              Um e-mail de confirmação foi enviado para {auth.user.email}.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={cooldown.throttle(onSubmit)} method="post">
+              <Button type="submit" className="w-full" disabled={cooldown.active}>
+                Não recebi nada...
+              </Button>
+              {cooldown.active && (
+                <p className="text-muted-foreground text-xs mt-2">
+                  Por favor espera {cooldown.secondsLeft} segundos antes de tentar novamente.
+                </p>
+              )}
+            </form>
+          </CardContent>
+        </Card>
+      </CardLayout>
+    </BaseLayout>
   )
 }

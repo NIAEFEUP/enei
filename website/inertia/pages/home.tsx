@@ -1,4 +1,4 @@
-import AppLayout from '../layouts/applayout'
+import BaseLayout from '../layouts/base'
 import { TZDateMini } from '@date-fns/tz'
 import { useCountdown } from '~/hooks/use_countdown'
 import { useEnvironment } from '~/hooks/use_env'
@@ -74,7 +74,7 @@ function Countdown() {
 export default function Home() {
   return (
     <>
-      <AppLayout title="Home" className="flex">
+      <BaseLayout title="Home" className="flex">
         <div className="absolute inset-0 bg-gradient-to-b from-[#0B4F6C_7%] to-enei-beige h-[100vh]" />
         <div
           className="absolute inset-0 bg-[url('/images/background.jpeg')] bg-cover bg-no-repeat bg-bottom md:bg-center
@@ -111,7 +111,7 @@ export default function Home() {
             </p>
           </div> */}
         </section>
-      </AppLayout>
+      </BaseLayout>
     </>
   )
 }
