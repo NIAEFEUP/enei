@@ -31,7 +31,10 @@ export default class AuthenticationController {
         session.flashErrors({ password: 'As credenciais que introduziste não são válidas' })
         return response.redirect().back()
       }
+
+      throw error
     }
+    
   }
 
   async logout({ auth, response }: HttpContext) {
