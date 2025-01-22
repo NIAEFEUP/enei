@@ -46,7 +46,8 @@ export default defineConfig({
     () => import('@adonisjs/mail/mail_provider'),
     () => import('@tuyau/core/tuyau_provider'),
     () => import('@adonisjs/ally/ally_provider'),
-    () => import('@adonisjs/limiter/limiter_provider')
+    () => import('@adonisjs/limiter/limiter_provider'),
+    () => import('@adonisjs/redis/redis_provider')
   ],
 
   /*

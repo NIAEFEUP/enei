@@ -11,9 +11,6 @@
   <body>
     <form method="post">
       {{ csrfField() }}
-      @each((value, key) in request.qs())
-        <input type="hidden" name="{{ key }}" value="{{ value }}" />
-      @end
       <button type="submit">Continuar</button>
     </form>
     <script type="text/javascript">

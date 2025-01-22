@@ -32,10 +32,10 @@ const EmailVerification = ({ logoUrl, email, verificationLink }: EmailVerificati
           </Section>
           <Section>
             <Text className="text-primary text-center px-[50px]">
-              Este e-mail foi enviado automaticamente para: {email}.
+              Este e-mail foi enviado automaticamente para: <span className='underline'>{email}</span>.
               <br />
               Se não criaste uma conta em{' '}
-              <Link href="https://eneiconf.pt">https://eneiconf.pt</Link>, podes ignorar este
+              <Link href="https://eneiconf.pt">eneiconf.pt</Link>, podes ignorar este
               e-mail.
             </Text>
           </Section>

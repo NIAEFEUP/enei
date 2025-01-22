@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
-import type { HasOne } from '@adonisjs/lucid/types/relations'
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import type { SocialProviders } from '@adonisjs/ally/types'
 import { compose } from '@adonisjs/core/helpers'
 import hash from '@adonisjs/core/services/hash'
@@ -31,8 +31,8 @@ export default class Account extends compose(BaseModel, AuthFinder) {
   @column()
   declare userId: number
 
-  @hasOne(() => User)
-  declare user: HasOne<typeof User>
+  @belongsTo(() => User)
+  declare user: BelongsTo<typeof User>
 
   static findByCredentials(email: string) {
     return this.findForAuth(['id'], `credentials:${email}`)

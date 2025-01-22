@@ -11,6 +11,10 @@
 
 import limiter from '@adonisjs/limiter/services/main'
 
-export const throttle = limiter.define('global', () => {
-  return limiter.allowRequests(10).every('1 minute')
+export const emailVerificationThrottle = limiter.define('auth.verify', (ctx) => {
+  if (ctx.auth.user) {
+    return limiter.allowRequests(1).every('1 minute').usingKey(`user:${ctx.auth.user.id}`)
+  }
+
+  return null
 })

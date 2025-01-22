@@ -1,6 +1,11 @@
+import type User from '#models/user'
 import env from '#start/env'
 import { defineConfig } from '@adonisjs/inertia'
 import type { InferSharedProps } from '@adonisjs/inertia/types'
+
+type AuthenticationData =
+  | { authenticated: false }
+  | { authenticated: true; user: Pick<User, 'email'> }
 
 const inertiaConfig = defineConfig({
   /**
@@ -13,6 +18,15 @@ const inertiaConfig = defineConfig({
    */
   sharedData: {
     environment: env.public(),
+    auth: async ({ auth, inertia })  => {
+      return inertia.always(async (): Promise<AuthenticationData> => {
+        if (!auth.authenticationAttempted) await auth.check()
+
+        const user = auth.user
+        if (!user) return { authenticated: false }
+        return { authenticated: true, user: { email: user.email } }
+      })
+    },
   },
 
   /**

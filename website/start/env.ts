@@ -32,6 +32,7 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     */
     FROM_EMAIL: vine.string(),
     REPLY_TO_EMAIL: vine.string().optional(),
+    
     SMTP_HOST: vine.string(),
     SMTP_PORT: vine.string(),
     //AWS_ACCESS_KEY_ID: vine.string(),
@@ -49,6 +50,15 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     |----------------------------------------------------------
     */
     LIMITER_STORE: vine.enum(['redis', 'memory'] as const),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring the redis package
+    |----------------------------------------------------------
+    */
+    REDIS_HOST: vine.string(),
+    REDIS_PORT: vine.string(),
+    REDIS_PASSWORD: vine.string().optional(),
 
     /*
     |----------------------------------------------------------

@@ -10,7 +10,7 @@ export default class User extends BaseModel {
   @column()
   declare email: string
 
-  @column()
+  @column.dateTime()
   declare emailVerifiedAt: DateTime | null
 
   @column.dateTime({ autoCreate: true })
@@ -21,4 +21,8 @@ export default class User extends BaseModel {
 
   @hasMany(() => Account)
   declare accounts: HasMany<typeof Account>
+
+  isEmailVerified() {
+    return this.emailVerifiedAt !== null
+  }
 }

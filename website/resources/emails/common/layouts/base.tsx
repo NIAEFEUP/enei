@@ -1,5 +1,6 @@
 import { Html } from '@react-email/components'
 import { Tailwind } from '../tailwind.js'
+import { cn } from '../cn.js'
 
 export const BaseLayout = ({
   children,
@@ -10,7 +11,7 @@ export const BaseLayout = ({
 }) => {
   return (
     <Tailwind>
-      <Html className={className}>{children}</Html>
+      <Html className={cn("mt-[16px]", className)}>{children}</Html>
     </Tailwind>
   )
 }

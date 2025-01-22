@@ -18,7 +18,6 @@ export default function Login() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
     post('/auth/register')
   }
 

@@ -1,5 +1,8 @@
+import { useForm } from '@inertiajs/react'
 import { Link } from '@tuyau/inertia/react'
-import { buttonVariants } from '~/components/ui/button'
+import { Button, buttonVariants } from '~/components/ui/button'
+import { useAuth } from '~/hooks/use_auth'
+import { useTuyau } from '~/hooks/use_tuyau'
 import { cn } from '~/lib/utils'
 
 /*
@@ -28,8 +31,33 @@ type PageRoute = {
 
 */
 
-export default function NavBar() {
+function LoginButton() {
+  return (
+    <Link route="pages:auth.login" className={cn(buttonVariants(), 'bg-enei-beige text-enei-blue')}>
+      Login
+    </Link>
+  )
+}
+
+function LogoutButton() {
+  const tuyau = useTuyau()
+  const { post } = useForm()
   
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    post(tuyau.$url('actions:auth.logout'))
+  }
+
+  return (
+    <form onSubmit={onSubmit} method="post">
+      <Button type="submit" className="bg-enei-beige text-enei-blue">
+        Logout
+      </Button>
+    </form>
+  )
+}
+
+export default function NavBar() {
   /*
   const navButtonStyle =
     "font-space-grotesk uppercase group inline-flex h-9 w-max items-center justify-center text-base font-bold text-enei-beige focus:outline-none disabled:pointer-events-none";
@@ -47,15 +75,15 @@ export default function NavBar() {
   }];
   */
 
+  const auth = useAuth()
+
   return (
     <>
       <nav className="py-5 px-6 sm:px-12 md:px-24 lg:px-36 flex flex-row justify-between items-center flex-grow md:flex-grow-0">
         <Link route="pages:home">
           <img className="w-28 max-md:w-24" src="/images/logo-white.svg" alt="Logótipo da SINF" />
         </Link>
-        <Link route="pages:auth.login" className={cn(buttonVariants(), "bg-enei-beige text-enei-blue")}>
-          <span>Login</span>
-        </Link>
+        {auth.authenticated ? <LogoutButton /> : <LoginButton />}
         {/*
         <NavigationMenu className="hidden sm:block">
           <NavigationMenuList className="gap-5">

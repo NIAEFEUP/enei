@@ -1,89 +1,114 @@
 import Account from '#models/account'
-import { socialAccountLoginValidator } from '#validators/account'
-import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
-import { registerWithCredentialsValidator } from '#validators/authentication'
+import {
+  registerWithCredentialsValidator,
+  emailVerificationCallbackValidator,
+  loginWithCredentialsValidator,
+} from '#validators/authentication'
 import { UserService } from '#services/user_service'
 import { inject } from '@adonisjs/core'
+import UserCreated from '#events/user_created'
+import SendVerificationEmail from '#listeners/send_verification_email'
+import { errors } from '@adonisjs/auth'
 
+@inject()
 export default class AuthenticationController {
-  async login({ request, auth, response, session }: HttpContext) {
-    const { email, password } = request.only(['email', 'password'])
+  constructor(private userService: UserService) {}
+
+  async login({ request, auth, session, response }: HttpContext) {
+    const { email, password } = await request.validateUsing(loginWithCredentialsValidator)
 
     try {
-      const account = await Account.verifyCredentials(email, password)
+      const account = await Account.verifyCredentials(`credentials:${email}`, password)
 
-      const user = await User.query().where('id', account.userId).first()
-      if (user) await auth.use('web').login(user)
+      await account.load('user')
+      await auth.use('web').login(account.user)
 
-      response.redirect('/')
+      return response.redirect().toRoute('pages:home')
+      
     } catch (error) {
-      session.flash('errors', { oauth: 'Email ou palavra-passe incorretos' })
-      return response.redirect().back()
+      if (error instanceof errors.E_INVALID_CREDENTIALS) {
+        session.flashErrors({ password: 'As credenciais que introduziste não são válidas' })
+        return response.redirect().back()
+      }
     }
   }
 
-  @inject()
-  async register({ request, auth, response }: HttpContext, userService: UserService) {
+  async logout({ auth, response }: HttpContext) {
+    await auth.use('web').logout()
+    return response.redirect().toRoute('pages:home')
+  }
+
+  async register({ request, auth, response }: HttpContext) {
     const { email, password } = await request.validateUsing(registerWithCredentialsValidator)
 
-    const user = await userService.createUserWithCredentials(email, password)
+    const user = await this.userService.createUserWithCredentials(email, password)
     await auth.use('web').login(user)
 
-    return response.redirect().toRoute('auth.email-confirmation.show')
+    return response.redirect().toRoute('pages:auth.verify')
   }
 
-  async showEmailConfirmation({ inertia }: HttpContext) {
-    return inertia.render('email_confirmation')
+  async retryEmailVerification({ auth, response }: HttpContext) {
+    const user = auth.getUserOrFail()
+
+    const listener = new SendVerificationEmail()
+    listener.handle(new UserCreated(user))
+
+    return response.redirect().toRoute('pages:auth.verify')
   }
 
-  async verify({ request, view }: HttpContext) {
-    if (request.method() === 'POST') return request.toJSON()
-    return view.render('automatic_submit')
+  async callbackForEmailVerification({ request, view, response }: HttpContext) {
+    if (request.method() !== 'POST') return view.render('automatic_submit')
+
+    const { email } = await request.validateUsing(emailVerificationCallbackValidator)
+    await this.userService.verifyEmail(email)
+
+    return response.redirect().toRoute('actions:auth.verify.success')
   }
 
-  async initiateGithubLogin({ ally, inertia }: HttpContext) {
-    const url = await ally.use('github').redirectUrl()
-    console.log(url)
-    return inertia.location(url)
-  }
+  // SOCIAL AUTHENTICATION
 
-  async callbackForGithubLogin({ ally }: HttpContext) {
-    const github = ally.use('github')
-    const user = await github.user()
+  // async initiateGithubLogin({ ally, inertia }: HttpContext) {
+  //   const url = await ally.use('github').redirectUrl()
+  //   return inertia.location(url)
+  // }
 
-    const data = await socialAccountLoginValidator.validate(user)
-    console.log(data)
+  // async callbackForGithubLogin({ ally }: HttpContext) {
+  //   const github = ally.use('github')
+  //   const user = await github.user()
 
-    // const account = await getOrCreate({
-    //   provider: 'github',
-    //   providerId: data.id,
-    // })
+  //   const data = await socialAccountLoginValidator.validate(user)
+  //   console.log(data)
 
-    // return response.json({ user, account: account.serialize() })
-  }
+  //   const account = await getOrCreate({
+  //     provider: 'github',
+  //     providerId: data.id,
+  //   })
 
-  async initiateGoogleLogin({ ally, inertia }: HttpContext) {
-    const url = await ally.use('google').redirectUrl()
-    return inertia.location(url)
-  }
+  //   return response.json({ user, account: account.serialize() })
+  // }
 
-  async callbackForGoogleLogin({ response, ally }: HttpContext) {
-    const google = ally.use('google')
-    const user = await google.user()
+  // async initiateGoogleLogin({ ally, inertia }: HttpContext) {
+  //   const url = await ally.use('google').redirectUrl()
+  //   return inertia.location(url)
+  // }
 
-    return response.json({ user })
-  }
+  // async callbackForGoogleLogin({ response, ally }: HttpContext) {
+  //   const google = ally.use('google')
+  //   const user = await google.user()
 
-  async initiateLinkedinLogin({ ally, inertia }: HttpContext) {
-    const url = await ally.use('linkedin').redirectUrl()
-    return inertia.location(url)
-  }
+  //   return response.json({ user })
+  // }
 
-  async callbackForLinkedinLogin({ response, ally }: HttpContext) {
-    const linkedin = ally.use('linkedin')
-    const user = await linkedin.user()
+  // async initiateLinkedinLogin({ ally, inertia }: HttpContext) {
+  //   const url = await ally.use('linkedin').redirectUrl()
+  //   return inertia.location(url)
+  // }
 
-    return response.json({ user })
-  }
+  // async callbackForLinkedinLogin({ response, ally }: HttpContext) {
+  //   const linkedin = ally.use('linkedin')
+  //   const user = await linkedin.user()
+
+  //   return response.json({ user })
+  // }
 }

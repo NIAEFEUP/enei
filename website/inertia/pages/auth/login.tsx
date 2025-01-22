@@ -11,7 +11,7 @@ import AppLayout from '~/layouts/applayout'
 export default function Login() {
   const oauthError = useError('oauth')
 
-  const { data, setData, post } = useForm({
+  const { data, setData, errors, post } = useForm({
     email: '',
     password: '',
   })
@@ -46,6 +46,7 @@ export default function Login() {
                       onChange={(e) => setData('email', e.target.value)}
                       required
                     />
+                    {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
                   </div>
                   <div className="grid gap-2">
                     <div className="flex items-center">
@@ -65,6 +66,7 @@ export default function Login() {
                       onChange={(e) => setData('password', e.target.value)}
                       required
                     />
+                    {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
                   </div>
                   <div className="flex flex-col gap-4   ">
                     <Button type="submit" className="w-full bg-enei-blue">

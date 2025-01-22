@@ -8,6 +8,7 @@
 */
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
+import { emailVerificationThrottle } from '#start/limiter'
 
 const AuthenticationController = () => import('#controllers/authentication_controller')
 const TicketsController = () => import('#controllers/tickets_controller')
@@ -18,66 +19,83 @@ router.on('/tickets/:id/checkout').renderInertia('payments').as('checkout')
 
 router
   .group(() => {
-    router
-      .on('/login')
-      .renderInertia('auth/login')
-      .as('pages:auth.login')
-      .use(middleware.redirectIfAuthenticated())
+    router.on('/login').renderInertia('auth/login').as('pages:auth.login').use(middleware.guest())
 
     router
       .post('/login', [AuthenticationController, 'login'])
       .as('actions:auth.login')
-      .use(middleware.redirectIfAuthenticated())
+      .use(middleware.guest())
+
+    router
+      .post('/logout', [AuthenticationController, 'logout'])
+      .as('actions:auth.logout')
+      .use(middleware.auth())
 
     router
       .on('/register')
       .renderInertia('auth/register')
       .as('pages:auth.register')
-      .use(middleware.redirectIfAuthenticated())
+      .use(middleware.guest())
 
     router
       .post('/register', [AuthenticationController, 'register'])
       .as('actions:auth.register')
-      .use(middleware.redirectIfAuthenticated())
+      .use(middleware.guest())
 
     router
-      .get('/email-confirmation', [AuthenticationController, 'showEmailConfirmation'])
-      .as('pages:auth.email-confirmation')
+      .on('/verify')
+      .renderInertia('auth/verify/index')
+      .as('pages:auth.verify')
       .use(middleware.auth())
 
     router
-      .route('/verify', ['GET', 'POST'], [AuthenticationController, 'verify'])
-      .as('actions:auth.verify')
-      .middleware(middleware.automaticSubmit())
-
-    // Github
-    router
-      .get('/github/initiate', [AuthenticationController, 'initiateGithubLogin'])
-      .as('actions:auth.github.initiate')
+      .post('/verify/new', [AuthenticationController, 'retryEmailVerification'])
+      .as('actions:auth.verify.send')
+      .use([middleware.auth(), emailVerificationThrottle])
 
     router
-      .get('/github/callback', [AuthenticationController, 'callbackForGithubLogin'])
-      .middleware(middleware.verifySocialCallback({ provider: 'github' }))
-      .as('actions:auth.github.callback')
-
-    // Google
-    router
-      .get('/google/initiate', [AuthenticationController, 'initiateGoogleLogin'])
-      .as('actions:auth.google.initiate')
+      .on('/verify/success')
+      .renderInertia('auth/verify/success')
+      .as('actions:auth.verify.success')
 
     router
-      .get('/google/callback', [AuthenticationController, 'callbackForGoogleLogin'])
-      .middleware(middleware.verifySocialCallback({ provider: 'google' }))
-      .as('actions:auth.google.callback')
+      .route(
+        '/verify/callback',
+        ['GET', 'POST'],
+        [AuthenticationController, 'callbackForEmailVerification']
+      )
+      .as('actions:auth.verify.callback')
+      .middleware([middleware.verifyUrlSignature(), middleware.automaticSubmit()])
 
-    // LinkedIn
-    router
-      .get('/linkedin/initiate', [AuthenticationController, 'initiateLinkedinLogin'])
-      .as('actions:auth.linkedin.initiate')
+    // SOCIAL AUTHENTICATION
 
-    router
-      .get('/linkedin/callback', [AuthenticationController, 'callbackForLinkedinLogin'])
-      .middleware(middleware.verifySocialCallback({ provider: 'linkedin' }))
-      .as('actions:auth.linkedin.callback')
+    // router
+    //   .get('/github/initiate', [AuthenticationController, 'initiateGithubLogin'])
+    //   .as('actions:auth.github.initiate')
+
+    // router
+    //   .get('/github/callback', [AuthenticationController, 'callbackForGithubLogin'])
+    //   .middleware(middleware.verifySocialCallback({ provider: 'github' }))
+    //   .as('actions:auth.github.callback')
+
+    // // Google
+    // router
+    //   .get('/google/initiate', [AuthenticationController, 'initiateGoogleLogin'])
+    //   .as('actions:auth.google.initiate')
+
+    // router
+    //   .get('/google/callback', [AuthenticationController, 'callbackForGoogleLogin'])
+    //   .middleware(middleware.verifySocialCallback({ provider: 'google' }))
+    //   .as('actions:auth.google.callback')
+
+    // // LinkedIn
+    // router
+    //   .get('/linkedin/initiate', [AuthenticationController, 'initiateLinkedinLogin'])
+    //   .as('actions:auth.linkedin.initiate')
+
+    // router
+    //   .get('/linkedin/callback', [AuthenticationController, 'callbackForLinkedinLogin'])
+    //   .middleware(middleware.verifySocialCallback({ provider: 'linkedin' }))
+    //   .as('actions:auth.linkedin.callback')
   })
   .prefix('/auth')
