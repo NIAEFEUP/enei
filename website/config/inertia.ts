@@ -18,14 +18,12 @@ const inertiaConfig = defineConfig({
    */
   sharedData: {
     environment: env.public(),
-    auth: async ({ auth, inertia })  => {
-      return inertia.always(async (): Promise<AuthenticationData> => {
-        if (!auth.authenticationAttempted) await auth.check()
+    auth: async ({ auth }): Promise<AuthenticationData> => {
+      if (!auth.authenticationAttempted) await auth.check()
 
-        const user = auth.user
-        if (!user) return { authenticated: false }
-        return { authenticated: true, user: { email: user.email } }
-      })
+      const user = auth.user
+      if (!user) return { authenticated: false }
+      return { authenticated: true, user: { email: user.email } }
     },
   },
 
