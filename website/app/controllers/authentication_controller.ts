@@ -24,6 +24,9 @@ export default class AuthenticationController {
       await account.load('user')
       await auth.use('web').login(account.user)
 
+      if (!account.user.isEmailVerified())
+        return response.redirect().toRoute('pages:auth.verify')
+
       return response.redirect().toRoute('pages:home')
       
     } catch (error) {

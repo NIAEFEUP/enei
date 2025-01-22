@@ -46,7 +46,7 @@ export default function EmailVerification() {
           <CardHeader>
             <CardTitle className="text-2xl">Confirmação de e-mail</CardTitle>
             <CardDescription>
-              Um e-mail de confirmação foi enviado para {auth.user.email}.
+              Um e-mail de confirmação foi enviado para <span className='underline'>{auth.user.email}</span>.
               Por favor, verifica a tua caixa de entrada, <span className="font-bold">incluindo o spam</span>!
             </CardDescription>
           </CardHeader>
