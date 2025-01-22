@@ -16,10 +16,6 @@ import {
   FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import { format } from 'date-fns'
-import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
-import { Calendar } from '~/components/ui/calendar'
-import { Calendar as CalendarIcon } from 'lucide-react'
 import { PhoneInput } from '~/components/ui/phone-input/phone-input'
 import {
   Select,
@@ -31,7 +27,6 @@ import {
 import LocationSelector from '~/components/ui/form-build/location-input'
 import BaseLayout from '~/components/layouts/base'
 import { Textarea } from '~/components/ui/textarea'
-import { pt } from 'date-fns/locale'
 import {
   MultiSelector,
   MultiSelectorContent,
@@ -40,6 +35,9 @@ import {
   MultiSelectorList,
   MultiSelectorTrigger,
 } from '~/components/ui/extension/multi-select'
+import { Step, Stepper } from '~/components/ui/stepper'
+import PersonalInfoForm from '~/components/register_form/1_personal_info'
+
 import * as enei from '~/lib/enei'
 
 const previousEditions = enei.getPreviousEditions()
@@ -65,6 +63,13 @@ const formSchema = z.object({
   reasonForSignup: z.string(errorMapPt),
   previousParticipations: z.array(z.string(errorMapPt)),
 })
+
+const steps = [
+  { label: "Informação Pessoal" },
+  { label: "Informação de Estudante" },
+  { label: "Informações de Logística" }, //TODO: (later) See how to make this optional
+  { label: "Comunicação" },
+]
 
 export default function Signup() {
   const [countryName, setCountryName] = useState<string>('')
@@ -96,120 +101,22 @@ export default function Signup() {
 
   return (
     <BaseLayout>
+      <p></p>
+      <div className="flex flex-col gap-4 max-w-96 mx-auto text-enei-beige">
+        <Stepper variant="circle-alt" initialStep={0} steps={steps} orientation="horizontal" responsive={true} size="md">
+
+          {/* Content */}
+          {steps.map((stepProps, index) => (
+            <Step key={stepProps.label} {...stepProps}>
+              {index === 0 && <PersonalInfoForm />}
+            </Step>
+          ))}
+        </Stepper>
+      </div>
+
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <FormField
-                control={form.control}
-                name="firstName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Primeiro Nome</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Joca" type="text" {...field} />
-                    </FormControl>
-
-                    <FormDescription>
-                      O teu primeiro e último nome vão ser visíveis no teu perfil.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div>
-              <FormField
-                control={form.control}
-                name="lastName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Último Nome</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Costa" type="text" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-
-          <FormField
-            control={form.control}
-            name="dateOfBirth"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>Data de Nascimento</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={'outline'}
-                        className={cn(
-                          'w-[240px] pl-3 text-left font-normal',
-                          !field.value && 'text-muted-foreground'
-                        )}
-                      >
-                        {field.value ? (
-                          format(field.value, 'PPP', { locale: pt })
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      locale={pt}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-                <FormDescription>
-                  A tua data de nascimento vai ser usada para determinar a tua idade.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem className="flex flex-col items-start">
-                <FormLabel>Número de telemóvel</FormLabel>
-                <FormControl className="w-full">
-                  <PhoneInput placeholder="Placeholder" {...field} defaultCountry="PT" />
-                </FormControl>
-                {/* <FormDescription>Enter your phone number.</FormDescription> */}
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="cityOfOrigin"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Naturalidade</FormLabel>
-
-                <FormControl>
-                  <Input placeholder="Vila Nova de Gaia" type="text" {...field} />
-                </FormControl>
-
-                <FormDescription>Este é o concelho onde nasceste.</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
           <FormField
             control={form.control}
             name="university"
