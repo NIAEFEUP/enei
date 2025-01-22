@@ -25,7 +25,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare password: string
 
   @hasOne(() => Profile)
-  declare profile: HasOne<typeof Profile>
+  declare profile: HasOne<typeof Profile> | null
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

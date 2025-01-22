@@ -13,6 +13,9 @@ export default class Profile extends BaseModel {
   declare lastName: string
 
   @column()
+  declare email: string
+
+  @column()
   declare age: number
 
   @column()
@@ -20,12 +23,24 @@ export default class Profile extends BaseModel {
 
   // Student Info
   @column()
+  declare university: string
+
+  @column()
   declare year: number
 
   @column()
   declare isComplete: boolean
 
+  @column()
+  declare state: string
+
+  @column()
+  declare country: string
+
   // Logistics Info
+  @column()
+  declare shirtSize: string
+
   @column()
   declare foodRestrictions: string
 
@@ -33,7 +48,7 @@ export default class Profile extends BaseModel {
   declare isVegetarian: boolean
 
   @column()
-  declare transportation: string
+  declare transportation: string[]
 
   // Communication Info
   @column()

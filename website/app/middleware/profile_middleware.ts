@@ -7,8 +7,9 @@ export default class ProfileMiddleware {
      * Middleware logic goes here (before the next call)
      */
     const user = ctx.auth.user
+    user?.preload('profile')
 
-    if (!user?.profileId) {
+    if (!user?.profile) {
       ctx.response.redirect().toRoute('/signup')
     }
 
@@ -19,4 +20,3 @@ export default class ProfileMiddleware {
     return output
   }
 }
-
