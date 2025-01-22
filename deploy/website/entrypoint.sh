@@ -125,11 +125,13 @@ print ">> Application preparation"
 push_indent "   "
 
 if [ "$ON_STARTUP_MIGRATE" = "true" ]; then
-    print ">> ON_STARTUP_MIGRATE is enabled"
+    mode="${ON_STARTUP_MIGRATE_MODE:-run}"
+
+    print ">> ON_STARTUP_MIGRATE is enabled [mode: $mode]"
     push_indent "   "
 
     print "Migrating database..."
-    run_command node ace migration:run --force
+    run_command node ace migration:$mode --force
 
     pop_indent
 fi

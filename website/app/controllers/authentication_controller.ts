@@ -34,7 +34,6 @@ export default class AuthenticationController {
 
       throw error
     }
-    
   }
 
   async logout({ auth, response }: HttpContext) {
