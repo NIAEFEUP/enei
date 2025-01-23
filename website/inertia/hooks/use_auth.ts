@@ -12,7 +12,7 @@ type UseAuthResult<Props extends UseAuthProps> = Props["only"] extends (infer On
   : AuthenticationData
 
 export function useAuth<Props extends UseAuthProps>(props?: Props) {
-  const { only } = props ?? {}
+  const only = props?.only ?? []
 
   const auth = usePage<SharedProps>().props.auth
   const valid = useMemo<boolean>(() => {
