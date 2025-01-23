@@ -14,18 +14,16 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    * codes. You might want to enable them in production only, but feel
    * free to enable them in development as well.
    */
-  protected renderStatusPages = app.inProduction
+  protected renderStatusPages = true
 
-  protected ignoreCodes = []
-  protected ignoreStatuses = []
-  protected ignoreExceptions = []
+  protected ignoreCodes = ["E_AUTH_DISABLED"]
 
   /**
    * Status pages is a collection of error code range and a callback
    * to return the HTML contents to send as a response.
    */
   protected statusPages: Record<StatusPageRange, StatusPageRenderer> = {
-    '401': (_error, { response }) => response.status(200).send("Yikes, you're not allowed to do that"),
+    '403': (error, { inertia }) => inertia.render('errors/forbidden', { error }),
     '404': (error, { inertia }) => inertia.render('errors/not_found', { error }),
     '500..599': (error, { inertia }) => inertia.render('errors/server_error', { error }),
   }
@@ -35,7 +33,6 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    * response to the client
    */
   async handle(error: unknown, ctx: HttpContext) {
-    console.log("handling", error)
     return super.handle(error, ctx)
   }
 

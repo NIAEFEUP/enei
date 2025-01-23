@@ -1,9 +1,9 @@
-import { MaybePromise } from '@adonisjs/inertia/types'
+import type { MaybePromise } from '@adonisjs/inertia/types'
 import { useEffect, useMemo, useState } from 'react'
 
 type UseCooldownProps = {
   seconds: number
-  onThrottledActivation: () => MaybePromise<void>
+  onThrottledActivation?: () => MaybePromise<void>
 }
 
 type Throttler = {
@@ -25,7 +25,8 @@ export function useCooldown({ seconds, onThrottledActivation }: UseCooldownProps
   const throttle: Throttler = (fn?: Parameters<Throttler>[0]) => {
     return async <I, O>(arg?: I) => {
       if (active) {
-        await onThrottledActivation()
+        if (onThrottledActivation)
+          await onThrottledActivation()
       } else {
         setActivatedAt(Date.now())
         if (fn)

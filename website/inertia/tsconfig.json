@@ -6,7 +6,8 @@
     "jsx": "react-jsx",
     "paths": {
       "~/*": ["./*"]
-    }
+    },
+    "verbatimModuleSyntax": true
   },
   "include": ["./**/*.ts", "./**/*.tsx"]
 }

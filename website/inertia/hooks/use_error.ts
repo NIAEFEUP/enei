@@ -1,6 +1,6 @@
 import { usePage } from '@inertiajs/react'
 import { useEffect, useMemo } from 'react'
-import { Toast, toast } from './use_toast'
+import { type Toast, toast } from './use_toast'
 
 export function useError(key: string) {
   const page = usePage()

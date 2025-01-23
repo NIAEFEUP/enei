@@ -76,16 +76,30 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
 
     /*
     |----------------------------------------------------------
+    | Variables for configuring app features
+    |   even though variables are public, they are meant to be
+    |   used by the backend as well
+    |----------------------------------------------------------
+    */
+    FEATURES_DISABLE_AUTH: vine
+      .boolean({ strict: false })
+      .optional()
+      .transform((val) => val ?? false),
+
+    /*
+    |----------------------------------------------------------
     | Variables for configuring the homepage countdown
     |----------------------------------------------------------
     */
     INERTIA_PUBLIC_TZ: vine.string(),
     INERTIA_PUBLIC_EVENT_COUNTDOWN_DATE: vine.string(),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring tuyau
+    |----------------------------------------------------------
+    */
     INERTIA_PUBLIC_APP_URL: vine.string(),
-    INERTIA_PUBLIC_AUTHENTICATION_ENABLED: vine
-      .boolean({ strict: false })
-      .optional()
-      .transform((val) => val ?? false),
   })
 })
 

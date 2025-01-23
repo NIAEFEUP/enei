@@ -1,6 +1,6 @@
 'use client'
 
-import { InferPageProps } from '@adonisjs/inertia/types'
+import type { InferPageProps } from '@adonisjs/inertia/types'
 import { Link } from '@tuyau/inertia/react'
 import { Card, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import TicketsController from '#controllers/tickets_controller'

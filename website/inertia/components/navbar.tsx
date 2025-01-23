@@ -32,7 +32,7 @@ type PageRoute = {
 
 function LoginButton() {
   return (
-    <Link route="pages:auth.login" className={buttonVariants({ variant: "secondary" })}>
+    <Link route="pages:auth.login" className={buttonVariants({ variant: 'secondary' })}>
       Login
     </Link>
   )
@@ -41,7 +41,7 @@ function LoginButton() {
 function LogoutButton() {
   const tuyau = useTuyau()
   const { post } = useForm()
-  
+
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     post(tuyau.$url('actions:auth.logout'))
@@ -82,7 +82,11 @@ export default function NavBar() {
         <Link route="pages:home">
           <img className="w-28 max-md:w-24" src="/images/logo-white.svg" alt="Logótipo da SINF" />
         </Link>
-        {auth.authenticated ? <LogoutButton /> : <LoginButton />}
+        {auth.state === 'authenticated' ? (
+          <LogoutButton />
+        ) : (
+          auth.state === 'unauthenticated' && <LoginButton />
+        )}
         {/*
         <NavigationMenu className="hidden sm:block">
           <NavigationMenuList className="gap-5">

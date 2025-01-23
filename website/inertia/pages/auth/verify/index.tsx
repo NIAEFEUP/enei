@@ -9,23 +9,15 @@ import BaseLayout from '~/layouts/base'
 import CardLayout from '~/layouts/card'
 
 export default function EmailVerification() {
+  const auth = useAuth({ only: ['authenticated'] })
   const tuyau = useTuyau()
-  const auth = useAuth()
-  if (!auth.authenticated) {
-    throw new Error('How did you get here?')
-  }
-
-  const { post } = useForm()
-
-  const { toast } = useToast()
 
   const cooldown = useCooldown({
     seconds: 60,
-    onThrottledActivation: () => {
-      toast({ title: 'Por favor aguarde...', description: <p>Hey</p> })
-    },
   })
-
+  
+  const { post } = useForm()
+  const { toast } = useToast()
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     post(tuyau.$url('actions:auth.verify.send'), {
@@ -46,8 +38,9 @@ export default function EmailVerification() {
           <CardHeader>
             <CardTitle className="text-2xl">Confirmação de e-mail</CardTitle>
             <CardDescription>
-              Um e-mail de confirmação foi enviado para <span className='underline'>{auth.user.email}</span>.
-              Por favor, verifica a tua caixa de entrada, <span className="font-bold">incluindo o spam</span>!
+              Um e-mail de confirmação foi enviado para{' '}
+              <span className="underline">{auth.user.email}</span>. Por favor, verifica a tua caixa
+              de entrada, <span className="font-bold">incluindo o spam</span>!
             </CardDescription>
           </CardHeader>
           <CardContent>

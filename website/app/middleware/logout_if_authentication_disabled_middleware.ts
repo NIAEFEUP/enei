@@ -4,7 +4,7 @@ import type { NextFn } from '@adonisjs/core/types/http'
 
 export default class LogoutIfAuthenticationDisabledMiddleware {
   async handle(ctx: HttpContext, next: NextFn) {
-    if (!env.get('INERTIA_PUBLIC_AUTHENTICATION_ENABLED')) {
+    if (env.get('FEATURES_DISABLE_AUTH')) {
       await ctx.auth.use('web').logout()
     }
 

@@ -1,4 +1,4 @@
-import { SharedProps } from '@adonisjs/inertia/types'
+import type { SharedProps } from '@adonisjs/inertia/types'
 import { usePage } from '@inertiajs/react'
 import { useMemo } from 'react'
 

@@ -3,9 +3,10 @@ import env from '#start/env'
 import { defineConfig } from '@adonisjs/inertia'
 import type { InferSharedProps } from '@adonisjs/inertia/types'
 
-type AuthenticationData =
-  | { authenticated: false }
-  | { authenticated: true; user: Pick<User, 'email'> }
+export type AuthenticationData =
+  | { state: "disabled" }
+  | { state: "unauthenticated" }
+  | { state: "authenticated"; user: Pick<User, 'email'> }
 
 const inertiaConfig = defineConfig({
   /**
@@ -19,11 +20,13 @@ const inertiaConfig = defineConfig({
   sharedData: {
     environment: env.public(),
     auth: async ({ auth }): Promise<AuthenticationData> => {
-      if (!auth.authenticationAttempted) await auth.check()
+      if (env.get('FEATURES_DISABLE_AUTH')) return { state: "disabled" }
 
+      if (!auth.authenticationAttempted) await auth.check()
       const user = auth.user
-      if (!user) return { authenticated: false }
-      return { authenticated: true, user: { email: user.email } }
+
+      if (!user) return { state: "unauthenticated" }
+      return { state: "authenticated", user: { email: user.email } }
     },
   },
 
