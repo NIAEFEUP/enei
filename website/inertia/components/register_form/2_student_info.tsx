@@ -31,6 +31,7 @@ import universities from '#data/enei/universities.json' with { type: 'json' }
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '~/lib/utils'
+import { Input } from '../ui/input'
 
 // HACK: This is because the tuple would return an array of errors
 // this way they are validated individually
@@ -51,7 +52,7 @@ const StudentInfoSchema = z.object({
       ([first, _]) => {
         return CurricularYearSchema.safeParse(first).success
       },
-      { message: 'Obrigatório' }
+      { message: 'Seleciona um ano curricular' }
     )
     .refine(
       ([_, second]) => {
@@ -67,7 +68,7 @@ const StudentInfoSchema = z.object({
         }
         return true
       },
-      { message: 'Introduz o ano de conclusão do curso.' }
+      { message: 'Introduz o ano de conclusão do curso' }
     ),
 })
 
@@ -86,7 +87,6 @@ const StudentInfoForm = () => {
   function onSubmit() {
     nextStep()
   }
-
 
   const [selectedUniversity, setSelectedUniversity] = useState<string | null>(null)
   const [openUniversityDropdown, setOpenUniversityDropdown] = useState(false)
@@ -111,7 +111,9 @@ const StudentInfoForm = () => {
                       className="w-full justify-between overflow-ellipsis font-normal"
                     >
                       {selectedUniversity ? (
-                        <span className='w-full overflow-ellipsis overflow-hidden'>{selectedUniversity}</span>
+                        <span className="w-full overflow-ellipsis overflow-hidden">
+                          {selectedUniversity}
+                        </span>
                       ) : (
                         <span>Selecionar Universidade...</span>
                       )}
@@ -164,15 +166,11 @@ const StudentInfoForm = () => {
             <FormItem>
               <FormLabel>Curso*</FormLabel>
               <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Seleciona o teu curso" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Course A">Course A</SelectItem>
-                    <SelectItem value="Course B">Course B</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Input
+                  onChange={field.onChange}
+                  defaultValue={field.value}
+                  placeholder="Introduz o teu curso"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
