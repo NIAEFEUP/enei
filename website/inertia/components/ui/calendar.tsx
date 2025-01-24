@@ -7,9 +7,13 @@ import { Button, buttonVariants } from '~/components/ui/button'
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
 
-function ChangeMonthButton({ className, ...props }:  React.ButtonHTMLAttributes<HTMLButtonElement>) {
+function ChangeMonthButton({ className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <Button variant="outline" className={cn(className, 'h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100')} {...props} /> 
+    <Button
+      variant="outline"
+      className={cn(className, 'h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100')}
+      {...props}
+    />
   )
 }
 
@@ -54,12 +58,12 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
       }}
       components={{
         PreviousMonthButton: ({ ...props }) => (
-          <ChangeMonthButton {...props}> 
+          <ChangeMonthButton {...props}>
             <ChevronLeft className="w-full h-full" />
           </ChangeMonthButton>
         ),
         NextMonthButton: ({ ...props }) => (
-          <ChangeMonthButton {...props}> 
+          <ChangeMonthButton {...props}>
             <ChevronRight className="w-full h-full" />
           </ChangeMonthButton>
         ),

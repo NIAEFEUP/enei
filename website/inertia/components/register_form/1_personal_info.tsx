@@ -1,40 +1,46 @@
-import * as z from "zod"
+import * as z from 'zod'
 
 import districts from '#data/location-input/districts.json' with { type: 'json' }
-import { useForm } from "react-hook-form"
-import { useStepper } from "../ui/stepper"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import { Input } from "../ui/input"
-import StepperFormActions from "./actions"
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../ui/select"
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
-import { Button } from "../ui/button"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { Calendar } from "../ui/calendar"
+import { useForm } from 'react-hook-form'
+import { useStepper } from '../ui/stepper'
+import { zodResolver } from '@hookform/resolvers/zod'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '../ui/form'
+import { Input } from '../ui/input'
+import StepperFormActions from './actions'
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../ui/select'
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
+import { Button } from '../ui/button'
+import { Calendar as CalendarIcon } from 'lucide-react'
+import { Calendar } from '../ui/calendar'
 import { pt } from 'date-fns/locale'
-import { cn } from "~/lib/utils"
+import { cn } from '~/lib/utils'
 import { format } from 'date-fns'
-import { PhoneInput } from "../ui/phone-input/phone-input"
+import { PhoneInput } from '../ui/phone-input/phone-input'
 
 const PersonalInfoSchema = z.object({
   firstName: z.string().min(2, {
-    message: "O primeiro nome deve ter pelo menos 2 caracteres.",
+    message: 'O primeiro nome deve ter pelo menos 2 caracteres.',
   }),
   lastName: z.string().min(2, {
-    message: "O último nome deve ter pelo menos 2 caracteres.",
+    message: 'O último nome deve ter pelo menos 2 caracteres.',
   }),
   email: z.string().email({
-    message: "Insere um email válido",
+    message: 'Insere um email válido',
   }),
   dateOfBirth: z.coerce.date({
-    message: "Insere uma data válida",
+    message: 'Insere uma data válida',
   }),
-  phone: z
-    .string()
-    .regex(/^\+?[0-9\s-]{9,15}$/, {
-      message: "Insere um número de telemóvel válido",
-    }),
+  phone: z.string().regex(/^\+?[0-9\s-]{9,15}$/, {
+    message: 'Insere um número de telemóvel válido',
+  }),
   municipality: z.string(),
 })
 
@@ -44,12 +50,12 @@ const PersonalInfoForm = () => {
   const form = useForm<z.infer<typeof PersonalInfoSchema>>({
     resolver: zodResolver(PersonalInfoSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
+      firstName: '',
+      lastName: '',
+      email: '',
       dateOfBirth: new Date(),
-      phone: "",
-      municipality: "",
+      phone: '',
+      municipality: '',
     },
   })
 
@@ -60,7 +66,7 @@ const PersonalInfoForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        { /* TODO: Make it look good in mobile */ }
+        {/* TODO: Make it look good in mobile */}
         <div className="grid grid-cols-2 gap-4">
           <div>
             <FormField
@@ -68,7 +74,7 @@ const PersonalInfoForm = () => {
               name="firstName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Primeiro Nome</FormLabel>
+                  <FormLabel>Primeiro Nome*</FormLabel>
                   <FormControl>
                     <Input placeholder="Joca" type="text" {...field} />
                   </FormControl>
@@ -87,7 +93,7 @@ const PersonalInfoForm = () => {
               name="lastName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Último Nome</FormLabel>
+                  <FormLabel>Último Nome*</FormLabel>
                   <FormControl>
                     <Input placeholder="Costa" type="text" {...field} />
                   </FormControl>
@@ -97,13 +103,13 @@ const PersonalInfoForm = () => {
             />
           </div>
         </div>
-        { /* FIX: This calendar is not ideal for choosing the year */}
+        {/* FIX: This calendar is not ideal for choosing the year */}
         <FormField
           control={form.control}
           name="dateOfBirth"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Data de Nascimento</FormLabel>
+              <FormLabel>Data de Nascimento*</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -173,17 +179,18 @@ const PersonalInfoForm = () => {
             <FormItem>
               <FormLabel>Natural de</FormLabel>
               <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecionar distrito/região autónoma" />
                   </SelectTrigger>
 
                   <SelectContent>
                     {districts.map((dist) => {
-                      return <SelectItem value={dist}>{dist}</SelectItem>
+                      return (
+                        <SelectItem key={dist} value={dist}>
+                          {dist}
+                        </SelectItem>
+                      )
                     })}
                   </SelectContent>
                 </Select>
@@ -199,4 +206,4 @@ const PersonalInfoForm = () => {
   )
 }
 
-export default PersonalInfoForm;
+export default PersonalInfoForm
