@@ -4,7 +4,6 @@ import { toast } from '~/hooks/use_toast'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { cn } from '~/lib/utils'
 import { Button } from '~/components/ui/button'
 import {
   Form,
@@ -16,7 +15,6 @@ import {
   FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import { PhoneInput } from '~/components/ui/phone-input/phone-input'
 import {
   Select,
   SelectContent,
@@ -37,13 +35,14 @@ import {
 } from '~/components/ui/extension/multi-select'
 import { Step, Stepper } from '~/components/ui/stepper'
 import PersonalInfoForm from '~/components/register_form/1_personal_info'
+import StudentInfoForm from '~/components/register_form/2_student_info'
 
 import * as enei from '~/lib/enei'
 
 const previousEditions = enei.getPreviousEditions()
 
 const errorMapPt = {
-  required_error: "Obrigatório",
+  required_error: 'Obrigatório',
 }
 
 const formSchema = z.object({
@@ -65,10 +64,10 @@ const formSchema = z.object({
 })
 
 const steps = [
-  { label: "Informação Pessoal" },
-  { label: "Informação de Estudante" },
-  { label: "Informações de Logística" }, //TODO: (later) See how to make this optional
-  { label: "Comunicação" },
+  { label: 'Informação Pessoal' },
+  { label: 'Informação de Estudante' },
+  { label: 'Informações de Logística' }, //TODO: (later) See how to make this optional
+  { label: 'Comunicação' },
 ]
 
 export default function Signup() {
@@ -103,17 +102,23 @@ export default function Signup() {
     <BaseLayout>
       <p></p>
       <div className="flex flex-col gap-4 max-w-96 mx-auto text-enei-beige">
-        <Stepper variant="circle-alt" initialStep={0} steps={steps} orientation="horizontal" responsive={true} size="md">
-
+        <Stepper
+          variant="circle-alt"
+          initialStep={0}
+          steps={steps}
+          orientation="horizontal"
+          responsive={true}
+          size="md"
+        >
           {/* Content */}
           {steps.map((stepProps, index) => (
             <Step key={stepProps.label} {...stepProps}>
               {index === 0 && <PersonalInfoForm />}
+              {index === 1 && <StudentInfoForm />}
             </Step>
           ))}
         </Stepper>
       </div>
-
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
