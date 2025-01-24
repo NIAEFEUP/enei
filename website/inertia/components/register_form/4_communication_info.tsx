@@ -11,8 +11,6 @@ import { Textarea } from '../ui/textarea'
 
 import * as enei from '~/lib/enei'
 
-const previousEditions = enei.getPreviousEditions()
-
 const ENEI_EDITIONS: Option[] = enei.getPreviousEditions().map(({ year, location }) => {
   return {
     value: year.toString(),
