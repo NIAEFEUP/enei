@@ -15,6 +15,22 @@ import {
 import StepperFormActions from './actions'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import CurricularYearSelector from '../ui/form-build/curricular-year-input'
+import { Button } from '~/components/ui/button'
+import { ScrollArea, ScrollBar } from '~/components/ui/scroll-area'
+import {
+  Command,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from '~/components/ui/command'
+import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
+
+import universities from '#data/enei/universities.json' with { type: 'json' }
+import { Check, ChevronsUpDown } from 'lucide-react'
+import { useState } from 'react'
+import { cn } from '~/lib/utils'
 
 // HACK: This is because the tuple would return an array of errors
 // this way they are validated individually
@@ -35,17 +51,13 @@ const StudentInfoSchema = z.object({
       ([first, _]) => {
         return CurricularYearSchema.safeParse(first).success
       },
-      {
-        message: 'Obrigatório',
-      }
+      { message: 'Obrigatório' }
     )
     .refine(
       ([_, second]) => {
         return CurricularYearLastYearSchema.safeParse(second).success
       },
-      {
-        message: 'Ano de conclusão inválido',
-      }
+      { message: 'Ano de conclusão inválido' }
     )
     .refine(
       ([first, second]) => {
@@ -55,9 +67,7 @@ const StudentInfoSchema = z.object({
         }
         return true
       },
-      {
-        message: 'Introduz o ano de conclusão do curso.',
-      }
+      { message: 'Introduz o ano de conclusão do curso.' }
     ),
 })
 
@@ -77,6 +87,10 @@ const StudentInfoForm = () => {
     nextStep()
   }
 
+
+  const [selectedUniversity, setSelectedUniversity] = useState<string | null>(null)
+  const [openUniversityDropdown, setOpenUniversityDropdown] = useState(false)
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -88,15 +102,56 @@ const StudentInfoForm = () => {
             <FormItem>
               <FormLabel>Universidade/Faculdade*</FormLabel>
               <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Seleciona a tua universidade/faculdade" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="University A">University A</SelectItem>
-                    <SelectItem value="University B">University B</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Popover open={openUniversityDropdown} onOpenChange={setOpenUniversityDropdown}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={openUniversityDropdown}
+                      className="w-full justify-between overflow-ellipsis font-normal"
+                    >
+                      {selectedUniversity ? (
+                        <span className='w-full overflow-ellipsis overflow-hidden'>{selectedUniversity}</span>
+                      ) : (
+                        <span>Selecionar Universidade...</span>
+                      )}
+                      <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[300px] p-0">
+                    <Command>
+                      <CommandInput placeholder="Procurar universidade..." />
+                      <CommandList>
+                        <CommandEmpty>Nenhuma universidade encontrada.</CommandEmpty>
+                        <CommandGroup>
+                          <ScrollArea className="h-[300px]">
+                            {universities.map((uni) => (
+                              <CommandItem
+                                key={uni}
+                                value={uni}
+                                onSelect={() => {
+                                  setSelectedUniversity(uni)
+                                  form.setValue(field.name, uni)
+                                  setOpenUniversityDropdown(false)
+                                }}
+                                className="flex cursor-pointer items-center justify-between text-sm"
+                              >
+                                <span>{uni}</span>
+                                <Check
+                                  className={cn(
+                                    'h-4 w-4',
+                                    selectedUniversity === uni ? 'opacity-100' : 'opacity-0'
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
+                            <ScrollBar orientation="vertical" />
+                          </ScrollArea>
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -128,7 +183,7 @@ const StudentInfoForm = () => {
           name="curricularYear"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Ano Curricular</FormLabel>
+              <FormLabel>Ano Curricular*</FormLabel>
               <FormControl>
                 <CurricularYearSelector
                   onCurricularYearChange={(curricularYear, lastYear) => {
