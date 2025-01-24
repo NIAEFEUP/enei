@@ -17,8 +17,7 @@ const steps = [
 export default function Signup() {
   return (
     <BaseLayout>
-      <p></p>
-      <div className="flex flex-col gap-4 max-w-96 mx-auto text-enei-beige">
+      <div className="flex flex-col gap-4 max-w-96 mx-auto text-enei-beige pt-10">
         <Stepper
           variant="circle-alt"
           initialStep={0}
