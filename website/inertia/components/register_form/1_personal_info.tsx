@@ -13,17 +13,12 @@ import {
   FormLabel,
   FormMessage,
 } from '../ui/form'
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '../ui/input-otp'
 import { Input } from '../ui/input'
 import StepperFormActions from './actions'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../ui/select'
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
-import { Button } from '../ui/button'
-import { Calendar as CalendarIcon } from 'lucide-react'
-import { Calendar } from '../ui/calendar'
-import { pt } from 'date-fns/locale'
-import { cn } from '~/lib/utils'
-import { format } from 'date-fns'
 import { PhoneInput } from '../ui/phone-input/phone-input'
+import { REGEXP_ONLY_DIGITS } from 'input-otp'
 
 const PersonalInfoSchema = z.object({
   firstName: z.string().min(2, {
@@ -35,11 +30,18 @@ const PersonalInfoSchema = z.object({
   email: z.string().email({
     message: 'Insere um email válido',
   }),
-  dateOfBirth: z.coerce.date({
-    message: 'Insere uma data válida',
-  }),
+  dateOfBirth: z.coerce
+    .date({
+      message: 'Insere uma data válida',
+      errorMap: ({ code }, { defaultError }) => {
+        if (code == 'invalid_date') return { message: 'Data inválida.' }
+        return { message: defaultError }
+      },
+    })
+    .min(new Date(Date.parse('1900-01-01')), { message: 'Data inválida, tem de ser mais recente.' })
+    .max(new Date(), { message: 'Data inválida, tem de ser menor que a atual.' }),
   phone: z.string().regex(/^\+?[0-9\s-]{9,15}$/, {
-    message: 'Insere um número de telemóvel válido',
+    message: 'Insere um número de telemóvel válido.',
   }),
   municipality: z.string(),
 })
@@ -103,42 +105,42 @@ const PersonalInfoForm = () => {
             />
           </div>
         </div>
-        {/* FIX: This calendar is not ideal for choosing the year */}
         <FormField
           control={form.control}
           name="dateOfBirth"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
+            <FormItem>
               <FormLabel>Data de Nascimento*</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={'outline'}
-                      className={cn(
-                        'w-[240px] pl-3 text-left font-normal',
-                        !field.value && 'text-muted-foreground'
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, 'PPP', { locale: pt })
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
-                    locale={pt}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
+              <FormControl>
+                <InputOTP
+                  maxLength={8}
+                  pattern={REGEXP_ONLY_DIGITS}
+                  onChange={(val) => {
+                    form.setValue(
+                      field.name,
+                      new Date(Date.parse(`${val.slice(4)}-${val.slice(2, 4)}-${val.slice(0, 2)}`))
+                    )
+                  }}
+                >
+                  <InputOTPGroup>
+                    <InputOTPSlot index={0} placeholder="D" />
+                    <InputOTPSlot index={1} placeholder="D" />
+                  </InputOTPGroup>
+                  <InputOTPSeparator />
+                  <InputOTPGroup>
+                    <InputOTPSlot index={2} placeholder="M" />
+                    <InputOTPSlot index={3} placeholder="M" />
+                  </InputOTPGroup>
+                  <InputOTPSeparator />
+                  <InputOTPGroup>
+                    <InputOTPSlot index={4} placeholder="Y" />
+                    <InputOTPSlot index={5} placeholder="Y" />
+                    <InputOTPSlot index={6} placeholder="Y" />
+                    <InputOTPSlot index={7} placeholder="Y" />
+                  </InputOTPGroup>
+                </InputOTP>
+              </FormControl>
+
               <FormDescription>
                 A tua data de nascimento vai ser usada para determinar a tua idade.
               </FormDescription>
@@ -164,7 +166,7 @@ const PersonalInfoForm = () => {
           name="phone"
           render={({ field }) => (
             <FormItem className="flex flex-col items-start">
-              <FormLabel>Número de telemóvel</FormLabel>
+              <FormLabel>Número de telemóvel*</FormLabel>
               <FormControl className="w-full">
                 <PhoneInput placeholder="+351 923 456 789" {...field} defaultCountry="PT" />
               </FormControl>
