@@ -31,6 +31,8 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     |----------------------------------------------------------
     */
     FROM_EMAIL: vine.string(),
+    REPLY_TO_EMAIL: vine.string().optional(),
+
     SMTP_HOST: vine.string(),
     SMTP_PORT: vine.string(),
     //AWS_ACCESS_KEY_ID: vine.string(),
@@ -44,11 +46,59 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
 
     /*
     |----------------------------------------------------------
+    | Variables for configuring the limiter package
+    |----------------------------------------------------------
+    */
+    LIMITER_STORE: vine.enum(['redis', 'memory'] as const),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring the redis package
+    |----------------------------------------------------------
+    */
+    REDIS_HOST: vine.string(),
+    REDIS_PORT: vine.string(),
+    REDIS_PASSWORD: vine.string().optional(),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring the social authentication
+    |----------------------------------------------------------
+    */
+    GITHUB_CLIENT_ID: vine.string(),
+    GITHUB_CLIENT_SECRET: vine.string(),
+
+    GOOGLE_CLIENT_ID: vine.string(),
+    GOOGLE_CLIENT_SECRET: vine.string(),
+
+    LINKEDIN_CLIENT_ID: vine.string(),
+    LINKEDIN_CLIENT_SECRET: vine.string(),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring app features
+    |   even though variables are public, they are meant to be
+    |   used by the backend as well
+    |----------------------------------------------------------
+    */
+    FEATURES_DISABLE_AUTH: vine
+      .boolean({ strict: false })
+      .optional()
+      .transform((val) => val ?? false),
+
+    /*
+    |----------------------------------------------------------
     | Variables for configuring the homepage countdown
     |----------------------------------------------------------
     */
     INERTIA_PUBLIC_TZ: vine.string(),
     INERTIA_PUBLIC_EVENT_COUNTDOWN_DATE: vine.string(),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring tuyau
+    |----------------------------------------------------------
+    */
     INERTIA_PUBLIC_APP_URL: vine.string(),
   })
 })

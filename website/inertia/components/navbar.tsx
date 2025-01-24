@@ -1,4 +1,8 @@
-import { Link } from "@inertiajs/react";
+import { useForm } from '@inertiajs/react'
+import { Link } from '@tuyau/inertia/react'
+import { Button, buttonVariants } from '~/components/ui/button'
+import { useAuth } from '~/hooks/use_auth'
+import { useTuyau } from '~/hooks/use_tuyau'
 
 /*
 import { Menu } from "lucide-react";
@@ -26,6 +30,32 @@ type PageRoute = {
 
 */
 
+function LoginButton() {
+  return (
+    <Link route="pages:auth.login" className={buttonVariants({ variant: 'secondary' })}>
+      Login
+    </Link>
+  )
+}
+
+function LogoutButton() {
+  const tuyau = useTuyau()
+  const { post } = useForm()
+
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    post(tuyau.$url('actions:auth.logout'))
+  }
+
+  return (
+    <form onSubmit={onSubmit} method="post">
+      <Button type="submit" variant="secondary">
+        Logout
+      </Button>
+    </form>
+  )
+}
+
 export default function NavBar() {
   /*
   const navButtonStyle =
@@ -44,18 +74,20 @@ export default function NavBar() {
   }];
   */
 
+  const auth = useAuth()
+
   return (
     <>
       <nav className="py-5 px-6 sm:px-12 md:px-24 lg:px-36 flex flex-row justify-between items-center flex-grow md:flex-grow-0">
-        <Link href="/">
-          <img
-            className="w-28 max-md:w-24"
-            src="/images/logo-white.svg"
-            alt="Logótipo da SINF"
-          />
+        <Link route="pages:home">
+          <img className="w-28 max-md:w-24" src="/images/logo-white.svg" alt="Logótipo da SINF" />
         </Link>
-        {
-          /*
+        {auth.state === 'authenticated' ? (
+          <LogoutButton />
+        ) : (
+          auth.state === 'unauthenticated' && <LoginButton />
+        )}
+        {/*
         <NavigationMenu className="hidden sm:block">
           <NavigationMenuList className="gap-5">
             {routes.map(function (route, _) {
@@ -109,9 +141,8 @@ export default function NavBar() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-            */
-        }
+            */}
       </nav>
     </>
-  );
+  )
 }
