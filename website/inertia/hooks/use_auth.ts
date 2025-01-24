@@ -12,13 +12,10 @@ type UseAuthResult<Props extends UseAuthProps> = Props["only"] extends (infer On
   : AuthenticationData
 
 export function useAuth<Props extends UseAuthProps>(props?: Props) {
-  const only = props?.only ?? []
+  const only = props?.only
 
   const auth = usePage<SharedProps>().props.auth
-  const valid = useMemo<boolean>(() => {
-    if (only === undefined) return true
-    return only.includes(auth.state)
-  }, [auth, only])
+  const valid = useMemo(() => only?.includes(auth.state) ?? true, [auth, only])
 
   if (!valid) throw new Error('Assertion failed: authentication state is not permitted')
 

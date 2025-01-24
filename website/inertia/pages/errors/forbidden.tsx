@@ -1,6 +1,6 @@
 import BaseLayout from '~/layouts/base'
 
-export default function Forbidden({}: { error: any }) {
+export default function Forbidden() {
   return (
     <BaseLayout title="You should not be here">
       <div className="">
