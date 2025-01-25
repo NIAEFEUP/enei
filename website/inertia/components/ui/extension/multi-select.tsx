@@ -180,6 +180,7 @@ const MultiSelector = ({
         setInputValue,
         activeIndex,
         setActiveIndex,
+        // @ts-expect-error
         ref: inputRef,
         handleSelect,
       }}
@@ -250,7 +251,7 @@ MultiSelectorTrigger.displayName = 'MultiSelectorTrigger'
 const MultiSelectorInput = forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
->(({ className, ...props }, ref) => {
+>(({ className, ...props }, _ref) => {
   const {
     setOpen,
     inputValue,

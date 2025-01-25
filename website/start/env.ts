@@ -3,25 +3,104 @@
 | Environment variables service
 |--------------------------------------------------------------------------
 |
-| The `Env.create` method creates an instance of the Env service. The
-| service validates the environment variables and also cast values
-| to JavaScript data types.
-|
 */
 
-import { Env } from '@adonisjs/core/env'
+import vine from '@vinejs/vine'
+import { defineEnv } from '../app/env.js'
 
-export default await Env.create(new URL('../', import.meta.url), {
-  NODE_ENV: Env.schema.enum(['development', 'production', 'test'] as const),
-  PORT: Env.schema.number(),
-  APP_KEY: Env.schema.string(),
-  HOST: Env.schema.string({ format: 'host' }),
-  LOG_LEVEL: Env.schema.string(),
+vine.convertEmptyStringsToNull = true
 
-  /*
-  |----------------------------------------------------------
-  | Variables for configuring session package
-  |----------------------------------------------------------
-  */
-  SESSION_DRIVER: Env.schema.enum(['cookie', 'memory'] as const),
+const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', ({ object }) => {
+  return object({
+    NODE_ENV: vine.enum(['development', 'production', 'test'] as const),
+    PORT: vine.number(),
+    APP_KEY: vine.string(),
+    HOST: vine.string(),
+    LOG_LEVEL: vine.string(),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring session package
+    |----------------------------------------------------------
+    */
+    SESSION_DRIVER: vine.enum(['cookie', 'memory'] as const),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring the mail package
+    |----------------------------------------------------------
+    */
+    FROM_EMAIL: vine.string(),
+    REPLY_TO_EMAIL: vine.string().optional(),
+
+    SMTP_HOST: vine.string(),
+    SMTP_PORT: vine.string(),
+    //AWS_ACCESS_KEY_ID: vine.string(),
+    //AWS_SECRET_ACCESS_KEY: vine.string(),
+    //AWS_REGION: vine.string(),
+    //MAILGUN_API_KEY: vine.string(),
+    //MAILGUN_DOMAIN: vine.string(),
+    //SPARKPOST_API_KEY: vine.string(),
+    //RESEND_API_KEY: vine.string(),
+    //BREVO_API_KEY: vine.string()
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring the limiter package
+    |----------------------------------------------------------
+    */
+    LIMITER_STORE: vine.enum(['redis', 'memory'] as const),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring the redis package
+    |----------------------------------------------------------
+    */
+    REDIS_HOST: vine.string(),
+    REDIS_PORT: vine.string(),
+    REDIS_PASSWORD: vine.string().optional(),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring the social authentication
+    |----------------------------------------------------------
+    */
+    GITHUB_CLIENT_ID: vine.string(),
+    GITHUB_CLIENT_SECRET: vine.string(),
+
+    GOOGLE_CLIENT_ID: vine.string(),
+    GOOGLE_CLIENT_SECRET: vine.string(),
+
+    LINKEDIN_CLIENT_ID: vine.string(),
+    LINKEDIN_CLIENT_SECRET: vine.string(),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring app features
+    |   even though variables are public, they are meant to be
+    |   used by the backend as well
+    |----------------------------------------------------------
+    */
+    FEATURES_DISABLE_AUTH: vine
+      .boolean({ strict: false })
+      .optional()
+      .transform((val) => val ?? false),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring the homepage countdown
+    |----------------------------------------------------------
+    */
+    INERTIA_PUBLIC_TZ: vine.string(),
+    INERTIA_PUBLIC_EVENT_COUNTDOWN_DATE: vine.string(),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring tuyau
+    |----------------------------------------------------------
+    */
+    INERTIA_PUBLIC_APP_URL: vine.string(),
+  })
 })
+
+export default env

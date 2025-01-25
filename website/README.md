@@ -36,24 +36,16 @@ To get started with the website, follow these steps:
 4. Install the dependencies:
 
    ```bash
-   pnpm install
+   pnpm install --frozen-lockfile
    ```
 
-5. Copy the `.env.example` file to a new file called `.env` and update the values as needed.
-
-6. Create an app key to sign the session cookies:
-
-   ```bash
-   node ace generate:key
-   ```
-
-7. Run the database migrations to create the database:
+4. Run the database migrations to create the database:
 
    ```bash
    node ace migration:run
    ```
 
-8. Start the development server:
+5. Start the development server:
 
    ```bash
    pnpm run dev
@@ -61,3 +53,18 @@ To get started with the website, follow these steps:
 
    This will start the development server on `http://localhost:3333`.
    The development server has hot-reloading enabled, so you can make changes to the code and see them reflected in the browser immediately.
+
+## Defining Routes with Tuyau
+
+To use Tuyau in your routes, you need to update the API file each time you do certain actions, mainly:
+
+1. Adding a new route/controller to your project
+2. Adding a `request.validateUsing` call in your controller method
+
+This is done with the command:
+
+```bash
+node ace tuyau:generate
+```
+
+More info here: [Tuyau - Installation](https://adonisjs.com/blog/introducing-tuyau#installation)

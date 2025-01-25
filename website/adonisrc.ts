@@ -10,7 +10,12 @@ export default defineConfig({
   | will be scanned automatically from the "./commands" directory.
   |
   */
-  commands: [() => import('@adonisjs/core/commands'), () => import('@adonisjs/lucid/commands')],
+  commands: [
+    () => import('@adonisjs/core/commands'),
+    () => import('@adonisjs/lucid/commands'),
+    () => import('@adonisjs/mail/commands'),
+    () => import('@tuyau/core/commands'),
+  ],
 
   /*
   |--------------------------------------------------------------------------
@@ -38,6 +43,11 @@ export default defineConfig({
     () => import('@adonisjs/lucid/database_provider'),
     () => import('@adonisjs/auth/auth_provider'),
     () => import('@adonisjs/inertia/inertia_provider'),
+    () => import('@adonisjs/mail/mail_provider'),
+    () => import('@tuyau/core/tuyau_provider'),
+    () => import('@adonisjs/ally/ally_provider'),
+    () => import('@adonisjs/limiter/limiter_provider'),
+    () => import('@adonisjs/redis/redis_provider')
   ],
 
   /*
@@ -48,7 +58,7 @@ export default defineConfig({
   | List of modules to import before starting the application.
   |
   */
-  preloads: [() => import('#start/routes'), () => import('#start/kernel')],
+  preloads: [() => import('#start/routes'), () => import('#start/kernel'), () => import('#start/events'), () => import('#start/validator')],
 
   /*
   |--------------------------------------------------------------------------
