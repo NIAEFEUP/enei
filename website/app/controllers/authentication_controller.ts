@@ -69,6 +69,24 @@ export default class AuthenticationController {
     return response.redirect().toRoute('actions:auth.verify.success')
   }
 
+  async sendForgotPassword({ request, response }: HttpContext) {
+    const { email } = request.only(['email'])
+    await this.userService.sendForgotPasswordEmail(email)
+
+    return response.redirect().toRoute('pages:auth.forgot-password')
+  }
+
+  async callbackForForgotPassword({ request, response, inertia }: HttpContext) {
+    // const { email } = await request.validateUsing(emailVerificationCallbackValidator)
+
+    if(request.method() === 'GET') {
+      return inertia.render('auth/forgot-password-reset')
+    } else if(request.method() === 'POST') {
+    }
+
+    return response.redirect().back()//toRoute('actions:auth.forgot-password.success')
+  }
+
   // SOCIAL AUTHENTICATION
 
   // async initiateGithubLogin({ ally, inertia }: HttpContext) {

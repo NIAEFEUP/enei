@@ -43,6 +43,26 @@ router
       .use(middleware.guest())
 
     router
+      .on('/password/forgot')
+      .renderInertia('auth/forgot-password')
+      .as('pages:auth.forgot-password')
+      .use(middleware.guest())
+
+    router
+      .post('/password/forgot/new', [AuthenticationController, 'sendForgotPassword'])
+      .as('actions:auth.forgot-password.send')
+      .use(middleware.guest())
+
+    router
+      .route(
+        '/password/forgot/callback',
+        ['GET', 'POST'],
+        [AuthenticationController, 'callbackForForgotPassword']
+      )
+      .as('actions:auth.forgot-password.callback')
+      .middleware([middleware.verifyUrlSignature(), middleware.automaticSubmit()])
+
+    router
       .on('/verify')
       .renderInertia('auth/verify/index')
       .as('pages:auth.verify')

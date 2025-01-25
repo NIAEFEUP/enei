@@ -1,5 +1,7 @@
 import UserCreated from '#events/user_created'
 import UserEmailVerified from '#events/user_email_verified'
+import UserForgotPassword from '#events/user_forgot_password'
+import SendForgotPasswordEmail from '#listeners/send_forgot_password_email'
 import SendVerificationEmail from '#listeners/send_verification_email'
 import User from '#models/user'
 import db from '@adonisjs/lucid/services/db'
@@ -37,5 +39,10 @@ export class UserService {
 
     UserEmailVerified.dispatch(verifiedUser)
     return verifiedUser
+  }
+
+  async sendForgotPasswordEmail(email: string) {
+    const listener = new SendForgotPasswordEmail()
+    listener.handle(new UserForgotPassword(email))
   }
 }
