@@ -9,8 +9,6 @@ export default class ProfileMiddleware {
     const user = ctx.auth.user
     user?.load('profile')
 
-    user?.profile
-
     if (!user?.profile) {
       ctx.response.redirect().toRoute('/signup')
     }
