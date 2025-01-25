@@ -6,8 +6,8 @@ import { Label } from '~/components/ui/label'
 import { useError } from '~/hooks/use_error'
 import { useForm } from '@inertiajs/react'
 import { cn } from '~/lib/utils'
-import BaseLayout from '~/layouts/base'
-import CardLayout from '~/layouts/card'
+import Page from '~/components/common/page'
+import CardContainer from '~/components/common/containers/card'
 
 export default function Login() {
   const oauthError = useError('oauth')
@@ -24,8 +24,8 @@ export default function Login() {
   }
 
   return (
-    <BaseLayout title="Iniciar Sessão">
-      <CardLayout>
+    <Page title="Iniciar Sessão" className='bg-enei-blue'>
+      <CardContainer>
         <Card className={cn(oauthError && 'border-2 border-red-600')}>
           <CardHeader>
             <CardTitle className="text-2xl">Iniciar Sessão</CardTitle>
@@ -112,7 +112,7 @@ export default function Login() {
             {oauthError && <p className="text-sm text-red-600 text-center mt-4">{oauthError}</p>}
           </CardContent>
         </Card>
-      </CardLayout>
-    </BaseLayout>
+      </CardContainer>
+    </Page>
   )
 }
