@@ -10,6 +10,8 @@ import MultipleSelector, { Option } from '../ui/multiple-selector'
 import { Textarea } from '../ui/textarea'
 
 import * as enei from '~/lib/enei'
+import { useContext } from 'react'
+import { FormContext } from '~/contexts/form_context'
 
 const ENEI_EDITIONS: Option[] = enei.getPreviousEditions().map(({ year, location }) => {
   return {
@@ -59,8 +61,34 @@ const CommunicationInfoForm = () => {
     },
   })
 
-  function onSubmit() {
-    //TODO: Submit data
+  const { formData, updateFormData } = useContext(FormContext)
+
+  async function onSubmit() {
+    const localData = form.getValues()
+    ;(Object.keys(localData) as Array<keyof typeof localData>).forEach((key) => {
+      updateFormData(key, localData[key])
+    })
+
+    console.log(formData)
+
+    try {
+      const response = await fetch('/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+
+      const data = await response.json()
+      console.log('Success:', data)
+    } catch (error) {
+      console.error('Error:', error)
+    }
   }
 
   return (

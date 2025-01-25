@@ -29,9 +29,10 @@ import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover
 
 import universities from '#data/enei/universities.json' with { type: 'json' }
 import { Check, ChevronsUpDown } from 'lucide-react'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { cn } from '~/lib/utils'
 import { Input } from '../ui/input'
+import { FormContext } from '~/contexts/form_context'
 
 // HACK: This is because the tuple would return an array of errors
 // this way they are validated individually
@@ -74,6 +75,7 @@ const StudentInfoSchema = z.object({
 
 const StudentInfoForm = () => {
   const { nextStep } = useStepper()
+  const { updateFormData } = useContext(FormContext)
 
   const form = useForm<z.infer<typeof StudentInfoSchema>>({
     resolver: zodResolver(StudentInfoSchema),
@@ -85,9 +87,12 @@ const StudentInfoForm = () => {
   })
 
   function onSubmit() {
+    const localData = form.getValues()
+    ;(Object.keys(localData) as Array<keyof typeof localData>).forEach((key) => {
+      updateFormData(key, localData[key])
+    })
     nextStep()
   }
-
   const [selectedUniversity, setSelectedUniversity] = useState<string | null>(null)
   const [openUniversityDropdown, setOpenUniversityDropdown] = useState(false)
 

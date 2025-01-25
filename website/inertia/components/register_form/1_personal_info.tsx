@@ -19,6 +19,9 @@ import StepperFormActions from './actions'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../ui/select'
 import { PhoneInput } from '../ui/phone-input/phone-input'
 import { REGEXP_ONLY_DIGITS } from 'input-otp'
+import { useContext } from 'react'
+import { FormContext } from '~/contexts/form_context'
+import { DateTime } from 'luxon'
 
 const PersonalInfoSchema = z.object({
   firstName: z.string().min(2, {
@@ -34,7 +37,7 @@ const PersonalInfoSchema = z.object({
     .date({
       message: 'Insere uma data válida',
       errorMap: ({ code }, { defaultError }) => {
-        if (code == 'invalid_date') return { message: 'Data inválida.' }
+        if (code === 'invalid_date') return { message: 'Data inválida.' }
         return { message: defaultError }
       },
     })
@@ -48,6 +51,7 @@ const PersonalInfoSchema = z.object({
 
 const PersonalInfoForm = () => {
   const { nextStep } = useStepper()
+  const { updateFormData } = useContext(FormContext)
 
   const form = useForm<z.infer<typeof PersonalInfoSchema>>({
     resolver: zodResolver(PersonalInfoSchema),
@@ -62,6 +66,14 @@ const PersonalInfoForm = () => {
   })
 
   function onSubmit() {
+    const localData = form.getValues()
+    ;(Object.keys(localData) as Array<keyof typeof localData>).forEach((key) => {
+      if (key === 'dateOfBirth') {
+        updateFormData(key, DateTime.fromJSDate(localData[key] as Date))
+      } else if (localData[key] !== undefined) {
+        updateFormData(key, localData[key])
+      }
+    })
     nextStep()
   }
 

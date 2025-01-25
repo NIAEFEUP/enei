@@ -9,6 +9,8 @@ import StepperFormActions from './actions'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { Checkbox } from '../ui/checkbox'
 import MultipleSelector, { Option } from '../ui/multiple-selector'
+import { FormContext } from '~/contexts/form_context'
+import { useContext } from 'react'
 
 const OPTIONS: Option[] = [
   { label: 'CP - Comboios de Portugal', value: 'CP' },
@@ -42,6 +44,7 @@ const LogisticsInfoSchema = z.object({
 
 const LogisticsInfoForm = () => {
   const { nextStep } = useStepper()
+  const { updateFormData } = useContext(FormContext)
 
   const form = useForm<z.infer<typeof LogisticsInfoSchema>>({
     resolver: zodResolver(LogisticsInfoSchema),
@@ -55,6 +58,10 @@ const LogisticsInfoForm = () => {
   })
 
   function onSubmit() {
+    const localData = form.getValues()
+    ;(Object.keys(localData) as Array<keyof typeof localData>).forEach((key) => {
+      updateFormData(key, localData[key])
+    })
     nextStep()
   }
 
