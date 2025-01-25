@@ -1,13 +1,13 @@
 import { Link } from '@tuyau/inertia/react'
+import CardContainer from '~/components/common/containers/card'
+import Page from '~/components/common/page'
 import { buttonVariants } from '~/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
-import BaseLayout from '~/layouts/base'
-import CardLayout from '~/layouts/card'
 
 export default function EmailVerification() {
   return (
-    <BaseLayout title="E-mail confirmado">
-      <CardLayout>
+    <Page title="E-mail confirmado">
+      <CardContainer>
         <Card>
           <CardHeader>
             <CardTitle>O teu e-mail foi confirmado!</CardTitle>
@@ -19,7 +19,7 @@ export default function EmailVerification() {
             </Link>
           </CardContent>
         </Card>
-      </CardLayout>
-    </BaseLayout>
+      </CardContainer>
+    </Page>
   )
 }
