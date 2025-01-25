@@ -15,50 +15,53 @@ export default class Profile extends BaseModel {
   @column()
   declare email: string
 
-  @column()
-  declare age: number
+  @column.date()
+  declare dateOfBirth: DateTime
 
   @column()
-  declare phoneNumber: string
+  declare phone: string
 
   // Student Info
   @column()
   declare university: string
 
   @column()
-  declare year: number
+  declare course: string
 
   @column()
-  declare isComplete: boolean
+  declare curricularYear: number
+
+  @column()
+  declare finishedAt: number
 
   @column()
   declare state: string
 
-  @column()
-  declare country: string
-
   // Logistics Info
   @column()
-  declare shirtSize: string
+  declare tShirtSize: string
 
   @column()
-  declare foodRestrictions: string
+  declare dietaryRestrictions: string
 
   @column()
   declare isVegetarian: boolean
 
   @column()
-  declare transportation: string[]
+  declare isVegan: boolean
+
+  @column()
+  declare transportationModes: string[]
 
   // Communication Info
   @column()
-  declare heardOf: string
+  declare heardAboutENEI: string
 
   @column()
-  declare whyAttend: string
+  declare reasonForSignup: string
 
   @column()
-  declare previousExperience: string
+  declare attendedBeforeEditions: string[]
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

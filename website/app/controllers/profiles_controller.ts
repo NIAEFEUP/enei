@@ -1,5 +1,5 @@
 import Profile from '#models/profile'
-import { createProfileValidator } from '#validators/profileValidator'
+import { createProfileValidator } from '#validators/profile_validator'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class ProfilesController {
@@ -15,6 +15,7 @@ export default class ProfilesController {
     })
 
     const profileAdd = new Profile()
-    profileAdd.fill(profile).save()
+    profileAdd.fill(profile)
+    await profileAdd.save()
   }
 }
