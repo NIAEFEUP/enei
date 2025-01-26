@@ -2,7 +2,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import { InferPageProps } from '@adonisjs/inertia/types'
 import OrdersController from '#controllers/orders_controller'
-
+import Page from '~/components/common/page'
 interface Order {
   id: number
   requestId: string
@@ -19,6 +19,7 @@ export default function TicketSalePage(props: InferPageProps<OrdersController, '
   const { order } = props
 
   return (
+    <Page title="Order Details" className="bg-enei-blue">
     <div className="min-h-screen flex items-center justify-center m-5">
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>
@@ -52,5 +53,6 @@ export default function TicketSalePage(props: InferPageProps<OrdersController, '
         </CardContent>
       </Card>
     </div>
+    </Page>
   )
 }

@@ -4,13 +4,15 @@ import { InferPageProps } from '@adonisjs/inertia/types'
 import { Card, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import TicketsController from '#controllers/tickets_controller'
 import { Link } from '@inertiajs/react'
+import Page from '~/components/common/page'
 export default function SelectTicketsPage(props: InferPageProps<TicketsController, 'index'>) {
   const imageSrc = `favicon.svg`
 
   return (
+    <Page title="tickets" className="bg-enei-blue">
     <div className="container mx-auto p-4 flex flex-col items-center m-20">
       <h1 className="text-3xl font-bold text-center mb-6">Seleciona o teu bilhete</h1>
-      <p className="text-center text-gray-600 mb-8">
+      <p className="text-center  mb-8">
         Seleciona o teu bilhete e clica em comprar para continuar.
       </p>
 
@@ -36,5 +38,6 @@ export default function SelectTicketsPage(props: InferPageProps<TicketsControlle
         ))}
       </div>
     </div>
+    </Page>
   )
 }

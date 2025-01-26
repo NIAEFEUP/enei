@@ -14,6 +14,7 @@ type UpdateOrderStatusPayload = {
 export default class UpdateOrderStatus extends Job {
   async handle({ requestId, email }: UpdateOrderStatusPayload) {
     try {
+      
       this.logger.info(`Processing status update for requestId: ${requestId}`)
 
       // Fetch the order based on the requestId

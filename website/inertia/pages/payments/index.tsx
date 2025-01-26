@@ -9,6 +9,7 @@ import PhoneNumberModal from '~/components/payments/phone-modal'
 import PurchaseSummary from '~/components/payments/purchase-summary'
 import BillingInformationForm from '~/components/payments/billing-information-form'
 import PaymentMethodSelector from '~/components/payments/payment-method-selector'
+import Page from '~/components/common/page'
 import axios from 'axios'
 
 
@@ -37,17 +38,6 @@ export default function TicketSalePage(props: InferPageProps<TicketsController, 
       vat: '',
       address: '',
     })
-    const loginUser = async () => {
-      //simulate login
-      try {
-        const response = await axios.get('http://localhost:3333/login/1')
-        console.log('Login successful:', response.data)
-      } catch (error) {
-        console.error('Error during login:', error)
-      }
-    }
-
-    loginUser()
   }, [])
 
   // Handles the payment button click. If the payment method is MB Way, it opens the phone modal, otherwise it processes the payment
@@ -89,6 +79,7 @@ export default function TicketSalePage(props: InferPageProps<TicketsController, 
   }
 
   return (
+    <Page title="Compra de Bilhete" className="bg-enei-blue">
     <div className="min-h-screen flex items-center justify-center m-5">
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>
@@ -131,5 +122,6 @@ export default function TicketSalePage(props: InferPageProps<TicketsController, 
         </CardContent>
       </Card>
     </div>
+    </Page>
   )
 }

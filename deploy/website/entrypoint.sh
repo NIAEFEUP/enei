@@ -1,6 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
+set -o pipefail
 
 # Script configuration
 
@@ -28,8 +29,12 @@ run_command() {
     echo
     print "# $command"
 
+    trap "print_file $_LOG_FILE" EXIT
+
     # Strip any ANSI escape sequences from the output
     eval "$command" 2>&1 | sed "s/\x1B\[[0-9;]*[a-zA-Z]//g" > "$_LOG_FILE"
+
+    trap - EXIT
 
     print_file "$_LOG_FILE"
     echo
@@ -120,11 +125,13 @@ print ">> Application preparation"
 push_indent "   "
 
 if [ "$ON_STARTUP_MIGRATE" = "true" ]; then
-    print ">> MIGRATE_ON_STARTUP is enabled"
+    mode="${ON_STARTUP_MIGRATE_MODE:-run}"
+
+    print ">> ON_STARTUP_MIGRATE is enabled [mode: $mode]"
     push_indent "   "
 
     print "Migrating database..."
-    run_command node ace migration:run --force
+    run_command node ace migration:$mode --force
 
     pop_indent
 fi
