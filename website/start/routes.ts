@@ -69,6 +69,10 @@ router
       .middleware([middleware.verifyUrlSignature(), middleware.automaticSubmit()])
 
     router
+      .get('/password/forgot/reset', [AuthenticationController, 'showForgotPasswordPage'])
+      .as('pages:auth.forgot-password.change')
+
+    router
       .post('/password/forgot/reset', [AuthenticationController, 'changePassword'])
       .as('actions:auth.forgot-password.change')
       .use(middleware.guest())

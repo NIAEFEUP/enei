@@ -13,7 +13,6 @@ export default function ForgotPasswor() {
 
   const { data, setData, errors, post } = useForm({
     email: '',
-    password: '',
   })
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

@@ -6,7 +6,7 @@ import CardLayout from '~/layouts/card'
 
 export default function EmailVerification() {
   return (
-    <BaseLayout title="E-mail confirmado">
+    <BaseLayout title="Palavra-passe alterada">
       <CardLayout>
         <Card>
           <CardHeader>

@@ -85,10 +85,15 @@ export default class AuthenticationController {
     return response.redirect().toRoute('page:auth.forgot-password.sent')
   }
 
-  async callbackForForgotPassword({ request, inertia }: HttpContext) {
+  async callbackForForgotPassword({ request, response, session }: HttpContext) {
     const { email } = await request.validateUsing(emailVerificationCallbackValidator)
 
-    return inertia.render('auth/forgot-password/reset', { email })
+    session.flash('forgot-password-email', email)
+    return response.redirect().toRoute('pages:auth.forgot-password.change')
+  }
+
+  async showForgotPasswordPage({ inertia, session }: HttpContext) {
+    return inertia.render('auth/forgot-password/reset', { email: session.flashMessages.get('forgot-password-email') })
   }
 
   async changePassword({ request, response }: HttpContext) {

@@ -12,7 +12,7 @@ export default function ForgotPasswor() {
   const page = usePage()
   const oauthError = useError('oauth')
 
-  const { data, setData, post } = useForm({
+  const { data, setData, errors, post } = useForm({
     email: String(page.props.email),
     password: '',
     password_confirmation: '',
@@ -58,6 +58,7 @@ export default function ForgotPasswor() {
                     onChange={(e) => setData('password_confirmation', e.target.value)}
                     required
                   />
+                  {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
                 </div>
                 <div className="flex flex-col gap-4   ">
                   <Button type="submit" className="w-full bg-enei-blue">
@@ -66,7 +67,6 @@ export default function ForgotPasswor() {
                 </div>
               </div>
             </form>
-            {oauthError && <p className="text-sm text-red-600 text-center mt-4">{oauthError}</p>}
           </CardContent>
         </Card>
       </CardLayout>
