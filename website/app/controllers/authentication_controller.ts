@@ -4,6 +4,7 @@ import {
   registerWithCredentialsValidator,
   emailVerificationCallbackValidator,
   loginWithCredentialsValidator,
+  passwordResetValidator,
 } from '#validators/authentication'
 import { UserService } from '#services/user_service'
 import { inject } from '@adonisjs/core'
@@ -71,20 +72,38 @@ export default class AuthenticationController {
 
   async sendForgotPassword({ request, response }: HttpContext) {
     const { email } = request.only(['email'])
-    await this.userService.sendForgotPasswordEmail(email)
 
-    return response.redirect().toRoute('pages:auth.forgot-password')
-  }
-
-  async callbackForForgotPassword({ request, response, inertia }: HttpContext) {
-    // const { email } = await request.validateUsing(emailVerificationCallbackValidator)
-
-    if(request.method() === 'GET') {
-      return inertia.render('auth/forgot-password-reset')
-    } else if(request.method() === 'POST') {
+    /*
+      According to OWASP recommendations, the existence of the account should be transparent
+      to the person who issues this request, but we should not send an email that is not in
+      any account.
+    */
+    if(await Account.findBy('id', `credentials:${email}`)) {
+      await this.userService.sendForgotPasswordEmail(email)
     }
 
-    return response.redirect().back()//toRoute('actions:auth.forgot-password.success')
+    return response.redirect().toRoute('page:auth.forgot-password.sent')
+  }
+
+  async callbackForForgotPassword({ request, inertia }: HttpContext) {
+    const { email } = await request.validateUsing(emailVerificationCallbackValidator)
+
+    return inertia.render('auth/forgot-password/reset', { email })
+  }
+
+  async changePassword({ request, response }: HttpContext) {
+    const { 
+      password, 
+      email 
+    } = await request.validateUsing(passwordResetValidator)
+
+    const account = await Account.find(`credentials:${email}`)
+    if (account) {
+      account.password = password // Auther mixin hashes it automatically on assignment
+      await account.save()
+    }
+
+    return response.redirect().toRoute('actions:auth.forgot-password.success')
   }
 
   // SOCIAL AUTHENTICATION

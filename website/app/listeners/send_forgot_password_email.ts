@@ -13,7 +13,7 @@ export default class SendForgotPasswordEmail {
 
       verificationLink: buildUrl()
         .qs({ email })
-        .makeSigned("actions:auth.forgot-password.callback", { expiresIn: "1h" }),
+        .makeSigned("actions:auth.forgot-password.callback", { expiresIn: "10m" }),
     });
 
     await mail.send(notification);

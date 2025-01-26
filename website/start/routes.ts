@@ -44,8 +44,14 @@ router
 
     router
       .on('/password/forgot')
-      .renderInertia('auth/forgot-password')
+      .renderInertia('auth/forgot-password/index')
       .as('pages:auth.forgot-password')
+      .use(middleware.guest())
+
+    router
+      .on('/password/forgot/sent')
+      .renderInertia('auth/forgot-password/sent')
+      .as('page:auth.forgot-password.sent')
       .use(middleware.guest())
 
     router
@@ -61,6 +67,16 @@ router
       )
       .as('actions:auth.forgot-password.callback')
       .middleware([middleware.verifyUrlSignature(), middleware.automaticSubmit()])
+
+    router
+      .post('/password/forgot/reset', [AuthenticationController, 'changePassword'])
+      .as('actions:auth.forgot-password.change')
+      .use(middleware.guest())
+
+    router
+      .on('/password/forgot/success')
+      .renderInertia('auth/forgot-password/success')
+      .as('actions:auth.forgot-password.success')
 
     router
       .on('/verify')
