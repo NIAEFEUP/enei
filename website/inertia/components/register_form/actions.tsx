@@ -20,7 +20,7 @@ function StepperFormActions() {
           )}
           <Button size="sm">
             {isLastStep
-              ? 'Registar-me na 16ªedição do ENEI'
+              ? 'Registar-me na 16ª edição do ENEI'
               : isOptionalStep
                 ? 'Passar'
                 : 'Próximo'}

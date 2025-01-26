@@ -1,17 +1,17 @@
 import * as z from 'zod'
 
-import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
-import StepperFormActions from './actions'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import { useForm } from 'react-hook-form'
 import { Checkbox } from '../ui/checkbox'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import MultipleSelector, { Option } from '../ui/multiple-selector'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { Textarea } from '../ui/textarea'
+import StepperFormActions from './actions'
 
-import * as enei from '~/lib/enei'
 import { useContext } from 'react'
 import { FormContext } from '~/contexts/form_context'
+import * as enei from '~/lib/enei'
 
 const ENEI_EDITIONS: Option[] = enei.getPreviousEditions().map(({ year, location }) => {
   return {
@@ -50,18 +50,18 @@ const CommunicationFormSchema = z.object({
 })
 
 const CommunicationInfoForm = () => {
+  const { formData, updateFormData, getValue } = useContext(FormContext)
+
   const form = useForm<z.infer<typeof CommunicationFormSchema>>({
     resolver: zodResolver(CommunicationFormSchema),
     defaultValues: {
-      heardAboutENEI: '',
-      participationReason: '',
-      attendedBefore: false,
-      termsAndConditions: false,
-      photoConsent: false,
+      heardAboutENEI: getValue('heardAboutENEI') || '',
+      participationReason: getValue('participationReason') || '',
+      attendedBefore: getValue('attendedBeforeEditions').length > 0 || false,
+      termsAndConditions: false, // don't autofill this
+      photoConsent: false, // don't autofill this
     },
   })
-
-  const { formData, updateFormData } = useContext(FormContext)
 
   async function onSubmit() {
     const localData = form.getValues()

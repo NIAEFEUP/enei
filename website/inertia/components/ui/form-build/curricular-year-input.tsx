@@ -15,14 +15,18 @@ interface CurricularYearProps {
 interface CurricularYearSelectorProps {
   disabled?: boolean
   onCurricularYearChange?: (curricularYear: string | null, lastYear: number | null) => void
+  defaultCurricularYear: string | null
+  defaultLastYear: number | null
 }
 
 const CurricularYearSelector = ({
   disabled,
   onCurricularYearChange,
+  defaultCurricularYear,
+  defaultLastYear,
 }: CurricularYearSelectorProps) => {
-  const [selectedCurricularYear, setCurricularYear] = useState<string | null>(null)
-  const [_, setSelectedLastYear] = useState<number | null>(null)
+  const [selectedCurricularYear, setCurricularYear] = useState<string | null>(defaultCurricularYear)
+  const [_, setSelectedLastYear] = useState<number | null>(defaultLastYear)
 
   const curricularYears: CurricularYearProps[] = [
     { value: '1', label: '1º ano' },
@@ -49,7 +53,7 @@ const CurricularYearSelector = ({
   return (
     <div className="flex gap-4">
       {/* Curricular Year Selector */}
-      <Select onValueChange={handleCurricularYearSelect}>
+      <Select defaultValue={defaultCurricularYear || ''} onValueChange={handleCurricularYearSelect}>
         <SelectTrigger disabled={disabled}>
           <SelectValue placeholder="Ano Curricular" />
         </SelectTrigger>

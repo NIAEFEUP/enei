@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, ReactNode } from 'react'
+import { createContext, ReactNode, useContext, useState } from 'react'
 
 type FormData = {
   firstName: string
@@ -16,7 +16,7 @@ type FormData = {
   isVegan: boolean
   transportationModes: Array<string>
   heardAboutENEI: string
-  reasonForSignup: string
+  participationReason: string
   attendedBeforeEditions: Array<string>
 }
 
@@ -33,16 +33,17 @@ const defaultFormData = {
   tShirtSize: '',
   dietaryRestrictions: '',
   isVegetarian: false,
-  isVegan: true,
+  isVegan: false,
   transportationModes: [],
   heardAboutENEI: '',
-  reasonForSignup: '',
+  participationReason: '',
   attendedBeforeEditions: [],
 }
 
 export const FormContext = createContext({
   formData: defaultFormData,
-  updateFormData: (_key: any, _value: any) => {}, // Placeholder function for default context
+  getValue: (_key: keyof FormData): any => {}, // Placeholder function for default context
+  updateFormData: (_key: any, _value: unknown) => {}, // Placeholder function for default context
 })
 
 type FormProviderProps = {
@@ -52,17 +53,25 @@ type FormProviderProps = {
 export function FormProvider({ children }: FormProviderProps) {
   const [formData, setFormData] = useState(defaultFormData)
 
-  const updateFormData = (key: keyof FormData, value: any) => {
+  const updateFormData = (key: keyof FormData, value: unknown) => {
     if (key in formData) {
       setFormData((prev) => ({
         ...prev,
         [key]: value,
       }))
     }
+
+    console.log(formData)
+  }
+
+  const getValue = (key: keyof FormData) => {
+    return formData[key]
   }
 
   return (
-    <FormContext.Provider value={{ formData, updateFormData }}>{children}</FormContext.Provider>
+    <FormContext.Provider value={{ formData, updateFormData, getValue }}>
+      {children}
+    </FormContext.Provider>
   )
 }
 

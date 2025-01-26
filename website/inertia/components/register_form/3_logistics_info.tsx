@@ -44,16 +44,16 @@ const LogisticsInfoSchema = z.object({
 
 const LogisticsInfoForm = () => {
   const { nextStep } = useStepper()
-  const { updateFormData } = useContext(FormContext)
+  const { updateFormData, getValue } = useContext(FormContext)
 
   const form = useForm<z.infer<typeof LogisticsInfoSchema>>({
     resolver: zodResolver(LogisticsInfoSchema),
     defaultValues: {
-      tShirtSize: '',
-      dietaryRestrictions: '',
-      isVegetarian: false,
-      isVegan: false,
-      transportationModes: [],
+      tShirtSize: getValue('tShirtSize') || '',
+      dietaryRestrictions: getValue('dietaryRestrictions') || '',
+      isVegetarian: getValue('isVegetarian') || false,
+      isVegan: getValue('isVegan') || false,
+      transportationModes: getValue('transportationModes') || [],
     },
   })
 

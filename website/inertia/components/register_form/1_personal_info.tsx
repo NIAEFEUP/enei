@@ -1,9 +1,12 @@
 import * as z from 'zod'
 
 import districts from '#data/location-input/districts.json' with { type: 'json' }
-import { useForm } from 'react-hook-form'
-import { useStepper } from '../ui/stepper'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { REGEXP_ONLY_DIGITS } from 'input-otp'
+import { DateTime } from 'luxon'
+import { useContext } from 'react'
+import { useForm } from 'react-hook-form'
+import { FormContext } from '~/contexts/form_context'
 import {
   Form,
   FormControl,
@@ -13,15 +16,12 @@ import {
   FormLabel,
   FormMessage,
 } from '../ui/form'
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '../ui/input-otp'
 import { Input } from '../ui/input'
-import StepperFormActions from './actions'
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../ui/select'
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '../ui/input-otp'
 import { PhoneInput } from '../ui/phone-input/phone-input'
-import { REGEXP_ONLY_DIGITS } from 'input-otp'
-import { useContext } from 'react'
-import { FormContext } from '~/contexts/form_context'
-import { DateTime } from 'luxon'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import { useStepper } from '../ui/stepper'
+import StepperFormActions from './actions'
 
 const PersonalInfoSchema = z.object({
   firstName: z.string().min(2, {
@@ -51,17 +51,17 @@ const PersonalInfoSchema = z.object({
 
 const PersonalInfoForm = () => {
   const { nextStep } = useStepper()
-  const { updateFormData } = useContext(FormContext)
+  const { updateFormData, getValue } = useContext(FormContext)
 
   const form = useForm<z.infer<typeof PersonalInfoSchema>>({
     resolver: zodResolver(PersonalInfoSchema),
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      dateOfBirth: new Date(),
-      phone: '',
-      municipality: '',
+      firstName: getValue('firstName') || '',
+      lastName: getValue('lastName') || '',
+      email: getValue('email') || '',
+      dateOfBirth: getValue('dateOfBirth') || new Date(),
+      phone: getValue('phone') || '',
+      municipality: getValue('municipality') || '',
     },
   })
 

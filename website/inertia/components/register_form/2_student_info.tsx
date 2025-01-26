@@ -1,8 +1,7 @@
 import * as z from 'zod'
 
-import { useForm } from 'react-hook-form'
-import { useStepper } from '../ui/stepper'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
 import {
   Form,
   FormControl,
@@ -12,27 +11,28 @@ import {
   FormLabel,
   FormMessage,
 } from '../ui/form'
+import { useStepper } from '../ui/stepper'
 import StepperFormActions from './actions'
 // import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import CurricularYearSelector from '../ui/form-build/curricular-year-input'
 import { Button } from '~/components/ui/button'
-import { ScrollArea, ScrollBar } from '~/components/ui/scroll-area'
 import {
   Command,
-  CommandList,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from '~/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
+import { ScrollArea, ScrollBar } from '~/components/ui/scroll-area'
+import CurricularYearSelector from '../ui/form-build/curricular-year-input'
 
 import universities from '#data/enei/universities.json' with { type: 'json' }
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { useContext, useState } from 'react'
+import { FormContext } from '~/contexts/form_context'
 import { cn } from '~/lib/utils'
 import { Input } from '../ui/input'
-import { FormContext } from '~/contexts/form_context'
 
 // HACK: This is because the tuple would return an array of errors
 // this way they are validated individually
@@ -75,14 +75,14 @@ const StudentInfoSchema = z.object({
 
 const StudentInfoForm = () => {
   const { nextStep } = useStepper()
-  const { updateFormData } = useContext(FormContext)
+  const { updateFormData, getValue } = useContext(FormContext)
 
   const form = useForm<z.infer<typeof StudentInfoSchema>>({
     resolver: zodResolver(StudentInfoSchema),
     defaultValues: {
-      university: '',
-      course: '',
-      curricularYear: ['', undefined],
+      university: getValue('university') || '',
+      course: getValue('course') || '',
+      curricularYear: getValue('curricularYear') || ['', undefined],
     },
   })
 
@@ -93,7 +93,9 @@ const StudentInfoForm = () => {
     })
     nextStep()
   }
-  const [selectedUniversity, setSelectedUniversity] = useState<string | null>(null)
+  const [selectedUniversity, setSelectedUniversity] = useState<string | null>(
+    getValue('university')
+  )
   const [openUniversityDropdown, setOpenUniversityDropdown] = useState(false)
 
   return (
@@ -189,6 +191,8 @@ const StudentInfoForm = () => {
               <FormLabel>Ano Curricular*</FormLabel>
               <FormControl>
                 <CurricularYearSelector
+                  defaultCurricularYear={getValue('curricularYear')[0]}
+                  defaultLastYear={getValue('curricularYear')[1]}
                   onCurricularYearChange={(curricularYear, lastYear) => {
                     form.setValue(field.name, [curricularYear || '', lastYear || undefined])
                   }}
