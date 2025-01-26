@@ -1,13 +1,13 @@
 'use client'
 
 import { Command as CommandPrimitive, useCommandState } from 'cmdk'
-import { X } from 'lucide-react'
+import { ChevronDown, X } from 'lucide-react'
 import * as React from 'react'
 import { forwardRef, useEffect } from 'react'
 
+import { cn } from '~/lib/utils'
 import { Badge } from './badge'
 import { Command, CommandGroup, CommandItem, CommandList } from './command'
-import { cn } from '~/lib/utils'
 
 export interface Option {
   value: string
@@ -452,7 +452,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
             inputRef?.current?.focus()
           }}
         >
-          <div className="relative flex flex-wrap gap-1">
+          <div className="relative flex flex-wrap gap-1 items-center pr-3">
             {selected.map((option) => {
               return (
                 <Badge
@@ -535,6 +535,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
             >
               <X />
             </button>
+            {selected.length === 0 && <ChevronDown className="h-4 w-4 opacity-50" />}
           </div>
         </div>
         <div className="relative">

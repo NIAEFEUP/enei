@@ -1,16 +1,16 @@
 import * as z from 'zod'
 
-import { useForm } from 'react-hook-form'
-import { useStepper } from '../ui/stepper'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useContext } from 'react'
+import { useForm } from 'react-hook-form'
+import { FormContext } from '~/contexts/form_context'
+import { Checkbox } from '../ui/checkbox'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import { Input } from '../ui/input'
-import StepperFormActions from './actions'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import { Checkbox } from '../ui/checkbox'
 import MultipleSelector, { Option } from '../ui/multiple-selector'
-import { FormContext } from '~/contexts/form_context'
-import { useContext } from 'react'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import { useStepper } from '../ui/stepper'
+import StepperFormActions from './actions'
 
 const OPTIONS: Option[] = [
   { label: 'CP - Comboios de Portugal', value: 'CP' },
@@ -155,6 +155,8 @@ const LogisticsInfoForm = () => {
                 <MultipleSelector
                   {...field}
                   defaultOptions={OPTIONS}
+                  placeholder="Selecionar meios de transporte"
+                  hidePlaceholderWhenSelected={true}
                   emptyIndicator={
                     <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
                       Sem resultados
