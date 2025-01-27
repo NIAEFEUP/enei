@@ -1,12 +1,12 @@
 import { useForm } from '@inertiajs/react'
+import CardContainer from '~/components/common/containers/card'
+import Page from '~/components/common/page'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import { useAuth } from '~/hooks/use_auth'
 import { useCooldown } from '~/hooks/use_cooldown'
 import { useToast } from '~/hooks/use_toast'
 import { useTuyau } from '~/hooks/use_tuyau'
-import BaseLayout from '~/layouts/base'
-import CardLayout from '~/layouts/card'
 
 export default function EmailVerification() {
   const auth = useAuth({ only: ['authenticated'] })
@@ -32,8 +32,8 @@ export default function EmailVerification() {
   }
 
   return (
-    <BaseLayout title="Registo bem-sucedido">
-      <CardLayout>
+    <Page title="Registo bem-sucedido">
+      <CardContainer>
         <Card>
           <CardHeader>
             <CardTitle className="text-2xl">Confirmação de e-mail</CardTitle>
@@ -56,7 +56,7 @@ export default function EmailVerification() {
             </form>
           </CardContent>
         </Card>
-      </CardLayout>
-    </BaseLayout>
+      </CardContainer>
+    </Page>
   )
 }
