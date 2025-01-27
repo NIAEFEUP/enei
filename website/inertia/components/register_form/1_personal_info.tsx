@@ -1,14 +1,5 @@
-import * as z from 'zod'
-
-import districts from '#data/location-input/districts.json' with { type: 'json' }
-import { zodResolver } from '@hookform/resolvers/zod'
-import { REGEXP_ONLY_DIGITS } from 'input-otp'
-import { DateTime } from 'luxon'
-import { useContext } from 'react'
-import { useForm } from 'react-hook-form'
-import { FormContext } from '~/contexts/form_context'
+import districts from '#data/enei/districts.json' with { type: 'json' }
 import {
-  Form,
   FormControl,
   FormDescription,
   FormField,
@@ -17,141 +8,100 @@ import {
   FormMessage,
 } from '../ui/form'
 import { Input } from '../ui/input'
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '../ui/input-otp'
 import { PhoneInput } from '../ui/phone-input/phone-input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import { useStepper } from '../ui/stepper'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select'
+// import { useStepper } from '../ui/stepper'
 import StepperFormActions from './actions'
-
-const PersonalInfoSchema = z.object({
-  firstName: z.string().min(2, {
-    message: 'O primeiro nome deve ter pelo menos 2 caracteres.',
-  }),
-  lastName: z.string().min(2, {
-    message: 'O último nome deve ter pelo menos 2 caracteres.',
-  }),
-  email: z.string().email({
-    message: 'Insere um email válido',
-  }),
-  dateOfBirth: z.coerce
-    .date({
-      message: 'Insere uma data válida',
-      errorMap: ({ code }, { defaultError }) => {
-        if (code === 'invalid_date') return { message: 'Data inválida.' }
-        return { message: defaultError }
-      },
-    })
-    .min(new Date(Date.parse('1900-01-01')), { message: 'Data inválida, tem de ser mais recente.' })
-    .max(new Date(), { message: 'Data inválida, tem de ser menor que a atual.' }),
-  phone: z.string().regex(/^\+?[0-9\s-]{9,15}$/, {
-    message: 'Insere um número de telemóvel válido.',
-  }),
-  municipality: z.string(),
-})
+import { SignupInfo } from '../../pages/signup/schema'
+import { Button } from '~/components/ui/button'
+import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
+import { cn } from '~/lib/utils'
+import { Calendar } from '~/components/ui/calendar'
+import { CalendarIcon } from 'lucide-react'
+import { format } from 'date-fns'
+import { pt } from 'date-fns/locale'
+import { useFormContext } from 'react-hook-form'
 
 const PersonalInfoForm = () => {
-  const { nextStep } = useStepper()
-  const { updateFormData, getValue } = useContext(FormContext)
-
-  const form = useForm<z.infer<typeof PersonalInfoSchema>>({
-    resolver: zodResolver(PersonalInfoSchema),
-    defaultValues: {
-      firstName: getValue('firstName') || '',
-      lastName: getValue('lastName') || '',
-      email: getValue('email') || '',
-      dateOfBirth: getValue('dateOfBirth') || new Date(),
-      phone: getValue('phone') || '',
-      municipality: getValue('municipality') || '',
-    },
-  })
-
-  function onSubmit() {
-    const localData = form.getValues()
-    ;(Object.keys(localData) as Array<keyof typeof localData>).forEach((key) => {
-      if (key === 'dateOfBirth') {
-        updateFormData(key, DateTime.fromJSDate(localData[key] as Date))
-      } else if (localData[key] !== undefined) {
-        updateFormData(key, localData[key])
-      }
-    })
-    nextStep()
-  }
+  // const { nextStep } = useStepper()
+  const form = useFormContext<SignupInfo>()
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {/* TODO: Make it look good in mobile */}
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <FormField
-              control={form.control}
-              name="firstName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Primeiro Nome*</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Joca" type="text" {...field} />
-                  </FormControl>
+    <>
+      {/* TODO: Make it look good in mobile */}
+      <div className="flex flex-col gap-4">
+        <div className='flex gap-2'>
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormItem className='flex-1'>
+                <FormLabel>Primeiro Nome*</FormLabel>
+                <FormControl>
+                  <Input placeholder="Joca" type="text" {...field} />
+                </FormControl>
 
-                  <FormDescription>
-                    O teu primeiro e último nome vão ser visíveis no teu perfil.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div>
-            <FormField
-              control={form.control}
-              name="lastName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Último Nome*</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Costa" type="text" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+                <FormDescription>
+                  O teu primeiro e último nome vão ser visíveis no teu perfil.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem className='flex-1'>
+                <FormLabel>Último Nome*</FormLabel>
+                <FormControl>
+                  <Input placeholder="Costa" type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
         <FormField
           control={form.control}
           name="dateOfBirth"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex flex-col">
               <FormLabel>Data de Nascimento*</FormLabel>
-              <FormControl>
-                <InputOTP
-                  maxLength={8}
-                  pattern={REGEXP_ONLY_DIGITS}
-                  onChange={(val) => {
-                    form.setValue(
-                      field.name,
-                      new Date(Date.parse(`${val.slice(4)}-${val.slice(2, 4)}-${val.slice(0, 2)}`))
-                    )
-                  }}
-                >
-                  <InputOTPGroup>
-                    <InputOTPSlot index={0} placeholder="D" />
-                    <InputOTPSlot index={1} placeholder="D" />
-                  </InputOTPGroup>
-                  <InputOTPSeparator />
-                  <InputOTPGroup>
-                    <InputOTPSlot index={2} placeholder="M" />
-                    <InputOTPSlot index={3} placeholder="M" />
-                  </InputOTPGroup>
-                  <InputOTPSeparator />
-                  <InputOTPGroup>
-                    <InputOTPSlot index={4} placeholder="Y" />
-                    <InputOTPSlot index={5} placeholder="Y" />
-                    <InputOTPSlot index={6} placeholder="Y" />
-                    <InputOTPSlot index={7} placeholder="Y" />
-                  </InputOTPGroup>
-                </InputOTP>
-              </FormControl>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={'outline'}
+                      className={cn(
+                        'w-[240px] pl-3 text-left font-normal',
+                        !field.value && 'text-muted-foreground'
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, 'PPP', { locale: pt })
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
 
               <FormDescription>
                 A tua data de nascimento vai ser usada para determinar a tua idade.
@@ -201,8 +151,8 @@ const PersonalInfoForm = () => {
                   <SelectContent>
                     {districts.map((dist) => {
                       return (
-                        <SelectItem key={dist} value={dist}>
-                          {dist}
+                        <SelectItem key={dist.id} value={dist.id}>
+                          {dist.name}
                         </SelectItem>
                       )
                     })}
@@ -215,8 +165,8 @@ const PersonalInfoForm = () => {
           )}
         />
         <StepperFormActions />
-      </form>
-    </Form>
+      </div>
+    </>
   )
 }
 

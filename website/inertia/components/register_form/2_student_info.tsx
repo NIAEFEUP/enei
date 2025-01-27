@@ -136,20 +136,20 @@ const StudentInfoForm = () => {
                           <ScrollArea className="h-[300px]">
                             {universities.map((uni) => (
                               <CommandItem
-                                key={uni}
-                                value={uni}
+                                key={uni.id}
+                                value={uni.id}
                                 onSelect={() => {
-                                  setSelectedUniversity(uni)
-                                  form.setValue(field.name, uni)
+                                  setSelectedUniversity(uni.id)
+                                  form.setValue(field.name, uni.id)
                                   setOpenUniversityDropdown(false)
                                 }}
                                 className="flex cursor-pointer items-center justify-between text-sm"
                               >
-                                <span>{uni}</span>
+                                <span>{uni.name}</span>
                                 <Check
                                   className={cn(
                                     'h-4 w-4',
-                                    selectedUniversity === uni ? 'opacity-100' : 'opacity-0'
+                                    selectedUniversity === uni.id ? 'opacity-100' : 'opacity-0'
                                   )}
                                 />
                               </CommandItem>

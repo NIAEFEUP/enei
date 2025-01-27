@@ -32,7 +32,7 @@ export const createProfileValidator = vine.compile(
           .first()
         return !user
       }),
-    university: vine.string().in(universities),
+    university: vine.string().in(universities.map((val) => val.id)),
     course: vine.string(),
     curricularYear: vine.number().range([1, 6]),
     finishedAt: vine.number().range([1930, new Date().getFullYear()]),

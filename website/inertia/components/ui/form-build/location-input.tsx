@@ -13,8 +13,8 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
 import { cn } from '~/lib/utils'
 
-import countries from '~/data/location-input/countries.json'
-import states from '~/data/location-input/states.json'
+import countries from '#data/location-input/countries.json' with { type: 'json' }
+import states from '#data/location-input/states.json' with { type: 'json' }
 
 interface Timezone {
   zoneName: string

@@ -11,9 +11,9 @@ import StepperFormActions from './actions'
 
 import { useContext } from 'react'
 import { FormContext } from '~/contexts/form_context'
-import * as enei from '~/lib/enei'
+import editions from '#data/enei/editions.json' with { type: "json" }
 
-const ENEI_EDITIONS: Option[] = enei.getPreviousEditions().map(({ year, location }) => {
+const ENEI_EDITIONS: Option[] = editions.map(({ year, location }) => {
   return {
     value: year.toString(),
     label: location + ', ' + year.toString(),
