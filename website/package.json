@@ -121,7 +121,7 @@
     "@vinejs/vine": "^3.0.0",
     "adonisjs-jobs": "^0.0.21",
     "axios": "^1.7.9",
-    "better-sqlite3": "^11.7.0",
+    "better-sqlite3": "^11.8.1",
     "bull": "^4.16.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

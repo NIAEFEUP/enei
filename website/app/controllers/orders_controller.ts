@@ -23,12 +23,9 @@ export default class OrdersController {
 
       // Validate authentication
 
-  
       if (!authUser || authUser.id !== userId) {
         return response.status(401).json({ message: 'Unauthorized' })
       }
-      
-
 
       // Validate user existence
 
@@ -42,12 +39,11 @@ export default class OrdersController {
       let description = ''
 
       const productDetails = []
-     
 
       for (const productItem of products) {
         const { productId, quantity } = productItem
         const product = await Product.find(productId)
-        
+
         if (!product) {
           return response.status(404).json({ message: `Product with id ${productId} not found` })
         }
@@ -91,10 +87,9 @@ export default class OrdersController {
           quantity,
         })
       }
-      
 
       // Prepare payment data
-      
+
       const data = {
         mbWayKey: env.get('IFTHENPAY_MBWAY_KEY'),
         orderId: order.id,
@@ -102,12 +97,11 @@ export default class OrdersController {
         mobileNumber,
         description,
       }
-      
 
       // Call payment API
-      
+
       const apiResponse = await axios.post('https://api.ifthenpay.com/spg/payment/mbway', data)
-      
+
       if (apiResponse.status === 200) {
         const responseData = apiResponse.data
         order.requestId = responseData.RequestId
@@ -116,22 +110,19 @@ export default class OrdersController {
         await order.save()
 
         // Dispatch background job to update order status
-        
+
         await UpdateOrderStatus.dispatch(
           { requestId: order.requestId, email: authUser.email },
           { delay: 10000 }
         ).catch((error) => {
           console.error('Error dispatching job', error)
-        }
-        )
-        
+        })
 
         return response.status(200).json({
           order,
           message: 'Payment initiated successfully',
         })
       } else {
-        
         return response.status(500).json({ message: 'Failed to initiate payment' })
       }
     } catch (error) {
