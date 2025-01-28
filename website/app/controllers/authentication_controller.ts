@@ -14,7 +14,7 @@ import { errors } from '@adonisjs/auth'
 
 @inject()
 export default class AuthenticationController {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
   async login({ request, auth, session, response }: HttpContext) {
     const { email, password } = await request.validateUsing(loginWithCredentialsValidator)
@@ -29,7 +29,7 @@ export default class AuthenticationController {
         return response.redirect().toRoute('pages:auth.verify')
 
       return response.redirect().toRoute('pages:home')
-      
+
     } catch (error) {
       if (error instanceof errors.E_INVALID_CREDENTIALS) {
         session.flashErrors({ password: 'As credenciais que introduziste não são válidas' })
@@ -78,28 +78,36 @@ export default class AuthenticationController {
       to the person who issues this request, but we should not send an email that is not in
       any account.
     */
-    if(await Account.findBy('id', `credentials:${email}`)) {
+    if (await Account.findBy('id', `credentials:${email}`)) {
       await this.userService.sendForgotPasswordEmail(email)
     }
 
     return response.redirect().toRoute('page:auth.forgot-password.sent')
   }
 
-  async callbackForForgotPassword({ request, response, session }: HttpContext) {
-    const { email } = await request.validateUsing(emailVerificationCallbackValidator)
+  async callbackForForgotPassword({ request, response }: HttpContext) {
+    const {
+      password,
+      email
+    } = await request.validateUsing(passwordResetValidator)
 
-    session.flash('forgot-password-email', email)
-    return response.redirect().toRoute('pages:auth.forgot-password.change')
+    const account = await Account.find(`credentials:${email}`)
+    if (account) {
+      account.password = password // Auther mixin hashes it automatically on assignment
+      await account.save()
+    }
+
+    return response.redirect().toRoute('actions:auth.forgot-password.success')
   }
 
-  async showForgotPasswordPage({ inertia, session }: HttpContext) {
-    return inertia.render('auth/forgot-password/reset', { email: session.flashMessages.get('forgot-password-email') })
+  async showForgotPasswordPage({ inertia }: HttpContext) {
+    return inertia.render('auth/forgot-password/reset')
   }
 
   async changePassword({ request, response }: HttpContext) {
-    const { 
-      password, 
-      email 
+    const {
+      password,
+      email
     } = await request.validateUsing(passwordResetValidator)
 
     const account = await Account.find(`credentials:${email}`)

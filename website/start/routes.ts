@@ -60,22 +60,14 @@ router
       .use(middleware.guest())
 
     router
-      .route(
-        '/password/forgot/callback',
-        ['GET', 'POST'],
-        [AuthenticationController, 'callbackForForgotPassword']
-      )
+      .get('/password/forgot/callback', [AuthenticationController, 'showForgotPasswordPage'])
+      .as('pages:auth.forgot-password.callback')
+      .middleware([middleware.verifyUrlSignature()])
+
+    router
+      .post('/password/forgot/callback', [AuthenticationController, 'callbackForForgotPassword'])
       .as('actions:auth.forgot-password.callback')
-      .middleware([middleware.verifyUrlSignature(), middleware.automaticSubmit()])
-
-    router
-      .get('/password/forgot/reset', [AuthenticationController, 'showForgotPasswordPage'])
-      .as('pages:auth.forgot-password.change')
-
-    router
-      .post('/password/forgot/reset', [AuthenticationController, 'changePassword'])
-      .as('actions:auth.forgot-password.change')
-      .use(middleware.guest())
+      .middleware([middleware.verifyUrlSignature()])
 
     router
       .on('/password/forgot/success')

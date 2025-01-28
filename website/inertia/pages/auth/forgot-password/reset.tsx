@@ -7,13 +7,19 @@ import { useForm, usePage } from '@inertiajs/react'
 import { cn } from '~/lib/utils'
 import BaseLayout from '~/layouts/base'
 import CardLayout from '~/layouts/card'
+import { useTuyau } from '~/hooks/use_tuyau'
+import { useParams } from '~/hooks/use_params'
 
-export default function ForgotPasswor() {
+export default function ForgotPassword() {
+  const tuyau = useTuyau()
   const page = usePage()
+  const params = useParams(page.url)
   const oauthError = useError('oauth')
 
+  console.log(tuyau)
+
   const { data, setData, errors, post } = useForm({
-    email: String(page.props.email),
+    email: params.email,
     password: '',
     password_confirmation: '',
   })
@@ -21,7 +27,7 @@ export default function ForgotPasswor() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    post('/auth/password/forgot/reset')
+    post(`${tuyau.$url('actions:auth.forgot-password.callback')}?email=${params.email}&signature=${params.signature}`)
   }
 
   return (
