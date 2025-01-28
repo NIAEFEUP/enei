@@ -27,6 +27,13 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
 
     /*
     |----------------------------------------------------------
+    | Variables for configuring the payments system
+    |----------------------------------------------------------
+    */
+    IFTHENPAY_MBWAY_KEY: vine.string().optional(),
+
+    /*
+    |----------------------------------------------------------
     | Variables for configuring the mail package
     |----------------------------------------------------------
     */
