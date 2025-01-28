@@ -1,6 +1,7 @@
 import * as React from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
 import { DayPicker } from 'react-day-picker'
+import { addYears, subYears } from 'date-fns'
 
 import { cn } from '~/lib/utils'
 import { Button, buttonVariants } from '~/components/ui/button'
@@ -17,15 +18,29 @@ function ChangeMonthButton({ className, ...props }: React.ButtonHTMLAttributes<H
   )
 }
 
+function ChangeYearButton({ className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  return (
+    <Button
+      variant="outline"
+      className={cn(className, 'h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100')}
+      {...props}
+    />
+  )
+}
+
 function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
+  const [month, setMonth] = React.useState(() => new Date())
+
   return (
     <DayPicker
+      month={month}
+      onMonthChange={setMonth}
       showOutsideDays={showOutsideDays}
       className={cn('p-3', className)}
       classNames={{
         months: 'MONTHS flex flex-col',
         month: 'MONTH space-y-4',
-        month_caption: 'MONTH_CAPTION flex justify-center pt-1 relative items-center',
+        month_caption: 'MONTH_CAPTION flex justify-center pt-2 relative items-center',
         caption_label: 'CAPTION_LABEL text-sm font-medium',
         nav: 'NAV flex items-center justify-between',
         table: 'TABLE w-full border-collapse space-y-1',
@@ -58,14 +73,24 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
       }}
       components={{
         PreviousMonthButton: ({ ...props }) => (
-          <ChangeMonthButton {...props}>
-            <ChevronLeft className="w-full h-full" />
-          </ChangeMonthButton>
+          <div className='flex gap-1'>
+            <ChangeYearButton onClick={() => setMonth((month) => subYears(month, 1))}>
+              <ChevronsLeft className="w-full h-full" />
+            </ChangeYearButton>
+            <ChangeMonthButton {...props}>
+              <ChevronLeft className="w-full h-full" />
+            </ChangeMonthButton>
+          </div>
         ),
         NextMonthButton: ({ ...props }) => (
-          <ChangeMonthButton {...props}>
-            <ChevronRight className="w-full h-full" />
-          </ChangeMonthButton>
+          <div className='flex gap-1'>
+            <ChangeMonthButton {...props}>
+              <ChevronRight className="w-full h-full" />
+            </ChangeMonthButton>
+            <ChangeYearButton onClick={() => setMonth((month) => addYears(month, 1))}>
+              <ChevronsRight className="w-full h-full" />
+            </ChangeYearButton>
+          </div>
         ),
         // DayButton: ({ className, ...props }) => (
         //   <button className={cn('DAY_BUTTON flex items-center justify-center', className)} {...props} />
