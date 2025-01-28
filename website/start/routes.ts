@@ -57,17 +57,17 @@ router
     router
       .post('/password/forgot/new', [AuthenticationController, 'sendForgotPassword'])
       .as('actions:auth.forgot-password.send')
-      .use(middleware.guest())
+      .use([middleware.guest(), emailVerificationThrottle])
 
     router
       .get('/password/forgot/callback', [AuthenticationController, 'showForgotPasswordPage'])
       .as('pages:auth.forgot-password.callback')
-      .middleware([middleware.verifyUrlSignature()])
+      .middleware(middleware.verifyUrlSignature())
 
     router
       .post('/password/forgot/callback', [AuthenticationController, 'callbackForForgotPassword'])
       .as('actions:auth.forgot-password.callback')
-      .middleware([middleware.verifyUrlSignature()])
+      .middleware(middleware.verifyUrlSignature())
 
     router
       .on('/password/forgot/success')
