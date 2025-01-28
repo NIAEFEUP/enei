@@ -27,7 +27,13 @@ To get started with the website, follow these steps:
    cd enei/website
    ```
 
-3. Install the dependencies:
+3. Install `pnpm`:
+
+   ```bash
+   corepack enable
+   ```
+
+4. Install the dependencies:
 
    ```bash
    pnpm install --frozen-lockfile

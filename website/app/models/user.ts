@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasMany, hasOne } from '@adonisjs/lucid/orm'
+import Profile from './profile.js'
+import type { HasMany, HasOne } from '@adonisjs/lucid/types/relations'
 import Account from './account.js'
-import type { HasMany } from '@adonisjs/lucid/types/relations'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -12,6 +13,9 @@ export default class User extends BaseModel {
 
   @column.dateTime()
   declare emailVerifiedAt: DateTime | null
+
+  @hasOne(() => Profile)
+  declare profile: HasOne<typeof Profile>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

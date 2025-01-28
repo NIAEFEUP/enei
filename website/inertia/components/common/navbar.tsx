@@ -5,6 +5,7 @@ import { useAuth } from '~/hooks/use_auth'
 import { useTuyau } from '~/hooks/use_tuyau'
 import { cn } from '~/lib/utils'
 import Container from './containers'
+import { useEffect, useState } from 'react'
 
 /*
 import { Menu } from "lucide-react";
@@ -60,9 +61,20 @@ function LogoutButton() {
 
 export function Navbar({ className }: { className?: string }) {
   const auth = useAuth()
+  const [onTop, setOnTop] = useState(true)
+
+  useEffect(() => {
+    const controller = new AbortController()
+
+    window.addEventListener('scroll', () => {
+      setOnTop(window.scrollY === 0)
+    }, { signal: controller.signal })
+
+    return () => controller.abort()
+  }, [])
 
   return (
-    <nav className={cn('w-full', className)}>
+    <nav className={cn('w-full transition-colors duration-300', !onTop && "bg-enei-blue", className)}>
       <Container>
         <div className="w-full py-6 flex flex-row justify-between items-center">
           <Link route="pages:home">

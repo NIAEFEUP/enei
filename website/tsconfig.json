@@ -3,6 +3,7 @@
   "compilerOptions": {
     "rootDir": "./",
     "outDir": "./build",
+    "resolveJsonModule": true,
     "verbatimModuleSyntax": true,
     "jsx": "react-jsx",
   },

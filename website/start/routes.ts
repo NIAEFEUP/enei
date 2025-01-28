@@ -12,10 +12,13 @@ import { emailVerificationThrottle } from '#start/limiter'
 
 const AuthenticationController = () => import('#controllers/authentication_controller')
 const TicketsController = () => import('#controllers/tickets_controller')
+const ProfilesController = () => import('#controllers/profiles_controller')
 
 router.on('/').renderInertia('home').as('pages:home')
 router.get('/tickets', [TicketsController, 'index'])
 router.on('/tickets/:id/checkout').renderInertia('payments').as('checkout')
+router.on('/signup').renderInertia('signup').as('pages:signup')
+router.post('/signup', [ProfilesController, 'create']).use(middleware.profile())
 
 router
   .group(() => {

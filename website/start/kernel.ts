@@ -47,6 +47,7 @@ router.use([
  * the routes or the routes group.
  */
 export const middleware = router.named({
+  profile: () => import('#middleware/profile_middleware'),
   requireAuthenticationEnabled: () => import('#middleware/require_authentication_enabled_middleware'),
   verifyUrlSignature: () => import('#middleware/verify_url_signature_middleware'),
   automaticSubmit: () => import('#middleware/automatic_submit_middleware'),
