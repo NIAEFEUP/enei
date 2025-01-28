@@ -3,7 +3,9 @@ import { createTuyau } from '@tuyau/client'
 import { TuyauProvider } from '@tuyau/inertia/react'
 import { useEnvironment } from '~/hooks/use_env'
 
-export function TuyauWrapper({ children }: { children?: React.ReactNode }) {
+export type TuyauClient = ReturnType<typeof useTuyau>
+
+function useTuyau() {
   const tuyau = useEnvironment((env) =>
     createTuyau({
       api,
@@ -11,5 +13,10 @@ export function TuyauWrapper({ children }: { children?: React.ReactNode }) {
     })
   )
 
+  return tuyau
+}
+
+export function TuyauWrapper({ children }: { children?: React.ReactNode }) {
+  const tuyau = useTuyau()
   return <TuyauProvider client={tuyau}>{children}</TuyauProvider>
 }
