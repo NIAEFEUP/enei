@@ -8,7 +8,7 @@
 */
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
-import { emailVerificationThrottle } from '#start/limiter'
+import { emailVerificationThrottle, sendForgotPasswordThrottle } from '#start/limiter'
 
 const AuthenticationController = () => import('#controllers/authentication_controller')
 const TicketsController = () => import('#controllers/tickets_controller')
@@ -57,7 +57,7 @@ router
     router
       .post('/password/forgot/new', [AuthenticationController, 'sendForgotPassword'])
       .as('actions:auth.forgot-password.send')
-      .use([middleware.guest(), emailVerificationThrottle])
+      .use([middleware.guest(), sendForgotPasswordThrottle])
 
     router
       .get('/password/forgot/callback', [AuthenticationController, 'showForgotPasswordPage'])
