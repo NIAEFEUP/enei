@@ -23,6 +23,7 @@ export default class UpdateOrderStatus extends Job {
         console.error(`Order with requestId ${requestId} not found`)
         return
       }
+      this.logger.info(`Order found: ${JSON.stringify(order)}`)
 
       if (order.status !== 'Pending') {
         this.logger.info(`Order status is no longer pending: ${order.status}`)

@@ -15,18 +15,16 @@ const TicketsController = () => import('#controllers/tickets_controller')
 const AuthenticationController = () => import('#controllers/authentication_controller')
 router.on('/').renderInertia('home').as('pages:home')
 router.get('/tickets', [TicketsController, 'index'])
-router.on('/tickets/:id/checkout').renderInertia('payments').as('checkout').use(middleware.auth())
-
+router.get('/tickets/:id/checkout', [TicketsController, 'showPayment']).as('checkout').middleware(middleware.auth())
 
 router
   .group(() => {
-    router.get('/', [OrdersController, 'index'])
+    //router.get('/', [OrdersController, 'index']) acho que isto já nao e usado
     router.post('/mbway', [OrdersController, 'createMBWay']).use(middleware.auth())
     router.get('/:id', [OrdersController, 'show']).as('payment.show')
   })
+  .middleware(middleware.requireAuthenticationEnabled())
   .prefix('payment')
-  .use(middleware.auth())
-
 router
   .group(() => {
     router.on('/login').renderInertia('auth/login').as('pages:auth.login').use(middleware.guest())

@@ -66,9 +66,7 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     | Variables for configuring the redis package
     |----------------------------------------------------------
     */
-    REDIS_HOST: vine.string(),
-    REDIS_PORT: vine.string(),
-    REDIS_PASSWORD: vine.string().optional(),
+ 
 
     /*
     |----------------------------------------------------------

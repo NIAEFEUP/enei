@@ -9,7 +9,6 @@ export default class TicketsController {
 
   async showPayment({ inertia, params }: HttpContext) {
     const ticket = await Product.find(params.id)
-
     return inertia.render('payments/index', { ticket })
   }
 }
