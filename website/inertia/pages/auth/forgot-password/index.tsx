@@ -53,7 +53,6 @@ export default function ForgotPasswor() {
                 </div>
               </div>
             </form>
-            {oauthError && <p className="text-sm text-red-600 text-center mt-4">{oauthError}</p>}
           </CardContent>
         </Card>
       </CardLayout>
