@@ -5,6 +5,7 @@ import {
   emailVerificationCallbackValidator,
   loginWithCredentialsValidator,
   passwordResetValidator,
+  passwordSendForgotPasswordValidator,
 } from '#validators/authentication'
 import { UserService } from '#services/user_service'
 import { inject } from '@adonisjs/core'
@@ -71,7 +72,7 @@ export default class AuthenticationController {
   }
 
   async sendForgotPassword({ request, response }: HttpContext) {
-    const { email } = request.only(['email'])
+    const { email } = await request.validateUsing(passwordSendForgotPasswordValidator)
 
     /*
       According to OWASP recommendations, the existence of the account should be transparent
