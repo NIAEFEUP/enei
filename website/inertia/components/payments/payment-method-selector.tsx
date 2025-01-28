@@ -13,11 +13,11 @@ export default function PaymentMethodSelector({
   return (
     <section>
       <h2 className="text-xl font-semibold mb-4">3. Método de pagamento</h2>
-      <RadioGroup  value={paymentMethod} onValueChange={setPaymentMethod}>
+      <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="mbway" id="mbway" />
           <Label htmlFor="mbway">
-            <img src="/images/mbway.svg" alt="MB Way" className={`w-20 h-20 m-1 p-1`} />
+            <img src="/images/mbway_white.svg" alt="MB Way" className={`w-20 h-20 m-1 p-1`} />
           </Label>
         </div>
         {/*

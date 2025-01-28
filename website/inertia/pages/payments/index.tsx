@@ -8,21 +8,20 @@ import TicketsController from '#controllers/tickets_controller'
 import PhoneNumberModal from '~/components/payments/phone-modal'
 import PurchaseSummary from '~/components/payments/purchase-summary'
 import BillingInformationForm from '~/components/payments/billing-information-form'
-import PaymentMethodSelector from '~/components/payments/payment-method-selector'
 import Page from '~/components/common/page'
 import axios from 'axios'
 
-
 interface Ticket {
-  name: string;
-  description: string;
-  price: number;
-  image: string;
+  name: string
+  description: string
+  price: number
+  image: string
 }
 
-export default function TicketSalePage(props: InferPageProps<TicketsController, 'showPayment'> & { ticket: Ticket }) {
+export default function TicketSalePage(
+  props: InferPageProps<TicketsController, 'showPayment'> & { ticket: Ticket }
+) {
   const [enableBillingInfo, setEnableBillingInfo] = useState(false)
-  const [paymentMethod, setPaymentMethod] = useState<string>('mbway')
   const [phoneModalOpen, setPhoneModalOpen] = useState(false)
   const [billingInfo, setBillingInfo] = useState({
     name: '',
@@ -42,11 +41,7 @@ export default function TicketSalePage(props: InferPageProps<TicketsController, 
 
   // Handles the payment button click. If the payment method is MB Way, it opens the phone modal, otherwise it processes the payment
   const handlePaymentClick = () => {
-    if (paymentMethod === 'mbway') {
-      setPhoneModalOpen(true)
-    } else {
-      handleModalSubmit('')
-    }
+    setPhoneModalOpen(true)
   }
 
   // Closes the modal (if open) and processes the payment
@@ -56,15 +51,13 @@ export default function TicketSalePage(props: InferPageProps<TicketsController, 
       setPhoneModalOpen(false)
     }
     try {
-        await axios.post('/payment/mbway', {
+      await axios.post('/payment/mbway', {
         userId: 1,
         products: [{ productId: 1, quantity: 1 }],
         nif: enableBillingInfo ? billingInfo.vat : null,
         address: enableBillingInfo ? billingInfo.address : null,
         mobileNumber: number,
       })
-
-
     } catch (error) {
       console.error('Error processing the payment', error)
     }
@@ -80,48 +73,36 @@ export default function TicketSalePage(props: InferPageProps<TicketsController, 
 
   return (
     <Page title="Compra de Bilhete" className="bg-enei-blue">
-    <div className="min-h-screen flex items-center justify-center m-5">
-      <Card className="w-full max-w-2xl mx-auto">
-        <CardHeader>
-          <CardTitle>Completa a tua compra</CardTitle>
-          <CardDescription>Revê o teu bilhete e procede para o pagamento</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {item ? (
-            <PurchaseSummary item={item} />
-          ) : (
-            <p>Loading ticket details...</p>
-          )}
-          <Separator />
+      <div className="min-h-screen flex items-center justify-center m-5">
+        <Card className="w-full max-w-2xl mx-auto">
+          <CardHeader>
+            <CardTitle>Completa a tua compra</CardTitle>
+            <CardDescription>Revê o teu bilhete e procede para o pagamento</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {item ? <PurchaseSummary item={item} /> : <p>Loading ticket details...</p>}
+            <Separator />
 
-          <BillingInformationForm
-            enableBillingInfo={enableBillingInfo}
-            setEnableBillingInfo={setEnableBillingInfo}
-            billingInfo={billingInfo}
-            onBillingInfoChange={handleBillingInfoChange}
-          />
+            <BillingInformationForm
+              enableBillingInfo={enableBillingInfo}
+              setEnableBillingInfo={setEnableBillingInfo}
+              billingInfo={billingInfo}
+              onBillingInfoChange={handleBillingInfoChange}
+            />
 
-          <Separator />
+            <Button onClick={handlePaymentClick} className="w-full">
+              Pagar com
+              <img src="/images/mbway_black.svg" alt="MB Way" className="h-6 w-auto" />
+            </Button>
 
-          <PaymentMethodSelector
-            paymentMethod={paymentMethod}
-            setPaymentMethod={setPaymentMethod}
-          />
-
-          <Separator />
-
-          <Button onClick={handlePaymentClick} disabled={!paymentMethod} className="w-full">
-            Pagar
-          </Button>
-
-          <PhoneNumberModal
-            isOpen={phoneModalOpen}
-            onClose={() => setPhoneModalOpen(false)}
-            onSubmit={handleModalSubmit}
-          />
-        </CardContent>
-      </Card>
-    </div>
+            <PhoneNumberModal
+              isOpen={phoneModalOpen}
+              onClose={() => setPhoneModalOpen(false)}
+              onSubmit={handleModalSubmit}
+            />
+          </CardContent>
+        </Card>
+      </div>
     </Page>
   )
 }
