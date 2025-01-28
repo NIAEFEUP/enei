@@ -18,7 +18,7 @@ import { Form } from '~/components/ui/form'
 import { SignupInfo, signupInfoSchema } from './schema'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { atomWithStorage } from 'jotai/utils'
 import { useAtom } from 'jotai/react'
 
@@ -52,6 +52,12 @@ const signupInfoAtom = atomWithStorage<SignupInfo>(
 export default function Signup() {
   const [signupInfo, setSignupInfo] = useAtom(signupInfoAtom)
 
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+
   const form = useForm<SignupInfo>({
     resolver: zodResolver(signupInfoSchema),
     values: signupInfo,
@@ -68,6 +74,12 @@ export default function Signup() {
 
   function onSubmit(values: SignupInfo) {
     console.log(values)
+  }
+
+  // We need to wait until mount for the atom to have information
+  // up-to-date from the localStorage
+  if (!mounted) {
+    return null
   }
 
   return (
