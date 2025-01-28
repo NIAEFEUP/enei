@@ -90,8 +90,6 @@ export default function TicketSalePage(
               onBillingInfoChange={handleBillingInfoChange}
             />
 
-            <Separator />
-
             <Button onClick={handlePaymentClick} className="w-full">
               Pagar com
               <img src="/images/mbway_black.svg" alt="MB Way" className="h-6 w-auto" />
