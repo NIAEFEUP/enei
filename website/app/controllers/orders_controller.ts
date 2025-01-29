@@ -20,6 +20,7 @@ export default class OrdersController {
       await request.validateUsing(createMBWayOrderValidator)
 
       const { userId, products, nif, address, mobileNumber } = request.all()
+      console.log(userId, products, nif, address, mobileNumber)
 
       // Validate authentication
 
@@ -45,7 +46,9 @@ export default class OrdersController {
         const product = await Product.find(productId)
 
         if (!product) {
-          return response.status(404).json({ message: `Produto com id ${productId} não foi encontrado` })
+          return response
+            .status(404)
+            .json({ message: `Produto com id ${productId} não foi encontrado` })
         }
 
         const successfulOrdersOfGivenProduct = await OrderProduct.query()

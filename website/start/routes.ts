@@ -99,10 +99,11 @@ router
   .middleware(middleware.requireAuthenticationEnabled())
   .prefix('/auth')
 
-
-
 router.get('/tickets', [TicketsController, 'index'])
-router.get('/tickets/:id/checkout', [TicketsController, 'showPayment']).as('checkout').middleware(middleware.auth())
+router
+  .get('/tickets/:id/checkout', [TicketsController, 'showPayment'])
+  .as('checkout')
+  .middleware(middleware.auth())
 
 router
   .group(() => {

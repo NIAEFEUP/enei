@@ -15,14 +15,19 @@ import axios from 'axios'
 import { useToast } from '~/hooks/use_toast'
 
 interface Ticket {
+  id: number
   name: string
   description: string
   price: number
   image: string
 }
 
+interface User {
+  id: number
+}
+
 export default function TicketSalePage(
-  props: InferPageProps<TicketsController, 'showPayment'> & { ticket: Ticket }
+  props: InferPageProps<TicketsController, 'showPayment'> & { ticket: Ticket; user: User }
 ) {
   const [enableBillingInfo, setEnableBillingInfo] = useState(false)
   const [phoneModalOpen, setPhoneModalOpen] = useState(false)
@@ -57,11 +62,10 @@ export default function TicketSalePage(
     if (phoneModalOpen && !number) {
       return
     }
-    // TODO this logic is hardcoding the user and the product
     try {
       await axios.post('/payment/mbway', {
-        userId: 1,
-        products: [{ productId: 1, quantity: 1 }],
+        userId: props.user.id,
+        products: [{ productId: item.id, quantity: 1 }],
         nif: enableBillingInfo ? billingInfo.vat : null,
         address: enableBillingInfo ? billingInfo.address : null,
         mobileNumber: number,
