@@ -9,14 +9,16 @@ import {
 import { Button } from '~/components/ui/button'
 import { useState } from 'react'
 import { PhoneInput } from '~/components/ui/phone-input'
+import { Loader2 } from 'lucide-react'
 
 interface PhoneNumberModalProps {
   isOpen: boolean
+  isLoading: boolean
   onClose: () => void
   onSubmit: (phoneNumber: string) => void
 }
 
-function PhoneNumberModal({ isOpen, onClose, onSubmit }: PhoneNumberModalProps) {
+function PhoneNumberModal({ isOpen, isLoading, onClose, onSubmit }: PhoneNumberModalProps) {
   const [phoneNumber, setPhoneNumber] = useState('')
   const [error, setError] = useState('')
 
@@ -56,7 +58,10 @@ function PhoneNumberModal({ isOpen, onClose, onSubmit }: PhoneNumberModalProps) 
           <Button variant="secondary" onClick={onClose}>
             Cancelar
           </Button>
-          <Button onClick={handleSubmit}>Confirmar</Button>
+          <Button disabled={isLoading} onClick={handleSubmit}>
+            {isLoading && <Loader2 className="animate-spin" />}
+            Confirmar
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

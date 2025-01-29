@@ -24,7 +24,7 @@ export default class OrdersController {
       // Validate authentication
 
       if (!authUser || authUser.id !== userId) {
-        return response.status(401).json({ message: 'Unauthorized' })
+        return response.status(401).json({ message: 'Não autorizado' })
       }
 
       // Validate user existence
@@ -32,7 +32,7 @@ export default class OrdersController {
       const user = await User.find(userId)
 
       if (!user) {
-        return response.status(404).json({ message: 'User not found' })
+        return response.status(404).json({ message: 'Utilizador não encontrado' })
       }
 
       let totalAmount = 0
@@ -45,7 +45,7 @@ export default class OrdersController {
         const product = await Product.find(productId)
 
         if (!product) {
-          return response.status(404).json({ message: `Product with id ${productId} not found` })
+          return response.status(404).json({ message: `Produto com id ${productId} não foi encontrado` })
         }
 
         const successfulOrdersOfGivenProduct = await OrderProduct.query()
@@ -62,12 +62,12 @@ export default class OrdersController {
         if (product.stock < quantity) {
           return response
             .status(400)
-            .json({ message: `Not enough stock for product ${product.name}` })
+            .json({ message: `Não há mais stock do produto ${product.name}` })
         }
 
         if (quantity + totalQuantity > product.max_order) {
           return response.status(400).json({
-            message: `You can only buy ${product.max_order} of product ${product.name}`,
+            message: `Apenas podes comprar ${product.max_order} do produto ${product.name}`,
           })
         }
         productDetails.push({ product, quantity })

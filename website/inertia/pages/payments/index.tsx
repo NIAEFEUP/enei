@@ -24,13 +24,14 @@ export default function TicketSalePage(
 ) {
   const [enableBillingInfo, setEnableBillingInfo] = useState(false)
   const [phoneModalOpen, setPhoneModalOpen] = useState(false)
+  const [phoneModalIsLoading, setPhoneModalIsLoading] = useState(false)
   const [billingInfo, setBillingInfo] = useState({
     name: '',
     vat: '',
     address: '',
   })
   const item = props.ticket
-  const {toast} = useToast()
+  const { toast } = useToast()
 
   // Clear billing info when the component mounts (to prevent stale data)
   useEffect(() => {
@@ -48,10 +49,10 @@ export default function TicketSalePage(
 
   // Closes the modal (if open) and processes the payment
   const handleModalSubmit = async (number: string) => {
+    setPhoneModalIsLoading(true)
 
-    if (phoneModalOpen) {
-      if (!number) return
-      setPhoneModalOpen(false)
+    if (phoneModalOpen && !number) {
+      return
     }
     try {
       await axios.post('/payment/mbway', {
@@ -61,11 +62,15 @@ export default function TicketSalePage(
         address: enableBillingInfo ? billingInfo.address : null,
         mobileNumber: number,
       })
+      setPhoneModalIsLoading(false)
+      setPhoneModalOpen(false)
     } catch (error) {
-      console.error('Error processing the payment', error)
+      setPhoneModalIsLoading(false)
+      setPhoneModalOpen(false)
       toast({
-        title: 'Error processing payment',
-        description: error.response?.data?.message || 'An error occurred while processing the payment',
+        title: 'Error a processar o pagamento',
+        description:
+          error.response?.data?.message || 'Ocurreu um erro ao processar o pagamento. Por favor, tenta novamente.',
         duration: 5000,
       })
     }
@@ -105,6 +110,7 @@ export default function TicketSalePage(
 
             <PhoneNumberModal
               isOpen={phoneModalOpen}
+              isLoading={phoneModalIsLoading}
               onClose={() => setPhoneModalOpen(false)}
               onSubmit={handleModalSubmit}
             />
