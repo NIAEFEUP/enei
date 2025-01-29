@@ -1,4 +1,5 @@
 'use client'
+import { router } from '@inertiajs/react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import { Button } from '~/components/ui/button'
 import { Separator } from '~/components/ui/separator'
@@ -122,7 +123,10 @@ export default function TicketSalePage(
 
             <OrderConfirmationModal
               isOpen={orderConfirmationModalOpen}
-              onClose={() => setOrderConfirmationModalOpen(false)}
+              onClose={() => {
+                router.visit('/tickets')
+                return setOrderConfirmationModalOpen(false)
+              }}
             />
           </CardContent>
         </Card>
