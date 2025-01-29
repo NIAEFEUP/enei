@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import { InferPageProps } from '@adonisjs/inertia/types'
 import TicketsController from '#controllers/tickets_controller'
 import PhoneNumberModal from '~/components/payments/phone_modal'
+import OrderConfirmationModal from '~/components/payments/order_confirmation_modal'
 import PurchaseSummary from '~/components/payments/purchase_summary'
 import BillingInformationForm from '~/components/payments/billing_information_form'
 import Page from '~/components/common/page'
@@ -24,6 +25,7 @@ export default function TicketSalePage(
 ) {
   const [enableBillingInfo, setEnableBillingInfo] = useState(false)
   const [phoneModalOpen, setPhoneModalOpen] = useState(false)
+  const [orderConfirmationModalOpen, setOrderConfirmationModalOpen] = useState(false)
   const [phoneModalIsLoading, setPhoneModalIsLoading] = useState(false)
   const [billingInfo, setBillingInfo] = useState({
     name: '',
@@ -54,6 +56,7 @@ export default function TicketSalePage(
     if (phoneModalOpen && !number) {
       return
     }
+    // TODO this logic is hardcoding the user and the product
     try {
       await axios.post('/payment/mbway', {
         userId: 1,
@@ -64,13 +67,15 @@ export default function TicketSalePage(
       })
       setPhoneModalIsLoading(false)
       setPhoneModalOpen(false)
+      setOrderConfirmationModalOpen(true)
     } catch (error) {
       setPhoneModalIsLoading(false)
       setPhoneModalOpen(false)
       toast({
-        title: 'Error a processar o pagamento',
+        title: 'Erro a processar o pagamento',
         description:
-          error.response?.data?.message || 'Ocurreu um erro ao processar o pagamento. Por favor, tenta novamente.',
+          error.response?.data?.message ||
+          'Ocurreu um erro ao processar o pagamento. Por favor, tenta novamente.',
         duration: 5000,
       })
     }
@@ -113,6 +118,11 @@ export default function TicketSalePage(
               isLoading={phoneModalIsLoading}
               onClose={() => setPhoneModalOpen(false)}
               onSubmit={handleModalSubmit}
+            />
+
+            <OrderConfirmationModal
+              isOpen={orderConfirmationModalOpen}
+              onClose={() => setOrderConfirmationModalOpen(false)}
             />
           </CardContent>
         </Card>
