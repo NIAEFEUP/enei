@@ -10,6 +10,7 @@ import PurchaseSummary from '~/components/payments/purchase_summary'
 import BillingInformationForm from '~/components/payments/billing_information_form'
 import Page from '~/components/common/page'
 import axios from 'axios'
+import { useToast } from '~/hooks/use_toast'
 
 interface Ticket {
   name: string
@@ -29,6 +30,7 @@ export default function TicketSalePage(
     address: '',
   })
   const item = props.ticket
+  const {toast} = useToast()
 
   // Clear billing info when the component mounts (to prevent stale data)
   useEffect(() => {
@@ -46,6 +48,7 @@ export default function TicketSalePage(
 
   // Closes the modal (if open) and processes the payment
   const handleModalSubmit = async (number: string) => {
+
     if (phoneModalOpen) {
       if (!number) return
       setPhoneModalOpen(false)
@@ -60,6 +63,11 @@ export default function TicketSalePage(
       })
     } catch (error) {
       console.error('Error processing the payment', error)
+      toast({
+        title: 'Error processing payment',
+        description: error.response?.data?.message || 'An error occurred while processing the payment',
+        duration: 5000,
+      })
     }
   }
 
