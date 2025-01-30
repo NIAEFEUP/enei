@@ -105,21 +105,6 @@ export default class AuthenticationController {
     return inertia.render('auth/forgot-password/reset')
   }
 
-  async changePassword({ request, response }: HttpContext) {
-    const {
-      password,
-      email
-    } = await request.validateUsing(passwordResetValidator)
-
-    const account = await Account.find(`credentials:${email}`)
-    if (account) {
-      account.password = password // Auther mixin hashes it automatically on assignment
-      await account.save()
-    }
-
-    return response.redirect().toRoute('actions:auth.forgot-password.success')
-  }
-
   // SOCIAL AUTHENTICATION
 
   // async initiateGithubLogin({ ally, inertia }: HttpContext) {
