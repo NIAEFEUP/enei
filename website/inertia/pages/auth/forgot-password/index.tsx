@@ -8,7 +8,7 @@ import { cn } from '~/lib/utils'
 import BaseLayout from '~/layouts/base'
 import CardLayout from '~/layouts/card'
 
-export default function ForgotPasswor() {
+export default function ForgotPassword() {
   const oauthError = useError('oauth')
 
   const { data, setData, errors, post } = useForm({
