@@ -1,3 +1,5 @@
+import app from '@adonisjs/core/services/app'
+
 /*
 |--------------------------------------------------------------------------
 | Define HTTP limiters
@@ -12,9 +14,17 @@
 import limiter from '@adonisjs/limiter/services/main'
 
 export const emailVerificationThrottle = limiter.define('auth.verify', (ctx) => {
+  if(app.nodeEnvironment !== 'production') return null
+
   if (ctx.auth.user) {
     return limiter.allowRequests(1).every('1 minute').usingKey(`user:${ctx.auth.user.id}`)
   }
 
   return null
+})
+
+export const sendForgotPasswordThrottle = limiter.define('auth.forgot-password', () => {
+  if(app.nodeEnvironment !== 'production') return null
+
+  return limiter.allowRequests(3).every('1 minute')
 })

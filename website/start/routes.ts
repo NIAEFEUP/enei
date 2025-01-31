@@ -8,7 +8,7 @@
 */
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
-import { emailVerificationThrottle } from '#start/limiter'
+import { emailVerificationThrottle, sendForgotPasswordThrottle } from '#start/limiter'
 
 const AuthenticationController = () => import('#controllers/authentication_controller')
 const TicketsController = () => import('#controllers/tickets_controller')
@@ -41,6 +41,38 @@ router
       .post('/register', [AuthenticationController, 'register'])
       .as('actions:auth.register')
       .use(middleware.guest())
+
+    router
+      .on('/password/forgot')
+      .renderInertia('auth/forgot-password/index')
+      .as('pages:auth.forgot-password')
+      .use(middleware.guest())
+
+    router
+      .on('/password/forgot/sent')
+      .renderInertia('auth/forgot-password/sent')
+      .as('page:auth.forgot-password.sent')
+      .use(middleware.guest())
+
+    router
+      .post('/password/forgot/new', [AuthenticationController, 'sendForgotPassword'])
+      .as('actions:auth.forgot-password.send')
+      .use([middleware.guest(), sendForgotPasswordThrottle])
+
+    router
+      .get('/password/forgot/callback', [AuthenticationController, 'showForgotPasswordPage'])
+      .as('pages:auth.forgot-password.callback')
+      .middleware(middleware.verifyUrlSignature())
+
+    router
+      .post('/password/forgot/callback', [AuthenticationController, 'callbackForForgotPassword'])
+      .as('actions:auth.forgot-password.callback')
+      .middleware(middleware.verifyUrlSignature())
+
+    router
+      .on('/password/forgot/success')
+      .renderInertia('auth/forgot-password/success')
+      .as('actions:auth.forgot-password.success')
 
     router
       .on('/verify')
