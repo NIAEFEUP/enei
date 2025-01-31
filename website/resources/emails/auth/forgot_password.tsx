@@ -41,7 +41,7 @@ const ForgotPassword = ({ logoUrl, email, verificationLink }: EmailVerificationP
 ForgotPassword.defaultProps = {
   logoUrl: 'https://eneiconf.pt/images/logo-white.svg',
   email: 'participante@eneiconf.pt',
-  verificationLink: 'https://eneiconf.pt/auth/forgot-password?email=participante@eneiconf.pt',
+  verificationLink: 'https://eneiconf.pt/auth/forgot/callback?email=participante@eneiconf.pt',
 }
 
 export default ForgotPassword
