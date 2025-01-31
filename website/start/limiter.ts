@@ -26,5 +26,5 @@ export const emailVerificationThrottle = limiter.define('auth.verify', (ctx) => 
 export const sendForgotPasswordThrottle = limiter.define('auth.forgot-password', () => {
   if(app.nodeEnvironment !== 'production') return null
 
-  return limiter.allowRequests(1).every('1 minute')
+  return limiter.allowRequests(3).every('1 minute')
 })
