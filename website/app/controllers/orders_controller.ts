@@ -136,12 +136,17 @@ export default class OrdersController {
     }
   }
 
-  public async show({ inertia, params, response }: HttpContext) {
-    const order = await Order.find(params.id)
-    if (!order) {
-      return response.status(404).json({
-        message: 'Order not found',
+  public async show({ inertia, params, auth, response }: HttpContext) {
+    const authUser = auth.user
+    if (!authUser) {
+      return response.status(401).json({
+        message: 'Unauthorized',
       })
+    }
+    
+    const order = await Order.find(params.id)
+    if (!order || (order.userId !== authUser.id)) {
+      return response.notFound({ message: 'Order not found' })
     }
     return inertia.render('payments/show', { order })
   }

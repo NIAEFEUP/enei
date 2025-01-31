@@ -101,15 +101,15 @@ router
 
 router.get('/tickets', [TicketsController, 'index'])
 router
-  .get('/tickets/:id/checkout', [TicketsController, 'showPayment'])
+  .get('/tickets/:id/checkout', [TicketsController, 'showPayment']).use(middleware.auth())
   .as('checkout')
-  .middleware(middleware.auth())
+  .middleware(middleware.requireAuthenticationEnabled())
 
 router
   .group(() => {
     //router.get('/', [OrdersController, 'index']) acho que isto já nao e usado
     router.post('/mbway', [OrdersController, 'createMBWay']).use(middleware.auth())
-    router.get('/:id', [OrdersController, 'show']).as('payment.show')
+    router.get('/:id', [OrdersController, 'show']).as('payment.show').use(middleware.auth())
   })
   .middleware(middleware.requireAuthenticationEnabled())
   .prefix('payment')
