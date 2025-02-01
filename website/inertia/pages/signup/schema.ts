@@ -30,9 +30,11 @@ const educationInfoSchema = z
   .and(
     z.union([
       z.object({
-        // a: z.string(),
+        curricularYear: z.string().nonempty(),
       }),
-      z.object({}),
+      z.object({
+        completedYear: z.coerce.number().max(new Date().getFullYear()).nullable(),
+      }),
     ])
   )
 

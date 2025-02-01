@@ -18,7 +18,7 @@ import { Form } from '~/components/ui/form'
 import { SignupInfo, signupInfoSchema } from './schema'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { atomWithStorage } from 'jotai/utils'
 import { useAtom } from 'jotai/react'
 
@@ -33,6 +33,8 @@ const signupInfoAtom = atomWithStorage<SignupInfo>(
     municipality: '',
     university: '',
     course: '',
+    curricularYear: 'Selecione uma opção',
+    completedYear: null,
     shirtSize: '',
     dietaryRestrictions: '',
     isVegetarian: false,
@@ -46,7 +48,7 @@ const signupInfoAtom = atomWithStorage<SignupInfo>(
     termsAndConditions: false,
     photoConsent: false,
   },
-  undefined,
+  undefined
 )
 
 export default function Signup() {
@@ -57,11 +59,12 @@ export default function Signup() {
     setMounted(true)
   }, [])
 
-
   const form = useForm<SignupInfo>({
     resolver: zodResolver(signupInfoSchema),
     values: signupInfo,
   })
+
+  const formRef = useRef<HTMLFormElement>(null)
 
   useEffect(() => {
     const { unsubscribe } = form.watch(($values) => {
@@ -72,8 +75,34 @@ export default function Signup() {
     return unsubscribe
   }, [form.watch])
 
-  function onSubmit(values: SignupInfo) {
-    console.log(values)
+  useEffect(() => {
+    const handleSubmitForm = (event: Event) => {
+      if (event instanceof CustomEvent) {
+        handleFormSubmit(event)
+      }
+      window.addEventListener('submitForm', handleSubmitForm)
+      return () => {
+        window.removeEventListener('submitForm', handleSubmitForm)
+      }
+    }
+  }, [])
+
+  const handleFormSubmit = async (event: CustomEvent<SignupInfo>) => {
+    const values = event.detail
+
+    const response = await fetch('/api/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    })
+
+    if (response.ok) {
+      // Handle successful response
+    } else {
+      // Handle error response
+    }
   }
 
   // We need to wait until mount for the atom to have information
@@ -87,7 +116,7 @@ export default function Signup() {
       <Container className="max-w-xl">
         <Card className="px-6 py-12">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form ref={formRef}>
               <Stepper
                 variant="circle-alt"
                 initialStep={0}
