@@ -1,12 +1,12 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 
-export default class Ticket extends BaseModel {
+export default class Product extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
   @column()
-  declare name: string | null
+  declare name: string
 
   @column()
   declare description: string
@@ -17,9 +17,21 @@ export default class Ticket extends BaseModel {
   @column()
   declare stock: number
 
+  @column()
+  declare currency: string
+
+  @column()
+  declare max_order: number
+
+  @column()
+  declare image: string
+
+  @column()
+  declare productGroupId: number
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
+  declare updatedAt: DateTime
 }

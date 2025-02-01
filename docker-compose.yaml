@@ -5,3 +5,14 @@ services:
     ports:
       - "1025:1025"
       - "8025:8025"
+
+  valkey:
+    image: valkey/valkey:8-alpine
+    container_name: enei-valkey
+    volumes:
+      - valkey-data:/data
+    ports:
+      - "6379:6379"
+
+volumes:
+  valkey-data:

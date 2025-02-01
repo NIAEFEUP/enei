@@ -7,5 +7,11 @@ module.exports = {
       exec_mode: 'cluster',
       autorestart: true,
     },
+    {
+      name: 'enei-jobs',
+      script: './ace.js',
+      args: 'jobs:listen',
+      autorestart: true,
+    },
   ],
 }
