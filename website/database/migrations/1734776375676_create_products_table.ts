@@ -13,6 +13,7 @@ export default class extends BaseSchema {
       table.integer('max_order').notNullable()
       table.string('currency').notNullable()
       table.string('image').notNullable
+      table.integer('product_group_id').unsigned().references('id').inTable('product_groups').onDelete('CASCADE')
 
       table.timestamp('created_at')
       table.timestamp('updated_at')
