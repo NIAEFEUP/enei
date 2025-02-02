@@ -1,177 +1,126 @@
-import * as z from 'zod'
-
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useContext } from 'react'
-import { useForm } from 'react-hook-form'
-import { FormContext } from '~/contexts/form_context'
+import { useFormContext } from 'react-hook-form'
 import { Checkbox } from '../ui/checkbox'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import { Input } from '../ui/input'
 import MultipleSelector, { Option } from '../ui/multiple-selector'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import { useStepper } from '../ui/stepper'
 import StepperFormActions from './actions'
+import { SignupInfo } from '~/pages/signup/schema'
+import transports from '#data/enei/signup/transports.json' with { type: 'json' }
+import sizes from '#data/enei/signup/shirts.json' with { type: 'json' }
 
-const OPTIONS: Option[] = [
-  { label: 'CP - Comboios de Portugal', value: 'CP' },
-  { label: 'Metro do Porto', value: 'Metro do Porto' },
-  { label: 'STCP', value: 'STCP' },
-  { label: 'Rede Expresso', value: 'Rede Expresso' },
-  { label: 'FlixBus', value: 'FlixBus' },
-  { label: 'Avião', value: 'Avião' },
-  { label: 'Carro', value: 'Carro' },
-  { label: 'Uber/Bolt', value: 'Uber/Bolt' },
-  { label: 'Táxi', value: 'Táxi' },
-  { label: 'Bicicleta', value: 'Bicicleta' },
-  { label: 'Trotinete', value: 'Trotinete' },
-  { label: 'Pé', value: 'Pé' },
-]
-
-const LogisticsInfoSchema = z.object({
-  tShirtSize: z.string().min(1, { message: 'Seleciona um tamanho' }),
-  dietaryRestrictions: z.string().optional(),
-  isVegetarian: z.boolean(),
-  isVegan: z.boolean(),
-  transportationModes: z
-    .array(
-      z.object({
-        label: z.string(),
-        value: z.string(),
-      })
-    )
-    .optional(),
+const TRANSPORTS: Option[] = transports.map(({ id, description }) => {
+  return {
+    label: description,
+    value: id,
+  }
 })
 
+const SIZES = sizes
+
 const LogisticsInfoForm = () => {
-  const { nextStep } = useStepper()
-  const { updateFormData, getValue } = useContext(FormContext)
-
-  const form = useForm<z.infer<typeof LogisticsInfoSchema>>({
-    resolver: zodResolver(LogisticsInfoSchema),
-    defaultValues: {
-      tShirtSize: getValue('tShirtSize') || '',
-      dietaryRestrictions: getValue('dietaryRestrictions') || '',
-      isVegetarian: getValue('isVegetarian') || false,
-      isVegan: getValue('isVegan') || false,
-      transportationModes: getValue('transportationModes') || [],
-    },
-  })
-
-  function onSubmit() {
-    const localData = form.getValues()
-    ;(Object.keys(localData) as Array<keyof typeof localData>).forEach((key) => {
-      updateFormData(key, localData[key])
-    })
-    nextStep()
-  }
+  const form = useFormContext<SignupInfo>()
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {/* Tamanho da T-Shirt */}
-        <FormField
-          control={form.control}
-          name="tShirtSize"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Tamanho da T-shirt*</FormLabel>
+    <>
+      <FormField
+        control={form.control}
+        name="shirtSize"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Tamanho da T-shirt*</FormLabel>
+            <FormControl>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecionar tamanho" />
+                </SelectTrigger>
+                <SelectContent>
+                  {SIZES.map((size) => {
+                    return <SelectItem value={size}>{size}</SelectItem>
+                  })}
+                </SelectContent>
+              </Select>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      {/* Restrições Alimentares */}
+      <FormField
+        control={form.control}
+        name="dietaryRestrictions"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Restrições alimentares</FormLabel>
+            <FormControl>
+              <Input placeholder="Intolerâncias, alergias, etc." {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="isVegetarian"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="flex gap-2 items-center">
               <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecionar tamanho" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="XS">XS</SelectItem>
-                    <SelectItem value="S">S</SelectItem>
-                    <SelectItem value="M">M</SelectItem>
-                    <SelectItem value="L">L</SelectItem>
-                    <SelectItem value="XL">XL</SelectItem>
-                    <SelectItem value="2XL">2XL</SelectItem>
-                    <SelectItem value="3XL">3XL</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
               </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+              <p>Vegetariano?</p>
+            </FormLabel>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
 
-        {/* Restrições Alimentares */}
-        <FormField
-          control={form.control}
-          name="dietaryRestrictions"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Restrições alimentares</FormLabel>
+      {/* Vegan? */}
+      <FormField
+        control={form.control}
+        name="isVegan"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="flex gap-2 items-center">
               <FormControl>
-                <Input placeholder="Intolerâncias, alergias, etc." {...field} />
+                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
               </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+              <p>Vegan?</p>
+            </FormLabel>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
 
-        <FormField
-          control={form.control}
-          name="isVegetarian"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="flex gap-2 items-center">
-                <FormControl>
-                  <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                </FormControl>
-                <p>Vegetariano?</p>
-              </FormLabel>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      {/* Transporte até ao evento */}
+      <FormField
+        control={form.control}
+        name="transports"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Como estou a pensar deslocar-me para o evento</FormLabel>
+            <FormControl>
+              <MultipleSelector
+                {...field}
+                defaultOptions={TRANSPORTS}
+                placeholder="Selecionar meios de transporte"
+                hidePlaceholderWhenSelected={true}
+                emptyIndicator={
+                  <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                    Sem resultados
+                  </p>
+                }
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
 
-        {/* Vegan? */}
-        <FormField
-          control={form.control}
-          name="isVegan"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="flex gap-2 items-center">
-                <FormControl>
-                  <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                </FormControl>
-                <p>Vegan?</p>
-              </FormLabel>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Transporte até ao evento */}
-        <FormField
-          control={form.control}
-          name="transportationModes"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Como estou a pensar deslocar-me para o evento</FormLabel>
-              <FormControl>
-                <MultipleSelector
-                  {...field}
-                  defaultOptions={OPTIONS}
-                  placeholder="Selecionar meios de transporte"
-                  hidePlaceholderWhenSelected={true}
-                  emptyIndicator={
-                    <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                      Sem resultados
-                    </p>
-                  }
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <StepperFormActions />
-      </form>
-    </Form>
+      <StepperFormActions />
+    </>
   )
 }
 

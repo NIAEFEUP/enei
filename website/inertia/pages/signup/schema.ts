@@ -7,7 +7,12 @@ const universityIds = universities.map((university) => university.id)
 const university = z.string().refine((val) => universityIds.includes(val))
 
 const transportIds = transports.map((transport) => transport.id)
-const transport = z.string().refine((val) => transportIds.includes(val))
+const transportLabels = transports.map((transport) => transport.description)
+
+const transport = z.object({
+  label: z.string().refine((val) => transportLabels.includes(val)),
+  value: z.string().refine((val) => transportIds.includes(val)),
+})
 
 const shirtSize = z.string().refine((val) => shirts.includes(val))
 
