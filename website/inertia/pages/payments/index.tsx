@@ -66,6 +66,7 @@ export default function TicketSalePage(
       await axios.post('/payment/mbway', {
         userId: props.user.id,
         products: [{ productId: item.id, quantity: 1 }],
+        name: enableBillingInfo ? billingInfo.name : null,
         nif: enableBillingInfo ? billingInfo.vat : null,
         address: enableBillingInfo ? billingInfo.address : null,
         mobileNumber: number,

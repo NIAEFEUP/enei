@@ -20,7 +20,7 @@ export default class OrdersController {
       // Validate input format
       await request.validateUsing(createMBWayOrderValidator)
 
-      const { userId, products, nif, address, mobileNumber } = request.all()
+      const { userId, products, name, nif, address, mobileNumber } = request.all()
    
       // Validate authentication
 
@@ -108,7 +108,7 @@ export default class OrdersController {
       description = `Payment for order: ${description.slice(0, -2)}`
 
       // Create the order and associated products
-      const order = await Order.create({ userId, nif, address })
+      const order = await Order.create({ userId, name, nif, address })
 
       for (const { product, quantity } of productDetails) {
         await OrderProduct.create({

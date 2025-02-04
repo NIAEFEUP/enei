@@ -9,6 +9,7 @@ export default class extends BaseSchema {
       table.integer('request_id')
       table.string('status')
       table.integer('user_id').notNullable()
+      table.string('name')
       table.integer('nif')
       table.string('address')
       table.float('total')

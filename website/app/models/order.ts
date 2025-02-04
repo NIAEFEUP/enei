@@ -12,6 +12,9 @@ export default class Order extends BaseModel {
   declare userId: number
 
   @column()
+  declare name: string
+
+  @column()
   declare nif: number
 
   @column()
