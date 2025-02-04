@@ -105,7 +105,7 @@ export default function Login() {
               <div className="mt-4 text-center text-sm">
                 Ainda não tens conta?{' '}
                 <Link route="pages:auth.register">
-                  <span className="underline">Regista-te</span>
+                  <span className="underline">Criar conta</span>
                 </Link>
               </div>
             </form>

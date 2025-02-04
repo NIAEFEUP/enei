@@ -1,7 +1,6 @@
 import { useFormContext } from 'react-hook-form'
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -34,7 +33,7 @@ const StudentInfoForm = () => {
   const [openUniversityDropdown, setOpenUniversityDropdown] = useState(false)
   const [selectedUniversity, setSelectedUniversity] = useState<string | null>(null)
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <FormField
         control={form.control}
         name="university"
@@ -60,11 +59,11 @@ const StudentInfoForm = () => {
                     <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-[300px] p-0">
+                <PopoverContent className="w-[400px] p-0">
                   <Command>
                     <CommandInput placeholder="Procurar universidade..." />
                     <CommandList>
-                      <CommandEmpty>Nenhuma universidade encontrada.</CommandEmpty>
+                      <CommandEmpty>Nenhuma universidade encontrada</CommandEmpty>
                       <CommandGroup>
                         <ScrollArea className="h-[300px]">
                           {universities.map((uni) => (
@@ -135,13 +134,12 @@ const StudentInfoForm = () => {
                 }}
               />
             </FormControl>
-            <FormDescription>Se já terminaste o curso, indica o ano de conclusão.</FormDescription>
             <FormMessage />
           </FormItem>
         )}
       />
       <StepperFormActions />
-    </>
+    </div>
   )
 }
 

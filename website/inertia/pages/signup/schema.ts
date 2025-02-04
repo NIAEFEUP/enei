@@ -65,7 +65,6 @@ const communicationsInfoSchema = z.object({
     )
     .optional(),
   termsAndConditions: consent,
-  photoConsent: consent,
 })
 
 export type SignupInfo = z.output<typeof signupInfoSchema>

@@ -7,7 +7,7 @@ import CommunicationInfoForm from '~/components/register_form/4_communication_in
 const steps = [
   { label: 'Informação Pessoal' },
   { label: 'Informação de Estudante' },
-  { label: 'Informações de Logística' }, //TODO: (later) See how to make this optional
+  { label: 'Informações de Logística' },
   { label: 'Comunicação' },
 ]
 
@@ -46,7 +46,6 @@ const signupInfoAtom = atomWithStorage<SignupInfo>(
     attendedBefore: false,
     attendedBeforeEditions: [],
     termsAndConditions: false,
-    photoConsent: false,
   },
   undefined
 )
@@ -100,6 +99,7 @@ export default function Signup() {
 
     if (response.ok) {
       // Handle successful response
+      // TODO: Redirect
     } else {
       // Handle error response
     }

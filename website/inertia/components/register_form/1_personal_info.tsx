@@ -46,10 +46,6 @@ const PersonalInfoForm = () => {
                 <FormControl>
                   <Input placeholder="Joca" type="text" {...field} />
                 </FormControl>
-
-                <FormDescription>
-                  O teu primeiro e último nome vão ser visíveis no teu perfil.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -87,7 +83,7 @@ const PersonalInfoForm = () => {
                       {field.value ? (
                         format(field.value, 'PPP', { locale: pt })
                       ) : (
-                        <span>Pick a date</span>
+                        <span>Seleciona uma data</span>
                       )}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
@@ -98,14 +94,9 @@ const PersonalInfoForm = () => {
                     mode="single"
                     selected={field.value}
                     onSelect={field.onChange}
-                    initialFocus
                   />
                 </PopoverContent>
               </Popover>
-
-              <FormDescription>
-                A tua data de nascimento vai ser usada para determinar a tua idade.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -159,7 +150,7 @@ const PersonalInfoForm = () => {
                   </SelectContent>
                 </Select>
               </FormControl>
-              <FormDescription>Este é o concelho onde nasceste.</FormDescription>
+              <FormDescription>Concelho onde nasceste</FormDescription>
               <FormMessage />
             </FormItem>
           )}

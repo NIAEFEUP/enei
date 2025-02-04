@@ -36,7 +36,7 @@ type PageRoute = {
 function LoginButton() {
   return (
     <Link route="pages:auth.login" className={buttonVariants({ variant: 'secondary' })}>
-      Login
+      Entrar
     </Link>
   )
 }

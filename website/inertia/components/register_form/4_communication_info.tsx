@@ -9,7 +9,7 @@ import StepperFormActions from './actions'
 import editions from '#data/enei/editions.json' with { type: 'json' }
 import { SignupInfo } from '~/pages/signup/schema'
 
-const ENEI_EDITIONS: Option[] = editions.map(({ year, location }) => {
+const ENEI_EDITIONS: Option[] = editions.sort((a, b) => b.year - a.year).map(({ year, location }) => {
   return {
     label: location + ', ' + year.toString(),
     value: year.toString(),
@@ -28,7 +28,7 @@ const CommunicationInfoForm = () => {
   const form = useFormContext<SignupInfo>()
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <FormField
         control={form.control}
         name="heardAboutENEI"
@@ -129,27 +129,8 @@ const CommunicationInfoForm = () => {
         )}
       />
 
-      <FormField
-        control={form.control}
-        name="photoConsent"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel className="flex items-center gap-2">
-              <FormControl>
-                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-              </FormControl>
-              <p>
-                Declaro que posso ser fotografado e que a minha imagem pode ser utilizada para
-                publicações nas redes sociais do evento.
-              </p>
-            </FormLabel>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
       <StepperFormActions />
-    </>
+    </div>
   )
 }
 

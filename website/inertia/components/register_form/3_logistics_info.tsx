@@ -22,7 +22,7 @@ const LogisticsInfoForm = () => {
   const form = useFormContext<SignupInfo>()
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <FormField
         control={form.control}
         name="shirtSize"
@@ -120,7 +120,7 @@ const LogisticsInfoForm = () => {
       />
 
       <StepperFormActions />
-    </>
+    </div>
   )
 }
 

@@ -29,7 +29,7 @@ export default function Login() {
           <CardHeader>
             <CardTitle className="text-2xl">Criar conta</CardTitle>
             <CardDescription>
-              Introduz o teu e-mail e palavra-passe para criares uma conta
+              Esta será a conta que vais utilizar para te inscreveres nas atividades do ENEI e umas outras coisinhas
             </CardDescription>
           </CardHeader>
           <CardContent>
