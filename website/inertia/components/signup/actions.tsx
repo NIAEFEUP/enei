@@ -12,11 +12,6 @@ function StepperFormActions() {
     isOptionalStep,
   } = useStepper()
 
-  const lastStep = () => {
-    const event = new Event('submitForm')
-    window.dispatchEvent(event)
-  }
-
   return (
     <div className="w-full flex justify-end gap-2">
       {hasCompletedAllSteps ? (
@@ -30,7 +25,7 @@ function StepperFormActions() {
               Anterior
             </Button>
           )}
-          <Button onClick={isLastStep ? lastStep : nextStep} size="sm">
+          <Button onClick={nextStep} size="sm">
             {isLastStep
               ? 'Registar-me na 16ª edição do ENEI'
               : isOptionalStep

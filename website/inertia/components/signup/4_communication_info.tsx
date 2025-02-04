@@ -25,7 +25,16 @@ const HEARD_ABOUT_FROM: Option[] = [
 ]
 
 const CommunicationInfoForm = () => {
-  const form = useFormContext<SignupInfo>()
+  const form = useForm({
+    resolver: zodResolver(communicationsInfoSchema),
+    defaultValues: {
+      heardAboutENEI: '',
+      reasonForSignup: '',
+      attendedBefore: false,
+      attendedBeforeEditions: [],
+      termsAndConditions: false,
+    }
+  })
 
   return (
     <div className="flex flex-col gap-4">
@@ -122,7 +131,7 @@ const CommunicationInfoForm = () => {
               <FormControl>
                 <Checkbox checked={field.value} onCheckedChange={field.onChange} />
               </FormControl>
-              <p>Declaro que li e aceito todos os termos e condições do evento.</p>
+              <p>Declaro que li e aceito todos os <a href="/terms-and-conditions.pdf" target="_blank" className="underline">termos e condições</a> do evento.</p>
             </FormLabel>
             <FormMessage />
           </FormItem>

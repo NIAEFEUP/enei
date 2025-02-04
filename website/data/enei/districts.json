@@ -19,5 +19,5 @@
   { "id": "viseu", "name": "Viseu" },
   { "id": "acores", "name": "Açores" },
   { "id": "madeira", "name": "Madeira" },
-  { "id": "estrangeiro", "name": "Estrangeiro" }
+  { "id": "estrangeiro", "name": "Fora de Portugal" }
 ]

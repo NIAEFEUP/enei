@@ -19,6 +19,8 @@ interface CurricularYearSelectorProps {
   defaultLastYear: number | null
 }
 
+const LAST_YEAR_LIST = Array.from({ length: 75 }, (_, i) => (2025 - i).toString())
+
 const CurricularYearSelector = ({
   disabled,
   onCurricularYearChange,
@@ -36,7 +38,6 @@ const CurricularYearSelector = ({
     { value: '5', label: '5º ano' },
     { value: 'already-finished', label: 'Já terminei o curso' },
   ]
-  const lastYearList: string[] = Array.from({ length: 75 }, (_, i) => (2024 - i).toString())
 
   const handleCurricularYearSelect = (curricularYear: string | null) => {
     setCurricularYear(curricularYear)
@@ -45,7 +46,7 @@ const CurricularYearSelector = ({
   }
 
   const handleLastYearSelect = (year: string | null) => {
-    const numericYear: number | null = year ? parseInt(year, 10) : null
+    const numericYear: number | null = year ? Number.parseInt(year, 10) : null
     setSelectedLastYear(numericYear)
     onCurricularYearChange?.(selectedCurricularYear, numericYear)
   }
@@ -73,7 +74,7 @@ const CurricularYearSelector = ({
             <SelectValue placeholder="Ano de Conclusão" />
           </SelectTrigger>
           <SelectContent>
-            {lastYearList.map((year) => (
+            {LAST_YEAR_LIST.map((year) => (
               <SelectItem key={year} value={year}>
                 {year}
               </SelectItem>

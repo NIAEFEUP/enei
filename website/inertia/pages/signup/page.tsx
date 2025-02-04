@@ -1,8 +1,8 @@
 import { Step, Stepper } from '~/components/ui/stepper'
-import PersonalInfoForm from '~/components/register_form/1_personal_info'
-import StudentInfoForm from '~/components/register_form/2_student_info'
-import LogisticsInfoForm from '~/components/register_form/3_logistics_info'
-import CommunicationInfoForm from '~/components/register_form/4_communication_info'
+import PersonalInfoForm from '~/components/signup/1_personal_info'
+import EducationInfoForm from '~/components/signup/2_student_info'
+import LogisticsInfoForm from '~/components/signup/3_logistics_info'
+import CommunicationInfoForm from '~/components/signup/4_communication_info'
 
 const steps = [
   { label: 'Informação Pessoal' },
@@ -14,131 +14,32 @@ const steps = [
 import Page from '~/components/common/page'
 import { Card } from '~/components/ui/card'
 import Container from '~/components/common/containers'
-import { Form } from '~/components/ui/form'
-import { SignupInfo, signupInfoSchema } from './schema'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useRef, useState } from 'react'
-import { atomWithStorage } from 'jotai/utils'
-import { useAtom } from 'jotai/react'
-
-const signupInfoAtom = atomWithStorage<SignupInfo>(
-  'enei:signup',
-  {
-    firstName: '',
-    lastName: '',
-    email: '',
-    dateOfBirth: new Date(2004, 0, 1),
-    phone: '',
-    municipality: '',
-    university: '',
-    course: '',
-    curricularYear: 'Selecione uma opção',
-    completedYear: null,
-    shirtSize: '',
-    dietaryRestrictions: '',
-    isVegetarian: false,
-    isVegan: false,
-    transports: [],
-    heardAboutENEI: '',
-    participationReason: '',
-    reasonForSignup: '',
-    attendedBefore: false,
-    attendedBeforeEditions: [],
-    termsAndConditions: false,
-  },
-  undefined
-)
 
 export default function Signup() {
-  const [signupInfo, setSignupInfo] = useAtom(signupInfoAtom)
-
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const form = useForm<SignupInfo>({
-    resolver: zodResolver(signupInfoSchema),
-    values: signupInfo,
-  })
-
-  const formRef = useRef<HTMLFormElement>(null)
-
-  useEffect(() => {
-    const { unsubscribe } = form.watch(($values) => {
-      const values = $values as SignupInfo
-      setSignupInfo(values)
-    })
-
-    return unsubscribe
-  }, [form.watch])
-
-  useEffect(() => {
-    const handleSubmitForm = (event: Event) => {
-      if (event instanceof CustomEvent) {
-        handleFormSubmit(event)
-      }
-      window.addEventListener('submitForm', handleSubmitForm)
-      return () => {
-        window.removeEventListener('submitForm', handleSubmitForm)
-      }
-    }
-  }, [])
-
-  const handleFormSubmit = async (event: CustomEvent<SignupInfo>) => {
-    const values = event.detail
-
-    const response = await fetch('/api/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(values),
-    })
-
-    if (response.ok) {
-      // Handle successful response
-      // TODO: Redirect
-    } else {
-      // Handle error response
-    }
-  }
-
-  // We need to wait until mount for the atom to have information
-  // up-to-date from the localStorage
-  if (!mounted) {
-    return null
-  }
-
   return (
     <Page title="Criar Perfil" className="bg-enei-blue text-white">
       <Container className="max-w-xl">
         <Card className="px-6 py-12">
-          <Form {...form}>
-            <form ref={formRef}>
-              <Stepper
-                variant="circle-alt"
-                initialStep={0}
-                steps={steps}
-                orientation="horizontal"
-                responsive={true}
-                size="md"
-              >
-                {/* Content */}
-                {steps.map((stepProps, index) => (
-                  <Step key={stepProps.label} {...stepProps}>
-                    <div className="mt-4">
-                      {index === 0 && <PersonalInfoForm />}
-                      {index === 1 && <StudentInfoForm />}
-                      {index === 2 && <LogisticsInfoForm />}
-                      {index === 3 && <CommunicationInfoForm />}
-                    </div>
-                  </Step>
-                ))}
-              </Stepper>
-            </form>
-          </Form>
+          <Stepper
+            variant="circle-alt"
+            initialStep={0}
+            steps={steps}
+            orientation="horizontal"
+            responsive={true}
+            size="md"
+          >
+            {/* Content */}
+            {steps.map((stepProps, index) => (
+              <Step key={stepProps.label} {...stepProps}>
+                <div className="mt-4">
+                  {index === 0 && <PersonalInfoForm />}
+                  {index === 1 && <EducationInfoForm />}
+                  {index === 2 && <LogisticsInfoForm />}
+                  {index === 3 && <CommunicationInfoForm />}
+                </div>
+              </Step>
+            ))}
+          </Stepper>
         </Card>
       </Container>
     </Page>

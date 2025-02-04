@@ -6,7 +6,7 @@ import { addYears, subYears } from 'date-fns'
 import { cn } from '~/lib/utils'
 import { Button, buttonVariants } from '~/components/ui/button'
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>
+export type CalendarProps = React.ComponentProps<typeof DayPicker> & { initialMonth?: Date }
 
 function ChangeMonthButton({ className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
@@ -29,7 +29,12 @@ function ChangeYearButton({ className, ...props }: React.ButtonHTMLAttributes<HT
 }
 
 function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
-  const [month, setMonth] = React.useState(() => new Date())
+  const [month, setMonth] = React.useState(() => {
+    if (props.mode === "single" && props.selected)
+      return props.selected
+    
+    return props.initialMonth ?? new Date()
+  })
 
   return (
     <DayPicker

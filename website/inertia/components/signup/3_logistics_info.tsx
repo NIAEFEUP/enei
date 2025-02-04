@@ -1,13 +1,14 @@
-import { useFormContext } from 'react-hook-form'
+import { useForm, useFormContext } from 'react-hook-form'
 import { Checkbox } from '../ui/checkbox'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import { Input } from '../ui/input'
 import MultipleSelector, { Option } from '../ui/multiple-selector'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import StepperFormActions from './actions'
-import { SignupInfo } from '~/pages/signup/schema'
+import { logisticsInfoSchema, SignupInfo } from '~/pages/signup/schema'
 import transports from '#data/enei/signup/transports.json' with { type: 'json' }
 import sizes from '#data/enei/signup/shirts.json' with { type: 'json' }
+import { zodResolver } from '@hookform/resolvers/zod'
 
 const TRANSPORTS: Option[] = transports.map(({ id, description }) => {
   return {
@@ -19,7 +20,16 @@ const TRANSPORTS: Option[] = transports.map(({ id, description }) => {
 const SIZES = sizes
 
 const LogisticsInfoForm = () => {
-  const form = useFormContext<SignupInfo>()
+  const form = useForm({
+    resolver: zodResolver(logisticsInfoSchema),
+    defaultValues: {
+      shirtSize: '',
+      dietaryRestrictions: '',
+      isVegetarian: false,
+      isVegan: false,
+      transports: [],
+    }
+  })
 
   return (
     <div className="flex flex-col gap-4">

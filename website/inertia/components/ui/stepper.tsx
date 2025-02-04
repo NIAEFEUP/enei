@@ -463,13 +463,13 @@ const verticalStepVariants = cva(
     variants: {
       variant: {
         circle: cn(
-          '[&:not(:last-child)]:pb-[var(--step-gap)] [&:not(:last-child)]:gap-[var(--step-gap)]',
-          "[&:not(:last-child)]:after:content-[''] [&:not(:last-child)]:after:w-[2px] [&:not(:last-child)]:after:bg-border",
-          '[&:not(:last-child)]:after:inset-x-[calc(var(--step-icon-size)/2)]',
-          '[&:not(:last-child)]:after:absolute',
-          '[&:not(:last-child)]:after:top-[calc(var(--step-icon-size)+var(--step-gap))]',
-          '[&:not(:last-child)]:after:bottom-[var(--step-gap)]',
-          '[&:not(:last-child)]:after:transition-all [&:not(:last-child)]:after:duration-200'
+          //'[&:not(:last-child)]:pb-[var(--step-gap)] [&:not(:last-child)]:gap-[var(--step-gap)]',
+          //"[&:not(:last-child)]:after:content-[''] [&:not(:last-child)]:after:w-[2px] [&:not(:last-child)]:after:bg-border",
+          //'[&:not(:last-child)]:after:inset-x-[calc(var(--step-icon-size)/2)]',
+          //'[&:not(:last-child)]:after:absolute',
+          //'[&:not(:last-child)]:after:top-[calc(var(--step-icon-size)+var(--step-gap))]',
+          //'[&:not(:last-child)]:after:bottom-[var(--step-gap)]',
+          //'[&:not(:last-child)]:after:transition-all [&:not(:last-child)]:after:duration-200'
         ),
         line: 'flex-1 border-t-0 mb-4',
       },
@@ -557,6 +557,7 @@ const VerticalStep = React.forwardRef<HTMLDivElement, VerticalStepProps>((props,
       ref={ref}
       className={cn(
         'stepper__vertical-step',
+        'max-w-full',
         verticalStepVariants({
           variant: variant?.includes('circle') ? 'circle' : 'line',
         }),
@@ -602,7 +603,7 @@ const VerticalStep = React.forwardRef<HTMLDivElement, VerticalStepProps>((props,
         className={cn(
           'stepper__vertical-step-content',
           !isLastStep && 'min-h-4',
-          variant !== 'line' && 'ps-[--step-icon-size]',
+          //variant !== 'line' && 'ps-[--step-icon-size]',
           variant === 'line' && orientation === 'vertical' && 'min-h-0',
           styles?.['vertical-step-content']
         )}
