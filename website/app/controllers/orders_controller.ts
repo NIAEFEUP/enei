@@ -21,8 +21,7 @@ export default class OrdersController {
       await request.validateUsing(createMBWayOrderValidator)
 
       const { userId, products, nif, address, mobileNumber } = request.all()
-      console.log(userId, products, nif, address, mobileNumber)
-
+   
       // Validate authentication
 
       if (!authUser || authUser.id !== userId) {
