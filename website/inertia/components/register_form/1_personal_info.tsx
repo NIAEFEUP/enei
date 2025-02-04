@@ -9,13 +9,7 @@ import {
 } from '../ui/form'
 import { Input } from '../ui/input'
 import { PhoneInput } from '../ui/phone-input/phone-input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../ui/select'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 // import { useStepper } from '../ui/stepper'
 import StepperFormActions from './actions'
 import { SignupInfo } from '../../pages/signup/schema'
@@ -36,12 +30,12 @@ const PersonalInfoForm = () => {
     <>
       {/* TODO: Make it look good in mobile */}
       <div className="flex flex-col gap-4">
-        <div className='flex gap-2'>
+        <div className="flex gap-2">
           <FormField
             control={form.control}
             name="firstName"
             render={({ field }) => (
-              <FormItem className='flex-1'>
+              <FormItem className="flex-1">
                 <FormLabel>Primeiro Nome*</FormLabel>
                 <FormControl>
                   <Input placeholder="Joca" type="text" {...field} />
@@ -54,7 +48,7 @@ const PersonalInfoForm = () => {
             control={form.control}
             name="lastName"
             render={({ field }) => (
-              <FormItem className='flex-1'>
+              <FormItem className="flex-1">
                 <FormLabel>Último Nome*</FormLabel>
                 <FormControl>
                   <Input placeholder="Costa" type="text" {...field} />

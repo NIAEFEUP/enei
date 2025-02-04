@@ -16,7 +16,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    */
   protected renderStatusPages = app.inProduction
 
-  protected ignoreCodes = ["E_AUTH_DISABLED"]
+  protected ignoreCodes = ['E_AUTH_DISABLED']
 
   /**
    * Status pages is a collection of error code range and a callback

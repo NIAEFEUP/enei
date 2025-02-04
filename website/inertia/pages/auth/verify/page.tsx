@@ -15,7 +15,7 @@ export default function EmailVerification() {
   const cooldown = useCooldown({
     seconds: 60,
   })
-  
+
   const { post } = useForm()
   const { toast } = useToast()
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -32,7 +32,7 @@ export default function EmailVerification() {
   }
 
   return (
-    <Page title="Registo bem-sucedido">
+    <Page title="Registo bem-sucedido" className="bg-enei-blue">
       <CardContainer>
         <Card>
           <CardHeader>

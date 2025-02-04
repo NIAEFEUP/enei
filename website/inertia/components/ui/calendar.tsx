@@ -73,7 +73,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
       }}
       components={{
         PreviousMonthButton: ({ ...props }) => (
-          <div className='flex gap-1'>
+          <div className="flex gap-1">
             <ChangeYearButton onClick={() => setMonth((month) => subYears(month, 1))}>
               <ChevronsLeft className="w-full h-full" />
             </ChangeYearButton>
@@ -83,7 +83,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
           </div>
         ),
         NextMonthButton: ({ ...props }) => (
-          <div className='flex gap-1'>
+          <div className="flex gap-1">
             <ChangeMonthButton {...props}>
               <ChevronRight className="w-full h-full" />
             </ChangeMonthButton>

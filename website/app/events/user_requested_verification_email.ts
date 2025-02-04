@@ -1,7 +1,7 @@
-import User from '#models/user'
+import type User from '#models/user'
 import { BaseEvent } from '@adonisjs/core/events'
 
-export default class UserCreated extends BaseEvent {
+export default class UserRequestedVerificationEmail extends BaseEvent {
   constructor(public readonly user: User) {
     super()
   }

@@ -28,7 +28,7 @@ const signupInfoAtom = atomWithStorage<SignupInfo>(
     firstName: '',
     lastName: '',
     email: '',
-    dateOfBirth: new Date(),
+    dateOfBirth: new Date(2004, 0, 1),
     phone: '',
     municipality: '',
     university: '',

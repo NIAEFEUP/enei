@@ -104,7 +104,7 @@ export default function Home() {
   return (
     <Page title="Home">
       <Background />
-      <Hero className='h-auto flex-grow'>
+      <Hero className="h-auto flex-grow">
         <Container>
           <section className="relative flex flex-col gap-8 py-4 sm:py-24 lg:py-32 md:justify-between z-10">
             <div className="flex-grow md:flex-grow-0">

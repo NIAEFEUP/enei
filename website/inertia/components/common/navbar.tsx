@@ -66,20 +66,30 @@ export function Navbar({ className }: { className?: string }) {
   useEffect(() => {
     const controller = new AbortController()
 
-    window.addEventListener('scroll', () => {
-      setOnTop(window.scrollY === 0)
-    }, { signal: controller.signal })
+    window.addEventListener(
+      'scroll',
+      () => {
+        setOnTop(window.scrollY === 0)
+      },
+      { signal: controller.signal }
+    )
 
     return () => controller.abort()
   }, [])
 
   return (
-    <nav className={cn('w-full transition-colors duration-300', !onTop && "bg-enei-blue", className)}>
+    <nav
+      className={cn('w-full transition-colors duration-300', !onTop && 'bg-enei-blue', className)}
+    >
       <Container>
         <div className="w-full py-6 flex flex-row justify-between items-center">
           <Link route="pages:home">
-            <img className="w-20 md:w-28 h-auto" src="/images/logo-white.svg" alt="Logótipo do ENEI" />
-            <span className='sr-only'>Ir para a página inicial</span>
+            <img
+              className="w-20 md:w-28 h-auto"
+              src="/images/logo-white.svg"
+              alt="Logótipo do ENEI"
+            />
+            <span className="sr-only">Ir para a página inicial</span>
           </Link>
           {auth.state === 'authenticated' ? (
             <LogoutButton />

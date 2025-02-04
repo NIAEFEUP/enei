@@ -24,7 +24,7 @@ export default function Login() {
   }
 
   return (
-    <Page title="Iniciar Sessão" className='bg-enei-blue'>
+    <Page title="Iniciar Sessão" className="bg-enei-blue">
       <CardContainer>
         <Card className={cn(oauthError && 'border-2 border-red-600')}>
           <CardHeader>

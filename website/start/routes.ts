@@ -45,11 +45,7 @@ router
       .as('actions:auth.register')
       .use(middleware.guest())
 
-    router
-      .on('/verify')
-      .renderInertia('auth/verify/index')
-      .as('pages:auth.verify')
-      .use(middleware.auth())
+    router.on('/verify').renderInertia('auth/verify').as('pages:auth.verify').use(middleware.auth())
 
     router
       .post('/verify/new', [AuthenticationController, 'retryEmailVerification'])

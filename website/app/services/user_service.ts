@@ -3,6 +3,7 @@ import UserEmailVerified from '#events/user_email_verified'
 import SendVerificationEmail from '#listeners/send_verification_email'
 import User from '#models/user'
 import db from '@adonisjs/lucid/services/db'
+import logger from '@adonisjs/core/services/logger'
 import { DateTime } from 'luxon'
 
 export class UserService {
@@ -14,7 +15,7 @@ export class UserService {
       return user
     })
 
-    UserCreated.dispatch(committedUser)
+    UserCreated.dispatch(committedUser).catch((error) => logger.error(error))
 
     return committedUser
   }
@@ -35,7 +36,8 @@ export class UserService {
 
     if (!verifiedUser) return null
 
-    UserEmailVerified.dispatch(verifiedUser)
+    UserEmailVerified.dispatch(verifiedUser).catch((error) => logger.error(error))
+
     return verifiedUser
   }
 }

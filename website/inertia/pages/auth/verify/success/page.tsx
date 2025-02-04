@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/com
 
 export default function EmailVerification() {
   return (
-    <Page title="E-mail confirmado">
+    <Page title="E-mail confirmado" className="bg-enei-blue">
       <CardContainer>
         <Card>
           <CardHeader>

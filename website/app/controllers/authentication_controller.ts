@@ -7,9 +7,9 @@ import {
 } from '#validators/authentication'
 import { UserService } from '#services/user_service'
 import { inject } from '@adonisjs/core'
-import UserCreated from '#events/user_created'
-import SendVerificationEmail from '#listeners/send_verification_email'
 import { errors } from '@adonisjs/auth'
+import UserRequestedVerificationEmail from '#events/user_requested_verification_email'
+import logger from '@adonisjs/core/services/logger'
 
 @inject()
 export default class AuthenticationController {
@@ -24,11 +24,9 @@ export default class AuthenticationController {
       await account.load('user')
       await auth.use('web').login(account.user)
 
-      if (!account.user.isEmailVerified())
-        return response.redirect().toRoute('pages:auth.verify')
+      if (!account.user.isEmailVerified()) return response.redirect().toRoute('pages:auth.verify')
 
       return response.redirect().toRoute('pages:home')
-      
     } catch (error) {
       if (error instanceof errors.E_INVALID_CREDENTIALS) {
         session.flashErrors({ password: 'As credenciais que introduziste não são válidas' })
@@ -56,8 +54,7 @@ export default class AuthenticationController {
   async retryEmailVerification({ auth, response }: HttpContext) {
     const user = auth.getUserOrFail()
 
-    const listener = new SendVerificationEmail()
-    listener.handle(new UserCreated(user))
+    UserRequestedVerificationEmail.dispatch(user).catch((error) => logger.error(error))
 
     return response.redirect().toRoute('pages:auth.verify')
   }

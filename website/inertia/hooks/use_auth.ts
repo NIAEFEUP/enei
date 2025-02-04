@@ -4,10 +4,11 @@ import { usePage } from '@inertiajs/react'
 import { useMemo } from 'react'
 
 type UseAuthProps = {
-  only?: AuthenticationData["state"][]
+  only?: AuthenticationData['state'][]
 }
 
-type UseAuthResult<Props extends UseAuthProps> = Props["only"] extends (infer Only extends AuthenticationData["state"])[]
+type UseAuthResult<Props extends UseAuthProps> = Props['only'] extends (infer Only extends
+  AuthenticationData['state'])[]
   ? AuthenticationData & { state: Only }
   : AuthenticationData
 
