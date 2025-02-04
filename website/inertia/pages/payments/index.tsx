@@ -80,7 +80,7 @@ export default function TicketSalePage(
         title: 'Erro a processar o pagamento',
         description:
           error.response?.data?.message ||
-          'Ocurreu um erro ao processar o pagamento. Por favor, tenta novamente.',
+          'Ocorreu um erro ao processar o pagamento. Por favor, tenta novamente.',
         duration: 5000,
       })
     }
@@ -129,7 +129,6 @@ export default function TicketSalePage(
               isOpen={orderConfirmationModalOpen}
               onClose={() => {
                 router.visit('/tickets')
-                return setOrderConfirmationModalOpen(false)
               }}
             />
           </CardContent>

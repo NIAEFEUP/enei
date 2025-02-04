@@ -20,7 +20,7 @@ export default class ConfirmPaymentNotification extends ReactNotification {
 
   get props(): MailProps {
     return {
-      logoUrl: 'https://eneiconf.pt/images/logo-white.svg',
+      logoUrl: 'https://eneiconf.pt/images/logo-white.png',
       userEmail: this.userEmail,
       products: this.products,
       total: this.total,

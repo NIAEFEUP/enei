@@ -99,7 +99,7 @@ router
   .middleware(middleware.requireAuthenticationEnabled())
   .prefix('/auth')
 
-router.get('/tickets', [TicketsController, 'index'])
+router.get('/tickets', [TicketsController, 'index']).as('pages:tickets')
 router
   .get('/tickets/:id/checkout', [TicketsController, 'showPayment']).use(middleware.auth())
   .as('checkout')

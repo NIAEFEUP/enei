@@ -32,7 +32,6 @@ export default function PaymentMethodSelector({
           </Label>
         </div>
         */}
-        <p className="text-gray-500 text-sm">Mais métodos de pagamento em breve...</p>
       </RadioGroup>
     </section>
   )
