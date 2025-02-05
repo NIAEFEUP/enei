@@ -84,7 +84,7 @@ function EducationInfoForm() {
                           {universities.map(({ id, name }) => (
                             <CommandItem
                               key={id}
-                              value={id}
+                              value={name.toLowerCase()}
                               onSelect={() => form.setValue(field.name, id)}
                               className="flex cursor-pointer items-center justify-between text-sm"
                             >
