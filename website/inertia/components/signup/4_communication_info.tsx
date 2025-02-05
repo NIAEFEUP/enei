@@ -93,7 +93,6 @@ const CommunicationInfoForm = () => {
                 <FormLabel>Qual a principal razão para te inscreveres no ENEI?</FormLabel>
                 <FormControl>
                   <Textarea
-                    defaultValue={field.value}
                     placeholder="Aprender novas tecnologias, melhorar soft skills..."
                     className="resize-none"
                     {...field}
