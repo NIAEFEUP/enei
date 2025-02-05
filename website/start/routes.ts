@@ -11,11 +11,10 @@ import { middleware } from '#start/kernel'
 import { emailVerificationThrottle, sendForgotPasswordThrottle } from '#start/limiter'
 
 const AuthenticationController = () => import('#controllers/authentication_controller')
+const OrdersController = () => import('#controllers/orders_controller')
 const TicketsController = () => import('#controllers/tickets_controller')
 
 router.on('/').renderInertia('home').as('pages:home')
-router.get('/tickets', [TicketsController, 'index'])
-router.on('/tickets/:id/checkout').renderInertia('payments').as('checkout')
 
 router
   .group(() => {
@@ -132,3 +131,18 @@ router
   })
   .middleware(middleware.requireAuthenticationEnabled())
   .prefix('/auth')
+
+router.get('/tickets', [TicketsController, 'index']).as('pages:tickets')
+router
+  .get('/tickets/:id/checkout', [TicketsController, 'showPayment']).use(middleware.auth())
+  .as('checkout')
+  .middleware(middleware.requireAuthenticationEnabled())
+
+router
+  .group(() => {
+    //router.get('/', [OrdersController, 'index']) acho que isto já nao e usado
+    router.post('/mbway', [OrdersController, 'createMBWay']).use(middleware.auth())
+    router.get('/:id', [OrdersController, 'show']).as('payment.show').use(middleware.auth())
+  })
+  .middleware(middleware.requireAuthenticationEnabled())
+  .prefix('payment')

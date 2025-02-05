@@ -69,11 +69,16 @@ export function Navbar({ className }: { className?: string }) {
             <img className="w-20 md:w-28 h-auto" src="/images/logo-white.svg" alt="Logótipo do ENEI" />
             <span className='sr-only'>Ir para a página inicial</span>
           </Link>
+          <div className = "flex flex-row gap-4">
+          <Link route='pages:tickets' className={buttonVariants({ variant: 'secondary' })}>
+          Tickets
+          </Link>
           {auth.state === 'authenticated' ? (
             <LogoutButton />
           ) : (
             auth.state === 'unauthenticated' && <LoginButton />
           )}
+          </div>
         </div>
       </Container>
     </nav>
