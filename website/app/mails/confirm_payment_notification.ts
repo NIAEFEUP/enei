@@ -1,6 +1,7 @@
 import env from '#start/env'
 import { ReactNotification } from './base/react_notification.js'
 import type { ProductWithQuantity, MailProps } from '#resources/emails/payment/confirm_purchase_email'
+import { staticUrl } from '../url.js'
 
 export default class ConfirmPaymentNotification extends ReactNotification {
   private userEmail: string
@@ -20,7 +21,7 @@ export default class ConfirmPaymentNotification extends ReactNotification {
 
   get props(): MailProps {
     return {
-      logoUrl: 'https://eneiconf.pt/images/logo-white.png',
+      logoUrl: staticUrl('/images/logo-white.png'),
       userEmail: this.userEmail,
       products: this.products,
       total: this.total,
