@@ -11,8 +11,8 @@ export default function SelectTicketsPage(props: InferPageProps<TicketsControlle
   return (
     <Page title="Tickets" className="bg-enei-blue">
     <div className="container mx-auto p-4 flex flex-col items-center m-20">
-      <h1 className="text-3xl font-bold text-center mb-6">Seleciona o teu bilhete</h1>
-      <p className="text-center  mb-8">
+      <h1 className="text-3xl font-bold text-center text-white mb-6">Seleciona o teu bilhete</h1>
+      <p className="text-center text-white mb-8">
         Seleciona o teu bilhete e clica em comprar para continuar.
       </p>
 
