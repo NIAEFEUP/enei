@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { useTuyau } from '~/hooks/use_tuyau'
 import { Checkbox } from '../ui/checkbox'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import MultipleSelector, { Option } from '../ui/multiple-selector'
@@ -30,6 +31,8 @@ const HEARD_ABOUT_FROM: Option[] = [
 ]
 
 const CommunicationInfoForm = () => {
+  const tuyau = useTuyau()
+
   const setCommunicationsInfo = useSetAtom(communicationsInfoAtom)
   const [communicationsInfo] = useAtom(communicationsInfoAtom)
 
@@ -47,7 +50,7 @@ const CommunicationInfoForm = () => {
   const onSubmit = async (data: CommunicationsInfo) => {
     setCommunicationsInfo(data)
 
-    return await fetch('/signup', {
+    return await fetch(tuyau.$url('actions:signup'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
