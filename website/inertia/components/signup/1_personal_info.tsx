@@ -21,9 +21,10 @@ import { pt } from 'date-fns/locale'
 import { useForm } from 'react-hook-form'
 import { PersonalInfo, personalInfoSchema } from '~/pages/signup/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useSetAtom } from 'jotai/react'
+import { useAtom, useSetAtom } from 'jotai/react'
 import { personalInfoAtom } from '~/pages/signup/atoms'
 import { useStepper } from '../ui/stepper'
+import StepperFormActions from './actions'
 
 const INITIAL_MONTH = new Date(2004, 0, 1)
 
@@ -31,10 +32,11 @@ const PersonalInfoForm = () => {
   const { nextStep } = useStepper()
 
   const setPersonalInfo = useSetAtom(personalInfoAtom)
+  const [personalInfo] = useAtom(personalInfoAtom)
 
   const form = useForm<PersonalInfo>({
     resolver: zodResolver(personalInfoSchema),
-    defaultValues: {
+    defaultValues: personalInfo || {
       firstName: '',
       lastName: '',
       phone: '',
@@ -158,12 +160,8 @@ const PersonalInfoForm = () => {
               </FormItem>
             )}
           />
-          {/* <StepperFormActions /> */}
-          <div className="flex justify-end">
-            <Button type="submit" size="sm">
-              Próximo
-            </Button>
-          </div>
+
+          <StepperFormActions />
         </div>
       </form>
     </Form>

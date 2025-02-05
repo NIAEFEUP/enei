@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
-import StepperFormActions from './actions'
 import { Button } from '~/components/ui/button'
 import {
   Command,
@@ -11,7 +10,7 @@ import {
   CommandList,
 } from '~/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
-import CurricularYearSelector from './input/curricular-year-input'
+import CurricularYearSelector, { CurricularYearSelectorType } from './input/curricular-year-input'
 
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { cn } from '~/lib/utils'
@@ -20,31 +19,39 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { EducationInfo, educationInfoSchema } from '~/pages/signup/schema'
 import { getUniversityById, universities } from '~/lib/enei/signup/universities'
 import { useMemo } from 'react'
+import { useStepper } from '../ui/stepper'
+import { useAtom, useSetAtom } from 'jotai/react'
+import { educationInfoAtom } from '~/pages/signup/atoms'
+import StepperFormActions from './actions'
 
 function UniversitySelection({ value }: { value?: string }) {
   const name = useMemo(() => value && getUniversityById(value)?.name, [value])
 
   return name ? (
-    <span className="max-w-full overflow-ellipsis overflow-hidden">
-      {name}
-    </span>
+    <span className="max-w-full overflow-ellipsis overflow-hidden">{name}</span>
   ) : (
     <span>Selecionar Universidade...</span>
   )
 }
 
 function EducationInfoForm() {
+  const { nextStep } = useStepper()
+
+  const setEducationInfo = useSetAtom(educationInfoAtom)
+  const [educationInfo] = useAtom(educationInfoAtom)
+
   const form = useForm({
     resolver: zodResolver(educationInfoSchema),
-    defaultValues: {
+    defaultValues: educationInfo || {
       university: '',
       course: '',
-      curricularYear: ['', null] as const,
+      curricularYear: ['1', null] as CurricularYearSelectorType,
     },
   })
 
   const onSubmit = (data: EducationInfo) => {
-    console.log(data)
+    setEducationInfo(data)
+    nextStep()
   }
 
   return (
@@ -124,10 +131,12 @@ function EducationInfoForm() {
                 <FormLabel>Ano Curricular*</FormLabel>
                 <FormControl>
                   <CurricularYearSelector
-                    defaultCurricularYear={form.getValues('curricularYear')}
-                    defaultLastYear={form.getValues('completedYear')}
+                    defaultValue={form.getValues('curricularYear')}
                     onCurricularYearChange={(curricularYear, lastYear) => {
-                      form.setValue(field.name, [curricularYear!, lastYear || null] as const)
+                      form.setValue(field.name, [
+                        curricularYear,
+                        lastYear || null,
+                      ] as CurricularYearSelectorType)
                     }}
                   />
                 </FormControl>
@@ -135,11 +144,8 @@ function EducationInfoForm() {
               </FormItem>
             )}
           />
-          <div className="flex justify-end">
-            <Button type="submit" size="sm">
-              Próximo
-            </Button>
-          </div>
+
+          <StepperFormActions />
         </div>
       </form>
     </Form>

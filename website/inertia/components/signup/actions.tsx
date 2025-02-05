@@ -2,15 +2,8 @@ import { Button } from '../ui/button'
 import { useStepper } from '../ui/stepper'
 
 function StepperFormActions() {
-  const {
-    prevStep,
-    nextStep,
-    resetSteps,
-    isDisabledStep,
-    hasCompletedAllSteps,
-    isLastStep,
-    isOptionalStep,
-  } = useStepper()
+  const { prevStep, resetSteps, isDisabledStep, hasCompletedAllSteps, isLastStep, isOptionalStep } =
+    useStepper()
 
   return (
     <div className="w-full flex justify-end gap-2">
@@ -25,7 +18,7 @@ function StepperFormActions() {
               Anterior
             </Button>
           )}
-          <Button onClick={nextStep} size="sm">
+          <Button type="submit" size="sm">
             {isLastStep
               ? 'Registar-me na 16ª edição do ENEI'
               : isOptionalStep
