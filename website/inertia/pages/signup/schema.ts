@@ -18,11 +18,13 @@ const transport = z.object({
   value: z.string().refine((val) => transportIds.includes(val)),
 })
 
-const shirtSize = z.string().refine((val) => shirts.includes(val))
+const shirtSize = z
+  .string()
+  .nonempty({ message: 'Seleciona um tamanho' })
+  .refine((val) => shirts.includes(val))
 
-const consent = z.boolean().refine((val) => val, {
+const termsAndConditions = z.boolean().refine((val) => val, {
   message: 'Tens de concordar com os termos e condições',
-  path: ['consent'],
 })
 
 // Schemas
@@ -55,11 +57,9 @@ export const personalInfoSchema = z.object({
 export type EducationInfo = z.output<typeof educationInfoSchema>
 export const educationInfoSchema = z.object({
   university,
-  course: z
-    .string()
-    .nonempty({
-      message: 'O curso é obrigatório.',
-    }),
+  course: z.string().nonempty({
+    message: 'O curso é obrigatório.',
+  }),
   curricularYear: z.union([
     z.tuple([z.enum(['1', '2', '3', '4', '5']), z.literal(null)]),
     z.tuple([z.literal('already-finished'), z.number()]),
@@ -89,5 +89,5 @@ export const communicationsInfoSchema = z.object({
       })
     )
     .optional(),
-  termsAndConditions: consent,
+  termsAndConditions,
 })
