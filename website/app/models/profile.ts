@@ -1,9 +1,14 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import User from './user.js'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 
 export default class Profile extends BaseModel {
-  @column({ isPrimary: true })
+  @column()
   declare userId: number
+
+  @belongsTo(() => User)
+  declare user: BelongsTo<typeof User>
 
   // General Info
   @column()
@@ -39,7 +44,7 @@ export default class Profile extends BaseModel {
   declare shirtSize: string
 
   @column()
-  declare dietaryRestrictions: string
+  declare dietaryRestrictions: string | null
 
   @column()
   declare isVegetarian: boolean
@@ -47,7 +52,10 @@ export default class Profile extends BaseModel {
   @column()
   declare isVegan: boolean
 
-  @column()
+  @column({
+    serialize: (value: string | null) => value ? value.split(',') : [],
+    prepare: (value: string[]) => value.join(',')
+  })
   declare transports: string[]
 
   // Communication Info
@@ -55,9 +63,12 @@ export default class Profile extends BaseModel {
   declare heardAboutENEI: string
 
   @column()
-  declare reasonForSignup: string
+  declare reasonForSignup: string | null
 
-  @column()
+  @column({
+    serialize: (value: string | null) => value ? value.split(',') : [],
+    prepare: (value: string[]) => value.join(',')
+  })
   declare attendedBeforeEditions: string[]
 
   @column.dateTime({ autoCreate: true })

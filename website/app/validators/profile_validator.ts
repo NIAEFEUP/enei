@@ -9,6 +9,15 @@ import { DateTime } from 'luxon'
 
 export const createProfileValidator = vine.compile(
   vine.object({
+    userId: vine
+    .number()
+    .unique(async (db, value) => {
+        const user = await db
+          .from('profiles')
+          .where('user_id', value)
+          .first()
+        return !user
+    }),
     firstName: vine.string(),
     lastName: vine.string(),
     dateOfBirth: vine
@@ -16,19 +25,27 @@ export const createProfileValidator = vine.compile(
       .transform((date) => DateTime.fromJSDate(date)),
     phone: vine
       .string()
-      .mobile(),
+      .mobile()
+      .unique(async (db, value, field) => {
+        const user = await db
+          .from('profiles')
+          .whereNot('user_id', field.meta.userId)
+          .where('phone', value)
+          .first()
+        return !user
+      }),
     university: vine.string().in(universities.map((val) => val.id)),
     course: vine.string(),
     curricularYear: vine.string().in(['1', '2', '3', '4', '5', 'already-finished']),
     finishedAt: vine.number().range([1930, new Date().getFullYear()]).nullable(),
     municipality: vine.string().in(districts.map((dist) => dist.id)),
     shirtSize: vine.string().in(shirts),
-    dietaryRestrictions: vine.string().trim().escape(),
+    dietaryRestrictions: vine.string().trim().escape().nullable(),
     isVegetarian: vine.boolean(),
     isVegan: vine.boolean(),
     transports: vine.array(vine.string().in(transports.map((item) => item.id))),
     heardAboutENEI: vine.string().in(heardaboutfrom.map((item) => item.value)),
-    reasonForSignup: vine.string(),
+    reasonForSignup: vine.string().nullable(),
     attendedBeforeEditions: vine.array(vine.string().in(editions.map((item) => item.year.toString()))),
   })
 )

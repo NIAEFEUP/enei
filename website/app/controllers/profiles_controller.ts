@@ -24,15 +24,16 @@ export default class ProfilesController {
       .map((item: { label: string; value: string; }) => item.value)
     data.attendedBeforeEditions = data.attendedBeforeEditions
       .map((item: { label: string; value: string; }) => item.value)
+    data.dietaryRestrictions ||= ""
+    data.reasonForSignup ||= ""
 
-    console.log("ProfileController", auth.user!.id, data)
+    // add user_id
+    data.userId = auth.user?.id
+    await auth.user?.load('profile')
 
-    const profile = await createProfileValidator.validate(data)
-
-    console.log("profile", profile)
-
-    // TODO: The steps below
-    return
+    const profile = await createProfileValidator.validate(data, {
+      meta: { userId: auth.user!.id },
+    })
 
     const profileAdd = new Profile()
     profileAdd.fill(profile)

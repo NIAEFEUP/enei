@@ -60,15 +60,17 @@ const CommunicationInfoForm = () => {
   const onSubmit = async (data: CommunicationsInfo) => {
     setCommunicationsInfo(data)
 
+    // data is added to the payload with instead of communicationInfo
+    // because it does not get updated right away
     const payload = {
       ...personalInfo,
       ...educationInfo,
       ...logisticsInfo,
-      ...communicationsInfo,
+      ...data,
       _csrf: csrfToken
     }
 
-    return await fetch(tuyau.$url('actions:signup'), {
+    const submitresult = await fetch(tuyau.$url('actions:signup'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -76,6 +78,8 @@ const CommunicationInfoForm = () => {
       credentials: 'include',
       body: JSON.stringify(payload),
     })
+
+    console.log("result", submitresult, await submitresult.text())
   }
 
   return (
