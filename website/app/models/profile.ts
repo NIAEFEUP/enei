@@ -26,17 +26,17 @@ export default class Profile extends BaseModel {
   declare course: string
 
   @column()
-  declare curricularYear: number
+  declare curricularYear: string
 
   @column()
-  declare finishedAt: number
+  declare finishedAt: number | null
 
   @column()
-  declare state: string
+  declare municipality: string
 
   // Logistics Info
   @column()
-  declare tShirtSize: string
+  declare shirtSize: string
 
   @column()
   declare dietaryRestrictions: string
@@ -48,7 +48,7 @@ export default class Profile extends BaseModel {
   declare isVegan: boolean
 
   @column()
-  declare transportationModes: string[]
+  declare transports: string[]
 
   // Communication Info
   @column()

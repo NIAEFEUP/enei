@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Textarea } from '../ui/textarea'
 
 import editions from '#data/enei/editions.json' with { type: 'json' }
+import heardaboutfrom from '#data/enei/signup/heardaboutfrom.json' with { type: 'json' }
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   CommunicationsInfo,
@@ -32,13 +33,7 @@ const ENEI_EDITIONS: Option[] = editions
     }
   })
 
-const HEARD_ABOUT_FROM: Option[] = [
-  { value: 'friends', label: 'Amigos' },
-  { value: 'socialMedia', label: 'Redes' },
-  { value: 'university', label: 'Banca' },
-  { value: 'other', label: 'Outro' },
-  { value: 'unknown', label: 'Já não me lembro' },
-]
+const HEARD_ABOUT_FROM: Option[] = heardaboutfrom
 
 const CommunicationInfoForm = () => {
   const tuyau = useTuyau()

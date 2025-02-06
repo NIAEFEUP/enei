@@ -17,22 +17,22 @@ export default class ProfilesController {
   async create({ auth, request }: HttpContext) {
     const data = request.body()
     delete data._csrf;
+    data.finishedAt = data.curricularYear[1]
+    data.curricularYear = data.curricularYear[0]
+    // HACK
+    data.transports = data.transports
+      .map((item: { label: string; value: string; }) => item.value)
+    data.attendedBeforeEditions = data.attendedBeforeEditions
+      .map((item: { label: string; value: string; }) => item.value)
 
     console.log("ProfileController", auth.user!.id, data)
 
-    console.log("before validate")
-    try{
-      const profile1 = await createProfileValidator.validate(data)
-      console.log("profile11", profile1)
-    }
-    catch (e) {
-      console.log("validation error", e)
-    }
-    const profile = await request.validateUsing(createProfileValidator, {
-      meta: { userId: auth.user!.id },
-    })
+    const profile = await createProfileValidator.validate(data)
 
     console.log("profile", profile)
+
+    // TODO: The steps below
+    return
 
     const profileAdd = new Profile()
     profileAdd.fill(profile)
