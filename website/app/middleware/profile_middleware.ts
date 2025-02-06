@@ -10,7 +10,7 @@ export default class ProfileMiddleware {
     user?.load('profile')
 
     if (!user?.profile) {
-      ctx.response.redirect().toRoute('/signup')
+      ctx.response.redirect().toRoute('/auth/signup')
     }
 
     /**
