@@ -5,8 +5,26 @@ import User from '#models/user'
 import db from '@adonisjs/lucid/services/db'
 import logger from '@adonisjs/core/services/logger'
 import { DateTime } from 'luxon'
+import app from '@adonisjs/core/services/app'
+import Account from '#models/account'
+import { errors } from '@adonisjs/auth'
 
 export class UserService {
+  async getUserWithCredentials(email: string, password: string) {
+    try {
+      const account = await Account.verifyCredentials(`credentials:${email}`, password)
+      await account.load('user')
+
+      return account.user
+    } catch (error) {
+      if (error instanceof errors.E_INVALID_CREDENTIALS) {
+        return null
+      }
+
+      throw error
+    }
+  }
+
   async createUserWithCredentials(email: string, password: string) {
     const committedUser = await db.transaction(async (trx) => {
       const user = await User.create({ email }, { client: trx })
@@ -15,14 +33,16 @@ export class UserService {
       return user
     })
 
-    UserCreated.dispatch(committedUser).catch((error) => logger.error(error))
-
-    return committedUser
+    return [
+      committedUser,
+      UserCreated.tryDispatch(committedUser),
+    ] as const
   }
 
-  sendVerificationEmail(user: User) {
-    const listener = new SendVerificationEmail()
+  async sendVerificationEmail(user: User) {
+    const listener = await app.container.make(SendVerificationEmail)
     listener.handle(new UserCreated(user))
+      .catch((error) => logger.error(error))
   }
 
   async verifyEmail(email: string) {
@@ -36,7 +56,7 @@ export class UserService {
 
     if (!verifiedUser) return null
 
-    UserEmailVerified.dispatch(verifiedUser).catch((error) => logger.error(error))
+    UserEmailVerified.tryDispatch(verifiedUser)
 
     return verifiedUser
   }

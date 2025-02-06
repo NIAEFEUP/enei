@@ -30,7 +30,7 @@ export default function Login() {
           <CardHeader>
             <CardTitle className="text-2xl">Iniciar Sessão</CardTitle>
             <CardDescription>
-              Introduz o teu e-mail e palavra-passe para iniciar sessão
+              Introduz o teu e-mail e palavra-passe para iniciar sessão.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -68,7 +68,7 @@ export default function Login() {
                   />
                   {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
                 </div>
-                <div className="flex flex-col gap-4   ">
+                <div className="flex flex-col gap-4">
                   <Button type="submit" className="w-full bg-enei-blue">
                     Iniciar Sessão
                   </Button>

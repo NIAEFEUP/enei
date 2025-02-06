@@ -18,6 +18,13 @@ router.on('/').renderInertia('home').as('pages:home')
 router.get('/tickets', [TicketsController, 'index'])
 router.on('/tickets/:id/checkout').renderInertia('payments').as('checkout')
 
+router.get('/signup', [ProfilesController, 'show']).as('pages:signup').use(middleware.auth())
+router
+  .post('/signup', [ProfilesController, 'create'])
+  .as('actions:signup')
+  .use(middleware.auth())
+  .use(middleware.profile())
+
 router
   .group(() => {
     router.on('/login').renderInertia('auth/login').as('pages:auth.login').use(middleware.guest())
@@ -43,16 +50,6 @@ router
       .as('actions:auth.register')
       .use(middleware.guest())
 
-    router
-      .get('/signup', [ProfilesController, 'show'])
-      .as('pages:signup')
-      .use(middleware.auth())
-    router
-      .post('/signup', [ProfilesController, 'create'])
-      .as('actions:signup')
-      .use(middleware.auth())
-      .use(middleware.profile())
-
     router.on('/verify').renderInertia('auth/verify').as('pages:auth.verify').use(middleware.auth())
 
     router
@@ -63,7 +60,7 @@ router
     router
       .on('/verify/success')
       .renderInertia('auth/verify/success')
-      .as('actions:auth.verify.success')
+      .as('pages:auth.verify.success')
 
     router
       .route(

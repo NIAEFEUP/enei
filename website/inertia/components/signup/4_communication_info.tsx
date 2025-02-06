@@ -22,7 +22,7 @@ import {
 } from '~/pages/signup/atoms'
 import StepperFormActions from './actions'
 import { PageProps } from '@adonisjs/inertia/types'
-import { usePage } from '@inertiajs/react'
+import { router, usePage } from '@inertiajs/react'
 
 const ENEI_EDITIONS: Option[] = editions
   .sort((a, b) => b.year - a.year)
@@ -69,17 +69,8 @@ const CommunicationInfoForm = () => {
       ...data,
       _csrf: csrfToken
     }
-
-    const submitresult = await fetch(tuyau.$url('actions:signup'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify(payload),
-    })
-
-    console.log("result", submitresult, await submitresult.text())
+    
+    router.post(tuyau.$url('actions:signup'), payload)
   }
 
   return (

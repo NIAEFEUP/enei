@@ -7,6 +7,7 @@ import { cn } from '~/lib/utils'
 import { useForm } from '@inertiajs/react'
 import Page from '~/components/common/page'
 import CardContainer from '~/components/common/containers/card'
+import { Link } from '@tuyau/inertia/react'
 
 export default function Login() {
   const oauthError = useError('oauth')
@@ -29,11 +30,12 @@ export default function Login() {
           <CardHeader>
             <CardTitle className="text-2xl">Criar conta</CardTitle>
             <CardDescription>
-              Esta será a conta que vais utilizar para te inscreveres nas atividades do ENEI e umas outras coisinhas
+              Esta será a conta que vais utilizar para te inscreveres nas atividades do ENEI e umas
+              outras coisinhas.
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} method="POST" action="/auth/login">
+            <form onSubmit={handleSubmit}>
               <div className="flex flex-col gap-6">
                 <div className="grid gap-2">
                   <Label htmlFor="email">E-mail</Label>
@@ -75,7 +77,7 @@ export default function Login() {
                 </div>
 
                 <div className="flex flex-col gap-4">
-                  <Button type="submit" className="w-full bg-enei-blue text-enei-beige">
+                  <Button type="submit" className="w-full">
                     Criar conta
                   </Button>
                   {/* <div className="flex gap-2 items-center"> */}
@@ -107,6 +109,12 @@ export default function Login() {
                   {/*   </Link> */}
                   {/* </div> */}
                 </div>
+              </div>
+              <div className="mt-4 text-center text-sm">
+                Já tens conta?{' '}
+                <Link route="pages:auth.login">
+                  <span className="underline">Iniciar sessão</span>
+                </Link>
               </div>
             </form>
             {oauthError && <p className="text-sm text-red-600 text-center mt-4">{oauthError}</p>}

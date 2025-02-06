@@ -35,6 +35,7 @@
     "#start/*": "./start/*.js",
     "#config/*": "./config/*.js",
     "#data/*": "./data/*",
+    "#lib/*": "./lib/*",
     "#resources/*": "./resources/*.js"
   },
   "devDependencies": {

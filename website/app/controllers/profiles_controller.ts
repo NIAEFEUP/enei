@@ -14,9 +14,8 @@ export default class ProfilesController {
     return inertia.render('signup', { csrfToken: request.csrfToken })
   }
 
-  async create({ auth, request }: HttpContext) {
+  async create({ auth, request, response }: HttpContext) {
     const data = request.body()
-    delete data._csrf;
     data.finishedAt = data.curricularYear[1]
     data.curricularYear = data.curricularYear[0]
     // HACK
@@ -40,5 +39,7 @@ export default class ProfilesController {
 
     console.log("profileAdd", profileAdd)
     await profileAdd.save()
+
+    return response.redirect().toRoute('pages:profile')
   }
 }

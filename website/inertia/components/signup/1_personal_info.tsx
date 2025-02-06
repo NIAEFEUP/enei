@@ -21,7 +21,7 @@ import { pt } from 'date-fns/locale'
 import { useForm } from 'react-hook-form'
 import { PersonalInfo, personalInfoSchema } from '~/pages/signup/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useAtom, useSetAtom } from 'jotai/react'
+import { useAtom } from 'jotai/react'
 import { personalInfoAtom } from '~/pages/signup/atoms'
 import { useStepper } from '../ui/stepper'
 import StepperFormActions from './actions'
@@ -31,8 +31,7 @@ const INITIAL_MONTH = new Date(2004, 0, 1)
 const PersonalInfoForm = () => {
   const { nextStep } = useStepper()
 
-  const setPersonalInfo = useSetAtom(personalInfoAtom)
-  const [personalInfo] = useAtom(personalInfoAtom)
+  const [personalInfo, setPersonalInfo] = useAtom(personalInfoAtom)
 
   const form = useForm<PersonalInfo>({
     resolver: zodResolver(personalInfoSchema),
@@ -111,6 +110,7 @@ const PersonalInfoForm = () => {
                       initialMonth={INITIAL_MONTH}
                       selected={field.value}
                       onSelect={field.onChange}
+                      locale={pt}
                     />
                   </PopoverContent>
                 </Popover>
@@ -125,7 +125,13 @@ const PersonalInfoForm = () => {
               <FormItem className="flex flex-col items-start">
                 <FormLabel>Número de telemóvel*</FormLabel>
                 <FormControl className="w-full">
-                  <PhoneInput placeholder="923 456 789" {...field} defaultCountry="PT" />
+                  <PhoneInput
+                    placeholder="923 456 789"
+                    defaultCountry="PT"
+                    locales="pt"
+                    countryOptionsOrder={['PT', '...']}
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription>Não incluas o código do país.</FormDescription>
                 <FormMessage />

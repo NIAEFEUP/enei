@@ -52,7 +52,6 @@ export const middleware = router.named({
     import('#middleware/require_authentication_enabled_middleware'),
   verifyUrlSignature: () => import('#middleware/verify_url_signature_middleware'),
   automaticSubmit: () => import('#middleware/automatic_submit_middleware'),
-  redirectIfAuthenticated: () => import('#middleware/redirect_if_authenticated_middleware'),
   verifySocialCallback: () => import('#middleware/verify_social_callback_middleware'),
   guest: () => import('#middleware/guest_middleware'),
   auth: () => import('#middleware/auth_middleware'),

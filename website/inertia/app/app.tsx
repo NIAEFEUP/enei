@@ -11,7 +11,6 @@ import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import { createInertiaApp } from '@inertiajs/react'
 import { hydrateRoot } from 'react-dom/client'
 import { Providers } from './providers'
-import { Suspense } from 'react'
 
 const appName = import.meta.env.VITE_APP_NAME || 'ENEI'
 
@@ -34,9 +33,7 @@ createInertiaApp({
         <App {...props}>
           {(page) => (
             <Providers>
-              <Suspense fallback={<div>Loading...</div>}>
-                <page.Component key={page.key} {...page.props} />
-              </Suspense>
+              <page.Component key={page.key} {...page.props} />
             </Providers>
           )}
         </App>

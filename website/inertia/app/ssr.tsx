@@ -1,7 +1,6 @@
 import ReactDOMServer from 'react-dom/server'
 import { createInertiaApp } from '@inertiajs/react'
 import { Providers } from './providers'
-import { Suspense } from 'react'
 
 export default function render(intialPage: any) {
   return createInertiaApp({
@@ -16,9 +15,7 @@ export default function render(intialPage: any) {
         <App {...props}>
           {(page) => (
             <Providers>
-              <Suspense fallback={<div>Loading...</div>}>
-                <page.Component key={page.key} {...page.props} />
-              </Suspense>
+              <page.Component key={page.key} {...page.props} />
             </Providers>
           )}
         </App>
