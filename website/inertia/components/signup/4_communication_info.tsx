@@ -8,9 +8,17 @@ import { Textarea } from '../ui/textarea'
 
 import editions from '#data/enei/editions.json' with { type: 'json' }
 import { zodResolver } from '@hookform/resolvers/zod'
-import { CommunicationsInfo, communicationsInfoSchema } from '~/pages/signup/schema'
+import {
+  CommunicationsInfo,
+  communicationsInfoSchema,
+} from '~/pages/signup/schema'
 import { useAtom, useSetAtom } from 'jotai/react'
-import { communicationsInfoAtom } from '~/pages/signup/atoms'
+import {
+  personalInfoAtom,
+  educationInfoAtom,
+  logisticsInfoAtom,
+  communicationsInfoAtom,
+} from '~/pages/signup/atoms'
 import StepperFormActions from './actions'
 import { PageProps } from '@adonisjs/inertia/types'
 import { usePage } from '@inertiajs/react'
@@ -39,6 +47,9 @@ const CommunicationInfoForm = () => {
 
   const setCommunicationsInfo = useSetAtom(communicationsInfoAtom)
   const [communicationsInfo] = useAtom(communicationsInfoAtom)
+  const [personalInfo] = useAtom(personalInfoAtom)
+  const [educationInfo] = useAtom(educationInfoAtom)
+  const [logisticsInfo] = useAtom(logisticsInfoAtom)
 
   const form = useForm({
     resolver: zodResolver(communicationsInfoSchema),
@@ -54,7 +65,13 @@ const CommunicationInfoForm = () => {
   const onSubmit = async (data: CommunicationsInfo) => {
     setCommunicationsInfo(data)
 
-    const payload: CommunicationsInfo & { _csrf: string; } = { ...data, _csrf: csrfToken }
+    const payload = {
+      ...personalInfo,
+      ...educationInfo,
+      ...logisticsInfo,
+      ...communicationsInfo,
+      _csrf: csrfToken
+    }
 
     return await fetch(tuyau.$url('actions:signup'), {
       method: 'POST',

@@ -11,19 +11,33 @@ export default class ProfilesController {
   }
 
   async show({ inertia, request }: HttpContext) {
-    return inertia.render('signup', {csrfToken: request.csrfToken})
+    return inertia.render('signup', { csrfToken: request.csrfToken })
   }
 
   async create({ auth, request }: HttpContext) {
-    console.log("ProfileController", auth, auth.user, request.csrfToken)
+    const data = request.body()
+    delete data._csrf;
 
-    return
+    console.log("ProfileController", auth.user!.id, data)
+
+    console.log("before validate")
+    try{
+      const profile1 = await createProfileValidator.validate(data)
+      console.log("profile11", profile1)
+    }
+    catch (e) {
+      console.log("validation error", e)
+    }
     const profile = await request.validateUsing(createProfileValidator, {
       meta: { userId: auth.user!.id },
     })
 
+    console.log("profile", profile)
+
     const profileAdd = new Profile()
     profileAdd.fill(profile)
+
+    console.log("profileAdd", profileAdd)
     await profileAdd.save()
   }
 }

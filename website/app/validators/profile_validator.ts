@@ -7,17 +7,6 @@ export const createProfileValidator = vine.compile(
   vine.object({
     firstName: vine.string(),
     lastName: vine.string(),
-    email: vine
-      .string()
-      .email()
-      .unique(async (db, value, field) => {
-        const user = await db
-          .from('users')
-          .whereNot('id', field.meta.userId)
-          .where('email', value)
-          .first()
-        return !user
-      }),
     dateOfBirth: vine
       .date({ formats: { utc: true } })
       .transform((date) => DateTime.fromJSDate(date)),
