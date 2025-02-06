@@ -12,6 +12,8 @@ import { CommunicationsInfo, communicationsInfoSchema } from '~/pages/signup/sch
 import { useAtom, useSetAtom } from 'jotai/react'
 import { communicationsInfoAtom } from '~/pages/signup/atoms'
 import StepperFormActions from './actions'
+import { PageProps } from '@adonisjs/inertia/types'
+import { usePage } from '@inertiajs/react'
 
 const ENEI_EDITIONS: Option[] = editions
   .sort((a, b) => b.year - a.year)
@@ -33,6 +35,8 @@ const HEARD_ABOUT_FROM: Option[] = [
 const CommunicationInfoForm = () => {
   const tuyau = useTuyau()
 
+  const { csrfToken } = usePage<PageProps & { csrfToken: string; }>().props;
+
   const setCommunicationsInfo = useSetAtom(communicationsInfoAtom)
   const [communicationsInfo] = useAtom(communicationsInfoAtom)
 
@@ -50,12 +54,15 @@ const CommunicationInfoForm = () => {
   const onSubmit = async (data: CommunicationsInfo) => {
     setCommunicationsInfo(data)
 
+    const payload: CommunicationsInfo & { _csrf: string; } = { ...data, _csrf: csrfToken }
+
     return await fetch(tuyau.$url('actions:signup'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      credentials: 'include',
+      body: JSON.stringify(payload),
     })
   }
 

@@ -43,10 +43,11 @@ router
       .as('actions:auth.register')
       .use(middleware.guest())
 
-    router.on('/signup').renderInertia('signup').as('pages:signup')
+    router.get('/signup', [ProfilesController, 'show']).as('pages:signup')
     router
       .post('/signup', [ProfilesController, 'create'])
       .as('actions:signup')
+      .use(middleware.auth())
       .use(middleware.profile())
 
     router.on('/verify').renderInertia('auth/verify').as('pages:auth.verify').use(middleware.auth())

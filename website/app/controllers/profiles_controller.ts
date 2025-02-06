@@ -10,7 +10,14 @@ export default class ProfilesController {
     return inertia.render('profile', user.profile!)
   }
 
+  async show({ inertia, request }: HttpContext) {
+    return inertia.render('signup', {csrfToken: request.csrfToken})
+  }
+
   async create({ auth, request }: HttpContext) {
+    console.log("ProfileController", auth, auth.user, request.csrfToken)
+
+    return
     const profile = await request.validateUsing(createProfileValidator, {
       meta: { userId: auth.user!.id },
     })
