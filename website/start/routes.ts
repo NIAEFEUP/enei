@@ -43,7 +43,10 @@ router
       .as('actions:auth.register')
       .use(middleware.guest())
 
-    router.get('/signup', [ProfilesController, 'show']).as('pages:signup')
+    router
+      .get('/signup', [ProfilesController, 'show'])
+      .as('pages:signup')
+      .use(middleware.auth())
     router
       .post('/signup', [ProfilesController, 'create'])
       .as('actions:signup')
