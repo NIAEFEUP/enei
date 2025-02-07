@@ -12,7 +12,7 @@ export default class extends BaseSchema {
       table.string('first_name').notNullable()
       table.string('last_name').notNullable()
       table.date('date_of_birth').notNullable()
-      table.string('phone').notNullable()
+      table.string('phone').unique().notNullable()
 
       // Student Info
       table.string('university').notNullable()

@@ -1,5 +1,5 @@
 import ParticipantProfile from '#models/participant_profile'
-import { createProfileValidator } from '#validators/profile_validator'
+import { createProfileValidator } from '#validators/profile'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class ProfilesController {
@@ -10,11 +10,13 @@ export default class ProfilesController {
     return inertia.render('profile', user.participantProfile!)
   }
 
-  async show({ inertia, request }: HttpContext) {
-    return inertia.render('signup', { csrfToken: request.csrfToken })
+  async show({ inertia }: HttpContext) {
+    return inertia.render('signup')
   }
 
   async create({ auth, request, response }: HttpContext) {
+    const user = auth.getUserOrFail()
+
     const data = request.body()
     data.finishedAt = data.curricularYear[1]
     data.curricularYear = data.curricularYear[0]
@@ -26,18 +28,13 @@ export default class ProfilesController {
     data.dietaryRestrictions ||= ""
     data.reasonForSignup ||= ""
 
-    // add user_id
-    data.userId = auth.user?.id
-    await auth.user?.load('participantProfile')
+    const profile = await createProfileValidator.validate(data)
 
-    const profile = await createProfileValidator.validate(data, {
-      meta: { userId: auth.user!.id },
-    })
-
+    console.log(profile)
     const profileAdd = new ParticipantProfile()
     profileAdd.fill(profile)
 
-    await profileAdd.save()
+    await user.related('participantProfile').associate(profileAdd)
 
     return response.redirect().toRoute('pages:tickets.show')
   }

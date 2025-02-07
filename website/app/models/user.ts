@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany, hasOne } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import ParticipantProfile from './participant_profile.js'
-import type { HasMany, HasOne } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import Account from './account.js'
 
 export default class User extends BaseModel {
@@ -26,10 +26,10 @@ export default class User extends BaseModel {
   // Profiles
 
   @column()
-  declare participantProfileId: number
+  declare participantProfileId: number | null
 
-  @hasOne(() => ParticipantProfile)
-  declare participantProfile: HasOne<typeof ParticipantProfile>
+  @belongsTo(() => ParticipantProfile)
+  declare participantProfile: BelongsTo<typeof ParticipantProfile>
 
   // Functions
 

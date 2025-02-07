@@ -115,7 +115,7 @@ export default function Home() {
               route="pages:tickets.show"
               className={cn(buttonVariants({ variant: 'link' }), 'pl-0 text-md')}
             >
-              Compra já o teu bilhete a um preço reduzido <ArrowRight className="inline-block" />
+              Garante já o teu bilhete antes que esgotem <ArrowRight className="inline-block" />
             </Link>
           </p>
         </div>

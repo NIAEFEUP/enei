@@ -9,15 +9,6 @@ import { DateTime } from 'luxon'
 
 export const createProfileValidator = vine.compile(
   vine.object({
-    userId: vine
-    .number()
-    .unique(async (db, value) => {
-        const user = await db
-          .from('profiles')
-          .where('user_id', value)
-          .first()
-        return !user
-    }),
     firstName: vine.string(),
     lastName: vine.string(),
     dateOfBirth: vine
@@ -25,15 +16,7 @@ export const createProfileValidator = vine.compile(
       .transform((date) => DateTime.fromJSDate(date)),
     phone: vine
       .string()
-      .mobile()
-      .unique(async (db, value, field) => {
-        const user = await db
-          .from('profiles')
-          .whereNot('user_id', field.meta.userId)
-          .where('phone', value)
-          .first()
-        return !user
-      }),
+      .mobile(),
     university: vine.string().in(universities.map((val) => val.id)),
     course: vine.string(),
     curricularYear: vine.string().in(['1', '2', '3', '4', '5', 'already-finished']),

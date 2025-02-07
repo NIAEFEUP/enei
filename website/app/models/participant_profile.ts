@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
 import User from './user.js'
 import type { HasOne } from '@adonisjs/lucid/types/relations'
+import { json } from '#lib/lucid/decorators.js'
 
 export default class ParticipantProfile extends BaseModel {
   @column({ isPrimary: true })
@@ -50,7 +51,7 @@ export default class ParticipantProfile extends BaseModel {
   // Logistics Info
 
   @column()
-  declare shirtSizeProfile: string
+  declare shirtSize: string
 
   @column()
   declare dietaryRestrictions: string | null
@@ -61,7 +62,7 @@ export default class ParticipantProfile extends BaseModel {
   @column()
   declare isVegan: boolean
 
-  @column()
+  @json()
   declare transports: string[]
 
   // Communication Info
@@ -72,6 +73,6 @@ export default class ParticipantProfile extends BaseModel {
   @column()
   declare reasonForSignup: string | null
 
-  @column()
+  @json()
   declare attendedBeforeEditions: string[]
 }

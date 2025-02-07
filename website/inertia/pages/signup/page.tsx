@@ -8,7 +8,7 @@ const steps = [
   { label: 'Informação Pessoal' },
   { label: 'Informação de Estudante' },
   { label: 'Informações de Logística' },
-  { label: 'Comunicação' },
+  { label: 'Informações de Comunicação' },
 ]
 
 import Page from '~/components/common/page'

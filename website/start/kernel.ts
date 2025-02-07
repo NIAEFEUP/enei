@@ -39,9 +39,7 @@ router.use([
   () => import('@adonisjs/session/session_middleware'),
   () => import('@adonisjs/shield/shield_middleware'),
   () => import('@adonisjs/auth/initialize_auth_middleware'),
-  () => import('#middleware/silent_auth_middleware'),
-  () => import('#middleware/logout_if_authentication_disabled_middleware'),
-  () => import('#middleware/setup_account_middleware')
+  () => import('#middleware/auth/logout_if_authentication_disabled_middleware'),
 ])
 
 /**
@@ -49,13 +47,15 @@ router.use([
  * the routes or the routes group.
  */
 export const middleware = router.named({
-  profile: () => import('#middleware/profile_middleware'),
+  verifiedEmail: () => import('#middleware/auth/verified_email_middleware'),
+  noProfile: () => import('#middleware/profile/no_profile_middleware'),
+  participant: () => import('#middleware/profile/participant_middleware'),
   requireAuthenticationEnabled: () =>
-    import('#middleware/require_authentication_enabled_middleware'),
+    import('#middleware/auth/require_authentication_enabled_middleware'),
   verifyUrlSignature: () => import('#middleware/verify_url_signature_middleware'),
   automaticSubmit: () => import('#middleware/automatic_submit_middleware'),
-  verifySocialCallback: () => import('#middleware/verify_social_callback_middleware'),
-  guest: () => import('#middleware/guest_middleware'),
-  auth: () => import('#middleware/auth_middleware'),
-  signup: () => import('#middleware/signup_middleware'),
+  verifySocialCallback: () => import('#middleware/auth/verify_social_callback_middleware'),
+  guest: () => import('#middleware/auth/guest_middleware'),
+  auth: () => import('#middleware/auth/auth_middleware'),
+  finishRedirect: () => import('#middleware/finish_redirect_middleware'),
 })

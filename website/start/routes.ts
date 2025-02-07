@@ -14,54 +14,31 @@ const AuthenticationController = () => import('#controllers/authentication_contr
 const TicketsController = () => import('#controllers/tickets_controller')
 const ProfilesController = () => import('#controllers/profiles_controller')
 
-router.on('/').renderInertia('home').as('pages:home')
-router.get('/tickets', [TicketsController, 'index']).as('pages:tickets.show')
-router.on('/tickets/:id/checkout').renderInertia('payments').as('pages:tickets.checkout')
-
-router.get('/signup', [ProfilesController, 'show'])
-  .as('pages:signup')
-  .use(middleware.auth())
-  .use(middleware.signup())
-router
-  .post('/signup', [ProfilesController, 'create'])
-  .as('actions:signup')
-  .use(middleware.auth())
-  .use(middleware.profile())
+router.on('/').renderInertia('home').as('pages:home').use(middleware.finishRedirect())
 
 router
   .group(() => {
-    router.on('/login')
-      .renderInertia('auth/login')
-      .as('pages:auth.login')
+    router
+      .group(() => {
+        router.on('/login').renderInertia('auth/login').as('pages:auth.login')
+        router.post('/login', [AuthenticationController, 'login']).as('actions:auth.login')
+
+        router.on('/register').renderInertia('auth/register').as('pages:auth.register')
+        router.post('/register', [AuthenticationController, 'register']).as('actions:auth.register')
+      })
       .use(middleware.guest())
 
     router
-      .post('/login', [AuthenticationController, 'login'])
-      .as('actions:auth.login')
-      .use(middleware.guest())
+      .group(() => {
+        router.post('/logout', [AuthenticationController, 'logout']).as('actions:auth.logout')
 
-    router
-      .post('/logout', [AuthenticationController, 'logout'])
-      .as('actions:auth.logout')
+        router.on('/verify').renderInertia('auth/verify').as('pages:auth.verify')
+        router
+          .post('/verify/new', [AuthenticationController, 'retryEmailVerification'])
+          .as('actions:auth.verify.send')
+          .use(emailVerificationThrottle)
+      })
       .use(middleware.auth())
-
-    router
-      .on('/register')
-      .renderInertia('auth/register')
-      .as('pages:auth.register')
-      .use(middleware.guest())
-
-    router
-      .post('/register', [AuthenticationController, 'register'])
-      .as('actions:auth.register')
-      .use(middleware.guest())
-
-    router.on('/verify').renderInertia('auth/verify').as('pages:auth.verify').use(middleware.auth())
-
-    router
-      .post('/verify/new', [AuthenticationController, 'retryEmailVerification'])
-      .as('actions:auth.verify.send')
-      .use([middleware.auth(), emailVerificationThrottle])
 
     router
       .on('/verify/success')
@@ -110,3 +87,19 @@ router
   })
   .middleware(middleware.requireAuthenticationEnabled())
   .prefix('/auth')
+
+router
+  .group(() => {
+    router.get('/', [ProfilesController, 'show']).as('pages:signup')
+    router.post('/', [ProfilesController, 'create']).as('actions:signup')
+  })
+  .prefix('/signup')
+  .use([middleware.auth(), middleware.noProfile()])
+
+router
+  .group(() => {
+    router.get('/', [TicketsController, 'index']).as('pages:tickets.show')
+    router.on('/:id/checkout').renderInertia('payments').as('pages:tickets.checkout')
+  })
+  .prefix('/tickets')
+  .use([middleware.auth(), middleware.participant(), middleware.verifiedEmail()])
