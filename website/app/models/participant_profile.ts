@@ -17,6 +17,7 @@ export default class ParticipantProfile extends BaseModel {
   declare updatedAt: DateTime
 
   // General Info
+
   @column()
   declare firstName: string
 
@@ -30,6 +31,7 @@ export default class ParticipantProfile extends BaseModel {
   declare phone: string
 
   // Student Info
+
   @column()
   declare university: string
 
@@ -46,6 +48,7 @@ export default class ParticipantProfile extends BaseModel {
   declare municipality: string
 
   // Logistics Info
+
   @column()
   declare shirtSizeProfile: string
 
@@ -62,6 +65,7 @@ export default class ParticipantProfile extends BaseModel {
   declare transports: string[]
 
   // Communication Info
+  
   @column()
   declare heardAboutENEI: string
 

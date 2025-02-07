@@ -20,7 +20,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   )
 
   return (
-    <div className={container ? 'visible' : 'invisible'}>
+    <div>
       <NotificationContext.Provider value={{ setContainer, render }}>
         {children}
       </NotificationContext.Provider>
