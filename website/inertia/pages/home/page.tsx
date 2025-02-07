@@ -6,6 +6,10 @@ import background from '~/images/background.jpeg'
 import Page from '~/components/common/page'
 import Hero from '~/components/common/hero'
 import Container from '~/components/common/containers'
+import { Notification } from '~/components/notifications'
+import { Link } from '@tuyau/inertia/react'
+import { buttonVariants } from '~/components/ui/button'
+import { ArrowRight } from 'lucide-react'
 
 function useUtcTarget() {
   return useEnvironment((env) =>
@@ -87,7 +91,7 @@ function BackgroundGradient({ className }: { className?: string }) {
 
 function Background() {
   return (
-    <div className="absolute inset-0 isolate">
+    <div className="absolute inset-0 isolate -z-10">
       <div className="relative size-full">
         <BackgroundGradient className="z-10" />
         <img
@@ -103,11 +107,24 @@ function Background() {
 export default function Home() {
   return (
     <Page title="Home">
+      <Notification>
+        <div className="bg-enei-beige px-4 py-2 bg-opacity-[62%] shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
+          <p className="text-enei-blue flex flex-row gap-2 items-center justify-center">
+            <span>🎉</span> Os early-birds para o ENEI 2025 já estão disponíveis!{' '}
+            <Link
+              route="pages:tickets.show"
+              className={cn(buttonVariants({ variant: 'link' }), 'pl-0 text-md')}
+            >
+              Compra já o teu bilhete a um preço reduzido <ArrowRight className="inline-block" />
+            </Link>
+          </p>
+        </div>
+      </Notification>
       <Background />
       <Hero className="h-auto flex-grow">
         <Container>
-          <section className="relative flex flex-col gap-8 py-4 sm:py-24 lg:py-32 md:justify-between z-10">
-            <div className="flex-grow md:flex-grow-0">
+          <section className="relative flex flex-col gap-8 md:justify-between z-10">
+            <div className="flex-grow md:flex-grow-0 py-4 sm:py-24 lg:py-20">
               <h1 className="w-3/12 text-justify font-space-grotesk text-5xl font-bold tracking-tight text-enei-beige leading-[60px] md:leading-[90px] md:text-7xl ">
                 <div className="block gap-10 flex-row sm:flex sm:gap-0 md:block md:gap-10 lg:flex lg:gap-0">
                   <p className="whitespace-nowrap lowercase [text-shadow:_0_4px_4px_rgb(0_0_0_/_25%)]">

@@ -1,19 +1,12 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'profiles'
+  protected tableName = 'participant_profiles'
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id').notNullable()
-
-      table.integer('user_id')
-        .notNullable()
-        .unique()
-        .unsigned()
-        .references('id')
-        .inTable('users')
-        .onDelete('CASCADE')
+      table.increments('id')
+      table.timestamps({ defaultToNow: true })
 
       // General Info
       table.string('first_name').notNullable()
@@ -33,15 +26,12 @@ export default class extends BaseSchema {
       table.string('dietary_restrictions').nullable()
       table.boolean('is_vegetarian').notNullable()
       table.boolean('is_vegan').notNullable()
-      table.json('transports').nullable()
+      table.jsonb('transports').notNullable()
 
-      // _communication _info
+      // Communications Info
       table.string('heard_about_enei').notNullable()
       table.string('reason_for_signup').nullable()
-      table.json('attended_before_editions').nullable()
-
-      table.timestamp('created_at').notNullable()
-      table.timestamp('updated_at').nullable()
+      table.jsonb('attended_before_editions').notNullable()
     })
   }
 

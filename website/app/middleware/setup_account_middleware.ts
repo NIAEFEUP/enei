@@ -31,8 +31,8 @@ export default class SetupAccountMiddleware {
       return response.redirect().toRoute('pages:auth.verify')
     }
 
-    await user.load('profile')
-    if (!user.profile) {
+    await user.load('participantProfile')
+    if (!user.participantProfile) {
       return response.redirect().toRoute('pages:signup')
     }
 

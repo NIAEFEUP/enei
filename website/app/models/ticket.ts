@@ -5,8 +5,14 @@ export default class Ticket extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
+
   @column()
-  declare name: string | null
+  declare name: string
 
   @column()
   declare description: string
@@ -16,10 +22,4 @@ export default class Ticket extends BaseModel {
 
   @column()
   declare stock: number
-
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
 }

@@ -6,6 +6,7 @@ import { useTuyau } from '~/hooks/use_tuyau'
 import { cn } from '~/lib/utils'
 import Container from './containers'
 import { useEffect, useState } from 'react'
+import { NotificationContainer } from '../notifications'
 
 /*
 import { Menu } from "lucide-react";
@@ -78,26 +79,29 @@ export function Navbar({ className }: { className?: string }) {
   }, [])
 
   return (
-    <nav
-      className={cn('w-full transition-colors duration-300', !onTop && 'bg-enei-blue', className)}
-    >
-      <Container>
-        <div className="w-full py-6 flex flex-row justify-between items-center">
-          <Link route="pages:home">
-            <img
-              className="w-20 md:w-28 h-auto"
-              src="/images/logo-white.svg"
-              alt="Logótipo do ENEI"
-            />
-            <span className="sr-only">Ir para a página inicial</span>
-          </Link>
-          {auth.state === 'authenticated' ? (
-            <LogoutButton />
-          ) : (
-            auth.state === 'unauthenticated' && <LoginButton />
-          )}
-        </div>
-      </Container>
-    </nav>
+    <>
+      <NotificationContainer className='w-full flex flex-col' />
+      <nav
+        className={cn('w-full transition-colors duration-300', !onTop && 'bg-enei-blue', className)}
+      >
+        <Container>
+          <div className="w-full py-6 flex flex-row justify-between items-center">
+            <Link route="pages:home">
+              <img
+                className="w-20 md:w-28 h-auto"
+                src="/images/logo-white.svg"
+                alt="Logótipo do ENEI"
+              />
+              <span className="sr-only">Ir para a página inicial</span>
+            </Link>
+            {auth.state === 'authenticated' ? (
+              <LogoutButton />
+            ) : (
+              auth.state === 'unauthenticated' && <LoginButton />
+            )}
+          </div>
+        </Container>
+      </nav>
+    </>
   )
 }

@@ -5,13 +5,16 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.timestamp('email_verified_at').nullable()
+      table.integer('participant_profile_id')
+        .unique()
+        .references('id')
+        .inTable('participant_profiles')
     })
   }
 
   async down() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.dropColumn('email_verified_at')
+      table.dropColumn('participant_profile_id')
     })
   }
 }

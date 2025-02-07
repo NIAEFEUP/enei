@@ -1,4 +1,4 @@
-import Profile from '#models/profile'
+import ParticipantProfile from '#models/participant_profile'
 import { createProfileValidator } from '#validators/profile_validator'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -6,8 +6,8 @@ export default class ProfilesController {
   // To be used when the profile page is done
   async index({ auth, inertia }: HttpContext) {
     const user = auth.user!
-    await user.preload('profile')
-    return inertia.render('profile', user.profile!)
+    await user.load('participantProfile')
+    return inertia.render('profile', user.participantProfile!)
   }
 
   async show({ inertia, request }: HttpContext) {
@@ -28,13 +28,13 @@ export default class ProfilesController {
 
     // add user_id
     data.userId = auth.user?.id
-    await auth.user?.load('profile')
+    await auth.user?.load('participantProfile')
 
     const profile = await createProfileValidator.validate(data, {
       meta: { userId: auth.user!.id },
     })
 
-    const profileAdd = new Profile()
+    const profileAdd = new ParticipantProfile()
     profileAdd.fill(profile)
 
     await profileAdd.save()

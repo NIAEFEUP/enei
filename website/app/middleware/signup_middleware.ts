@@ -9,8 +9,8 @@ export default class SignUpMiddleware {
     if (!user)
       return response.redirect().toRoute('pages:home')
 
-    await user.load('profile')
-    if (user.profile) {
+    await user.load('participantProfile')
+    if (user.participantProfile) {
       return response.redirect().toRoute('pages:home')
     }
 

@@ -1,14 +1,20 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
 import User from './user.js'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import type { HasOne } from '@adonisjs/lucid/types/relations'
 
-export default class Profile extends BaseModel {
-  @column()
-  declare userId: number
+export default class ParticipantProfile extends BaseModel {
+  @column({ isPrimary: true })
+  declare id: number
+  
+  @hasOne(() => User)
+  declare user: HasOne<typeof User>
 
-  @belongsTo(() => User)
-  declare user: BelongsTo<typeof User>
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime
 
   // General Info
   @column()
@@ -41,7 +47,7 @@ export default class Profile extends BaseModel {
 
   // Logistics Info
   @column()
-  declare shirtSize: string
+  declare shirtSizeProfile: string
 
   @column()
   declare dietaryRestrictions: string | null
@@ -52,10 +58,7 @@ export default class Profile extends BaseModel {
   @column()
   declare isVegan: boolean
 
-  @column({
-    serialize: (value: string | null) => value ? value.split(',') : [],
-    prepare: (value: string[]) => value.join(',')
-  })
+  @column()
   declare transports: string[]
 
   // Communication Info
@@ -65,15 +68,6 @@ export default class Profile extends BaseModel {
   @column()
   declare reasonForSignup: string | null
 
-  @column({
-    serialize: (value: string | null) => value ? value.split(',') : [],
-    prepare: (value: string[]) => value.join(',')
-  })
+  @column()
   declare attendedBeforeEditions: string[]
-
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
 }

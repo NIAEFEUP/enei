@@ -7,9 +7,9 @@ export default class ProfileMiddleware {
      * Middleware logic goes here (before the next call)
      */
     const user = ctx.auth.user
-    user?.load('profile')
+    await user?.load('participantProfile')
 
-    if (!user?.profile) {
+    if (!user?.participantProfile) {
       ctx.response.redirect().toRoute('pages:signup')
     }
 
