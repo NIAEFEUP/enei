@@ -1,11 +1,11 @@
-import { compose } from '@adonisjs/core/helpers'
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasMany, hasOne } from '@adonisjs/lucid/orm'
 import Account from './account.js'
-import type { HasMany } from '@adonisjs/lucid/types/relations'
-import { HasReferralLink } from '#models/mixins/has_referral_link'
+import type { HasMany, HasOne } from '@adonisjs/lucid/types/relations'
+import PromoterInfo from './promoter_info.js'
+import ParticipantInfo from './participant_info.js'
 
-export default class User extends compose(BaseModel, HasReferralLink) {
+export default class User extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
@@ -24,11 +24,25 @@ export default class User extends compose(BaseModel, HasReferralLink) {
   @hasMany(() => Account)
   declare accounts: HasMany<typeof Account>
 
+  @column()
+  declare referredBy: User
+
+  @hasOne(() => PromoterInfo)
+  declare promoterInfo: HasOne<typeof PromoterInfo>
+
+  @hasOne(() => ParticipantInfo)
+  declare participantInfo: HasOne<typeof ParticipantInfo>
+
+  isStudentAssociation() {
+    return this.promoterInfo !== null
+  }
+
+  isParticipant() {
+    return this.participantInfo !== null
+  }
+
   isEmailVerified() {
     return this.emailVerifiedAt !== null
   }
 
-  getPromoterCode(): number {
-    return this.id
-  }
 }
