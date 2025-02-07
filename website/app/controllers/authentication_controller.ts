@@ -9,6 +9,7 @@ import {
 import { UserService } from '#services/user_service'
 import { inject } from '@adonisjs/core'
 import UserRequestedVerificationEmail from '#events/user_requested_verification_email'
+import Account from '#models/account'
 
 @inject()
 export default class AuthenticationController {

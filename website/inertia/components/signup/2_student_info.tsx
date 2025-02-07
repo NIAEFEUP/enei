@@ -10,7 +10,7 @@ import {
   CommandList,
 } from '~/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
-import CurricularYearSelector, { CurricularYearSelectorType } from './input/curricular-year-input'
+import CurricularYearSelector, { CurricularYearSelectorType } from './input/curricular_year_input'
 
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { cn } from '~/lib/utils'

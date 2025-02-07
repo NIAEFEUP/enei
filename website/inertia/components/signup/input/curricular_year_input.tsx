@@ -30,7 +30,7 @@ const CurricularYearSelector = ({
   defaultValue,
 }: CurricularYearSelectorProps) => {
   const [selectedCurricularYear, setCurricularYear] = useState<string | null>(defaultValue[0])
-  const [_, setSelectedLastYear] = useState<number | null>(defaultValue[1])
+  const [, setSelectedLastYear] = useState<number | null>(defaultValue[1])
 
   const curricularYears: CurricularYearProps[] = [
     { value: '1', label: '1º ano' },
