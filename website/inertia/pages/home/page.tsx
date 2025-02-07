@@ -108,16 +108,14 @@ export default function Home() {
   return (
     <Page title="Home">
       <Notification>
-        <div className="bg-enei-beige px-4 py-2 bg-opacity-[62%] shadow-[0_4px_4px_rgba(0_0_0_/_25%)]">
-          <p className="text-enei-blue flex flex-row gap-2 items-center justify-center">
-            <span>🎉</span> Os early-birds para o ENEI 2025 já estão disponíveis!{' '}
+        <div className="bg-enei-beige px-4 py-4 bg-opacity-[62%] shadow-[0_4px_4px_rgba(0_0_0_/_25%)] text-enei-blue flex flex-col lg:flex-row gap-2 items-center justify-center">
+            <p className='text-center lg:text-left'><span>🎉</span> Os early-birds para o ENEI 2025 já estão disponíveis!{' '}</p>
             <Link
               route="pages:tickets.show"
-              className={cn(buttonVariants({ variant: 'link' }), 'pl-0 text-md')}
+              className={cn(buttonVariants({ variant: 'link' }), 'p-0 text-md h-fit')}
             >
-              Garante já o teu bilhete antes que esgotem <ArrowRight className="inline-block" />
+              <p className='text-center'>Garante já o teu bilhete antes que esgotem <ArrowRight className="inline-block" /></p>
             </Link>
-          </p>
         </div>
       </Notification>
       <Background />
