@@ -37,7 +37,6 @@ export default class ProfilesController {
     const profileAdd = new Profile()
     profileAdd.fill(profile)
 
-    console.log("profileAdd", profileAdd)
     await profileAdd.save()
 
     return response.redirect().toRoute('pages:tickets.show')

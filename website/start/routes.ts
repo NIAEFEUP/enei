@@ -27,7 +27,10 @@ router
 
 router
   .group(() => {
-    router.on('/login').renderInertia('auth/login').as('pages:auth.login').use(middleware.guest())
+    router.on('/login')
+      .renderInertia('auth/login')
+      .as('pages:auth.login')
+      .use(middleware.guest())
 
     router
       .post('/login', [AuthenticationController, 'login'])
