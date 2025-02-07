@@ -4,7 +4,7 @@ import districts from '#data/enei/districts.json' with { type: 'json' }
 import editions from '#data/enei/editions.json' with { type: 'json' }
 import transports from '#data/enei/signup/transports.json' with { type: 'json' }
 import shirts from '#data/enei/signup/shirts.json' with { type: 'json' }
-import heardaboutfrom from '#data/enei/signup/heardaboutfrom.json' with { type: 'json' }
+import heardaboutfrom from '#data/enei/signup/heard-about.json' with { type: 'json' }
 import { DateTime } from 'luxon'
 
 export const createProfileValidator = vine.compile(

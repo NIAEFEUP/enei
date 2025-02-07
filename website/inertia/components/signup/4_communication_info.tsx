@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Textarea } from '../ui/textarea'
 
 import editions from '#data/enei/editions.json' with { type: 'json' }
-import heardaboutfrom from '#data/enei/signup/heardaboutfrom.json' with { type: 'json' }
+import heardaboutfrom from '#data/enei/signup/heard-about.json' with { type: 'json' }
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   CommunicationsInfo,

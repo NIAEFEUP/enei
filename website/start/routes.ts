@@ -15,8 +15,8 @@ const TicketsController = () => import('#controllers/tickets_controller')
 const ProfilesController = () => import('#controllers/profiles_controller')
 
 router.on('/').renderInertia('home').as('pages:home')
-router.get('/tickets', [TicketsController, 'index'])
-router.on('/tickets/:id/checkout').renderInertia('payments').as('checkout')
+router.get('/tickets', [TicketsController, 'index']).as('pages:tickets.show')
+router.on('/tickets/:id/checkout').renderInertia('payments').as('pages:tickets.checkout')
 
 router.get('/signup', [ProfilesController, 'show']).as('pages:signup').use(middleware.auth())
 router

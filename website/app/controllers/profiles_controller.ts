@@ -40,6 +40,6 @@ export default class ProfilesController {
     console.log("profileAdd", profileAdd)
     await profileAdd.save()
 
-    return response.redirect().toRoute('pages:profile')
+    return response.redirect().toRoute('pages:tickets.show')
   }
 }

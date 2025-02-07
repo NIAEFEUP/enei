@@ -17,7 +17,7 @@ export default function SelectTicketsPage(props: InferPageProps<TicketsControlle
 
       <div className="grid gap-6 grid-cols-1 md:w-1/2">
         {props.ticketTypes.map((ticket) => (
-          <Link route="checkout" params={{ id: ticket.id }} key={ticket.id}>
+          <Link route="pages:tickets.checkout" params={{ id: ticket.id }} key={ticket.id}>
             <Card className="hover:shadow-lg">
               <div className="flex items-center justify-between p-6">
                 <CardHeader>
