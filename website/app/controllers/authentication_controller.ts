@@ -3,6 +3,8 @@ import {
   registerWithCredentialsValidator,
   emailVerificationCallbackValidator,
   loginWithCredentialsValidator,
+  passwordResetValidator,
+  passwordSendForgotPasswordValidator,
 } from '#validators/authentication'
 import { UserService } from '#services/user_service'
 import { inject } from '@adonisjs/core'
@@ -10,7 +12,7 @@ import UserRequestedVerificationEmail from '#events/user_requested_verification_
 
 @inject()
 export default class AuthenticationController {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
   async login({ request, auth, session, response }: HttpContext) {
     const { email, password } = await request.validateUsing(loginWithCredentialsValidator)
@@ -60,6 +62,40 @@ export default class AuthenticationController {
     await this.userService.verifyEmail(email)
 
     return response.redirect().toRoute('pages:auth.verify.success')
+  }
+
+  async sendForgotPassword({ request, response }: HttpContext) {
+    const { email } = await request.validateUsing(passwordSendForgotPasswordValidator)
+
+    /*
+      According to OWASP recommendations, the existence of the account should be transparent
+      to the person who issues this request, but we should not send an email that is not in
+      any account.
+    */
+    if (await Account.findBy('id', `credentials:${email}`)) {
+      await this.userService.sendForgotPasswordEmail(email)
+    }
+
+    return response.redirect().toRoute('page:auth.forgot-password.sent')
+  }
+
+  async callbackForForgotPassword({ request, response }: HttpContext) {
+    const {
+      password,
+      email
+    } = await request.validateUsing(passwordResetValidator)
+
+    const account = await Account.find(`credentials:${email}`)
+    if (account) {
+      account.password = password // Auther mixin hashes it automatically on assignment
+      await account.save()
+    }
+
+    return response.redirect().toRoute('actions:auth.forgot-password.success')
+  }
+
+  async showForgotPasswordPage({ inertia }: HttpContext) {
+    return inertia.render('auth/forgot-password/reset')
   }
 
   // SOCIAL AUTHENTICATION

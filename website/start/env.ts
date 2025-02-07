@@ -27,6 +27,13 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
 
     /*
     |----------------------------------------------------------
+    | Variables for configuring the payments system
+    |----------------------------------------------------------
+    */
+    IFTHENPAY_MBWAY_KEY: vine.string().optional(),
+
+    /*
+    |----------------------------------------------------------
     | Variables for configuring the mail package
     |----------------------------------------------------------
     */
@@ -42,7 +49,17 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     //MAILGUN_DOMAIN: vine.string(),
     //SPARKPOST_API_KEY: vine.string(),
     //RESEND_API_KEY: vine.string(),
-    //BREVO_API_KEY: vine.string()
+    //BREVO_API_KEY: vine.string(),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring the jobs package
+    |----------------------------------------------------------
+    */
+    REDIS_HOST: vine.string(),
+    REDIS_PORT: vine.number(),
+    REDIS_PASSWORD: vine.string().optional(),
+    REDIS_QUEUE: vine.string().optional(),
 
     /*
     |----------------------------------------------------------
@@ -50,15 +67,6 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     |----------------------------------------------------------
     */
     LIMITER_STORE: vine.enum(['redis', 'memory'] as const),
-
-    /*
-    |----------------------------------------------------------
-    | Variables for configuring the redis package
-    |----------------------------------------------------------
-    */
-    REDIS_HOST: vine.string(),
-    REDIS_PORT: vine.string(),
-    REDIS_PASSWORD: vine.string().optional(),
 
     /*
     |----------------------------------------------------------

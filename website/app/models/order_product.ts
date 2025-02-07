@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 
-export default class Ticket extends BaseModel {
+export default class OrderProduct extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
@@ -12,14 +12,11 @@ export default class Ticket extends BaseModel {
   declare updatedAt: DateTime
 
   @column()
-  declare name: string
+  declare orderId: number
 
   @column()
-  declare description: string
+  declare productId: number
 
   @column()
-  declare price: number
-
-  @column()
-  declare stock: number
+  declare quantity: number
 }

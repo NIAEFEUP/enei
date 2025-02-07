@@ -8,13 +8,14 @@
 */
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
-import { emailVerificationThrottle } from '#start/limiter'
+import { emailVerificationThrottle, sendForgotPasswordThrottle } from '#start/limiter'
 
 const AuthenticationController = () => import('#controllers/authentication_controller')
+const OrdersController = () => import('#controllers/orders_controller')
 const TicketsController = () => import('#controllers/tickets_controller')
 const ProfilesController = () => import('#controllers/profiles_controller')
 
-router.on('/').renderInertia('home').as('pages:home').use(middleware.finishRedirect())
+router.on('/').renderInertia('home').as('pages:home')
 
 router
   .group(() => {
@@ -40,6 +41,37 @@ router
       })
       .use(middleware.auth())
 
+    router
+      .on('/password/forgot')
+      .renderInertia('auth/forgot-password/index')
+      .as('pages:auth.forgot-password')
+      .use(middleware.guest())
+
+    router
+      .on('/password/forgot/sent')
+      .renderInertia('auth/forgot-password/sent')
+      .as('page:auth.forgot-password.sent')
+      .use(middleware.guest())
+
+    router
+      .post('/password/forgot/new', [AuthenticationController, 'sendForgotPassword'])
+      .as('actions:auth.forgot-password.send')
+      .use([middleware.guest(), sendForgotPasswordThrottle])
+
+    router
+      .get('/password/forgot/callback', [AuthenticationController, 'showForgotPasswordPage'])
+      .as('pages:auth.forgot-password.callback')
+      .middleware(middleware.verifyUrlSignature())
+
+    router
+      .post('/password/forgot/callback', [AuthenticationController, 'callbackForForgotPassword'])
+      .as('actions:auth.forgot-password.callback')
+      .middleware(middleware.verifyUrlSignature())
+
+    router
+      .on('/password/forgot/success')
+      .renderInertia('auth/forgot-password/success')
+      .as('actions:auth.forgot-password.success')
     router
       .on('/verify/success')
       .renderInertia('auth/verify/success')
@@ -98,8 +130,17 @@ router
 
 router
   .group(() => {
-    router.get('/', [TicketsController, 'index']).as('pages:tickets.show')
-    router.on('/:id/checkout').renderInertia('payments').as('pages:tickets.checkout')
+    router.get('/', [TicketsController, 'index']).as('pages:tickets')
+    router.get('/:id/checkout', [TicketsController, 'showPayment']).as('checkout')
   })
   .prefix('/tickets')
   .use([middleware.auth(), middleware.participant(), middleware.verifiedEmail()])
+
+router
+  .group(() => {
+    //router.get('/', [OrdersController, 'index']) acho que isto já nao e usado
+    router.post('/mbway', [OrdersController, 'createMBWay']).use(middleware.auth())
+    router.get('/:id', [OrdersController, 'show']).as('payment.show').use(middleware.auth())
+  })
+  .middleware(middleware.requireAuthenticationEnabled())
+  .prefix('payment')

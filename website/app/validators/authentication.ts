@@ -8,6 +8,19 @@ export const registerWithCredentialsValidator = vine.compile(
   })
 )
 
+export const passwordResetValidator = vine.compile(
+  vine.object({
+    email: vine.string().email().exists({ table: User.table, column: 'email' }),
+    password: vine.string().minLength(8).confirmed(),
+  })
+)
+
+export const passwordSendForgotPasswordValidator = vine.compile(
+  vine.object({
+    email: vine.string().email()
+  })
+)
+
 export const emailVerificationCallbackValidator = vine.compile(
   vine.object({
     email: vine.string().email().exists({ table: User.table, column: 'email' }),
