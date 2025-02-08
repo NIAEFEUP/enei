@@ -53,18 +53,28 @@ export default class OrdersController {
 
         const successfulOrdersOfGivenProduct = await OrderProduct.query()
           .join('orders', 'order_products.order_id', 'orders.id')
+          .where('order_products.product_id', productId)
+          .where('orders.status', 'Success')
+
+        const successfulOrdersOfGivenProductPerUser = await OrderProduct.query()
+          .join('orders', 'order_products.order_id', 'orders.id')
           .where('orders.user_id', userId)
           .where('order_products.product_id', productId)
           .where('orders.status', 'Success')
 
-        
-
-        const totalQuantity = successfulOrdersOfGivenProduct.reduce(
+        const stockUsed = successfulOrdersOfGivenProduct.reduce(
           (acc, orderProduct) => acc + orderProduct.quantity,
           0
         )
 
-        if (product.stock < quantity) {
+        
+
+        const totalQuantity = successfulOrdersOfGivenProductPerUser.reduce(
+          (acc, orderProduct) => acc + orderProduct.quantity,
+          0
+        )
+
+        if (product.stock < quantity + stockUsed) {
           return response
             .status(400)
             .json({ message: `Não há mais stock do produto ${product.name}` })
