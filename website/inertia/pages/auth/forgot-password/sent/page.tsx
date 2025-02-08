@@ -30,7 +30,7 @@ export default function EmailVerification() {
   }
 
   return (
-    <BaseLayout title="Repôr palavra-passe">
+    <BaseLayout title="Repor palavra-passe">
       <CardLayout>
         <Card>
           <CardHeader>
