@@ -5,6 +5,8 @@ import { useAuth } from '~/hooks/use_auth'
 import { useTuyau } from '~/hooks/use_tuyau'
 import { cn } from '~/lib/utils'
 import Container from './containers'
+import { useEffect, useState } from 'react'
+import { NotificationContainer } from '../notifications'
 
 /*
 import { Menu } from "lucide-react";
@@ -35,7 +37,7 @@ type PageRoute = {
 function LoginButton() {
   return (
     <Link route="pages:auth.login" className={buttonVariants({ variant: 'secondary' })}>
-      Login
+      Entrar
     </Link>
   )
 }
@@ -60,27 +62,46 @@ function LogoutButton() {
 
 export function Navbar({ className }: { className?: string }) {
   const auth = useAuth()
+  const [onTop, setOnTop] = useState(true)
+
+  useEffect(() => {
+    const controller = new AbortController()
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        setOnTop(window.scrollY === 0)
+      },
+      { signal: controller.signal }
+    )
+
+    return () => controller.abort()
+  }, [])
 
   return (
-    <nav className={cn('w-full', className)}>
-      <Container>
-        <div className="w-full py-6 flex flex-row justify-between items-center">
-          <Link route="pages:home">
-            <img className="w-20 md:w-28 h-auto" src="/images/logo-white.svg" alt="Logótipo do ENEI" />
-            <span className='sr-only'>Ir para a página inicial</span>
-          </Link>
-          <div className = "flex flex-row gap-4">
-          <Link route='pages:tickets' className={buttonVariants({ variant: 'secondary' })}>
-          Tickets
-          </Link>
-          {auth.state === 'authenticated' ? (
-            <LogoutButton />
-          ) : (
-            auth.state === 'unauthenticated' && <LoginButton />
-          )}
+    <>
+      <NotificationContainer className='w-full flex flex-col' />
+      <nav
+        className={cn('w-full transition-colors duration-300', !onTop && 'bg-enei-blue', className)}
+      >
+        <Container>
+          <div className="w-full py-6 flex flex-row justify-between items-center">
+            <Link route="pages:home">
+              <img
+                className="w-20 md:w-28 h-auto"
+                src="/images/logo-white.svg"
+                alt="Logótipo do ENEI"
+              />
+              <span className="sr-only">Ir para a página inicial</span>
+            </Link>
+            {auth.state === 'authenticated' ? (
+              <LogoutButton />
+            ) : (
+              auth.state === 'unauthenticated' && <LoginButton />
+            )}
           </div>
-        </div>
-      </Container>
-    </nav>
+        </Container>
+      </nav>
+    </>
   )
 }

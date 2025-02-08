@@ -13,7 +13,7 @@ export default function BaseLayout({ title, children, className }: Props) {
   return (
     <div className="w-full min-h-dvh bg-enei-blue scroll-smooth relative flex flex-col">
       <Head title={title} />
-      <Navbar className="sticky top-0 z-10" />
+      <Navbar className="sticky top-0 z-20" />
       <div className={cn('flex-1', className)}>
         {children}
         <Toaster />

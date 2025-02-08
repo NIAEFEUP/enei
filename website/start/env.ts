@@ -14,9 +14,16 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
   return object({
     NODE_ENV: vine.enum(['development', 'production', 'test'] as const),
     PORT: vine.number(),
-    APP_KEY: vine.string(),
     HOST: vine.string(),
     LOG_LEVEL: vine.string(),
+    
+    APP_KEY: vine.string(),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring the database
+    |----------------------------------------------------------
+    */
 
     /*
     |----------------------------------------------------------
@@ -30,7 +37,7 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     | Variables for configuring the payments system
     |----------------------------------------------------------
     */
-    IFTHENPAY_MBWAY_KEY: vine.string().optional(),
+    IFTHENPAY_MBWAY_KEY: vine.string(),
 
     /*
     |----------------------------------------------------------
@@ -50,6 +57,7 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     //SPARKPOST_API_KEY: vine.string(),
     //RESEND_API_KEY: vine.string(),
     //BREVO_API_KEY: vine.string(),
+
 
     /*
     |----------------------------------------------------------

@@ -15,7 +15,7 @@ export default function Page({
   return (
     <div className={cn('w-full min-h-dvh scroll-smooth relative flex flex-col', className)}>
       <Head title={title} />
-      <Navbar className="sticky top-0 z-10 grow-0" />
+      <Navbar className="sticky top-0 z-20 grow-0" />
       <Toaster />
 
       {children}

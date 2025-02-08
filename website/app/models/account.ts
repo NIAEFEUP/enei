@@ -16,14 +16,14 @@ type AccountProvider = 'credentials' | keyof SocialProviders
 type AccountId = `${AccountProvider}:${string}`
 
 export default class Account extends compose(BaseModel, AuthFinder) {
+  @column({ isPrimary: true })
+  declare id: AccountId
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
-
-  @column({ isPrimary: true })
-  declare id: AccountId
 
   @column({ serializeAs: null })
   declare password: string

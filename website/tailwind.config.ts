@@ -3,7 +3,7 @@ import tailwindcssAnimate from 'tailwindcss-animate'
 import defaultTheme from 'tailwindcss/defaultTheme.js'
 
 export default {
-  darkMode: ['class'],
+  // darkMode: ['class'],
   content: ['./resources/**/*.edge', './inertia/**/*.{js,ts,jsx,tsx}'],
 
   theme: {

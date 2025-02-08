@@ -9,10 +9,8 @@ export abstract class ReactNotification extends BaseMail {
     const component = await importer().then((mod) => mod.default)
     const element = component(props)
 
-    this.message
-      .html(await render(element))
-      .text(await render(element, { plainText: true }))
+    this.message.html(await render(element)).text(await render(element, { plainText: true }))
   }
 
-  abstract prepare(): void | Promise<void>;
+  abstract prepare(): void | Promise<void>
 }

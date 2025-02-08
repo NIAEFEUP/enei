@@ -15,7 +15,7 @@ export type MailProps = {
     orderId: number
   }
 
-const ConfirmPurchaseEmail = ({ logoUrl, orderId, products, total, userEmail }: MailProps) => {
+const ConfirmPurchaseEmail = ({ logoUrl, products, total, userEmail }: MailProps) => {
     return (
         <BaseLayout>
             <Body>
@@ -32,8 +32,6 @@ const ConfirmPurchaseEmail = ({ logoUrl, orderId, products, total, userEmail }: 
                             </Text>
                         ))}
                         <Text className="font-bold">Total: €{total}</Text>
-                        
-                        <Text>ID da Ordem: {orderId}</Text>
                     </Section>
                     
                     <Section>

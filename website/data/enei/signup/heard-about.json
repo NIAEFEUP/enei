@@ -1,0 +1,22 @@
+[
+   {
+      "value":"friends",
+      "label":"Amigos"
+   },
+   {
+      "value":"social-media",
+      "label":"Redes Sociais"
+   },
+   {
+      "value":"university",
+      "label":"Banca"
+   },
+   {
+      "value":"other",
+      "label":"Outro"
+   },
+   {
+      "value":"unknown",
+      "label":"Já não me lembro"
+   }
+]
