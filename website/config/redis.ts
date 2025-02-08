@@ -21,6 +21,7 @@ const redisConfig = defineConfig({
       port: env.get('REDIS_PORT'),
       password: env.get('REDIS_PASSWORD', ''),
       db: 0,
+      family: 0,
       keyPrefix: '',
       retryStrategy(times) {
         return times > 10 ? null : times * 50
@@ -32,6 +33,7 @@ const redisConfig = defineConfig({
       port: env.get('REDIS_PORT'),
       password: env.get('REDIS_PASSWORD', ''),
       db: 1,
+      family: 0,
       retryStrategy(times) {
         return times > 10 ? null : times * 50
       },
