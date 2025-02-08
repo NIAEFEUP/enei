@@ -20,6 +20,13 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
 
     /*
     |----------------------------------------------------------
+    | Variables for configuring the database
+    |----------------------------------------------------------
+    */
+    DB_CONNECTION: vine.enum(['sqlite', 'pg'] as const),
+
+    /*
+    |----------------------------------------------------------
     | Variables for configuring session package
     |----------------------------------------------------------
     */
