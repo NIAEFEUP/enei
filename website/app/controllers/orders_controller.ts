@@ -54,7 +54,7 @@ export default class OrdersController {
         const successfulOrdersOfGivenProduct = await OrderProduct.query()
           .join('orders', 'order_products.order_id', 'orders.id')
           .where('order_products.product_id', productId)
-          .where('orders.status', 'Success')
+          .whereIn('orders.status', ['Success', 'Pending'])
 
         const successfulOrdersOfGivenProductPerUser = await OrderProduct.query()
           .join('orders', 'order_products.order_id', 'orders.id')
