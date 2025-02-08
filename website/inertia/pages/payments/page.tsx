@@ -129,7 +129,7 @@ export default function TicketSalePage(
             <OrderConfirmationModal
               isOpen={orderConfirmationModalOpen}
               onClose={() => {
-                router.visit('/tickets')
+                router.visit('/')
               }}
             />
           </CardContent>
