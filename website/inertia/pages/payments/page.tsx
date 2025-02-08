@@ -97,7 +97,7 @@ export default function TicketSalePage(
 
   return (
     <Page title="Compra de Bilhete" className="bg-enei-blue">
-      <div className="min-h-screen flex items-center justify-center m-5">
+      <div className="flex justify-center mt-10">
         <Card className="w-full max-w-2xl mx-auto">
           <CardHeader>
             <CardTitle>Completa a tua compra</CardTitle>

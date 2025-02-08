@@ -43,7 +43,7 @@ router
 
     router
       .on('/password/forgot')
-      .renderInertia('auth/forgot-password/index')
+      .renderInertia('auth/forgot-password')
       .as('pages:auth.forgot-password')
       .use(middleware.guest())
 

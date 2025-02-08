@@ -10,7 +10,7 @@ import { createMBWayOrderValidator } from '#validators/order'
 import UpdateOrderStatus from '../jobs/update_order_status.js'
 export default class OrdersController {
   index({ inertia }: HttpContext) {
-    return inertia.render('payments/index')
+    return inertia.render('payments')
   }
 
   public async createMBWay({ request, auth, response }: HttpContext) {
