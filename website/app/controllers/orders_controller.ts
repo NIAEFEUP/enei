@@ -60,14 +60,12 @@ export default class OrdersController {
           .join('orders', 'order_products.order_id', 'orders.id')
           .where('orders.user_id', userId)
           .where('order_products.product_id', productId)
-          .where('orders.status', 'Success')
+          .whereIn('orders.status', ['Success', 'Pending'])
 
         const stockUsed = successfulOrdersOfGivenProduct.reduce(
           (acc, orderProduct) => acc + orderProduct.quantity,
           0
         )
-
-        
 
         const totalQuantity = successfulOrdersOfGivenProductPerUser.reduce(
           (acc, orderProduct) => acc + orderProduct.quantity,
