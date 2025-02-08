@@ -23,11 +23,11 @@ export default function ForgotPassword() {
   }
 
   return (
-    <BaseLayout title="Repôr palavra-passe">
+    <BaseLayout title="Repor palavra-passe">
       <CardLayout>
         <Card className={cn(oauthError && 'border-2 border-red-600')}>
           <CardHeader>
-            <CardTitle className="text-2xl">Repôr palavra-passe</CardTitle>
+            <CardTitle className="text-2xl">Repor palavra-passe</CardTitle>
             <CardDescription>
               Introduz a tua nova palavra-passe
             </CardDescription>
