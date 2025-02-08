@@ -33,11 +33,15 @@ router
       .group(() => {
         router.post('/logout', [AuthenticationController, 'logout']).as('actions:auth.logout')
 
-        router.on('/verify').renderInertia('auth/verify').as('pages:auth.verify')
-        router
-          .post('/verify/new', [AuthenticationController, 'retryEmailVerification'])
-          .as('actions:auth.verify.send')
-          .use(emailVerificationThrottle)
+        router.group(() => {
+          router.on('/verify').renderInertia('auth/verify').as('pages:auth.verify')
+          router
+            .post('/verify/new', [AuthenticationController, 'retryEmailVerification'])
+            .as('actions:auth.verify.send')
+            .use(emailVerificationThrottle)
+        })
+        .use(middleware.noVerifiedEmail())
+        
       })
       .use(middleware.auth())
 
