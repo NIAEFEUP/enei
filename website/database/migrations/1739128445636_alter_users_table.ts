@@ -5,17 +5,21 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.integer('points').defaultTo(0)
-      table.integer('referred_by_id')
+      table.integer('promoter_info_id')
+        .unique()
         .references('id')
-        .inTable('users')
+        .inTable('promoter_infos')
+      table.integer('participant_info_id')
+        .unique()
+        .references('id')
+        .inTable('participant_infos')
     })
   }
 
   async down() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.dropColumn('points')
-      table.dropColumn('referred_by_id')
+      table.dropColumn('promoter_info_id')
+      table.dropColumn('participant_info_id')
     })
   }
 }

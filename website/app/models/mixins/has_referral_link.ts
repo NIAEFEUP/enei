@@ -1,7 +1,7 @@
-import HashIdService from '#services/referral_service'
 import { NormalizeConstructor } from '@adonisjs/core/types/helpers'
 import { BaseModel } from '@adonisjs/lucid/orm'
 import router from '@adonisjs/core/services/router'
+import ReferralService from '#services/referral_service'
 
 export const HasReferralLink = <T extends NormalizeConstructor<typeof BaseModel>>(
   superclass: T
@@ -12,7 +12,7 @@ export const HasReferralLink = <T extends NormalizeConstructor<typeof BaseModel>
     }
 
     public getReferralCode = (): string => {
-      return HashIdService.encode(this.getPromoterCode())
+      return ReferralService.encode(this.getPromoterCode())
     }
 
     public getReferralLink = (): string => {

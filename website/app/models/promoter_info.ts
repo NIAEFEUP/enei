@@ -1,13 +1,14 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
 import User from './user.js'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
-import { compose } from '@adonisjs/core/helpers'
-import { HasReferralLink } from './mixins/has_referral_link.js'
+import type { HasOne } from '@adonisjs/lucid/types/relations'
 
-export default class PromoterInfo extends compose(BaseModel, HasReferralLink) {
+export default class PromoterInfo extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
+
+  @hasOne(() => User)
+  declare user: HasOne<typeof User>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -15,6 +16,4 @@ export default class PromoterInfo extends compose(BaseModel, HasReferralLink) {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
-  @belongsTo(() => User)
-  declare user: BelongsTo<typeof User>
 }

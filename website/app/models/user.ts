@@ -4,8 +4,10 @@ import Account from './account.js'
 import type { BelongsTo, HasMany, HasOne } from '@adonisjs/lucid/types/relations'
 import PromoterInfo from './promoter_info.js'
 import ParticipantInfo from './participant_info.js'
+import { compose } from '@adonisjs/core/helpers'
+import { HasReferralLink } from './mixins/has_referral_link.js'
 
-export default class User extends BaseModel {
+export default class User extends compose(BaseModel, HasReferralLink) {
   @column({ isPrimary: true })
   declare id: number
 
@@ -25,29 +27,41 @@ export default class User extends BaseModel {
   declare accounts: HasMany<typeof Account>
 
   @column()
-  declare referredById: number | number
+  declare referredById: number | null
 
-  @belongsTo(() => User)
+  @belongsTo(() => User, {
+    foreignKey: 'id'
+  })
   declare referredBy: BelongsTo<typeof User>
 
   @column()
   declare points: number
 
-  @hasOne(() => PromoterInfo)
-  declare promoterInfo: HasOne<typeof PromoterInfo>
+  @column()
+  declare promoterInfoId: number | null
 
-  @hasOne(() => ParticipantInfo)
-  declare participantInfo: HasOne<typeof ParticipantInfo>
+  @belongsTo(() => PromoterInfo)
+  declare promoterInfo: BelongsTo<typeof PromoterInfo>
+
+  @column()
+  declare participantInfoId: number | null
+
+  @belongsTo(() => ParticipantInfo)
+  declare participantInfo: BelongsTo<typeof ParticipantInfo>
 
   isStudentAssociation() {
-    return this.promoterInfo !== null
+    return this.promoterInfoId !== null
   }
 
   isParticipant() {
-    return this.participantInfo !== null
+    return this.participantInfoId !== null
   }
 
   isEmailVerified() {
     return this.emailVerifiedAt !== null
+  }
+
+  public getPromoterCode: () => number = () => {
+    return this.id;
   }
 }
