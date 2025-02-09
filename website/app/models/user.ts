@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany, hasOne } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, hasMany, hasOne } from '@adonisjs/lucid/orm'
 import Account from './account.js'
-import type { HasMany, HasOne } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasMany, HasOne } from '@adonisjs/lucid/types/relations'
 import PromoterInfo from './promoter_info.js'
 import ParticipantInfo from './participant_info.js'
 
@@ -25,7 +25,13 @@ export default class User extends BaseModel {
   declare accounts: HasMany<typeof Account>
 
   @column()
-  declare referredBy: User
+  declare referredById: number | number
+
+  @belongsTo(() => User)
+  declare referredBy: BelongsTo<typeof User>
+
+  @column()
+  declare points: number
 
   @hasOne(() => PromoterInfo)
   declare promoterInfo: HasOne<typeof PromoterInfo>
@@ -44,5 +50,4 @@ export default class User extends BaseModel {
   isEmailVerified() {
     return this.emailVerifiedAt !== null
   }
-
 }
