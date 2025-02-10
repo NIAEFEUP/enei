@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column, hasMany, hasOne } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import Account from './account.js'
-import type { BelongsTo, HasMany, HasOne } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import PromoterInfo from './promoter_info.js'
 import ParticipantInfo from './participant_info.js'
 import { compose } from '@adonisjs/core/helpers'
@@ -27,29 +27,31 @@ export default class User extends compose(BaseModel, HasReferralLink) {
   declare accounts: HasMany<typeof Account>
 
   @column()
-  declare referredById: number | null
+  declare referredByPromoterId: number | null
 
   @belongsTo(() => User, {
-    foreignKey: 'id'
+    foreignKey: 'referredByPromoterId'
   })
-  declare referredBy: BelongsTo<typeof User>
+  declare referredByPromoter: BelongsTo<typeof User>
 
   @column()
   declare points: number
 
+  // PromoterInfo
   @column()
   declare promoterInfoId: number | null
 
   @belongsTo(() => PromoterInfo)
   declare promoterInfo: BelongsTo<typeof PromoterInfo>
 
+  // ParticipantInfo
   @column()
   declare participantInfoId: number | null
 
   @belongsTo(() => ParticipantInfo)
   declare participantInfo: BelongsTo<typeof ParticipantInfo>
 
-  isStudentAssociation() {
+  isPromoter() {
     return this.promoterInfoId !== null
   }
 

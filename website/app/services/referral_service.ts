@@ -3,7 +3,7 @@ import Hashids from 'hashids'
 import db from '@adonisjs/lucid/services/db'
 
 export default class ReferralService {
-  static POINTS_FOR_ASSOCIATION = 20
+  static POINTS_FOR_PROMOTER = 20
   static POINTS_FOR_PARTICIPANT = 10
 
   static hashIds = new Hashids('', 8)
@@ -17,38 +17,50 @@ export default class ReferralService {
   }
 
   static async handlePointAttribution(referredUser: User, referralCode: string) {
-    const promoterId = ReferralService.decode(referralCode)
-    if (!promoterId) return
+    // referredUser cannot be a promoter
+    if (referredUser.isPromoter())
+      return
 
-    const promoter = await User.find(promoterId)
-    if (!promoter) return
+    const referralUserId = ReferralService.decode(referralCode)
+    if (!referralUserId) return
 
-    if (promoter.isStudentAssociation()) {
+    const referralUser = await User.find(referralUserId)
+    if (!referralUser) return
+
+    if (referralUser.isPromoter()) {
+
+      // If the referralUser is a promoter
+      // give points to the referralUser
       await db.transaction(async (trx) => {
-        promoter.useTransaction(trx)
+        referralUser.useTransaction(trx)
         referredUser.useTransaction(trx)
 
-        promoter.points += this.POINTS_FOR_ASSOCIATION
-        // FIXME: Not associating
-        await referredUser.related('referredBy').associate(promoter)
+        referralUser.points += this.POINTS_FOR_PROMOTER
+
+        await referredUser.related('referredByPromoter').associate(referralUser)
+        referralUser.save()
       })
-    } else if (promoter.isParticipant()) {
-      console.log("promoter is participant")
-      const referralAssociation = await User.find(promoter.referredById)
+    } else if (referralUser.isParticipant()) {
+      const referralPromoter: User | null = referralUser.referredByPromoterId !== null
+        ? await User.find(referralUser.referredByPromoterId)
+        : null;
 
-      // If the promoter was referred by a student association
-      // give points to the student association and to the
-      // promoter, else, give only to the promoter
+      // If the referralUser is a participant and was
+      // previously referred by a promoter, give points
+      // to the referralUser and to the promoter, else
+      // give only to the referralUser
       await db.transaction(async (trx) => {
-        promoter.useTransaction(trx)
+        referralUser.useTransaction(trx)
         referredUser.useTransaction(trx)
-        referralAssociation?.useTransaction(trx)
+        referralPromoter?.useTransaction(trx)
 
-        if (referralAssociation !== null) {
-          referralAssociation.points += this.POINTS_FOR_ASSOCIATION
-          await referredUser.related('referredBy').associate(referralAssociation)
+        referralUser.points += this.POINTS_FOR_PARTICIPANT
+        if (referralPromoter !== null && referralPromoter.isPromoter()) {
+          await referredUser.related('referredByPromoter').associate(referralPromoter)
+          referralPromoter.points += this.POINTS_FOR_PROMOTER
+          referralPromoter.save()
         }
-        promoter.points += this.POINTS_FOR_PARTICIPANT
+        await referralUser.save()
       })
     }
   }

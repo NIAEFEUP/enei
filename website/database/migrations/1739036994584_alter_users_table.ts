@@ -6,16 +6,19 @@ export default class extends BaseSchema {
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
       table.integer('points').defaultTo(0)
-      table.integer('referred_by_id')
+      table.integer('referred_by_promoter_id')
+        .unsigned()
+        .nullable()
         .references('id')
         .inTable('users')
+        .onDelete('SET NULL')
     })
   }
 
   async down() {
     this.schema.alterTable(this.tableName, (table) => {
       table.dropColumn('points')
-      table.dropColumn('referred_by_id')
+      table.dropColumn('referred_by_promoter_id')
     })
   }
 }
