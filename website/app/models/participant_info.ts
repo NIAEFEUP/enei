@@ -7,9 +7,6 @@ export default class ParticipantInfo extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
-  @column()
-  declare userId: number | null
-
   @hasOne(() => User)
   declare user: HasOne<typeof User>
 
