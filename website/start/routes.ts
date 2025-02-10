@@ -33,15 +33,15 @@ router
       .group(() => {
         router.post('/logout', [AuthenticationController, 'logout']).as('actions:auth.logout')
 
-        router.group(() => {
-          router.on('/verify').renderInertia('auth/verify').as('pages:auth.verify')
-          router
-            .post('/verify/new', [AuthenticationController, 'retryEmailVerification'])
-            .as('actions:auth.verify.send')
-            .use(emailVerificationThrottle)
-        })
-        .use(middleware.noVerifiedEmail())
-        
+        router
+          .group(() => {
+            router.on('/verify').renderInertia('auth/verify').as('pages:auth.verify')
+            router
+              .post('/verify/new', [AuthenticationController, 'retryEmailVerification'])
+              .as('actions:auth.verify.send')
+              .use(emailVerificationThrottle)
+          })
+          .use(middleware.noVerifiedEmail())
       })
       .use(middleware.auth())
 
@@ -135,16 +135,18 @@ router
 router
   .group(() => {
     router.get('/', [TicketsController, 'index']).as('pages:tickets')
-    router.get('/:id/checkout', [TicketsController, 'showPayment']).as('checkout')
+    router
+      .get('/:id/checkout', [TicketsController, 'showPayment'])
+      .as('checkout')
+      .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   })
   .prefix('/tickets')
-  .use([middleware.auth(), middleware.participant(), middleware.verifiedEmail()])
 
 router
   .group(() => {
     //router.get('/', [OrdersController, 'index']) acho que isto já nao e usado
-    router.post('/mbway', [OrdersController, 'createMBWay']).use(middleware.auth())
-    router.get('/:id', [OrdersController, 'show']).as('payment.show').use(middleware.auth())
+    router.post('/mbway', [OrdersController, 'createMBWay'])
+    router.get('/:id', [OrdersController, 'show']).as('payment.show')
   })
-  .middleware(middleware.requireAuthenticationEnabled())
+  .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix('payment')

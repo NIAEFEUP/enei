@@ -30,7 +30,6 @@ export default class ProfilesController {
 
     const profile = await createProfileValidator.validate(data)
 
-    console.log(profile)
     const profileAdd = new ParticipantProfile()
     profileAdd.fill(profile)
 

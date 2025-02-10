@@ -35,11 +35,14 @@ server.use([
  * requests with a registered route.
  */
 router.use([
+  () => import('#middleware/update_logger_storage_middleware'),
   () => import('@adonisjs/core/bodyparser_middleware'),
   () => import('@adonisjs/session/session_middleware'),
   () => import('@adonisjs/shield/shield_middleware'),
   () => import('@adonisjs/auth/initialize_auth_middleware'),
   () => import('#middleware/auth/logout_if_authentication_disabled_middleware'),
+  () => import('#middleware/log_user_middleware'),
+  () => import('#middleware/update_logger_storage_middleware')
 ])
 
 /**

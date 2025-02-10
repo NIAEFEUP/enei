@@ -5,13 +5,17 @@ import SendForgotPasswordEmail from '#listeners/send_forgot_password_email'
 import SendVerificationEmail from '#listeners/send_verification_email'
 import User from '#models/user'
 import db from '@adonisjs/lucid/services/db'
-import logger from '@adonisjs/core/services/logger'
 import { DateTime } from 'luxon'
-import app from '@adonisjs/core/services/app'
 import Account from '#models/account'
 import { errors } from '@adonisjs/auth'
+import app from '@adonisjs/core/services/app'
+import { inject } from '@adonisjs/core'
+import { Logger } from '@adonisjs/core/logger'
 
+@inject()
 export class UserService {
+  constructor(private logger: Logger) {}
+
   async getUserWithCredentials(email: string, password: string) {
     try {
       const account = await Account.verifyCredentials(`credentials:${email}`, password)
@@ -44,7 +48,7 @@ export class UserService {
   async sendVerificationEmail(user: User) {
     const listener = await app.container.make(SendVerificationEmail)
     listener.handle(new UserCreated(user))
-      .catch((error) => logger.error(error))
+      .catch((error) => this.logger.error(error))
   }
 
   async verifyEmail(email: string) {
