@@ -3,8 +3,9 @@
   "compilerOptions": {
     "rootDir": "./",
     "outDir": "./build",
+    "resolveJsonModule": true,
     "verbatimModuleSyntax": true,
-    "jsx": "react-jsx",
+    "jsx": "react-jsx"
   },
   "exclude": ["./inertia/**/*", "node_modules", "build"]
 }

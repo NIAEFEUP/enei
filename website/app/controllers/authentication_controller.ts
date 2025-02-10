@@ -1,4 +1,3 @@
-import Account from '#models/account'
 import type { HttpContext } from '@adonisjs/core/http'
 import {
   registerWithCredentialsValidator,
@@ -9,9 +8,8 @@ import {
 } from '#validators/authentication'
 import { UserService } from '#services/user_service'
 import { inject } from '@adonisjs/core'
-import UserCreated from '#events/user_created'
-import SendVerificationEmail from '#listeners/send_verification_email'
-import { errors } from '@adonisjs/auth'
+import UserRequestedVerificationEmail from '#events/user_requested_verification_email'
+import Account from '#models/account'
 
 @inject()
 export default class AuthenticationController {
@@ -20,25 +18,17 @@ export default class AuthenticationController {
   async login({ request, auth, session, response }: HttpContext) {
     const { email, password } = await request.validateUsing(loginWithCredentialsValidator)
 
-    try {
-      const account = await Account.verifyCredentials(`credentials:${email}`, password)
-
-      await account.load('user')
-      await auth.use('web').login(account.user)
-
-      if (!account.user.isEmailVerified())
-        return response.redirect().toRoute('pages:auth.verify')
-
-      return response.redirect().toRoute('pages:home')
-
-    } catch (error) {
-      if (error instanceof errors.E_INVALID_CREDENTIALS) {
-        session.flashErrors({ password: 'As credenciais que introduziste não são válidas' })
-        return response.redirect().back()
-      }
-
-      throw error
+    const user = await this.userService.getUserWithCredentials(email, password)
+    if (!user) {
+      session.flashErrors({ password: 'As credenciais que introduziste não são válidas' })
+      return response.redirect().back()
     }
+
+    await auth.use('web').login(user)
+
+    return user.isEmailVerified()
+      ? response.redirect().toRoute('pages:home')
+      : response.redirect().toRoute('pages:auth.verify')
   }
 
   async logout({ auth, response }: HttpContext) {
@@ -49,7 +39,12 @@ export default class AuthenticationController {
   async register({ request, auth, response }: HttpContext) {
     const { email, password } = await request.validateUsing(registerWithCredentialsValidator)
 
-    const user = await this.userService.createUserWithCredentials(email, password)
+    const [user, events] = await this.userService.createUserWithCredentials(email, password)
+    const [success] = await events
+    if (!success) {
+
+    }
+
     await auth.use('web').login(user)
 
     return response.redirect().toRoute('pages:auth.verify')
@@ -58,8 +53,7 @@ export default class AuthenticationController {
   async retryEmailVerification({ auth, response }: HttpContext) {
     const user = auth.getUserOrFail()
 
-    const listener = new SendVerificationEmail()
-    listener.handle(new UserCreated(user))
+    UserRequestedVerificationEmail.tryDispatch(user)
 
     return response.redirect().toRoute('pages:auth.verify')
   }
@@ -68,7 +62,7 @@ export default class AuthenticationController {
     const { email } = await request.validateUsing(emailVerificationCallbackValidator)
     await this.userService.verifyEmail(email)
 
-    return response.redirect().toRoute('actions:auth.verify.success')
+    return response.redirect().toRoute('pages:auth.verify.success')
   }
 
   async sendForgotPassword({ request, response }: HttpContext) {

@@ -13,6 +13,7 @@ import { emailVerificationThrottle, sendForgotPasswordThrottle } from '#start/li
 const AuthenticationController = () => import('#controllers/authentication_controller')
 const OrdersController = () => import('#controllers/orders_controller')
 const TicketsController = () => import('#controllers/tickets_controller')
+const ProfilesController = () => import('#controllers/profiles_controller')
 
 router.use([() => import('#middleware/referral_middleware')])
 
@@ -20,32 +21,35 @@ router.on('/').renderInertia('home').as('pages:home')
 
 router
   .group(() => {
-    router.on('/login').renderInertia('auth/login').as('pages:auth.login').use(middleware.guest())
-
     router
-      .post('/login', [AuthenticationController, 'login'])
-      .as('actions:auth.login')
+      .group(() => {
+        router.on('/login').renderInertia('auth/login').as('pages:auth.login')
+        router.post('/login', [AuthenticationController, 'login']).as('actions:auth.login')
+
+        router.on('/register').renderInertia('auth/register').as('pages:auth.register')
+        router.post('/register', [AuthenticationController, 'register']).as('actions:auth.register')
+      })
       .use(middleware.guest())
 
     router
-      .post('/logout', [AuthenticationController, 'logout'])
-      .as('actions:auth.logout')
+      .group(() => {
+        router.post('/logout', [AuthenticationController, 'logout']).as('actions:auth.logout')
+
+        router
+          .group(() => {
+            router.on('/verify').renderInertia('auth/verify').as('pages:auth.verify')
+            router
+              .post('/verify/new', [AuthenticationController, 'retryEmailVerification'])
+              .as('actions:auth.verify.send')
+              .use(emailVerificationThrottle)
+          })
+          .use(middleware.noVerifiedEmail())
+      })
       .use(middleware.auth())
 
     router
-      .on('/register')
-      .renderInertia('auth/register')
-      .as('pages:auth.register')
-      .use(middleware.guest())
-
-    router
-      .post('/register', [AuthenticationController, 'register'])
-      .as('actions:auth.register')
-      .use(middleware.guest())
-
-    router
       .on('/password/forgot')
-      .renderInertia('auth/forgot-password/index')
+      .renderInertia('auth/forgot-password')
       .as('pages:auth.forgot-password')
       .use(middleware.guest())
 
@@ -74,22 +78,10 @@ router
       .on('/password/forgot/success')
       .renderInertia('auth/forgot-password/success')
       .as('actions:auth.forgot-password.success')
-
-    router
-      .on('/verify')
-      .renderInertia('auth/verify/index')
-      .as('pages:auth.verify')
-      .use(middleware.auth())
-
-    router
-      .post('/verify/new', [AuthenticationController, 'retryEmailVerification'])
-      .as('actions:auth.verify.send')
-      .use([middleware.auth(), emailVerificationThrottle])
-
     router
       .on('/verify/success')
       .renderInertia('auth/verify/success')
-      .as('actions:auth.verify.success')
+      .as('pages:auth.verify.success')
 
     router
       .route(
@@ -134,17 +126,29 @@ router
   .middleware(middleware.requireAuthenticationEnabled())
   .prefix('/auth')
 
-router.get('/tickets', [TicketsController, 'index']).as('pages:tickets')
 router
-  .get('/tickets/:id/checkout', [TicketsController, 'showPayment']).use(middleware.auth())
-  .as('checkout')
-  .middleware(middleware.requireAuthenticationEnabled())
+  .group(() => {
+    router.get('/', [ProfilesController, 'show']).as('pages:signup')
+    router.post('/', [ProfilesController, 'create']).as('actions:signup')
+  })
+  .prefix('/signup')
+  .use([middleware.auth(), middleware.noProfile()])
+
+router
+  .group(() => {
+    router.get('/', [TicketsController, 'index']).as('pages:tickets')
+    router
+      .get('/:id/checkout', [TicketsController, 'showPayment'])
+      .as('checkout')
+      .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
+  })
+  .prefix('/tickets')
 
 router
   .group(() => {
     //router.get('/', [OrdersController, 'index']) acho que isto já nao e usado
-    router.post('/mbway', [OrdersController, 'createMBWay']).use(middleware.auth())
-    router.get('/:id', [OrdersController, 'show']).as('payment.show').use(middleware.auth())
+    router.post('/mbway', [OrdersController, 'createMBWay'])
+    router.get('/:id', [OrdersController, 'show']).as('payment.show')
   })
-  .middleware(middleware.requireAuthenticationEnabled())
+  .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix('payment')

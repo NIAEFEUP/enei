@@ -27,19 +27,25 @@ To get started with the website, follow these steps:
    cd enei/website
    ```
 
-3. Install the dependencies:
+3. Install `pnpm`:
+
+   ```bash
+   corepack enable
+   ```
+
+4. Install the dependencies:
 
    ```bash
    pnpm install --frozen-lockfile
    ```
 
-4. Run the database migrations to create the database:
+5. Run the database migrations to create the database:
 
    ```bash
    node ace migration:run
    ```
 
-5. Start the development server:
+6. Start the development server:
 
    ```bash
    pnpm run dev

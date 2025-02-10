@@ -14,8 +14,13 @@ const loggerConfig = defineConfig({
       enabled: true,
       name: env.get('APP_NAME'),
       level: env.get('LOG_LEVEL'),
+
+      formatters: {
+        level: (label) => ({ level: label }),
+      },
+
       transport: {
-        targets: targets()
+        pipeline: targets()
           .pushIf(!app.inProduction, targets.pretty())
           .pushIf(app.inProduction, targets.file({ destination: 1 }))
           .toArray(),

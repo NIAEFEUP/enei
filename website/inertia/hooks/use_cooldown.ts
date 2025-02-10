@@ -25,12 +25,10 @@ export function useCooldown({ seconds, onThrottledActivation }: UseCooldownProps
   const throttle: Throttler = (fn?: Parameters<Throttler>[0]) => {
     return async <I, O>(arg?: I) => {
       if (active) {
-        if (onThrottledActivation)
-          await onThrottledActivation()
+        if (onThrottledActivation) await onThrottledActivation()
       } else {
         setActivatedAt(Date.now())
-        if (fn)
-            return await fn(arg) as O
+        if (fn) return (await fn(arg)) as O
       }
     }
   }

@@ -10,7 +10,7 @@ import { createMBWayOrderValidator } from '#validators/order'
 import UpdateOrderStatus from '../jobs/update_order_status.js'
 export default class OrdersController {
   index({ inertia }: HttpContext) {
-    return inertia.render('payments/index')
+    return inertia.render('payments')
   }
 
   public async createMBWay({ request, auth, response }: HttpContext) {
@@ -53,18 +53,26 @@ export default class OrdersController {
 
         const successfulOrdersOfGivenProduct = await OrderProduct.query()
           .join('orders', 'order_products.order_id', 'orders.id')
+          .where('order_products.product_id', productId)
+          .whereIn('orders.status', ['Success', 'Pending'])
+
+        const successfulOrdersOfGivenProductPerUser = await OrderProduct.query()
+          .join('orders', 'order_products.order_id', 'orders.id')
           .where('orders.user_id', userId)
           .where('order_products.product_id', productId)
-          .where('orders.status', 'Success')
+          .whereIn('orders.status', ['Success', 'Pending'])
 
-        
-
-        const totalQuantity = successfulOrdersOfGivenProduct.reduce(
+        const stockUsed = successfulOrdersOfGivenProduct.reduce(
           (acc, orderProduct) => acc + orderProduct.quantity,
           0
         )
 
-        if (product.stock < quantity) {
+        const totalQuantity = successfulOrdersOfGivenProductPerUser.reduce(
+          (acc, orderProduct) => acc + orderProduct.quantity,
+          0
+        )
+
+        if (product.stock < quantity + stockUsed) {
           return response
             .status(400)
             .json({ message: `Não há mais stock do produto ${product.name}` })
