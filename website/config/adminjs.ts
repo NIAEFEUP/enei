@@ -3,9 +3,15 @@ import { AdminJSProviderConfig, LucidResource } from '@adminjs/adonis'
 import componentLoader from '../app/admin/component_loader.js'
 import authProvider from '../app/admin/auth.js'
 import User from '#models/user'
-import Ticket from '#models/ticket'
+import dbConfig from './database.js'
+import Order from '#models/order'
+import Product from '#models/product'
 
-const resources = [new LucidResource(User, 'sqlite'), new LucidResource(Ticket, 'sqlite')]
+const resources = [
+  new LucidResource(User, dbConfig.connection),
+  new LucidResource(Order, dbConfig.connection),
+  new LucidResource(Product, dbConfig.connection),
+]
 
 const adminjsConfig: AdminJSProviderConfig = {
   adapter: {

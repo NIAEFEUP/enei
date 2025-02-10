@@ -1,8 +1,11 @@
-import { DefaultAuthProvider, DefaultAuthenticatePayload } from 'adminjs'
+import { DefaultAuthProvider, setCurrentAdmin, useCurrentAdmin } from 'adminjs'
+import type { CurrentAdmin, DefaultAuthenticatePayload } from 'adminjs'
 
 import componentLoader from './component_loader.js'
 import User from '#models/user'
 import hash from '@adonisjs/core/services/hash'
+import Account from '#models/account'
+import { errors } from '@adonisjs/auth'
 
 /**
  * Your "authenticate" function. Depending on the auth provider used, the payload may be different.
@@ -12,30 +15,28 @@ import hash from '@adonisjs/core/services/hash'
  *
  * The default implementation below will let any in, so make sure to update it.
  */
-const authenticate = async ({ email, password }: DefaultAuthenticatePayload) => {
-  const user = await User.query().where('email', email).first()
 
-  if (!user) {
-    return null
-  }
-
-  const isPasswordValid = await hash.verify(user.password, password)
-
-  if (!isPasswordValid) {
-    return null
-  }
-
-  const isAdmin = user.isAdmin
-
-  if (!isAdmin) {
-    return null
-  }
-
-  return { email: user.email, id: user.id }
-}
 const authProvider = new DefaultAuthProvider({
   componentLoader,
-  authenticate,
+  authenticate: async (payload: DefaultAuthenticatePayload): Promise<CurrentAdmin | null> => {
+    const { email, password } = payload
+
+    try {
+      const account = await Account.verifyCredentials(`credentials:${email}`, password)
+      await account.load('user')
+      
+      return {
+        email: account.user.email
+      }
+    } catch (error) {
+      if (error instanceof errors.E_INVALID_CREDENTIALS) {
+        console.log("sadge")
+        return null
+      }
+
+      throw error
+    }
+  },
 })
 
 export default authProvider

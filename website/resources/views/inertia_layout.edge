@@ -20,10 +20,10 @@
 
     @viteReactRefresh()
     @inertiaHead()
-    @vite(['inertia/app/app.tsx', `inertia/pages/${page.component}.tsx`])
+    @vite(['inertia/app/app.tsx', `inertia/pages/${page.component}/page.tsx`])
   </head>
 
-  <body class="min-h-dvh w-screen font-sans">
+  <body>
     @inertia()
   </body>
 
