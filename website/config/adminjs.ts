@@ -1,16 +1,17 @@
-import { AdminJSProviderConfig, LucidResource } from '@adminjs/adonis'
+import type { AdminJSProviderConfig } from "@adminjs/adonis"
 
 import componentLoader from '../app/admin/component_loader.js'
 import authProvider from '../app/admin/auth.js'
-import User from '#models/user'
-import dbConfig from './database.js'
-import Order from '#models/order'
-import Product from '#models/product'
+import UserResource from "../app/admin/resources/user_resource.js"
+import PromoterInfoResource from "../app/admin/resources/promoter_info_resource.js"
+import OrderResource from "../app/admin/resources/order_resource.js"
+import ProductResource from "../app/admin/resources/product_resource.js"
 
 const resources = [
-  new LucidResource(User, dbConfig.connection),
-  new LucidResource(Order, dbConfig.connection),
-  new LucidResource(Product, dbConfig.connection),
+  UserResource,
+  PromoterInfoResource,
+  OrderResource,
+  ProductResource
 ]
 
 const adminjsConfig: AdminJSProviderConfig = {
@@ -22,19 +23,7 @@ const adminjsConfig: AdminJSProviderConfig = {
     loginPath: '/admin/login',
     logoutPath: '/admin/logout',
     componentLoader,
-    resources: resources.map((Resource) => ({
-      resource: Resource,
-      options: {
-        properties: {
-          createdAt: {
-            isVisible: { list: true, filter: false, show: true, edit: false },
-          },
-          updatedAt: {
-            isVisible: { list: true, filter: false, show: true, edit: false },
-          },
-        },
-      },
-    })),
+    resources: resources,
     pages: {},
     locale: {
       availableLanguages: ['en'],
@@ -59,7 +48,7 @@ const adminjsConfig: AdminJSProviderConfig = {
       },
     },
     branding: {
-      companyName: 'AdminJS',
+      companyName: 'ENEI - Admin',
       theme: {},
     },
     settings: {

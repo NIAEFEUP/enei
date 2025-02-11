@@ -3,6 +3,7 @@ import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import ParticipantProfile from './participant_profile.js'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import Account from './account.js'
+import PromoterInfo from './promoter_info.js'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -33,6 +34,14 @@ export default class User extends BaseModel {
 
   @belongsTo(() => ParticipantProfile)
   declare participantProfile: BelongsTo<typeof ParticipantProfile>
+
+  // PromoterInfo
+
+  @column()
+  declare promoterInfoId: number | null
+
+  @belongsTo(() => PromoterInfo)
+  declare promoterInfo: BelongsTo<typeof PromoterInfo>
 
   // Functions
 
