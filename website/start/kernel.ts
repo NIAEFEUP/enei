@@ -28,6 +28,7 @@ server.use([
   () => import('@adonisjs/cors/cors_middleware'),
   () => import('@adonisjs/vite/vite_middleware'),
   () => import('@adonisjs/inertia/inertia_middleware'),
+  () => import('#middleware/require_referrals_enabled_middleware')
 ])
 
 /**
@@ -62,4 +63,5 @@ export const middleware = router.named({
   guest: () => import('#middleware/auth/guest_middleware'),
   auth: () => import('#middleware/auth/auth_middleware'),
   finishRedirect: () => import('#middleware/finish_redirect_middleware'),
+  requireReferralsEnabled: () => import('#middleware/require_referrals_enabled_middleware')
 })

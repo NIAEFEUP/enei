@@ -116,6 +116,14 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     |----------------------------------------------------------
     */
     INERTIA_PUBLIC_APP_URL: vine.string(),
+
+
+    /*
+    |----------------------------------------------------------
+    | Variable for activation date of referrals
+    |----------------------------------------------------------
+    */
+    REFERRALS_ACTIVATION_DATE: vine.date(),
   })
 })
 
