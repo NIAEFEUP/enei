@@ -38,6 +38,7 @@ export default class ReferralService {
         referralUser.points += this.POINTS_FOR_PROMOTER
 
         await referredUser.related('referredByPromoter').associate(referralUser)
+        await referredUser.related('referredByUser').associate(referralUser)
         referralUser.save()
       })
     } else if (referralUser.isParticipant()) {
@@ -61,6 +62,9 @@ export default class ReferralService {
           referralPromoter.save()
         }
         await referralUser.save()
+
+        await referredUser.related('referredByUser').associate(referralUser)
+        await referredUser.save()
       })
     }
   }

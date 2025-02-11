@@ -18,6 +18,13 @@ export default class extends BaseSchema {
         .references('id')
         .inTable('users')
         .onDelete('SET NULL')
+
+      table.integer('referred_by_user_id')
+        .unsigned()
+        .nullable()
+        .references('id')
+        .inTable('users')
+        .onDelete('SET NULL')
     })
   }
 
@@ -28,6 +35,8 @@ export default class extends BaseSchema {
       table.dropColumn('points')
 
       table.dropColumn('referred_by_promoter_id')
+
+      table.dropColumn('referred_by_user_id')
     })
   }
 }

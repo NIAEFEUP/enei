@@ -35,6 +35,14 @@ export default class User extends compose(BaseModel, HasReferralLink) {
   declare referredByPromoter: BelongsTo<typeof User>
 
   @column()
+  declare referredByUserId: number | null
+
+  @belongsTo(() => User, {
+    foreignKey: 'referredByUserId'
+  })
+  declare referredByUser: BelongsTo<typeof User>
+
+  @column()
   declare points: number
 
   // PromoterInfo
