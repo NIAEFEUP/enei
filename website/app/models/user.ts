@@ -3,7 +3,6 @@ import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import Account from './account.js'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import PromoterInfo from './promoter_info.js'
-import ParticipantInfo from './participant_info.js'
 import { compose } from '@adonisjs/core/helpers'
 import { HasReferralLink } from './mixins/has_referral_link.js'
 import ParticipantProfile from './participant_profile.js'
@@ -45,14 +44,7 @@ export default class User extends compose(BaseModel, HasReferralLink) {
   @belongsTo(() => PromoterInfo)
   declare promoterInfo: BelongsTo<typeof PromoterInfo>
 
-  // ParticipantInfo
-  @column()
-  declare participantInfoId: number | null
-
-  @belongsTo(() => ParticipantInfo)
-  declare participantInfo: BelongsTo<typeof ParticipantInfo>
-
-  // Profiles
+  // ParticipantProfile
   @column()
   declare participantProfileId: number | null
 
@@ -65,9 +57,9 @@ export default class User extends compose(BaseModel, HasReferralLink) {
   }
 
   isParticipant() {
-    return this.participantInfoId !== null
+    return this.participantProfileId !== null
   }
-    
+
   isEmailVerified() {
     return this.emailVerifiedAt !== null
   }

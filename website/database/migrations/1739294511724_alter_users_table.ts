@@ -9,17 +9,25 @@ export default class extends BaseSchema {
         .unique()
         .references('id')
         .inTable('promoter_infos')
-      table.integer('participant_info_id')
-        .unique()
+
+      table.integer('points').defaultTo(0)
+
+      table.integer('referred_by_promoter_id')
+        .unsigned()
+        .nullable()
         .references('id')
-        .inTable('participant_infos')
+        .inTable('users')
+        .onDelete('SET NULL')
     })
   }
 
   async down() {
     this.schema.alterTable(this.tableName, (table) => {
       table.dropColumn('promoter_info_id')
-      table.dropColumn('participant_info_id')
+
+      table.dropColumn('points')
+
+      table.dropColumn('referred_by_promoter_id')
     })
   }
 }
