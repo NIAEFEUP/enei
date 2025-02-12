@@ -21,6 +21,10 @@ export default class ReferralService {
     if (referredUser.isPromoter())
       return
 
+    // cannot use a referral more than once
+    if (referredUser.hasBeenReferred())
+      return
+
     const referralUserId = ReferralService.decode(referralCode)
     if (!referralUserId) return
 

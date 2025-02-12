@@ -72,6 +72,10 @@ export default class User extends compose(BaseModel, HasReferralLink) {
     return this.emailVerifiedAt !== null
   }
 
+  hasBeenReferred() {
+    return this.referredByUserId !== null;
+  }
+
   public getPromoterCode: () => number = () => {
     return this.id;
   }
