@@ -62,7 +62,7 @@ export default class ReferralService {
         referralUser.points += this.POINTS_FOR_PARTICIPANT
         if (referralPromoter !== null && referralPromoter.isPromoter()) {
           await referredUser.related('referredByPromoter').associate(referralPromoter)
-          referralPromoter.points += this.POINTS_FOR_PROMOTER
+          referralPromoter.points += this.POINTS_FOR_PROMOTER - this.POINTS_FOR_PARTICIPANT
           referralPromoter.save()
         }
         await referralUser.save()
