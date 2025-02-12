@@ -7,13 +7,12 @@ export default class extends BaseSeeder {
       {
         type: 'referral',
         description: {
-          referralCode: '123456789',
-          promoterCode: '123456789',
-          participantCode: '123456789',
-          participantName: 'NIAEFEUP',
-          promoterName: 'NIAEFEUP',
-          promoterEmail: 'ni@aefeup.pt',
-          participantEmail: 'ni@aefeup.pt',
+          referralCode: "123",
+          referralUserId: 1,
+          referralIsPromoter: true,
+          promoterId: 1,
+          referredUserId: 2,
+          pointsToPromoter: 20,
         },
       }
     )
