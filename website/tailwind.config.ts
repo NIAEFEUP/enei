@@ -3,7 +3,7 @@ import tailwindcssAnimate from 'tailwindcss-animate'
 import defaultTheme from 'tailwindcss/defaultTheme.js'
 
 export default {
-  darkMode: ['class'],
+  // darkMode: ['class'],
   content: ['./resources/**/*.edge', './inertia/**/*.{js,ts,jsx,tsx}'],
 
   theme: {
@@ -12,8 +12,8 @@ export default {
         sans: ['Space Grotesk', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        'enei-blue': '#0B4F6C',
-        'enei-beige': '#EFE3CA',
+        'enei-blue': 'hsl(var(--enei-blue))',
+        'enei-beige': 'hsl(var(--enei-beige))',
         'primary': {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',

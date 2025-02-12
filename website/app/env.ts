@@ -1,8 +1,8 @@
 import vine from '@vinejs/vine'
-import { ConstructableSchema, SchemaTypes } from '@vinejs/vine/types'
+import type { ConstructableSchema, SchemaTypes } from '@vinejs/vine/types'
 import { EnvProcessor, Env as AdonisEnv } from '@adonisjs/core/env'
 
-type Primitives = string | number | boolean
+type Primitives = string | number | boolean | null | undefined
 
 function createObjectInterceptor() {
   const keys = new Set<string>()
