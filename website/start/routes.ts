@@ -14,8 +14,7 @@ const AuthenticationController = () => import('#controllers/authentication_contr
 const OrdersController = () => import('#controllers/orders_controller')
 const TicketsController = () => import('#controllers/tickets_controller')
 const ProfilesController = () => import('#controllers/profiles_controller')
-
-router.use([() => import('#middleware/referral_middleware')])
+const ReferralsController = () => import('#controllers/referrals_controller')
 
 router.on('/').renderInertia('home').as('pages:home')
 
@@ -152,3 +151,12 @@ router
   })
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix('payment')
+
+// Referrals
+router.get('/referrals', [ReferralsController, 'showReferralLink'])
+  .middleware(middleware.auth())
+  .as('pages:referrals')
+
+router.route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
+  .middleware([middleware.automaticSubmit(), middleware.silentAuth()]) 
+  .as('actions:referrals.link')
