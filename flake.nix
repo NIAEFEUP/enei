@@ -20,6 +20,10 @@
         corepack_22
         sqlite
       ];
+
+      shellHook = ''
+        alias pnpm="noglob pnpm"
+      '';
     };
   };
 }

@@ -1,5 +1,5 @@
 {
-  "name": "turborepo",
+  "name": "enei",
   "private": true,
   "scripts": {
     "build": "turbo run build",
@@ -16,7 +16,7 @@
   "engines": {
     "node": ">=22"
   },
-  "packageManager": "pnpm@9.0.0",
+  "packageManager": "pnpm@9.5.0",
   "pnpm": {
     "overrides": {
       "strtok3": "8.0.1"

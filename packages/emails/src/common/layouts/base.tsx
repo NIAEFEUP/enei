@@ -1,6 +1,6 @@
 import { Html } from '@react-email/components'
 import { Tailwind } from '../tailwind.js'
-import { cn } from '../cn.js'
+import { cn } from '@enei/cn'
 
 export const BaseLayout = ({
   children,
