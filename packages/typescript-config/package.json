@@ -3,7 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
+  "exports": {
+    "./client/tsconfig.app.json": "./src/client/tsconfig.app.json",
+    "./client/tsconfig.library.json": "./src/client/tsconfig.library.json",
+    "./client/tsconfig.react-library.json": "./src/client/tsconfig.react-library.json",
+    "./server/tsconfig.app.json": "./src/server/tsconfig.app.json",
+    "./server/tsconfig.library.json": "./src/server/tsconfig.library.json",
+    "./server/tsconfig.react-library.json": "./src/server/tsconfig.react-library.json"
   }
 }

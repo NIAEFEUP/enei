@@ -1,0 +1,68 @@
+{
+  "compilerOptions": {
+    
+    // Type Checking
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+
+    // Modules
+    "allowArbitraryExtensions": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noUncheckedSideEffectImports": true,
+    "resolveJsonModule": true,
+
+    // Emit
+    // ...
+    
+    // JavaScript Support
+    "allowJs": true,
+    "checkJs": true,
+
+    // Editor Support
+    // ...
+
+    // Interop Constraints
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+
+    // Backwards Compatibility
+    // ...
+
+    // Language and Environment
+    "lib": ["ESNext"],
+    "moduleDetection": "force",
+    "target": "ESNext",
+
+    // Compiler Diagnostics
+    "extendedDiagnostics": true,
+
+    // Projects
+    "disableReferencedProjectLoad": true,
+    "incremental": false,
+
+    // Output Formatting
+    // ...
+
+    // Completeness
+    "skipLibCheck": true,
+
+    // Watch Options
+    // ...
+  },
+  "ts-node": {
+    "swc": true
+  },
+}

@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.library.json",
+  "compilerOptions": {
+    // Modules
+    "types": ["@types/node", "@types/react", "@types/react-dom"],
+
+    // Language and Environment
+    "jsx": "react-jsx",
+  }
+}
