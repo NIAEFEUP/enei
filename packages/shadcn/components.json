@@ -13,9 +13,10 @@
   "aliases": {
     "components": "@/components",
     "utils": "@enei/cn",
-    "ui": "@/components/ui",
     "lib": "@/lib",
-    "hooks": "@/hooks"
+    "hooks": "@/hooks",
+    "ui": "@/components/ui",
+    "extension": "@/components/extension"
   },
   "iconLibrary": "lucide"
 }

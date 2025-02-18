@@ -20,10 +20,14 @@ and don't forget to import the styles:
 
 ## Adding a new component
 
-To add a new component to this library, first place the component in the `src/components` directory.
+To add a new component to this library, first place the component in a subfolder of the `src/components` directory.
 
 > [!NOTE]
-> The `src/components/ui` directory is reserved for components from https://ui.shadcn.com.
+>
+> The directory structure of the `src/components` directory is as follows:
+> - `src/components/ui`: components from https://ui.shadcn.com
+> - `src/components/form`: components from https://www.shadcn-form.com
+> - `src/components/extension`: components from https://www.shadcn-extension.com
 
 Then, run the following command to generate the necessary files and exports:
 

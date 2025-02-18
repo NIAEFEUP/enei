@@ -4,6 +4,7 @@
     // Type Checking
     "exactOptionalPropertyTypes": false,
     "noUncheckedIndexedAccess": false,
+    "noUnusedLocals": false,
 
     // Modules
     "baseUrl": ".",
