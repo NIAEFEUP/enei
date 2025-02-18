@@ -106,6 +106,7 @@
     "react-dropzone": "^14.3.5",
     "react-hook-form": "catalog:",
     "react-otp-input": "^3.1.1",
+    "react-phone-number-input": "^3.4.11",
     "react-resizable-panels": "^2.1.7",
     "recharts": "^2.15.1",
     "sonner": "^1.7.4",

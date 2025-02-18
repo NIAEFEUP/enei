@@ -27,7 +27,8 @@ To add a new component to this library, first place the component in a subfolder
 > The directory structure of the `src/components` directory is as follows:
 > - `src/components/ui`: components from https://ui.shadcn.com
 > - `src/components/form`: components from https://www.shadcn-form.com
-> - `src/components/extension`: components from https://www.shadcn-extension.com
+> - `src/components/extension`: components from https://shadcn-extension.vercel.app
+> - `src/components/phone-input`: components from https://shadcn-phone-input.vercel.app
 
 Then, run the following command to generate the necessary files and exports:
 
