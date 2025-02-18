@@ -50,7 +50,16 @@
     "./ui/textarea": "./src/components/ui/textarea.tsx",
     "./ui/toggle-group": "./src/components/ui/toggle-group.tsx",
     "./ui/toggle": "./src/components/ui/toggle.tsx",
-    "./ui/tooltip": "./src/components/ui/tooltip.tsx"
+    "./ui/tooltip": "./src/components/ui/tooltip.tsx",
+    "./phone-input/phone-input": "./src/components/phone-input/phone-input.tsx",
+    "./form/location-input": "./src/components/form/location-input.tsx",
+    "./extension/datetime-picker": "./src/components/extension/datetime-picker.tsx",
+    "./extension/file-upload": "./src/components/extension/file-upload.tsx",
+    "./extension/multi-select": "./src/components/extension/multi-select.tsx",
+    "./extension/otp-input": "./src/components/extension/otp-input.tsx",
+    "./extension/smart-datetime-input": "./src/components/extension/smart-datetime-input.tsx",
+    "./extension/tags-input": "./src/components/extension/tags-input.tsx",
+    "./extension/tree-view": "./src/components/extension/tree-view.tsx"
   },
   "scripts": {
     "dev": "vite",

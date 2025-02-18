@@ -5,6 +5,7 @@
     "exactOptionalPropertyTypes": false,
     "noUncheckedIndexedAccess": false,
     "noUnusedLocals": false,
+    "strictNullChecks": false,
 
     // Modules
     "baseUrl": ".",

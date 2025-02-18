@@ -35,7 +35,7 @@ interface MultiSelectContextProps {
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
   activeIndex: number;
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
-  ref: React.RefObject<HTMLInputElement | null>;
+  ref: React.RefObject<HTMLInputElement>;
   handleSelect: (e: React.SyntheticEvent<HTMLInputElement>) => void;
 }
 

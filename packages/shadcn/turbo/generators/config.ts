@@ -1,4 +1,4 @@
-import type { PlopTypes } from "@turbo/gen";
+import { type PlopTypes } from "@turbo/gen";
 import fs from "fs/promises";
 import { resolve, relative } from "path";
 
