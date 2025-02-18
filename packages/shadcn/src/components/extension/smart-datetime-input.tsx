@@ -8,13 +8,15 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ActiveModifiers } from "react-day-picker";
-import { Calendar, CalendarProps } from "@/components/ui/calendar";
+import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@enei/cn";
 import { Calendar as CalendarIcon, LucideTextCursorInput } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { format } from "date-fns";
+
+type CalendarProps = React.ComponentProps<typeof Calendar>;
 
 /* -------------------------------------------------------------------------- */
 /*                               Inspired By:                                 */
