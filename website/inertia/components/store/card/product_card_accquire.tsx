@@ -3,7 +3,7 @@ import { Button } from '~/components/ui/button'
 import Product from '#models/product'
 
 interface PointsStoreProductCardAccquireProps {
-  product: typeof Product
+  product: Product
 }
 
 function PointsStoreProductCardAccquire({
