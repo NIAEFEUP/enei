@@ -1,0 +1,4 @@
+{
+  "extends": "@enei/typescript-config/tools/tsconfig.json",
+  "include": ["src"]
+}
