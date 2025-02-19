@@ -1,0 +1,24 @@
+{
+  "name": "@enei/vite-config",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./publish": "./dist/publish.js"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "prepare": "node --run build"
+  },
+  "dependencies": {
+    "vite-plugin-dts": "catalog:",
+    "vite-plugin-externalize-deps": "catalog:"
+  },
+  "devDependencies": {
+    "vite": "catalog:",
+    "@enei/typescript-config": "workspace:*"
+  },
+  "peerDependencies": {
+    "vite": "^6.1.0"
+  }
+}
