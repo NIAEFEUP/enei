@@ -31,6 +31,9 @@ export default class User extends BaseModel {
   @belongsTo(() => ParticipantProfile)
   declare participantProfile: BelongsTo<typeof ParticipantProfile>
 
+  @column()
+  declare points: number
+
   // Functions
 
   isEmailVerified() {

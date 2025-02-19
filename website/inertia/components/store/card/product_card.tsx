@@ -2,6 +2,8 @@ import { Card, CardFooter, CardHeader, CardContent, CardTitle } from '~/componen
 import PointsStoreProductCardAccquire from './product_card_accquire'
 
 import { cn } from '~/lib/utils'
+import { useContext } from 'react'
+import { StoreContext } from '~/pages/store/page'
 
 import Product from '#models/product'
 
@@ -15,8 +17,10 @@ interface StoreProductCardProps {
 function PointsStoreProductCard({
   product
 }: StoreProductCardProps) {
+  const { userPoints } = useContext(StoreContext)
+
   return (
-    <Card className={cn("", product.stock === 0 && "opacity-50")}>
+    <Card className={cn("", (userPoints < product.price || product.stock === 0) && "opacity-50")}>
       <CardHeader>
         <CardTitle>{product.name}</CardTitle>
       </CardHeader>

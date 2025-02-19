@@ -94,11 +94,16 @@ export function Navbar({ className }: { className?: string }) {
               />
               <span className="sr-only">Ir para a página inicial</span>
             </Link>
-            {auth.state === 'authenticated' ? (
-              <LogoutButton />
-            ) : (
-              auth.state === 'unauthenticated' && <LoginButton />
-            )}
+            <div className="flex flex-row items-center gap-x-4">
+              <Link route="pages:store">
+                <span>Loja</span>
+              </Link>
+              {auth.state === 'authenticated' ? (
+                <LogoutButton />
+              ) : (
+                auth.state === 'unauthenticated' && <LoginButton />
+              )}
+            </div>
           </div>
         </Container>
       </nav>
