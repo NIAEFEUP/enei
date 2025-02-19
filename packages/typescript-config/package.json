@@ -9,6 +9,7 @@
     "./client/tsconfig.react-library.json": "./src/client/tsconfig.react-library.json",
     "./server/tsconfig.app.json": "./src/server/tsconfig.app.json",
     "./server/tsconfig.library.json": "./src/server/tsconfig.library.json",
-    "./server/tsconfig.react-library.json": "./src/server/tsconfig.react-library.json"
+    "./server/tsconfig.react-library.json": "./src/server/tsconfig.react-library.json",
+    "./tools/tsconfig.json": "./src/tools/tsconfig.json"
   }
 }

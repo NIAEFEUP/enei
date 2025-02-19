@@ -1,8 +1,12 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
+    // Modules
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+
     // Language and Environment
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "target": "ES2020"
+    "lib": ["ES2021", "DOM", "DOM.Iterable"],
+    "target": "ES2021"
   }
 }

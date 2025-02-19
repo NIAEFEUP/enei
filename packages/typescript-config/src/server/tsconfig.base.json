@@ -1,13 +1,11 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    // Modules
-    "types": ["@types/node"],
-
     // Emit
     "sourceMap": true,
 
     // Language and Environment
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   }
 }

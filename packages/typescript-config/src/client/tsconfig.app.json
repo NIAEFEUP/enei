@@ -1,9 +1,6 @@
 {
   "extends": "./tsconfig.react-base.json",
   "compilerOptions": {
-    // Modules
-    "types": ["vite/client", "@types/react", "@types/react-dom"],
-
     // Emit
     "noEmit": true,
     "removeComments": true,
