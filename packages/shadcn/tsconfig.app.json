@@ -2,7 +2,6 @@
   "extends": "@enei/typescript-config/client/tsconfig.react-library.json",
   "compilerOptions": {
     // Type Checking
-    "exactOptionalPropertyTypes": false,
     "noUncheckedIndexedAccess": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
@@ -10,9 +9,7 @@
 
     // Modules
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
+    "paths": { "@/*": ["./src/*"] },
 
     // Emit
     "outDir": "./node_modules/.tmp/tsconfig.app/build",
@@ -21,7 +18,7 @@
     "verbatimModuleSyntax": false,
 
     // Projects
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo"
   },
   "include": ["src", "lib"]
 }

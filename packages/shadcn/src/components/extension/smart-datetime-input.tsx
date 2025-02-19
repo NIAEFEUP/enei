@@ -2,12 +2,8 @@
 
 import React from "react";
 import { parseDate } from "chrono-node";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { ActiveModifiers } from "react-day-picker";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Modifiers } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -76,8 +72,7 @@ const inputBase =
 
 // @source: https://www.perplexity.ai/search/in-javascript-how-RfI7fMtITxKr5c.V9Lv5KA#1
 // use this pattern to validate the transformed date string for the natural language input
-const naturalInputValidationPattern =
-  "^[A-Z][a-z]{2}sd{1,2},sd{4},sd{1,2}:d{2}s[AP]M$";
+const naturalInputValidationPattern = "^[A-Z][a-z]{2}sd{1,2},sd{4},sd{1,2}:d{2}s[AP]M$";
 
 const DEFAULT_SIZE = 96;
 
@@ -95,15 +90,12 @@ interface SmartDatetimeInputContextProps extends SmartDatetimeInputProps {
   onTimeChange: (time: string) => void;
 }
 
-const SmartDatetimeInputContext =
-  React.createContext<SmartDatetimeInputContextProps | null>(null);
+const SmartDatetimeInputContext = React.createContext<SmartDatetimeInputContextProps | null>(null);
 
 const useSmartDateInput = () => {
   const context = React.useContext(SmartDatetimeInputContext);
   if (!context) {
-    throw new Error(
-      "useSmartDateInput must be used within SmartDateInputProvider",
-    );
+    throw new Error("useSmartDateInput must be used within SmartDateInputProvider");
   }
   return context;
 };
@@ -113,8 +105,8 @@ export const SmartDatetimeInput = React.forwardRef<
   Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
     "type" | "ref" | "value" | "defaultValue" | "onBlur"
-  > &
-    SmartDatetimeInputProps
+  >
+    & SmartDatetimeInputProps
 >(({ className, value, onValueChange, placeholder, disabled }, ref) => {
   // ? refactor to be only used with controlled input
   /*  const [dateTime, setDateTime] = React.useState<Date | undefined>(
@@ -128,24 +120,18 @@ export const SmartDatetimeInput = React.forwardRef<
   }, []);
 
   return (
-    <SmartDatetimeInputContext.Provider
-      value={{ value, onValueChange, Time, onTimeChange }}
-    >
+    <SmartDatetimeInputContext.Provider value={{ value, onValueChange, Time, onTimeChange }}>
       <div className="flex items-center justify-center">
         <div
           className={cn(
-            "flex gap-1 w-full p-1 items-center justify-between rounded-md border transition-all",
+            "flex w-full items-center justify-between gap-1 rounded-md border p-1 transition-all",
             "focus-within:outline-0 focus:outline-0 focus:ring-0",
-            "placeholder:text-muted-foreground focus-visible:outline-0 ",
+            "placeholder:text-muted-foreground focus-visible:outline-0",
             className,
           )}
         >
           <DateTimeLocalInput />
-          <NaturalLanguageInput
-            placeholder={placeholder}
-            disabled={disabled}
-            ref={ref}
-          />
+          <NaturalLanguageInput placeholder={placeholder} disabled={disabled} ref={ref} />
         </div>
       </div>
     </SmartDatetimeInputContext.Provider>
@@ -169,10 +155,7 @@ const TimePicker = () => {
 
       if (!newVal) return;
 
-      newVal.setHours(
-        hour,
-        partStamp === 0 ? parseInt("00") : timestamp * partStamp,
-      );
+      newVal.setHours(hour, partStamp === 0 ? parseInt("00") : timestamp * partStamp);
 
       // ? refactor needed check if we want to use the new date
 
@@ -188,8 +171,7 @@ const TimePicker = () => {
       if (!document) return;
 
       const moveNext = () => {
-        const nextIndex =
-          activeIndex + 1 > DEFAULT_SIZE - 1 ? 0 : activeIndex + 1;
+        const nextIndex = activeIndex + 1 > DEFAULT_SIZE - 1 ? 0 : activeIndex + 1;
 
         const currentElm = document.getElementById(`time-${nextIndex}`);
 
@@ -199,8 +181,7 @@ const TimePicker = () => {
       };
 
       const movePrev = () => {
-        const prevIndex =
-          activeIndex - 1 < 0 ? DEFAULT_SIZE - 1 : activeIndex - 1;
+        const prevIndex = activeIndex - 1 < 0 ? DEFAULT_SIZE - 1 : activeIndex - 1;
 
         const currentElm = document.getElementById(`time-${prevIndex}`);
 
@@ -231,9 +212,7 @@ const TimePicker = () => {
               ? 12
               : PM_AM_hour + 12;
 
-        const part = Math.floor(
-          parseInt(timeValue.split(" ")[0].split(":")[1]) / 15,
-        );
+        const part = Math.floor(parseInt(timeValue.split(" ")[0].split(":")[1]) / 15);
 
         formateSelectedTime(timeValue, hour, part);
       };
@@ -267,11 +246,7 @@ const TimePicker = () => {
 
   const handleClick = React.useCallback(
     (hour: number, part: number, PM_AM: string, currentIndex: number) => {
-      formateSelectedTime(
-        `${hour}:${part === 0 ? "00" : timestamp * part} ${PM_AM}`,
-        hour,
-        part,
-      );
+      formateSelectedTime(`${hour}:${part === 0 ? "00" : timestamp * part} ${PM_AM}`, hour, part);
       setActiveIndex(currentIndex);
     },
     [formateSelectedTime],
@@ -279,10 +254,7 @@ const TimePicker = () => {
 
   const currentTime = React.useMemo(() => {
     const timeVal = Time.split(" ")[0];
-    return {
-      hours: parseInt(timeVal.split(":")[0]),
-      minutes: parseInt(timeVal.split(":")[1]),
-    };
+    return { hours: parseInt(timeVal.split(":")[0]), minutes: parseInt(timeVal.split(":")[1]) };
   }, [Time]);
 
   React.useEffect(() => {
@@ -292,8 +264,7 @@ const TimePicker = () => {
       const minutes = parseInt(timeVal.split(":")[1]);
       const PM_AM = Time.split(" ")[1];
 
-      const formatIndex =
-        PM_AM === "AM" ? hours : hours === 12 ? hours : hours + 12;
+      const formatIndex = PM_AM === "AM" ? hours : hours === 12 ? hours : hours + 12;
       const formattedHours = formatIndex;
 
       console.log(formatIndex);
@@ -301,20 +272,16 @@ const TimePicker = () => {
       for (let j = 0; j <= 3; j++) {
         const diff = Math.abs(j * timestamp - minutes);
         const selected =
-          PM_AM === (formattedHours >= 12 ? "PM" : "AM") &&
-          (minutes <= 53 ? diff < Math.ceil(timestamp / 2) : diff < timestamp);
+          PM_AM === (formattedHours >= 12 ? "PM" : "AM")
+          && (minutes <= 53 ? diff < Math.ceil(timestamp / 2) : diff < timestamp);
 
         if (selected) {
-          const trueIndex =
-            activeIndex === -1 ? formattedHours * 4 + j : activeIndex;
+          const trueIndex = activeIndex === -1 ? formattedHours * 4 + j : activeIndex;
 
           setActiveIndex(trueIndex);
 
           const currentElm = document.getElementById(`time-${trueIndex}`);
-          currentElm?.scrollIntoView({
-            block: "center",
-            behavior: "smooth",
-          });
+          currentElm?.scrollIntoView({ block: "center", behavior: "smooth" });
         }
       }
     };
@@ -330,20 +297,14 @@ const TimePicker = () => {
   }, []);
 
   return (
-    <div className="space-y-2 pr-3 py-3 relative ">
-      <h3 className="text-sm font-medium ">Time</h3>
+    <div className="relative space-y-2 py-3 pr-3">
+      <h3 className="text-sm font-medium">Time</h3>
       <ScrollArea
         onKeyDown={handleKeydown}
-        className="h-[90%] w-full focus-visible:outline-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-0 py-0.5"
-        style={{
-          height,
-        }}
+        className="h-[90%] w-full py-0.5 focus-visible:border-0 focus-visible:outline-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+        style={{ height }}
       >
-        <ul
-          className={cn(
-            "flex items-center flex-col gap-1 h-full max-h-56 w-28 px-1 py-0.5",
-          )}
-        >
+        <ul className={cn("flex h-full max-h-56 w-28 flex-col items-center gap-1 px-1 py-0.5")}>
           {Array.from({ length: 24 }).map((_, i) => {
             const PM_AM = i >= 12 ? "PM" : "AM";
             const formatIndex = i > 12 ? i % 12 : i === 0 || i === 12 ? 12 : i;
@@ -354,12 +315,9 @@ const TimePicker = () => {
 
               // ? refactor : add the select of the default time on the current device (H:MM)
               const isSelected =
-                (currentTime.hours === i ||
-                  currentTime.hours === formatIndex) &&
-                Time.split(" ")[1] === PM_AM &&
-                (currentTime.minutes <= 53
-                  ? diff < Math.ceil(timestamp / 2)
-                  : diff < timestamp);
+                (currentTime.hours === i || currentTime.hours === formatIndex)
+                && Time.split(" ")[1] === PM_AM
+                && (currentTime.minutes <= 53 ? diff < Math.ceil(timestamp / 2) : diff < timestamp);
 
               const isSuggested = !value && isSelected;
 
@@ -375,13 +333,9 @@ const TimePicker = () => {
                   aria-label="currentTime"
                   className={cn(
                     buttonVariants({
-                      variant: isSuggested
-                        ? "secondary"
-                        : isSelected
-                          ? "default"
-                          : "outline",
+                      variant: isSuggested ? "secondary" : isSelected ? "default" : "outline",
                     }),
-                    "h-8 px-3 w-full text-sm focus-visible:outline-0 outline-0 focus-visible:border-0 cursor-default ring-0",
+                    "h-8 w-full cursor-default px-3 text-sm outline-0 ring-0 focus-visible:border-0 focus-visible:outline-0",
                   )}
                   onClick={() => handleClick(i, part, PM_AM, trueIndex)}
                   onFocus={() => isSuggested && setActiveIndex(trueIndex)}
@@ -399,10 +353,7 @@ const TimePicker = () => {
 
 const NaturalLanguageInput = React.forwardRef<
   HTMLInputElement,
-  {
-    placeholder?: string;
-    disabled?: boolean;
-  }
+  { placeholder?: string; disabled?: boolean }
 >(({ placeholder, ...props }, ref) => {
   const { value, onValueChange, Time, onTimeChange } = useSmartDateInput();
 
@@ -481,7 +432,7 @@ const NaturalLanguageInput = React.forwardRef<
       onChange={(e) => setInputValue(e.currentTarget.value)}
       onKeyDown={handleKeydown}
       onBlur={handleParse}
-      className={cn("px-2 mr-0.5 flex-1 border-none h-8 rounded", inputBase)}
+      className={cn("mr-0.5 h-8 flex-1 rounded border-none px-2", inputBase)}
       {...props}
     />
   );
@@ -491,26 +442,15 @@ NaturalLanguageInput.displayName = "NaturalLanguageInput";
 
 type DateTimeLocalInputProps = {} & CalendarProps;
 
-const DateTimeLocalInput = ({
-  className,
-  ...props
-}: DateTimeLocalInputProps) => {
+const DateTimeLocalInput = ({ className, ...props }: DateTimeLocalInputProps) => {
   const { value, onValueChange, Time } = useSmartDateInput();
 
   const formateSelectedDate = React.useCallback(
-    (
-      date: Date | undefined,
-      selectedDate: Date,
-      m: ActiveModifiers,
-      e: React.MouseEvent,
-    ) => {
+    (date: Date | undefined, selectedDate: Date, m: Modifiers) => {
       const parsedDateTime = parseDateTime(selectedDate);
 
       if (parsedDateTime) {
-        parsedDateTime.setHours(
-          parseInt(Time.split(":")[0]),
-          parseInt(Time.split(":")[1]),
-        );
+        parsedDateTime.setHours(parseInt(Time.split(":")[0]), parseInt(Time.split(":")[1]));
         onValueChange(parsedDateTime);
       }
     },
@@ -524,7 +464,7 @@ const DateTimeLocalInput = ({
           variant={"outline"}
           size={"icon"}
           className={cn(
-            "size-9 flex items-center justify-center font-normal",
+            "flex size-9 items-center justify-center font-normal",
             !value && "text-muted-foreground",
           )}
         >
@@ -536,12 +476,13 @@ const DateTimeLocalInput = ({
         <div className="flex gap-1">
           <Calendar
             {...props}
-            id={"calendar"}
-            className={cn("peer flex justify-end", inputBase, className)}
+            id="calendar"
             mode="single"
+            required
             selected={value}
             onSelect={formateSelectedDate}
-            initialFocus
+            className={cn("peer flex justify-end", inputBase, className)}
+            autoFocus
           />
           <TimePicker />
         </div>

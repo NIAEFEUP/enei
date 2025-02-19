@@ -19,7 +19,7 @@
 
     // Emit
     // ...
-    
+
     // JavaScript Support
     "allowJs": true,
     "checkJs": true,
@@ -53,12 +53,12 @@
     // ...
 
     // Completeness
-    "skipLibCheck": true,
+    "skipLibCheck": true
 
     // Watch Options
     // ...
   },
   "ts-node": {
     "swc": true
-  },
+  }
 }

@@ -7,9 +7,7 @@ To use this library, import it from `@enei/vite-config`.
 ```tsx
 import publish from "@enei/vite-config/publish";
 
-export default defineConfig({
-  plugins: [publish()],
-});
+export default defineConfig({ plugins: [publish()] });
 ```
 
 The `publish` plugin will automatically define entry points for your library, according to the `exports` field in your `package.json` file.

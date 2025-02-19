@@ -6,6 +6,6 @@
     "removeComments": true,
 
     // Language and Environment
-    "jsx": "react-jsx",
-  },
+    "jsx": "react-jsx"
+  }
 }

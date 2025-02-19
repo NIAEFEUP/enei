@@ -3,6 +3,6 @@
   "compilerOptions": {
     // Emit
     "declaration": true,
-    "sourceMap": true,
+    "sourceMap": true
   }
 }

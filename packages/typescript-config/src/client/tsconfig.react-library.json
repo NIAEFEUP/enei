@@ -2,6 +2,6 @@
   "extends": "./tsconfig.library.json",
   "compilerOptions": {
     // Language and Environment
-    "jsx": "react-jsx",
+    "jsx": "react-jsx"
   }
 }

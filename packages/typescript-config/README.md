@@ -4,15 +4,13 @@ This package provides a set of TypeScript configurations for different use cases
 
 ## Configurations
 
-All configurations provide good defaults for TypeScript projects, with strict type checking enabled.
-Furthermore, incremental compilation is enabled and ESNext is targeted, by default.
+All configurations provide good defaults for TypeScript projects, with strict type checking enabled. Furthermore, incremental compilation is enabled and ESNext is targeted, by default.
 
-> [!WARNING]
-> When using any of these configurations, make sure to set the `outDir` and `tsBuildInfoFile` options.
-> 
+> [!WARNING] When using any of these configurations, make sure to set the `outDir` and `tsBuildInfoFile` options.
+>
 > ```json
 > {
->   // Emit 
+>   // Emit
 >   "outDir": "./node_modules/.tmp/tsconfig/build",
 >
 >   // Projects

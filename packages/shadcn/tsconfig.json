@@ -3,13 +3,7 @@
   "compilerOptions": {
     // Modules
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-
+    "paths": { "@/*": ["./src/*"] }
   },
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
 }

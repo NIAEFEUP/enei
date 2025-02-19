@@ -14,10 +14,7 @@ type DateFormat = "days" | "months" | "years";
 type TimeFormat = "hours" | "minutes" | "seconds" | "am/pm";
 
 type DateTimeArray<T extends DateFormat | TimeFormat> = T[];
-type DateTimeFormatDefaults = [
-  DateTimeArray<DateFormat>,
-  DateTimeArray<TimeFormat>,
-];
+type DateTimeFormatDefaults = [DateTimeArray<DateFormat>, DateTimeArray<TimeFormat>];
 
 const DEFAULTS = [
   ["months", "days", "years"],
@@ -27,12 +24,12 @@ const DEFAULTS = [
 type TimescapeReturn = ReturnType<typeof useTimescape>;
 type InputPlaceholders = Record<DateFormat | TimeFormat, string>;
 const INPUT_PLACEHOLDERS: InputPlaceholders = {
-  months: "MM",
-  days: "DD",
-  years: "YYYY",
-  hours: "HH",
-  minutes: "MM",
-  seconds: "SS",
+  "months": "MM",
+  "days": "DD",
+  "years": "YYYY",
+  "hours": "HH",
+  "minutes": "MM",
+  "seconds": "SS",
   "am/pm": "AM/PM",
 };
 
@@ -66,9 +63,9 @@ const DatetimeGrid = forwardRef<
     return (
       <div
         className={cn(
-          "flex items-center w-fit p-1 border-2",
+          "flex w-fit items-center border-2 p-1",
           className,
-          "border-input rounded-md gap-1 selection:bg-transparent selection:text-foreground",
+          "border-input selection:text-foreground gap-1 rounded-md selection:bg-transparent",
         )}
         {...timescape.getRootProps()}
         ref={ref}
@@ -101,14 +98,7 @@ const DatetimeGrid = forwardRef<
                   : null}
                 {format[1]?.length && !i ? (
                   // date-time separator - only if both date and time are present
-                  <span
-                    className={cn(
-                      timePickerSeparatorBase,
-                      "opacity-30 text-xl",
-                    )}
-                  >
-                    |
-                  </span>
+                  <span className={cn(timePickerSeparatorBase, "text-xl opacity-30")}>|</span>
                 ) : null}
               </React.Fragment>
             ))
@@ -129,10 +119,7 @@ interface DateTimeInput {
   className?: string;
 }
 
-const DEFAULT_TS_OPTIONS = {
-  date: new Date(),
-  hour12: true,
-};
+const DEFAULT_TS_OPTIONS = { date: new Date(), hour12: true };
 export const DatetimePicker = forwardRef<HTMLDivElement, DateTimeInput>(
   (
     {
@@ -151,11 +138,7 @@ export const DatetimePicker = forwardRef<HTMLDivElement, DateTimeInput>(
       },
       [onChange],
     );
-    const timescape = useTimescape({
-      date: value,
-      onChangeDate: handleDateChange,
-      ...dtOptions,
-    });
+    const timescape = useTimescape({ date: value, onChangeDate: handleDateChange, ...dtOptions });
     return (
       <DatetimeGrid
         format={format}

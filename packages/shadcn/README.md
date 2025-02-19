@@ -25,6 +25,7 @@ To add a new component to this library, first place the component in a subfolder
 > [!NOTE]
 >
 > The directory structure of the `src/components` directory is as follows:
+>
 > - `src/components/ui`: components from https://ui.shadcn.com
 > - `src/components/form`: components from https://www.shadcn-form.com
 > - `src/components/extension`: components from https://shadcn-extension.vercel.app

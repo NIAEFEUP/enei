@@ -38,17 +38,7 @@ const TagInputContext = React.createContext<TagsInputContextProps | null>(null);
 
 export const TagsInput = React.forwardRef<HTMLDivElement, TagsInputProps>(
   (
-    {
-      children,
-      value,
-      onValueChange,
-      placeholder,
-      maxItems,
-      minItems,
-      className,
-      dir,
-      ...props
-    },
+    { children, value, onValueChange, placeholder, maxItems, minItems, className, dir, ...props },
     ref,
   ) => {
     const [activeIndex, setActiveIndex] = React.useState(-1);
@@ -87,9 +77,9 @@ export const TagsInput = React.forwardRef<HTMLDivElement, TagsInputProps>(
         tags.forEach((item) => {
           const parsedItem = item.replaceAll(FORMATTING_REGEX, "").trim();
           if (
-            parsedItem.length > 0 &&
-            !newValue.includes(parsedItem) &&
-            newValue.length < parseMaxItems
+            parsedItem.length > 0
+            && !newValue.includes(parsedItem)
+            && newValue.length < parseMaxItems
           ) {
             newValue.push(parsedItem);
           }
@@ -146,24 +136,18 @@ export const TagsInput = React.forwardRef<HTMLDivElement, TagsInputProps>(
         e.stopPropagation();
 
         const moveNext = () => {
-          const nextIndex =
-            activeIndex + 1 > value.length - 1 ? -1 : activeIndex + 1;
+          const nextIndex = activeIndex + 1 > value.length - 1 ? -1 : activeIndex + 1;
           setActiveIndex(nextIndex);
         };
 
         const movePrev = () => {
-          const prevIndex =
-            activeIndex - 1 < 0 ? value.length - 1 : activeIndex - 1;
+          const prevIndex = activeIndex - 1 < 0 ? value.length - 1 : activeIndex - 1;
           setActiveIndex(prevIndex);
         };
 
         const moveCurrent = () => {
           const newIndex =
-            activeIndex - 1 <= 0
-              ? value.length - 1 === 0
-                ? -1
-                : 0
-              : activeIndex - 1;
+            activeIndex - 1 <= 0 ? (value.length - 1 === 0 ? -1 : 0) : activeIndex - 1;
           setActiveIndex(newIndex);
         };
         const target = e.currentTarget;
@@ -233,33 +217,21 @@ export const TagsInput = React.forwardRef<HTMLDivElement, TagsInputProps>(
       e.stopPropagation();
     }, []);
 
-    const handleChange = React.useCallback(
-      (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.currentTarget.value);
-      },
-      [],
-    );
+    const handleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+      setInputValue(e.currentTarget.value);
+    }, []);
 
     return (
       <TagInputContext.Provider
-        value={{
-          value,
-          onValueChange,
-          inputValue,
-          setInputValue,
-          activeIndex,
-          setActiveIndex,
-        }}
+        value={{ value, onValueChange, inputValue, setInputValue, activeIndex, setActiveIndex }}
       >
         <div
           {...props}
           ref={ref}
           dir={dir}
           className={cn(
-            "flex items-center flex-wrap gap-1 p-1 rounded-lg bg-background overflow-hidden   ring-1 ring-muted  ",
-            {
-              "focus-within:ring-ring": activeIndex === -1,
-            },
+            "bg-background ring-muted flex flex-wrap items-center gap-1 overflow-hidden rounded-lg p-1 ring-1",
+            { "focus-within:ring-ring": activeIndex === -1 },
             className,
           )}
         >
@@ -270,7 +242,7 @@ export const TagsInput = React.forwardRef<HTMLDivElement, TagsInputProps>(
               aria-disabled={disableButton}
               data-active={activeIndex === index}
               className={cn(
-                "relative px-1 rounded flex items-center gap-1 data-[active='true']:ring-2 data-[active='true']:ring-muted-foreground truncate aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
+                "data-[active='true']:ring-muted-foreground relative flex items-center gap-1 truncate rounded px-1 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 data-[active='true']:ring-2",
               )}
               variant={"secondary"}
             >
@@ -285,7 +257,7 @@ export const TagsInput = React.forwardRef<HTMLDivElement, TagsInputProps>(
                 className="disabled:cursor-not-allowed"
               >
                 <span className="sr-only">Remove {item} option</span>
-                <RemoveIcon className="h-4 w-4 hover:stroke-destructive" />
+                <RemoveIcon className="hover:stroke-destructive h-4 w-4" />
               </button>
             </Badge>
           ))}
@@ -301,7 +273,7 @@ export const TagsInput = React.forwardRef<HTMLDivElement, TagsInputProps>(
             placeholder={placeholder}
             onClick={() => setActiveIndex(-1)}
             className={cn(
-              "outline-0 border-none h-7 min-w-fit flex-1 focus-visible:outline-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-0 placeholder:text-muted-foreground px-1",
+              "placeholder:text-muted-foreground h-7 min-w-fit flex-1 border-none px-1 outline-0 focus-visible:border-0 focus-visible:outline-0 focus-visible:ring-0 focus-visible:ring-offset-0",
               activeIndex !== -1 && "caret-transparent",
             )}
           />

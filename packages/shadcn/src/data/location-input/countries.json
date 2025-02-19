@@ -6094,11 +6094,7 @@
         "tzName": "Central European Time"
       }
     ],
-    "translations": {
-      "kr": "코소보",
-      "cn": "科索沃",
-      "tr": "Kosova"
-    },
+    "translations": { "kr": "코소보", "cn": "科索沃", "tr": "Kosova" },
     "latitude": "42.56129090",
     "longitude": "20.34030350",
     "emoji": "🇽🇰",
