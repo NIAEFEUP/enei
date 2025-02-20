@@ -14,6 +14,7 @@ const AuthenticationController = () => import('#controllers/authentication_contr
 const OrdersController = () => import('#controllers/orders_controller')
 const TicketsController = () => import('#controllers/tickets_controller')
 const ProfilesController = () => import('#controllers/profiles_controller')
+const CvsController = () => import('#controllers/cvs_controller')
 
 router.use([() => import('#middleware/referral_middleware')])
 
@@ -152,3 +153,16 @@ router
   })
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix('payment')
+router.
+  group(() => {
+    router.on('/').renderInertia('cv').as('pages:cv')
+  })
+  .use([middleware.auth(), middleware.verifiedEmail()])
+  .prefix('cv') // dummy route for testing
+
+router.
+  group(() => {
+    router.post('/upload', [CvsController, 'upload'])
+  })
+  .use([middleware.auth()])
+  .prefix('cv')
