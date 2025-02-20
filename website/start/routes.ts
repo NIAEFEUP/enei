@@ -162,7 +162,9 @@ router.
 
 router.
   group(() => {
+    router.get('/name', [CvsController, 'showName'])
     router.post('/upload', [CvsController, 'upload'])
+    router.delete('/delete', [CvsController, 'delete'])
   })
   .use([middleware.auth()])
   .prefix('cv')

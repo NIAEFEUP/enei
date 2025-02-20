@@ -116,6 +116,13 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     |----------------------------------------------------------
     */
     INERTIA_PUBLIC_APP_URL: vine.string(),
+
+    /*
+    |----------------------------------------------------------
+    | DRIVE_DISK
+    |----------------------------------------------------------
+    */
+    DRIVE_DISK: vine.string(),
   })
 })
 
