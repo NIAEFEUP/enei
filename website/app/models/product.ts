@@ -35,6 +35,9 @@ export default class Product extends BaseModel {
   @column()
   declare productGroupId: number
 
+  @column()
+  declare image: string
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

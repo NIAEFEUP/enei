@@ -6,6 +6,7 @@ import { useContext, useState } from 'react'
 import { StoreContext } from '~/pages/store/page'
 
 import Product from '#models/product'
+import ProductCardStock from './product_card_stock'
 
 interface StoreProductCardProps {
   product: typeof Product
@@ -23,14 +24,20 @@ function PointsStoreProductCard({
 
   return (
     <Card className={cn("", (userPoints < product.price || product.stock === 0) && "opacity-50")}>
-      <CardHeader className="flex flex-row justify-between items-center">
+      <CardHeader className="flex flex-row justify-between items-center p-4">
         <CardTitle>{product.name}</CardTitle>
-        <p>Stock: {stock}</p>
+        <ProductCardStock
+          stock={stock} 
+        />
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-2">
+        <img
+          src={`/images/products/${product.image ?? "default-product.jpg"}`}
+          className="w-full h-full object-cover rounded-md"
+        />
         {/* Aqui é que vai ser renderizado aquele componente dinâmico */}
       </CardContent>
-      <CardFooter>
+      <CardFooter className="mt-4">
         <PointsStoreProductCardAccquire
           product={product}
           setStock={setStock}

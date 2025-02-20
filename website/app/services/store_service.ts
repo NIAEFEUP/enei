@@ -6,7 +6,7 @@ import OrderProduct from '#models/order_product'
 
 export class StoreService {
   async getProducts() {
-    return await Product.all()//findBy("currency", "points")
+    return await Product.query().where('currency', 'points')
   }
 
   async buyProduct(product_id: number, user: User) {
@@ -15,11 +15,11 @@ export class StoreService {
       if (!product) return null
 
       user.useTransaction(trx)
-      user.points = user.points - product.price
+      user.points = Math.max(0, user.points - product.price)
       await user.save()
 
       product.useTransaction(trx)
-      product.stock -= 1
+      product.stock = Math.max(0, product.stock - 1)
       await product.save()
 
       const order = await Order.create({
