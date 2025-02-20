@@ -34,7 +34,7 @@ export default function Store(props: InferPageProps<StoreController, 'index'>) {
       }
     >
       <Page title="Loja" className="bg-enei-blue text-enei-beige">
-        <div className="bg-enei-beige text-enei-blue">
+        <div className="bg-enei-beige text-enei-blue min-h-dvh">
           <Container className="mt-4 flex flex-col gap-y-8">
             <div className="flex flex-col gap-y-4">
               <h1 className="text-center text-3xl font-bold">

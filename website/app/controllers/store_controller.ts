@@ -2,10 +2,12 @@ import type { HttpContext } from '@adonisjs/core/http'
 import { inject } from '@adonisjs/core'
 import { StoreService } from '#services/store_service'
 import { storeValidator } from '#validators/store'
+import { OrderService } from '#services/order_service'
+import Product from '#models/product'
 
 @inject()
 export default class StoreController {
-  constructor(private storeService: StoreService) { }
+  constructor(private storeService: StoreService, private orderService: OrderService) { }
 
   async index({ auth, inertia }: HttpContext) {
     const products = await this.storeService.getProducts()
@@ -20,12 +22,16 @@ export default class StoreController {
       ...request.all()
     })
 
+    const product = await Product.find(params.id)
+    if(!await this.orderService.checkUserMaxOrders(auth.user!, product)) {
+      session.flashErrors({ max_order: 'Já adquiriste a quantia máxima permitida deste produto' })
+    }
+
     if(auth.user!.points < cost) {
       session.flashErrors({ cost: 'Não tens pontos suficientes' })
       return response.redirect().back()
     }
 
-    // 3. Create an order and associate the product
     await this.storeService.buyProduct(params.id, auth.user!)
 
     return response.redirect().back()

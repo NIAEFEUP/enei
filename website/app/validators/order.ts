@@ -14,3 +14,4 @@ export const createMBWayOrderValidator = vine.compile(
     mobileNumber: vine.string(),
   })
 )
+

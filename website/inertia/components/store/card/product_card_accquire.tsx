@@ -70,11 +70,13 @@ function PointsStoreProductCardAccquire({
     <div className="flex flex-row justify-between w-full">
       <p>{product.price} {product.currency}</p>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger disabled={userPoints < product.price}>
-          <AcquireDisplayText 
-            productPrice={product.price} 
-            userPoints={userPoints} 
-          />
+        <DialogTrigger disabled={userPoints < product.price} asChild>
+          <Button>
+            <AcquireDisplayText 
+              productPrice={product.price} 
+              userPoints={userPoints} 
+            />
+          </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
