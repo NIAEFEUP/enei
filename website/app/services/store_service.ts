@@ -18,6 +18,10 @@ export class StoreService {
       user.points = user.points - product.price
       await user.save()
 
+      product.useTransaction(trx)
+      product.stock -= 1
+      await product.save()
+
       const order = await Order.create({
         userId: user.id,
       }, {

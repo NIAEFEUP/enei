@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 
 import { StoreContext } from '~/pages/store/page'
 import { Button } from '~/components/ui/button'
@@ -23,11 +23,13 @@ function AcquireDisplayText({ productPrice, userPoints}) {
 }
 
 interface PointsStoreProductCardAccquireProps {
-  product: Product
+  product: Product,
+  setStock: React.Dispatch<React.SetStateAction<number>>
 }
 
 function PointsStoreProductCardAccquire({
-  product
+  product,
+  setStock
 }: PointsStoreProductCardAccquireProps) {
   const [open, setOpen] = useState<boolean>(false)
 
@@ -50,6 +52,7 @@ function PointsStoreProductCardAccquire({
         })
 
         setUserPoints(prev => prev - product.price)
+        setStock(prev => prev - 1)
         setOpen(false)
       },
       onError: () => {

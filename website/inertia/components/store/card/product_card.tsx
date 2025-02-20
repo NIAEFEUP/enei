@@ -2,7 +2,7 @@ import { Card, CardFooter, CardHeader, CardContent, CardTitle } from '~/componen
 import PointsStoreProductCardAccquire from './product_card_accquire'
 
 import { cn } from '~/lib/utils'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { StoreContext } from '~/pages/store/page'
 
 import Product from '#models/product'
@@ -17,12 +17,15 @@ interface StoreProductCardProps {
 function PointsStoreProductCard({
   product
 }: StoreProductCardProps) {
+  const [stock, setStock] = useState<number>(product.stock)
+
   const { userPoints } = useContext(StoreContext)
 
   return (
     <Card className={cn("", (userPoints < product.price || product.stock === 0) && "opacity-50")}>
-      <CardHeader>
+      <CardHeader className="flex flex-row justify-between items-center">
         <CardTitle>{product.name}</CardTitle>
+        <p>Stock: {stock}</p>
       </CardHeader>
       <CardContent>
         {/* Aqui é que vai ser renderizado aquele componente dinâmico */}
@@ -30,6 +33,7 @@ function PointsStoreProductCard({
       <CardFooter>
         <PointsStoreProductCardAccquire
           product={product}
+          setStock={setStock}
         />
       </CardFooter>
     </Card>
