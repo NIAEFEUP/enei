@@ -35,7 +35,6 @@ function PointsStoreProductCard({
           src={`/images/products/${product.image ?? "default-product.jpg"}`}
           className="w-full h-full object-cover rounded-md"
         />
-        {/* Aqui é que vai ser renderizado aquele componente dinâmico */}
       </CardContent>
       <CardFooter className="mt-4">
         <PointsStoreProductCardAccquire
