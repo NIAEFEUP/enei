@@ -19,8 +19,9 @@ export default class CvUploadController {
     }
 
     const fileName = `${user.id}_resume.pdf`
+    cv.fileName = fileName
     
-    await cv.moveToDisk(fileName)
+    await cv.moveToDisk('./uploads/cvs/'+fileName)
 
 
     return response.ok({ message: 'File uploaded successfully', fileName })
@@ -32,11 +33,11 @@ export default class CvUploadController {
       return response.unauthorized('User not authenticated')
     }
     const fileName = `${user.id}_resume.pdf`
-    const exists = await drive.use().exists(fileName)
+    const exists = await drive.use().exists('./uploads/cvs/'+fileName)
     if(!exists){
       return response.notFound('File not found')
     }
-    await drive.use().delete(fileName)
+    await drive.use().delete('./uploads/cvs/'+fileName)
     return response.ok({ message: 'File deleted successfully' })
   }
 
@@ -46,7 +47,7 @@ export default class CvUploadController {
       return response.unauthorized('User not authenticated')
     }
     const fileName = `${user.id}_resume.pdf`
-    const exists = await drive.use().exists(fileName)
+    const exists = await drive.use().exists('./uploads/cvs/'+fileName)
     if(!exists){
       return response.notFound('File not found')
     }

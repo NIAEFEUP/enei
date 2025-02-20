@@ -12,7 +12,7 @@ const CvUpload= () => {
     useEffect(() => {
         const fetchFileName = async () => {
             try {
-                const response = await axios.get('/cv/name');
+                const response = await axios.get('user/cv/name');
                 setFileName(response.data.fileName);
             } catch (error) {
                 setFileName(null);
@@ -38,7 +38,7 @@ const CvUpload= () => {
         formData.append('cv', file);
 
         try {
-            await axios.post('/cv/upload', formData, {
+            await axios.post('/user/cv/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -52,7 +52,7 @@ const CvUpload= () => {
     const handleDelete = async () => {
         setUploading(true);
         try {
-            await axios.delete('/cv/delete', {
+            await axios.delete('/user/cv/delete', {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

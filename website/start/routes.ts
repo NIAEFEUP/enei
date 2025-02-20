@@ -9,6 +9,8 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import { emailVerificationThrottle, sendForgotPasswordThrottle } from '#start/limiter'
+import { sep, normalize } from 'node:path'
+import app from '@adonisjs/core/services/app'
 
 const AuthenticationController = () => import('#controllers/authentication_controller')
 const OrdersController = () => import('#controllers/orders_controller')
@@ -162,9 +164,21 @@ router.
 
 router.
   group(() => {
-    router.get('/name', [CvsController, 'showName'])
-    router.post('/upload', [CvsController, 'upload'])
-    router.delete('/delete', [CvsController, 'delete'])
+    router.get('/cv/name', [CvsController, 'showName'])
+    router.post('/cv/upload', [CvsController, 'upload'])
+    router.delete('cv/delete', [CvsController, 'delete'])
+    router.get('cv/uploads/*', ({ request, response }) => {
+      const PATH_TRAVERSAL_REGEX = /(?:^|[\\/])\.\.(?:[\\/]|$)/
+      const filePath = request.param('*').join(sep)
+      const normalizedPath = normalize(filePath)
+      if (PATH_TRAVERSAL_REGEX.test(normalizedPath)) {
+        return response.badRequest('Malformed path')
+      }
+      const absolutePath = app.makePath('storage/uploads/cvs', normalizedPath)
+      return response.download(absolutePath)
+    })
   })
   .use([middleware.auth()])
-  .prefix('cv')
+  .prefix('user')
+
+
