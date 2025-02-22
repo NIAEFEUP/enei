@@ -9,6 +9,7 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import { emailVerificationThrottle, sendForgotPasswordThrottle } from '#start/limiter'
+const EventsController = () => import('#controllers/events_controller')
 
 const AuthenticationController = () => import('#controllers/authentication_controller')
 const OrdersController = () => import('#controllers/orders_controller')
@@ -150,3 +151,5 @@ router
   })
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix('payment')
+
+router.get('/event', [EventsController, 'index']).as('pages:event')
