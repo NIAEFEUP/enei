@@ -168,8 +168,8 @@ router.
     router.post('/cv/upload', [CvsController, 'upload'])
     router.delete('cv/delete', [CvsController, 'delete'])
     router.get('cv/uploads/*', ({ request, response }) => {
+      const filePath = `${request.param('*').join(sep)}_resume.pdf`
       const PATH_TRAVERSAL_REGEX = /(?:^|[\\/])\.\.(?:[\\/]|$)/
-      const filePath = request.param('*').join(sep)
       const normalizedPath = normalize(filePath)
       if (PATH_TRAVERSAL_REGEX.test(normalizedPath)) {
         return response.badRequest('Malformed path')
@@ -179,6 +179,7 @@ router.
     })
   })
   .use([middleware.auth()])
+  
   .prefix('user')
 
 
