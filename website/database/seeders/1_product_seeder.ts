@@ -32,7 +32,7 @@ export default class ProductSeeder extends BaseSeeder {
       stock: 50,
       currency: 'points',
       max_order: 1,
-      image: 'hyprxmouse.jpg',
+      image: 'hyprxmouse.png',
     })
     await Product.create({
       name: 'Rato',
@@ -42,7 +42,17 @@ export default class ProductSeeder extends BaseSeeder {
       stock: 0,
       currency: 'points',
       max_order: 1,
-      image: 'hyprxmouse.jpg',
+      image: 'hyprxmouse.png',
+    })
+    await Product.create({
+      name: 'Rato',
+      description:
+        'I am a mouse',
+      price: 30,
+      stock: 50,
+      currency: 'points',
+      max_order: 1,
+      image: 'hyprxmouse.png',
     })
   }
 }

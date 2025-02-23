@@ -1,8 +1,6 @@
 import { Button, Container, Heading, Text, Img, Body, Section } from '@react-email/components'
 import { BaseLayout } from '../common/layouts/base.js'
 
-import { useForm } from '@inertiajs/react'
-
 export type EmailVerificationProps = {
   logoUrl: string
   email: string

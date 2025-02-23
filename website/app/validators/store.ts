@@ -4,7 +4,7 @@ import type { FieldContext } from '@vinejs/vine/types'
 
 vine.convertEmptyStringsToNull = true
 
-const productMustExistAndBeInStock = vine.createRule(async (value, options, field: FieldContext) => {
+const productMustExistAndBeInStock = vine.createRule(async (value, _options, field: FieldContext) => {
   const product = await Product.findBy('id', value)
 
   if (!product) {
@@ -13,6 +13,7 @@ const productMustExistAndBeInStock = vine.createRule(async (value, options, fiel
         'product_must_exist',
         field
     )
+    return
   }
 
   if (product.stock === 0) {

@@ -1,6 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
-import User from './user.js'
+import { BaseModel, column } from '@adonisjs/lucid/orm'
 
 export default class OrderProduct extends BaseModel {
   @column({ isPrimary: true })

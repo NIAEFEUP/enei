@@ -60,7 +60,7 @@ function LogoutButton() {
   )
 }
 
-export function Navbar({ className }: { className?: string }) {
+export function Navbar({ className, variant = "blue" }: { className?: string, variant?: string }) {
   const auth = useAuth()
   const [onTop, setOnTop] = useState(true)
 
@@ -78,24 +78,27 @@ export function Navbar({ className }: { className?: string }) {
     return () => controller.abort()
   }, [])
 
+  const bgColor = variant === "blue" ? "enei-blue" : "enei-beige"
+  const textColor = variant === "blue" ? "enei-beige" : "enei-blue"
+
   return (
     <>
       <NotificationContainer className='w-full flex flex-col' />
       <nav
-        className={cn('w-full transition-colors duration-300', !onTop && 'bg-enei-blue', className)}
+        className={cn('w-full transition-colors duration-300', !onTop && 'bg-enei-blue', `bg-${bgColor}`, className)}
       >
         <Container>
           <div className="w-full py-6 flex flex-row justify-between items-center">
             <Link route="pages:home">
               <img
                 className="w-20 md:w-28 h-auto"
-                src="/images/logo-white.svg"
+                src={variant === "blue" ? "/images/logo-white.svg" : "/images/logo-blue.svg"}
                 alt="Logótipo do ENEI"
               />
               <span className="sr-only">Ir para a página inicial</span>
             </Link>
             <div className="flex flex-row items-center gap-x-4">
-              <Link route="pages:store">
+              <Link route="pages:store" className={cn("", `text-${textColor}`)}>
                 <span>Loja</span>
               </Link>
               {auth.state === 'authenticated' ? (

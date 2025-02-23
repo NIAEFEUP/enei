@@ -7,16 +7,31 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { useForm } from '@inertiajs/react'
 import { useToast } from '~/hooks/use_toast'
 
-import Product from '#models/product'
+import { canBuyProduct } from '~/lib/enei/store/utils'
 
-function AcquireDisplayText({ productPrice, userPoints}) {
-  const displayText = productPrice === 0 ? "Obter" : "Comprar"
+import type Product from '#models/product'
+
+interface ProductAcquireDisplayTextProps {
+  product: Product,
+  userPoints: number
+}
+
+function AcquireDisplayText({
+  product,
+  userPoints
+}: ProductAcquireDisplayTextProps) {
+  const displayText = product.price === 0 ? "Obter" : "Comprar"
 
   return (
     <>
-      {userPoints < productPrice 
+      {userPoints < product.price
         ? "Sem pontos suficientes"
-        : displayText
+        : (
+          <div className="flex flex-col">
+            <span>{displayText}</span>
+            <span>{product.price} pontos</span>
+          </div>
+        )
       }
     </>
   )
@@ -66,18 +81,24 @@ function PointsStoreProductCardAccquire({
     })
   }
 
-  return (
-    <div className="flex flex-row justify-between w-full">
-      <p>{product.price} {product.currency}</p>
+  return (<>
+    <div className="flex flex-row justify-between items-center w-full">
+      <p className="text-white font-bold">
+        {product.name}
+      </p>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger disabled={userPoints < product.price} asChild>
-          <Button>
-            <AcquireDisplayText 
-              productPrice={product.price} 
-              userPoints={userPoints} 
+        {product.stock > 0
+          ? (<DialogTrigger disabled={!canBuyProduct(product, userPoints)} asChild>
+          <Button className="bg-persian-orange p-8">
+            <AcquireDisplayText
+              product={product}
+              userPoints={userPoints}
             />
           </Button>
         </DialogTrigger>
+        )
+        : <span className="text-white">Esgotado</span>
+        }
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Confirmação</DialogTitle>
@@ -95,6 +116,7 @@ function PointsStoreProductCardAccquire({
         </DialogContent>
       </Dialog>
     </div>
+    </>
   )
 }
 
