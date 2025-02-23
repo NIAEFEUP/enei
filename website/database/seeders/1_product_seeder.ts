@@ -54,5 +54,35 @@ export default class ProductSeeder extends BaseSeeder {
       max_order: 1,
       image: 'hyprxmouse.png',
     })
+    await Product.create({
+      name: 'Participant Rato',
+      description:
+        'I am a mouse',
+      price: 30,
+      stock: 50,
+      currency: 'points',
+      max_order: 1,
+      image: 'hyprxmouse.png',
+      restrictions: {
+        groups: [
+          'PARTICIPANT'
+        ]
+      }
+    })
+    await Product.create({
+      name: 'Promoter Rato',
+      description:
+        'I am a mouse',
+      price: 30,
+      stock: 50,
+      currency: 'points',
+      max_order: 1,
+      image: 'hyprxmouse.png',
+      restrictions: {
+        groups: [
+          'PROMOTER'
+        ]
+      }
+    })
   }
 }

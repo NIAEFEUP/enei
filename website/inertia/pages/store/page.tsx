@@ -39,7 +39,7 @@ export default function Store(props: InferPageProps<StoreController, 'index'>) {
     >
       <Page title="Loja" className="bg-enei-blue text-enei-beige" variant="beige">
         <div className="bg-enei-beige text-enei-blue min-h-dvh">
-          <Container className="mt-4 flex flex-col gap-y-24">
+          <Container className="mt-4 flex flex-col gap-y-24 justify-center">
             <div className="flex flex-col gap-y-2">
               <h1 className="text-center text-3xl font-bold">
                 Loja
@@ -48,7 +48,11 @@ export default function Store(props: InferPageProps<StoreController, 'index'>) {
                 {userPoints} pontos
               </p>
             </div>
-            <Container className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Container className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
+              {products.length === 0
+                && <p className="text-center mx-auto w-full text-2xl">Não há produtos disponíveis</p>
+              }
+
               {products?.map((product) => (
                 <PointsStoreProductCard
                   product={product as Product}

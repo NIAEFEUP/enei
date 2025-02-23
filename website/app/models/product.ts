@@ -4,6 +4,8 @@ import type { ModelAttributes } from '@adonisjs/lucid/types/model';
 
 export type SerializedProduct = ModelAttributes<Product>;
 
+import type { ProductRestrictions } from '../../types/product'
+
 export default class Product extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
@@ -34,6 +36,12 @@ export default class Product extends BaseModel {
 
   @column()
   declare productGroupId: number
+
+  @column({
+    consume: (value: string) => JSON.parse(value),
+    serialize: (value: ProductRestrictions) => JSON.stringify(value),
+  })
+  declare restrictions: ProductRestrictions
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

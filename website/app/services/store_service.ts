@@ -4,9 +4,16 @@ import type User from '#models/user'
 import Order from '#models/order'
 import OrderProduct from '#models/order_product'
 
+import { ProductService } from './product_service.js'
+
+import { inject } from '@adonisjs/core'
+
+@inject()
 export class StoreService {
-  async getProducts() {
-    return await Product.query().where('currency', 'points')
+  constructor(private productService: ProductService) { }
+
+  async getProducts(user: User | undefined) {
+    return await this.productService.getPointProducts(user)
   }
 
   async buyProduct(product_id: number, user: User) {

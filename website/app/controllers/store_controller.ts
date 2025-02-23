@@ -10,7 +10,7 @@ export default class StoreController {
   constructor(private storeService: StoreService, private orderService: OrderService) { }
 
   async index({ auth, inertia }: HttpContext) {
-    const products = await this.storeService.getProducts()
+    const products = await this.storeService.getProducts(auth.user)
     const user = auth.user!
 
     return inertia.render('store', { products, user })
