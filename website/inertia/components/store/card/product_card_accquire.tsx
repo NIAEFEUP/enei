@@ -28,7 +28,7 @@ function AcquireDisplayText({
         ? "Sem pontos suficientes"
         : (
           <div className="flex flex-col">
-            <span>{displayText}</span>
+            <span className="text-2xl font-bold">{displayText}</span>
             <span>{product.price} pontos</span>
           </div>
         )
@@ -97,7 +97,7 @@ function PointsStoreProductCardAccquire({
           </Button>
         </DialogTrigger>
         )
-        : <span className="text-white">Esgotado</span>
+        : <span className="text-white font-bold">Esgotado</span>
         }
         <DialogContent>
           <DialogHeader>
