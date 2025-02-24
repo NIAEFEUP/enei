@@ -71,7 +71,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                           Código QR
                         </Button>
                       </DialogTrigger>
-                      <DialogContent className="w-4/5 max-w-96 sm:w-96">
+                      <DialogContent className="w-4/5 max-w-96 sm:w-96 pt-12">
                         <QRCodeSVG value={windowHref} className='aspect-square w-full h-full' />
                         <p className='text-center'> {windowHref} </p>
                       </DialogContent>
