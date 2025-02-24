@@ -150,3 +150,8 @@ router
   })
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix('payment')
+
+router
+  .group(() => {
+    router.get("/profile", [ProfilesController, 'index']).as('pages:profile')
+  })

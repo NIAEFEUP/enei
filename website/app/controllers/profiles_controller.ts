@@ -7,7 +7,7 @@ export default class ProfilesController {
   async index({ auth, inertia }: HttpContext) {
     const user = auth.user!
     await user.load('participantProfile')
-    return inertia.render('profile', user.participantProfile!)
+    return inertia.render('profile', { profile: user.participantProfile! })
   }
 
   async show({ inertia }: HttpContext) {
