@@ -150,3 +150,6 @@ router
   })
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix('payment')
+
+router
+  .on('/faq').renderInertia('faq').as('pages:faq')
