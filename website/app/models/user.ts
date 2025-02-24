@@ -27,7 +27,7 @@ export default class User extends BaseModel {
   // Referrals
 
   @column()
-  declare referringPromoterId: number | null
+  declare referringPromoterId: number | undefined
 
   @belongsTo(() => User, {
     foreignKey: 'promoterId',
@@ -35,7 +35,7 @@ export default class User extends BaseModel {
   declare referringPromoter: BelongsTo<typeof User>
 
   @column()
-  declare referrerId: number | null
+  declare referrerId: number | undefined
 
   @belongsTo(() => User, {
     foreignKey: 'referrerId',
@@ -45,7 +45,7 @@ export default class User extends BaseModel {
   // PromoterInfo
 
   @column()
-  declare promoterProfileId: number | null
+  declare promoterProfileId: number | undefined
 
   @belongsTo(() => PromoterProfile)
   declare promoterProfile: BelongsTo<typeof PromoterProfile>
@@ -53,7 +53,7 @@ export default class User extends BaseModel {
   // ParticipantProfile
 
   @column()
-  declare participantProfileId: number | null
+  declare participantProfileId: number | undefined
 
   @belongsTo(() => ParticipantProfile)
   declare participantProfile: BelongsTo<typeof ParticipantProfile>
@@ -67,11 +67,11 @@ export default class User extends BaseModel {
   }
 
   isPromoter() {
-    return this.promoterProfileId !== null
+    return !this.promoterProfileId
   }
 
   isParticipant() {
-    return this.participantProfileId !== null
+    return !this.participantProfileId
   }
 
   isEmailVerified() {
@@ -79,7 +79,7 @@ export default class User extends BaseModel {
   }
 
   wasReferred() {
-    return this.referrerId !== null
+    return !this.referrerId
   }
 
   static async hasPurchasedTicket(user: User) {
