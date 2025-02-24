@@ -5,7 +5,6 @@ import ForgotPasswordNotification from "#mails/forgot_password_notification";
 
 export default class SendForgotPasswordEmail {
   async handle(event: UserForgotPassword) {
-
     const email = event.email;
     const notification = new ForgotPasswordNotification({
       email,
@@ -19,4 +18,3 @@ export default class SendForgotPasswordEmail {
     await mail.send(notification);
   }
 }
-

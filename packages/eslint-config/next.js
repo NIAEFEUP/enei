@@ -21,24 +21,18 @@ export const nextJsConfig = [
     ...pluginReact.configs.flat.recommended,
     languageOptions: {
       ...pluginReact.configs.flat.recommended.languageOptions,
-      globals: {
-        ...globals.serviceworker,
-      },
+      globals: { ...globals.serviceworker },
     },
   },
   {
-    plugins: {
-      "@next/next": pluginNext,
-    },
+    plugins: { "@next/next": pluginNext },
     rules: {
       ...pluginNext.configs.recommended.rules,
       ...pluginNext.configs["core-web-vitals"].rules,
     },
   },
   {
-    plugins: {
-      "react-hooks": pluginReactHooks,
-    },
+    plugins: { "react-hooks": pluginReactHooks },
     settings: { react: { version: "detect" } },
     rules: {
       ...pluginReactHooks.configs.recommended.rules,

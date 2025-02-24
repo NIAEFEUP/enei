@@ -1,32 +1,29 @@
-import { Link } from '@tuyau/inertia/react'
-import { Button } from '~/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
-import { Input } from '~/components/ui/input'
-import { Label } from '~/components/ui/label'
-import { useError } from '~/hooks/use_error'
-import { useForm } from '@inertiajs/react'
-import { cn } from '~/lib/utils'
-import Page from '~/components/common/page'
-import CardContainer from '~/components/common/containers/card'
+import { Link } from "@tuyau/inertia/react";
+import { Button } from "~/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
+import { useError } from "~/hooks/use_error";
+import { useForm } from "@inertiajs/react";
+import { cn } from "~/lib/utils";
+import Page from "~/components/common/page";
+import CardContainer from "~/components/common/containers/card";
 
 export default function Login() {
-  const oauthError = useError('oauth')
+  const oauthError = useError("oauth");
 
-  const { data, setData, errors, post } = useForm({
-    email: '',
-    password: '',
-  })
+  const { data, setData, errors, post } = useForm({ email: "", password: "" });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    post('/auth/login')
-  }
+    post("/auth/login");
+  };
 
   return (
     <Page title="Iniciar Sessão" className="bg-enei-blue">
       <CardContainer>
-        <Card className={cn(oauthError && 'border-2 border-red-600')}>
+        <Card className={cn(oauthError && "border-2 border-red-600")}>
           <CardHeader>
             <CardTitle className="text-2xl">Iniciar Sessão</CardTitle>
             <CardDescription>
@@ -43,7 +40,7 @@ export default function Login() {
                     type="email"
                     placeholder="alice@eneiconf.pt"
                     value={data.email}
-                    onChange={(e) => setData('email', e.target.value)}
+                    onChange={(e) => setData("email", e.target.value)}
                     required
                   />
                   {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
@@ -52,10 +49,10 @@ export default function Login() {
                   <div className="flex items-center">
                     <Label htmlFor="password">Palavra-passe</Label>
                     <Link
-                        route="pages:auth.forgot-password"
-                        className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                      >
-                        Esqueci-me da palavra-passe
+                      route="pages:auth.forgot-password"
+                      className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                    >
+                      Esqueci-me da palavra-passe
                     </Link>
                   </div>
                   <Input
@@ -63,13 +60,13 @@ export default function Login() {
                     type="password"
                     placeholder="••••••••••••"
                     value={data.password}
-                    onChange={(e) => setData('password', e.target.value)}
+                    onChange={(e) => setData("password", e.target.value)}
                     required
                   />
                   {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
                 </div>
                 <div className="flex flex-col gap-4">
-                  <Button type="submit" className="w-full bg-enei-blue">
+                  <Button type="submit" className="bg-enei-blue w-full">
                     Iniciar Sessão
                   </Button>
                   {/* <div className="flex gap-2 items-center"> */}
@@ -103,16 +100,16 @@ export default function Login() {
                 </div>
               </div>
               <div className="mt-4 text-center text-sm">
-                Ainda não tens conta?{' '}
+                Ainda não tens conta?{" "}
                 <Link route="pages:auth.register">
                   <span className="underline">Criar conta</span>
                 </Link>
               </div>
             </form>
-            {oauthError && <p className="text-sm text-red-600 text-center mt-4">{oauthError}</p>}
+            {oauthError && <p className="mt-4 text-center text-sm text-red-600">{oauthError}</p>}
           </CardContent>
         </Card>
       </CardContainer>
     </Page>
-  )
+  );
 }

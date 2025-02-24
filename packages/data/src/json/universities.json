@@ -1,0 +1,258 @@
+[
+  {
+    "id": "pt.enautica",
+    "name": "Escola Superior Náutica Infante D. Henrique"
+  },
+  {
+    "id": "pt.politecnicoguarda",
+    "name": "Escola Superior de Tecnologia e Gestão - Instituto Politécnico da Guarda"
+  },
+  {
+    "id": "pt.ipbeja",
+    "name": "Escola Superior de Tecnologia e de Gestão - Instituto Politécnico de Beja"
+  },
+  {
+    "id": "pt.ipb",
+    "name": "Escola Superior de Tecnologia e de Gestão de Bragança - Instituto Politécnico de Bragança"
+  },
+  {
+    "id": "pt.ipcb",
+    "name": "Escola Superior de Tecnologia de Castelo Branco - Instituto Politécnico de Castelo Branco"
+  },
+  {
+    "id": "pt.ipc.estgoh",
+    "name": "Escola Superior de Tecnologia e Gestão de Oliveira do Hospital - Instituto Politécnico de Coimbra"
+  },
+  {
+    "id": "pt.isec",
+    "name": "Instituto Superior de Engenharia de Coimbra - Instituto Politécnico de Coimbra"
+  },
+  {
+    "id": "pt.ipleiria",
+    "name": "Escola Superior de Tecnologia e Gestão - Instituto Politécnico de Leiria"
+  },
+  {
+    "id": "pt.isel",
+    "name": "Instituto Superior de Engenharia de Lisboa - Instituto Politécnico de Lisboa"
+  },
+  {
+    "id": "pt.ipportalegre",
+    "name": "Escola Superior de Tecnologia, Gestão e Design - Instituto Politécnico de Portalegre"
+  },
+  {
+    "id": "pt.ipsantarem",
+    "name": "Escola Superior de Gestão e Tecnologia de Santarém - Instituto Politécnico de Santarém"
+  },
+  {
+    "id": "pt.ips.estbarreiro",
+    "name": "Escola Superior de Tecnologia do Barreiro - Instituto Politécnico de Setúbal"
+  },
+  {
+    "id": "pt.ips.estsetubal",
+    "name": "Escola Superior de Tecnologia de Setúbal - Instituto Politécnico de Setúbal"
+  },
+  {
+    "id": "pt.ipt.esta",
+    "name": "Escola Superior de Tecnologia de Abrantes - Instituto Politécnico de Tomar"
+  },
+  {
+    "id": "pt.ipt.estt",
+    "name": "Escola Superior de Tecnologia de Tomar - Instituto Politécnico de Tomar"
+  },
+  {
+    "id": "pt.ipvc",
+    "name": "Escola Superior de Tecnologia e Gestão - Instituto Politécnico de Viana do Castelo"
+  },
+  {
+    "id": "pt.ipv.estgl",
+    "name": "Escola Superior de Tecnologia e Gestão de Lamego - Instituto Politécnico de Viseu"
+  },
+  {
+    "id": "pt.ipv.estgv",
+    "name": "Escola Superior de Tecnologia e Gestão de Viseu - Instituto Politécnico de Viseu"
+  },
+  {
+    "id": "pt.ipca.est",
+    "name": "Escola Superior de Tecnologia - Instituto Politécnico do Cávado e do Ave"
+  },
+  {
+    "id": "pt.ipca.etesp",
+    "name": "Escola Técnica Superior Profissional - Instituto Politécnico do Cávado e do Ave"
+  },
+  {
+    "id": "pt.ipp.estg",
+    "name": "Escola Superior de Tecnologia e Gestão - Instituto Politécnico do Porto"
+  },
+  {
+    "id": "pt.ipp.isep",
+    "name": "Instituto Superior de Engenharia do Porto - Instituto Politécnico do Porto"
+  },
+  {
+    "id": "pt.iscte-iul",
+    "name": "ISCTE - Instituto Universitário de Lisboa"
+  },
+  {
+    "id": "pt.uab",
+    "name": "Universidade Aberta"
+  },
+  {
+    "id": "pt.ubi",
+    "name": "Universidade da Beira Interior"
+  },
+  {
+    "id": "pt.uma",
+    "name": "Faculdade de Ciências Exatas e da Engenharia - Universidade da Madeira"
+  },
+  {
+    "id": "pt.ua",
+    "name": "Universidade de Aveiro"
+  },
+  {
+    "id": "pt.ua/estga",
+    "name": "Escola Superior de Tecnologia e Gestão de Águeda - Universidade de Aveiro"
+  },
+  {
+    "id": "pt.uc/fctuc",
+    "name": "Faculdade de Ciências e Tecnologia - Universidade de Coimbra"
+  },
+  {
+    "id": "pt.ulisboa.tecnico",
+    "name": "Instituto Superior Técnico - Universidade de Lisboa"
+  },
+  {
+    "id": "pt.ulisboa.tecnico/taguspark",
+    "name": "Instituto Superior Técnico (Tagus Park) - Universidade de Lisboa"
+  },
+  {
+    "id": "pt.utad/ect",
+    "name": "Escola de Ciências e Tecnologia - Universidade de Trás-os-Montes e Alto Douro"
+  },
+  {
+    "id": "pt.uevora.ect",
+    "name": "Escola de Ciências e Tecnologia - Universidade de Évora"
+  },
+  {
+    "id": "pt.ualg.fct",
+    "name": "Faculdade de Ciências e Tecnologia - Universidade do Algarve"
+  },
+  {
+    "id": "pt.ualg.ise",
+    "name": "Instituto Superior de Engenharia - Universidade do Algarve"
+  },
+  {
+    "id": "pt.uminho",
+    "name": "Universidade do Minho"
+  },
+  {
+    "id": "pt.up.fe",
+    "name": "Faculdade de Engenharia - Universidade do Porto"
+  },
+  {
+    "id": "pt.up.fc",
+    "name": "Faculdade de Ciências - Universidade do Porto"
+  },
+  {
+    "id": "pt.uac.esta",
+    "name": "Escola Superior de Tecnologias e Administração - Universidade dos Açores"
+  },
+  {
+    "id": "pt.uac.fct",
+    "name": "Faculdade de Ciências e Tecnologia - Universidade dos Açores"
+  },
+  {
+    "id": "pt.unl.fct",
+    "name": "Faculdade de Ciências e Tecnologia - Universidade Nova de Lisboa"
+  },
+  {
+    "id": "pt.unl.novaims",
+    "name": "NOVA Information Management School - Universidade Nova de Lisboa"
+  },
+  {
+    "id": "pt.uatlantica",
+    "name": "Atlântica - Instituto Universitário"
+  },
+  {
+    "id": "pt.umaia",
+    "name": "Universidade da Maia"
+  },
+  {
+    "id": "pt.europeia",
+    "name": "Universidade Europeia"
+  },
+  {
+    "id": "pt.ufp",
+    "name": "Universidade Fernando Pessoa"
+  },
+  {
+    "id": "pt.ulusiada.lis",
+    "name": "Centro Universitário de Lisboa - Universidade Lusíada"
+  },
+  {
+    "id": "pt.ulusiada.fam",
+    "name": "Centro Universitário do Norte (campus de Vila Nova de Famalicão) - Universidade Lusíada"
+  },
+  {
+    "id": "pt.ulusofona",
+    "name": "Universidade Lusófona"
+  },
+  {
+    "id": "pt.ulusofona/cul",
+    "name": "Centro Universitário de Lisboa - Universidade Lusófona"
+  },
+  {
+    "id": "pt.ulusofona/cup",
+    "name": "Centro Universitário do Porto - Universidade Lusófona"
+  },
+  {
+    "id": "pt.upt",
+    "name": "Universidade Portucalense Infante D. Henrique"
+  },
+  {
+    "id": "pt.iesfafe",
+    "name": "Escola Superior de Tecnologias de Fafe"
+  },
+  {
+    "id": "pt.ipluso",
+    "name": "Escola Superior de Engenharia e Tecnologias - Instituto Politécnico da Lusofonia"
+  },
+  {
+    "id": "pt.ipmaia/estg",
+    "name": "Escola Superior de Tecnologia e Gestão - Instituto Politécnico da Maia"
+  },
+  {
+    "id": "pt.ipmaia",
+    "name": "Instituto Politécnico da Maia"
+  },
+  {
+    "id": "org.ipiaget/estgjpalmada",
+    "name": "Escola Superior de Tecnologia e Gestão Jean Piaget - Instituto Politécnico Jean Piaget do Sul"
+  },
+  {
+    "id": "pt.istec",
+    "name": "Instituto Superior de Tecnologias Avançadas de Lisboa"
+  },
+  {
+    "id": "pt.istec-porto",
+    "name": "Instituto Superior de Tecnologias Avançadas do Porto"
+  },
+  {
+    "id": "pt.ismat",
+    "name": "Instituto Superior Manuel Teixeira Gomes"
+  },
+  {
+    "id": "pt.ismt",
+    "name": "Instituto Superior Miguel Torga"
+  },
+  {
+    "id": "pt.ispgaya",
+    "name": "Escola Superior de Ciência e Tecnologia - Instituto Superior Politécnico Gaya"
+  },
+  {
+    "id": "pt.islagaia",
+    "name": "ISLA - Instituto Politécnico de Gestão e Tecnologia"
+  },
+  {
+    "id": "pt.autonoma",
+    "name": "Universidade Autónoma de Lisboa Luís de Camões"
+  }
+]

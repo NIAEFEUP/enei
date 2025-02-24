@@ -1,9 +1,9 @@
-import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group'
-import { Label } from '~/components/ui/label'
+import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
+import { Label } from "~/components/ui/label";
 
 interface PaymentMethodSelectorProps {
-  paymentMethod: string
-  setPaymentMethod: (method: string) => void
+  paymentMethod: string;
+  setPaymentMethod: (method: string) => void;
 }
 
 export default function PaymentMethodSelector({
@@ -12,12 +12,12 @@ export default function PaymentMethodSelector({
 }: PaymentMethodSelectorProps) {
   return (
     <section>
-      <h2 className="text-xl font-semibold mb-4">3. Método de pagamento</h2>
+      <h2 className="mb-4 text-xl font-semibold">3. Método de pagamento</h2>
       <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="mbway" id="mbway" />
           <Label htmlFor="mbway">
-            <img src="/images/mbway_white.svg" alt="MB Way" className={`w-20 h-20 m-1 p-1`} />
+            <img src="/images/mbway_white.svg" alt="MB Way" className={`m-1 h-20 w-20 p-1`} />
           </Label>
         </div>
         {/*
@@ -34,5 +34,5 @@ export default function PaymentMethodSelector({
         */}
       </RadioGroup>
     </section>
-  )
+  );
 }

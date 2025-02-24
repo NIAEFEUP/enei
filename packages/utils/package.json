@@ -1,0 +1,17 @@
+{
+    "name": "@enei/utils",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+      "build": "tsc -b"
+    },
+    "exports": {
+        "./defer": "./src/defer.ts",
+        "./types": "./src/types.ts"
+    },
+    "devDependencies": {
+      "@enei/typescript-config": "workspace:*"
+    }
+  }
+  

@@ -1,7 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { cn } from "@enei/cn";
+import { cn } from "@enei/react-utils/cn";
 import {
   Dispatch,
   SetStateAction,

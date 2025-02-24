@@ -4,9 +4,7 @@
     "baseUrl": ".",
     "module": "ESNext",
     "jsx": "react-jsx",
-    "paths": {
-      "~/*": ["./*"]
-    }
+    "paths": { "~/*": ["./*"] }
   },
   "include": ["./**/*.ts", "./**/*.tsx"]
 }

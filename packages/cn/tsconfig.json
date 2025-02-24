@@ -1,4 +1,0 @@
-{
-    "extends": "@enei/typescript-config/react-library.json",
-    "include": ["src"],
-}

@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Command, CommandItem, CommandEmpty, CommandList } from "@/components/ui/command";
-import { cn } from "@enei/cn";
+import { cn } from "@enei/react-utils/cn";
 import { Command as CommandPrimitive } from "cmdk";
 import { X as RemoveIcon, Check } from "lucide-react";
 import React, {

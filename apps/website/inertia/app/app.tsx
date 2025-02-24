@@ -5,14 +5,14 @@
 /// <reference path="../../config/limiter.ts" />
 /// <reference path="../../config/redis.ts" />
 
-import '../css/app.css'
+import "../css/app.css";
 
-import { resolvePageComponent } from '@adonisjs/inertia/helpers'
-import { createInertiaApp } from '@inertiajs/react'
-import { hydrateRoot } from 'react-dom/client'
-import { Providers } from './providers'
+import { resolvePageComponent } from "@adonisjs/inertia/helpers";
+import { createInertiaApp } from "@inertiajs/react";
+import { hydrateRoot } from "react-dom/client";
+import { Providers } from "./providers";
 
-const appName = import.meta.env.VITE_APP_NAME || 'ENEI'
+const appName = import.meta.env.VITE_APP_NAME || "ENEI";
 
 createInertiaApp({
   progress: { color: 'var(--progress-bar)' },
@@ -22,8 +22,8 @@ createInertiaApp({
   resolve: (name) => {
     return resolvePageComponent(
       `../pages/${name}/page.tsx`,
-      import.meta.glob('../pages/**/page.tsx')
-    )
+      import.meta.glob("../pages/**/page.tsx"),
+    );
   },
 
   setup({ el, App, props }) {
@@ -37,7 +37,7 @@ createInertiaApp({
             </Providers>
           )}
         </App>
-      </>
-    )
+      </>,
+    );
   },
-})
+});

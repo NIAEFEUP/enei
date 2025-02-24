@@ -38,6 +38,15 @@ This package provides the following client configurations:
 
 In these configurations, ES2021 is targeted and DOM types are included.
 
+## Common Configurations
+
+This package provides the following common configurations:
+
+- `common/tsconfig.library.json`: Configuration for libraries, with reusable logic.
+- `common/tsconfig.react-library.json`: Configuration for libraries, that use React components (e.g., a UI library).
+
+These configurations are similar to the client configurations, but do not include DOM types. This means that these configurations are suitable for libraries that are meant to be used in both the browser and Node.js environments.
+
 ## Tools Configurations
 
 This package provides the following tools configurations:

@@ -1,8 +1,8 @@
-import env from '#start/env'
-import { defineConfig, stores } from '@adonisjs/limiter'
+import env from "#start/env";
+import { defineConfig, stores } from "@adonisjs/limiter";
 
 const limiterConfig = defineConfig({
-  default: env.get('LIMITER_STORE'),
+  default: env.get("LIMITER_STORE"),
 
   stores: {
     /**
@@ -12,9 +12,7 @@ const limiterConfig = defineConfig({
      * It is recommended to use a separate database for
      * the limiter connection.
      */
-    redis: stores.redis({
-      connectionName: 'limiter',
-    }),
+    redis: stores.redis({ connectionName: "limiter" }),
 
     /**
      * Memory store could be used during
@@ -22,10 +20,10 @@ const limiterConfig = defineConfig({
      */
     memory: stores.memory({}),
   },
-})
+});
 
-export default limiterConfig
+export default limiterConfig;
 
-declare module '@adonisjs/limiter/types' {
+declare module "@adonisjs/limiter/types" {
   export interface LimitersList extends InferLimiters<typeof limiterConfig> {}
 }

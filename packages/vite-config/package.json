@@ -4,11 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "exports": {
-    "./publish": "./dist/publish.js"
+    "./publish": "./src/publish.js"
   },
   "scripts": {
-    "build": "tsc -b",
-    "prepare": "node --run build"
+    "build": "tsc -b"
   },
   "dependencies": {
     "vite-plugin-dts": "catalog:",

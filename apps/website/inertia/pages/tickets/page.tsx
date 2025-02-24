@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import type { InferPageProps } from '@adonisjs/inertia/types'
 import { Link } from '@tuyau/inertia/react'
@@ -8,14 +8,14 @@ import Page from '~/components/common/page'
 import Container from '~/components/common/containers'
 import { cn } from '~/lib/utils'
 
-export default function SelectTicketsPage(props: InferPageProps<TicketsController, 'index'>) {
-  const imageSrc = `favicon.svg`
+export default function SelectTicketsPage(props: InferPageProps<TicketsController, "index">) {
+  const imageSrc = `favicon.svg`;
 
   return (
     <Page title="Bilhetes" className="bg-enei-blue text-enei-beige">
       <Container>
-        <h1 className="text-3xl font-bold text-center mb-6">Seleciona o teu bilhete</h1>
-        <p className="text-center mb-8">
+        <h1 className="mb-6 text-center text-3xl font-bold">Seleciona o teu bilhete</h1>
+        <p className="mb-8 text-center">
           Seleciona o teu bilhete e clica em comprar para continuar.
         </p>
         <div className="grid gap-6 grid-cols-1 mx-auto max-w-lg md:max-w-xl w-full">
@@ -52,5 +52,5 @@ export default function SelectTicketsPage(props: InferPageProps<TicketsControlle
         </div>
       </Container>
     </Page>
-  )
+  );
 }

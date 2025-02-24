@@ -49,33 +49,33 @@ export default class ProfilesController {
   }
 
   async show({ inertia }: HttpContext) {
-    return inertia.render('signup')
+    return inertia.render("signup");
   }
 
   async create({ auth, request, response }: HttpContext) {
-    const user = auth.getUserOrFail()
+    const user = auth.getUserOrFail();
 
-    const data = request.body()
-    data.finishedAt = data.curricularYear[1]
-    data.curricularYear = data.curricularYear[0]
+    const data = request.body();
+    data.finishedAt = data.curricularYear[1];
+    data.curricularYear = data.curricularYear[0];
     // HACK
-    data.transports = data.transports
-      .map((item: { label: string; value: string; }) => item.value)
-    data.attendedBeforeEditions = data.attendedBeforeEditions
-      .map((item: { label: string; value: string; }) => item.value)
-    data.dietaryRestrictions ||= ""
-    data.reasonForSignup ||= ""
+    data.transports = data.transports.map((item: { label: string; value: string }) => item.value);
+    data.attendedBeforeEditions = data.attendedBeforeEditions.map(
+      (item: { label: string; value: string }) => item.value,
+    );
+    data.dietaryRestrictions ||= "";
+    data.reasonForSignup ||= "";
 
     data.slug = slug(`${data.firstName} ${data.lastName} ${sludSqids.encode([user.id])}`)
 
-    const profile = await createProfileValidator.validate(data)
+    const profile = await createProfileValidator.validate(data);
 
-    const profileAdd = new ParticipantProfile()
-    profileAdd.fill(profile)
+    const profileAdd = new ParticipantProfile();
+    profileAdd.fill(profile);
 
-    await user.related('participantProfile').associate(profileAdd)
+    await user.related("participantProfile").associate(profileAdd);
 
-    return response.redirect().toRoute('pages:profile.default')
+    return response.redirect().toRoute("pages:tickets");
   }
   
 }

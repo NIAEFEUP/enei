@@ -12,8 +12,7 @@ To get started with the website, follow these steps:
 >
 > You will need to have [Node.js 22.x](https://nodejs.org/) or later installed on your machine.
 >
-> Furthermore, you will also need to have [pnpm](https://pnpm.io/) installed.
-> If you don't have `pnpm` installed, you can run `corepack enable` to install it.
+> Furthermore, you will also need to have [pnpm](https://pnpm.io/) installed. If you don't have `pnpm` installed, you can run `corepack enable` to install it.
 
 1. Clone the repository:
 
@@ -51,8 +50,7 @@ To get started with the website, follow these steps:
    pnpm run dev
    ```
 
-   This will start the development server on `http://localhost:3333`.
-   The development server has hot-reloading enabled, so you can make changes to the code and see them reflected in the browser immediately.
+   This will start the development server on `http://localhost:3333`. The development server has hot-reloading enabled, so you can make changes to the code and see them reflected in the browser immediately.
 
 ## Defining Routes with Tuyau
 

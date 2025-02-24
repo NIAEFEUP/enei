@@ -1,11 +1,11 @@
-import env from '#start/env'
-import { defineConfig, transports } from '@adonisjs/mail'
+import env from "#start/env";
+import { defineConfig, transports } from "@adonisjs/mail";
 
 const mailConfig = defineConfig({
-  default: 'smtp',
+  default: "smtp",
 
-  from: env.get('FROM_EMAIL'),
-  replyTo: env.get('REPLY_TO_EMAIL'),
+  from: env.get("FROM_EMAIL"),
+  replyTo: env.get("REPLY_TO_EMAIL"),
 
   /**
    * The mailers object can be used to configure multiple mailers
@@ -14,17 +14,13 @@ const mailConfig = defineConfig({
    */
   mailers: {
     smtp: transports.smtp({
-      host: env.get('SMTP_HOST'),
-      port: env.get('SMTP_PORT'),
+      host: env.get("SMTP_HOST"),
+      port: env.get("SMTP_PORT"),
       /**
        * Uncomment the auth block if your SMTP
        * server needs authentication
        */
-      auth: {
-        type: 'login',
-        user: env.get('SMTP_USERNAME')!,
-        pass: env.get('SMTP_PASSWORD')!,
-      },
+      auth: { type: "login", user: env.get("SMTP_USERNAME")!, pass: env.get("SMTP_PASSWORD")! },
     }),
 
     /*ses: transports.ses({
@@ -59,10 +55,10 @@ const mailConfig = defineConfig({
       baseUrl: 'https://api.resend.com',
     }),*/
   },
-})
+});
 
-export default mailConfig
+export default mailConfig;
 
-declare module '@adonisjs/mail/types' {
+declare module "@adonisjs/mail/types" {
   export interface MailersList extends InferMailers<typeof mailConfig> {}
 }

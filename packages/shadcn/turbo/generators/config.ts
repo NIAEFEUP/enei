@@ -41,14 +41,6 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         template: ',\n    "./{{ path }}": "./src/components/{{path}}.tsx"',
         separator: "",
       },
-      {
-        type: "append",
-        path: "vite.config.ts",
-        pattern: /entry: {.*?(?<insertion>)(?=[ \n]*})/gs,
-        template:
-          "\n        \"lib/components/{{path}}\": resolve(__dirname, 'lib/components/{{path}}'),",
-        separator: "",
-      },
     ],
   });
 }

@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    // Modules
+    "module": "NodeNext",
+
+    // Language and Environment
+    "lib": ["ES2021"],
+    "target": "ES2021"
+  }
+}

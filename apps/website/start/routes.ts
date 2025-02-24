@@ -22,80 +22,82 @@ const CvsController = () => import('#controllers/cvs_controller')
 const StoreController = () => import('#controllers/store_controller')
 const ReferralsController = () => import('#controllers/referrals_controller')
 
-router.on('/').renderInertia('home').as('pages:home')
+router.on("/").renderInertia("home").as("pages:home");
 
 router
   .group(() => {
     router
       .group(() => {
-        router.on('/login').renderInertia('auth/login').as('pages:auth.login')
-        router.post('/login', [AuthenticationController, 'login']).as('actions:auth.login')
+        router.on("/login").renderInertia("auth/login").as("pages:auth.login");
+        router.post("/login", [AuthenticationController, "login"]).as("actions:auth.login");
 
-        router.on('/register').renderInertia('auth/register').as('pages:auth.register')
-        router.post('/register', [AuthenticationController, 'register']).as('actions:auth.register')
+        router.on("/register").renderInertia("auth/register").as("pages:auth.register");
+        router
+          .post("/register", [AuthenticationController, "register"])
+          .as("actions:auth.register");
       })
-      .use(middleware.guest())
+      .use(middleware.guest());
 
     router
       .group(() => {
-        router.post('/logout', [AuthenticationController, 'logout']).as('actions:auth.logout')
+        router.post("/logout", [AuthenticationController, "logout"]).as("actions:auth.logout");
 
         router
           .group(() => {
-            router.on('/verify').renderInertia('auth/verify').as('pages:auth.verify')
+            router.on("/verify").renderInertia("auth/verify").as("pages:auth.verify");
             router
-              .post('/verify/new', [AuthenticationController, 'retryEmailVerification'])
-              .as('actions:auth.verify.send')
-              .use(emailVerificationThrottle)
+              .post("/verify/new", [AuthenticationController, "retryEmailVerification"])
+              .as("actions:auth.verify.send")
+              .use(emailVerificationThrottle);
           })
-          .use(middleware.noVerifiedEmail())
+          .use(middleware.noVerifiedEmail());
       })
-      .use(middleware.auth())
+      .use(middleware.auth());
 
     router
-      .on('/password/forgot')
-      .renderInertia('auth/forgot-password')
-      .as('pages:auth.forgot-password')
-      .use(middleware.guest())
+      .on("/password/forgot")
+      .renderInertia("auth/forgot-password")
+      .as("pages:auth.forgot-password")
+      .use(middleware.guest());
 
     router
-      .on('/password/forgot/sent')
-      .renderInertia('auth/forgot-password/sent')
-      .as('page:auth.forgot-password.sent')
-      .use(middleware.guest())
+      .on("/password/forgot/sent")
+      .renderInertia("auth/forgot-password/sent")
+      .as("page:auth.forgot-password.sent")
+      .use(middleware.guest());
 
     router
-      .post('/password/forgot/new', [AuthenticationController, 'sendForgotPassword'])
-      .as('actions:auth.forgot-password.send')
-      .use([middleware.guest(), sendForgotPasswordThrottle])
+      .post("/password/forgot/new", [AuthenticationController, "sendForgotPassword"])
+      .as("actions:auth.forgot-password.send")
+      .use([middleware.guest(), sendForgotPasswordThrottle]);
 
     router
-      .get('/password/forgot/callback', [AuthenticationController, 'showForgotPasswordPage'])
-      .as('pages:auth.forgot-password.callback')
-      .middleware(middleware.verifyUrlSignature())
+      .get("/password/forgot/callback", [AuthenticationController, "showForgotPasswordPage"])
+      .as("pages:auth.forgot-password.callback")
+      .middleware(middleware.verifyUrlSignature());
 
     router
-      .post('/password/forgot/callback', [AuthenticationController, 'callbackForForgotPassword'])
-      .as('actions:auth.forgot-password.callback')
-      .middleware(middleware.verifyUrlSignature())
+      .post("/password/forgot/callback", [AuthenticationController, "callbackForForgotPassword"])
+      .as("actions:auth.forgot-password.callback")
+      .middleware(middleware.verifyUrlSignature());
 
     router
-      .on('/password/forgot/success')
-      .renderInertia('auth/forgot-password/success')
-      .as('actions:auth.forgot-password.success')
+      .on("/password/forgot/success")
+      .renderInertia("auth/forgot-password/success")
+      .as("actions:auth.forgot-password.success");
     router
-      .on('/verify/success')
-      .renderInertia('auth/verify/success')
-      .as('pages:auth.verify.success')
+      .on("/verify/success")
+      .renderInertia("auth/verify/success")
+      .as("pages:auth.verify.success");
 
     router
       .route(
-        '/verify/callback',
-        ['GET', 'POST'],
-        [AuthenticationController, 'callbackForEmailVerification']
+        "/verify/callback",
+        ["GET", "POST"],
+        [AuthenticationController, "callbackForEmailVerification"],
       )
-      .as('actions:auth.verify.callback')
-      .middleware([middleware.verifyUrlSignature(), middleware.automaticSubmit()])
+      .as("actions:auth.verify.callback")
+      .middleware([middleware.verifyUrlSignature(), middleware.automaticSubmit()]);
 
     // SOCIAL AUTHENTICATION
 
@@ -129,31 +131,31 @@ router
     //   .as('actions:auth.linkedin.callback')
   })
   .middleware(middleware.requireAuthenticationEnabled())
-  .prefix('/auth')
+  .prefix("/auth");
 
 router
   .group(() => {
-    router.get('/', [ProfilesController, 'show']).as('pages:signup')
-    router.post('/', [ProfilesController, 'create']).as('actions:signup')
+    router.get("/", [ProfilesController, "show"]).as("pages:signup");
+    router.post("/", [ProfilesController, "create"]).as("actions:signup");
   })
-  .prefix('/signup')
-  .use([middleware.auth(), middleware.noProfile()])
+  .prefix("/signup")
+  .use([middleware.auth(), middleware.noProfile()]);
 
 router
   .group(() => {
-    router.get('/', [TicketsController, 'index']).as('pages:tickets')
+    router.get("/", [TicketsController, "index"]).as("pages:tickets");
     router
-      .get('/:id/checkout', [TicketsController, 'showPayment'])
-      .as('checkout')
-      .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
+      .get("/:id/checkout", [TicketsController, "showPayment"])
+      .as("checkout")
+      .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()]);
   })
-  .prefix('/tickets')
+  .prefix("/tickets");
 
 router
   .group(() => {
     //router.get('/', [OrdersController, 'index']) acho que isto já nao e usado
-    router.post('/mbway', [OrdersController, 'createMBWay'])
-    router.get('/:id', [OrdersController, 'show']).as('payment.show')
+    router.post("/mbway", [OrdersController, "createMBWay"]);
+    router.get("/:id", [OrdersController, "show"]).as("payment.show");
   })
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix('payment')

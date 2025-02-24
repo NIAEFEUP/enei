@@ -4,32 +4,32 @@ import type { ModelAttributes } from '@adonisjs/lucid/types/model';
 
 export type SerializedProduct = ModelAttributes<Product>;
 
-import type { ProductRestrictions } from '../../types/product'
+import type { ProductRestrictions } from '#types/product'
 
 export default class Product extends BaseModel {
   @column({ isPrimary: true })
-  declare id: number
+  declare id: number;
 
   @column()
-  declare name: string
+  declare name: string;
 
   @column()
-  declare description: string
+  declare description: string;
 
   @column()
-  declare price: number
+  declare price: number;
 
   @column()
-  declare stock: number
+  declare stock: number;
 
   @column()
-  declare currency: string
+  declare currency: string;
 
   @column()
-  declare max_order: number
+  declare max_order: number;
 
   @column()
-  declare image: string
+  declare image: string;
 
   @column()
   declare hidden: boolean
@@ -44,8 +44,8 @@ export default class Product extends BaseModel {
   declare restrictions: ProductRestrictions
 
   @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
+  declare createdAt: DateTime;
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
+  declare updatedAt: DateTime;
 }

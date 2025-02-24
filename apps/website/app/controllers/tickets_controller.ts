@@ -2,7 +2,7 @@ import OrderProduct from '#models/order_product'
 import Product, { type SerializedProduct } from '#models/product'
 import type { ProductService } from '#services/product_service'
 import { inject } from '@adonisjs/core'
-import type { HttpContext } from '@adonisjs/core/http'
+import type { HttpContext } from "@adonisjs/core/http";
 
 @inject()
 export default class TicketsController {
@@ -34,8 +34,8 @@ export default class TicketsController {
   }
 
   async showPayment({ inertia, auth, params }: HttpContext) {
-    const ticket = await Product.find(params.id)
+    const ticket = await Product.find(params.id);
 
-    return inertia.render('payments', { ticket, user: auth.user })
+    return inertia.render("payments", { ticket, user: auth.user });
   }
 }

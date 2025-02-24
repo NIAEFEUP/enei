@@ -1,4 +1,4 @@
-import districts from '#data/enei/districts.json' with { type: 'json' }
+import districts from "#data/enei/districts.json" with { type: "json" };
 import {
   Form,
   FormControl,
@@ -7,45 +7,41 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form'
-import { Input } from '../ui/input'
-import { PhoneInput } from '../ui/phone-input/phone-input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import { Button } from '~/components/ui/button'
-import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
-import { cn } from '~/lib/utils'
-import { Calendar } from '~/components/ui/calendar'
-import { CalendarIcon } from 'lucide-react'
-import { format } from 'date-fns'
-import { pt } from 'date-fns/locale'
-import { useForm } from 'react-hook-form'
-import { PersonalInfo, personalInfoSchema } from '~/pages/signup/schema'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useAtom } from 'jotai/react'
-import { personalInfoAtom } from '~/pages/signup/atoms'
-import { useStepper } from '../ui/stepper'
-import StepperFormActions from './actions'
+} from "../ui/form";
+import { Input } from "../ui/input";
+import { PhoneInput } from "../ui/phone-input/phone-input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Button } from "~/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
+import { cn } from "~/lib/utils";
+import { Calendar } from "~/components/ui/calendar";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { pt } from "date-fns/locale";
+import { useForm } from "react-hook-form";
+import { PersonalInfo, personalInfoSchema } from "~/pages/signup/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAtom } from "jotai/react";
+import { personalInfoAtom } from "~/pages/signup/atoms";
+import { useStepper } from "../ui/stepper";
+import StepperFormActions from "./actions";
 
-const INITIAL_MONTH = new Date(2004, 0, 1)
+const INITIAL_MONTH = new Date(2004, 0, 1);
 
 const PersonalInfoForm = () => {
-  const { nextStep } = useStepper()
+  const { nextStep } = useStepper();
 
-  const [personalInfo, setPersonalInfo] = useAtom(personalInfoAtom)
+  const [personalInfo, setPersonalInfo] = useAtom(personalInfoAtom);
 
   const form = useForm<PersonalInfo>({
     resolver: zodResolver(personalInfoSchema),
-    defaultValues: personalInfo || {
-      firstName: '',
-      lastName: '',
-      phone: '',
-    },
-  })
+    defaultValues: personalInfo || { firstName: "", lastName: "", phone: "" },
+  });
 
   const onSubmit = (data: PersonalInfo) => {
-    setPersonalInfo(data)
-    nextStep()
-  }
+    setPersonalInfo(data);
+    nextStep();
+  };
 
   return (
     <Form {...form}>
@@ -89,14 +85,14 @@ const PersonalInfoForm = () => {
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
-                        variant={'outline'}
+                        variant={"outline"}
                         className={cn(
-                          'w-[240px] pl-3 text-left font-normal',
-                          !field.value && 'text-muted-foreground'
+                          "w-[240px] pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground",
                         )}
                       >
                         {field.value ? (
-                          format(field.value, 'PPP', { locale: pt })
+                          format(field.value, "PPP", { locale: pt })
                         ) : (
                           <span>Seleciona uma data</span>
                         )}
@@ -129,7 +125,7 @@ const PersonalInfoForm = () => {
                     placeholder="923 456 789"
                     defaultCountry="PT"
                     locales="pt"
-                    countryOptionsOrder={['PT', '...']}
+                    countryOptionsOrder={["PT", "..."]}
                     {...field}
                   />
                 </FormControl>
@@ -156,7 +152,7 @@ const PersonalInfoForm = () => {
                           <SelectItem key={dist.id} value={dist.id}>
                             {dist.name}
                           </SelectItem>
-                        )
+                        );
                       })}
                     </SelectContent>
                   </Select>
@@ -171,7 +167,7 @@ const PersonalInfoForm = () => {
         </div>
       </form>
     </Form>
-  )
-}
+  );
+};
 
-export default PersonalInfoForm
+export default PersonalInfoForm;

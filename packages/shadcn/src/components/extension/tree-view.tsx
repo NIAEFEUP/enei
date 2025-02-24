@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@enei/cn";
+import { cn } from "@enei/react-utils/cn";
 import React, { forwardRef, useCallback, useRef } from "react";
 import useResizeObserver from "use-resize-observer";
 import { useVirtualizer } from "@tanstack/react-virtual";

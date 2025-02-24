@@ -12,7 +12,7 @@
   },
   "aliases": {
     "components": "@/components",
-    "utils": "@enei/cn",
+    "utils": "@enei/react-utils/cn",
     "lib": "@/lib",
     "hooks": "@/hooks",
     "ui": "@/components/ui",

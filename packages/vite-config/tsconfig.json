@@ -1,9 +1,6 @@
 {
-  "extends": "@enei/typescript-config/server/tsconfig.library.json",
+  "extends": "@enei/typescript-config/tools/tsconfig.json",
   "compilerOptions": {
-    // Emit
-    "outDir": "./dist",
-
     // Projects
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo"
   },

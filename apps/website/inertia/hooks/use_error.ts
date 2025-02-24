@@ -1,29 +1,29 @@
-import { usePage } from '@inertiajs/react'
-import { useEffect, useMemo } from 'react'
-import { type Toast, toast } from './use_toast'
+import { usePage } from "@inertiajs/react";
+import { useEffect, useMemo } from "react";
+import { type Toast, toast } from "./use_toast";
 
 export function useError(key: string) {
-  const page = usePage()
+  const page = usePage();
   const error = useMemo(() => {
-    const props = page.props
+    const props = page.props;
     if (props.errors && key in props.errors) {
-      return props.errors[key]
+      return props.errors[key];
     }
 
-    return null
-  }, [page.props])
+    return null;
+  }, [page.props]);
 
-  return error
+  return error;
 }
 
 export function useErrorToast(key: string, toastCreator: (msg: string) => Toast) {
-  const error = useError(key)
-  const toastContent = useMemo(() => error && toastCreator(error), [error])
+  const error = useError(key);
+  const toastContent = useMemo(() => error && toastCreator(error), [error]);
 
   useEffect(() => {
     if (toastContent) {
-      const t = toast(toastContent)
-      return () => t.dismiss()
+      const t = toast(toastContent);
+      return () => t.dismiss();
     }
-  }, [toastContent])
+  }, [toastContent]);
 }

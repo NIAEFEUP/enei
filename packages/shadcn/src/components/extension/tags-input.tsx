@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { cn } from "@enei/cn";
+import { cn } from "@enei/react-utils/cn";
 import { X as RemoveIcon } from "lucide-react";
 import React from "react";
 

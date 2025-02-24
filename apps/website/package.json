@@ -36,13 +36,13 @@
     "#config/*": "./config/*.js",
     "#data/*": "./data/*",
     "#lib/*": "./lib/*",
-    "#resources/*": "./resources/*.js"
+    "#resources/*": "./resources/*.js",
+    "#types/*": "./types/*.js"
   },
   "devDependencies": {
     "@adminjs/adonis": "^1.1.0",
     "@adonisjs/assembler": "^7.8.2",
     "@adonisjs/eslint-config": "2.0.0-beta.7",
-    "@adonisjs/prettier-config": "^1.4.0",
     "@adonisjs/tsconfig": "^1.4.0",
     "@babel/plugin-syntax-import-assertions": "^7.26.0",
     "@japa/assert": "^4.0.1",
@@ -129,7 +129,6 @@
       "./app/middleware/*.ts"
     ]
   },
-  "prettier": "@adonisjs/prettier-config",
   "lint-staged": {
     "*": "pnpm run lint:fix"
   }

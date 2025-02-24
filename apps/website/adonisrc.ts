@@ -1,4 +1,4 @@
-import { defineConfig } from '@adonisjs/core/app'
+import { defineConfig } from "@adonisjs/core/app";
 
 export default defineConfig({
   /*
@@ -11,11 +11,11 @@ export default defineConfig({
   |
   */
   commands: [
-    () => import('@adonisjs/core/commands'),
-    () => import('@adonisjs/lucid/commands'),
-    () => import('@adonisjs/mail/commands'),
-    () => import('@tuyau/core/commands'),
-    () => import('adonisjs-jobs/commands'),
+    () => import("@adonisjs/core/commands"),
+    () => import("@adonisjs/lucid/commands"),
+    () => import("@adonisjs/mail/commands"),
+    () => import("@tuyau/core/commands"),
+    () => import("adonisjs-jobs/commands"),
   ],
 
   /*
@@ -66,10 +66,10 @@ export default defineConfig({
   |
   */
   preloads: [
-    () => import('#start/routes'),
-    () => import('#start/kernel'),
-    () => import('#start/events'),
-    () => import('#start/validator'),
+    () => import("#start/routes"),
+    () => import("#start/kernel"),
+    () => import("#start/events"),
+    () => import("#start/validator"),
   ],
 
   /*
@@ -83,16 +83,8 @@ export default defineConfig({
   */
   tests: {
     suites: [
-      {
-        files: ['tests/unit/**/*.spec(.ts|.js)'],
-        name: 'unit',
-        timeout: 2000,
-      },
-      {
-        files: ['tests/functional/**/*.spec(.ts|.js)'],
-        name: 'functional',
-        timeout: 30000,
-      },
+      { files: ["tests/unit/**/*.spec(.ts|.js)"], name: "unit", timeout: 2000 },
+      { files: ["tests/functional/**/*.spec(.ts|.js)"], name: "functional", timeout: 30000 },
     ],
     forceExit: false,
   },
@@ -107,18 +99,10 @@ export default defineConfig({
   |
   */
   metaFiles: [
-    {
-      pattern: 'resources/views/**/*.edge',
-      reloadServer: false,
-    },
-    {
-      pattern: 'public/**',
-      reloadServer: false,
-    },
+    { pattern: "resources/views/**/*.edge", reloadServer: false },
+    { pattern: "public/**", reloadServer: false },
   ],
 
   assetsBundler: false,
-  hooks: {
-    onBuildStarting: [() => import('@adonisjs/vite/build_hook')],
-  },
-})
+  hooks: { onBuildStarting: [() => import("@adonisjs/vite/build_hook")] },
+});

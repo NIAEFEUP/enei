@@ -1,6 +1,6 @@
-import { useForm } from 'react-hook-form'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
-import { Button } from '~/components/ui/button'
+import { useForm } from "react-hook-form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { Button } from "~/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -8,51 +8,51 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '~/components/ui/command'
-import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
-import CurricularYearSelector, { CurricularYearSelectorType } from './input/curricular_year_input'
+} from "~/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
+import CurricularYearSelector, { CurricularYearSelectorType } from "./input/curricular_year_input";
 
-import { Check, ChevronsUpDown } from 'lucide-react'
-import { cn } from '~/lib/utils'
-import { Input } from '../ui/input'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { EducationInfo, educationInfoSchema } from '~/pages/signup/schema'
-import { getUniversityById, universities } from '~/lib/enei/signup/universities'
-import { useMemo } from 'react'
-import { useStepper } from '../ui/stepper'
-import { useAtom, useSetAtom } from 'jotai/react'
-import { educationInfoAtom } from '~/pages/signup/atoms'
-import StepperFormActions from './actions'
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "~/lib/utils";
+import { Input } from "../ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { EducationInfo, educationInfoSchema } from "~/pages/signup/schema";
+import { getUniversityById, universities } from "~/lib/enei/signup/universities";
+import { useMemo } from "react";
+import { useStepper } from "../ui/stepper";
+import { useAtom, useSetAtom } from "jotai/react";
+import { educationInfoAtom } from "~/pages/signup/atoms";
+import StepperFormActions from "./actions";
 
 function UniversitySelection({ value }: { value?: string }) {
-  const name = useMemo(() => value && getUniversityById(value)?.name, [value])
+  const name = useMemo(() => value && getUniversityById(value)?.name, [value]);
 
   return name ? (
-    <span className="max-w-full overflow-ellipsis overflow-hidden">{name}</span>
+    <span className="max-w-full overflow-hidden overflow-ellipsis">{name}</span>
   ) : (
     <span>Selecionar Universidade...</span>
-  )
+  );
 }
 
 function EducationInfoForm() {
-  const { nextStep } = useStepper()
+  const { nextStep } = useStepper();
 
-  const setEducationInfo = useSetAtom(educationInfoAtom)
-  const [educationInfo] = useAtom(educationInfoAtom)
+  const setEducationInfo = useSetAtom(educationInfoAtom);
+  const [educationInfo] = useAtom(educationInfoAtom);
 
   const form = useForm({
     resolver: zodResolver(educationInfoSchema),
     defaultValues: educationInfo || {
-      university: '',
-      course: '',
-      curricularYear: ['1', null] as CurricularYearSelectorType,
+      university: "",
+      course: "",
+      curricularYear: ["1", null] as CurricularYearSelectorType,
     },
-  })
+  });
 
   const onSubmit = (data: EducationInfo) => {
-    setEducationInfo(data)
-    nextStep()
-  }
+    setEducationInfo(data);
+    nextStep();
+  };
 
   return (
     <Form {...form}>
@@ -91,8 +91,8 @@ function EducationInfoForm() {
                               <span>{name}</span>
                               <Check
                                 className={cn(
-                                  'h-4 w-4',
-                                  field.value === id ? 'opacity-100' : 'opacity-0'
+                                  "h-4 w-4",
+                                  field.value === id ? "opacity-100" : "opacity-0",
                                 )}
                               />
                             </CommandItem>
@@ -131,12 +131,12 @@ function EducationInfoForm() {
                 <FormLabel>Ano Curricular*</FormLabel>
                 <FormControl>
                   <CurricularYearSelector
-                    defaultValue={form.getValues('curricularYear')}
+                    defaultValue={form.getValues("curricularYear")}
                     onCurricularYearChange={(curricularYear, lastYear) => {
                       form.setValue(field.name, [
                         curricularYear,
                         lastYear || null,
-                      ] as CurricularYearSelectorType)
+                      ] as CurricularYearSelectorType);
                     }}
                   />
                 </FormControl>
@@ -149,7 +149,7 @@ function EducationInfoForm() {
         </div>
       </form>
     </Form>
-  )
+  );
 }
 
-export default EducationInfoForm
+export default EducationInfoForm;

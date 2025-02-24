@@ -11,7 +11,7 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@enei/cn";
+import { cn } from "@enei/react-utils/cn";
 
 // Import JSON data directly
 import countries from "@/data/location-input/countries.json";

@@ -5,11 +5,11 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,json}\"",
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
-    "prettier": "^3.5.0",
+    "@enei/prettier-config": "workspace:*",
     "turbo": "^2.4.2",
     "typescript": "5.7.3"
   },
@@ -21,5 +21,6 @@
     "overrides": {
       "strtok3": "8.0.1"
     }
-  }
+  },
+  "prettier": "@enei/prettier-config"
 }

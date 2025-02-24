@@ -1,48 +1,45 @@
-import { useForm } from 'react-hook-form'
-import { Checkbox } from '../ui/checkbox'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
-import { Input } from '../ui/input'
-import MultipleSelector, { Option } from '../ui/multiple-selector'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import { LogisticsInfo, logisticsInfoSchema } from '~/pages/signup/schema'
-import transports from '#data/enei/signup/transports.json' with { type: 'json' }
-import sizes from '#data/enei/signup/shirts.json' with { type: 'json' }
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useStepper } from '../ui/stepper'
-import { useAtom, useSetAtom } from 'jotai/react'
-import { logisticsInfoAtom } from '~/pages/signup/atoms'
-import StepperFormActions from './actions'
+import { useForm } from "react-hook-form";
+import { Checkbox } from "../ui/checkbox";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { Input } from "../ui/input";
+import MultipleSelector, { Option } from "../ui/multiple-selector";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { LogisticsInfo, logisticsInfoSchema } from "~/pages/signup/schema";
+import transports from "#data/enei/signup/transports.json" with { type: "json" };
+import sizes from "#data/enei/signup/shirts.json" with { type: "json" };
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useStepper } from "../ui/stepper";
+import { useAtom, useSetAtom } from "jotai/react";
+import { logisticsInfoAtom } from "~/pages/signup/atoms";
+import StepperFormActions from "./actions";
 
 const TRANSPORTS: Option[] = transports.map(({ id, description }) => {
-  return {
-    label: description,
-    value: id,
-  }
-})
+  return { label: description, value: id };
+});
 
-const SIZES = sizes
+const SIZES = sizes;
 
 const LogisticsInfoForm = () => {
-  const { nextStep } = useStepper()
+  const { nextStep } = useStepper();
 
-  const setLogisticsInfo = useSetAtom(logisticsInfoAtom)
-  const [logisticsInfo] = useAtom(logisticsInfoAtom)
+  const setLogisticsInfo = useSetAtom(logisticsInfoAtom);
+  const [logisticsInfo] = useAtom(logisticsInfoAtom);
 
   const form = useForm({
     resolver: zodResolver(logisticsInfoSchema),
     defaultValues: logisticsInfo || {
-      shirtSize: '',
-      dietaryRestrictions: '',
+      shirtSize: "",
+      dietaryRestrictions: "",
       isVegetarian: false,
       isVegan: false,
       transports: [],
     },
-  })
+  });
 
   const onSubmit = (data: LogisticsInfo) => {
-    setLogisticsInfo(data)
-    nextStep()
-  }
+    setLogisticsInfo(data);
+    nextStep();
+  };
 
   return (
     <Form {...form}>
@@ -61,7 +58,11 @@ const LogisticsInfoForm = () => {
                     </SelectTrigger>
                     <SelectContent>
                       {SIZES.map((size) => {
-                        return <SelectItem key={size} value={size}>{size}</SelectItem>
+                        return (
+                          <SelectItem key={size} value={size}>
+                            {size}
+                          </SelectItem>
+                        );
                       })}
                     </SelectContent>
                   </Select>
@@ -91,7 +92,7 @@ const LogisticsInfoForm = () => {
             name="isVegetarian"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="flex gap-2 items-center">
+                <FormLabel className="flex items-center gap-2">
                   <FormControl>
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
@@ -108,7 +109,7 @@ const LogisticsInfoForm = () => {
             name="isVegan"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="flex gap-2 items-center">
+                <FormLabel className="flex items-center gap-2">
                   <FormControl>
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
@@ -148,7 +149,7 @@ const LogisticsInfoForm = () => {
         </div>
       </form>
     </Form>
-  )
-}
+  );
+};
 
-export default LogisticsInfoForm
+export default LogisticsInfoForm;

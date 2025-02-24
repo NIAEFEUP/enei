@@ -2,7 +2,7 @@ import * as React from "react";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { DayPicker } from "react-day-picker";
 
-import { cn } from "@enei/cn";
+import { cn } from "@enei/react-utils/cn";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { addYears, subYears } from "date-fns";
 

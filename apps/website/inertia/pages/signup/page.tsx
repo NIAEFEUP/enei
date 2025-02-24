@@ -1,19 +1,19 @@
-import { Step, Stepper } from '~/components/ui/stepper'
-import PersonalInfoForm from '~/components/signup/1_personal_info'
-import EducationInfoForm from '~/components/signup/2_student_info'
-import LogisticsInfoForm from '~/components/signup/3_logistics_info'
-import CommunicationInfoForm from '~/components/signup/4_communication_info'
+import { Step, Stepper } from "~/components/ui/stepper";
+import PersonalInfoForm from "~/components/signup/1_personal_info";
+import EducationInfoForm from "~/components/signup/2_student_info";
+import LogisticsInfoForm from "~/components/signup/3_logistics_info";
+import CommunicationInfoForm from "~/components/signup/4_communication_info";
 
 const steps = [
-  { label: 'Informação Pessoal' },
-  { label: 'Informação de Estudante' },
-  { label: 'Informações de Logística' },
-  { label: 'Informações de Comunicação' },
-]
+  { label: "Informação Pessoal" },
+  { label: "Informação de Estudante" },
+  { label: "Informações de Logística" },
+  { label: "Informações de Comunicação" },
+];
 
-import Page from '~/components/common/page'
-import { Card } from '~/components/ui/card'
-import Container from '~/components/common/containers'
+import Page from "~/components/common/page";
+import { Card } from "~/components/ui/card";
+import Container from "~/components/common/containers";
 
 export default function Signup() {
   return (
@@ -43,5 +43,5 @@ export default function Signup() {
         </Card>
       </Container>
     </Page>
-  )
+  );
 }

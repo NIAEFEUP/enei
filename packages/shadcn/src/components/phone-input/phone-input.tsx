@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@enei/cn";
+import { cn } from "@enei/react-utils/cn";
 
 type PhoneInputProps = Omit<React.ComponentProps<"input">, "onChange" | "value" | "ref">
   & Omit<RPNInput.Props<typeof RPNInput.default>, "onChange"> & {

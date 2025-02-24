@@ -9,25 +9,25 @@ import ParticipantProfile from './participant_profile.js'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
-  declare id: number
+  declare id: number;
 
   @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
+  declare createdAt: DateTime;
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
+  declare updatedAt: DateTime;
 
   @column()
-  declare email: string
+  declare email: string;
 
   @column.dateTime()
-  declare emailVerifiedAt: DateTime | null
+  declare emailVerifiedAt: DateTime | null;
 
   @column()
   declare isAdmin: boolean
 
   @hasMany(() => Account)
-  declare accounts: HasMany<typeof Account>
+  declare accounts: HasMany<typeof Account>;
 
   // Referrals
 
@@ -61,7 +61,7 @@ export default class User extends BaseModel {
   declare participantProfileId: number | undefined
 
   @belongsTo(() => ParticipantProfile)
-  declare participantProfile: BelongsTo<typeof ParticipantProfile>
+  declare participantProfile: BelongsTo<typeof ParticipantProfile>;
 
   @column()
   declare points: number
@@ -86,7 +86,7 @@ export default class User extends BaseModel {
   }
 
   isEmailVerified() {
-    return this.emailVerifiedAt !== null
+    return this.emailVerifiedAt !== null;
   }
 
   groups() {

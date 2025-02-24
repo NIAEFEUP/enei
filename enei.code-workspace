@@ -1,0 +1,42 @@
+{
+  "folders": [
+    {
+      "name": "workspace",
+      "path": ".",
+    },
+    {
+      "path": "apps",
+    },
+    {
+      "path": "packages",
+    },
+  ],
+  "settings": {
+    // Tailwind CSS
+    "editor.quickSuggestions": {
+      "strings": "on",
+    },
+
+    // ESLint
+    "eslint.workingDirectories": [
+      {
+        "mode": "auto",
+      },
+    ],
+
+    "files.exclude": {
+      "**/.direnv": true,
+      "**/.turbo": true,
+      "**/node_modules": true,
+      "apps": true,
+      "packages": true,
+    },
+  },
+  "extensions": {
+    "recommendations": [
+      "bradlc.vscode-tailwindcss",
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+    ],
+  },
+}

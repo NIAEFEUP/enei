@@ -1,0 +1,25 @@
+{
+  "name": "@enei/react-utils",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "exports": {
+    "./cn": "./src/cn.ts",
+    "./registry": "./src/registry.ts"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.0.1"
+  },
+  "devDependencies": {
+    "@enei/typescript-config": "workspace:*",
+    "@types/react": "^19.0.10",
+    "react": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  }
+}

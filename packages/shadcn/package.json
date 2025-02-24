@@ -5,6 +5,7 @@
   "type": "module",
   "exports": {
     "./styles.css": "./lib/styles.css",
+    "./hooks/use-mobile": "./lib/hooks/use-mobile.ts",
     "./ui/accordion": "./lib/components/ui/accordion.ts",
     "./ui/alert-dialog": "./lib/components/ui/alert-dialog.ts",
     "./ui/alert": "./lib/components/ui/alert.ts",
@@ -63,12 +64,10 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "build": "tsc -b && vite build"
   },
   "dependencies": {
-    "@enei/cn": "workspace:*",
+    "@enei/react-utils": "workspace:*",
     "@hookform/resolvers": "^4.1.0",
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.1.6",
@@ -124,21 +123,15 @@
   "devDependencies": {
     "@enei/typescript-config": "workspace:*",
     "@enei/vite-config": "workspace:*",
-    "@eslint/js": "catalog:",
     "@tailwindcss/vite": "catalog:",
     "@turbo/gen": "catalog:",
     "@types/react": "^19.0.10",
     "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "catalog:",
-    "eslint-plugin-react-hooks": "^5.1.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^15.15.0",
     "react": "catalog:",
     "react-dom": "catalog:",
     "shadcn": "2.4.0-canary.6",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
-    "typescript-eslint": "^8.24.1",
     "vite": "catalog:"
   },
   "peerDependencies": {

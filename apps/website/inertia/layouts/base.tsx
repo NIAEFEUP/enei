@@ -1,23 +1,19 @@
-import { Head } from '@inertiajs/react'
-import { Navbar } from '~/components/common/navbar'
-import { Toaster } from '~/components/ui/toaster'
-import { cn } from '~/lib/utils'
+import { Head } from "@inertiajs/react";
+import { Navbar } from "~/components/common/navbar";
+import { Toaster } from "~/components/ui/toaster";
+import { cn } from "~/lib/utils";
 
-type Props = {
-  title: string
-  children?: React.ReactNode
-  className?: string
-}
+type Props = { title: string; children?: React.ReactNode; className?: string };
 
 export default function BaseLayout({ title, children, className }: Props) {
   return (
-    <div className="w-full min-h-dvh bg-enei-blue scroll-smooth relative flex flex-col">
+    <div className="bg-enei-blue relative flex min-h-dvh w-full flex-col scroll-smooth">
       <Head title={title} />
       <Navbar className="sticky top-0 z-20" />
-      <div className={cn('flex-1', className)}>
+      <div className={cn("flex-1", className)}>
         {children}
         <Toaster />
       </div>
     </div>
-  )
+  );
 }

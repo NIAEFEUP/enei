@@ -1,12 +1,12 @@
-import { useForm } from '@inertiajs/react'
-import { Link } from '@tuyau/inertia/react'
-import { Button, buttonVariants } from '~/components/ui/button'
-import { useAuth } from '~/hooks/use_auth'
-import { useTuyau } from '~/hooks/use_tuyau'
-import { cn } from '~/lib/utils'
-import Container from './containers'
-import { useEffect, useState } from 'react'
-import { NotificationContainer } from '../notifications'
+import { useForm } from "@inertiajs/react";
+import { Link } from "@tuyau/inertia/react";
+import { Button, buttonVariants } from "~/components/ui/button";
+import { useAuth } from "~/hooks/use_auth";
+import { useTuyau } from "~/hooks/use_tuyau";
+import { cn } from "~/lib/utils";
+import Container from "./containers";
+import { useEffect, useState } from "react";
+import { NotificationContainer } from "../notifications";
 
 /*
 import { Menu } from "lucide-react";
@@ -36,19 +36,19 @@ type PageRoute = {
 
 function LoginButton() {
   return (
-    <Link route="pages:auth.login" className={buttonVariants({ variant: 'secondary' })}>
+    <Link route="pages:auth.login" className={buttonVariants({ variant: "secondary" })}>
       Entrar
     </Link>
-  )
+  );
 }
 
 function LogoutButton() {
-  const tuyau = useTuyau()
-  const { post } = useForm()
+  const tuyau = useTuyau();
+  const { post } = useForm();
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    post(tuyau.$url('actions:auth.logout'))
+    e.preventDefault();
+    post(tuyau.$url("actions:auth.logout"));
   }
 
   return (
@@ -57,7 +57,7 @@ function LogoutButton() {
         Logout
       </Button>
     </form>
-  )
+  );
 }
 
 export function Navbar({ className, variant = "blue" }: { className?: string, variant?: string }) {
@@ -65,25 +65,25 @@ export function Navbar({ className, variant = "blue" }: { className?: string, va
   const [onTop, setOnTop] = useState(true)
 
   useEffect(() => {
-    const controller = new AbortController()
+    const controller = new AbortController();
 
     window.addEventListener(
-      'scroll',
+      "scroll",
       () => {
-        setOnTop(window.scrollY === 0)
+        setOnTop(window.scrollY === 0);
       },
-      { signal: controller.signal }
-    )
+      { signal: controller.signal },
+    );
 
-    return () => controller.abort()
-  }, [])
+    return () => controller.abort();
+  }, []);
 
   const bgColor = variant === "blue" ? "enei-blue" : "enei-beige"
   const textColor = variant === "blue" ? "enei-beige" : "enei-blue"
 
   return (
     <>
-      <NotificationContainer className='w-full flex flex-col' />
+      <NotificationContainer className="flex w-full flex-col" />
       <nav
         className={cn('w-full transition-colors duration-300', !onTop && 'bg-enei-blue', `bg-${bgColor}`, className)}
       >
@@ -120,5 +120,5 @@ export function Navbar({ className, variant = "blue" }: { className?: string, va
         </Container>
       </nav>
     </>
-  )
+  );
 }

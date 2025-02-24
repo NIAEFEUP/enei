@@ -4,5 +4,5 @@
     // Projects
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo"
   },
-  "include": ["vite.config.ts", "eslint.config.js"]
+  "include": ["vite.config.ts"]
 }

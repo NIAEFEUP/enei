@@ -1,12 +1,12 @@
-import { Button } from '../ui/button'
-import { useStepper } from '../ui/stepper'
+import { Button } from "../ui/button";
+import { useStepper } from "../ui/stepper";
 
 function StepperFormActions() {
   const { prevStep, resetSteps, isDisabledStep, hasCompletedAllSteps, isLastStep, isOptionalStep } =
-    useStepper()
+    useStepper();
 
   return (
-    <div className="w-full flex justify-end gap-2">
+    <div className="flex w-full justify-end gap-2">
       {hasCompletedAllSteps ? (
         <Button size="sm" onClick={resetSteps}>
           Reset
@@ -20,15 +20,15 @@ function StepperFormActions() {
           )}
           <Button type="submit" size="sm">
             {isLastStep
-              ? 'Registar-me na 16ª edição do ENEI'
+              ? "Registar-me na 16ª edição do ENEI"
               : isOptionalStep
-                ? 'Passar'
-                : 'Próximo'}
+                ? "Passar"
+                : "Próximo"}
           </Button>
         </>
       )}
     </div>
-  )
+  );
 }
 
-export default StepperFormActions
+export default StepperFormActions;

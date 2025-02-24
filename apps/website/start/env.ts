@@ -5,14 +5,14 @@
 |
 */
 
-import vine from '@vinejs/vine'
-import { defineEnv } from '../app/env.js'
+import vine from "@vinejs/vine";
+import { defineEnv } from "../app/env.js";
 
-vine.convertEmptyStringsToNull = true
+vine.convertEmptyStringsToNull = true;
 
-const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', ({ object }) => {
+const env = await defineEnv(new URL("../", import.meta.url), "INERTIA_PUBLIC_", ({ object }) => {
   return object({
-    NODE_ENV: vine.enum(['development', 'production', 'test'] as const),
+    NODE_ENV: vine.enum(["development", "production", "test"] as const),
     PORT: vine.number(),
     HOST: vine.string(),
     LOG_LEVEL: vine.string(),
@@ -30,7 +30,7 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     | Variables for configuring session package
     |----------------------------------------------------------
     */
-    SESSION_DRIVER: vine.enum(['cookie', 'memory'] as const),
+    SESSION_DRIVER: vine.enum(["cookie", "memory"] as const),
 
     /*
     |----------------------------------------------------------
@@ -58,7 +58,6 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     //RESEND_API_KEY: vine.string(),
     //BREVO_API_KEY: vine.string(),
 
-
     /*
     |----------------------------------------------------------
     | Variables for configuring the jobs package
@@ -74,7 +73,7 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     | Variables for configuring the limiter package
     |----------------------------------------------------------
     */
-    LIMITER_STORE: vine.enum(['redis', 'memory'] as const),
+    LIMITER_STORE: vine.enum(["redis", "memory"] as const),
 
     /*
     |----------------------------------------------------------
@@ -126,4 +125,4 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
   })
 })
 
-export default env
+export default env;

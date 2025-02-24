@@ -1,64 +1,58 @@
-import { useForm } from 'react-hook-form'
-import { useTuyau } from '~/hooks/use_tuyau'
-import { Checkbox } from '../ui/checkbox'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
-import MultipleSelector, { Option } from '../ui/multiple-selector'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import { Textarea } from '../ui/textarea'
+import { useForm } from "react-hook-form";
+import { useTuyau } from "~/hooks/use_tuyau";
+import { Checkbox } from "../ui/checkbox";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import MultipleSelector, { Option } from "../ui/multiple-selector";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Textarea } from "../ui/textarea";
 
-import editions from '#data/enei/editions.json' with { type: 'json' }
-import heardaboutfrom from '#data/enei/signup/heard-about.json' with { type: 'json' }
-import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  CommunicationsInfo,
-  communicationsInfoSchema,
-} from '~/pages/signup/schema'
-import { useAtom, useSetAtom } from 'jotai/react'
+import editions from "#data/enei/editions.json" with { type: "json" };
+import heardaboutfrom from "#data/enei/signup/heard-about.json" with { type: "json" };
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CommunicationsInfo, communicationsInfoSchema } from "~/pages/signup/schema";
+import { useAtom, useSetAtom } from "jotai/react";
 import {
   personalInfoAtom,
   educationInfoAtom,
   logisticsInfoAtom,
   communicationsInfoAtom,
-} from '~/pages/signup/atoms'
-import StepperFormActions from './actions'
-import { PageProps } from '@adonisjs/inertia/types'
-import { router, usePage } from '@inertiajs/react'
+} from "~/pages/signup/atoms";
+import StepperFormActions from "./actions";
+import { PageProps } from "@adonisjs/inertia/types";
+import { router, usePage } from "@inertiajs/react";
 
 const ENEI_EDITIONS: Option[] = editions
   .sort((a, b) => b.year - a.year)
   .map(({ year, location }) => {
-    return {
-      label: location + ', ' + year.toString(),
-      value: year.toString(),
-    }
-  })
+    return { label: location + ", " + year.toString(), value: year.toString() };
+  });
 
-const HEARD_ABOUT_FROM: Option[] = heardaboutfrom
+const HEARD_ABOUT_FROM: Option[] = heardaboutfrom;
 
 const CommunicationInfoForm = () => {
-  const tuyau = useTuyau()
+  const tuyau = useTuyau();
 
-  const { csrfToken } = usePage<PageProps & { csrfToken: string; }>().props;
+  const { csrfToken } = usePage<PageProps & { csrfToken: string }>().props;
 
-  const setCommunicationsInfo = useSetAtom(communicationsInfoAtom)
-  const [communicationsInfo] = useAtom(communicationsInfoAtom)
-  const [personalInfo] = useAtom(personalInfoAtom)
-  const [educationInfo] = useAtom(educationInfoAtom)
-  const [logisticsInfo] = useAtom(logisticsInfoAtom)
+  const setCommunicationsInfo = useSetAtom(communicationsInfoAtom);
+  const [communicationsInfo] = useAtom(communicationsInfoAtom);
+  const [personalInfo] = useAtom(personalInfoAtom);
+  const [educationInfo] = useAtom(educationInfoAtom);
+  const [logisticsInfo] = useAtom(logisticsInfoAtom);
 
   const form = useForm({
     resolver: zodResolver(communicationsInfoSchema),
     defaultValues: communicationsInfo || {
-      heardAboutENEI: '',
-      reasonForSignup: '',
+      heardAboutENEI: "",
+      reasonForSignup: "",
       attendedBefore: false,
       attendedBeforeEditions: [],
       termsAndConditions: false,
     },
-  })
+  });
 
   const onSubmit = async (data: CommunicationsInfo) => {
-    setCommunicationsInfo(data)
+    setCommunicationsInfo(data);
 
     // data is added to the payload with instead of communicationInfo
     // because it does not get updated right away
@@ -67,11 +61,11 @@ const CommunicationInfoForm = () => {
       ...educationInfo,
       ...logisticsInfo,
       ...data,
-      _csrf: csrfToken
-    }
-    
-    router.post(tuyau.$url('actions:signup'), payload)
-  }
+      _csrf: csrfToken,
+    };
+
+    router.post(tuyau.$url("actions:signup"), payload);
+  };
 
   return (
     <Form {...form}>
@@ -125,7 +119,7 @@ const CommunicationInfoForm = () => {
             name="attendedBefore"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="flex gap-2 items-center">
+                <FormLabel className="flex items-center gap-2">
                   <FormControl>
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
@@ -136,7 +130,7 @@ const CommunicationInfoForm = () => {
             )}
           />
 
-          {form.watch('attendedBefore') && (
+          {form.watch("attendedBefore") && (
             <FormField
               control={form.control}
               name="attendedBeforeEditions"
@@ -170,10 +164,10 @@ const CommunicationInfoForm = () => {
                     <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
                   <p>
-                    Declaro que li e aceito todos os{' '}
+                    Declaro que li e aceito todos os{" "}
                     <a href="/terms-and-conditions.pdf" target="_blank" className="underline">
                       termos e condições
-                    </a>{' '}
+                    </a>{" "}
                     do evento.
                   </p>
                 </FormLabel>
@@ -185,7 +179,7 @@ const CommunicationInfoForm = () => {
         </div>
       </form>
     </Form>
-  )
-}
+  );
+};
 
-export default CommunicationInfoForm
+export default CommunicationInfoForm;
