@@ -1,4 +1,4 @@
-import { Calendar, Clock, MapPin, Users } from 'lucide-react'
+import { Calendar, Clock, MapPin, Ticket, Users, Info, ClipboardCheck } from 'lucide-react'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import { Separator } from '~/components/ui/separator'
@@ -12,6 +12,7 @@ export default function EventRegistrationPage() {
   const location = 'B107 - FEUP'
   const speakers = ['Sabio Fa']
   const registrationRequirements = 'Nada'
+  const ticketsRemaining = 10
 
   return (
     <BaseLayout title="Registo de Evento" className="bg-enei-beige ">
@@ -37,23 +38,33 @@ export default function EventRegistrationPage() {
           </CardHeader>
           <Separator />
           <CardContent className="space-y-2 mt-2">
-            <h1 className="text-lg font-semibold">Acerca do Evento</h1>
+            <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+              <Info className="h-5 w-5" />
+              <h1 className="text-lg font-semibold">Acerca do Evento</h1>
+            </h2>
             <CardDescription>{description}</CardDescription>
 
             <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
               <Users className="h-5 w-5" />
-              <h1 className="text-lg font-semibold">Palestrante</h1>
+              <h1 className="text-lg font-semibold">Orador</h1>
             </h2>
             <ul className="list-inside list-disc text-muted-foreground">
               {speakers.map((speaker) => (
                 <li key={speaker}>{speaker}</li>
               ))}
             </ul>
-            <h1 className="text-lg font-semibold">Requisitos de Inscrição</h1>
+            <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+              <ClipboardCheck className="h-5 w-5" />
+              <h1 className="text-lg font-semibold">Requisitos de Inscrição</h1>
+            </h2>
             <CardDescription>{registrationRequirements}</CardDescription>
             <Button onClick={() => console.log('Hello!')} className="w-full">
               Inscrever
             </Button>
+            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+              <Ticket className="h-4 w-4" />
+              <span>{ticketsRemaining} lugares disponíveis</span>
+            </div>
           </CardContent>
         </Card>
       </div>
