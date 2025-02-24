@@ -6,10 +6,7 @@ import { Button } from '~/components/ui/button'
 import Page from '~/components/common/page'
 import Container from '~/components/common/containers'
 import { getUniversityById } from '~/lib/enei/signup/universities'
-import { Download, EyeOff, User, Github, Instagram, Linkedin, Globe, QrCode, LucideProps } from 'lucide-react'
-import { Dialog, DialogContent, DialogTrigger } from '~/components/ui/dialog'
-import { QRCodeSVG } from 'qrcode.react';
-import { useEffect, useState } from 'react'
+import { Download, EyeOff, User, Github, Instagram, Linkedin, Globe, LucideProps } from 'lucide-react'
 
 interface SocialIconProps {
   icon: React.FC<LucideProps>;
@@ -27,24 +24,27 @@ function SocialIcon({ icon: Icon, link }: SocialIconProps) {
 export default function ProfilePage(props: InferPageProps<ProfilesController, 'index'> & { profile: ParticipantProfile }) {
   const { profile, isUser } = props
 
-  const [windowHref, setWindowHref] = useState("");
+  /*
+  const districts_dict = districts.reduce(
+    (dict: { [id: string]: string; }, el: { id: string; name: string }, _) => (dict[el.id] = el.name, dict),
+    {}
+  );
+  */
 
-  useEffect(() => {
-    setWindowHref(window.location.href)
-  })
+  // districts.find(({ id: universityId }) => universityId === id)
 
   return (
-    <Page title="Perfil" className="bg-enei-beige text-white">
+    <Page title="Perfil" className="bg-enei-blue text-white">
       <Container>
         <section className="relative flex flex-col gap-8 md:justify-between z-10">
           <Card className='p-4 flex flex-col gap-4'>
             <h3 className='text-2xl'>Perfil do Participante</h3>
 
-            <section className='grid md:grid-cols-[auto_1fr] items-center gap-4 md:gap-8'>
-              <div className='size-fit rounded-sm bg-enei-beige mx-auto md:mx-0'>
+            <section className='grid sm:grid-cols-[auto_1fr] items-center gap-4 sm:gap-8'>
+              <div className='size-fit rounded-sm bg-enei-beige mx-auto sm:mx-0'>
                 <User className='w-48 h-48' />
               </div>
-              <div className='h-full flex flex-col gap-2 justify-between py-0 md:py-4 text-center md:text-start'>
+              <div className='h-full flex flex-col gap-2 justify-between py-0 md:py-4 text-center sm:text-start'>
                 <p className='text-3xl'>
                   {profile.firstName} {profile.lastName}
                 </p>
@@ -52,31 +52,15 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   <p className='text-lg'> {profile.course} &#183; {(profile.curricularYear === 'already-finished') ? ("Concluído em " + profile.finishedAt) : (profile.curricularYear + "º ano")} </p>
                   <p className='text-lg'> @ {getUniversityById(profile.university)!.name} </p>
                 </div>
-                <div className='flex flex-row flex-wrap gap-2 justify-center md:justify-start'>
-                  <div className='flex flex-row gap-2'>
-                    <SocialIcon icon={Github} link={"https://github.com"} />
-                    <SocialIcon icon={Instagram} link={"https://instagram.com"} />
-                    <SocialIcon icon={Linkedin} link={"https://linkedin.com"} />
-                    <SocialIcon icon={Globe} link={"https://google.com"} />
-                  </div>
-                  <div className='flex flex-row gap-2'>
-                    <Button className='w-fit'>
-                      <Download />
-                      Currículo
-                    </Button>
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button className='w-fit'>
-                          <QrCode />
-                          Código QR
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="w-4/5 max-w-96 sm:w-96">
-                        <QRCodeSVG value={windowHref} className='aspect-square w-full h-full' />
-                        <p className='text-center'> {windowHref} </p>
-                      </DialogContent>
-                    </Dialog>
-                  </div>
+                <div className='flex flex-row gap-2 justify-center sm:justify-start'>
+                  <SocialIcon icon={Github} link={"https://github.com"} />
+                  <SocialIcon icon={Instagram} link={"https://instagram.com"} />
+                  <SocialIcon icon={Linkedin} link={"https://linkedin.com"} />
+                  <SocialIcon icon={Globe} link={"https://google.com"} />
+                  <Button className='w-fit'>
+                    <Download />
+                    Currículo
+                  </Button>
                 </div>
               </div>
             </section>
