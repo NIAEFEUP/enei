@@ -1,8 +1,8 @@
 import { Calendar, Clock, MapPin, Users } from 'lucide-react'
-import Page from '~/components/common/page'
 import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import { Separator } from '~/components/ui/separator'
+import BaseLayout from '~/layouts/base'
 
 export default function EventRegistrationPage() {
   const title = 'Workshop Prolog'
@@ -14,10 +14,11 @@ export default function EventRegistrationPage() {
   const registrationRequirements = 'Nada'
 
   return (
-    <Page title="Registo de Evento" className="bg-enei-beige ">
+    <BaseLayout title="Registo de Evento" className="bg-enei-beige ">
       <div className="flex justify-center mt-10">
         <Card className="w-full max-w-2xl mx-auto">
           <CardHeader>
+            {/* Title and important information (date, time, location) */}
             <CardTitle className="text-2xl font-bold">{title}</CardTitle>
             <div className="mt-4 flex flex-col gap-2 text-muted-foreground sm:flex-row sm:gap-6">
               <div className="flex items-center gap-2">
@@ -56,6 +57,6 @@ export default function EventRegistrationPage() {
           </CardContent>
         </Card>
       </div>
-    </Page>
+    </BaseLayout>
   )
 }
