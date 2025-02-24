@@ -12,7 +12,9 @@ export default class ProfilesController {
       return
     }
     await user.load('participantProfile')
-    return inertia.render('profile', { profile: user.participantProfile!, isUser: user.id == auth.user!.id })
+
+    const isUser = auth.user ? (user.id == auth.user!.id) : false;
+    return inertia.render('profile', { profile: user.participantProfile!, isUser })
   }
 
   async show({ inertia }: HttpContext) {
