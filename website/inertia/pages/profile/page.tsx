@@ -49,7 +49,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   {profile.firstName} {profile.lastName}
                 </p>
                 <div>
-                  <p className='text-lg'> {profile.course} &#183; {profile.curricularYear}º ano </p>
+                  <p className='text-lg'> {profile.course} &#183; {(profile.curricularYear === 'already-finished') ? ("Concluído em " + profile.finishedAt) : (profile.curricularYear + "º ano")} </p>
                   <p className='text-lg'> @ {getUniversityById(profile.university)!.name} </p>
                 </div>
                 <div className='flex flex-row gap-2 justify-center sm:justify-start'>
