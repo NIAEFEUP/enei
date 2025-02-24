@@ -21,7 +21,7 @@ export default function SelectTicketsPage(props: InferPageProps<TicketsControlle
         <div className="grid gap-6 grid-cols-1 mx-auto max-w-lg md:max-w-xl w-full">
           {props.ticketTypes.map((ticket) => {
             const card = (
-              <Card className={cn('hover:shadow-lg', ticket.outOfStock && 'saturate-0 contrast-75 cursor-not-allowed')}>
+              <Card className={cn('hover:shadow-lg', ticket.outOfStock && 'saturate-0 contrast-75 cursor-not-allowed select-none')}>
                 <div className="flex items-center justify-between p-6">
                   <CardHeader>
                     <CardTitle>{ticket.name}</CardTitle>
@@ -44,7 +44,7 @@ export default function SelectTicketsPage(props: InferPageProps<TicketsControlle
             )
 
             return ticket.outOfStock ? (
-              <div>{card}</div>
+              <div key={ticket.id}>{card}</div>
             ) : (
               <Link route="checkout" params={{ id: ticket.id }} key={ticket.id}>{card}</Link>
             )
