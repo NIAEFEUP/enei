@@ -153,5 +153,6 @@ router
 
 router
   .group(() => {
-    router.get("/profile", [ProfilesController, 'index']).as('pages:profile')
+    router.get("/u/:id", [ProfilesController, 'index'])
+      .as('pages:profile')
   })

@@ -1,13 +1,15 @@
 import ParticipantProfile from '#models/participant_profile'
+import User from '#models/user'
 import { createProfileValidator } from '#validators/profile'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class ProfilesController {
   // To be used when the profile page is done
-  async index({ auth, inertia }: HttpContext) {
-    const user = auth.user!
+  async index({ auth, inertia, params }: HttpContext) {
+    // TODO: 404 if user does not exist
+    const user = await User.findOrFail(params.id)
     await user.load('participantProfile')
-    return inertia.render('profile', { profile: user.participantProfile! })
+    return inertia.render('profile', { profile: user.participantProfile!, isUser: user.id == auth.user!.id })
   }
 
   async show({ inertia }: HttpContext) {

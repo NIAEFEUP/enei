@@ -22,7 +22,7 @@ function SocialIcon({ icon: Icon, link }: SocialIconProps) {
 }
 
 export default function ProfilePage(props: InferPageProps<ProfilesController, 'index'> & { profile: ParticipantProfile }) {
-  const { profile } = props
+  const { profile, isUser } = props
 
   /*
   const districts_dict = districts.reduce(
@@ -69,43 +69,45 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
               </p>
             </section>
-            <section>
-              <div className='grid grid-cols-[auto_1fr] gap-2 items-center my-2'>
-                <EyeOff />
-                <p> As informações a baixo não estão visíveis para todos. </p>
-              </div>
-              Primeiro Nome: {profile.firstName}
-              <br />
-              Último Nome: {profile.lastName}
-              <br />
-              Data de Nascimento: {profile.dateOfBirth.toLocaleString()}
-              <br />
-              Número de Telemóvel: {profile.phone}
-              <br />
-              Natural de: {profile.municipality}
-              <br />
-              Universidade/Faculdade: {profile.university}
-              <br />
-              Curso: {profile.course}
-              <br />
-              Ano Curricular: {profile.curricularYear} {profile.finishedAt}
-              <br />
-              Tamanho da T-Shirt: {profile.shirtSize}
-              <br />
-              Restrições Alimentares: {profile.dietaryRestrictions}
-              <br />
-              Vegetariano?: {profile.isVegetarian}
-              <br />
-              Vegan?: {profile.isVegan}
-              <br />
-              Como estou a pensar deslocar-me para o evento: {profile.transports}
-              <br />
-              Como ouviste falar do ENEI?: {profile.heardAboutEnei}
-              <br />
-              Qual a principal razão para te inscreveres no ENEI?: {profile.reasonForSignup}
-              <br />
-              Já participaste em alguma edição do ENEI?: {profile.attendedBeforeEditions}
-            </section>
+            {isUser &&
+              <section>
+                <div className='grid grid-cols-[auto_1fr] gap-2 items-center my-2'>
+                  <EyeOff />
+                  <p> As informações a baixo estão visíveis apenas para ti. </p>
+                </div>
+                Primeiro Nome: {profile.firstName}
+                <br />
+                Último Nome: {profile.lastName}
+                <br />
+                Data de Nascimento: {profile.dateOfBirth.toLocaleString()}
+                <br />
+                Número de Telemóvel: {profile.phone}
+                <br />
+                Natural de: {profile.municipality}
+                <br />
+                Universidade/Faculdade: {profile.university}
+                <br />
+                Curso: {profile.course}
+                <br />
+                Ano Curricular: {profile.curricularYear} {profile.finishedAt}
+                <br />
+                Tamanho da T-Shirt: {profile.shirtSize}
+                <br />
+                Restrições Alimentares: {profile.dietaryRestrictions}
+                <br />
+                Vegetariano?: {profile.isVegetarian}
+                <br />
+                Vegan?: {profile.isVegan}
+                <br />
+                Como estou a pensar deslocar-me para o evento: {profile.transports}
+                <br />
+                Como ouviste falar do ENEI?: {profile.heardAboutEnei}
+                <br />
+                Qual a principal razão para te inscreveres no ENEI?: {profile.reasonForSignup}
+                <br />
+                Já participaste em alguma edição do ENEI?: {profile.attendedBeforeEditions}
+              </section>
+            }
           </Card>
         </section>
       </Container>
