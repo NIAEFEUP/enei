@@ -1,16 +1,26 @@
 import { Calendar, Clock, MapPin, Ticket, Users, Info, ClipboardCheck } from 'lucide-react'
 import { Button } from '~/components/ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import { Separator } from '~/components/ui/separator'
 import BaseLayout from '~/layouts/base'
 
 export default function EventRegistrationPage() {
-  const title = 'Workshop Prolog'
-  const description = 'Workshop dado pela lenda sabio fa'
+  const title = 'Cybersecurity & Password Cracking'
+  const description =
+    'Uma exploração profunda sobre técnicas de cibersegurança e como os hackers conseguem aceder a passwords. Vamos explorar as técnicas mais comuns e como as podemos prevenir.'
   const date = '2025-03-03'
   const time = '14:00 - 15:30'
   const location = 'B107 - FEUP'
-  const speakers = ['Sabio Fa']
+  const speakers = [
+    {
+      name: 'Dr. Mike Pound',
+      role: 'Pesquisador na Universidade de Nottingham, Inglaterra',
+      image:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY5VZfZYg8fK226K1rD3uGZgKFyA59EkXify-5sPm9Eihp7K11As_fxdM&usqp=CAE&s',
+    },
+
+  ]
   const registrationRequirements = 'Nada'
   const ticketsRemaining = 10
 
@@ -46,13 +56,24 @@ export default function EventRegistrationPage() {
 
             <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
               <Users className="h-5 w-5" />
-              <h1 className="text-lg font-semibold">Orador</h1>
+              <h1 className="text-lg font-semibold">{speakers.length === 1 ? "Orador" : "Oradores"}</h1>
             </h2>
-            <ul className="list-inside list-disc text-muted-foreground">
+            <div className="grid gap-4">
               {speakers.map((speaker) => (
-                <li key={speaker}>{speaker}</li>
+                <div key={speaker.name} className="flex items-center gap-4 rounded-lg border p-4">
+                  <Avatar className="h-12 w-12">
+                    <AvatarImage src={speaker.image} alt={speaker.name} />
+                    <AvatarFallback>{speaker.name[0]}</AvatarFallback>
+                  </Avatar>
+                  <div className="space-y-1">
+                    <h3 className="font-medium">{speaker.name}</h3>
+                    {speaker.role && (
+                      <p className="text-sm text-muted-foreground">{speaker.role}</p>
+                    )}
+                  </div>
+                </div>
               ))}
-            </ul>
+            </div>
             <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
               <ClipboardCheck className="h-5 w-5" />
               <h1 className="text-lg font-semibold">Requisitos de Inscrição</h1>
