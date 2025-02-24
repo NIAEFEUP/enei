@@ -5,9 +5,12 @@ import type { HttpContext } from '@adonisjs/core/http'
 
 export default class ProfilesController {
   // To be used when the profile page is done
-  async index({ auth, inertia, params }: HttpContext) {
-    // TODO: 404 if user does not exist
-    const user = await User.findOrFail(params.id)
+  async index({ auth, inertia, params, response }: HttpContext) {
+    const user = await User.find(params.id)
+    if (!user) {
+      response.abort("Participante não encontrado", 404)
+      return
+    }
     await user.load('participantProfile')
     return inertia.render('profile', { profile: user.participantProfile!, isUser: user.id == auth.user!.id })
   }
