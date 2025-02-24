@@ -37,7 +37,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
     <Page title="Perfil" className="bg-enei-beige text-white">
       <Container>
         <section className="relative flex flex-col gap-8 md:justify-between z-10">
-          <Card className='p-4 flex flex-col gap-8'>
+          <Card className='p-4 flex flex-col gap-4'>
             <h3 className='text-2xl'>Perfil do Participante</h3>
 
             <section className='grid sm:grid-cols-[auto_1fr] items-center gap-4 sm:gap-8'>
@@ -74,21 +74,37 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                 <EyeOff />
                 <p> As informações a baixo não estão visíveis para todos. </p>
               </div>
-              1: {profile.firstName} {profile.lastName}
+              Primeiro Nome: {profile.firstName}
               <br />
-              2: {profile.university} {profile.course}
+              Último Nome: {profile.lastName}
               <br />
-              3: {profile.curricularYear} {profile.finishedAt}
+              Data de Nascimento: {profile.dateOfBirth.toLocaleString()}
               <br />
-              4: {profile.municipality} {profile.shirtSize}
+              Número de Telemóvel: {profile.phone}
               <br />
-              5: {profile.dietaryRestrictions} {profile.isVegetarian}
+              Natural de: {profile.municipality}
               <br />
-              6: {profile.isVegan} {profile.transports}
+              Universidade/Faculdade: {profile.university}
               <br />
-              7: {profile.heardAboutEnei} {profile.reasonForSignup}
+              Curso: {profile.course}
               <br />
-              8: {profile.attendedBeforeEditions}
+              Ano Curricular: {profile.curricularYear} {profile.finishedAt}
+              <br />
+              Tamanho da T-Shirt: {profile.shirtSize}
+              <br />
+              Restrições Alimentares: {profile.dietaryRestrictions}
+              <br />
+              Vegetariano?: {profile.isVegetarian}
+              <br />
+              Vegan?: {profile.isVegan}
+              <br />
+              Como estou a pensar deslocar-me para o evento: {profile.transports}
+              <br />
+              Como ouviste falar do ENEI?: {profile.heardAboutEnei}
+              <br />
+              Qual a principal razão para te inscreveres no ENEI?: {profile.reasonForSignup}
+              <br />
+              Já participaste em alguma edição do ENEI?: {profile.attendedBeforeEditions}
             </section>
           </Card>
         </section>
