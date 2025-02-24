@@ -6,6 +6,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from '~/components/ui/ca
 import TicketsController from '#controllers/tickets_controller'
 import Page from '~/components/common/page'
 import Container from '~/components/common/containers'
+import { cn } from '~/lib/utils'
 
 export default function SelectTicketsPage(props: InferPageProps<TicketsController, 'index'>) {
   const imageSrc = `favicon.svg`
@@ -18,9 +19,9 @@ export default function SelectTicketsPage(props: InferPageProps<TicketsControlle
           Seleciona o teu bilhete e clica em comprar para continuar.
         </p>
         <div className="grid gap-6 grid-cols-1 mx-auto max-w-lg md:max-w-xl w-full">
-          {props.ticketTypes.map((ticket) => (
-            <Link route="checkout" params={{ id: ticket.id }} key={ticket.id}>
-              <Card className="hover:shadow-lg">
+          {props.ticketTypes.map((ticket) => {
+            const card = (
+              <Card className={cn('hover:shadow-lg', ticket.outOfStock && 'saturate-0 contrast-75 cursor-not-allowed select-none')}>
                 <div className="flex items-center justify-between p-6">
                   <CardHeader>
                     <CardTitle>{ticket.name}</CardTitle>
@@ -30,13 +31,24 @@ export default function SelectTicketsPage(props: InferPageProps<TicketsControlle
                         dangerouslySetInnerHTML={{ __html: ticket.description }}
                       />
                     </CardDescription>
-                    <p className="text-2xl font-bold">{ticket.price}€</p>
+                    <p className="text-2xl font-bold">
+                      <span className={cn(ticket.outOfStock && 'line-through')}>
+                        {ticket.price}€
+                      </span>{' '}
+                      {ticket.outOfStock && <span className="uppercase">Esgotado</span>}
+                    </p>
                   </CardHeader>
                   <img className="hidden md:block" src={imageSrc} alt={ticket.name || undefined} />
                 </div>
               </Card>
-            </Link>
-          ))}
+            )
+
+            return ticket.outOfStock ? (
+              <div key={ticket.id}>{card}</div>
+            ) : (
+              <Link route="checkout" params={{ id: ticket.id }} key={ticket.id}>{card}</Link>
+            )
+          })}
         </div>
       </Container>
     </Page>
