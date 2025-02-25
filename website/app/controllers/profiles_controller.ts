@@ -11,10 +11,27 @@ export default class ProfilesController {
       response.abort("Participante não encontrado", 404)
       return
     }
-    await user.load('participantProfile')
 
     const isUser = auth.user ? (user.id == auth.user!.id) : false;
+
+    await user.load('participantProfile')
+    if (!user.participantProfile) {
+      if (isUser) {
+        response.redirect().toRoute('pages:signup')
+      } else {
+        response.abort("Participante não encontrado", 404)
+      }
+      return
+    }
+
     return inertia.render('profile', { profile: user.participantProfile!, isUser })
+  }
+
+  async edit({ auth, inertia }: HttpContext) {
+    const user = auth.user;
+    await user!.load('participantProfile')
+
+    return inertia.render('profile/edit', { profile: user!.participantProfile! })
   }
 
   async show({ inertia }: HttpContext) {
