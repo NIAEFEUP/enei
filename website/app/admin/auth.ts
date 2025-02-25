@@ -24,13 +24,15 @@ const authProvider = new DefaultAuthProvider({
     try {
       const account = await Account.verifyCredentials(`credentials:${email}`, password)
       await account.load('user')
+
+      if (!account.user.isAdmin)
+        return null
       
       return {
         email: account.user.email
       }
     } catch (error) {
       if (error instanceof errors.E_INVALID_CREDENTIALS) {
-        console.log("sadge")
         return null
       }
 
