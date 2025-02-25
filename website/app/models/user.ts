@@ -21,6 +21,9 @@ export default class User extends BaseModel {
   @column.dateTime()
   declare emailVerifiedAt: DateTime | null
 
+  @column()
+  declare isAdmin: boolean
+
   @hasMany(() => Account)
   declare accounts: HasMany<typeof Account>
 
@@ -42,7 +45,7 @@ export default class User extends BaseModel {
   })
   declare referrer: BelongsTo<typeof User>
 
-  // PromoterInfo
+  // PromoterProfile
 
   @column()
   declare promoterProfileId: number | undefined

@@ -39,10 +39,12 @@
     "#resources/*": "./resources/*.js"
   },
   "devDependencies": {
+    "@adminjs/adonis": "^1.1.0",
     "@adonisjs/assembler": "^7.8.2",
     "@adonisjs/eslint-config": "2.0.0-beta.7",
     "@adonisjs/prettier-config": "^1.4.0",
     "@adonisjs/tsconfig": "^1.4.0",
+    "@babel/plugin-syntax-import-assertions": "^7.26.0",
     "@japa/assert": "^4.0.1",
     "@japa/plugin-adonisjs": "^4.0.0",
     "@japa/runner": "^4.1.0",
@@ -124,6 +126,7 @@
     "@tuyau/inertia": "^0.0.9",
     "@tuyau/utils": "^0.0.6",
     "@vinejs/vine": "^3.0.0",
+    "adminjs": "^7.8.13",
     "adonisjs-jobs": "^0.0.21",
     "axios": "^1.7.9",
     "badge": "^1.0.3",
