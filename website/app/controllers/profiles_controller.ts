@@ -1,34 +1,39 @@
 import ParticipantProfile from '#models/participant_profile'
-import User from '#models/user'
 import { createProfileValidator } from '#validators/profile'
 import type { HttpContext } from '@adonisjs/core/http'
+import slug from 'slug';
+import Sqids from 'sqids'
+
+const sludSqids = new Sqids({
+  alphabet: 'nkzm6vl3170gtx8uro9aj4iyqhwdpcebsf52' // lowercase letters and numbers
+})
 
 export default class ProfilesController {
   async index({ auth, inertia, params, response }: HttpContext) {
-    const user = await User.find(params.id)
-    if (!user) {
+    const profile = await ParticipantProfile.findBy('slug', params.slug)
+
+    if (!profile) {
       response.notFound("Participante não encontrado")
       return
     }
 
-    const isUser = auth.user ? (user.id === auth.user!.id) : false;
-
-    await user.load('participantProfile')
-    if (!user.participantProfile) {
-      if (isUser) {
-        response.redirect().toRoute('pages:signup')
-      } else {
-        response.notFound("Participante não encontrado")
-      }
+    await profile.load('user')
+    if (!profile.user) {
+      response.notFound("Participante não encontrado")
       return
     }
 
-    return inertia.render('profile', { profile: user.participantProfile!, isUser })
+    const isUser = profile.user ? (profile.user.id === auth.user?.id) : false;
+
+    return inertia.render('profile', { profile, isUser })
   }
 
-  async edit({ auth, inertia }: HttpContext) {
+  async edit({ auth, inertia, response }: HttpContext) {
     const user = auth.user;
     await user!.load('participantProfile')
+
+    if (!user?.participantProfile)
+      return response.redirect().toRoute('pages:signup')
 
     return inertia.render('profile/edit', { profile: user!.participantProfile! })
   }
@@ -50,6 +55,8 @@ export default class ProfilesController {
       .map((item: { label: string; value: string; }) => item.value)
     data.dietaryRestrictions ||= ""
     data.reasonForSignup ||= ""
+
+    data.slug = slug(`${data.firstName} ${data.lastName} ${sludSqids.encode([user.id])}`)
 
     const profile = await createProfileValidator.validate(data)
 

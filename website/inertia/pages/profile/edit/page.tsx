@@ -21,7 +21,7 @@ function SocialIcon({ icon: Icon, link }: SocialIconProps) {
   )
 }
 
-export default function ProfilePage(props: InferPageProps<ProfilesController, 'index'> & { profile: ParticipantProfile }) {
+export default function ProfileEditPage(props: InferPageProps<ProfilesController, 'index'> & { profile: ParticipantProfile }) {
   const { profile, isUser } = props
 
   /*

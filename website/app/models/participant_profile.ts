@@ -7,7 +7,10 @@ import { json } from '#lib/lucid/decorators.js'
 export default class ParticipantProfile extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
-  
+
+  @column()
+  declare slug: string
+
   @hasOne(() => User)
   declare user: HasOne<typeof User>
 
@@ -66,7 +69,7 @@ export default class ParticipantProfile extends BaseModel {
   declare transports: string[]
 
   // Communication Info
-  
+
   @column()
   declare heardAboutENEI: string
 

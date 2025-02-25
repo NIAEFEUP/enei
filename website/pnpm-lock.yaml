@@ -263,9 +263,15 @@ importers:
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
+      slug:
+        specifier: ^10.0.0
+        version: 10.0.0
       sonner:
         specifier: ^1.7.2
         version: 1.7.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      sqids:
+        specifier: ^0.3.0
+        version: 0.3.0
       tailwind-merge:
         specifier: ^2.6.0
         version: 2.6.0
@@ -324,6 +330,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.0.3
         version: 19.0.3(@types/react@19.0.8)
+      '@types/slug':
+        specifier: ^5.0.9
+        version: 5.0.9
       '@vitejs/plugin-react':
         specifier: ^4.3.4
         version: 4.3.4(vite@6.0.11(@types/node@22.12.0)(jiti@1.21.7)(yaml@2.7.0))
@@ -3071,6 +3080,9 @@ packages:
 
   '@types/react@19.0.8':
     resolution: {integrity: sha512-9P/o1IGdfmQxrujGbIMDyYaaCykhLKc0NGCtYcECNUr9UAaDe4gwvV9bR6tvd5Br1SG0j+PBpbKr2UYY8CwqSw==}
+
+  '@types/slug@5.0.9':
+    resolution: {integrity: sha512-6Yp8BSplP35Esa/wOG1wLNKiqXevpQTEF/RcL/NV6BBQaMmZh4YlDwCgrrFSoUE4xAGvnKd5c+lkQJmPrBAzfQ==}
 
   '@types/tinycolor2@1.4.6':
     resolution: {integrity: sha512-iEN8J0BoMnsWBqjVbWH/c0G0Hh7O21lpR2/+PrvAVgWdzL7eexIFm4JN/Wn10PTcmNdtS6U67r499mlWMXOxNw==}
@@ -6325,6 +6337,10 @@ packages:
     resolution: {integrity: sha512-bSiSngZ/jWeX93BqeIAbImyTbEihizcwNjFoRUIY/T1wWQsfsm2Vw1agPKylXvQTU7iASGdHhyqRlqQzfz+Htg==}
     engines: {node: '>=18'}
 
+  slug@10.0.0:
+    resolution: {integrity: sha512-M8s2PWOUeSCdD4S1NH5lCzXg2zFV1fozrtfr0FSKl65x+EF1rUowj+/vyFlnHgxPxWzT+DL0VXKfYc1DHJoymg==}
+    hasBin: true
+
   slugify@1.6.6:
     resolution: {integrity: sha512-h+z7HKHYXj6wJU+AnS/+IH8Uh9fdcX1Lrhg1/VMdf9PwoBQXFcXiAdsy2tSK0P6gKwJLXp02r90ahUCqHk9rrw==}
     engines: {node: '>=8.0.0'}
@@ -6404,6 +6420,9 @@ packages:
 
   sprintf-js@1.1.3:
     resolution: {integrity: sha512-Oo+0REFV59/rz3gfJNKQiBlwfHaSESl1pcGyABQsnnIfWOFt6JNj5gCog2U6MLZ//IGYD+nA8nI+mTShREReaA==}
+
+  sqids@0.3.0:
+    resolution: {integrity: sha512-lOQK1ucVg+W6n3FhRwwSeUijxe93b51Bfz5PMRMihVf1iVkl82ePQG7V5vwrhzB11v0NtsR25PSZRGiSomJaJw==}
 
   stacktracey@2.1.8:
     resolution: {integrity: sha512-Kpij9riA+UNg7TnphqjH7/CzctQ/owJGNbFkfEeve4Z4uxT5+JapVLFXcsurIfN34gnTWZNJ/f7NMG0E8JDzTw==}
@@ -10049,6 +10068,8 @@ snapshots:
     dependencies:
       csstype: 3.1.3
 
+  '@types/slug@5.0.9': {}
+
   '@types/tinycolor2@1.4.6': {}
 
   '@types/validator@13.12.2': {}
@@ -13419,6 +13440,8 @@ snapshots:
       ansi-styles: 6.2.1
       is-fullwidth-code-point: 5.0.0
 
+  slug@10.0.0: {}
+
   slugify@1.6.6: {}
 
   smart-buffer@4.2.0: {}
@@ -13515,6 +13538,8 @@ snapshots:
   sprintf-js@1.1.2: {}
 
   sprintf-js@1.1.3: {}
+
+  sqids@0.3.0: {}
 
   stacktracey@2.1.8:
     dependencies:
