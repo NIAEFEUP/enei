@@ -4,7 +4,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 
 export default class TicketsController {
   async index({ inertia }: HttpContext) {
-    const ticketTypes = await Product.all()
+    const ticketTypes = await Product.query().where('hidden', false)
 
     const tickets = await Promise.all(
       ticketTypes.map(async (ticketType) => {
