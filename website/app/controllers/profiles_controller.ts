@@ -37,4 +37,5 @@ export default class ProfilesController {
 
     return response.redirect().toRoute('pages:tickets')
   }
+  
 }

@@ -38,7 +38,7 @@ export default class AuthenticationController {
 
   async register({ request, auth, response }: HttpContext) {
     const { email, password } = await request.validateUsing(registerWithCredentialsValidator)
-
+    
     const [user, events] = await this.userService.createUserWithCredentials(email, password)
     const [success] = await events
     if (!success) {
