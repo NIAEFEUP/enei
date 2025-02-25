@@ -15,7 +15,7 @@ import { Providers } from './providers'
 const appName = import.meta.env.VITE_APP_NAME || 'ENEI'
 
 createInertiaApp({
-  progress: { color: 'var(--primary)' },
+  progress: { color: 'var(--progress-bar)' },
 
   title: (title) => `${title} - ${appName}`,
 

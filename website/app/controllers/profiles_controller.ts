@@ -77,4 +77,5 @@ export default class ProfilesController {
 
     return response.redirect().toRoute('pages:profile.default')
   }
+  
 }

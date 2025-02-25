@@ -9,11 +9,18 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import { emailVerificationThrottle, sendForgotPasswordThrottle } from '#start/limiter'
+const EventsController = () => import('#controllers/events_controller')
+import { sep, normalize } from 'node:path'
+import app from '@adonisjs/core/services/app'
 
 const AuthenticationController = () => import('#controllers/authentication_controller')
 const OrdersController = () => import('#controllers/orders_controller')
 const TicketsController = () => import('#controllers/tickets_controller')
 const ProfilesController = () => import('#controllers/profiles_controller')
+const CvsController = () => import('#controllers/cvs_controller')
+
+const StoreController = () => import('#controllers/store_controller')
+const ReferralsController = () => import('#controllers/referrals_controller')
 
 router.on('/').renderInertia('home').as('pages:home')
 
@@ -161,3 +168,57 @@ router
       .as('pages:profile.edit')
       .use([middleware.auth(), middleware.verifiedEmail()])
   })
+
+router
+  .on('/faq').renderInertia('faq').as('pages:faq')
+
+
+router.get('/event', [EventsController, 'index']).as('pages:event')
+
+
+router.
+  group(() => {
+    router.on('/').renderInertia('cv').as('pages:cv')
+  })
+  .use([middleware.auth(), middleware.verifiedEmail()])
+  .prefix('cv') // dummy route for testing
+
+router.
+  group(() => {
+    router.get('/cv/name', [CvsController, 'showName'])
+    router.post('/cv/upload', [CvsController, 'upload'])
+    router.delete('cv/delete', [CvsController, 'delete'])
+    router.get('cv/uploads/*', ({ request, response }) => {
+      const filePath = `${request.param('*').join(sep)}_resume.pdf`
+      const PATH_TRAVERSAL_REGEX = /(?:^|[\\/])\.\.(?:[\\/]|$)/
+      const normalizedPath = normalize(filePath)
+      if (PATH_TRAVERSAL_REGEX.test(normalizedPath)) {
+        return response.badRequest('Malformed path')
+      }
+      const absolutePath = app.makePath('storage/uploads/cvs', normalizedPath)
+      return response.download(absolutePath)
+    })
+  })
+  .use([middleware.auth()])
+  
+  .prefix('user')
+
+
+
+router
+  .group(() => {
+    router.get('/', [StoreController, 'index']).as('pages:store')
+    router.post('/products/:id/buy/', [StoreController, 'buy']).as('actions:store.buy')
+  })
+  .use([middleware.auth(), middleware.verifiedEmail(), /*middleware.participant()*/])
+  .prefix('/store')
+  
+// Referrals
+router.get('/referrals', [ReferralsController, 'showReferralLink'])
+  .middleware(middleware.auth())
+  .as('pages:referrals')
+
+router.route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
+  .middleware([middleware.automaticSubmit(), middleware.silentAuth()]) 
+  .as('actions:referrals.link')
+
