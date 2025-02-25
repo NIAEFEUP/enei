@@ -153,8 +153,11 @@ router
 
 router
   .group(() => {
-    router.get("/u/:slug", [ProfilesController, 'index'])
-      .as('pages:profile')
-      router.get("/profile/edit", [ProfilesController, 'edit'])
+    router.get("/u/:slug", [ProfilesController, 'index']).as('pages:profile.show')
+    router.get("/profile", [ProfilesController, 'default'])
+      .as('pages:profile.default')
+      .use([middleware.auth(), middleware.verifiedEmail()])
+    router.get("/profile/edit", [ProfilesController, 'edit'])
       .as('pages:profile.edit')
+      .use([middleware.auth(), middleware.verifiedEmail()])
   })

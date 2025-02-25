@@ -9,6 +9,16 @@ const sludSqids = new Sqids({
 })
 
 export default class ProfilesController {
+  async default({ auth, response }: HttpContext) {
+    const user = auth.user;
+    await user!.load('participantProfile')
+
+    if (!user?.participantProfile)
+      return response.redirect().toRoute('pages:signup')
+
+    return response.redirect().toRoute('pages:profile.show', { slug: user.participantProfile.slug } )
+  }
+
   async index({ auth, inertia, params, response }: HttpContext) {
     const profile = await ParticipantProfile.findBy('slug', params.slug)
 
