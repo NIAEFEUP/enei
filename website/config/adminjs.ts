@@ -27,7 +27,7 @@ const adminjsConfig: AdminJSProviderConfig = {
       component: components.CustomDashboard,
       handler: async () => {
         const userActivities = (await UserActivity.query().where('type', '=', 'referral'))
-        const points = (await User.all()).reduce((acc, user) => acc + user.points, 0)
+        const points = 0 // (await User.all()).reduce((acc, user) => acc + user.points, 0)
 
         return { 
           userActivities, 
