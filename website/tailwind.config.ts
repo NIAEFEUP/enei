@@ -4,7 +4,7 @@ import defaultTheme from 'tailwindcss/defaultTheme.js'
 
 export default {
   // darkMode: ['class'],
-  content: ['./resources/**/*.edge', './inertia/**/*.{js,ts,jsx,tsx}'],
+  content: ['./resources/**/*.edge', './inertia/**/*.{js,ts,jsx,tsx}', './app/admin/components/**/*.{js,ts,jsx,tsx}'],
 
   theme: {
     extend: {

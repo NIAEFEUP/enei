@@ -88,7 +88,7 @@ export function Navbar({ className, variant = "blue" }: { className?: string, va
         className={cn('w-full transition-colors duration-300', !onTop && 'bg-enei-blue', `bg-${bgColor}`, className)}
       >
         <Container>
-          <div className="w-full py-6 flex flex-row justify-between items-center">
+          <div className="w-full py-6 flex flex-row justify-between items-center flex-wrap gap-2">
             <Link route="pages:home">
               <img
                 className="w-20 md:w-28 h-auto"
@@ -97,15 +97,24 @@ export function Navbar({ className, variant = "blue" }: { className?: string, va
               />
               <span className="sr-only">Ir para a página inicial</span>
             </Link>
-            <div className="flex flex-row items-center gap-x-4">
-              <Link route="pages:store" className={cn("", `text-${textColor}`)}>
-                <span>Loja</span>
-              </Link>
-              {auth.state === 'authenticated' ? (
-                <LogoutButton />
-              ) : (
-                auth.state === 'unauthenticated' && <LoginButton />
-              )}
+            <div className='flex gap-4 items-center justify-between'>
+              <div className={auth.state === 'authenticated' ? 'block' : 'hidden'}>
+                <Link route="pages:store" className={cn("", `text-${textColor}`)}>
+                    <span>Loja</span>
+                </Link>
+              </div>
+              <div className={auth.state === 'authenticated' ? 'block' : 'hidden'}>
+                <Link route="pages:referrals" className={cn(buttonVariants({ variant: 'link' }), "text-enei-beige p-0")}>
+                  Referenciações
+                </Link>
+              </div>
+              <div>
+                {auth.state === 'authenticated' ? (
+                  <LogoutButton />
+                ) : (
+                  auth.state === 'unauthenticated' && <LoginButton />
+                )}
+              </div>
             </div>
           </div>
         </Container>

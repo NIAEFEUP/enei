@@ -1,10 +1,11 @@
 import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
-import ParticipantProfile from './participant_profile.js'
-import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import Account from './account.js'
 import { UserTypes } from '../../types/user.js'
 import PromoterInfo from './promoter_info.js'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
+import PromoterProfile from './promoter_profile.js'
+import ParticipantProfile from './participant_profile.js'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -22,13 +23,42 @@ export default class User extends BaseModel {
   @column.dateTime()
   declare emailVerifiedAt: DateTime | null
 
+  @column()
+  declare isAdmin: boolean
+
   @hasMany(() => Account)
   declare accounts: HasMany<typeof Account>
 
-  // Profiles
+  // Referrals
 
   @column()
-  declare participantProfileId: number | null
+  declare referringPromoterId: number | undefined
+
+  @belongsTo(() => User, {
+    foreignKey: 'promoterId',
+  })
+  declare referringPromoter: BelongsTo<typeof User>
+
+  @column()
+  declare referrerId: number | undefined
+
+  @belongsTo(() => User, {
+    foreignKey: 'referrerId',
+  })
+  declare referrer: BelongsTo<typeof User>
+
+  // PromoterProfile
+
+  @column()
+  declare promoterProfileId: number | undefined
+
+  @belongsTo(() => PromoterProfile)
+  declare promoterProfile: BelongsTo<typeof PromoterProfile>
+
+  // ParticipantProfile
+
+  @column()
+  declare participantProfileId: number | undefined
 
   @belongsTo(() => ParticipantProfile)
   declare participantProfile: BelongsTo<typeof ParticipantProfile>
@@ -41,6 +71,20 @@ export default class User extends BaseModel {
 
   // Functions
 
+  get role() {
+    if (this.isParticipant()) return 'participant' as const
+    if (this.isPromoter()) return 'promoter' as const
+    return 'unknown' as const
+  }
+
+  isPromoter() {
+    return this.promoterProfileId
+  }
+
+  isParticipant() {
+    return this.participantProfileId
+  }
+
   isEmailVerified() {
     return this.emailVerifiedAt !== null
   }
@@ -48,10 +92,31 @@ export default class User extends BaseModel {
   groups() {
     const groups = []
 
-    if(this.participantProfile) groups.push(UserTypes.PARTICIPANT)
+    if (this.participantProfile) groups.push(UserTypes.PARTICIPANT)
 
-    if(this.promoterInfo) groups.push(UserTypes.PROMOTER)
+    if (this.promoterInfo) groups.push(UserTypes.PROMOTER)
 
     return groups
+  }
+
+  wasReferred() {
+    return !this.referrerId
+  }
+
+  static async hasPurchasedTicket(user: User) {
+    if (!user.isParticipant()) return false
+
+    await user.load('participantProfile')
+    return !!user.participantProfile.purchasedTicket
+  }
+
+  static async getReferringPromoter(user: User) {
+    await user.load('referringPromoter')
+    return user.referringPromoter
+  }
+
+  static async getReferrer(user: User) {
+    await user.load('referrer')
+    return user.referrer
   }
 }
