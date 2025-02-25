@@ -159,6 +159,10 @@ router
   .prefix('payment')
 
 
+router
+  .on('/faq').renderInertia('faq').as('pages:faq')
+
+
 router.get('/event', [EventsController, 'index']).as('pages:event')
 
 
@@ -207,3 +211,4 @@ router.get('/referrals', [ReferralsController, 'showReferralLink'])
 router.route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
   .middleware([middleware.automaticSubmit(), middleware.silentAuth()]) 
   .as('actions:referrals.link')
+
