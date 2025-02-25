@@ -11,6 +11,7 @@ import { errors } from '@adonisjs/auth'
 import app from '@adonisjs/core/services/app'
 import { inject } from '@adonisjs/core'
 import { Logger } from '@adonisjs/core/logger'
+import PromoterProfile from '#models/promoter_profile'
 
 @inject()
 export class UserService {
@@ -65,6 +66,23 @@ export class UserService {
     UserEmailVerified.tryDispatch(verifiedUser)
 
     return verifiedUser
+  }
+
+  async createPromoter(email: string, password: string) {
+    const committedUser = await db.transaction(async (trx) => {
+      const user = await User.create({ email }, { client: trx })
+      await user.related('accounts').create({ id: `credentials:${email}`, password })
+
+      const promoterInfo = await PromoterProfile.create({}, { client: trx })
+      await user.related('promoterProfile').associate(promoterInfo)
+
+      return user
+    })
+
+    return [
+      committedUser,
+      UserCreated.tryDispatch(committedUser),
+    ] as const
   }
 
   async sendForgotPasswordEmail(email: string) {

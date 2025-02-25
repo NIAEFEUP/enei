@@ -5,38 +5,28 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.integer('promoter_info_id')
+      table.integer('referring_promoter_id')
+        .references('id')
+        .inTable('users')
+
+      table.integer('referrer_id')
+        .references('id')
+        .inTable('users')
+
+      table.integer('promoter_profile_id')
         .unique()
         .references('id')
-        .inTable('promoter_infos')
-
-      table.integer('points').defaultTo(0)
-
-      table.integer('referred_by_promoter_id')
-        .unsigned()
-        .nullable()
-        .references('id')
-        .inTable('users')
-        .onDelete('SET NULL')
-
-      table.integer('referred_by_user_id')
-        .unsigned()
-        .nullable()
-        .references('id')
-        .inTable('users')
-        .onDelete('SET NULL')
+        .inTable('promoter_profiles')
     })
   }
 
   async down() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.dropColumn('promoter_info_id')
+      table.dropColumn('promoter_profile_id')
 
-      table.dropColumn('points')
+      table.dropColumn('referrer_id')
 
-      table.dropColumn('referred_by_promoter_id')
-
-      table.dropColumn('referred_by_user_id')
+      table.dropColumn('root_referrer_id')
     })
   }
 }

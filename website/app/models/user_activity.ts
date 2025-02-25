@@ -2,10 +2,20 @@ import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
 import User from './user.js'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import type { UserActivityDescription } from '../../types/user_activity.js'
 
-export default class CompanyRepresentativeInfo extends BaseModel {
+export default class UserActivity extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
+
+  @belongsTo(() => User)
+  declare user: BelongsTo<typeof User>
+
+  @column()
+  declare type: string
+
+  @column()
+  declare description: UserActivityDescription
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -13,6 +23,5 @@ export default class CompanyRepresentativeInfo extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
-  @belongsTo(() => User)
-  declare user: BelongsTo<typeof User>
 }
+

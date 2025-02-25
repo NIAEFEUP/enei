@@ -1,13 +1,13 @@
 import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import Account from './account.js'
-import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
+import { UserTypes } from '../../types/user.js'
 import PromoterInfo from './promoter_info.js'
-import { compose } from '@adonisjs/core/helpers'
-import { HasReferralLink } from './mixins/has_referral_link.js'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
+import PromoterProfile from './promoter_profile.js'
 import ParticipantProfile from './participant_profile.js'
 
-export default class User extends compose(BaseModel, HasReferralLink) {
+export default class User extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
@@ -23,60 +23,100 @@ export default class User extends compose(BaseModel, HasReferralLink) {
   @column.dateTime()
   declare emailVerifiedAt: DateTime | null
 
+  @column()
+  declare isAdmin: boolean
+
   @hasMany(() => Account)
   declare accounts: HasMany<typeof Account>
 
+  // Referrals
+
   @column()
-  declare referredByPromoterId: number | null
+  declare referringPromoterId: number | undefined
 
   @belongsTo(() => User, {
-    foreignKey: 'referredByPromoterId'
+    foreignKey: 'promoterId',
   })
-  declare referredByPromoter: BelongsTo<typeof User>
+  declare referringPromoter: BelongsTo<typeof User>
 
   @column()
-  declare referredByUserId: number | null
+  declare referrerId: number | undefined
 
   @belongsTo(() => User, {
-    foreignKey: 'referredByUserId'
+    foreignKey: 'referrerId',
   })
-  declare referredByUser: BelongsTo<typeof User>
+  declare referrer: BelongsTo<typeof User>
+
+  // PromoterProfile
 
   @column()
-  declare points: number
+  declare promoterProfileId: number | undefined
 
-  // PromoterInfo
-  @column()
-  declare promoterInfoId: number | null
-
-  @belongsTo(() => PromoterInfo)
-  declare promoterInfo: BelongsTo<typeof PromoterInfo>
+  @belongsTo(() => PromoterProfile)
+  declare promoterProfile: BelongsTo<typeof PromoterProfile>
 
   // ParticipantProfile
+
   @column()
-  declare participantProfileId: number | null
+  declare participantProfileId: number | undefined
 
   @belongsTo(() => ParticipantProfile)
   declare participantProfile: BelongsTo<typeof ParticipantProfile>
 
+  @column()
+  declare points: number
+
+  @belongsTo(() => PromoterInfo)
+  declare promoterInfo: BelongsTo<typeof PromoterInfo>
+
   // Functions
+
+  get role() {
+    if (this.isParticipant()) return 'participant' as const
+    if (this.isPromoter()) return 'promoter' as const
+    return 'unknown' as const
+  }
+
   isPromoter() {
-    return this.promoterInfoId !== null
+    return this.promoterProfileId
   }
 
   isParticipant() {
-    return this.participantProfileId !== null
+    return this.participantProfileId
   }
 
   isEmailVerified() {
     return this.emailVerifiedAt !== null
   }
 
-  hasBeenReferred() {
-    return this.referredByUserId !== null;
+  groups() {
+    const groups = []
+
+    if (this.participantProfile) groups.push(UserTypes.PARTICIPANT)
+
+    if (this.promoterInfo) groups.push(UserTypes.PROMOTER)
+
+    return groups
   }
 
-  public getPromoterCode: () => number = () => {
-    return this.id;
+  wasReferred() {
+    return !this.referrerId
+  }
+
+  static async hasPurchasedTicket(user: User) {
+    if (!user.isParticipant()) return false
+
+    await user.load('participantProfile')
+    return !!user.participantProfile.purchasedTicket
+  }
+
+  static async getReferringPromoter(user: User) {
+    await user.load('referringPromoter')
+    return user.referringPromoter
+  }
+
+  static async getReferrer(user: User) {
+    await user.load('referrer')
+    return user.referrer
   }
 }

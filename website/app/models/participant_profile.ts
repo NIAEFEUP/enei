@@ -17,6 +17,10 @@ export default class ParticipantProfile extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
+  // Ticket Info
+  @column()
+  declare purchasedTicket: "early-bird-without-housing" | "early-bird-with-housing" | null
+
   // General Info
 
   @column()

@@ -18,7 +18,8 @@ const TicketsController = () => import('#controllers/tickets_controller')
 const ProfilesController = () => import('#controllers/profiles_controller')
 const CvsController = () => import('#controllers/cvs_controller')
 
-router.use([() => import('#middleware/referral_middleware')])
+const StoreController = () => import('#controllers/store_controller')
+const ReferralsController = () => import('#controllers/referrals_controller')
 
 router.on('/').renderInertia('home').as('pages:home')
 
@@ -155,6 +156,7 @@ router
   })
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix('payment')
+  
 router.
   group(() => {
     router.on('/').renderInertia('cv').as('pages:cv')
@@ -183,3 +185,20 @@ router.
   .prefix('user')
 
 
+
+router
+  .group(() => {
+    router.get('/', [StoreController, 'index']).as('pages:store')
+    router.post('/products/:id/buy/', [StoreController, 'buy']).as('actions:store.buy')
+  })
+  .use([middleware.auth(), middleware.verifiedEmail(), /*middleware.participant()*/])
+  .prefix('/store')
+  
+// Referrals
+router.get('/referrals', [ReferralsController, 'showReferralLink'])
+  .middleware(middleware.auth())
+  .as('pages:referrals')
+
+router.route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
+  .middleware([middleware.automaticSubmit(), middleware.silentAuth()]) 
+  .as('actions:referrals.link')

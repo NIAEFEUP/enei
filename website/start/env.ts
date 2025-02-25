@@ -16,7 +16,7 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     PORT: vine.number(),
     HOST: vine.string(),
     LOG_LEVEL: vine.string(),
-    
+
     APP_KEY: vine.string(),
 
     /*
@@ -119,10 +119,10 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
 
     /*
     |----------------------------------------------------------
-    | DRIVE_DISK
+    | Variables for configuring the drive package
     |----------------------------------------------------------
     */
-    DRIVE_DISK: vine.string(),
+    DRIVE_DISK: vine.string()
   })
 })
 
