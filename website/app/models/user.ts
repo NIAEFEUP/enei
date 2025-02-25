@@ -67,11 +67,11 @@ export default class User extends BaseModel {
   }
 
   isPromoter() {
-    return !this.promoterProfileId
+    return this.promoterProfileId
   }
 
   isParticipant() {
-    return !this.participantProfileId
+    return this.participantProfileId
   }
 
   isEmailVerified() {
