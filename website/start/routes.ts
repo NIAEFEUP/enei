@@ -9,6 +9,7 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import { emailVerificationThrottle, sendForgotPasswordThrottle } from '#start/limiter'
+const EventsController = () => import('#controllers/events_controller')
 import { sep, normalize } from 'node:path'
 import app from '@adonisjs/core/services/app'
 
@@ -156,7 +157,11 @@ router
   })
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix('payment')
-  
+
+
+router.get('/event', [EventsController, 'index']).as('pages:event')
+
+
 router.
   group(() => {
     router.on('/').renderInertia('cv').as('pages:cv')
