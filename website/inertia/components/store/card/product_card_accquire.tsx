@@ -24,15 +24,15 @@ function AcquireDisplayText({
 
   return (
     <>
-      {userPoints < product.price
-        ? "Sem pontos suficientes"
-        : (
-          <div className="flex flex-col">
-            <span className="text-2xl font-bold">{displayText}</span>
-            <span>{product.price} pontos</span>
-          </div>
-        )
-      }
+      <div className="flex flex-col">
+        <span className="text-xl font-bold">
+          {product.price <= userPoints
+            ? `${displayText}`
+            : "Sem pontos"
+          }
+        </span>
+        <span>{product.price} pontos</span>
+      </div>
     </>
   )
 }
