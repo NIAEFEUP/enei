@@ -8,9 +8,6 @@ export default class ParticipantProfile extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
-  @column()
-  declare slug: string
-
   @hasOne(() => User)
   declare user: HasOne<typeof User>
 
@@ -78,4 +75,22 @@ export default class ParticipantProfile extends BaseModel {
 
   @json()
   declare attendedBeforeEditions: string[]
+
+  // Profile Info
+
+  @column()
+  declare slug: string | null
+
+  @column()
+  declare about: string | null
+
+  @column()
+  declare github: string | null
+
+  @column()
+  declare linkedin: string | null
+
+  @column()
+  declare website: string | null
+
 }

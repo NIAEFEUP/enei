@@ -5,7 +5,7 @@ import { Button, buttonVariants } from '~/components/ui/button'
 import Page from '~/components/common/page'
 import Container from '~/components/common/containers'
 import { getUniversityById } from '~/lib/enei/signup/universities'
-import { Download, EyeOff, User, Github, Instagram, Linkedin, Globe, QrCode, LucideProps, Pencil } from 'lucide-react'
+import { Download, User, Github, Linkedin, Globe, QrCode, LucideProps, Pencil} from 'lucide-react'
 import { Dialog, DialogContent, DialogTrigger } from '~/components/ui/dialog'
 import { QRCodeSVG } from 'qrcode.react';
 import { useEffect, useState } from 'react'
@@ -29,7 +29,7 @@ const ENEI_EDITIONS: Option[] = editions
     }
   })
 
-function SocialIcon({ icon: Icon, link }: SocialIconProps) {
+const SocialIcon = ({ icon: Icon, link }: SocialIconProps) => {
   return (
     <a href={link} className='border-2 border-enei-blue rounded-full h-9 w-9 flex justify-center items-center'>
       <Icon className='h-5' />
@@ -48,8 +48,14 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
 
   const profileEditions = ENEI_EDITIONS.filter((edition) => profile.attendedBeforeEditions.includes(edition.value)).map((edition) => edition.label)
 
+  const socials: SocialIconProps[] = []
+
+  if (profile.github) socials.push({ icon: Github, link: `https://github.com/${profile.github}` })
+  if (profile.linkedin) socials.push({ icon: Linkedin, link: `https://linkedin.com/in/${profile.linkedin}` })
+  if (profile.website) socials.push({ icon: Globe, link: profile.website })
+
   return (
-    <Page title={profile.firstName} className="bg-enei-beige text-enei-blue">
+    <Page title={`${profile.firstName} ${profile.lastName}`} className="bg-enei-beige text-enei-blue">
       <Container>
         <section className="relative flex flex-col gap-8 md:justify-between z-10">
           <div className='flex flex-row justify-normal gap-4'>
@@ -75,12 +81,11 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                 <p className='text-lg'> @ {getUniversityById(profile.university)!.name} </p>
               </div>
               <div className='flex flex-row flex-wrap gap-2 justify-center md:justify-start'>
-                <div className='flex flex-row gap-2'>
-                  <SocialIcon icon={Github} link={"https://github.com"} />
-                  <SocialIcon icon={Instagram} link={"https://instagram.com"} />
-                  <SocialIcon icon={Linkedin} link={"https://linkedin.com"} />
-                  <SocialIcon icon={Globe} link={"https://google.com"} />
-                </div>
+                {socials.length > 0 &&
+                  socials.map((social: SocialIconProps) => (
+                    <SocialIcon {...social} />
+                  ))
+                }
                 <div className='flex flex-row gap-2'>
                   <Button className='w-fit'>
                     <Download />
@@ -123,18 +128,10 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                 Sobre
               </h4>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                {profile.about ?? "Sem informação."}
               </p>
             </div>
           </section>
-          {isUser &&
-            <section>
-              <div className='grid grid-cols-[auto_1fr] gap-2 items-center my-2'>
-                <EyeOff />
-                <p> As informações a baixo estão visíveis apenas para ti. </p>
-              </div>
-            </section>
-          }
         </section>
       </Container>
     </Page>
