@@ -3,11 +3,19 @@ import User from '#models/user'
 import type { UserTypes } from '../../types/user.js'
 
 export class ProductService {
-  async getPointProducts(user: User | undefined) {
-    return this.applyRestrictions(await Product.query().where('currency', 'points'), user)
+  productBaseQuery() {
+    return Product.query().where('hidden', false)
   }
 
-  applyRestrictions(products: Array<Product>, user: User | undefined) {
+  async getPointProducts(user: User | undefined) {
+    return this.applyRestrictions(await this.productBaseQuery().where('currency', 'points'), user)
+  }
+
+  async getRealCurrencyProducts() {
+    return this.applyRestrictions(await this.productBaseQuery().where('currency', 'EUR'))
+  }
+
+  applyRestrictions(products: Array<Product>, user: User | undefined = undefined) {
     if (!user) return products
 
     return products.filter((product: Product) => this.validGroup(user, product))

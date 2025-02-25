@@ -22,7 +22,7 @@ export class StoreService {
       if (!product) return null
 
       user.useTransaction(trx)
-      user.points = Math.max(0, user.points - product.price)
+      user.points = user.points - product.price
       await user.save()
 
       product.useTransaction(trx)
