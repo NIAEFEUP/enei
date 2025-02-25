@@ -5,13 +5,13 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.integer('promoter_info_id').nullable()
+      table.boolean('is_admin').defaultTo(false)
     })
   }
 
   async down() {
-    this.schema.alterTable  (this.tableName, (table) => {
-      table.dropColumn('promoter_info_id')
+    this.schema.alterTable(this.tableName, (table) => {
+      table.dropColumn('is_admin')
     })
   }
 }

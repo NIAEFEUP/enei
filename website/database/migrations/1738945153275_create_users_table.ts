@@ -9,8 +9,6 @@ export default class extends BaseSchema {
       table.timestamps({ defaultToNow: true })
 
       table.string('email').unique().notNullable()
-      table.boolean('is_admin').defaultTo(false)
-
       table.timestamp('email_verified_at')
     })
   }
