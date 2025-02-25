@@ -9,11 +9,15 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import { emailVerificationThrottle, sendForgotPasswordThrottle } from '#start/limiter'
+import { sep, normalize } from 'node:path'
+import app from '@adonisjs/core/services/app'
 
 const AuthenticationController = () => import('#controllers/authentication_controller')
 const OrdersController = () => import('#controllers/orders_controller')
 const TicketsController = () => import('#controllers/tickets_controller')
 const ProfilesController = () => import('#controllers/profiles_controller')
+const CvsController = () => import('#controllers/cvs_controller')
+
 const StoreController = () => import('#controllers/store_controller')
 const ReferralsController = () => import('#controllers/referrals_controller')
 
@@ -152,6 +156,35 @@ router
   })
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix('payment')
+  
+router.
+  group(() => {
+    router.on('/').renderInertia('cv').as('pages:cv')
+  })
+  .use([middleware.auth(), middleware.verifiedEmail()])
+  .prefix('cv') // dummy route for testing
+
+router.
+  group(() => {
+    router.get('/cv/name', [CvsController, 'showName'])
+    router.post('/cv/upload', [CvsController, 'upload'])
+    router.delete('cv/delete', [CvsController, 'delete'])
+    router.get('cv/uploads/*', ({ request, response }) => {
+      const filePath = `${request.param('*').join(sep)}_resume.pdf`
+      const PATH_TRAVERSAL_REGEX = /(?:^|[\\/])\.\.(?:[\\/]|$)/
+      const normalizedPath = normalize(filePath)
+      if (PATH_TRAVERSAL_REGEX.test(normalizedPath)) {
+        return response.badRequest('Malformed path')
+      }
+      const absolutePath = app.makePath('storage/uploads/cvs', normalizedPath)
+      return response.download(absolutePath)
+    })
+  })
+  .use([middleware.auth()])
+  
+  .prefix('user')
+
+
 
 router
   .group(() => {
