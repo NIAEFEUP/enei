@@ -158,6 +158,16 @@ router
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix('payment')
 
+router
+  .group(() => {
+    router.get("/u/:slug", [ProfilesController, 'index']).as('pages:profile.show')
+    router.get("/profile", [ProfilesController, 'default'])
+      .as('pages:profile.default')
+      .use([middleware.auth(), middleware.verifiedEmail()])
+    router.get("/profile/edit", [ProfilesController, 'edit'])
+      .as('pages:profile.edit')
+      .use([middleware.auth(), middleware.verifiedEmail()])
+  })
 
 router
   .on('/faq').renderInertia('faq').as('pages:faq')
