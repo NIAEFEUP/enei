@@ -96,18 +96,19 @@ export default function Faq() {
     
 
     return (
-        <Page title="FAQ" className="bg-enei-blue text-enei-beige">
-            <header className="flex flex-col justify-center items-center gap-2">
+        <Page title="FAQ" className="bg-enei-blue">
+            <div className="bg-enei-beige text-enei-blue w-full">
+            <header className="flex flex-col justify-center items-center gap-2 p-8">
                 <h1 className="text-center lg:text-5xl text-3xl font-bold">Frequently Asked Questions</h1>
                 <h2 className="text-center lg:text-xl text-lg">Não encontras uma resposta?</h2>
                 <h2 className="text-center lg:text-xl text-lg">Contacta-nos 999112222 ou por email geral@eneiconf.pt</h2>
             </header>
-            <div className="qa-container flex flex-col lg:p-16 p-8 w-full">
+            <div className="qa-container flex flex-col lg:px-16 px-8 w-full">
                 {questions.map((topic, topicIndex) => (
                     <div key={topicIndex} className="qa-topic mb-8">
                         <div className="flex items-center">
-                            <h3 className="lg:text-3xl text-xl font-bold text-orange-300 whitespace-nowrap">{topic.topic}</h3>
-                            <div className="bg-orange-300 h-0.5 w-full ml-4"></div>
+                            <h3 className="lg:text-3xl text-xl font-bold text-orange-400 whitespace-nowrap">{topic.topic}</h3>
+                            <div className="bg-orange-400 h-0.5 w-full ml-4"></div>
                         </div>
 
                         <div className="qa-questions flex flex-col gap-4 mt-4">
@@ -131,6 +132,7 @@ export default function Faq() {
                         </div>
                     </div>
                 ))}
+            </div>
             </div>
         </Page>
     );
