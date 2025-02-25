@@ -8,6 +8,9 @@ const UserResource = {
     properties: {
       promoterInfoId: {
         isVisible: { list: true, filter: true, show: true, edit: true },
+      },
+      points: {
+        isVisible: { list: true, filter: true, show: true, edit: false },
       }
     },
   }

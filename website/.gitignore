@@ -26,3 +26,5 @@ yarn-error.log
 .DS_Store
 
 dump.rdb
+
+/.adminjs/
