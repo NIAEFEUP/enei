@@ -42,7 +42,8 @@ router.use([
   () => import('@adonisjs/auth/initialize_auth_middleware'),
   () => import('#middleware/auth/logout_if_authentication_disabled_middleware'),
   () => import('#middleware/log_user_middleware'),
-  () => import('#middleware/update_logger_storage_middleware')
+  () => import('#middleware/update_logger_storage_middleware'),
+  () => import('#middleware/link_to_user_middleware')
 ])
 
 /**
@@ -61,5 +62,6 @@ export const middleware = router.named({
   verifySocialCallback: () => import('#middleware/auth/verify_social_callback_middleware'),
   guest: () => import('#middleware/auth/guest_middleware'),
   auth: () => import('#middleware/auth/auth_middleware'),
+  silentAuth: () => import('#middleware/auth/silent_auth_middleware'),
   finishRedirect: () => import('#middleware/finish_redirect_middleware'),
 })

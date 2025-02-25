@@ -158,6 +158,7 @@
     "recharts": "^2.15.0",
     "reflect-metadata": "^0.2.2",
     "sonner": "^1.7.2",
+    "sqids": "^0.3.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "use-resize-observer": "^9.1.0",

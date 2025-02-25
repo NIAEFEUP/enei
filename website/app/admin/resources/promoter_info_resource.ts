@@ -1,9 +1,9 @@
 import dbConfig from "#config/database"
-import PromoterInfo from "#models/promoter_info"
+import PromoterProfile from "#models/promoter_profile"
 import { LucidResource } from "@adminjs/adonis"
 
-const PromoterInfoResource = {
-  resource: new LucidResource(PromoterInfo, dbConfig.connection),
+const PromoterProfileResource = {
+  resource: new LucidResource(PromoterProfile, dbConfig.connection),
   options: {
     properties: {
       promoterInfoId: {
@@ -13,4 +13,4 @@ const PromoterInfoResource = {
   }
 }
 
-export default PromoterInfoResource
+export default PromoterProfileResource

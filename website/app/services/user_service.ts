@@ -11,7 +11,7 @@ import { errors } from '@adonisjs/auth'
 import app from '@adonisjs/core/services/app'
 import { inject } from '@adonisjs/core'
 import { Logger } from '@adonisjs/core/logger'
-import PromoterInfo from '#models/promoter_info'
+import PromoterProfile from '#models/promoter_profile'
 
 @inject()
 export class UserService {
@@ -73,8 +73,8 @@ export class UserService {
       const user = await User.create({ email }, { client: trx })
       await user.related('accounts').create({ id: `credentials:${email}`, password })
 
-      const promoterInfo = await PromoterInfo.create({}, { client: trx })
-      await user.related('promoterInfo').associate(promoterInfo)
+      const promoterInfo = await PromoterProfile.create({}, { client: trx })
+      await user.related('promoterProfile').associate(promoterInfo)
 
       return user
     })

@@ -3,13 +3,13 @@ import type { AdminJSProviderConfig } from "@adminjs/adonis"
 import componentLoader from '../app/admin/component_loader.js'
 import authProvider from '../app/admin/auth.js'
 import UserResource from "../app/admin/resources/user_resource.js"
-import PromoterInfoResource from "../app/admin/resources/promoter_info_resource.js"
+import PromoterProfileResource from "../app/admin/resources/promoter_info_resource.js"
 import OrderResource from "../app/admin/resources/order_resource.js"
 import ProductResource from "../app/admin/resources/product_resource.js"
 
 const resources = [
   UserResource,
-  PromoterInfoResource,
+  PromoterProfileResource,
   OrderResource,
   ProductResource
 ]

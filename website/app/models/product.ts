@@ -1,5 +1,8 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
+import type { ModelAttributes } from '@adonisjs/lucid/types/model';
+
+export type SerializedProduct = ModelAttributes<Product>;
 
 export default class Product extends BaseModel {
   @column({ isPrimary: true })
@@ -25,6 +28,9 @@ export default class Product extends BaseModel {
 
   @column()
   declare image: string
+
+  @column()
+  declare hidden: boolean
 
   @column()
   declare productGroupId: number
