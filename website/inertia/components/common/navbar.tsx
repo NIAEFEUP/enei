@@ -85,7 +85,7 @@ export function Navbar({ className }: { className?: string }) {
         className={cn('w-full transition-colors duration-300', !onTop && 'bg-enei-blue', className)}
       >
         <Container>
-          <div className="w-full py-6 flex flex-row justify-between items-center">
+          <div className="w-full py-6 flex flex-row justify-between items-center flex-wrap gap-2">
             <Link route="pages:home">
               <img
                 className="w-20 md:w-28 h-auto"
@@ -94,11 +94,20 @@ export function Navbar({ className }: { className?: string }) {
               />
               <span className="sr-only">Ir para a página inicial</span>
             </Link>
-            {auth.state === 'authenticated' ? (
-              <LogoutButton />
-            ) : (
-              auth.state === 'unauthenticated' && <LoginButton />
-            )}
+            <div className='flex gap-4 items-center justify-between'>
+              <div className={auth.state === 'authenticated' ? 'block' : 'hidden'}>
+                <Link route="pages:referrals" className={cn(buttonVariants({ variant: 'link' }), "text-enei-beige p-0")}>
+                  Referenciações
+                </Link>
+              </div>
+              <div>
+                {auth.state === 'authenticated' ? (
+                  <LogoutButton />
+                ) : (
+                  auth.state === 'unauthenticated' && <LoginButton />
+                )}
+              </div>
+            </div>
           </div>
         </Container>
       </nav>
