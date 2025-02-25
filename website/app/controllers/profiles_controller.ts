@@ -4,11 +4,10 @@ import { createProfileValidator } from '#validators/profile'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class ProfilesController {
-  // To be used when the profile page is done
   async index({ auth, inertia, params, response }: HttpContext) {
     const user = await User.find(params.id)
     if (!user) {
-      response.abort("Participante não encontrado", 404)
+      response.notFound("Participante não encontrado")
       return
     }
 
@@ -19,7 +18,7 @@ export default class ProfilesController {
       if (isUser) {
         response.redirect().toRoute('pages:signup')
       } else {
-        response.abort("Participante não encontrado", 404)
+        response.notFound("Participante não encontrado")
       }
       return
     }
