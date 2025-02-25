@@ -12,7 +12,7 @@ export default class ProfilesController {
       return
     }
 
-    const isUser = auth.user ? (user.id == auth.user!.id) : false;
+    const isUser = auth.user ? (user.id === auth.user!.id) : false;
 
     await user.load('participantProfile')
     if (!user.participantProfile) {
