@@ -1,9 +1,7 @@
-import { DefaultAuthProvider, setCurrentAdmin, useCurrentAdmin } from 'adminjs'
+import { DefaultAuthProvider } from 'adminjs'
 import type { CurrentAdmin, DefaultAuthenticatePayload } from 'adminjs'
 
 import componentLoader from './component_loader.js'
-import User from '#models/user'
-import hash from '@adonisjs/core/services/hash'
 import Account from '#models/account'
 import { errors } from '@adonisjs/auth'
 
