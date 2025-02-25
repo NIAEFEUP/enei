@@ -1,5 +1,10 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
+import type { ModelAttributes } from '@adonisjs/lucid/types/model';
+
+export type SerializedProduct = ModelAttributes<Product>;
+
+import type { ProductRestrictions } from '../../types/product'
 
 export default class Product extends BaseModel {
   @column({ isPrimary: true })
@@ -27,7 +32,16 @@ export default class Product extends BaseModel {
   declare image: string
 
   @column()
+  declare hidden: boolean
+
+  @column()
   declare productGroupId: number
+
+  @column({
+    consume: (value: string) => JSON.parse(value),
+    serialize: (value: ProductRestrictions) => JSON.stringify(value),
+  })
+  declare restrictions: ProductRestrictions
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
