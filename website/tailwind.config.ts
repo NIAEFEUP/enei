@@ -18,6 +18,8 @@ export default {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
         },
+        'persian-orange': '#E28C40',
+        'dark-persian-orange': '#914E13',
         'sand': {
           '1': '#fdfdfc',
           '2': '#f9f9f8',

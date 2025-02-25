@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import Account from './account.js'
+import { UserTypes } from '../../types/user.js'
+import PromoterInfo from './promoter_info.js'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import PromoterProfile from './promoter_profile.js'
 import ParticipantProfile from './participant_profile.js'
@@ -61,6 +63,12 @@ export default class User extends BaseModel {
   @belongsTo(() => ParticipantProfile)
   declare participantProfile: BelongsTo<typeof ParticipantProfile>
 
+  @column()
+  declare points: number
+
+  @belongsTo(() => PromoterInfo)
+  declare promoterInfo: BelongsTo<typeof PromoterInfo>
+
   // Functions
 
   get role() {
@@ -81,13 +89,23 @@ export default class User extends BaseModel {
     return this.emailVerifiedAt !== null
   }
 
+  groups() {
+    const groups = []
+
+    if (this.participantProfile) groups.push(UserTypes.PARTICIPANT)
+
+    if (this.promoterInfo) groups.push(UserTypes.PROMOTER)
+
+    return groups
+  }
+
   wasReferred() {
     return !this.referrerId
   }
 
   static async hasPurchasedTicket(user: User) {
     if (!user.isParticipant()) return false
-    
+
     await user.load('participantProfile')
     return !!user.participantProfile.purchasedTicket
   }

@@ -25,15 +25,17 @@ export default function Page({
   title,
   className,
   children,
+  variant = "blue"
 }: {
   title: string
   className?: string
+  variant?: string
   children?: React.ReactNode
 }) {
   return (
     <div className={cn('w-full min-h-dvh scroll-smooth relative flex flex-col', className)}>
       <Head title={title} />
-      <Navbar className="sticky top-0 z-20 grow-0" />
+      <Navbar className="sticky top-0 z-20 grow-0" variant={variant}/>
       <PromoterNotification />
       <Toaster />
       {children}
