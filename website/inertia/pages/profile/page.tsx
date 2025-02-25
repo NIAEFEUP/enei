@@ -5,7 +5,7 @@ import { Button, buttonVariants } from '~/components/ui/button'
 import Page from '~/components/common/page'
 import Container from '~/components/common/containers'
 import { getUniversityById } from '~/lib/enei/signup/universities'
-import { Download, User, Github, Linkedin, Globe, QrCode, LucideProps, Pencil} from 'lucide-react'
+import { Download, User, Github, Linkedin, Globe, QrCode, LucideProps, Pencil } from 'lucide-react'
 import { Dialog, DialogContent, DialogTrigger } from '~/components/ui/dialog'
 import { QRCodeSVG } from 'qrcode.react';
 import { useEffect, useState } from 'react'
@@ -31,7 +31,7 @@ const ENEI_EDITIONS: Option[] = editions
 
 const SocialIcon = ({ icon: Icon, link }: SocialIconProps) => {
   return (
-    <a href={link} className='border-2 border-enei-blue rounded-full h-9 w-9 flex justify-center items-center'>
+    <a href={link} className='border-2 border-enei-blue rounded-full h-9 w-9 flex justify-center items-center' target="_blank" rel="noopener noreferrer">
       <Icon className='h-5' />
     </a>
   )
@@ -52,11 +52,11 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
 
   if (profile.github) socials.push({ icon: Github, link: `https://github.com/${profile.github}` })
   if (profile.linkedin) socials.push({ icon: Linkedin, link: `https://linkedin.com/in/${profile.linkedin}` })
-  if (profile.website) socials.push({ icon: Globe, link: profile.website })
+  if (profile.website) socials.push({ icon: Globe, link: `//${profile.website}` })
 
   return (
     <Page title={`${profile.firstName} ${profile.lastName}`} className="bg-enei-beige text-enei-blue">
-      <Container>
+      <Container className='mt-8'>
         <section className="relative flex flex-col gap-8 md:justify-between z-10">
           <div className='flex flex-row justify-normal gap-4'>
             <h3 className='text-2xl'>Perfil do Participante</h3>
