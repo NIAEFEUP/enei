@@ -6,6 +6,7 @@ import PromoterInfo from './promoter_info.js'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import PromoterProfile from './promoter_profile.js'
 import ParticipantProfile from './participant_profile.js'
+import StaffProfile from './staff_profile.js'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -65,6 +66,12 @@ export default class User extends BaseModel {
 
   @column()
   declare points: number
+
+  @column()
+  declare staffProfileId: number | undefined
+
+  @belongsTo(() => StaffProfile)
+  declare staffProfile: BelongsTo<typeof StaffProfile>
 
   @belongsTo(() => PromoterInfo)
   declare promoterInfo: BelongsTo<typeof PromoterInfo>
