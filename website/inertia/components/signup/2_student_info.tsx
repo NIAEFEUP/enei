@@ -17,22 +17,12 @@ import { cn } from '~/lib/utils'
 import { Input } from '../ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { EducationInfo, educationInfoSchema } from '~/pages/signup/schema'
-import { getUniversityById, universities } from '~/lib/enei/signup/universities'
-import { useMemo } from 'react'
+import { universities } from '~/lib/enei/signup/universities'
 import { useStepper } from '../ui/stepper'
 import { useAtom, useSetAtom } from 'jotai/react'
 import { educationInfoAtom } from '~/pages/signup/atoms'
 import StepperFormActions from './actions'
-
-function UniversitySelection({ value }: { value?: string }) {
-  const name = useMemo(() => value && getUniversityById(value)?.name, [value])
-
-  return name ? (
-    <span className="max-w-full overflow-ellipsis overflow-hidden">{name}</span>
-  ) : (
-    <span>Selecionar Universidade...</span>
-  )
-}
+import UniversitySelection from './common/university_selection'
 
 function EducationInfoForm() {
   const { nextStep } = useStepper()
