@@ -17,8 +17,9 @@ export default class EventsController {
       },
     ]
     const registrationRequirements = ''
-    const ticketsRemaining = 10
-    const price = 1;
+    const ticketsRemaining = 0
+    const price = 0
+    const requiresRegistration = false
 
     return inertia.render('events', {
       title,
@@ -28,6 +29,7 @@ export default class EventsController {
       location,
       speakers,
       registrationRequirements,
+      requiresRegistration,
       ticketsRemaining,
       price,
     })

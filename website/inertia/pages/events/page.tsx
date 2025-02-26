@@ -19,6 +19,7 @@ interface EventRegistrationProps {
   location: string
   speakers: Speaker[]
   registrationRequirements: string
+  requiresRegistration: boolean
   ticketsRemaining: number
   price: number
 }
@@ -31,6 +32,7 @@ export default function EventRegistrationPage({
   location,
   speakers,
   registrationRequirements,
+  requiresRegistration,
   ticketsRemaining,
   price,
 }: EventRegistrationProps) {
@@ -110,17 +112,25 @@ export default function EventRegistrationPage({
             {/* Button to buy */}
             <Button
               onClick={() => console.log('Hello!')}
-              disabled={ticketsRemaining <= 0}
+              disabled={ticketsRemaining <= 0 || !requiresRegistration}
               className="w-full"
             >
-              {ticketsRemaining > 0 ? (price > 0 ? 'Comprar' : 'Inscrever') : 'Esgotado'}
+              {requiresRegistration
+                ? ticketsRemaining > 0
+                  ? price > 0
+                    ? 'Comprar'
+                    : 'Inscrever'
+                  : 'Esgotado'
+                : 'Inscrição não necessária'}
             </Button>
 
             {/* Seats Available */}
-            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-              <Ticket className="h-4 w-4" />
-              <span>{ticketsRemaining} lugares disponíveis</span>
-            </div>
+            {requiresRegistration && (
+              <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                <Ticket className="h-4 w-4" />
+                <span>{ticketsRemaining} lugares disponíveis</span>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
