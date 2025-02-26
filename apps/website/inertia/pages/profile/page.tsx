@@ -178,22 +178,12 @@ import { useEffect, useState } from 'react'
 import { Link } from '@tuyau/inertia/react'
 import { cn } from '~/lib/utils'
 import { Badge } from '~/components/ui/badge'
-import editions from '#data/enei/editions.json' with { type: 'json' }
-import { Option } from '~/components/ui/multiple-selector'
+import { ENEI_EDITIONS } from '~/lib/enei/signup/editions'
 
 interface SocialIconProps {
   icon: React.FC<LucideProps>;
   link: string;
 }
-
-const ENEI_EDITIONS: Option[] = editions
-  .sort((a, b) => b.year - a.year)
-  .map(({ year, location }) => {
-    return {
-      label: location + ', ' + year.toString(),
-      value: year.toString(),
-    }
-  })
 
 const SocialIcon = ({ icon: Icon, link }: SocialIconProps) => {
   return (
