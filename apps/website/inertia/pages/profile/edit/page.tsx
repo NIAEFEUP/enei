@@ -50,14 +50,17 @@ import { format } from 'date-fns'
 import { pt } from 'date-fns/locale'
 import { cn } from '~/lib/utils'
 import { PhoneInput } from '~/components/ui/phone-input/phone-input'
-import { z } from 'zod'
 import CurricularYearSelector, { CurricularYearSelectorType } from '~/components/signup/input/curricular_year_input'
 import UniversitySelection from '~/components/signup/common/university_selection'
 import MultipleSelector, { Option } from '~/components/ui/multiple-selector'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Textarea } from '~/components/ui/textarea'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { useTuyau } from '~/hooks/use_tuyau'
+import { router, usePage } from '@inertiajs/react'
+import { PageProps } from '@adonisjs/inertia/types'
 import districts from '#data/enei/districts.json' with { type: 'json' }
 import sizes from '#data/enei/signup/shirts.json' with { type: 'json' }
 import heardaboutfrom from '#data/enei/signup/heard-about.json' with { type: 'json' }
@@ -113,7 +116,10 @@ function profileToCommonInfo(profile: ParticipantProfile & { heardAboutEnei?: st
 }
 
 export default function ProfilePage(props: InferPageProps<ProfilesController, 'index'> & { profile: ParticipantProfile }) {
+  const tuyau = useTuyau()
+
   const { profile }: { profile: ParticipantProfile } = props
+  const { csrfToken } = usePage<PageProps & { csrfToken: string; }>().props;
 
   const [initialValues, _] = useState<CommonInfo>(profileToCommonInfo(profile))
 
@@ -132,7 +138,10 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
       payload = { ...payload, [k]: data[k] }
     }
 
-    console.log("submit payload", payload)
+    router.patch(tuyau.$url('actions:profile.update'), {
+      ...payload,
+      _csrf: csrfToken
+    })
   }
 
   return (
