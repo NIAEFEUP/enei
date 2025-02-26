@@ -118,7 +118,10 @@ const CommunicationInfoForm = () => {
               <FormItem>
                 <FormLabel className="flex gap-2 items-center">
                   <FormControl>
-                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                    <Checkbox checked={field.value} onCheckedChange={(checked) => {
+                      field.onChange(checked)
+                      if (!checked) form.setValue("attendedBeforeEditions", [], { shouldDirty: true })
+                    }} />
                   </FormControl>
                   <p>Já participaste em alguma edição do ENEI?</p>
                 </FormLabel>
