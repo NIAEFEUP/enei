@@ -26,20 +26,19 @@ export default class ReferralService {
   // To be moved to a policy once bouncer is installed
 
   async canUserRefer(user: User) {
-    if (user.isPromoter())
-      return true
+    if (user.isPromoter()) return true
 
     return await User.hasPurchasedTicket(user)
   }
 
   async canUserBeLinked(user: User) {
-    return !user.isPromoter() && !user.wasReferred() && !await User.hasPurchasedTicket(user)
+    return !user.isPromoter() && !user.wasReferred() && !(await User.hasPurchasedTicket(user))
   }
 
   // High-level methods
 
   async #getReferralCode(user: User) {
-    if (!await this.canUserRefer(user)) {
+    if (!(await this.canUserRefer(user))) {
       return null
     }
 
@@ -52,9 +51,7 @@ export default class ReferralService {
       return null
     }
 
-    return buildUrl()
-      .params({ referralCode: referralCode })
-      .make('actions:referrals.link')
+    return buildUrl().params({ referralCode: referralCode }).make('actions:referrals.link')
   }
 
   async getReferrerByCode(referralCode: string): Promise<User | null> {
@@ -62,13 +59,35 @@ export default class ReferralService {
     if (!referralUserId) return null
 
     const referrer = await User.find(referralUserId)
-    if (!referrer || !await this.canUserRefer(referrer)) return null
+    if (!referrer || !(await this.canUserRefer(referrer))) return null
 
     return referrer
   }
 
+  async getReferralCount(user: User): Promise<number | null> {
+    if (!(await this.canUserRefer(user))) return null
+
+    const referrals = await user
+      .related('referrals')
+      .query()
+      .count('*', 'count')
+      .first()
+    return referrals?.$extras.count
+  }
+
+  async getIndirectReferralCount(user: User): Promise<number | null> {
+    if (!user.isPromoter() || !(await this.canUserRefer(user))) return null
+
+    const indirectReferrals = await user
+      .related('indirectReferrals')
+      .query()
+      .count('*', 'count')
+      .first()
+    return indirectReferrals?.$extras.count
+  }
+
   async linkUserToReferrer(referredUser: User, referrer: User) {
-    if (!await this.canUserBeLinked(referredUser)) {
+    if (!(await this.canUserBeLinked(referredUser))) {
       return
     }
 
@@ -79,7 +98,7 @@ export default class ReferralService {
       : referrer.referringPromoterId !== null
         ? await User.getReferringPromoter(referrer)
         : null
-    
+
     if (referringPromoter) {
       await referredUser.related('referringPromoter').associate(referringPromoter)
     }

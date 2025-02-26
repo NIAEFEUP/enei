@@ -1,7 +1,7 @@
 import ReferralsController from '#controllers/referrals_controller'
 import { InferPageProps } from '@adonisjs/inertia/types'
 import { Link } from '@tuyau/inertia/react'
-import { CircleAlert } from 'lucide-react'
+import { CircleAlert, Info } from 'lucide-react'
 import Container from '~/components/common/containers'
 import CardContainer from '~/components/common/containers/card'
 import Page from '~/components/common/page'
@@ -13,6 +13,8 @@ import { cn } from '~/lib/utils'
 
 export default function ReferralsPage({
   referralLink,
+  referralCount,
+  indirectReferralCount,
 }: InferPageProps<ReferralsController, 'showReferralLink'>) {
   const hasReferralLink = referralLink !== null
   return (
@@ -47,18 +49,36 @@ export default function ReferralsPage({
                   Por cada pessoa que se inscrever e comprar bilhete para o ENEI 2025 usando o teu
                   link, receberás pontos como recompensa.
                 </p>
+                {referralCount !== null && 
+                  <div className="mt-4 text-sm bg-primary/90 py-2 px-4 rounded-md text-primary-foreground flex flex-row gap-2 items-center">
+                    <Info className="size-4 inline-block flex-shrink-0" />
+                    {referralCount === 0 ?
+                      <p>
+                        O teu link ainda não foi utilizado.
+                      </p>
+                    :
+                      <p>
+                        O teu link já foi utilizado por <strong>{referralCount}</strong> pessoa{referralCount !== 1 && 's'}{
+                          indirectReferralCount !== null && <>, abrangendo <strong>{indirectReferralCount}</strong> pessoa{indirectReferralCount !== 1 && 's'} no total</>
+                        }!
+                      </p>
+                    }
+                  </div>
+                }
               </div>
               {!hasReferralLink && (
-                <div className="mt-4 text-sm bg-red-500 py-2 px-4 rounded-md text-white">
-                  <CircleAlert className="size-4 inline-block" /> O link de referenciação só ficará
-                  disponível quando{' '}
-                  <Link
-                    route="pages:tickets"
-                    className={cn(buttonVariants({ variant: 'link' }), 'p-0 m-0 h-fit text-inherit underline')}
-                  >
-                    comprares o teu bilhete para o ENEI 2025
-                  </Link>
-                  .
+                <div className="mt-4 text-sm bg-red-500 py-2 px-4 rounded-md text-white flex flex-row gap-2 items-center">
+                  <CircleAlert className="size-4 inline-block flex-shrink-0" />
+                  <p>
+                    O link de referenciação só ficará disponível quando{' '}
+                    <Link
+                        route="pages:tickets"
+                        className={cn(buttonVariants({ variant: 'link' }), 'p-0 m-0 h-fit text-inherit underline')}
+                    >
+                        comprares o teu bilhete para o ENEI 2025
+                    </Link>
+                    .
+                  </p>
                 </div>
               )}
             </CardContent>
