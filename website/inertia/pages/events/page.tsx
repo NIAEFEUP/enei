@@ -5,25 +5,35 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/com
 import { Separator } from '~/components/ui/separator'
 import BaseLayout from '~/layouts/base'
 
-export default function EventRegistrationPage() {
-  const title = 'Cybersecurity & Password Cracking'
-  const description =
-    'Uma exploração profunda sobre técnicas de cibersegurança e como os hackers conseguem aceder a passwords. Vamos explorar as técnicas mais comuns e como as podemos prevenir.'
-  const date = '2025-03-03'
-  const time = '14:00 - 15:30'
-  const location = 'B107 - FEUP'
-  const speakers = [
-    {
-      name: 'Dr. Mike Pound',
-      role: 'Pesquisador na Universidade de Nottingham, Inglaterra',
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY5VZfZYg8fK226K1rD3uGZgKFyA59EkXify-5sPm9Eihp7K11As_fxdM&usqp=CAE&s',
-    },
+interface Speaker {
+  name: string
+  role: string
+  image: string
+}
 
-  ]
-  const registrationRequirements = 'Nada'
-  const ticketsRemaining = 10
+interface EventRegistrationProps {
+  title: string
+  description: string
+  date: string
+  time: string
+  location: string
+  speakers: Speaker[]
+  registrationRequirements: string
+  ticketsRemaining: number
+  price: number
+}
 
+export default function EventRegistrationPage({
+  title,
+  description,
+  date,
+  time,
+  location,
+  speakers,
+  registrationRequirements,
+  ticketsRemaining,
+  price,
+}: EventRegistrationProps) {
   return (
     <BaseLayout title="Registo de Evento" className="bg-enei-beige ">
       <div className="flex justify-center mt-10">
@@ -47,6 +57,8 @@ export default function EventRegistrationPage() {
             </div>
           </CardHeader>
           <Separator />
+
+          {/* Event Description */}
           <CardContent className="space-y-2 mt-2">
             <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
               <Info className="h-5 w-5" />
@@ -54,10 +66,14 @@ export default function EventRegistrationPage() {
             </h2>
             <CardDescription>{description}</CardDescription>
 
+            {/* Speakers */}
             <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
               <Users className="h-5 w-5" />
-              <h1 className="text-lg font-semibold">{speakers.length === 1 ? "Orador" : "Oradores"}</h1>
+              <h1 className="text-lg font-semibold">
+                {speakers.length === 1 ? 'Orador' : 'Oradores'}
+              </h1>
             </h2>
+
             <div className="grid gap-4">
               {speakers.map((speaker) => (
                 <div key={speaker.name} className="flex items-center gap-4 rounded-lg border p-4">
@@ -74,14 +90,33 @@ export default function EventRegistrationPage() {
                 </div>
               ))}
             </div>
-            <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
-              <ClipboardCheck className="h-5 w-5" />
-              <h1 className="text-lg font-semibold">Requisitos de Inscrição</h1>
-            </h2>
+
+            {/* Registration Requirements (if applicable) */}
+            {registrationRequirements !== '' && (
+              <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+                <ClipboardCheck className="h-5 w-5" />
+                <h1 className="text-lg font-semibold">Requisitos de Inscrição</h1>
+              </h2>
+            )}
             <CardDescription>{registrationRequirements}</CardDescription>
-            <Button onClick={() => console.log('Hello!')} className="w-full">
-              Inscrever
+
+            {/* Price Display */}
+            {price > 0 && (
+              <div className="flex items-center justify-center gap-2 py-2 text-lg font-medium">
+                <span>{price.toFixed(2)}€</span>
+              </div>
+            )}
+
+            {/* Button to buy */}
+            <Button
+              onClick={() => console.log('Hello!')}
+              disabled={ticketsRemaining <= 0}
+              className="w-full"
+            >
+              {ticketsRemaining > 0 ? (price > 0 ? 'Comprar' : 'Inscrever') : 'Esgotado'}
             </Button>
+
+            {/* Seats Available */}
             <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
               <Ticket className="h-4 w-4" />
               <span>{ticketsRemaining} lugares disponíveis</span>

@@ -158,33 +158,31 @@ router
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix('payment')
 
+router.group(() => {
+  router.get('/u/:slug', [ProfilesController, 'index']).as('pages:profile.show')
+  router
+    .get('/profile', [ProfilesController, 'default'])
+    .as('pages:profile.default')
+    .use([middleware.auth(), middleware.verifiedEmail()])
+  router
+    .get('/profile/edit', [ProfilesController, 'edit'])
+    .as('pages:profile.edit')
+    .use([middleware.auth(), middleware.verifiedEmail()])
+})
+
+router.on('/faq').renderInertia('faq').as('pages:faq')
+
+router.get('/event', [EventsController, 'showEvent']).as('pages:event')
+
 router
   .group(() => {
-    router.get("/u/:slug", [ProfilesController, 'index']).as('pages:profile.show')
-    router.get("/profile", [ProfilesController, 'default'])
-      .as('pages:profile.default')
-      .use([middleware.auth(), middleware.verifiedEmail()])
-    router.get("/profile/edit", [ProfilesController, 'edit'])
-      .as('pages:profile.edit')
-      .use([middleware.auth(), middleware.verifiedEmail()])
-  })
-
-router
-  .on('/faq').renderInertia('faq').as('pages:faq')
-
-
-router.get('/event', [EventsController, 'index']).as('pages:event')
-
-
-router.
-  group(() => {
     router.on('/').renderInertia('cv').as('pages:cv')
   })
   .use([middleware.auth(), middleware.verifiedEmail()])
   .prefix('cv') // dummy route for testing
 
-router.
-  group(() => {
+router
+  .group(() => {
     router.get('/cv/name', [CvsController, 'showName'])
     router.post('/cv/upload', [CvsController, 'upload'])
     router.delete('cv/delete', [CvsController, 'delete'])
@@ -200,25 +198,24 @@ router.
     })
   })
   .use([middleware.auth()])
-  
+
   .prefix('user')
-
-
 
 router
   .group(() => {
     router.get('/', [StoreController, 'index']).as('pages:store')
     router.post('/products/:id/buy/', [StoreController, 'buy']).as('actions:store.buy')
   })
-  .use([middleware.auth(), middleware.verifiedEmail(), /*middleware.participant()*/])
+  .use([middleware.auth(), middleware.verifiedEmail() /*middleware.participant()*/])
   .prefix('/store')
-  
+
 // Referrals
-router.get('/referrals', [ReferralsController, 'showReferralLink'])
+router
+  .get('/referrals', [ReferralsController, 'showReferralLink'])
   .middleware(middleware.auth())
   .as('pages:referrals')
 
-router.route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
-  .middleware([middleware.automaticSubmit(), middleware.silentAuth()]) 
+router
+  .route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
+  .middleware([middleware.automaticSubmit(), middleware.silentAuth()])
   .as('actions:referrals.link')
-
