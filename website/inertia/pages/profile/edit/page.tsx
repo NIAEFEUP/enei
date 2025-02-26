@@ -162,7 +162,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                     name="firstName"
                     render={({ field }) => (
                       <FormItem className="flex-1">
-                        <FormLabel>Primeiro Nome*</FormLabel>
+                        <FormLabel>Primeiro Nome</FormLabel>
                         <FormControl>
                           <Input placeholder="Joca" type="text" {...field} />
                         </FormControl>
@@ -175,7 +175,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                     name="lastName"
                     render={({ field }) => (
                       <FormItem className="flex-1">
-                        <FormLabel>Último Nome*</FormLabel>
+                        <FormLabel>Último Nome</FormLabel>
                         <FormControl>
                           <Input placeholder="Costa" type="text" {...field} />
                         </FormControl>
@@ -189,7 +189,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   name="university"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Universidade/Faculdade*</FormLabel>
+                      <FormLabel>Universidade/Faculdade</FormLabel>
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
@@ -211,7 +211,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                                   <CommandItem
                                     key={id}
                                     value={name.toLowerCase()}
-                                    onSelect={() => form.setValue(field.name, id)}
+                                    onSelect={() => form.setValue(field.name, id, { shouldDirty: true })}
                                     className="flex cursor-pointer items-center justify-between text-sm"
                                   >
                                     <span>{name}</span>
@@ -237,7 +237,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   name="course"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Curso*</FormLabel>
+                      <FormLabel>Curso</FormLabel>
                       <FormControl>
                         <Input
                           onChange={field.onChange}
@@ -254,7 +254,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   name="curricularYear"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Ano Curricular*</FormLabel>
+                      <FormLabel>Ano Curricular</FormLabel>
                       <FormControl>
                         <CurricularYearSelector
                           defaultValue={form.getValues('curricularYear')}
@@ -262,7 +262,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                             form.setValue(field.name, [
                               curricularYear,
                               lastYear || null,
-                            ] as CurricularYearSelectorType)
+                            ] as CurricularYearSelectorType, { shouldDirty: true })
                           }}
                         />
                       </FormControl>
@@ -384,7 +384,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   name="dateOfBirth"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel>Data de Nascimento*</FormLabel>
+                      <FormLabel>Data de Nascimento</FormLabel>
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -423,7 +423,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   name="phone"
                   render={({ field }) => (
                     <FormItem className="flex flex-col items-start">
-                      <FormLabel>Número de telemóvel*</FormLabel>
+                      <FormLabel>Número de telemóvel</FormLabel>
                       <FormControl className="w-full">
                         <PhoneInput
                           placeholder="923 456 789"
@@ -443,7 +443,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   name="municipality"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Natural de*</FormLabel>
+                      <FormLabel>Natural de</FormLabel>
                       <FormControl>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <SelectTrigger>
@@ -472,7 +472,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   name="shirtSize"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Tamanho da T-shirt*</FormLabel>
+                      <FormLabel>Tamanho da T-shirt</FormLabel>
                       <FormControl>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <SelectTrigger>
