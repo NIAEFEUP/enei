@@ -90,4 +90,12 @@ export const communicationsInfoSchema = z.object({
     )
     .optional(),
   termsAndConditions,
-});
+})
+
+export type AdditionalInfo = z.output<typeof additionalInfoSchema>
+export const additionalInfoSchema = z.object({
+  about: z.string().optional(),
+  github: z.string().url({message: 'URL inválida'}).optional(),
+  linkedin: z.string().url({message: 'URL inválida'}).optional(),
+  website: z.string().url({message: 'URL inválida'}).optional(),
+})
