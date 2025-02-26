@@ -167,6 +167,9 @@ router
     router.get("/profile/edit", [ProfilesController, 'edit'])
       .as('pages:profile.edit')
       .use([middleware.auth(), middleware.verifiedEmail()])
+    router.patch("/profile/edit", [ProfilesController, 'update'])
+      .as('actions:profile.update')
+      .use([middleware.auth(), middleware.verifiedEmail()])
   })
 
 router
@@ -200,7 +203,6 @@ router.
     })
   })
   .use([middleware.auth()])
-  
   .prefix('user')
 
 
@@ -212,13 +214,13 @@ router
   })
   .use([middleware.auth(), middleware.verifiedEmail(), /*middleware.participant()*/])
   .prefix('/store')
-  
+
 // Referrals
 router.get('/referrals', [ReferralsController, 'showReferralLink'])
   .middleware(middleware.auth())
   .as('pages:referrals')
 
 router.route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
-  .middleware([middleware.automaticSubmit(), middleware.silentAuth()]) 
+  .middleware([middleware.automaticSubmit(), middleware.silentAuth()])
   .as('actions:referrals.link')
 
