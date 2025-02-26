@@ -40,9 +40,9 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
 
   const socials: SocialIconProps[] = []
 
-  if (profile.github) socials.push({ icon: Github, link: `https://github.com/${profile.github}` })
-  if (profile.linkedin) socials.push({ icon: Linkedin, link: `https://linkedin.com/in/${profile.linkedin}` })
-  if (profile.website) socials.push({ icon: Globe, link: `//${profile.website}` })
+  if (profile.github) socials.push({ icon: Github, link: profile.github })
+  if (profile.linkedin) socials.push({ icon: Linkedin, link: profile.linkedin })
+  if (profile.website) socials.push({ icon: Globe, link: profile.website })
 
   return (
     <Page title={`${profile.firstName} ${profile.lastName}`} className="bg-enei-beige text-enei-blue">
