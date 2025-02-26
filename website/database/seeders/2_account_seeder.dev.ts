@@ -33,7 +33,7 @@ export default class extends BaseSeeder {
       course: 'M.EIC',
       curricularYear: '2',
       finishedAt: null,
-      municipality: 'Braga',
+      municipality: 'braga',
       heardAboutENEI: 'friends',
       shirtSize: 'M',
       isVegetarian: false,
