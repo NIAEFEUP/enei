@@ -101,10 +101,9 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
 
   const socials: SocialIconProps[] = []
 
-  if (profile.github) socials.push({ icon: Github, link: `https://github.com/${profile.github}` })
-  if (profile.linkedin) socials.push({ icon: Linkedin, link: `https://linkedin.com/in/${profile.linkedin}` })
-  if (profile.website) socials.push({ icon: Globe, link: `//${profile.website}` })
-
+  if (profile.github) socials.push({ icon: Github, link: profile.github })
+  if (profile.linkedin) socials.push({ icon: Linkedin, link: profile.linkedin })
+  if (profile.website) socials.push({ icon: Globe, link: profile.website })
 
   const form = useForm<CommonInfo>({
     resolver: zodResolver(commonSchema),
@@ -390,7 +389,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   name="github"
                   render={({ field }) => (
                     <FormItem className="flex-1">
-                      <FormLabel>Username do GitHub</FormLabel>
+                      <FormLabel>URL do teu GitHub</FormLabel>
                       <FormControl>
                         <Input placeholder="NIAEFEUP" type="text" {...field} />
                       </FormControl>
@@ -403,7 +402,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   name="linkedin"
                   render={({ field }) => (
                     <FormItem className="flex-1">
-                      <FormLabel>Username do Linkedin</FormLabel>
+                      <FormLabel>URL do teu Linkedin</FormLabel>
                       <FormControl>
                         <Input placeholder="NIAEFEUP" type="text" {...field} />
                       </FormControl>
@@ -416,7 +415,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   name="website"
                   render={({ field }) => (
                     <FormItem className="flex-1">
-                      <FormLabel>Website Pessoal</FormLabel>
+                      <FormLabel>URL do teu Website Pessoal</FormLabel>
                       <FormControl>
                         <Input placeholder="ni.fe.up.pt" type="text" {...field} />
                       </FormControl>
