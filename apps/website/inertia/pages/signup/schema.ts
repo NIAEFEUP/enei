@@ -95,7 +95,7 @@ export const communicationsInfoSchema = z.object({
 export type AdditionalInfo = z.output<typeof additionalInfoSchema>
 export const additionalInfoSchema = z.object({
   about: z.string().optional(),
-  github: z.string().url({message: 'URL inválida'}).optional(),
-  linkedin: z.string().url({message: 'URL inválida'}).optional(),
-  website: z.string().url({message: 'URL inválida'}).optional(),
+  github: z.union([z.literal(''), z.string().url({ message: 'URL inválida' })]),
+  linkedin: z.union([z.literal(''), z.string().url({ message: 'URL inválida' })]),
+  website: z.union([z.literal(''), z.string().url({ message: 'URL inválida' })]),
 })
