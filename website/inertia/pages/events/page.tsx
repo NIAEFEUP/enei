@@ -1,8 +1,7 @@
 import { Calendar, Clock, MapPin, Ticket, Users, Info, ClipboardCheck } from 'lucide-react'
 import { Button } from '~/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
-import { Separator } from '~/components/ui/separator'
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import BaseLayout from '~/layouts/base'
 
 interface Speaker {
@@ -39,7 +38,7 @@ export default function EventRegistrationPage({
   return (
     <BaseLayout title="Registo de Evento" className="bg-enei-beige ">
       <div className="flex justify-center mt-10">
-        <Card className="w-full max-w-2xl mx-auto">
+        <Card className="w-full max-w-7xl mx-auto bg-transparent border-transparent shadow-transparent">
           <CardHeader>
             {/* Title and important information (date, time, location) */}
             <CardTitle className="text-2xl font-bold">{title}</CardTitle>
@@ -58,7 +57,6 @@ export default function EventRegistrationPage({
               </div>
             </div>
           </CardHeader>
-          <Separator />
 
           {/* Event Description */}
           <CardContent className="space-y-2 mt-2">
@@ -66,7 +64,7 @@ export default function EventRegistrationPage({
               <Info className="h-5 w-5" />
               <h1 className="text-lg font-semibold">Acerca do Evento</h1>
             </h2>
-            <CardDescription>{description}</CardDescription>
+            <p className="text-black">{description}</p>
 
             {/* Speakers */}
             <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
@@ -76,18 +74,19 @@ export default function EventRegistrationPage({
               </h1>
             </h2>
 
-            <div className="grid gap-4">
+            <div className="flex flex-wrap gap-4">
               {speakers.map((speaker) => (
-                <div key={speaker.name} className="flex items-center gap-4 rounded-lg border p-4">
+                <div
+                  key={speaker.name}
+                  className="flex items-center gap-4 rounded-lg border p-4 border-gray-400 w-auto"
+                >
                   <Avatar className="h-12 w-12">
                     <AvatarImage src={speaker.image} alt={speaker.name} />
                     <AvatarFallback>{speaker.name[0]}</AvatarFallback>
                   </Avatar>
                   <div className="space-y-1">
                     <h3 className="font-medium">{speaker.name}</h3>
-                    {speaker.role && (
-                      <p className="text-sm text-muted-foreground">{speaker.role}</p>
-                    )}
+                    {speaker.role && <p className="text-sm text-black">{speaker.role}</p>}
                   </div>
                 </div>
               ))}
@@ -100,7 +99,7 @@ export default function EventRegistrationPage({
                 <h1 className="text-lg font-semibold">Requisitos de Inscrição</h1>
               </h2>
             )}
-            <CardDescription>{registrationRequirements}</CardDescription>
+            <p className="text-black">{registrationRequirements}</p>
 
             {/* Price Display */}
             {price > 0 && (
@@ -110,19 +109,21 @@ export default function EventRegistrationPage({
             )}
 
             {/* Button to buy */}
-            <Button
-              onClick={() => console.log('Hello!')}
-              disabled={ticketsRemaining <= 0 || !requiresRegistration}
-              className="w-full"
-            >
-              {requiresRegistration
-                ? ticketsRemaining > 0
-                  ? price > 0
-                    ? 'Comprar'
-                    : 'Inscrever'
-                  : 'Esgotado'
-                : 'Inscrição não necessária'}
-            </Button>
+            <div className="flex justify-center">
+              <Button
+                onClick={() => console.log('Hello!')}
+                disabled={ticketsRemaining <= 0 || !requiresRegistration}
+                className="px-4"
+              >
+                {requiresRegistration
+                  ? ticketsRemaining > 0
+                    ? price > 0
+                      ? 'Comprar'
+                      : 'Inscrever'
+                    : 'Esgotado'
+                  : 'Inscrição não necessária'}
+              </Button>
+            </div>
 
             {/* Seats Available */}
             {requiresRegistration && (

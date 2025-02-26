@@ -15,11 +15,29 @@ export default class EventsController {
         image:
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY5VZfZYg8fK226K1rD3uGZgKFyA59EkXify-5sPm9Eihp7K11As_fxdM&usqp=CAE&s',
       },
+      {
+        name: 'Dr. Mike Pound',
+        role: 'Pesquisador na Universidade de Nottingham, Inglaterra',
+        image:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY5VZfZYg8fK226K1rD3uGZgKFyA59EkXify-5sPm9Eihp7K11As_fxdM&usqp=CAE&s',
+      },
+      {
+        name: 'Dr. Mike Pound',
+        role: 'Pesquisador na Universidade de Nottingham, Inglaterra aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        image:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY5VZfZYg8fK226K1rD3uGZgKFyA59EkXify-5sPm9Eihp7K11As_fxdM&usqp=CAE&s',
+      },
+      {
+        name: 'Dr. Mike Pound',
+        role: 'Pesquisador na Universidade de Nottingham, Inglaterra',
+        image:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY5VZfZYg8fK226K1rD3uGZgKFyA59EkXify-5sPm9Eihp7K11As_fxdM&usqp=CAE&s',
+      },
     ]
     const registrationRequirements = ''
-    const ticketsRemaining = 0
-    const price = 0
-    const requiresRegistration = false
+    const ticketsRemaining = 10
+    const price = 15
+    const requiresRegistration = true
 
     return inertia.render('events', {
       title,
