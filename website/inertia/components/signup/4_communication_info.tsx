@@ -6,7 +6,6 @@ import MultipleSelector, { Option } from '../ui/multiple-selector'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { Textarea } from '../ui/textarea'
 
-import editions from '#data/enei/editions.json' with { type: 'json' }
 import heardaboutfrom from '#data/enei/signup/heard-about.json' with { type: 'json' }
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -23,15 +22,7 @@ import {
 import StepperFormActions from './actions'
 import { PageProps } from '@adonisjs/inertia/types'
 import { router, usePage } from '@inertiajs/react'
-
-const ENEI_EDITIONS: Option[] = editions
-  .sort((a, b) => b.year - a.year)
-  .map(({ year, location }) => {
-    return {
-      label: location + ', ' + year.toString(),
-      value: year.toString(),
-    }
-  })
+import { ENEI_EDITIONS } from '~/lib/enei/signup/editions'
 
 const HEARD_ABOUT_FROM: Option[] = heardaboutfrom
 
@@ -69,7 +60,7 @@ const CommunicationInfoForm = () => {
       ...data,
       _csrf: csrfToken
     }
-    
+
     router.post(tuyau.$url('actions:signup'), payload)
   }
 
