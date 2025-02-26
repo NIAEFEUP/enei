@@ -27,7 +27,6 @@ export default class extends BaseSeeder {
     const profile = await ParticipantProfile.create({
       firstName: 'Jorge',
       lastName: 'Costa',
-      slug: 'jorge-costa',
       dateOfBirth: DateTime.fromObject({ year: 2003, month: 5, day: 9 }),
       phone: '+351917777777',
       university: 'pt.up.fe',
@@ -41,6 +40,7 @@ export default class extends BaseSeeder {
       isVegan: false,
       transports: ['car'],
       attendedBeforeEditions: [],
+      slug: 'jorge-costa',
       about: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc laoreet eu enim vel semper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum eu est vitae ex sodales consequat. In hac habitasse platea dictumst. Donec sed sodales arcu. Ut ultrices risus ipsum, sed iaculis libero auctor quis. Praesent eu fermentum enim, in egestas eros. Curabitur ac eros ut erat varius pretium eu eu turpis. Pellentesque tristique neque mauris. Morbi ultricies et justo sed suscipit. Praesent maximus arcu eu urna consequat consectetur. Nam pellentesque iaculis fringilla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin massa orci, sed posuere mi imperdiet non.',
       github: 'JorgeCostaDevPT',
       website: 'eneiconf.pt'
