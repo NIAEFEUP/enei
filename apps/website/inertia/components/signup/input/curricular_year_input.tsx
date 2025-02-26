@@ -70,8 +70,8 @@ const CurricularYearSelector = ({
       </Select>
 
       {/* State Selector - Only shown if degree already finished */}
-      {selectedCurricularYear === "already-finished" && (
-        <Select onValueChange={handleLastYearSelect}>
+      {selectedCurricularYear === 'already-finished' && (
+        <Select defaultValue={defaultValue[1]?.toString()} onValueChange={handleLastYearSelect}>
           <SelectTrigger>
             <SelectValue placeholder="Ano de Conclusão" />
           </SelectTrigger>
