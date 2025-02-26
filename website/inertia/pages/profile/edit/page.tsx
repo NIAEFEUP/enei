@@ -121,7 +121,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
   const { profile }: { profile: ParticipantProfile } = props
   const { csrfToken } = usePage<PageProps & { csrfToken: string; }>().props;
 
-  const [initialValues, _] = useState<CommonInfo>(profileToCommonInfo(profile))
+  const [initialValues, ] = useState<CommonInfo>(profileToCommonInfo(profile))
 
   const form = useForm<CommonInfo>({
     resolver: zodResolver(commonSchema),
