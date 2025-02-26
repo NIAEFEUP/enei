@@ -21,7 +21,7 @@ export default class OrdersController {
       await request.validateUsing(createMBWayOrderValidator)
 
       const { userId, products, name, nif, address, mobileNumber } = request.all()
-   
+
       // Validate authentication
 
       if (!authUser || authUser.id !== userId) {
@@ -78,23 +78,20 @@ export default class OrdersController {
             .json({ message: `Não há mais stock do produto ${product.name}` })
         }
 
-        if (quantity + totalQuantity > product.max_order) {
+        if (quantity + totalQuantity > product.maxOrder) {
           return response.status(400).json({
-            message: `Apenas podes comprar ${product.max_order} do produto ${product.name}`,
+            message: `Apenas podes comprar ${product.maxOrder} do produto ${product.name}`,
           })
         }
 
         const productGroup = await ProductGroup.find(product.productGroupId)
-        if(productGroup){
-
+        if (productGroup) {
           const sucessfulOrdersOfGivenGroup = await OrderProduct.query()
             .join('orders', 'order_products.order_id', 'orders.id')
             .join('products', 'order_products.product_id', 'products.id')
             .where('orders.user_id', userId)
             .where('products.product_group_id', product.productGroupId)
             .where('orders.status', 'Success')
-
-          
 
           const totalGroupQuantity = sucessfulOrdersOfGivenGroup.reduce(
             (acc, orderProduct) => acc + orderProduct.quantity,
@@ -105,7 +102,6 @@ export default class OrdersController {
             return response.status(400).json({
               message: `Apenas podes comprar ${productGroup?.maxAmountPerGroup} produtos do grupo ${productGroup.name}`,
             })
-
           }
         }
         productDetails.push({ product, quantity })
@@ -178,9 +174,9 @@ export default class OrdersController {
         message: 'Unauthorized',
       })
     }
-    
+
     const order = await Order.find(params.id)
-    if (!order || (order.userId !== authUser.id)) {
+    if (!order || order.userId !== authUser.id) {
       return response.notFound({ message: 'Order not found' })
     }
     return inertia.render('payments/show', { order })
