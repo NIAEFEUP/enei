@@ -4,12 +4,19 @@ import ParticipantProfile from '#models/participant_profile'
 import { Button } from '~/components/ui/button'
 import Page from '~/components/common/page'
 import Container from '~/components/common/containers'
-import { getUniversityById } from '~/lib/enei/signup/universities'
-import { Badge } from '~/components/ui/badge'
 import { Card } from '~/components/ui/card'
-import { AdditionalInfo, additionalInfoSchema, CommunicationsInfo, communicationsInfoSchema, EducationInfo, educationInfoSchema, LogisticsInfo, logisticsInfoSchema, PersonalInfo, personalInfoSchema } from '~/pages/signup/schema'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import {
+  AdditionalInfo,
+  additionalInfoSchema,
+  CommunicationsInfo,
+  communicationsInfoSchema,
+  EducationInfo,
+  educationInfoSchema,
+  LogisticsInfo,
+  logisticsInfoSchema,
+  PersonalInfo,
+  personalInfoSchema,
+} from '~/pages/signup/schema'
 import {
   Form,
   FormControl,
@@ -28,12 +35,6 @@ import {
   CommandList,
 } from '~/components/ui/command'
 import {
-  Download,
-  User,
-  Github,
-  Linkedin,
-  Globe,
-  LucideProps,
   Eye,
   EyeOff,
   CalendarIcon,
@@ -52,32 +53,21 @@ import { PhoneInput } from '~/components/ui/phone-input/phone-input'
 import { z } from 'zod'
 import CurricularYearSelector, { CurricularYearSelectorType } from '~/components/signup/input/curricular_year_input'
 import UniversitySelection from '~/components/signup/common/university_selection'
+import MultipleSelector, { Option } from '~/components/ui/multiple-selector'
+import { Textarea } from '~/components/ui/textarea'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import districts from '#data/enei/districts.json' with { type: 'json' }
 import sizes from '#data/enei/signup/shirts.json' with { type: 'json' }
 import heardaboutfrom from '#data/enei/signup/heard-about.json' with { type: 'json' }
 import { universities } from '~/lib/enei/signup/universities'
 import { ENEI_EDITIONS } from '~/lib/enei/signup/editions'
-import MultipleSelector, { Option } from '~/components/ui/multiple-selector'
 import { TRANSPORTS } from '~/lib/enei/signup/transports'
-import { Textarea } from '~/components/ui/textarea'
-
-// TODO: Refactor exists in profile/page.tsx
-interface SocialIconProps {
-  icon: React.FC<LucideProps>;
-  link: string;
-}
 
 const INITIAL_MONTH = new Date(2004, 0, 1)
 const SIZES = sizes
 const HEARD_ABOUT_FROM: Option[] = heardaboutfrom
-
-const SocialIcon = ({ icon: Icon, link }: SocialIconProps) => {
-  return (
-    <a href={link} className='border-2 border-enei-blue rounded-full h-9 w-9 flex justify-center items-center' target="_blank" rel="noopener noreferrer">
-      <Icon className='h-5' />
-    </a>
-  );
-}
 
 type CommonInfo =
   & PersonalInfo
@@ -94,117 +84,61 @@ const commonSchema = z.object({
   ...additionalInfoSchema.shape,
 })
 
+// ISSUE: I don't really know why it is heardAboutEnei when it should be heardAboutENEI
+function profileToCommonInfo(profile: ParticipantProfile & { heardAboutEnei?: string }): CommonInfo {
+  return {
+    firstName: profile.firstName,
+    lastName: profile.lastName,
+    phone: profile.phone,
+    university: profile.university,
+    course: profile.course,
+    curricularYear: [profile.curricularYear as ("1" | "2" | "3" | "4" | "5" | "already-finished"), profile.finishedAt] as ["1" | "2" | "3" | "4" | "5", null] | ["already-finished", number],
+    shirtSize: profile.shirtSize,
+    dietaryRestrictions: profile.dietaryRestrictions ?? '',
+    isVegetarian: profile.isVegetarian ? true : false,
+    isVegan: profile.isVegan ? true : false,
+    transports: TRANSPORTS.filter((transport) => profile.transports.includes(transport.value)),
+    heardAboutEnei: profile.heardAboutEnei as string,
+    reasonForSignup: profile.reasonForSignup ?? '',
+    attendedBefore: profile.attendedBeforeEditions.length > 0,
+    attendedBeforeEditions: ENEI_EDITIONS.filter((edition) => profile.attendedBeforeEditions.includes(edition.value)),
+    about: profile.about ?? '',
+    github: profile.github ?? '',
+    linkedin: profile.linkedin ?? '',
+    website: profile.website ?? '',
+    dateOfBirth: new Date("2003-05-09"),
+    municipality: profile.municipality,
+    termsAndConditions: true,
+  }
+}
+
 export default function ProfilePage(props: InferPageProps<ProfilesController, 'index'> & { profile: ParticipantProfile }) {
-  const { profile } = props
+  const { profile }: { profile: ParticipantProfile } = props
 
-  const profileEditions = ENEI_EDITIONS.filter((edition) => profile.attendedBeforeEditions.includes(edition.value)).map((edition) => edition.label)
-
-  const socials: SocialIconProps[] = []
-
-  if (profile.github) socials.push({ icon: Github, link: profile.github })
-  if (profile.linkedin) socials.push({ icon: Linkedin, link: profile.linkedin })
-  if (profile.website) socials.push({ icon: Globe, link: profile.website })
+  const [initialValues, _] = useState<CommonInfo>(profileToCommonInfo(profile))
 
   const form = useForm<CommonInfo>({
     resolver: zodResolver(commonSchema),
-    defaultValues: {
-      firstName: '',
-      lastName: '',
-      phone: '',
-      university: '',
-      course: '',
-      curricularYear: ['1', null] as CurricularYearSelectorType,
-      shirtSize: '',
-      dietaryRestrictions: '',
-      isVegetarian: false,
-      isVegan: false,
-      transports: [],
-      heardAboutEnei: '',
-      reasonForSignup: '',
-      attendedBefore: false,
-      attendedBeforeEditions: [],
-      termsAndConditions: false,
-      about: '',
-      github: '',
-      linkedin: '',
-      website: '',
-    },
+    defaultValues: initialValues,
   })
 
   const onSubmit = (data: CommonInfo) => {
-    console.log(data)
+    let payload: Partial<CommonInfo> = {}
+
+    for (const [key, value] of Object.entries(form.formState.dirtyFields)) {
+      if (!value) continue
+      const k: keyof CommonInfo = key as keyof CommonInfo
+
+      payload = { ...payload, [k]: data[k] }
+    }
+
+    console.log("submit payload", payload)
   }
 
   return (
     <Page title={`${profile.firstName} ${profile.lastName}`} className="bg-enei-beige text-enei-blue">
       <Container className='mt-8'>
         <Card className='p-4'>
-          <section className="relative flex flex-col gap-8 md:justify-between z-10">
-            <h3 className='text-2xl'>Perfil do Participante</h3>
-
-            <section className='grid md:grid-cols-[auto_1fr] items-center gap-4 md:gap-8'>
-              <div className='size-fit rounded-sm bg-enei-blue mx-auto md:mx-0'>
-                <User className='w-48 h-48 text-enei-beige' />
-              </div>
-              <div className='h-full flex flex-col gap-2 justify-between text-center md:text-start'>
-                <p className='text-3xl'>
-                  {profile.firstName} {profile.lastName}
-                </p>
-                <div>
-                  <p className="text-lg">
-                    {" "}
-                    {profile.course} &#183;{" "}
-                    {profile.curricularYear === "already-finished"
-                      ? "Concluído em " + profile.finishedAt
-                      : profile.curricularYear + "º ano"}{" "}
-                  </p>
-                  <p className="text-lg"> @ {getUniversityById(profile.university)!.name} </p>
-                </div>
-                <div className='flex flex-row flex-wrap gap-2 justify-center md:justify-start'>
-                  {socials.length > 0 &&
-                    socials.map((social: SocialIconProps) => (
-                      <SocialIcon {...social} />
-                    ))
-                  }
-                  <div className='flex flex-row gap-2'>
-                    <Button className='w-fit'>
-                      <Download />
-                      Currículo
-                    </Button>
-                  </div>
-                </div>
-                {profileEditions.length > 0 ?
-                  <div className='flex flex-row flex-wrap gap-2 justify-center md:justify-normal'>
-                    {profileEditions.map((edition) => (
-                      <Badge>
-                        {edition}
-                      </Badge>
-                    ))}
-                  </div>
-                  :
-                  <div>
-                    <Badge variant={'default'}>
-                      Primeiro ENEI
-                    </Badge>
-                  </div>
-                }
-              </div>
-            </section>
-            <section className='grid grid-rows-[auto_1fr] gap-4 mt-4'>
-              <div>
-                <h4 className='font-bold text-lg text-center md:text-left'>
-                  Sobre
-                </h4>
-                <p>
-                  {profile.about ?? "Sem informação."}
-                </p>
-              </div>
-            </section>
-          </section>
-
-
-
-
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="flex flex-col gap-4">
@@ -391,7 +325,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                     <FormItem className="flex-1">
                       <FormLabel>URL do teu GitHub</FormLabel>
                       <FormControl>
-                        <Input placeholder="NIAEFEUP" type="text" {...field} />
+                        <Input placeholder="https://github.com/NIAEFEUP" type="text" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -404,7 +338,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                     <FormItem className="flex-1">
                       <FormLabel>URL do teu Linkedin</FormLabel>
                       <FormControl>
-                        <Input placeholder="NIAEFEUP" type="text" {...field} />
+                        <Input placeholder="https://www.linkedin.com/in/oteunome" type="text" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -417,17 +351,19 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                     <FormItem className="flex-1">
                       <FormLabel>URL do teu Website Pessoal</FormLabel>
                       <FormControl>
-                        <Input placeholder="ni.fe.up.pt" type="text" {...field} />
+                        <Input placeholder="https://ni.fe.up.pt" type="text" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
                 { /* TODO: */}
-                <br />
-                foto de perfil: // todo
-                <br />
-                Currículo: // TODO
+                <div className='hidden'>
+                  <br />
+                  foto de perfil: // TODO
+                  <br />
+                  Currículo: // TODO
+                </div>
 
                 <div className='grid grid-cols-[auto_1fr] gap-2 items-center my-2'>
                   <EyeOff />
@@ -659,7 +595,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   )}
                 />
 
-                <Button type="submit">Atualizar</Button>
+                <Button type="submit" disabled={!form.formState.isDirty}>Atualizar</Button>
               </div>
             </form>
           </Form>
