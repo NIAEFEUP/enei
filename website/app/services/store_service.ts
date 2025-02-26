@@ -31,6 +31,7 @@ export class StoreService {
 
       const order = await Order.create({
         userId: user.id,
+        status: 'Pending'
       }, {
         client: trx
       })
