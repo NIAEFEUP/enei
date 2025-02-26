@@ -7,7 +7,7 @@ import Container from '~/components/common/containers'
 import { getUniversityById } from '~/lib/enei/signup/universities'
 import { Badge } from '~/components/ui/badge'
 import { Card } from '~/components/ui/card'
-import { CommunicationsInfo, communicationsInfoSchema, EducationInfo, educationInfoSchema, LogisticsInfo, logisticsInfoSchema, PersonalInfo, personalInfoSchema } from '~/pages/signup/schema'
+import { AdditionalInfo, additionalInfoSchema, CommunicationsInfo, communicationsInfoSchema, EducationInfo, educationInfoSchema, LogisticsInfo, logisticsInfoSchema, PersonalInfo, personalInfoSchema } from '~/pages/signup/schema'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -84,12 +84,14 @@ type CommonInfo =
   & EducationInfo
   & LogisticsInfo
   & CommunicationsInfo
+  & AdditionalInfo
 
 const commonSchema = z.object({
   ...personalInfoSchema.shape,
   ...educationInfoSchema.shape,
   ...logisticsInfoSchema.shape,
   ...communicationsInfoSchema.shape,
+  ...additionalInfoSchema.shape,
 })
 
 export default function ProfilePage(props: InferPageProps<ProfilesController, 'index'> & { profile: ParticipantProfile }) {
@@ -123,14 +125,16 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
       attendedBefore: false,
       attendedBeforeEditions: [],
       termsAndConditions: false,
+      about: '',
+      github: '',
+      linkedin: '',
+      website: '',
     },
   })
-
 
   const onSubmit = (data: CommonInfo) => {
     console.log(data)
   }
-
 
   return (
     <Page title={`${profile.firstName} ${profile.lastName}`} className="bg-enei-beige text-enei-blue">
@@ -358,15 +362,63 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   />
                 )}
 
+                <FormField
+                  control={form.control}
+                  name="about"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Sobre</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Aprender novas tecnologias, melhorar soft skills..."
+                          className="resize-none"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="github"
+                  render={({ field }) => (
+                    <FormItem className="flex-1">
+                      <FormLabel>Username do GitHub</FormLabel>
+                      <FormControl>
+                        <Input placeholder="NIAEFEUP" type="text" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="linkedin"
+                  render={({ field }) => (
+                    <FormItem className="flex-1">
+                      <FormLabel>Username do Linkedin</FormLabel>
+                      <FormControl>
+                        <Input placeholder="NIAEFEUP" type="text" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="website"
+                  render={({ field }) => (
+                    <FormItem className="flex-1">
+                      <FormLabel>Website Pessoal</FormLabel>
+                      <FormControl>
+                        <Input placeholder="ni.fe.up.pt" type="text" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 { /* TODO: */}
-                <br />
-                Sobre: {profile.about}
-                <br />
-                GitHub: {profile.github}
-                <br />
-                LinkedIn: {profile.linkedin}
-                <br />
-                Website: {profile.website}
                 <br />
                 foto de perfil: // todo
                 <br />
