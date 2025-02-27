@@ -9,10 +9,10 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import { emailVerificationThrottle, sendForgotPasswordThrottle } from '#start/limiter'
-const EventsController = () => import('#controllers/events_controller')
 import { sep, normalize } from 'node:path'
 import app from '@adonisjs/core/services/app'
 
+const EventsController = () => import('#controllers/events_controller')
 const AuthenticationController = () => import('#controllers/authentication_controller')
 const OrdersController = () => import('#controllers/orders_controller')
 const TicketsController = () => import('#controllers/tickets_controller')
@@ -172,7 +172,8 @@ router.group(() => {
 
 router.on('/faq').renderInertia('faq').as('pages:faq')
 
-router.get('/event', [EventsController, 'showEvent']).as('pages:event')
+router.get('/events', [EventsController, 'index']).as('pages:events')
+router.get('/events/:id', [EventsController, 'show']).as('pages:events.show')
 
 router
   .group(() => {

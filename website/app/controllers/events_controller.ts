@@ -1,7 +1,10 @@
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class EventsController {
-  async showEvent({ inertia }: HttpContext) {
+  async index({ inertia }: HttpContext) {
+    return inertia.render('events')
+  }
+  async show({ inertia }: HttpContext) {
     const title = 'Cybersecurity & Password Cracking'
     const description =
       'Uma exploração profunda sobre técnicas de cibersegurança e como os hackers conseguem aceder a passwords. Vamos explorar as técnicas mais comuns e como as podemos prevenir.'
@@ -21,7 +24,7 @@ export default class EventsController {
     const price = 0
     const requiresRegistration = false
 
-    return inertia.render('events', {
+    return inertia.render('events/show', {
       title,
       description,
       date,
