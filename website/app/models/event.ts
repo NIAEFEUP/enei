@@ -21,6 +21,9 @@ export default class Event extends BaseModel {
   declare date: DateTime
 
   @column()
+  declare duration: number
+
+  @column()
   declare location: string
 
   // TODO: Add speakers relationship

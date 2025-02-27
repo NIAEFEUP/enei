@@ -10,6 +10,7 @@ export default class extends BaseSchema {
       table.string('title').notNullable()
       table.text('description').notNullable()
       table.dateTime('date').notNullable()
+      table.string('duration').notNullable()
       table.string('location').notNullable()
       table.string('registration_requirements')
       table.boolean('requires_registration').defaultTo(false)
