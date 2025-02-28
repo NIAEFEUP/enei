@@ -1,40 +1,26 @@
 import type { HttpContext } from '@adonisjs/core/http'
+import Event from '#models/event'
 
 export default class EventsController {
   async index({ inertia }: HttpContext) {
     return inertia.render('events')
   }
-  async show({ inertia }: HttpContext) {
-    const title = 'Cybersecurity & Password Cracking'
-    const description =
-      'Uma exploração profunda sobre técnicas de cibersegurança e como os hackers conseguem aceder a passwords. Vamos explorar as técnicas mais comuns e como as podemos prevenir.'
-    const date = '2025-03-03'
-    const time = '14:00 - 15:30'
-    const location = 'B107 - FEUP'
-    const speakers = [
-      {
-        name: 'Dr. Mike Pound',
-        role: 'Pesquisador na Universidade de Nottingham, Inglaterra',
-        image:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY5VZfZYg8fK226K1rD3uGZgKFyA59EkXify-5sPm9Eihp7K11As_fxdM&usqp=CAE&s',
-      },
-    ]
-    const registrationRequirements = ''
-    const ticketsRemaining = 0
-    const price = 0
-    const requiresRegistration = false
+  async show({ inertia, params }: HttpContext) {
+    const event = await Event.findOrFail(params.id)
+
+    const endTime = event.date.plus({ minutes: event.duration })
 
     return inertia.render('events/show', {
-      title,
-      description,
-      date,
-      time,
-      location,
-      speakers,
-      registrationRequirements,
-      requiresRegistration,
-      ticketsRemaining,
-      price,
+      title: event.title,
+      description: event.description,
+      date: `${event.date.year}-${String(event.date.month).padStart(2, '0')}-${String(event.date.day).padStart(2, '0')}`,
+      time: `${String(event.date.hour).padStart(2, '0')}:${String(event.date.minute).padStart(2, '0')} - ${String(endTime.hour).padStart(2, '0')}:${String(endTime.minute).padStart(2, '0')}`,
+      location: event.location,
+      speakers: [],
+      registrationRequirements: event.registrationRequirements,
+      requiresRegistration: event.requiresRegistration,
+      ticketsRemaining: event.ticketsRemaining,
+      price: event.price,
     })
   }
 }

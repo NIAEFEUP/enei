@@ -62,19 +62,19 @@ export default function EventRegistrationPage({
 
           {/* Event Description */}
           <CardContent className="space-y-2 mt-2">
-            <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+            <div className="mb-3 flex items-center gap-2 text-lg font-semibold">
               <Info className="h-5 w-5" />
-              <h1 className="text-lg font-semibold">Acerca do Evento</h1>
-            </h2>
+              <h2 className="text-lg font-semibold">Acerca do Evento</h2>
+            </div>
             <CardDescription>{description}</CardDescription>
 
             {/* Speakers */}
-            <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+            <div className="mb-3 flex items-center gap-2 text-lg font-semibold">
               <Users className="h-5 w-5" />
-              <h1 className="text-lg font-semibold">
+              <h2 className="text-lg font-semibold">
                 {speakers.length === 1 ? 'Orador' : 'Oradores'}
-              </h1>
-            </h2>
+              </h2>
+            </div>
 
             <div className="grid gap-4">
               {speakers.map((speaker) => (
