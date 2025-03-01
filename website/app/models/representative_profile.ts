@@ -18,7 +18,7 @@ export default class SpeakerProfile extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
-  // Speaker Info
+  // Representative Info
 
   @column()
   declare firstName: string
@@ -38,4 +38,9 @@ export default class SpeakerProfile extends BaseModel {
   // To uncomment when Events are created
   // @hasMany(() => Event)
   // declare participatingEvents: HasMany<typeof Event>
+
+  // Functions
+  static async getCompanyRepresentatives(companyId: number) {
+    return this.query().where('company_id', companyId)
+  }
 }
