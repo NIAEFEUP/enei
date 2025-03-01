@@ -14,4 +14,12 @@ export class OrderService {
 
       return orderProducts.length < product.max_order
     }
+
+    getOrdersForUser(user: User, states: Array<string> = ['Success', 'Pending']) {
+      return OrderProduct.query()
+        .join('orders', 'order_products.order_id', 'orders.id')
+        .join('products', 'order_products.product_id', 'products.id')
+        .where('user_id', user.id)
+        .whereIn('orders.status', states)
+    }
 }

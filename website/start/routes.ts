@@ -175,16 +175,17 @@ router
 
 router.get('/event', [EventsController, 'index']).as('pages:event')
 
-
 router.
   group(() => {
     router.on('/').renderInertia('cv').as('pages:cv')
   })
   .use([middleware.auth(), middleware.verifiedEmail()])
-  .prefix('cv') // dummy route for testing
+  .prefix('cv')
 
 router.
   group(() => {
+    router.get('/products/reserved', [StoreController, 'reservedProductsForUser'])
+
     router.get('/cv/name', [CvsController, 'showName'])
     router.post('/cv/upload', [CvsController, 'upload'])
     router.delete('cv/delete', [CvsController, 'delete'])
@@ -200,10 +201,7 @@ router.
     })
   })
   .use([middleware.auth()])
-  
   .prefix('user')
-
-
 
 router
   .group(() => {
@@ -222,3 +220,8 @@ router.route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
   .middleware([middleware.automaticSubmit(), middleware.silentAuth()]) 
   .as('actions:referrals.link')
 
+router
+  .group(() => {
+    router.on('/qrcode/scan').renderInertia('qrscanner').as('pages:staff.qrcode.scan')
+  })
+  .prefix('/staff')

@@ -7,6 +7,7 @@ import { cn } from '~/lib/utils'
 import Container from './containers'
 import { useEffect, useState } from 'react'
 import { NotificationContainer } from '../notifications'
+import { QrCode } from 'lucide-react'
 
 /*
 import { Menu } from "lucide-react";
@@ -99,8 +100,18 @@ export function Navbar({ className, variant = "blue" }: { className?: string, va
             </Link>
             <div className='flex gap-4 items-center justify-between'>
               <div className={auth.state === 'authenticated' ? 'block' : 'hidden'}>
+                <Link route="pages:staff.qrcode.scan" className={cn(buttonVariants({variant: 'link'}), `text-${textColor}`)}>
+                  <QrCode />
+                </Link>
+              </div>
+              <div className={auth.state === 'authenticated' ? 'block' : 'hidden'}>
                 <Link route="pages:store" className={cn(buttonVariants({variant: 'link'}), `text-${textColor}`)}>
                     <span>Loja</span>
+                </Link>
+              </div>
+              <div className={auth.state === 'authenticated' ? 'block' : 'hidden'}>
+                <Link route="pages:profile.default" className={cn("", `text-${textColor}`)}>
+                    <span>Perfil</span>
                 </Link>
               </div>
               <div className={auth.state === 'authenticated' ? 'block' : 'hidden'}>

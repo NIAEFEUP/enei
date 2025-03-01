@@ -25,7 +25,7 @@ function PointsStoreProductCard({
   const { userPoints } = useContext(StoreContext)
 
   return (
-    <Card className={cn("bg-persian-orange flex flex-col", !canBuyProduct(product, userPoints) && "bg-dark-persian-orange")}>
+    <Card className={cn("bg-persian-orange flex flex-col", !canBuyProduct(product, userPoints) )}>
       <CardHeader className="flex flex-row justify-end items-center p-4">
         <ProductCardStock
           stock={stock}
@@ -34,7 +34,7 @@ function PointsStoreProductCard({
       <CardContent className="p-12">
         <img
           src={`/images/products/${product.image ?? "default-product.jpg"}`}
-          className={cn("w-full h-full object-cover rounded-md", !canBuyProduct(product, userPoints) && "blur")}
+          className={cn("w-full h-full object-cover rounded-md", !canBuyProduct(product, userPoints) && "blur-sm")}
         />
       </CardContent>
       <div className="flex flex-col flex-grow gap-0">

@@ -25,7 +25,7 @@ function AcquireDisplayText({
   return (
     <>
       <div className="flex flex-col">
-        <span className="text-xl font-bold">
+        <span className="text-lg font-bold">
           {product.price <= userPoints
             ? `${displayText}`
             : "Sem pontos"

@@ -7,10 +7,11 @@ import OrderProduct from '#models/order_product'
 import { ProductService } from './product_service.js'
 
 import { inject } from '@adonisjs/core'
+import { OrderService } from './order_service.js'
 
 @inject()
 export class StoreService {
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private orderService: OrderService) { }
 
   async getProducts(user: User | undefined) {
     return await this.productService.getPointProducts(user)
@@ -44,5 +45,9 @@ export class StoreService {
         client: trx
       })
     })
+  }
+
+  async getReservedProducts(user: User) {
+    return await this.productService.applyPointProductRestriction(this.orderService.getOrdersForUser(user, ['Pending']))
   }
 }
