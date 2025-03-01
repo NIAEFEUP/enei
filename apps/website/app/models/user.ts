@@ -160,7 +160,7 @@ import PromoterInfo from './promoter_info.js'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import PromoterProfile from './promoter_profile.js'
 import ParticipantProfile from './participant_profile.js'
-import CompanyProfile from './company_profile.js'
+import CompanyProfile from './company.js'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -291,5 +291,6 @@ export default class User extends BaseModel {
     return user.referrer
   }
 }
+
 
 */

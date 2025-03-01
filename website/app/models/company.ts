@@ -3,7 +3,7 @@ import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
 import type { HasOne } from '@adonisjs/lucid/types/relations'
 import User from './user.js'
 
-export default class CompanyProfile extends BaseModel {
+export default class Company extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
   
