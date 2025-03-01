@@ -5,7 +5,7 @@ import User from './user.js'
 // import Event from './event.js'
 import Company from './company.js'
 
-export default class SpeakerProfile extends BaseModel {
+export default class RepresentativeProfile extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 

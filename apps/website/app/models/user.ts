@@ -161,6 +161,8 @@ import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import PromoterProfile from './promoter_profile.js'
 import ParticipantProfile from './participant_profile.js'
 import CompanyProfile from './company.js'
+import SpeakerProfile from './speaker_profile.js'
+import RepresentativeProfile from './representative_profile.js'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -237,14 +239,25 @@ export default class User extends BaseModel {
   @column()
   declare speakerProfileId: number | undefined
 
-  @belongsTo(() => CompanyProfile)
-  declare speakerProfile: BelongsTo<typeof CompanyProfile>
+  @belongsTo(() => SpeakerProfile)
+  declare speakerProfile: BelongsTo<typeof SpeakerProfile>
+
+  // RepresentantiveProfile
+
+  @column()
+  declare representativeProfileId: number | undefined
+
+  @belongsTo(() => RepresentativeProfile)
+  declare representativeProfile: BelongsTo<typeof RepresentativeProfile>
 
   // Functions
 
   get role() {
     if (this.isParticipant()) return 'participant' as const
     if (this.isPromoter()) return 'promoter' as const
+    if (this.isSpeaker()) return 'speaker' as const
+    if (this.isCompany()) return 'company' as const
+    if (this.isRepresentative()) return 'representative' as const
     return 'unknown' as const
   }
 
@@ -256,6 +269,18 @@ export default class User extends BaseModel {
     return this.participantProfileId
   }
 
+  isSpeaker() {
+    return this.speakerProfileId
+  }
+
+  isCompany() {
+    return this.companyProfileId
+  }
+
+  isRepresentative() {
+    return this.representativeProfileId
+  }
+  
   isEmailVerified() {
     return this.emailVerifiedAt !== null
   }
