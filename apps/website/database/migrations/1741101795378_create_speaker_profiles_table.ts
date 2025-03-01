@@ -10,10 +10,11 @@ export default class extends BaseSchema {
       table.string("last_name").notNullable();
       table.string("job_title");
       table.string("profile_picture");
-      table.string("company");
 
-      table.timestamp("created_at");
-      table.timestamp("updated_at");
+      table.string('ORCID_link')
+      table.integer('company_id').references('id').inTable('company')
+
+      table.timestamps({ defaultToNow: true })
     });
   }
 
