@@ -30,6 +30,9 @@ export default class SpeakerProfile extends BaseModel {
   declare jobTitle: string
 
   @column()
+  declare speakerRole: "keynote_speaker" | "panelist" | "moderator"
+
+  @column()
   declare ORCIDLink: string | null
 
   @belongsTo(() => Company)
