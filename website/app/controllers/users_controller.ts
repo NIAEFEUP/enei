@@ -28,9 +28,8 @@ export default class UsersController {
         await user.save()
         return response.ok({ message: 'CV deleted' })
     }
-    
 
-    async showName({ response, auth }: HttpContext) {
+    async showCVName({ response, auth }: HttpContext) {
         const user = auth.user 
         if (!user) {
           return response.unauthorized('User not authenticated')
@@ -45,25 +44,85 @@ export default class UsersController {
     
       }
     
-        async downloadCV({ response, auth }: HttpContext) {
-            const user = auth.user
-            if (!user) {
-                return response.unauthorized('User not authenticated')
-            }
-
-            if (user.resume === null) {
-                return response.notFound('File not found')
-            }
-
-            const filePath = await user.resume.path
-            if(!filePath) {
-                return response.notFound('File not found')
-            }
-            const file = await drive.use().getStream(filePath)
-
-            response.type('application/pdf')
-            response.header('Content-Disposition', `inline; filename="${user.resume.originalName}"`)
-            return response.stream(file)
+    async downloadCV({ response, auth }: HttpContext) {
+        const user = auth.user
+        if (!user) {
+            return response.unauthorized('User not authenticated')
         }
 
+        if (user.resume === null) {
+            return response.notFound('File not found')
+        }
+
+        const filePath = await user.resume.path
+        if(!filePath) {
+            return response.notFound('File not found')
+        }
+        const file = await drive.use().getStream(filePath)
+
+        response.type('application/pdf')
+        response.header('Content-Disposition', `inline; filename="${user.resume.originalName}"`)
+        return response.stream(file)
+    }
+
+
+    async showAvatar({ inertia }: HttpContext) {
+        return inertia.render('avatar')
+    }
+    async storeAvatar({ request, response, auth }: HttpContext) {
+        const user = auth.user
+        if (!user) {
+            return response.unauthorized('User not authenticated')
+        }
+        const avatar = request.file('avatar')!
+        user.avatar = await attachmentManager.createFromFile(avatar)
+        await user.save()
+        return response.ok({ message: 'Avatar uploaded' })
+    }
+
+    async deleteAvatar({ response, auth }: HttpContext) {
+        const user = auth.user
+        if (!user) {
+            return response.unauthorized('User not authenticated')
+        }
+        user.avatar = null
+        await user.save()
+        return response.ok({ message: 'Avatar deleted' })
+    }
+
+    async showAvatarName({ response, auth }: HttpContext) {
+        const user = auth.user 
+        if (!user) {
+          return response.unauthorized('User not authenticated')
+        }
+        
+        if( user.avatar === null) {
+            return response.notFound('File not found')
+          }
+        const fileName = user.avatar.originalName
+        
+        return response.ok({ fileName })
+    
+      }
+    
+    async downloadAvatar({ response, auth }: HttpContext) {
+        const user = auth.user
+        if (!user) {
+            return response.unauthorized('User not authenticated')
+        }
+
+        if (user.avatar === null) {
+            return response.notFound('File not found')
+        }
+
+        const filePath = await user.avatar.path
+        if(!filePath) {
+            return response.notFound('File not found')
+        }
+        const file = await drive.use().getStream(filePath)
+
+        response.type('image/jpeg')
+        response.header('Content-Disposition', `inline; filename="${user.avatar.originalName}"`)
+        return response.stream(file)
+    }
 }

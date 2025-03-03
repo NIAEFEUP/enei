@@ -71,6 +71,9 @@ export default class User extends BaseModel {
   @attachment()
   declare resume: Attachment | null 
 
+  @attachment()
+  declare avatar: Attachment | null
+
   @belongsTo(() => PromoterInfo)
   declare promoterInfo: BelongsTo<typeof PromoterInfo>
 

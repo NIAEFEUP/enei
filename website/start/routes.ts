@@ -187,9 +187,14 @@ router.
     router.get('/cv', [UsersController, 'showCV'])
     router.post('/cv/upload', [UsersController, 'storeCV'])
     router.delete('cv/delete', [UsersController, 'deleteCV'])
-    router.get('/cv/name', [UsersController
-      , 'showName'])
+    router.get('/cv/name', [UsersController, 'showCVName'])
     router.get('/cv/download', [UsersController, 'downloadCV'])
+
+    // Avatar endpoints
+    router.get('/avatar', [UsersController, 'showAvatar'])
+    router.get('/avatar/name', [UsersController, 'showAvatarName'])
+    router.post('/avatar/upload', [UsersController, 'storeAvatar'])
+    router.delete('/avatar/delete', [UsersController, 'deleteAvatar'])
   })
   .use([middleware.auth()])
   .prefix('user')
