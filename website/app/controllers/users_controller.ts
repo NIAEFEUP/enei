@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { attachmentManager } from '@jrmc/adonis-attachment'
+import drive from "@adonisjs/drive/services/main"
 
 export default class UsersController {
     
@@ -44,5 +45,25 @@ export default class UsersController {
     
       }
     
+        async downloadCV({ response, auth }: HttpContext) {
+            const user = auth.user
+            if (!user) {
+                return response.unauthorized('User not authenticated')
+            }
+
+            if (user.resume === null) {
+                return response.notFound('File not found')
+            }
+
+            const filePath = await user.resume.path
+            if(!filePath) {
+                return response.notFound('File not found')
+            }
+            const file = await drive.use().getStream(filePath)
+
+            response.type('application/pdf')
+            response.header('Content-Disposition', `inline; filename="${user.resume.originalName}"`)
+            return response.stream(file)
+        }
 
 }

@@ -189,6 +189,7 @@ router.
     router.delete('cv/delete', [UsersController, 'deleteCV'])
     router.get('/cv/name', [UsersController
       , 'showName'])
+    router.get('/cv/download', [UsersController, 'downloadCV'])
   })
   .use([middleware.auth()])
   .prefix('user')
