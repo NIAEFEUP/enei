@@ -222,6 +222,6 @@ router.route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
 
 router
   .group(() => {
-    router.on('/qrcode/scan').renderInertia('qrscanner').as('pages:staff.qrcode.scan')
+    router.on('/scan').renderInertia('qrscanner').as('pages:staff.qrcode.scan')
   })
-  .prefix('/staff')
+  .prefix('/qrcode')
