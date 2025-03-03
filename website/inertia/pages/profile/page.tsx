@@ -8,12 +8,17 @@ import { getUniversityById } from '~/lib/enei/signup/universities'
 import { Download, User, Github, Linkedin, Globe, QrCode, LucideProps, Pencil} from 'lucide-react'
 import { Dialog, DialogContent, DialogTrigger } from '~/components/ui/dialog'
 import { QRCodeSVG } from 'qrcode.react';
-import { useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { Link } from '@tuyau/inertia/react'
 import { cn } from '~/lib/utils'
 import { Badge } from '~/components/ui/badge'
 import editions from '#data/enei/editions.json' with { type: 'json' }
 import { Option } from '~/components/ui/multiple-selector'
+import ProfileActivityInfo from '~/components/profile/profile_activity_info'
+
+export const ProfileContext = createContext<{slug: string | number}>({
+  slug: ""
+})
 
 interface SocialIconProps {
   icon: React.FC<LucideProps>;
@@ -38,7 +43,7 @@ const SocialIcon = ({ icon: Icon, link }: SocialIconProps) => {
 }
 
 export default function ProfilePage(props: InferPageProps<ProfilesController, 'index'> & { profile: ParticipantProfile }) {
-  const { profile, isUser } = props
+  const { profile, isUser, activityInformation } = props
 
   const [windowHref, setWindowHref] = useState("");
 
@@ -55,10 +60,11 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
   if (profile.website) socials.push({ icon: Globe, link: profile.website })
 
   return (
+    <ProfileContext.Provider value={{ slug: profile.slug ?? "" }}>
     <Page title={`${profile.firstName} ${profile.lastName}`} className="bg-enei-beige text-enei-blue">
       <Container>
         <section className="relative flex flex-col gap-8 md:justify-between z-10">
-          <div className='flex flex-row justify-normal gap-4'>
+          <div className='flex flex-row justify-normal gap-4 mt-8'>
             <h3 className='text-2xl'>Perfil do Participante</h3>
             {isUser &&
               <Link route="pages:profile.edit" className={cn(buttonVariants({ variant: 'default' }), 'w-fit')}>
@@ -133,7 +139,11 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
             </div>
           </section>
         </section>
+        <ProfileActivityInfo 
+          activityInformation={activityInformation}
+        />
       </Container>
     </Page>
+    </ProfileContext.Provider>
   )
 }

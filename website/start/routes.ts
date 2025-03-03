@@ -22,6 +22,8 @@ const CvsController = () => import('#controllers/cvs_controller')
 const StoreController = () => import('#controllers/store_controller')
 const ReferralsController = () => import('#controllers/referrals_controller')
 
+const ProductReservationController = () => import('#controllers/product_reservation_controller')
+
 router.on('/').renderInertia('home').as('pages:home')
 
 router
@@ -161,6 +163,7 @@ router
 router
   .group(() => {
     router.get("/u/:slug", [ProfilesController, 'index']).as('pages:profile.show')
+    router.post("/u/:slug/product/collect", [ProductReservationController, 'collect']).as('actions:profile.product.collect')
     router.get("/profile", [ProfilesController, 'default'])
       .as('pages:profile.default')
       .use([middleware.auth(), middleware.verifiedEmail()])
@@ -171,7 +174,6 @@ router
 
 router
   .on('/faq').renderInertia('faq').as('pages:faq')
-
 
 router.get('/event', [EventsController, 'index']).as('pages:event')
 
@@ -184,8 +186,6 @@ router.
 
 router.
   group(() => {
-    router.get('/products/reserved', [StoreController, 'reservedProductsForUser'])
-
     router.get('/cv/name', [CvsController, 'showName'])
     router.post('/cv/upload', [CvsController, 'upload'])
     router.delete('cv/delete', [CvsController, 'delete'])

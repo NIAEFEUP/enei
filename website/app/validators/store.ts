@@ -34,3 +34,10 @@ export const storeValidator = vine.compile(
   })
 )
 
+export const reserveProductValidator = vine.compile(
+  vine.object({
+    productId: vine.number().use(
+      productMustExistAndBeInStock()
+    ),
+  })
+)

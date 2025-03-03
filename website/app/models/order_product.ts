@@ -1,5 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import Product from './product.js'
+import Order from './order.js'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 
 export default class OrderProduct extends BaseModel {
   @column({ isPrimary: true })
@@ -19,4 +22,10 @@ export default class OrderProduct extends BaseModel {
 
   @column()
   declare quantity: number
+
+  @belongsTo(() => Product)
+  declare product: BelongsTo<typeof Product>
+
+  @belongsTo(() => Order)
+  declare order: BelongsTo<typeof Order>
 }

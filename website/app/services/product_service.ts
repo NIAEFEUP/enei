@@ -30,7 +30,7 @@ export class ProductService {
     return groupRestrictionDefined.some((group: UserTypes) => user.groups().includes(group))
   }
 
-  applyPointProductRestriction(query: ModelQueryBuilderContract<typeof Product | typeof OrderProduct>) {
+  static applyPointProductRestriction(query: ModelQueryBuilderContract<typeof Product | typeof OrderProduct>) {
     return query.where('currency', 'points')
   }
 }

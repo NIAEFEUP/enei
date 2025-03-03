@@ -10,3 +10,7 @@ export type UserActivityDescription = {
     pointsToReferralUser?: number
     pointsToPromoter?: number
 }
+
+export type UserActivityInformation = {
+    [key: string]: any
+}

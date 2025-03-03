@@ -5,13 +5,13 @@ import Order from '#models/order'
 import OrderProduct from '#models/order_product'
 
 import { ProductService } from './product_service.js'
+import { OrderService } from './order_service.js'
 
 import { inject } from '@adonisjs/core'
-import { OrderService } from './order_service.js'
 
 @inject()
 export class StoreService {
-  constructor(private productService: ProductService, private orderService: OrderService) { }
+  constructor(private productService: ProductService) { }
 
   async getProducts(user: User | undefined) {
     return await this.productService.getPointProducts(user)
@@ -48,6 +48,12 @@ export class StoreService {
   }
 
   async getReservedProducts(user: User) {
-    return await this.productService.applyPointProductRestriction(this.orderService.getOrdersForUser(user, ['Pending']))
+    const userOrders = await OrderService.getOrdersForUser(user, ['points'])
+    return userOrders.map(
+      (orderProduct) => ({
+        "order": orderProduct.order,
+        "product": orderProduct.product,
+      })
+    )
   }
 }
