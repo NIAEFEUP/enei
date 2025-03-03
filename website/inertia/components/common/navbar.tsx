@@ -110,12 +110,12 @@ export function Navbar({ className, variant = "blue" }: { className?: string, va
                 </Link>
               </div>
               <div className={auth.state === 'authenticated' ? 'block' : 'hidden'}>
-                <Link route="pages:profile.default" className={cn("", `text-${textColor}`)}>
+                <Link route="pages:profile.default" className={cn(buttonVariants({ variant: 'link' }), `text-${textColor}`)}>
                     <span>Perfil</span>
                 </Link>
               </div>
               <div className={auth.state === 'authenticated' ? 'block' : 'hidden'}>
-                <Link route="pages:referrals" className={cn(buttonVariants({ variant: 'link' }), "text-enei-beige p-0")}>
+                <Link route="pages:referrals" className={cn(buttonVariants({ variant: 'link' }), `text-${textColor}`)}>
                   Referenciações
                 </Link>
               </div>

@@ -14,8 +14,6 @@ function ProfileInfoDrawer({
 }: ProfileInfoDrawerProps) {
     const [open, setOpen] = useState<boolean>(true)
 
-    console.log(profile);
-
     return (
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerContent className="bg-enei-beige text-enei-blue gap-4 p-4 absolute">

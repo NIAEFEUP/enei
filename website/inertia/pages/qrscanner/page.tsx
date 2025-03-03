@@ -14,15 +14,17 @@ export default function QrScanner() {
     return (
         <Page title="QRCode Scanner" className="bg-enei-beige text-enei-blue" variant="beige">
             <Container className="max-w-xl">
-                <CredentialScanner 
-                    onScan={(slug: string) => {
-                        axios.get(tuyau.$url('actions:profile.info', { params: { slug }})).then((res) => {
-                            setProfile(res.data.profile)
-                        })
-                    }}
-                />
+                <div className="w-3/4 mx-auto">
+                    <CredentialScanner
+                        onScan={(slug: string) => {
+                            axios.get(tuyau.$url('actions:profile.info', { params: { slug } })).then((res) => {
+                                setProfile(res.data.profile)
+                            })
+                        }}
+                    />
+                </div>
                 {profile && (
-                    <ProfileInfoDrawer 
+                    <ProfileInfoDrawer
                         profile={profile}
                     />
                 )}
