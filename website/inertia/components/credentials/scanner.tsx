@@ -1,22 +1,24 @@
-import { Scanner } from '@yudiel/react-qr-scanner';
+import { IDetectedBarcode, Scanner } from '@yudiel/react-qr-scanner';
+
+interface CredentialScannerProps {
+    onScan: (slug: string) => void
+}
 
 function CredentialScanner({
-}) {
+    onScan
+}: CredentialScannerProps ) {
     return (
         <Scanner
-            onScan={(data) => console.log(data)}
-            styles={{ 
-                video: {
-                    height: '36em',
-                    width: '100em',
-                },
-                container: {
-                    height: '10em',
-                    width: '20em',
-                    // backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                    // display: 'flex',
-                },
+            key={"credential-scanner"}
+
+            onScan={(data: IDetectedBarcode[]) => {
+                const value = data[0].rawValue.split("/")
+                const slug = value[value.length - 1]
+
+                onScan(slug)
             }}
+            allowMultiple={true}
+            scanDelay={0}
         />
     )
 }

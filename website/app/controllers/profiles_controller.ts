@@ -24,6 +24,17 @@ export default class ProfilesController {
     return response.redirect().toRoute('pages:profile.show', { slug: user.participantProfile.slug } )
   }
 
+  async getInfo({ params, response }: HttpContext) {
+    const profile = await ParticipantProfile.findBy('slug', params.slug)
+
+    if (!profile) {
+      response.notFound("Participante não encontrado")
+      return
+    }
+
+    return response.send({profile : profile})
+  }
+
   async index({ auth, inertia, params, response }: HttpContext) {
     const profile = await ParticipantProfile.findBy('slug', params.slug)
 

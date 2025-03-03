@@ -170,6 +170,7 @@ router
     router.get("/profile/edit", [ProfilesController, 'edit'])
       .as('pages:profile.edit')
       .use([middleware.auth(), middleware.verifiedEmail()])
+    router.get("/u/:slug/info", [ProfilesController, 'getInfo']).as('actions:profile.info')
   })
 
 router
