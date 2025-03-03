@@ -10,7 +10,7 @@ export default function StoreReservedProducts({
 }: StoreReservedProductsProps) {
     return (
         <>
-            {products.map(({ product, order }) => (
+            {products?.map(({ product, order }) => (
                 <PointsStoreProductCollectCard
                     key={product.id}
                     product={product}

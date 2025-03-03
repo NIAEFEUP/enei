@@ -61,7 +61,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
 
   return (
     <ProfileContext.Provider value={{ slug: profile.slug ?? "" }}>
-    <Page title={`${profile.firstName} ${profile.lastName}`} className="bg-enei-beige text-enei-blue">
+    <Page title={`${profile.firstName} ${profile.lastName}`} className="bg-enei-beige text-enei-blue" variant="beige">
       <Container>
         <section className="relative flex flex-col gap-8 md:justify-between z-10">
           <div className='flex flex-row justify-normal gap-4 mt-8'>
