@@ -23,11 +23,9 @@ export default class extends BaseSeeder {
       price: 0,
     })
 
-
     await Event.create({
       title: 'Workshop Computação Quântica',
-      description:
-        'idk',
+      description: 'idk',
       date: DateTime.fromObject({ year: 2025, month: 4, day: 11, hour: 16, minute: 0 }),
       duration: 90,
       location: 'ISEP - TBD',

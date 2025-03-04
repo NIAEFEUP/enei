@@ -6,9 +6,11 @@ import { Separator } from '~/components/ui/separator'
 import BaseLayout from '~/layouts/base'
 
 interface Speaker {
-  name: string
-  role: string
+  firstName: string
+  lastName: string
   image: string
+  jobTitle: string
+  company: string
 }
 
 interface EventRegistrationProps {
@@ -36,6 +38,8 @@ export default function EventRegistrationPage({
   ticketsRemaining,
   price,
 }: EventRegistrationProps) {
+
+
   return (
     <BaseLayout title="Registo de Evento" className="bg-enei-beige ">
       <div className="flex justify-center mt-10">
@@ -78,15 +82,15 @@ export default function EventRegistrationPage({
 
             <div className="grid gap-4">
               {speakers.map((speaker) => (
-                <div key={speaker.name} className="flex items-center gap-4 rounded-lg border p-4">
+                <div key={speaker.firstName} className="flex items-center gap-4 rounded-lg border p-4">
                   <Avatar className="h-12 w-12">
-                    <AvatarImage src={speaker.image} alt={speaker.name} />
-                    <AvatarFallback>{speaker.name[0]}</AvatarFallback>
+                    <AvatarImage src={speaker.image} alt={speaker.firstName} />
+                    <AvatarFallback>{speaker.firstName[0]}</AvatarFallback>
                   </Avatar>
                   <div className="space-y-1">
-                    <h3 className="font-medium">{speaker.name}</h3>
-                    {speaker.role && (
-                      <p className="text-sm text-muted-foreground">{speaker.role}</p>
+                    <h3 className="font-medium">{speaker.firstName}</h3>
+                    {speaker.jobTitle && (
+                      <p className="text-sm text-muted-foreground">{speaker.jobTitle}</p>
                     )}
                   </div>
                 </div>

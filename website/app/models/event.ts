@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, manyToMany } from '@adonisjs/lucid/orm'
+import SpeakerProfile from './speaker_profile.js'
+import type { ManyToMany } from '@adonisjs/lucid/types/relations'
 
 export default class Event extends BaseModel {
   @column({ isPrimary: true })
@@ -26,7 +28,10 @@ export default class Event extends BaseModel {
   @column()
   declare location: string
 
-  // TODO: Add speakers relationship
+  @manyToMany(() => SpeakerProfile, {
+    pivotTable: 'event_speaker',
+  })
+  public speakers!: ManyToMany<typeof SpeakerProfile>
 
   @column()
   declare registrationRequirements: string
@@ -39,5 +44,4 @@ export default class Event extends BaseModel {
 
   @column()
   declare price: number
-
 }
