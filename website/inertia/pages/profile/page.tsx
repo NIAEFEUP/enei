@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { InferPageProps } from '@adonisjs/inertia/types'
 import ProfilesController from '#controllers/profiles_controller'
 import ParticipantProfile from '#models/participant_profile'
@@ -47,7 +48,20 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
   if (profile.linkedin) socials.push({ icon: Linkedin, link: profile.linkedin })
   if (profile.website) socials.push({ icon: Globe, link: profile.website })
 
-  // TODO: Show resume button only when it exists.
+  const [hasCv, setHasCv] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchFileName = async () => {
+      try {
+        const response = await axios.get(tuyau.$url('pages:profile.cv.show', { params: { slug: profile.slug } }));
+
+        setHasCv(response.status == 200)
+      } catch (error) {
+      }
+    };
+
+    fetchFileName();
+  }, []);
 
   return (
     <Page title={`${profile.firstName} ${profile.lastName}`} className="bg-enei-beige text-enei-blue">
@@ -82,10 +96,12 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   ))
                 }
                 <div className='flex flex-row gap-2'>
-                  <a href={tuyau.$url('pages:profile.cv.show', { params: { slug: profile.slug } })} className={cn(buttonVariants({ variant: 'default' }), 'w-fit')} target="_blank" rel="noopener noreferrer">
-                    <Download />
-                    Currículo
-                  </a>
+                  {hasCv &&
+                    <a href={tuyau.$url('pages:profile.cv.show', { params: { slug: profile.slug } })} className={cn(buttonVariants({ variant: 'default' }), 'w-fit')} target="_blank" rel="noopener noreferrer">
+                      <Download />
+                      Currículo
+                    </a>
+                  }
                   <Dialog>
                     <DialogTrigger asChild>
                       <Button className='w-fit'>
