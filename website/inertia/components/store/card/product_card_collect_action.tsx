@@ -59,14 +59,14 @@ function PointsStoreProductCardCollectAction({
                 {product.name}
             </p>
             <Dialog open={open} onOpenChange={setOpen}>
-                {product.stock > 0
+                {status === "Pending"
                     ? (<DialogTrigger asChild>
                         <Button className="bg-persian-orange p-8">
                             {status === "Pending" ? "Marcar como recolhido" : "Já recolhido"}
                         </Button>
                     </DialogTrigger>
                     )
-                    : <span className="text-white font-bold">Esgotado</span>
+                    : <span className="text-white font-bold">Já recolhido!</span>
                 }
                 <DialogContent>
                     <DialogHeader>
