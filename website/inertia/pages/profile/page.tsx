@@ -55,7 +55,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
       try {
         const response = await axios.get(tuyau.$url('pages:profile.cv.show', { params: { slug: profile.slug } }));
 
-        setHasCv(response.status == 200)
+        setHasCv(response.status === 200)
       } catch (error) {
       }
     };
