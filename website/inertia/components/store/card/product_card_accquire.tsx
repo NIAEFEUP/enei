@@ -25,7 +25,7 @@ function AcquireDisplayText({
   return (
     <>
       <div className="flex flex-col">
-        <span className="text-xl font-bold">
+        <span className="text-lg font-bold">
           {product.price <= userPoints
             ? `${displayText}`
             : "Sem pontos"
@@ -82,7 +82,7 @@ function PointsStoreProductCardAccquire({
   }
 
   return (<>
-    <div className="flex flex-row justify-between items-center w-full">
+    <div className="flex flex-row justify-between items-center w-full gap-x-8">
       <p className="text-white font-bold">
         {product.name}
       </p>
