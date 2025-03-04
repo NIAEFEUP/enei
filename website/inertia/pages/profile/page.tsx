@@ -13,6 +13,7 @@ import { Link } from '@tuyau/inertia/react'
 import { cn } from '~/lib/utils'
 import { Badge } from '~/components/ui/badge'
 import { ENEI_EDITIONS } from '~/lib/enei/signup/editions'
+import { useTuyau } from '~/hooks/use_tuyau'
 
 interface SocialIconProps {
   icon: React.FC<LucideProps>;
@@ -28,6 +29,7 @@ const SocialIcon = ({ icon: Icon, link }: SocialIconProps) => {
 }
 
 export default function ProfilePage(props: InferPageProps<ProfilesController, 'index'> & { profile: ParticipantProfile }) {
+  const tuyau = useTuyau()
   const { profile, isUser } = props
 
   const [windowHref, setWindowHref] = useState("");
@@ -43,6 +45,8 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
   if (profile.github) socials.push({ icon: Github, link: profile.github })
   if (profile.linkedin) socials.push({ icon: Linkedin, link: profile.linkedin })
   if (profile.website) socials.push({ icon: Globe, link: profile.website })
+
+  // TODO: Show resume button only when it exists.
 
   return (
     <Page title={`${profile.firstName} ${profile.lastName}`} className="bg-enei-beige text-enei-blue">
@@ -77,10 +81,10 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   ))
                 }
                 <div className='flex flex-row gap-2'>
-                  <Button className='w-fit'>
+                  <a href={tuyau.$url('pages:profile.cv.show', { params: { slug: profile.slug } })} className={cn(buttonVariants({ variant: 'default' }), 'w-fit')} target="_blank" rel="noopener noreferrer">
                     <Download />
                     Currículo
-                  </Button>
+                  </a>
                   <Dialog>
                     <DialogTrigger asChild>
                       <Button className='w-fit'>

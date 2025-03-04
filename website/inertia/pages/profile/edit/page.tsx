@@ -67,6 +67,7 @@ import heardaboutfrom from '#data/enei/signup/heard-about.json' with { type: 'js
 import { universities } from '~/lib/enei/signup/universities'
 import { ENEI_EDITIONS } from '~/lib/enei/signup/editions'
 import { TRANSPORTS } from '~/lib/enei/signup/transports'
+import CvUpload from '~/components/common/cv_upload'
 
 const INITIAL_MONTH = new Date(2004, 0, 1)
 const SIZES = sizes
@@ -121,7 +122,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
   const { profile }: { profile: ParticipantProfile } = props
   const { csrfToken } = usePage<PageProps & { csrfToken: string; }>().props;
 
-  const [initialValues, ] = useState<CommonInfo>(profileToCommonInfo(profile))
+  const [initialValues,] = useState<CommonInfo>(profileToCommonInfo(profile))
 
   const form = useForm<CommonInfo>({
     resolver: zodResolver(commonSchema),
@@ -369,12 +370,17 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                     </FormItem>
                   )}
                 />
+                <FormItem className="flex-1">
+                  <FormLabel>Currículo</FormLabel>
+                  <FormControl>
+                    <CvUpload />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
                 { /* TODO: */}
                 <div className='hidden'>
                   <br />
                   foto de perfil: // TODO
-                  <br />
-                  Currículo: // TODO
                 </div>
 
                 <div className='grid grid-cols-[auto_1fr] gap-2 items-center my-2'>
