@@ -71,7 +71,7 @@ const CvUpload = () => {
             {fileName ? (
                 <div className='flex flex-row gap-2'>
                     <Input className="w-64" type="text" value={fileName} disabled />
-                    <Button onClick={handleDelete} disabled={uploading}>
+                    <Button onClick={handleDelete} disabled={uploading} variant={'destructive'}>
                         {uploading ? 'Uploading...' : 'Clear CV'}
                     </Button>
                 </div>
