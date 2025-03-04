@@ -160,7 +160,8 @@ router
 
 router
   .group(() => {
-    router.get("/u/:slug", [ProfilesController, 'index']).as('pages:profile.show')
+    router.get("/u/:slug", [ProfilesController, 'index'])
+      .as('pages:profile.show')
     router.get("/profile", [ProfilesController, 'default'])
       .as('pages:profile.default')
       .use([middleware.auth(), middleware.verifiedEmail()])
@@ -170,6 +171,8 @@ router
     router.patch("/profile/edit", [ProfilesController, 'update'])
       .as('actions:profile.update')
       .use([middleware.auth(), middleware.verifiedEmail()])
+    router.get("/u/:slug/cv", [CvsController, 'show'])
+      .as('pages:profile.cv.show')
   })
 
 router
@@ -179,6 +182,7 @@ router
 router.get('/event', [EventsController, 'index']).as('pages:event')
 
 
+// TODO: Delete
 router.
   group(() => {
     router.on('/').renderInertia('cv').as('pages:cv')
@@ -189,18 +193,11 @@ router.
 router.
   group(() => {
     router.get('/cv/name', [CvsController, 'showName'])
+      .as('actions:cv.name')
     router.post('/cv/upload', [CvsController, 'upload'])
+      .as('actions:cv.upload')
     router.delete('cv/delete', [CvsController, 'delete'])
-    router.get('cv/uploads/*', ({ request, response }) => {
-      const filePath = `${request.param('*').join(sep)}_resume.pdf`
-      const PATH_TRAVERSAL_REGEX = /(?:^|[\\/])\.\.(?:[\\/]|$)/
-      const normalizedPath = normalize(filePath)
-      if (PATH_TRAVERSAL_REGEX.test(normalizedPath)) {
-        return response.badRequest('Malformed path')
-      }
-      const absolutePath = app.makePath('storage/uploads/cvs', normalizedPath)
-      return response.download(absolutePath)
-    })
+      .as('actions:cv.delete')
   })
   .use([middleware.auth()])
   .prefix('user')

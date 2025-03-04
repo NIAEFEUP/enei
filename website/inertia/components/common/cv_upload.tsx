@@ -3,16 +3,19 @@ import axios from 'axios';
 import { Button} from '~/components/ui/button';
 import { Input } from "~/components/ui/input"
 import { useEffect } from 'react';
+import { useTuyau } from '~/hooks/use_tuyau'
 
-const CvUpload= () => {
+const CvUpload = () => {
     const [file, setFile] = useState<File | null>(null);
     const [uploading, setUploading] = useState(false);
     const [fileName, setFileName] = useState<string | null>(null);
 
+    const tuyau = useTuyau()
+
     useEffect(() => {
         const fetchFileName = async () => {
             try {
-                const response = await axios.get('user/cv/name');
+                const response = await axios.get(tuyau.$url('actions:cv.name'));
                 setFileName(response.data.fileName);
             } catch (error) {
                 setFileName(null);
@@ -38,7 +41,7 @@ const CvUpload= () => {
         formData.append('cv', file);
 
         try {
-            await axios.post('/user/cv/upload', formData, {
+            await axios.post(tuyau.$url('actions:cv.upload'), formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -52,7 +55,7 @@ const CvUpload= () => {
     const handleDelete = async () => {
         setUploading(true);
         try {
-            await axios.delete('/user/cv/delete', {
+            await axios.delete(tuyau.$url('actions:cv.delete'), {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -82,9 +85,6 @@ const CvUpload= () => {
             )}
         </div>
     );
-
-
-         
 };
 
 export default CvUpload;
