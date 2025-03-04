@@ -180,14 +180,6 @@ router
 router.get('/event', [EventsController, 'index']).as('pages:event')
 
 
-// TODO: Delete
-router.
-  group(() => {
-    router.on('/').renderInertia('cv').as('pages:cv')
-  })
-  .use([middleware.auth(), middleware.verifiedEmail()])
-  .prefix('cv') // dummy route for testing
-
 router.
   group(() => {
     router.get('/cv/name', [CvsController, 'showName'])
