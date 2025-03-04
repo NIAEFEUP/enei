@@ -3,9 +3,7 @@
   "version": "0.0.0",
   "type": "module",
   "private": true,
-  "exports": {
-    ".": "./src/config.js"
-  },
+  "exports": "./src/config.js",
   "devDependencies": {
     "@enei/typescript-config": "workspace:*",
     "prettier": "^3.5.0",

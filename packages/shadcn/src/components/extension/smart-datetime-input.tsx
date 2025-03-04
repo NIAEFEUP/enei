@@ -2,14 +2,14 @@
 
 import React from "react";
 import { parseDate } from "chrono-node";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "#components/ui/popover";
 import { Modifiers } from "react-day-picker";
-import { Calendar } from "@/components/ui/calendar";
-import { Input } from "@/components/ui/input";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Calendar } from "#components/ui/calendar";
+import { Input } from "#components/ui/input";
+import { Button, buttonVariants } from "#components/ui/button";
 import { cn } from "@enei/react-utils/cn";
 import { Calendar as CalendarIcon, LucideTextCursorInput } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea } from "#components/ui/scroll-area";
 import { format } from "date-fns";
 
 type CalendarProps = React.ComponentProps<typeof Calendar>;

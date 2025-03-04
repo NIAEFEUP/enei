@@ -1,0 +1,56 @@
+{
+  "name": "@enei/frontend",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -b",
+    "dev": "tsc -b --watch --preserveWatchOutput --diagnostics false",
+    "turbo:build": "turbo run build",
+    "turbo:dev": "turbo run dev",
+    "lint:fix": "eslint . --fix",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "typecheck": "tsc -p . -p ./inertia --noEmit"
+  },
+  "imports": {
+    "#assets/*": "./app/assets/*",
+    "#components/*": "./app/components/*.js",
+    "#hooks/*": "./app/hooks/*.js",
+    "#images/*": "./app/images/*.js",
+    "#layouts/*": "./app/layouts/*.js",
+    "#lib/*": "./app/lib/*.js",
+    "#pages/*": "./app/pages/*.js",
+    "#providers/*": "./app/providers/*.js"
+  },
+  "devDependencies": {
+    "@enei/typescript-config": "workspace:*",
+    "@tailwindcss/vite": "catalog:",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  },
+  "dependencies": {
+    "@adonisjs/inertia": "^3.0.1",
+    "@date-fns/tz": "^1.2.0",
+    "@enei/data": "workspace:*",
+    "@enei/react-utils": "workspace:*",
+    "@enei/shadcn": "workspace:*",
+    "@hookform/resolvers": "^4.1.2",
+    "@inertiajs/react": "^2.0.3",
+    "@tuyau/client": "^0.2.4",
+    "@tuyau/inertia": "^0.0.9",
+    "axios": "^1.7.9",
+    "date-fns": "4.1.0",
+    "jotai": "^2.11.1",
+    "qrcode.react": "^4.2.0",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-hook-form": "^7.54.2",
+    "zod": "^3.24.2"
+  }
+}

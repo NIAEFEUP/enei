@@ -1,0 +1,39 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "transit": {
+      "dependsOn": [
+        "^transit"
+      ],
+      "cache": true
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "{projectRoot}/**/*",
+        "{projectRoot}/.env*"
+      ],
+      "outputs": [
+        "{projectRoot}/dist/**"
+      ],
+      "cache": true
+    },
+    "lint": {
+      "dependsOn": [
+        "^lint"
+      ],
+      "cache": true
+    },
+    "check-types": {
+      "dependsOn": [
+        "transit"
+      ],
+      "cache": true
+    },
+    "dev": {
+      "cache": false
+    }
+  }
+}

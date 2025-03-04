@@ -1,6 +1,7 @@
 {
   "name": "enei",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -10,8 +11,12 @@
   },
   "devDependencies": {
     "@enei/prettier-config": "workspace:*",
-    "turbo": "^2.4.2",
-    "typescript": "5.7.3"
+    "@enei/typescript-config": "workspace:*",
+    "concurrently": "^9.1.2",
+    "dax-sh": "^0.42.0",
+    "turbo": "^2.4.4",
+    "typescript": "5.7.3",
+    "nx": "20.4.6"
   },
   "engines": {
     "node": ">=22"

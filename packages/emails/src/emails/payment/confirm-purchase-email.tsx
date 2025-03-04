@@ -1,14 +1,13 @@
 import { Container, Heading, Text, Img, Body, Section } from "@react-email/components";
 import { BaseLayout } from "#layouts/base.js";
 
-export type ProductWithQuantity = { id: number; name: string; price: number; quantity: number };
+export type ProductWithQuantity = { name: string; price: number; quantity: number };
 
 export type MailProps = {
   logoUrl: string;
   userEmail: string;
   products: ProductWithQuantity[];
   total: number;
-  orderId: number;
 };
 
 const ConfirmPurchaseEmail = ({ logoUrl, products, total, userEmail }: MailProps) => {
@@ -29,7 +28,7 @@ const ConfirmPurchaseEmail = ({ logoUrl, products, total, userEmail }: MailProps
                 {product.name} - €{product.price} x {product.quantity}
               </Text>
             ))}
-            <Text className="font-bold">Total: €{total}</Text>
+            <Text className="font-bold">Total: {total}€</Text>
           </Section>
 
           <Section>
@@ -41,6 +40,19 @@ const ConfirmPurchaseEmail = ({ logoUrl, products, total, userEmail }: MailProps
       </Body>
     </BaseLayout>
   );
+};
+
+ConfirmPurchaseEmail.defaultProps = {
+  logoUrl: "https://eneiconf.pt/images/logo-white.png",
+  userEmail: "participante@eneiconf.pt",
+  products: [
+    {
+      name: "Bilhete Early Bird - Com Alojamento",
+      price: 35,
+      quantity: 1,
+    },
+  ],
+  total: 35,
 };
 
 export default ConfirmPurchaseEmail;

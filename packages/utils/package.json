@@ -1,17 +1,29 @@
 {
-    "name": "@enei/utils",
-    "version": "0.0.0",
-    "private": true,
-    "type": "module",
-    "scripts": {
-      "build": "tsc -b"
+  "name": "@enei/utils",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b",
+    "dev": "tsc -b --watch --preserveWatchOutput --diagnostics false",
+    "turbo:build": "turbo run build",
+    "turbo:dev": "turbo run dev"
+  },
+  "devDependencies": {
+    "@enei/typescript-config": "workspace:*"
+  },
+  "exports": {
+    "./defer": {
+      "types": "./src/defer.ts",
+      "default": "./dist/defer.js"
     },
-    "exports": {
-        "./defer": "./src/defer.ts",
-        "./types": "./src/types.ts"
+    "./dynamic-import": {
+      "types": "./src/dynamic-import.ts",
+      "default": "./dist/dynamic-import.js"
     },
-    "devDependencies": {
-      "@enei/typescript-config": "workspace:*"
+    "./types": {
+      "types": "./src/types.ts",
+      "default": "./dist/types.js"
     }
   }
-  
+}

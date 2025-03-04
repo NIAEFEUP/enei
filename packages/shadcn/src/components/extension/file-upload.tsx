@@ -1,6 +1,6 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
+import { Input } from "#components/ui/input";
 import { cn } from "@enei/react-utils/cn";
 import {
   Dispatch,
@@ -16,7 +16,7 @@ import {
 import { useDropzone, DropzoneState, FileRejection, DropzoneOptions } from "react-dropzone";
 import { toast } from "sonner";
 import { Trash2 as RemoveIcon } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "#components/ui/button";
 
 type DirectionOptions = "rtl" | "ltr" | undefined;
 

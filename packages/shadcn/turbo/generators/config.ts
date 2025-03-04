@@ -30,15 +30,10 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     ],
     actions: [
       {
-        type: "add",
-        path: "lib/components/{{ path }}.ts",
-        templateFile: "templates/barrel-file.hbs",
-      },
-      {
         type: "append",
         path: "package.json",
-        pattern: /"exports": {.*?(?<insertion>)(?=[ \n]*})/gs,
-        template: ',\n    "./{{ path }}": "./src/components/{{path}}.tsx"',
+        pattern: /"exports": {.*?}(?<insertion>)(?=[ \n]*})/gs,
+        template: ',\n    "./{{ path }}": {\n      "types": "./src/components/{{path}}.tsx",\n      "default": "./dist/components/{{path}}.js"\n    }',
         separator: "",
       },
     ],

@@ -10,7 +10,7 @@ export type RenderOptions = {
   html?: HtmlOptions;
 };
 
-export default async function render(
+export async function render(
   element: MaybePromise<React.ReactElement>,
   options?: RenderOptions,
 ) {

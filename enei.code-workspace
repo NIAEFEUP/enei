@@ -24,9 +24,13 @@
       },
     ],
 
+    // Turborepo
+    "turbo.useLocalTurbo": true,
+
     "files.exclude": {
       "**/.direnv": true,
       "**/.turbo": true,
+      // "**/dist": true,
       "**/node_modules": true,
       "apps": true,
       "packages": true,
@@ -37,6 +41,7 @@
       "bradlc.vscode-tailwindcss",
       "esbenp.prettier-vscode",
       "dbaeumer.vscode-eslint",
+      "Vercel.turbo-vsc",
     ],
   },
 }

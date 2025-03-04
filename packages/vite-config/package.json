@@ -3,21 +3,29 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "exports": {
-    "./publish": "./src/publish.js"
-  },
   "scripts": {
-    "build": "tsc -b"
+    "build": "tsc -b",
+    "dev": "tsc -b --watch --preserveWatchOutput --diagnostics false",
+    "turbo:build": "turbo run build",
+    "turbo:dev": "turbo run dev"
   },
   "dependencies": {
     "vite-plugin-dts": "catalog:",
-    "vite-plugin-externalize-deps": "catalog:"
+    "vite-plugin-externalize-deps": "catalog:",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
-    "vite": "catalog:",
-    "@enei/typescript-config": "workspace:*"
+    "@enei/typescript-config": "workspace:*",
+    "typescript": "^5.8.2",
+    "vite": "catalog:"
   },
   "peerDependencies": {
     "vite": "^6.1.0"
+  },
+  "exports": {
+    "./publish": {
+      "types": "./src/publish.ts",
+      "default": "./dist/publish.js"
+    }
   }
 }

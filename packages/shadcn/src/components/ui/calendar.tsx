@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-r
 import { DayPicker } from "react-day-picker";
 
 import { cn } from "@enei/react-utils/cn";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "#components/ui/button";
 import { addYears, subYears } from "date-fns";
 
 type CalendarProps = React.ComponentProps<typeof DayPicker> & { initialMonth?: Date };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Button } from "#components/ui/button";
+import { ScrollArea, ScrollBar } from "#components/ui/scroll-area";
 import {
   Command,
   CommandList,
@@ -9,13 +9,13 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
-} from "@/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+} from "#components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "#components/ui/popover";
 import { cn } from "@enei/react-utils/cn";
 
 // Import JSON data directly
-import countries from "@/data/location-input/countries.json";
-import states from "@/data/location-input/states.json";
+import countries from "#data/location-input/countries.json";
+import states from "#data/location-input/states.json";
 
 interface Timezone {
   zoneName: string;

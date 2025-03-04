@@ -4,12 +4,15 @@
 
 ```ts
 import { render } from "@enei/emails";
+import emails from "@enei/emails/registry";
 
-const { html, plainText } = await render("auth/email-verification", {
-  logoUrl: "https://eneiconf.pt/images/logo-white.png",
-  email: "participante@eneiconf.pt",
-  verificationLink: "https://eneiconf.pt/auth/verify?email=participante@eneiconf.pt",
-});
+const { html, plainText } = await render(
+  emails.instantiate("auth/email-verification", {
+    logoUrl: "https://eneiconf.pt/images/logo-white.png",
+    email: "participante@eneiconf.pt",
+    verificationLink: "https://eneiconf.pt/auth/verify?email=participante@eneiconf.pt",
+  }),
+);
 ```
 
 ## Adding a new e-mail

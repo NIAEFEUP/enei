@@ -11,12 +11,12 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "@/components",
+    "components": "#components",
     "utils": "@enei/react-utils/cn",
-    "lib": "@/lib",
-    "hooks": "@/hooks",
-    "ui": "@/components/ui",
-    "extension": "@/components/extension"
+    "lib": "#lib",
+    "hooks": "#hooks",
+    "ui": "#components/ui",
+    "extension": "#components/extension"
   },
   "iconLibrary": "lucide"
 }

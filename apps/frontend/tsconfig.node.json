@@ -1,0 +1,8 @@
+{
+  "extends": "@enei/typescript-config/tools/tsconfig.json",
+  "compilerOptions": {
+    // Projects
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo"
+  },
+  "include": ["vite.config.ts"]
+}

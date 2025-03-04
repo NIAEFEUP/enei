@@ -4,11 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsc -b"
-  },
-  "exports": {
-    "./cn": "./src/cn.ts",
-    "./registry": "./src/registry.ts"
+    "build": "tsc -b",
+    "dev": "tsc -b --watch --preserveWatchOutput --diagnostics false",
+    "turbo:build": "turbo run build",
+    "turbo:dev": "turbo run dev"
   },
   "dependencies": {
     "clsx": "^2.1.1",
@@ -21,5 +20,15 @@
   },
   "peerDependencies": {
     "react": "^19.0.0"
+  },
+  "exports": {
+    "./cn": {
+      "types": "./src/cn.ts",
+      "default": "./dist/cn.js"
+    },
+    "./registry": {
+      "types": "./src/registry.ts",
+      "default": "./dist/registry.js"
+    }
   }
 }

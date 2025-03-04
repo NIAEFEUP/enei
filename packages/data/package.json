@@ -6,13 +6,24 @@
   "imports": {
     "#json/*": "./src/json/*"
   },
-  "exports": {
-    "./signup/shirts": "./src/signup/shirts.ts"
-  },
   "scripts": {
-    "build": "tsc -b"
+    "build": "tsc -b",
+    "dev": "tsc -b --watch --preserveWatchOutput --diagnostics false",
+
+    "turbo:build": "turbo run build",
+    "turbo:dev": "turbo run dev"
   },
   "devDependencies": {
     "@enei/typescript-config": "workspace:*"
+  },
+  "exports": {
+    "./signup/shirts": {
+      "types": "./src/signup/shirts.ts",
+      "default": "./dist/signup/shirts.js"
+    },
+    "./districts": {
+      "types": "./src/districts.ts",
+      "default": "./dist/districts.js"
+    }
   }
 }

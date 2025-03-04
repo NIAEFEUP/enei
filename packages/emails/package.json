@@ -8,8 +8,13 @@
     "./registry": "./src/registry.ts"
   },
   "scripts": {
-    "dev": "email dev --dir ./src/emails",
-    "build": "tsc -b"
+    "build": "tsc -b",
+    "dev": "concurrently --kill-others -c cyan,yellow \"pnpm:dev:*\"",
+    "dev:emails": "email dev --dir ./src/emails",
+    "dev:tsc": "tsc -b --watch --preserveWatchOutput --diagnostics false --pretty",
+
+    "turbo:build": "turbo run build",
+    "turbo:dev": "turbo run dev"
   },
   "imports": {
     "#components/*": "./src/lib/components/*",

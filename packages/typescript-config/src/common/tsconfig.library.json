@@ -2,6 +2,7 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     // Emit
-    "declaration": true
+    "declaration": true,
+    "declarationMap": true
   }
 }

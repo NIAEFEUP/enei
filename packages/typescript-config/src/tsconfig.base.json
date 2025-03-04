@@ -18,7 +18,8 @@
     "resolveJsonModule": true,
 
     // Emit
-    // ...
+    "declaration": true,
+    "declarationMap": true,
 
     // JavaScript Support
     "allowJs": true,
@@ -43,22 +44,20 @@
     "target": "ESNext",
 
     // Compiler Diagnostics
-    "extendedDiagnostics": true,
+    "diagnostics": true,
 
     // Projects
+    "composite": true,
     "disableReferencedProjectLoad": true,
     "incremental": true,
 
     // Output Formatting
-    // ...
+    "preserveWatchOutput": true,
 
     // Completeness
-    "skipLibCheck": true
-
-    // Watch Options
-    // ...
+    "skipLibCheck": true,
   },
   "ts-node": {
     "swc": true
-  }
+  },
 }
