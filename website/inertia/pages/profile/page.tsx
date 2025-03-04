@@ -14,6 +14,7 @@ import { cn } from '~/lib/utils'
 import { Badge } from '~/components/ui/badge'
 import { ENEI_EDITIONS } from '~/lib/enei/signup/editions'
 import { useTuyau } from '~/hooks/use_tuyau'
+import { DialogTitle } from '@radix-ui/react-dialog'
 
 interface SocialIconProps {
   icon: React.FC<LucideProps>;
@@ -93,6 +94,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                       </Button>
                     </DialogTrigger>
                     <DialogContent className="w-4/5 max-w-96 sm:w-96 pt-12">
+                      <DialogTitle />
                       <QRCodeSVG value={windowHref} className='aspect-square w-full h-full' />
                       <p className='text-center'> {windowHref} </p>
                     </DialogContent>
