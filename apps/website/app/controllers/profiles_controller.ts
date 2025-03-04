@@ -152,12 +152,44 @@ function toParticipantProfileFormat(data: any): Partial<ParticipantProfile> {
 export default class ProfilesController {
   async default({ auth, response }: HttpContext) {
     const user = auth.user;
-    await user!.load('participantProfile')
 
-    if (!user?.participantProfile)
-      return response.redirect().toRoute('pages:signup')
+    switch(user?.role) {
+      case "company":
+        await user!.load('companyProfile')
 
-    return response.redirect().toRoute('pages:profile.show', { slug: user.participantProfile.slug })
+        if (!user?.companyProfile)
+          return response.redirect().toRoute('pages:signup')
+        break;
+      case "participant":
+        await user!.load('participantProfile')
+
+        if (!user?.participantProfile)
+          return response.redirect().toRoute('pages:signup')
+        break;
+      case "promoter":
+        await user!.load('promoterProfile')
+
+        if (!user?.promoterProfile)
+          return response.redirect().toRoute('pages:signup')
+        break;
+      case "representative":
+        await user!.load('representativeProfile')
+
+        if (!user?.representativeProfile)
+          return response.redirect().toRoute('pages:signup')
+        break;
+      case "speaker":
+        await user!.load('speakerProfile')
+
+        if (!user?.speakerProfile)
+          return response.redirect().toRoute('pages:signup')
+        break;
+      case "unknown":
+        response.notFound("Perfil não encontrado")
+        break;
+    }
+
+    return response.redirect().toRoute('pages:profile.show', { slug: user?.participantProfile.slug })
   }
 
   async index({ auth, inertia, params, response }: HttpContext) {
