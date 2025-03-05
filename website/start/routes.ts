@@ -215,7 +215,7 @@ router
     router.get('/', [StoreController, 'index']).as('pages:store')
     router.post('/products/:id/buy/', [StoreController, 'buy']).as('actions:store.buy')
   })
-  .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
+  .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant(), middleware.wip()])
   .prefix('/store')
   
 // Referrals
