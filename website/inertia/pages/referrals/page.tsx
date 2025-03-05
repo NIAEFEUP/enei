@@ -73,7 +73,7 @@ export default function ReferralsPage({
                     O link de referenciação só ficará disponível quando{' '}
                     <Link
                         route="pages:tickets"
-                        className={cn(buttonVariants({ variant: 'link' }), 'p-0 m-0 h-fit text-inherit underline')}
+                        className={cn(buttonVariants({ variant: 'link' }), 'p-0 m-0 h-fit inline text-inherit underline')}
                     >
                         comprares o teu bilhete para o ENEI 2025
                     </Link>
