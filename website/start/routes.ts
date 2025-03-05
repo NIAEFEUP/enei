@@ -10,8 +10,6 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import { emailVerificationThrottle, sendForgotPasswordThrottle } from '#start/limiter'
 const EventsController = () => import('#controllers/events_controller')
-import { sep, normalize } from 'node:path'
-import app from '@adonisjs/core/services/app'
 
 const AuthenticationController = () => import('#controllers/authentication_controller')
 const OrdersController = () => import('#controllers/orders_controller')
@@ -160,13 +158,19 @@ router
 
 router
   .group(() => {
-    router.get("/u/:slug", [ProfilesController, 'index']).as('pages:profile.show')
+    router.get("/u/:slug", [ProfilesController, 'index'])
+      .as('pages:profile.show')
     router.get("/profile", [ProfilesController, 'default'])
       .as('pages:profile.default')
       .use([middleware.auth(), middleware.verifiedEmail()])
     router.get("/profile/edit", [ProfilesController, 'edit'])
       .as('pages:profile.edit')
       .use([middleware.auth(), middleware.verifiedEmail()])
+    router.patch("/profile/edit", [ProfilesController, 'update'])
+      .as('actions:profile.update')
+      .use([middleware.auth(), middleware.verifiedEmail()])
+    router.get("/u/:slug/cv", [CvsController, 'show'])
+      .as('pages:profile.cv.show')
   })
 
 router
@@ -178,29 +182,14 @@ router.get('/event', [EventsController, 'index']).as('pages:event')
 
 router.
   group(() => {
-    router.on('/').renderInertia('cv').as('pages:cv')
-  })
-  .use([middleware.auth(), middleware.verifiedEmail()])
-  .prefix('cv') // dummy route for testing
-
-router.
-  group(() => {
     router.get('/cv/name', [CvsController, 'showName'])
+      .as('actions:cv.name')
     router.post('/cv/upload', [CvsController, 'upload'])
+      .as('actions:cv.upload')
     router.delete('cv/delete', [CvsController, 'delete'])
-    router.get('cv/uploads/*', ({ request, response }) => {
-      const filePath = `${request.param('*').join(sep)}_resume.pdf`
-      const PATH_TRAVERSAL_REGEX = /(?:^|[\\/])\.\.(?:[\\/]|$)/
-      const normalizedPath = normalize(filePath)
-      if (PATH_TRAVERSAL_REGEX.test(normalizedPath)) {
-        return response.badRequest('Malformed path')
-      }
-      const absolutePath = app.makePath('storage/uploads/cvs', normalizedPath)
-      return response.download(absolutePath)
-    })
+      .as('actions:cv.delete')
   })
   .use([middleware.auth()])
-  
   .prefix('user')
 
 
@@ -212,13 +201,13 @@ router
   })
   .use([middleware.auth(), middleware.verifiedEmail(), /*middleware.participant()*/])
   .prefix('/store')
-  
+
 // Referrals
 router.get('/referrals', [ReferralsController, 'showReferralLink'])
   .middleware(middleware.auth())
   .as('pages:referrals')
 
 router.route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
-  .middleware([middleware.automaticSubmit(), middleware.silentAuth()]) 
+  .middleware([middleware.automaticSubmit(), middleware.silentAuth()])
   .as('actions:referrals.link')
 

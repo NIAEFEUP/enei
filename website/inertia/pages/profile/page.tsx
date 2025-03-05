@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { InferPageProps } from '@adonisjs/inertia/types'
 import ProfilesController from '#controllers/profiles_controller'
 import ParticipantProfile from '#models/participant_profile'
@@ -5,39 +6,32 @@ import { Button, buttonVariants } from '~/components/ui/button'
 import Page from '~/components/common/page'
 import Container from '~/components/common/containers'
 import { getUniversityById } from '~/lib/enei/signup/universities'
-import { Download, User, Github, Linkedin, Globe, QrCode, LucideProps, Pencil} from 'lucide-react'
+import { Download, User, Github, Linkedin, Globe, QrCode, LucideProps, Pencil } from 'lucide-react'
 import { Dialog, DialogContent, DialogTrigger } from '~/components/ui/dialog'
 import { QRCodeSVG } from 'qrcode.react';
 import { useEffect, useState } from 'react'
 import { Link } from '@tuyau/inertia/react'
 import { cn } from '~/lib/utils'
 import { Badge } from '~/components/ui/badge'
-import editions from '#data/enei/editions.json' with { type: 'json' }
-import { Option } from '~/components/ui/multiple-selector'
+import { ENEI_EDITIONS } from '~/lib/enei/signup/editions'
+import { useTuyau } from '~/hooks/use_tuyau'
+import { DialogTitle } from '@radix-ui/react-dialog'
 
 interface SocialIconProps {
   icon: React.FC<LucideProps>;
   link: string;
 }
 
-const ENEI_EDITIONS: Option[] = editions
-  .sort((a, b) => b.year - a.year)
-  .map(({ year, location }) => {
-    return {
-      label: location + ', ' + year.toString(),
-      value: year.toString(),
-    }
-  })
-
 const SocialIcon = ({ icon: Icon, link }: SocialIconProps) => {
   return (
-    <a href={link} className='border-2 border-enei-blue rounded-full h-9 w-9 flex justify-center items-center'>
+    <a href={link} className='border-2 border-enei-blue rounded-full h-9 w-9 flex justify-center items-center' target="_blank" rel="noopener noreferrer">
       <Icon className='h-5' />
     </a>
   )
 }
 
 export default function ProfilePage(props: InferPageProps<ProfilesController, 'index'> & { profile: ParticipantProfile }) {
+  const tuyau = useTuyau()
   const { profile, isUser } = props
 
   const [windowHref, setWindowHref] = useState("");
@@ -50,13 +44,28 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
 
   const socials: SocialIconProps[] = []
 
-  if (profile.github) socials.push({ icon: Github, link: `https://github.com/${profile.github}` })
-  if (profile.linkedin) socials.push({ icon: Linkedin, link: `https://linkedin.com/in/${profile.linkedin}` })
+  if (profile.github) socials.push({ icon: Github, link: profile.github })
+  if (profile.linkedin) socials.push({ icon: Linkedin, link: profile.linkedin })
   if (profile.website) socials.push({ icon: Globe, link: profile.website })
+
+  const [hasCv, setHasCv] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchFileName = async () => {
+      try {
+        const response = await axios.get(tuyau.$url('pages:profile.cv.show', { params: { slug: profile.slug } }));
+
+        setHasCv(response.status === 200)
+      } catch (error) {
+      }
+    };
+
+    fetchFileName();
+  }, []);
 
   return (
     <Page title={`${profile.firstName} ${profile.lastName}`} className="bg-enei-beige text-enei-blue">
-      <Container>
+      <Container className='mt-8'>
         <section className="relative flex flex-col gap-8 md:justify-between z-10">
           <div className='flex flex-row justify-normal gap-4'>
             <h3 className='text-2xl'>Perfil do Participante</h3>
@@ -87,10 +96,12 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   ))
                 }
                 <div className='flex flex-row gap-2'>
-                  <Button className='w-fit'>
-                    <Download />
-                    Currículo
-                  </Button>
+                  {hasCv &&
+                    <a href={tuyau.$url('pages:profile.cv.show', { params: { slug: profile.slug } })} className={cn(buttonVariants({ variant: 'default' }), 'w-fit')} target="_blank" rel="noopener noreferrer">
+                      <Download />
+                      Currículo
+                    </a>
+                  }
                   <Dialog>
                     <DialogTrigger asChild>
                       <Button className='w-fit'>
@@ -99,6 +110,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                       </Button>
                     </DialogTrigger>
                     <DialogContent className="w-4/5 max-w-96 sm:w-96 pt-12">
+                      <DialogTitle />
                       <QRCodeSVG value={windowHref} className='aspect-square w-full h-full' />
                       <p className='text-center'> {windowHref} </p>
                     </DialogContent>
