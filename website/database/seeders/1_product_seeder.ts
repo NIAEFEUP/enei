@@ -9,7 +9,7 @@ export default class ProductSeeder extends BaseSeeder {
       price: 35,
       stock: 100,
       currency: 'EUR',
-      max_order: 1,
+      maxOrder: 1,
       productGroupId: 1,
       image: '/favicon.svg',
     })
@@ -20,9 +20,69 @@ export default class ProductSeeder extends BaseSeeder {
       price: 30,
       stock: 50,
       currency: 'EUR',
-      max_order: 1,
+      maxOrder: 1,
       productGroupId: 1,
       image: '/favicon.svg',
+    })
+    await Product.create({
+      name: 'Rato',
+      description:
+        'I am a mouse',
+      price: 30,
+      stock: 50,
+      currency: 'points',
+      maxOrder: 1,
+      image: 'hyprxmouse.png',
+    })
+    await Product.create({
+      name: 'Rato',
+      description:
+        'I am a mouse',
+      price: 30,
+      stock: 0,
+      currency: 'points',
+      maxOrder: 1,
+      image: 'hyprxmouse.png',
+    })
+    await Product.create({
+      name: 'Rato',
+      description:
+        'I am a mouse',
+      price: 30,
+      stock: 50,
+      currency: 'points',
+      maxOrder: 1,
+      image: 'hyprxmouse.png',
+    })
+    await Product.create({
+      name: 'Participant Rato',
+      description:
+        'I am a mouse',
+      price: 30,
+      stock: 50,
+      currency: 'points',
+      maxOrder: 1,
+      image: 'hyprxmouse.png',
+      restrictions: {
+        groups: [
+          'PARTICIPANT'
+        ]
+      }
+    })
+    await Product.create({
+      name: 'Promoter Rato',
+      description:
+        'I am a mouse',
+      price: 30,
+      stock: 50,
+      currency: 'points',
+      maxOrder: 1,
+      image: 'hyprxmouse.png',
+      restrictions: {
+        groups: [
+          'PROMOTER'
+        ]
+      }
     })
   }
 }

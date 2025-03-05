@@ -5,6 +5,8 @@ import { Job } from 'adonisjs-jobs'
 import ConfirmPaymentNotification from '#mails/confirm_payment_notification'
 import mail from '@adonisjs/mail/services/main'
 import db from '@adonisjs/lucid/services/db'
+import app from '@adonisjs/core/services/app'
+import User from '#models/user'
 
 type UpdateOrderStatusPayload = {
   requestId: string
@@ -29,13 +31,18 @@ export default class UpdateOrderStatus extends Job {
         this.logger.info(`Order status is no longer pending: ${order.status}`)
         return // Exit if the status is no longer "Pending"
       }
+
       const apiResponse = await axios.get(
         `https://api.ifthenpay.com/spg/payment/mbway/status?mbWayKey=${env.get('IFTHENPAY_MBWAY_KEY')}&requestId=${requestId}`
       )
 
       if (apiResponse.status === 200) {
-        const status = apiResponse.data.Message
+        let status = apiResponse.data.Message
         if (status) {
+          if (app.inDev) {
+            status = "Success"
+          }
+
           if (status === 'Pending') {
             await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 }) // Retry after 5 seconds
             this.logger.info(`Requeued job for requestId: ${requestId}`)
@@ -54,7 +61,19 @@ export default class UpdateOrderStatus extends Job {
 
             const total = order.total
             const orderId = order.id
+
             await mail.send(new ConfirmPaymentNotification(email, products, total, orderId))
+
+            const user = await User.find(order.userId)
+            if (user) {
+              await user.load('participantProfile')
+              const participantProfile = user.participantProfile
+              if (participantProfile) {
+                // FIXME - this is a hack
+                participantProfile.purchasedTicket = 'early-bird-with-housing'
+                await participantProfile.save()
+              }
+            }
           }
         } else {
           await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 }) // Retry after 5 seconds

@@ -16,7 +16,7 @@ const ForgotPassword = ({ logoUrl, email, verificationLink }: EmailVerificationP
             <Img src={logoUrl} alt="Logótipo do ENEI 2025" height={50} />
             <Heading className="mt-[32px] text-[24px]">Repõe a tua palavra-passe!</Heading>
             <Text>
-              Ao clicares no botão abaixo, irás para uma página onde conseguirás repôr a tua palavra-passe. 
+              Ao clicares no botão abaixo, irás para uma página onde conseguirás repôr a tua palavra-passe.
             </Text>
             <Button
               href={verificationLink}

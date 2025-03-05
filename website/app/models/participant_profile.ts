@@ -7,7 +7,7 @@ import { json } from '#lib/lucid/decorators.js'
 export default class ParticipantProfile extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
-  
+
   @hasOne(() => User)
   declare user: HasOne<typeof User>
 
@@ -16,6 +16,10 @@ export default class ParticipantProfile extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  // Ticket Info
+  @column()
+  declare purchasedTicket: "early-bird-without-housing" | "early-bird-with-housing" | null
 
   // General Info
 
@@ -66,7 +70,7 @@ export default class ParticipantProfile extends BaseModel {
   declare transports: string[]
 
   // Communication Info
-  
+
   @column()
   declare heardAboutENEI: string
 
@@ -75,4 +79,22 @@ export default class ParticipantProfile extends BaseModel {
 
   @json()
   declare attendedBeforeEditions: string[]
+
+  // Profile Info
+
+  @column()
+  declare slug: string | null
+
+  @column()
+  declare about: string | null
+
+  @column()
+  declare github: string | null
+
+  @column()
+  declare linkedin: string | null
+
+  @column()
+  declare website: string | null
+
 }
