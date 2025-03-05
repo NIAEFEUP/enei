@@ -60,7 +60,7 @@ export default function EventRegistrationPage({
 
   const fetchRegistrationStatus = async () => {
     try {
-      const response = await axios.get('/events/' + eventId + '/isRegistered')
+      const response = await axios.get('/events/' + eventId + '/is-registered')
       setIsRegistered(response.data.isRegistered)
     } catch (error) {
       console.error(error)

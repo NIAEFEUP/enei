@@ -189,10 +189,10 @@ router
       .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
     router.get('/:id/tickets', [EventsController, 'ticketsRemaining']).as('actions:events.tickets')
     router
-      .get('/:id/isRegistered', [EventsController, 'isRegistered'])
+      .get('/:id/is-registered', [EventsController, 'isRegistered'])
       .as('actions:events.isRegistered')
     router
-      .get('/:id/isRegisteredByEmail', [EventsController, 'isRegisteredByEmail'])
+      .get('/:id/is-registered-by-email', [EventsController, 'isRegisteredByEmail'])
       .as('actions:events.isRegisteredByEmail')
   })
   .prefix('events')
