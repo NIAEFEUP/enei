@@ -4,7 +4,7 @@ import type { ModelAttributes } from '@adonisjs/lucid/types/model'
 
 export type SerializedProduct = ModelAttributes<Product>
 
-import type { ProductRestrictions } from '../../types/product'
+import type { ProductRestrictions } from '../../types/product.js'
 
 export default class Product extends BaseModel {
   @column({ isPrimary: true })

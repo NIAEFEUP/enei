@@ -9,10 +9,10 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import { emailVerificationThrottle, sendForgotPasswordThrottle } from '#start/limiter'
+const EventsController = () => import('#controllers/events_controller')
 import { sep, normalize } from 'node:path'
 import app from '@adonisjs/core/services/app'
 
-const EventsController = () => import('#controllers/events_controller')
 const AuthenticationController = () => import('#controllers/authentication_controller')
 const OrdersController = () => import('#controllers/orders_controller')
 const TicketsController = () => import('#controllers/tickets_controller')
@@ -158,19 +158,19 @@ router
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix('payment')
 
-router.group(() => {
-  router.get('/u/:slug', [ProfilesController, 'index']).as('pages:profile.show')
-  router
-    .get('/profile', [ProfilesController, 'default'])
-    .as('pages:profile.default')
-    .use([middleware.auth(), middleware.verifiedEmail()])
-  router
-    .get('/profile/edit', [ProfilesController, 'edit'])
-    .as('pages:profile.edit')
-    .use([middleware.auth(), middleware.verifiedEmail()])
-})
-
-router.on('/faq').renderInertia('faq').as('pages:faq')
+router
+  .group(() => {
+    router.get('/u/:slug', [ProfilesController, 'index']).as('pages:profile.show')
+    router
+      .get('/profile', [ProfilesController, 'default'])
+      .as('pages:profile.default')
+      .use([middleware.auth(), middleware.verifiedEmail()])
+    router
+      .get('/profile/edit', [ProfilesController, 'edit'])
+      .as('pages:profile.edit')
+      .use([middleware.auth(), middleware.verifiedEmail()])
+  })
+  .use(middleware.wip())
 
 router
   .group(() => {
@@ -197,12 +197,17 @@ router
   })
   .prefix('events')
 
+router.on('/faq').renderInertia('faq').as('pages:faq').use(middleware.wip())
+
+router.get('/event', [EventsController, 'index']).as('pages:event').use(middleware.wip())
+
 router
   .group(() => {
     router.on('/').renderInertia('cv').as('pages:cv')
   })
   .use([middleware.auth(), middleware.verifiedEmail()])
   .prefix('cv') // dummy route for testing
+  .use(middleware.wip())
 
 router
   .group(() => {
@@ -220,8 +225,7 @@ router
       return response.download(absolutePath)
     })
   })
-  .use([middleware.auth()])
-
+  .use([middleware.auth(), middleware.wip()])
   .prefix('user')
 
 router
@@ -229,7 +233,7 @@ router
     router.get('/', [StoreController, 'index']).as('pages:store')
     router.post('/products/:id/buy/', [StoreController, 'buy']).as('actions:store.buy')
   })
-  .use([middleware.auth(), middleware.verifiedEmail() /*middleware.participant()*/])
+  .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant(), middleware.wip()])
   .prefix('/store')
 
 // Referrals
