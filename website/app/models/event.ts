@@ -23,6 +23,9 @@ export default class Event extends BaseModel {
   @column()
   declare type: string
 
+  @column()
+  declare companyImage: string
+
   @column.dateTime()
   declare date: DateTime
 

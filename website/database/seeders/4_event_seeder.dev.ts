@@ -16,6 +16,9 @@ export default class extends BaseSeeder {
         'Uma exploração profunda sobre técnicas de cibersegurança e como os hackers conseguem aceder a passwords. Vamos explorar as técnicas mais comuns e como as podemos prevenir.',
       date: DateTime.fromObject({ year: 2025, month: 4, day: 11, hour: 14, minute: 0 }),
       duration: 90,
+      type: 'workshop',
+      companyImage:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Critical_TechWorks_Logo.png/800px-Critical_TechWorks_Logo.png?20201230153819',
       location: 'B107 - FEUP',
       registrationRequirements: '',
       requiresRegistration: true,
@@ -29,6 +32,7 @@ export default class extends BaseSeeder {
       description: 'idk',
       date: DateTime.fromObject({ year: 2025, month: 4, day: 11, hour: 16, minute: 0 }),
       duration: 90,
+      type: 'activity',
       location: 'ISEP - TBD',
       registrationRequirements: '',
       requiresRegistration: true,

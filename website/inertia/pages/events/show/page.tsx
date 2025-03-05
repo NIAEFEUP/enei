@@ -27,6 +27,7 @@ interface EventRegistrationProps {
   time: string
   location: string
   type: 'activity' | 'workshop' | 'other'
+  companyImage: string
   speakers: Speaker[]
   registrationRequirements: string
   requiresRegistration: boolean
@@ -42,6 +43,7 @@ export default function EventRegistrationPage({
   time,
   location,
   type,
+  companyImage,
   speakers,
   registrationRequirements,
   requiresRegistration,
@@ -124,7 +126,7 @@ export default function EventRegistrationPage({
     other: 'border-enei-other',
   }
 
-  console.log(speakers)
+  console.log(companyImage)
 
   return (
     <BaseLayout title="Registo de Evento" className="bg-enei-beige ">
@@ -137,20 +139,27 @@ export default function EventRegistrationPage({
         >
           <CardHeader>
             {/* Title and important information (date, time, location) */}
-            <CardTitle className="text-2xl font-bold">{title}</CardTitle>
-            <div className="mt-4 flex flex-col gap-2 text-muted-foreground sm:flex-row sm:gap-6">
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                <span>{date}</span>
+            <div className="flex flex-row justify-between">
+              <div>
+                <CardTitle className="text-2xl font-bold">{title}</CardTitle>
+                <div className="mt-4 flex flex-col gap-2 text-muted-foreground sm:flex-row sm:gap-6">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4" />
+                    <span>{date}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4" />
+                    <span>{time}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4" />
+                    <span>{location}</span>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                <span>{time}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
-                <span>{location}</span>
-              </div>
+              {companyImage && (
+                <img src={companyImage} alt="Company Logo" className="max-h-16 w-auto object-contain" />
+              )}
             </div>
           </CardHeader>
 

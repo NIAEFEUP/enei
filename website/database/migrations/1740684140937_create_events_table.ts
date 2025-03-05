@@ -12,13 +12,13 @@ export default class extends BaseSchema {
       table.dateTime('date').notNullable()
       table.string('duration').notNullable()
       table.string('location').notNullable()
-      table.string('type').defaultTo("other")
+      table.string('type').defaultTo('other')
+      table.string('company_image')
       table.string('registration_requirements')
       table.boolean('requires_registration').defaultTo(false)
       table.integer('tickets_total').defaultTo(0)
       table.integer('tickets_remaining').defaultTo(0)
       table.decimal('price', 10, 2).defaultTo(0)
-
 
       table.timestamp('created_at')
       table.timestamp('updated_at')

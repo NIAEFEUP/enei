@@ -21,6 +21,7 @@ export default class EventsController {
       time: `${String(event.date.hour).padStart(2, '0')}:${String(event.date.minute).padStart(2, '0')} - ${String(endTime.hour).padStart(2, '0')}:${String(endTime.minute).padStart(2, '0')}`,
       location: event.location,
       type: event.type,
+      companyImage: event.companyImage,
       speakers: speakers.map((speaker) => ({
         firstName: speaker.firstName,
         lastName: speaker.lastName,
