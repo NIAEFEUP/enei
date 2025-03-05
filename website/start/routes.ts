@@ -183,6 +183,17 @@ router
       .post('/:id/register', [EventsController, 'register'])
       .as('actions:events.register')
       .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
+    router
+      .post('/:id/unregister', [EventsController, 'unregister'])
+      .as('actions:events.unregister')
+      .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
+    router.get('/:id/tickets', [EventsController, 'ticketsRemaining']).as('actions:events.tickets')
+    router
+      .get('/:id/isRegistered', [EventsController, 'isRegistered'])
+      .as('actions:events.isRegistered')
+    router
+      .get('/:id/isRegisteredByEmail', [EventsController, 'isRegisteredByEmail'])
+      .as('actions:events.isRegisteredByEmail')
   })
   .prefix('events')
 

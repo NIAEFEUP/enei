@@ -3,7 +3,7 @@ import { Button } from '~/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import BaseLayout from '~/layouts/base'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useToast } from '~/hooks/use_toast'
 
@@ -39,22 +39,50 @@ export default function EventRegistrationPage({
   speakers,
   registrationRequirements,
   requiresRegistration,
-  ticketsRemaining,
+  ticketsRemaining: initialTicketsRemaining,
   price,
 }: EventRegistrationProps) {
   const [isRegistered, setIsRegistered] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [ticketsRemaining, setTicketsRemaining] = useState(initialTicketsRemaining)
 
   const { toast } = useToast()
+
+  const fetchTicketsRemaining = async () => {
+    try {
+      const response = await axios.get('/events/' + eventId + '/tickets')
+      console.log(response)
+      setTicketsRemaining(response.data.ticketsRemaining)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const fetchRegistrationStatus = async () => {
+    try {
+      const response = await axios.get('/events/' + eventId + '/isRegistered')
+      setIsRegistered(response.data.isRegistered)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true)
+      await fetchTicketsRemaining()
+      await fetchRegistrationStatus()
+      setIsLoading(false)
+    }
+    fetchData()
+  }, [])
 
   const handleRegister = async () => {
     setIsLoading(true)
     try {
       await axios.post('/events/' + eventId + '/register')
-      setIsRegistered(true)
     } catch (error) {
       console.log(error)
-      setIsRegistered(false)
       toast({
         title: 'Erro ao registar',
         description:
@@ -63,6 +91,8 @@ export default function EventRegistrationPage({
         duration: 5000,
       })
     } finally {
+      await fetchRegistrationStatus()
+      await fetchTicketsRemaining()
       setIsLoading(false)
     }
   }
@@ -70,16 +100,21 @@ export default function EventRegistrationPage({
   const handleUnregister = async () => {
     setIsLoading(true)
     try {
-      // await registerForEvent()
-      // timeout to simulate a request
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-
+      await axios.post('/events/' + eventId + '/unregister')
       setIsRegistered(false)
+      await fetchTicketsRemaining()
     } catch (error) {
-      console.error(error)
+      console.log(error)
+      setIsRegistered(true)
+      toast({
+        title: 'Erro ao remover o registo',
+        description:
+          error.response?.data?.message ||
+          'Ocorreu um erro ao cancelar a inscrição para o evento. Por favor, tente novamente.',
+        duration: 5000,
+      })
     } finally {
       setIsLoading(false)
-      setIsRegistered(false)
     }
   }
 

@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Event from '#models/event'
+import User from '#models/user'
 
 export default class EventsController {
   async index({ inertia }: HttpContext) {
@@ -34,11 +35,13 @@ export default class EventsController {
   }
 
   async register({ response, params, auth }: HttpContext) {
+    // Get the authenticated user
     const user = auth.user
     if (!user) {
       return response.unauthorized('Precisas de estar autenticado para te registares num evento')
     }
 
+    // Get the event and check if it is possible do register
     const event = await Event.findOrFail(params.id)
 
     if (event.ticketsRemaining <= 0) {
@@ -49,6 +52,7 @@ export default class EventsController {
       return response.badRequest('Este evento não requer registo')
     }
 
+    // Register and decrease tickets remaining
     await event.related('registeredUsers').attach([user.id])
 
     event.ticketsRemaining--
@@ -56,5 +60,82 @@ export default class EventsController {
     event.save()
 
     return response.ok({ message: 'Registado com sucesso' })
+  }
+
+  async unregister({ response, params, auth }: HttpContext) {
+    // Get the authenticated user
+    const user = auth.user
+    if (!user) {
+      return response.unauthorized(
+        'Precisas de estar autenticado para te desregistares de um evento'
+      )
+    }
+
+    const event = await Event.findOrFail(params.id)
+
+    // Check if user is registered
+    const isRegistered = await event
+      .related('registeredUsers')
+      .query()
+      .where('user_id', user.id)
+      .first()
+
+    if (!isRegistered) {
+      return response.badRequest('Não estás registado neste evento')
+    }
+
+    // Unregister ticket and increase tickets remaining
+    await event.related('registeredUsers').detach([user.id])
+
+    event.ticketsRemaining++
+
+    event.save()
+
+    return response.ok({ message: 'Desregistado com sucesso' })
+  }
+
+  async ticketsRemaining({ response, params }: HttpContext) {
+    const event = await Event.findOrFail(params.id)
+
+    return response.ok({ ticketsRemaining: event.ticketsRemaining })
+  }
+
+  async isRegistered({ response, params, auth }: HttpContext) {
+    const user = auth.user
+    if (!user) {
+      return response.unauthorized(
+        'Precisas de estar autenticado para verificar se estás registado num evento'
+      )
+    }
+
+    const event = await Event.findOrFail(params.id)
+
+    const isRegistered = await event
+      .related('registeredUsers')
+      .query()
+      .where('user_id', user.id)
+      .first()
+
+    return response.ok({ isRegistered: !!isRegistered })
+  }
+
+  async isRegisteredByEmail({ response, request }: HttpContext) {
+    const email = request.input('email')
+
+    const event = await Event.findOrFail(request.param('id'))
+
+    const user = await User.findBy('email', email)
+
+    if (!user) {
+      return response.badRequest('Utilizador não encontrado')
+    }
+
+    const isRegistered = await event
+      .related('registeredUsers')
+      .query()
+      .where('user_id', user.id)
+      .first()
+
+    return response.ok({ isRegistered: !!isRegistered })
   }
 }
