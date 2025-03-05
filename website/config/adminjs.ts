@@ -8,7 +8,6 @@ import OrderResource from "../app/admin/resources/order_resource.js"
 import ProductResource from "../app/admin/resources/product_resource.js"
 import UserActivityResource from "../app/admin/resources/user_activity_resource.js"
 import UserActivity from "#models/user_activity"
-import User from "#models/user"
 
 const resources = [
   UserResource,

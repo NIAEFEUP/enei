@@ -1,5 +1,6 @@
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import Product from '#models/product'
+import { UserTypes } from '../../types/user.js'
 export default class ProductSeeder extends BaseSeeder {
   public async run() {
     await Product.create({
@@ -65,7 +66,7 @@ export default class ProductSeeder extends BaseSeeder {
       image: 'hyprxmouse.png',
       restrictions: {
         groups: [
-          'PARTICIPANT'
+          UserTypes.PARTICIPANT
         ]
       }
     })
@@ -80,7 +81,7 @@ export default class ProductSeeder extends BaseSeeder {
       image: 'hyprxmouse.png',
       restrictions: {
         groups: [
-          'PROMOTER'
+          UserTypes.PROMOTER
         ]
       }
     })
