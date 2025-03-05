@@ -1,8 +1,6 @@
-import {Toaster} from '~/components/ui/toaster'
-
 function ActionCard() {
     return <>
-        <Toaster />
+        {/* <Toaster /> */}
     </>
 }
 
