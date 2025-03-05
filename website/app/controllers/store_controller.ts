@@ -24,7 +24,7 @@ export default class StoreController {
 
     const product = await Product.find(params.id)
     if(!await this.orderService.checkUserMaxOrders(auth.user!, product)) {
-      session.flashErrors({ max_order: 'Já adquiriste a quantia máxima permitida deste produto' })
+      session.flashErrors({ maxOrder: 'Já adquiriste a quantia máxima permitida deste produto' })
     }
 
     if(auth.user!.points < cost) {
