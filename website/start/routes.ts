@@ -180,10 +180,6 @@ router
       .post('/:id/register', [EventsController, 'register'])
       .as('actions:events.register')
       .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
-    router
-      .post('/:id/unregister', [EventsController, 'unregister'])
-      .as('actions:events.unregister')
-      .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
     router.get('/:id/tickets', [EventsController, 'ticketsRemaining']).as('actions:events.tickets')
     router
       .get('/:id/is-registered', [EventsController, 'isRegistered'])

@@ -7,6 +7,9 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useToast } from '~/hooks/use_toast'
 import { cn } from '~/lib/utils'
+import { Tooltip } from '~/components/ui/tooltip'
+import { TooltipContent, TooltipProvider, TooltipTrigger } from '@radix-ui/react-tooltip'
+import RegistrationConfirmationModal from '~/components/events/registration_confirmation_modal'
 
 interface Speaker {
   firstName: string
@@ -48,6 +51,7 @@ export default function EventRegistrationPage({
   const [isRegistered, setIsRegistered] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [ticketsRemaining, setTicketsRemaining] = useState(initialTicketsRemaining)
+  const [registrationConfirmationModalOpen, setRegistrationConfirmationModalOpen] = useState(false)
 
   const { toast } = useToast()
 
@@ -80,6 +84,10 @@ export default function EventRegistrationPage({
     fetchData()
   }, [])
 
+  const handleRegisterClick = () => {
+    setRegistrationConfirmationModalOpen(true)
+  }
+
   const handleRegister = async () => {
     setIsLoading(true)
     try {
@@ -100,29 +108,7 @@ export default function EventRegistrationPage({
       await fetchRegistrationStatus()
       await fetchTicketsRemaining()
       setIsLoading(false)
-    }
-  }
-
-  const handleUnregister = async () => {
-    setIsLoading(true)
-    try {
-      await axios.post('/events/' + eventId + '/unregister')
-      await fetchTicketsRemaining()
-    } catch (error) {
-      if (error.response?.status === 401) {
-        window.location.href = '/auth/login'
-        return
-      }
-      toast({
-        title: 'Erro ao remover o registo',
-        description:
-          error.response?.data?.message ||
-          'Ocorreu um erro ao cancelar a inscrição para o evento. Por favor, tente novamente.',
-        duration: 5000,
-      })
-    } finally {
-      fetchRegistrationStatus()
-      setIsLoading(false)
+      setRegistrationConfirmationModalOpen(false)
     }
   }
 
@@ -227,11 +213,10 @@ export default function EventRegistrationPage({
             )}
 
             {/* Button to register */}
-
             {!isRegistered && (
               <div className="flex justify-center">
                 <Button
-                  onClick={() => handleRegister()}
+                  onClick={() => handleRegisterClick()}
                   disabled={ticketsRemaining <= 0 || !requiresRegistration || isLoading}
                   className="px-4"
                 >
@@ -247,13 +232,25 @@ export default function EventRegistrationPage({
               </div>
             )}
 
-            {/* Button to unregister */}
+            {/* Indicator if the user is registered */}
             {isRegistered && (
               <div className="flex justify-center">
-                <Button onClick={() => handleUnregister()} disabled={isLoading} className="px-4">
-                  {isLoading && <Loader2 className="animate-spin" />}
-                  Cancelar Inscrição
-                </Button>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Button disabled={isLoading || isRegistered} className="px-4">
+                        {isLoading && <Loader2 className="animate-spin" />}
+                        Inscrito
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Para cancelares a tua inscrição contacta </p>
+                      <Button className="p-0" variant="link">
+                        <a href="mailto:geral@eneiconf.pt">geral@eneiconf.pt</a>
+                      </Button>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
             )}
 
@@ -264,6 +261,12 @@ export default function EventRegistrationPage({
                 <span>{ticketsRemaining} lugares disponíveis</span>
               </div>
             )}
+            <RegistrationConfirmationModal
+              isOpen={registrationConfirmationModalOpen}
+              isLoading={isLoading}
+              onClose={() => setRegistrationConfirmationModalOpen(false)}
+              onSubmit={handleRegister}
+            />
           </CardContent>
         </Card>
       </div>

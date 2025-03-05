@@ -63,38 +63,6 @@ export default class EventsController {
     return response.ok({ message: 'Registado com sucesso' })
   }
 
-  async unregister({ response, params, auth }: HttpContext) {
-    // Get the authenticated user
-    const user = auth.user
-    if (!user) {
-      return response.unauthorized(
-        'Precisas de estar autenticado para te desregistares de um evento'
-      )
-    }
-
-    const event = await Event.findOrFail(params.id)
-
-    // Check if user is registered
-    const isRegistered = await event
-      .related('registeredUsers')
-      .query()
-      .where('user_id', user.id)
-      .first()
-
-    if (!isRegistered) {
-      return response.badRequest('Não estás registado neste evento')
-    }
-
-    // Unregister ticket and increase tickets remaining
-    await event.related('registeredUsers').detach([user.id])
-
-    event.ticketsRemaining++
-
-    event.save()
-
-    return response.ok({ message: 'Desregistado com sucesso' })
-  }
-
   async ticketsRemaining({ response, params }: HttpContext) {
     const event = await Event.findOrFail(params.id)
 
