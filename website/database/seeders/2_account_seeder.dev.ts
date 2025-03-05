@@ -39,7 +39,7 @@ export default class extends BaseSeeder {
       shirtSize: 'M',
       isVegetarian: false,
       isVegan: false,
-      transports: ['car'],
+      transports: ['a-pe'],
       attendedBeforeEditions: []
     })
 

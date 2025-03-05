@@ -18,8 +18,9 @@ export default class extends BaseSeeder {
       duration: 90,
       location: 'B107 - FEUP',
       registrationRequirements: '',
-      requiresRegistration: false,
-      ticketsRemaining: 0,
+      requiresRegistration: true,
+      ticketsRemaining: 50,
+      ticketsTotal: 100,
       price: 0,
     })
 

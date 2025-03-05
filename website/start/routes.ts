@@ -172,8 +172,19 @@ router.group(() => {
 
 router.on('/faq').renderInertia('faq').as('pages:faq')
 
-router.get('/events', [EventsController, 'index']).as('pages:events')
-router.get('/events/:id', [EventsController, 'show']).as('pages:events.show')
+router
+  .group(() => {
+    router.get('/', [EventsController, 'index']).as('pages:events')
+    router
+      .get('/:id', [EventsController, 'show'])
+      .as('pages:events.show')
+      .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
+    router
+      .post('/:id/register', [EventsController, 'register'])
+      .as('actions:events.register')
+      .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
+  })
+  .prefix('events')
 
 router
   .group(() => {

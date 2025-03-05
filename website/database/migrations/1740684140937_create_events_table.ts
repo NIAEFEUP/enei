@@ -14,6 +14,7 @@ export default class extends BaseSchema {
       table.string('location').notNullable()
       table.string('registration_requirements')
       table.boolean('requires_registration').defaultTo(false)
+      table.integer('tickets_total').defaultTo(0)
       table.integer('tickets_remaining').defaultTo(0)
       table.decimal('price', 10, 2).defaultTo(0)
 

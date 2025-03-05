@@ -1,8 +1,11 @@
-import { Calendar, Clock, MapPin, Ticket, Users, Info, ClipboardCheck } from 'lucide-react'
+import { Calendar, Clock, MapPin, Ticket, Users, Info, ClipboardCheck, Loader2 } from 'lucide-react'
 import { Button } from '~/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import BaseLayout from '~/layouts/base'
+import { useState } from 'react'
+import axios from 'axios'
+import { useToast } from '~/hooks/use_toast'
 
 interface Speaker {
   firstName: string
@@ -13,6 +16,7 @@ interface Speaker {
 }
 
 interface EventRegistrationProps {
+  eventId: number
   title: string
   description: string
   date: string
@@ -26,6 +30,7 @@ interface EventRegistrationProps {
 }
 
 export default function EventRegistrationPage({
+  eventId,
   title,
   description,
   date,
@@ -37,6 +42,47 @@ export default function EventRegistrationPage({
   ticketsRemaining,
   price,
 }: EventRegistrationProps) {
+  const [isRegistered, setIsRegistered] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const { toast } = useToast()
+
+  const handleRegister = async () => {
+    setIsLoading(true)
+    try {
+      await axios.post('/events/' + eventId + '/register')
+      setIsRegistered(true)
+    } catch (error) {
+      console.log(error)
+      setIsRegistered(false)
+      toast({
+        title: 'Erro ao registar',
+        description:
+          error.response?.data?.message ||
+          'Ocorreu um erro ao registar para o evento. Por favor, tente novamente.',
+        duration: 5000,
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleUnregister = async () => {
+    setIsLoading(true)
+    try {
+      // await registerForEvent()
+      // timeout to simulate a request
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+
+      setIsRegistered(false)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+      setIsRegistered(false)
+    }
+  }
+
   return (
     <BaseLayout title="Registo de Evento" className="bg-enei-beige ">
       <div className="flex justify-center mt-10">
@@ -62,21 +108,21 @@ export default function EventRegistrationPage({
 
           {/* Event Description */}
           <CardContent className="space-y-2 mt-2">
-            <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+            <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
               <Info className="h-5 w-5" />
-              <h1 className="text-lg font-semibold">Acerca do Evento</h1>
-            </h2>
+              <p className="text-lg font-semibold">Acerca do Evento</p>
+            </h1>
             <p className="text-black">{description}</p>
 
             {/* Speakers (if applicable) */}
             {speakers.length > 0 && (
               <div>
-                <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+                <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
                   <Users className="h-5 w-5" />
-                  <h1 className="text-lg font-semibold">
+                  <p className="text-lg font-semibold">
                     {speakers.length === 1 ? 'Orador' : 'Oradores'}
-                  </h1>
-                </h2>
+                  </p>
+                </h1>
                 <div className="flex flex-wrap gap-4">
                   {speakers.map((speaker) => (
                     <div
@@ -101,10 +147,10 @@ export default function EventRegistrationPage({
 
             {/* Registration Requirements (if applicable) */}
             {registrationRequirements !== '' && (
-              <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+              <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
                 <ClipboardCheck className="h-5 w-5" />
-                <h1 className="text-lg font-semibold">Requisitos de Inscrição</h1>
-              </h2>
+                <p className="text-lg font-semibold">Requisitos de Inscrição</p>
+              </h1>
             )}
             <p className="text-black">{registrationRequirements}</p>
 
@@ -115,22 +161,36 @@ export default function EventRegistrationPage({
               </div>
             )}
 
-            {/* Button to buy */}
-            <div className="flex justify-center">
-              <Button
-                onClick={() => console.log('Hello!')}
-                disabled={ticketsRemaining <= 0 || !requiresRegistration}
-                className="px-4"
-              >
-                {requiresRegistration
-                  ? ticketsRemaining > 0
-                    ? price > 0
-                      ? 'Comprar'
-                      : 'Inscrever'
-                    : 'Esgotado'
-                  : 'Inscrição não necessária'}
-              </Button>
-            </div>
+            {/* Button to register */}
+
+            {!isRegistered && (
+              <div className="flex justify-center">
+                <Button
+                  onClick={() => handleRegister()}
+                  disabled={ticketsRemaining <= 0 || !requiresRegistration || isLoading}
+                  className="px-4"
+                >
+                  {isLoading && <Loader2 className="animate-spin" />}
+                  {requiresRegistration
+                    ? ticketsRemaining > 0
+                      ? price > 0
+                        ? 'Comprar'
+                        : 'Inscrever'
+                      : 'Esgotado'
+                    : 'Inscrição não necessária'}
+                </Button>
+              </div>
+            )}
+
+            {/* Button to unregister */}
+            {isRegistered && (
+              <div className="flex justify-center">
+                <Button onClick={() => handleUnregister()} disabled={isLoading} className="px-4">
+                  {isLoading && <Loader2 className="animate-spin" />}
+                  Cancelar Inscrição
+                </Button>
+              </div>
+            )}
 
             {/* Seats Available */}
             {requiresRegistration && (

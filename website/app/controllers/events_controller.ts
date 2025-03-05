@@ -13,6 +13,7 @@ export default class EventsController {
     const speakers = await event.related('speakers').query()
 
     return inertia.render('events/show', {
+      eventId: event.id,
       title: event.title,
       description: event.description,
       date: `${event.date.year}-${String(event.date.month).padStart(2, '0')}-${String(event.date.day).padStart(2, '0')}`,
@@ -30,5 +31,30 @@ export default class EventsController {
       ticketsRemaining: event.ticketsRemaining,
       price: event.price,
     })
+  }
+
+  async register({ response, params, auth }: HttpContext) {
+    const user = auth.user
+    if (!user) {
+      return response.unauthorized('Precisas de estar autenticado para te registares num evento')
+    }
+
+    const event = await Event.findOrFail(params.id)
+
+    if (event.ticketsRemaining <= 0) {
+      return response.badRequest('Já não há bilhetes disponíveis para este evento')
+    }
+
+    if (!event.requiresRegistration) {
+      return response.badRequest('Este evento não requer registo')
+    }
+
+    await event.related('registeredUsers').attach([user.id])
+
+    event.ticketsRemaining--
+
+    event.save()
+
+    return response.ok({ message: 'Registado com sucesso' })
   }
 }
