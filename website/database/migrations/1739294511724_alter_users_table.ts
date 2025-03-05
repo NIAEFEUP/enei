@@ -26,7 +26,7 @@ export default class extends BaseSchema {
 
       table.dropColumn('referrer_id')
 
-      table.dropColumn('root_referrer_id')
+      table.dropColumn('referring_promoter_id')
     })
   }
 }

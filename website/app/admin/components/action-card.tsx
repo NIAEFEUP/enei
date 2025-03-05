@@ -1,9 +1,7 @@
-import {Toaster} from '~/components/ui/toaster'
-
 function ActionCard() {
-    return <>
-        <Toaster />
-    </>
+    return <div>
+        {/* <Toaster /> */}
+    </div>
 }
 
 export default ActionCard
