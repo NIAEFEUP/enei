@@ -1,6 +1,6 @@
 import type { AdminJSProviderConfig } from "@adminjs/adonis"
 
-import componentLoader, { components } from '../app/admin/component_loader.js'
+import componentLoader from '../app/admin/component_loader.js'
 import authProvider from '../app/admin/auth.js'
 import UserResource from "../app/admin/resources/user_resource.js"
 import PromoterProfileResource from "../app/admin/resources/promoter_info_resource.js"
@@ -23,7 +23,7 @@ const adminjsConfig: AdminJSProviderConfig = {
   },
   adminjs: {
     dashboard: {
-      component: components.CustomDashboard,
+      // component: components.CustomDashboard,
       handler: async () => {
         const userActivities = (await UserActivity.query().where('type', '=', 'referral'))
         const points = 0 // (await User.all()).reduce((acc, user) => acc + user.points, 0)
