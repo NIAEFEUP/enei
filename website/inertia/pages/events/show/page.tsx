@@ -6,6 +6,7 @@ import BaseLayout from '~/layouts/base'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useToast } from '~/hooks/use_toast'
+import { cn } from '~/lib/utils'
 
 interface Speaker {
   firstName: string
@@ -22,6 +23,7 @@ interface EventRegistrationProps {
   date: string
   time: string
   location: string
+  type: 'activity' | 'workshop' | 'other'
   speakers: Speaker[]
   registrationRequirements: string
   requiresRegistration: boolean
@@ -36,6 +38,7 @@ export default function EventRegistrationPage({
   date,
   time,
   location,
+  type,
   speakers,
   registrationRequirements,
   requiresRegistration,
@@ -123,10 +126,27 @@ export default function EventRegistrationPage({
     }
   }
 
+  const activityClasses = {
+    activity: 'bg-enei-activity/30',
+    workshop: 'bg-enei-workshop/30',
+    other: 'bg-enei-other/30',
+  }
+
+  const activityClassesPrimary = {
+    activity: 'border-enei-activity',
+    workshop: 'border-enei-workshop',
+    other: 'border-enei-other',
+  }
+
   return (
     <BaseLayout title="Registo de Evento" className="bg-enei-beige ">
       <div className="flex justify-center mt-10">
-        <Card className="w-full max-w-7xl mx-auto bg-transparent border-transparent shadow-transparent">
+        <Card
+          className={cn(
+            'w-full max-w-7xl mx-auto border-transparent shadow-transparent',
+            activityClasses[type]
+          )}
+        >
           <CardHeader>
             {/* Title and important information (date, time, location) */}
             <CardTitle className="text-2xl font-bold">{title}</CardTitle>
@@ -167,14 +187,19 @@ export default function EventRegistrationPage({
                   {speakers.map((speaker) => (
                     <div
                       key={speaker.firstName + speaker.lastName}
-                      className="flex items-center gap-4 rounded-lg border p-4 border-gray-400 w-auto"
+                      className={cn(
+                        'flex items-center gap-4 rounded-lg border p-4 w-auto',
+                        activityClassesPrimary[type]
+                      )}
                     >
                       <Avatar className="h-12 w-12">
                         <AvatarImage src={speaker.image} alt={speaker.firstName} />
                         <AvatarFallback>{speaker.firstName[0]}</AvatarFallback>
                       </Avatar>
                       <div className="space-y-1">
-                        <h3 className="font-medium">{speaker.firstName + speaker.lastName}</h3>
+                        <h3 className="font-medium">
+                          {speaker.firstName + ' ' + speaker.lastName}
+                        </h3>
                         {speaker.jobTitle && (
                           <p className="text-sm text-black">{speaker.jobTitle}</p>
                         )}

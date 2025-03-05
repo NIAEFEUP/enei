@@ -20,6 +20,7 @@ export default class EventsController {
       date: `${event.date.year}-${String(event.date.month).padStart(2, '0')}-${String(event.date.day).padStart(2, '0')}`,
       time: `${String(event.date.hour).padStart(2, '0')}:${String(event.date.minute).padStart(2, '0')} - ${String(endTime.hour).padStart(2, '0')}:${String(endTime.minute).padStart(2, '0')}`,
       location: event.location,
+      type: event.type,
       speakers: speakers.map((speaker) => ({
         firstName: speaker.firstName,
         lastName: speaker.lastName,

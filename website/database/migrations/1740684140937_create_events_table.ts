@@ -12,6 +12,7 @@ export default class extends BaseSchema {
       table.dateTime('date').notNullable()
       table.string('duration').notNullable()
       table.string('location').notNullable()
+      table.string('type').defaultTo("other")
       table.string('registration_requirements')
       table.boolean('requires_registration').defaultTo(false)
       table.integer('tickets_total').defaultTo(0)
