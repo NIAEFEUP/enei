@@ -82,7 +82,10 @@ export default function EventRegistrationPage({
     try {
       await axios.post('/events/' + eventId + '/register')
     } catch (error) {
-      console.log(error)
+      if (error.response?.status === 401) {
+        window.location.href = '/auth/login'
+        return
+      }
       toast({
         title: 'Erro ao registar',
         description:
@@ -101,11 +104,12 @@ export default function EventRegistrationPage({
     setIsLoading(true)
     try {
       await axios.post('/events/' + eventId + '/unregister')
-      setIsRegistered(false)
       await fetchTicketsRemaining()
     } catch (error) {
-      console.log(error)
-      setIsRegistered(true)
+      if (error.response?.status === 401) {
+        window.location.href = '/auth/login'
+        return
+      }
       toast({
         title: 'Erro ao remover o registo',
         description:
@@ -114,6 +118,7 @@ export default function EventRegistrationPage({
         duration: 5000,
       })
     } finally {
+      fetchRegistrationStatus()
       setIsLoading(false)
     }
   }

@@ -175,10 +175,7 @@ router
 router
   .group(() => {
     router.get('/', [EventsController, 'index']).as('pages:events')
-    router
-      .get('/:id', [EventsController, 'show'])
-      .as('pages:events.show')
-      .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
+    router.get('/:id', [EventsController, 'show']).as('pages:events.show')
     router
       .post('/:id/register', [EventsController, 'register'])
       .as('actions:events.register')
@@ -198,8 +195,6 @@ router
   .prefix('events')
 
 router.on('/faq').renderInertia('faq').as('pages:faq').use(middleware.wip())
-
-router.get('/event', [EventsController, 'index']).as('pages:event').use(middleware.wip())
 
 router
   .group(() => {
