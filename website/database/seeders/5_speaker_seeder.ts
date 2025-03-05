@@ -13,6 +13,8 @@ export default class extends BaseSeeder {
       firstName: 'John',
       lastName: 'Doe',
       jobTitle: 'Software Engineer',
+      profilePicture:
+        'https://cdn-images.dzcdn.net/images/artist/f99f8f4d32fb5c72add009ae44729981/1900x1900-000000-80-0-0.jpg',
       company: 'Google',
     })
   }

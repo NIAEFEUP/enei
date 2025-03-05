@@ -17,6 +17,9 @@ export default class SpeakerProfile extends BaseModel {
   declare jobTitle: string
 
   @column()
+  declare profilePicture: string
+
+  @column()
   declare company: string
 
   @manyToMany(() => Event, {

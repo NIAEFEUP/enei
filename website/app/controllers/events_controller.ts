@@ -24,8 +24,8 @@ export default class EventsController {
       speakers: speakers.map((speaker) => ({
         firstName: speaker.firstName,
         lastName: speaker.lastName,
-        image: null,
         jobTitle: speaker.jobTitle,
+        profilePicture: speaker.profilePicture,
         company: speaker.company,
       })),
       registrationRequirements: event.registrationRequirements,

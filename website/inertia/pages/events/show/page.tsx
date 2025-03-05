@@ -14,8 +14,8 @@ import RegistrationConfirmationModal from '~/components/events/registration_conf
 interface Speaker {
   firstName: string
   lastName: string
-  image: string
   jobTitle: string
+  profilePicture: string
   company: string
 }
 
@@ -124,6 +124,8 @@ export default function EventRegistrationPage({
     other: 'border-enei-other',
   }
 
+  console.log(speakers)
+
   return (
     <BaseLayout title="Registo de Evento" className="bg-enei-beige ">
       <div className="flex justify-center mt-10">
@@ -179,7 +181,7 @@ export default function EventRegistrationPage({
                       )}
                     >
                       <Avatar className="h-12 w-12">
-                        <AvatarImage src={speaker.image} alt={speaker.firstName} />
+                        <AvatarImage src={speaker.profilePicture} alt={speaker.firstName} />
                         <AvatarFallback>{speaker.firstName[0]}</AvatarFallback>
                       </Avatar>
                       <div className="space-y-1">
