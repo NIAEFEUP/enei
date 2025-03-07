@@ -4,7 +4,11 @@ import defaultTheme from 'tailwindcss/defaultTheme.js'
 
 export default {
   // darkMode: ['class'],
-  content: ['./resources/**/*.edge', './inertia/**/*.{js,ts,jsx,tsx}', './app/admin/components/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './resources/**/*.edge',
+    './inertia/**/*.{js,ts,jsx,tsx}',
+    './app/admin/components/**/*.{js,ts,jsx,tsx}',
+  ],
 
   theme: {
     extend: {
@@ -18,6 +22,10 @@ export default {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
         },
+        'enei-activity': 'hsl(var(--enei-activity))',
+        'enei-workshop': 'hsl(var(--enei-workshop))',
+        'enei-other': 'hsl(var(--enei-other))',
+
         'persian-orange': '#E28C40',
         'dark-persian-orange': '#914E13',
         'sand': {
