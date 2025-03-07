@@ -187,6 +187,7 @@ router
     router
       .get('/:id/is-registered-by-email', [EventsController, 'isRegisteredByEmail'])
       .as('actions:events.isRegisteredByEmail')
+      .use(middleware.companyBearerAuth())
   })
   .prefix('events')
 

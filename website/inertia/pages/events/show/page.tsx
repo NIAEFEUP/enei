@@ -126,8 +126,6 @@ export default function EventRegistrationPage({
     other: 'border-enei-other',
   }
 
-  console.log(companyImage)
-
   return (
     <BaseLayout title="Registo de Evento" className="bg-enei-beige ">
       <div className="flex justify-center mt-10">
@@ -158,7 +156,11 @@ export default function EventRegistrationPage({
                 </div>
               </div>
               {companyImage && (
-                <img src={companyImage} alt="Company Logo" className="max-h-16 w-auto object-contain" />
+                <img
+                  src={companyImage}
+                  alt="Company Logo"
+                  className="max-h-16 w-auto object-contain"
+                />
               )}
             </div>
           </CardHeader>
