@@ -81,10 +81,6 @@ export default class ParticipantProfile extends BaseModel {
   declare attendedBeforeEditions: string[]
 
   // Profile Info
-
-  @column()
-  declare slug: string
-
   @column()
   declare about: string | null
 
