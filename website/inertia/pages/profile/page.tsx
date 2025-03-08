@@ -1,6 +1,5 @@
 import { InferPageProps } from '@adonisjs/inertia/types'
 import ProfilesController from '#controllers/profiles_controller'
-import ParticipantProfile from '#models/participant_profile'
 import { Button, buttonVariants } from '~/components/ui/button'
 import Page from '~/components/common/page'
 import Container from '~/components/common/containers'
@@ -27,7 +26,7 @@ const SocialIcon = ({ icon: Icon, link }: SocialIconProps) => {
   )
 }
 
-export default function ProfilePage(props: InferPageProps<ProfilesController, 'index'> & { profile: ParticipantProfile }) {
+export default function ProfilePage(props: InferPageProps<ProfilesController, 'index'>) {
   const { profile, isUser } = props
 
   const [windowHref, setWindowHref] = useState("");
@@ -35,7 +34,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
   useEffect(() => {
     setWindowHref(window.location.href)
   })
-
+  
   const profileEditions = ENEI_EDITIONS.filter((edition) => profile.attendedBeforeEditions.includes(edition.value)).map((edition) => edition.label)
 
   const socials: SocialIconProps[] = []
