@@ -210,7 +210,7 @@ export default class User extends BaseModel {
   // PromoterProfile
 
   @column()
-  declare promoterProfileId: number | undefined
+  declare promoterProfileId: number | null
 
   @belongsTo(() => PromoterProfile)
   declare promoterProfile: BelongsTo<typeof PromoterProfile>
@@ -218,7 +218,7 @@ export default class User extends BaseModel {
   // ParticipantProfile
 
   @column()
-  declare participantProfileId: number | undefined
+  declare participantProfileId: number | null
 
   @belongsTo(() => ParticipantProfile)
   declare participantProfile: BelongsTo<typeof ParticipantProfile>
@@ -232,7 +232,7 @@ export default class User extends BaseModel {
   // CompanyProfile
 
   @column()
-  declare companyProfileId: number | undefined
+  declare companyId: number | null
 
   @belongsTo(() => CompanyProfile)
   declare companyProfile: BelongsTo<typeof CompanyProfile>
@@ -240,7 +240,7 @@ export default class User extends BaseModel {
   // SpeakerProfile
 
   @column()
-  declare speakerProfileId: number | undefined
+  declare speakerProfileId: number | null
 
   @belongsTo(() => SpeakerProfile)
   declare speakerProfile: BelongsTo<typeof SpeakerProfile>
@@ -248,7 +248,7 @@ export default class User extends BaseModel {
   // RepresentantiveProfile
 
   @column()
-  declare representativeProfileId: number | undefined
+  declare representativeProfileId: number | null
 
   @belongsTo(() => RepresentativeProfile)
   declare representativeProfile: BelongsTo<typeof RepresentativeProfile>
@@ -268,7 +268,7 @@ export default class User extends BaseModel {
     return this.promoterProfileId
   }
 
-  isParticipant() {
+  isParticipant() {null
     return this.participantProfileId
   }
 
@@ -277,7 +277,7 @@ export default class User extends BaseModel {
   }
 
   isCompany() {
-    return this.companyProfileId
+    return this.companyId
   }
 
   isRepresentative() {
@@ -301,6 +301,28 @@ export default class User extends BaseModel {
   wasReferred() {
     return !this.referrerId
   }
+
+  static async getProfile(user: User): Promise<ParticipantProfile | PromoterProfile | SpeakerProfile | CompanyProfile | RepresentativeProfile | null> {
+    switch (user.role) {
+      case 'participant':
+        await user.loadOnce('participantProfile')
+        return user.participantProfile
+      case 'promoter':
+        await user.loadOnce('promoterProfile')
+        return user.promoterProfile
+      case 'speaker':
+        await user.loadOnce('speakerProfile')
+        return user.speakerProfile
+      case 'company':
+        await user.loadOnce('companyProfile')
+        return user.companyProfile
+      case 'representative':
+        await user.loadOnce('representativeProfile')
+        return user.representativeProfile
+      default:
+        return null
+    }
+  }  
 
   static async hasPurchasedTicket(user: User) {
     if (!user.isParticipant()) return false

@@ -120,6 +120,7 @@ export default class ProfilesController {
 /*
 
 import ParticipantProfile from '#models/participant_profile'
+import User from '#models/user';
 import { createProfileValidator, updateProfileValidator } from '#validators/profile'
 import type { HttpContext } from '@adonisjs/core/http'
 import slug from 'slug';
@@ -153,60 +154,36 @@ export default class ProfilesController {
   async default({ auth, response }: HttpContext) {
     const user = auth.user;
 
-    switch(user?.role) {
-      case "company":
-        await user!.load('companyProfile')
-
-        if (!user?.companyProfile)
-          return response.redirect().toRoute('pages:signup')
-        break;
-      case "participant":
-        await user!.load('participantProfile')
-
-        if (!user?.participantProfile)
-          return response.redirect().toRoute('pages:signup')
-        break;
-      case "promoter":
-        await user!.load('promoterProfile')
-
-        if (!user?.promoterProfile)
-          return response.redirect().toRoute('pages:signup')
-        break;
-      case "representative":
-        await user!.load('representativeProfile')
-
-        if (!user?.representativeProfile)
-          return response.redirect().toRoute('pages:signup')
-        break;
-      case "speaker":
-        await user!.load('speakerProfile')
-
-        if (!user?.speakerProfile)
-          return response.redirect().toRoute('pages:signup')
-        break;
-      case "unknown":
-        response.notFound("Perfil não encontrado")
-        break;
+    if (!user) {
+      response.notFound("Utilizador não encontrado")
+      return
     }
 
-    return response.redirect().toRoute('pages:profile.show', { slug: user?.participantProfile.slug })
+    const profile = User.getProfile(user)
+
+    if (!profile)
+      return response.redirect().toRoute('pages:signup')
+
+    console.log(user.slug)
+    return response.redirect().toRoute('pages:profile.show', { slug: user.slug })
   }
 
   async index({ auth, inertia, params, response }: HttpContext) {
-    const profile = await ParticipantProfile.findBy('slug', params.slug)
+    const user = await User.findBy('slug', params.slug)
+
+    if (!user) {
+      response.notFound("Participante não encontrado")
+      return
+    }
+
+    const profile = await User.getProfile(user)
 
     if (!profile) {
-      response.notFound("Participante não encontrado")
+      response.notFound("Perfil não encontrado")
       return
     }
 
-    await profile.load('user')
-    if (!profile.user) {
-      response.notFound("Participante não encontrado")
-      return
-    }
-
-    const isUser = profile.user ? (profile.user.id === auth.user?.id) : false;
+    const isUser = user ? (user.id === auth.user?.id) : false;
 
     return inertia.render('profile', { profile, isUser })
   }
@@ -244,9 +221,9 @@ export default class ProfilesController {
     const data = request.body()
 
     const formattedData = toParticipantProfileFormat(data)
-    formattedData.slug = slug(`${formattedData.firstName} ${formattedData.lastName} ${sludSqids.encode([user.id])}`)
 
     const profile = await createProfileValidator.validate(formattedData)
+    user.slug = slug(`${formattedData.firstName} ${formattedData.lastName} ${sludSqids.encode([user.id])}`)
 
     const profileAdd = new ParticipantProfile()
     profileAdd.fill(profile)
