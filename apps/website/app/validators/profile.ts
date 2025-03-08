@@ -55,7 +55,6 @@ export const createProfileValidator = vine.compile(
   vine.object({
     firstName: vine.string(),
     lastName: vine.string(),
-    slug: vine.string(),
     dateOfBirth: vine
       .date({ formats: { utc: true } })
       .transform((date) => DateTime.fromJSDate(date)),

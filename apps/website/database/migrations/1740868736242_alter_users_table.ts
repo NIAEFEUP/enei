@@ -17,6 +17,9 @@ export default class extends BaseSchema {
         .unique()
         .references('id')
         .inTable('representative_profiles')
+      table.string('slug')
+        .unique()
+        .nullable()
     })
   }
 
@@ -25,6 +28,7 @@ export default class extends BaseSchema {
       table.dropColumn('speaker_profile_id')
       table.dropColumn('company_profile_id')
       table.dropColumn('representative_profile_id')
+      table.dropColumn('slug')
     })
   }
 }
