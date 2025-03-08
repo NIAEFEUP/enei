@@ -13,6 +13,8 @@ const EventsController = () => import('#controllers/events_controller')
 import { sep, normalize } from 'node:path'
 import app from '@adonisjs/core/services/app'
 
+const LeaderboardController = () => import('#controllers/leaderboard_controller')
+
 const AuthenticationController = () => import('#controllers/authentication_controller')
 const OrdersController = () => import('#controllers/orders_controller')
 const TicketsController = () => import('#controllers/tickets_controller')
@@ -227,3 +229,6 @@ router.route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
   .middleware([middleware.automaticSubmit(), middleware.silentAuth()]) 
   .as('actions:referrals.link')
 
+router.group(() => {
+  router.get('/', [LeaderboardController, 'index']).as('pages:leaderboard')
+}).prefix('/leaderboard')
