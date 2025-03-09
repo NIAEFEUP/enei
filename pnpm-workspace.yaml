@@ -2,4 +2,5 @@ packages:
   # - "apps/*"
   # - "packages/*"
   - packages/typescript-config
+  - packages/utils
   - packages/vite-config

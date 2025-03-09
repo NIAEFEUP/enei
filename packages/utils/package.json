@@ -1,0 +1,44 @@
+{
+  "name": "@enei/utils",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b tsconfig.lib.json --pretty --verbose",
+    "dev": "node --run build -- --watch --diagnostics false --preserveWatchOutput"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.0.1"
+  },
+  "devDependencies": {
+    "@enei/typescript-config": "workspace:*",
+    "@types/react": "^19.0.10",
+    "react": "^19.0.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "exports": {
+    "./defer": {
+      "types": "./src/defer.ts",
+      "default": "./dist/defer.js"
+    },
+    "./dynamic-import": {
+      "types": "./src/dynamic-import.ts",
+      "default": "./dist/dynamic-import.js"
+    },
+    "./types": {
+      "types": "./src/types.ts",
+      "default": "./dist/types.js"
+    },
+    "./cn": {
+      "types": "./src/cn.ts",
+      "default": "./dist/cn.js"
+    },
+    "./registry": {
+      "types": "./src/registry.ts",
+      "default": "./dist/registry.js"
+    }
+  }
+}
