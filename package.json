@@ -1,0 +1,33 @@
+{
+  "name": "enei",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,json}\"",
+    "check-types": "turbo run check-types"
+  },
+  "devDependencies": {
+    "@enei/prettier-config": "workspace:*",
+    "@enei/typescript-config": "workspace:*",
+    "concurrently": "^9.1.2",
+    "prettier": "^2.6.2",
+    "typescript": "5.7.3"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@9.5.0",
+  "pnpm": {
+    "overrides": {
+      "strtok3": "8.0.1"
+    }
+  },
+  "prettier": "@enei/prettier-config",
+  "dependencies": {
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}
