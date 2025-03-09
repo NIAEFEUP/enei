@@ -1,0 +1,6 @@
+{
+    "compilerOptions": {
+        // Emit
+        "removeComments": true
+    }
+}
