@@ -1,21 +1,20 @@
-import { UserActivityType } from "../../types/user_activity.js"
+import { UserActivityType, type UserActivityDescription } from "../../types/user_activity.js"
 import UserActivity from "#events/user_activity"
+import { inject } from "@adonisjs/core"
 
+import PointsService from "#services/points_service"
+
+@inject()
 export default class UserActivityListener {
-    private actionMap: Map<UserActivityType, (activity: UserActivity) => void>
+    private pointsAttributionMap: Map<UserActivityType, (activity: UserActivityDescription) => Promise<void>>
 
-    constructor() {
-       this.actionMap = new Map([
-           [UserActivityType.Referral, this.handleReferral]
+    constructor(private pointsService: PointsService) {
+       this.pointsAttributionMap = new Map([
+           [UserActivityType.Referral, this.pointsService.referralPointAttribution]
        ])
     }
 
     async handle(event: UserActivity) {
-        const action = this.actionMap.get(event.description.type)
-        if(action) action(event)
-    }
-
-    handleReferral(activity: UserActivity) {
-        
+        this.pointsAttributionMap.get(event.description.type)?.(event.description)
     }
 }
