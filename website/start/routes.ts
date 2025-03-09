@@ -219,14 +219,18 @@ router
   })
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant(), middleware.wip()])
   .prefix('/store')
-  
+
 // Referrals
-router.get('/referrals', [ReferralsController, 'showReferralLink'])
-  .middleware(middleware.auth())
-  .as('pages:referrals')
+router.group(() => {
+  router.get('/', [ReferralsController, 'showReferralLink'])
+    .middleware(middleware.auth())
+    .as('pages:referrals')
+
+  router.post('/event/points/trigger/:id', [ReferralsController, 'referralPointsAttribution']).as('actions:referrals.event.pointattribution.trigger')
+}).prefix('/referrals')
 
 router.route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
-  .middleware([middleware.automaticSubmit(), middleware.silentAuth()]) 
+  .middleware([middleware.automaticSubmit(), middleware.silentAuth()])
   .as('actions:referrals.link')
 
 router.group(() => {
