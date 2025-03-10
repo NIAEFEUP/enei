@@ -7,6 +7,7 @@ import { cn } from '~/lib/utils'
 import Container from './containers'
 import { useEffect, useState } from 'react'
 import { NotificationContainer } from '../notifications'
+import { QrCode } from 'lucide-react'
 
 /*
 import { Menu } from "lucide-react";
@@ -79,7 +80,7 @@ export function Navbar({ className, variant = "blue" }: { className?: string, va
   }, [])
 
   const bgColor = variant === "blue" ? "enei-blue" : "enei-beige"
-  // const textColor = variant === "blue" ? "enei-beige" : "enei-blue"
+  const textColor = variant === "blue" ? "enei-beige" : "enei-blue"
 
   return (
     <>
@@ -98,13 +99,23 @@ export function Navbar({ className, variant = "blue" }: { className?: string, va
               <span className="sr-only">Ir para a página inicial</span>
             </Link>
             <div className='flex gap-4 items-center justify-between'>
-              {/* <div className={auth.state === 'authenticated' ? 'block' : 'hidden'}>
-                <Link route="pages:tickets" className={cn("", `text-${textColor}`)}>
+              <div className={auth.state === 'authenticated' ? 'block' : 'hidden'}>
+                <Link route="pages:staff.qrcode.scan" className={cn(buttonVariants({variant: 'link'}), `text-${textColor}`)}>
+                  <QrCode />
+                </Link>
+              </div>
+              <div className={auth.state === 'authenticated' ? 'block' : 'hidden'}>
+                <Link route="pages:store" className={cn(buttonVariants({variant: 'link'}), `text-${textColor}`)}>
                     <span>Loja</span>
                 </Link>
-              </div> */}
+              </div>
               <div className={auth.state === 'authenticated' ? 'block' : 'hidden'}>
-                <Link route="pages:referrals" className={cn(buttonVariants({ variant: 'link' }), "text-enei-beige p-0")}>
+                <Link route="pages:profile.default" className={cn(buttonVariants({ variant: 'link' }), `text-${textColor}`)}>
+                    <span>Perfil</span>
+                </Link>
+              </div>
+              <div className={auth.state === 'authenticated' ? 'block' : 'hidden'}>
+                <Link route="pages:referrals" className={cn(buttonVariants({ variant: 'link' }), `text-${textColor}`)}>
                   Referenciações
                 </Link>
               </div>
