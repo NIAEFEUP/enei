@@ -3,7 +3,7 @@
 import React from "react";
 import { parseDate } from "chrono-node";
 import { Popover, PopoverContent, PopoverTrigger } from "#components/ui/popover";
-import { Modifiers } from "react-day-picker";
+import { ActiveModifiers } from "react-day-picker";
 import { Calendar } from "#components/ui/calendar";
 import { Input } from "#components/ui/input";
 import { Button, buttonVariants } from "#components/ui/button";
@@ -445,8 +445,8 @@ type DateTimeLocalInputProps = {} & CalendarProps;
 const DateTimeLocalInput = ({ className, ...props }: DateTimeLocalInputProps) => {
   const { value, onValueChange, Time } = useSmartDateInput();
 
-  const formateSelectedDate = React.useCallback(
-    (date: Date | undefined, selectedDate: Date, m: Modifiers) => {
+  const formatSelectedDate = React.useCallback(
+    (date: Date | undefined, selectedDate: Date, m: ActiveModifiers) => {
       const parsedDateTime = parseDateTime(selectedDate);
 
       if (parsedDateTime) {
@@ -480,9 +480,9 @@ const DateTimeLocalInput = ({ className, ...props }: DateTimeLocalInputProps) =>
             mode="single"
             required
             selected={value}
-            onSelect={formateSelectedDate}
+            onSelect={formatSelectedDate}
             className={cn("peer flex justify-end", inputBase, className)}
-            autoFocus
+            initialFocus
           />
           <TimePicker />
         </div>
