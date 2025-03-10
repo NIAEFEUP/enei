@@ -1,4 +1,4 @@
-import $universities from "#data/enei/universities.json" with { type: "json" }
+import $universities from "#json/universities.json" with { type: "json" }
 
 export const universities = $universities.toSorted((a, b) => b.id.localeCompare(a.id))
 

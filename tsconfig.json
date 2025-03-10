@@ -3,6 +3,7 @@
 {
     "files": [],
     "references": [
+        { "path": "./packages/data" },
         { "path": "./packages/emails" },
         { "path": "./packages/shadcn" },
         { "path": "./packages/utils" },

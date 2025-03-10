@@ -1,0 +1,26 @@
+{
+  "name": "@enei/data",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#json/*": "./src/json/*"
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.lib.json --pretty --verbose",
+    "dev": "node --run build -- --watch --diagnostics false --preserveWatchOutput"
+  },
+  "devDependencies": {
+    "@enei/typescript-config": "workspace:*"
+  },
+  "exports": {
+    "./signup/shirts": {
+      "types": "./src/signup/shirts.ts",
+      "default": "./dist/signup/shirts.js"
+    },
+    "./districts": {
+      "types": "./src/districts.ts",
+      "default": "./dist/districts.js"
+    }
+  }
+}
