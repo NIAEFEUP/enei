@@ -49,7 +49,7 @@ export default class User extends BaseModel {
   declare referrerId: number | null
 
   @belongsTo(() => User, {
-    foreignKey: 'referrerId',
+    foreignKey: 'referrer_id',
   })
   declare referrer: BelongsTo<typeof User>
 
@@ -119,7 +119,7 @@ export default class User extends BaseModel {
     if (!user.isParticipant()) return false
 
     await user.load('participantProfile')
-    return !!user.participantProfile.purchasedTicket
+    return !!user.participantProfile?.purchasedTicket
   }
 
   static async getReferringPromoter(user: User) {
