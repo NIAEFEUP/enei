@@ -1,6 +1,7 @@
 packages:
   # - "apps/*"
   # - "packages/*"
+  - packages/shadcn
   - packages/typescript-config
   - packages/utils
   - packages/vite-config

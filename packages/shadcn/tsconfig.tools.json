@@ -1,0 +1,15 @@
+{
+  "extends": "@enei/typescript-config/env/tools",
+  "compilerOptions": {
+    // Modules
+    "rootDir": "./",
+
+    // Projects
+    "tsBuildInfoFile": "./dist/tsconfig.tools.tsbuildinfo",
+  },
+  "include": ["vite.config.ts"],
+  // Reference dependencies
+  "references": [
+    { "path": "../vite-config/tsconfig.lib.json" },
+  ]
+}

@@ -4,18 +4,19 @@
   "rsc": false,
   "tsx": true,
   "tailwind": {
-    "config": "tailwind.config.ts",
-    "css": "inertia/css/app.css",
+    "config": "",
+    "css": "src/css/styles.css",
     "baseColor": "slate",
     "cssVariables": true,
     "prefix": ""
   },
   "aliases": {
-    "components": "~/components",
-    "utils": "~/lib/utils",
-    "ui": "~/components/ui",
-    "lib": "~/lib",
-    "hooks": "~/hooks"
+    "utils": "@enei/utils/cn",
+    "lib": "@/lib",
+    "hooks": "@/hooks",
+    "components": "@/components",
+    "ui": "@/components/ui",
+    "extension": "@/components/extension"
   },
   "iconLibrary": "lucide"
 }

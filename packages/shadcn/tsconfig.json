@@ -1,0 +1,20 @@
+// This file is used to allow IDEs to understand the project structure.
+// It is not used to compile the project.
+{
+  "files": [],
+  "compilerOptions": {
+    // Module
+    "baseUrl": ".",
+    "paths": {
+      // shadcn CLI is dumb and can't handle paths from package.json
+      "@/*": ["./src/*"],
+    }
+  },
+  "references": [
+    { "path": "./tsconfig.lib.json" },
+    { "path": "./tsconfig.tools.json" },
+    // Reference dependency projects
+    { "path": "../utils" },
+    { "path": "../vite-config" },
+  ]
+}
