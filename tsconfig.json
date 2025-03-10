@@ -5,6 +5,7 @@
     "references": [
         { "path": "./packages/data" },
         { "path": "./packages/emails" },
+        { "path": "./packages/prettier-config" },
         { "path": "./packages/shadcn" },
         { "path": "./packages/utils" },
         { "path": "./packages/vite-config" },

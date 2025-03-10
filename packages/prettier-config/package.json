@@ -1,0 +1,19 @@
+{
+  "name": "@enei/prettier-config",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "exports": "./src/config.js",
+  "scripts": {
+    "build": "tsc -b tsconfig.lib.json --pretty --verbose",
+    "dev": "node --run build -- --watch --diagnostics false --preserveWatchOutput"
+  },
+  "devDependencies": {
+    "@enei/typescript-config": "workspace:*",
+    "prettier": "^3.5.0"
+  },
+  "dependencies": {
+    "prettier-plugin-edgejs": "^1.0.0",
+    "prettier-plugin-tailwindcss": "^0.6.11"
+  }
+}
