@@ -1,6 +1,7 @@
 packages:
   # - "apps/*"
   # - "packages/*"
+  - packages/emails
   - packages/shadcn
   - packages/typescript-config
   - packages/utils

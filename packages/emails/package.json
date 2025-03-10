@@ -1,0 +1,40 @@
+{
+  "name": "@enei/emails",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/render.ts",
+    "./registry": "./src/registry.ts"
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.lib.json --pretty --verbose",
+    "dev": "concurrently --kill-others -c cyan,yellow \"pnpm:dev:*\"",
+    "dev:tsc": "node --run build -- --watch --diagnostics false --preserveWatchOutput",
+    "dev:emails": "email dev --dir ./src/emails"
+  },
+  "imports": {
+    "#components/*": "./src/lib/components/*",
+    "#layouts/*": "./src/lib/layouts/*",
+    "#emails/*": "./src/emails/*",
+    "#render": "./src/render.js",
+    "#registry": "./src/registry.js"
+  },
+  "dependencies": {
+    "@enei/utils": "workspace:*",
+    "@react-email/components": "0.0.32",
+    "html-to-text": "^9.0.5"
+  },
+  "devDependencies": {
+    "@enei/typescript-config": "workspace:*",
+    "@types/html-to-text": "^9.0.4",
+    "@types/react": "^19.0.10",
+    "clsx": "^2.1.1",
+    "react": "^19.0.0",
+    "react-email": "^3.0.6",
+    "tailwind-merge": "^3.0.1"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  }
+}

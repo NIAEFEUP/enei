@@ -1,5 +1,5 @@
 import { Button, Container, Heading, Text, Img, Body, Section, Link } from '@react-email/components'
-import { BaseLayout } from '../common/layouts/base.js'
+import { BaseLayout } from '#layouts/base.js'
 
 export type EmailVerificationProps = {
   logoUrl: string

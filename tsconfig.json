@@ -3,6 +3,7 @@
 {
     "files": [],
     "references": [
+        { "path": "./packages/emails" },
         { "path": "./packages/shadcn" },
         { "path": "./packages/utils" },
         { "path": "./packages/vite-config" },

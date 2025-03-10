@@ -1,0 +1,19 @@
+{
+  "extends": "@enei/typescript-config/env/server",
+  "compilerOptions": {
+    // Modules
+    "rootDir": "./src",
+
+    // Emit
+    "outDir": "./dist",
+
+    // Projects
+    "tsBuildInfoFile": "./dist/tsconfig.lib.tsbuildinfo",
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "references": [
+    { "path": "../utils/tsconfig.lib.json" },
+  ]
+}
