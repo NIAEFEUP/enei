@@ -59,4 +59,13 @@ export default class Event extends BaseModel {
 
   @column()
   declare price: number
+
+  public getFormattedDate() {
+    return this.date.toFormat('dd-MM-yyyy')
+  }
+
+  public getFormattedTime() {
+    const endTime = this.date.plus({ minutes: this.duration })
+    return `${this.date.toFormat('HH:mm')} - ${endTime.toFormat('HH:mm')}`
+  }
 }

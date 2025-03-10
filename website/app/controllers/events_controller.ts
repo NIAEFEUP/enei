@@ -9,16 +9,14 @@ export default class EventsController {
   async show({ inertia, params }: HttpContext) {
     const event = await Event.findOrFail(params.id)
 
-    const endTime = event.date.plus({ minutes: event.duration })
-
     const speakers = await event.related('speakers').query()
 
     return inertia.render('events/show', {
       eventId: event.id,
       title: event.title,
       description: event.description,
-      date: `${event.date.year}-${String(event.date.month).padStart(2, '0')}-${String(event.date.day).padStart(2, '0')}`,
-      time: `${String(event.date.hour).padStart(2, '0')}:${String(event.date.minute).padStart(2, '0')} - ${String(endTime.hour).padStart(2, '0')}:${String(endTime.minute).padStart(2, '0')}`,
+      date: event.getFormattedDate(),
+      time: event.getFormattedTime(),
       location: event.location,
       type: event.type,
       companyImage: event.companyImage,
