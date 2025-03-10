@@ -37,9 +37,6 @@ export default class EventsController {
   async register({ response, params, auth }: HttpContext) {
     // Get the authenticated user
     const user = auth.user
-    if (!user) {
-      return response.unauthorized('Precisas de estar autenticado para te registares num evento')
-    }
 
     // Get the event and check if it is possible do register
     const event = await Event.findOrFail(params.id)
@@ -53,7 +50,7 @@ export default class EventsController {
     }
 
     // Register and decrease tickets remaining
-    await event.related('registeredUsers').attach([user.id])
+    await event.related('registeredUsers').attach([user!.id])
 
     event.ticketsRemaining--
 
