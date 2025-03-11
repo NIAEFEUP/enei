@@ -53,12 +53,8 @@ export default class EventsController {
       return response.badRequest('Este evento não requer registo')
     }
 
-    // Register and decrease tickets remaining
-    await event.related('registeredUsers').attach([user!.id])
-
-    event.ticketsRemaining--
-
-    event.save()
+    // Register
+    await this.eventService.register(user!, event)
 
     return response.ok({ message: 'Registado com sucesso' })
   }

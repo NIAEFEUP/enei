@@ -11,4 +11,12 @@ export default class EventService {
 
     return !!isRegistered
   }
+
+  async register(user: User, event: Event) {
+    await event.related('registeredUsers').attach([user!.id])
+
+    event.ticketsRemaining--
+
+    event.save()
+  }
 }
