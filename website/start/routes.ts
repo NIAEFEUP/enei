@@ -226,7 +226,7 @@ router.group(() => {
     .middleware(middleware.auth())
     .as('pages:referrals')
 
-  router.post('/event/points/trigger/:id', [ReferralsController, 'referralPointsAttribution']).as('actions:referrals.event.pointattribution.trigger')
+  router.post('/event/points/trigger/:id', [ReferralsController, 'referralPointsAttribution']).as('actions:referrals.event.pointattribution.trigger').use(middleware.apiKeyProtected())
 }).prefix('/referrals')
 
 router.route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])

@@ -8,8 +8,6 @@ import db from '@adonisjs/lucid/services/db'
 import app from '@adonisjs/core/services/app'
 import User from '#models/user'
 import { createTuyau } from '@tuyau/client'
-
-import { api } from '#.adonisjs/api'
 import { Env } from '@adonisjs/core/env'
 
 type UpdateOrderStatusPayload = {
@@ -19,6 +17,7 @@ type UpdateOrderStatusPayload = {
 
 export default class UpdateOrderStatus extends Job {
   async handle({ requestId, email }: UpdateOrderStatusPayload) {
+    const { api } = await import("#.adonisjs/api")
 
     try {
 
@@ -83,8 +82,8 @@ export default class UpdateOrderStatus extends Job {
             const tuyau = createTuyau({
                 api,
                 baseUrl: new Env(env).get('INERTIA_PUBLIC_APP_URL') ?? "",
-              })
-
+              }) 
+            
             await axios.post(tuyau.$url('actions:referrals.event.pointattribution.trigger', {
               params: { id: order.userId }
             }), { "apiKey": new Env(env).get('APP_KEY') }, { withXSRFToken: true, withCredentials: true})

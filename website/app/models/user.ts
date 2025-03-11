@@ -49,7 +49,7 @@ export default class User extends BaseModel {
   declare referrerId: number | null
 
   @belongsTo(() => User, {
-    foreignKey: 'referrer_id',
+    foreignKey: 'referrerId',
   })
   declare referrer: BelongsTo<typeof User>
 
