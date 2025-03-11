@@ -9,8 +9,8 @@ const attachmentConfig = defineConfig({
       options: {
         format: 'png',
         resize: {
-          width: 400,
-          height: 400,
+          width: 200,
+          height: 200,
           fit: sharp.fit.cover,
           position: 'center'
         },
