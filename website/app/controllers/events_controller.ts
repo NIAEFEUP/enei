@@ -1,8 +1,12 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Event from '#models/event'
+import EventService from '#services/event_service'
 import User from '#models/user'
+import { inject } from '@adonisjs/core'
 
+@inject()
 export default class EventsController {
+  constructor(private eventService: EventService) { }
   async index({ inertia }: HttpContext) {
     return inertia.render('events')
   }
@@ -75,13 +79,9 @@ export default class EventsController {
 
     const event = await Event.findOrFail(params.id)
 
-    const isRegistered = await event
-      .related('registeredUsers')
-      .query()
-      .where('user_id', user.id)
-      .first()
+    const isRegistered = await this.eventService.isRegistered(user, event)
 
-    return response.ok({ isRegistered: !!isRegistered })
+    return response.ok({ isRegistered: isRegistered })
   }
 
   async isRegisteredByEmail({ response, request }: HttpContext) {
@@ -95,12 +95,8 @@ export default class EventsController {
       return response.badRequest('Utilizador não encontrado')
     }
 
-    const isRegistered = await event
-      .related('registeredUsers')
-      .query()
-      .where('user_id', user.id)
-      .first()
+    const isRegistered = await this.eventService.isRegistered(user, event)
 
-    return response.ok({ isRegistered: !!isRegistered })
+    return response.ok({ isRegistered: isRegistered })
   }
 }
