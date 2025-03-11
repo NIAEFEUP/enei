@@ -5,6 +5,7 @@ import { Input } from "~/components/ui/input"
 import { useEffect } from 'react';
 
 const AvatarUpload= () => {
+    const [fetchedName, setfetchedName] = useState(false);
     const [file, setFile] = useState<File | null>(null);
     const [uploading, setUploading] = useState(false);
     const [fileName, setFileName] = useState<string | null>(null);
@@ -14,8 +15,11 @@ const AvatarUpload= () => {
             try {
                 const response = await axios.get('/user/avatar/name');
                 setFileName(response.data.fileName);
+                setfetchedName(true);
+
             } catch (error) {
                 setFileName(null);
+                setfetchedName(true);
             }
         };
 
@@ -65,17 +69,17 @@ const AvatarUpload= () => {
 
     return (
         <div className='flex flex-col gap-2'>
-            {fileName ? (
+            {(fileName ) ? (
                 <div className='flex flex-row gap-2'>
                     <Input className="w-64" type="text" value={fileName} disabled />
-                    <Button onClick={handleDelete} disabled={uploading}>
+                    <Button onClick={handleDelete} disabled={uploading || !fetchedName }>
                         {uploading ? 'Uploading...' : 'Clear avatar'}
                     </Button>
                 </div>
             ) : (
                 <div className='flex flex-row gap-2'>
                     <Input className="w-64" type="file" accept="image/*" onChange={handleFileChange} />
-                    <Button onClick={handleUpload} disabled={uploading}>
+                    <Button onClick={handleUpload} disabled={uploading || !fetchedName }>
                         {uploading ? 'Uploading...' : 'Upload avatar'}
                     </Button>
                 </div>

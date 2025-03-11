@@ -80,10 +80,18 @@ export default class User extends BaseModel {
   @column()
   declare points: number
 
-  @attachment()
+  @attachment(
+    {
+      folder: 'resumes',
+    }
+  )
   declare resume: Attachment | null 
 
-  @attachment()
+  @attachment({
+    folder: 'avatars',
+    variants: ['thumbnail'],
+    
+  })
   declare avatar: Attachment | null
 
   @belongsTo(() => PromoterInfo)

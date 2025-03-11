@@ -4,6 +4,7 @@
 /// <reference path="../../config/inertia.ts" />
 /// <reference path="../../config/limiter.ts" />
 /// <reference path="../../config/redis.ts" />
+/// <reference path="../../config/attachment.ts" />
 
 import '../css/app.css'
 

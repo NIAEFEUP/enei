@@ -5,6 +5,7 @@ import { Input } from "~/components/ui/input"
 import { useEffect } from 'react';
 
 const CvUpload= () => {
+    const [fetchedName, setfetchedName] = useState(false);
     const [file, setFile] = useState<File | null>(null);
     const [uploading, setUploading] = useState(false);
     const [fileName, setFileName] = useState<string | null>(null);
@@ -12,7 +13,7 @@ const CvUpload= () => {
     useEffect(() => {
         const fetchFileName = async () => {
             try {
-                const response = await axios.get('user/cv/name');
+                const response = await axios.get('/user/cv/name');
                 setFileName(response.data.fileName);
             } catch (error) {
                 setFileName(null);
@@ -20,6 +21,7 @@ const CvUpload= () => {
         };
 
         fetchFileName();
+        setfetchedName(true);
     }, [uploading]);
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
@@ -68,14 +70,14 @@ const CvUpload= () => {
             {fileName ? (
                 <div className='flex flex-row gap-2'>
                     <Input className="w-64" type="text" value={fileName} disabled />
-                    <Button onClick={handleDelete} disabled={uploading}>
+                    <Button onClick={handleDelete} disabled={uploading || !fetchedName}>
                         {uploading ? 'Uploading...' : 'Clear CV'}
                     </Button>
                 </div>
             ) : (
                 <div className='flex flex-row gap-2 '>
                     <Input className="w-64" type="file" accept=".pdf" onChange={handleFileChange} />
-                    <Button onClick={handleUpload} disabled={uploading}>
+                    <Button onClick={handleUpload} disabled={uploading || !fetchedName}>
                         {uploading ? 'Uploading...' : 'Upload CV'}
                     </Button>
                 </div>

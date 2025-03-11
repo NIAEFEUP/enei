@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { attachmentManager } from '@jrmc/adonis-attachment'
 import drive from "@adonisjs/drive/services/main"
+import User from '#models/user'
 
 export default class UsersController {
     
@@ -45,10 +46,16 @@ export default class UsersController {
       }
     
     async downloadCV({ response, auth }: HttpContext) {
-        const user = auth.user
-        if (!user) {
+        const userId = auth.user?.id
+        if (!userId) {
             return response.unauthorized('User not authenticated')
         }
+
+        const user = await User.find(userId)
+        if (!user) {
+            return response.notFound('User not found')
+        }
+
 
         if (user.resume === null) {
             return response.notFound('File not found')
@@ -70,12 +77,19 @@ export default class UsersController {
         return inertia.render('avatar')
     }
     async storeAvatar({ request, response, auth }: HttpContext) {
+        if(!request.file('avatar')) {
+            return response.badRequest('No file uploaded')
+        }
         const user = auth.user
         if (!user) {
             return response.unauthorized('User not authenticated')
         }
-        const avatar = request.file('avatar')!
+        const avatar = request.file('avatar', {
+            size: '2mb',
+            extnames: ['jpg', 'jpeg', 'png']
+        })!
         user.avatar = await attachmentManager.createFromFile(avatar)
+
         await user.save()
         return response.ok({ message: 'Avatar uploaded' })
     }

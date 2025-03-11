@@ -195,7 +195,7 @@ router.
     router.post('/cv/upload', [UsersController, 'storeCV'])
     router.delete('cv/delete', [UsersController, 'deleteCV'])
     router.get('/cv/name', [UsersController, 'showCVName'])
-    router.get('/cv/download', [UsersController, 'downloadCV'])
+    router.get('/:id/cv/download', [UsersController, 'downloadCV']).use( middleware.company())
 
     // Avatar endpoints
     router.get('/avatar', [UsersController, 'showAvatar'])
@@ -203,7 +203,7 @@ router.
     router.post('/avatar/upload', [UsersController, 'storeAvatar'])
     router.delete('/avatar/delete', [UsersController, 'deleteAvatar'])
   })
-  .use([middleware.auth(), middleware.wip()])
+  .use([middleware.auth()])
   .prefix('user')
 
 
