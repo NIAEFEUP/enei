@@ -7,6 +7,7 @@ import mail from '@adonisjs/mail/services/main'
 import db from '@adonisjs/lucid/services/db'
 import app from '@adonisjs/core/services/app'
 import User from '#models/user'
+import transmit from '@adonisjs/transmit/services/main'
 
 type UpdateOrderStatusPayload = {
   requestId: string
@@ -16,7 +17,7 @@ type UpdateOrderStatusPayload = {
 export default class UpdateOrderStatus extends Job {
   async handle({ requestId, email }: UpdateOrderStatusPayload) {
     try {
-      
+
       this.logger.info(`Processing status update for requestId: ${requestId}`)
 
       // Fetch the order based on the requestId
@@ -42,6 +43,11 @@ export default class UpdateOrderStatus extends Job {
           if (app.inDev) {
             status = "Success"
           }
+
+          transmit.on('broadcast', (data) => {
+            this.logger.info(`broadcast: ${JSON.stringify(data)}`)
+          })
+          transmit.broadcast(`order/${order.id}`, { status: status })
 
           if (status === 'Pending') {
             await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 }) // Retry after 5 seconds

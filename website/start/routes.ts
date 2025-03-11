@@ -12,6 +12,9 @@ import { emailVerificationThrottle, sendForgotPasswordThrottle } from '#start/li
 const EventsController = () => import('#controllers/events_controller')
 import { sep, normalize } from 'node:path'
 import app from '@adonisjs/core/services/app'
+import transmit from '@adonisjs/transmit/services/main'
+
+transmit.registerRoutes();
 
 const AuthenticationController = () => import('#controllers/authentication_controller')
 const OrdersController = () => import('#controllers/orders_controller')
@@ -217,13 +220,13 @@ router
   })
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant(), middleware.wip()])
   .prefix('/store')
-  
+
 // Referrals
 router.get('/referrals', [ReferralsController, 'showReferralLink'])
   .middleware(middleware.auth())
   .as('pages:referrals')
 
 router.route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
-  .middleware([middleware.automaticSubmit(), middleware.silentAuth()]) 
+  .middleware([middleware.automaticSubmit(), middleware.silentAuth()])
   .as('actions:referrals.link')
 

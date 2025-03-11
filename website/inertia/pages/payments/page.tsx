@@ -63,7 +63,7 @@ export default function TicketSalePage(
       return
     }
     try {
-      await axios.post('/payment/mbway', {
+      const response = await axios.post('/payment/mbway', {
         userId: props.user.id,
         products: [{ productId: item.id, quantity: 1 }],
         name: enableBillingInfo ? billingInfo.name : null,
@@ -73,7 +73,8 @@ export default function TicketSalePage(
       })
       setPhoneModalIsLoading(false)
       setPhoneModalOpen(false)
-      setOrderConfirmationModalOpen(true)
+      //setOrderConfirmationModalOpen(true)
+      router.visit(`/payment/${response.data.order.id}`)
     } catch (error) {
       setPhoneModalIsLoading(false)
       setPhoneModalOpen(false)
