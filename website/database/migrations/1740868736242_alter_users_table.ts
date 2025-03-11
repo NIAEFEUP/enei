@@ -9,7 +9,7 @@ export default class extends BaseSchema {
         .unique()
         .references('id')
         .inTable('speaker_profiles')
-      table.integer('company_profile_id')
+      table.integer('company_id')
         .unique()
         .references('id')
         .inTable('company_profiles')

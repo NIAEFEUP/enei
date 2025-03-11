@@ -6,6 +6,8 @@ import User from './user.js'
 import Company from './company.js'
 
 export default class SpeakerProfile extends BaseModel {
+  public static table = 'speaker_profiles'
+
   @column({ isPrimary: true })
   declare id: number
 
@@ -34,6 +36,12 @@ export default class SpeakerProfile extends BaseModel {
 
   @column()
   declare ORCIDLink: string | null
+
+  @column()
+  declare companyId: number | null
+
+  @column()
+  declare about: string | null
 
   @belongsTo(() => Company)
   declare company: BelongsTo<typeof Company>

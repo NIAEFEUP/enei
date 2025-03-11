@@ -12,8 +12,9 @@ export default class extends BaseSchema {
       table.string('last_name').notNullable()
       table.string('job_title').notNullable()
       table.enum('speaker_role', ['keynote_speaker', 'panelist', 'moderator']).notNullable()
-      table.string('ORCID_link')
-      table.integer('company_id').references('id').inTable('company')
+      table.string('orcid_link').nullable()
+      table.string('about').nullable()
+      table.integer('company_id').references('id').inTable('company_profiles')
     })
   }
 

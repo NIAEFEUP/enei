@@ -4,6 +4,8 @@ import type { HasOne } from '@adonisjs/lucid/types/relations'
 import User from './user.js'
 
 export default class Company extends BaseModel {
+  public static table = 'company_profiles'
+
   @column({ isPrimary: true })
   declare id: number
   
