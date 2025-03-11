@@ -1,4 +1,3 @@
-import Company from '#models/company';
 import ParticipantProfile from '#models/participant_profile'
 import SpeakerProfile from '#models/speaker_profile';
 import User from '#models/user';
