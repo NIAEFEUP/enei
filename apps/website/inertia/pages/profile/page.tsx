@@ -245,10 +245,10 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   <p className='text-lg'> @ {getUniversityById(profile.university)!.name} </p>
                 </div>
               }
-              {profile.jobTitle && profile.speakerRole &&
+              {profile.jobTitle && profile.company &&
                 <div>
                   <p className='text-lg'> &#183; {profile.jobTitle} &#183; </p>
-                  <p className='text-lg'> @{profile.speakerRole} </p>
+                  <p className='text-lg'> @ {profile.company.name} </p>
                 </div>
               }
               <div className='flex flex-row flex-wrap gap-2 justify-center md:justify-start'>
