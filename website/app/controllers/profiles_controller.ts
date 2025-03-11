@@ -1,4 +1,6 @@
+import Company from '#models/company';
 import ParticipantProfile from '#models/participant_profile'
+import SpeakerProfile from '#models/speaker_profile';
 import User from '#models/user';
 import { createProfileValidator, updateProfileValidator } from '#validators/profile'
 import type { HttpContext } from '@adonisjs/core/http'
@@ -60,6 +62,10 @@ export default class ProfilesController {
     if (!profile) {
       response.notFound("Perfil não encontrado")
       return
+    }
+
+    if (profile instanceof SpeakerProfile) {
+      profile.loadOnce('company')
     }
 
     const isUser = user ? (user.id === auth.user?.id) : false;
