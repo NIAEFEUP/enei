@@ -166,12 +166,18 @@ router
       .as('pages:profile.edit')
       .use([middleware.auth(), middleware.verifiedEmail()])
   })
+  .use(middleware.wip())
 
 router
-  .on('/faq').renderInertia('faq').as('pages:faq')
+  .on('/faq')
+  .renderInertia('faq')
+  .as('pages:faq')
+  .use(middleware.wip())
 
-
-router.get('/event', [EventsController, 'index']).as('pages:event')
+router
+  .get('/event', [EventsController, 'index'])
+  .as('pages:event')
+  .use(middleware.wip())
 
 
 router.
@@ -180,6 +186,7 @@ router.
   })
   .use([middleware.auth(), middleware.verifiedEmail()])
   .prefix('cv') // dummy route for testing
+  .use(middleware.wip())
 
 
 router.
@@ -196,7 +203,7 @@ router.
     router.post('/avatar/upload', [UsersController, 'storeAvatar'])
     router.delete('/avatar/delete', [UsersController, 'deleteAvatar'])
   })
-  .use([middleware.auth()])
+  .use([middleware.auth(), middleware.wip()])
   .prefix('user')
 
 
@@ -205,7 +212,7 @@ router
     router.get('/', [StoreController, 'index']).as('pages:store')
     router.post('/products/:id/buy/', [StoreController, 'buy']).as('actions:store.buy')
   })
-  .use([middleware.auth(), middleware.verifiedEmail(), /*middleware.participant()*/])
+  .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant(), middleware.wip()])
   .prefix('/store')
   
 // Referrals

@@ -11,6 +11,9 @@ importers:
 
   .:
     dependencies:
+      '@adminjs/adonis':
+        specifier: ^1.1.0
+        version: 1.1.1(@adonisjs/core@6.17.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.7.3))(@vinejs/vine@3.0.0)(edge.js@6.2.1))(@adonisjs/lucid@21.6.0(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.7.3))(@adonisjs/core@6.17.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.7.3))(@vinejs/vine@3.0.0)(edge.js@6.2.1))(@vinejs/vine@3.0.0)(better-sqlite3@11.8.1)(luxon@3.5.0)(pg@8.13.1))(@adonisjs/session@7.5.1(@adonisjs/core@6.17.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.7.3))(@vinejs/vine@3.0.0)(edge.js@6.2.1))(@adonisjs/redis@9.1.0(@adonisjs/core@6.17.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.7.3))(@vinejs/vine@3.0.0)(edge.js@6.2.1)))(edge.js@6.2.1))(reflect-metadata@0.2.2)
       '@adminjs/design-system':
         specifier: ^4.1.1
         version: 4.1.1(@babel/core@7.26.7)(@types/react@19.0.8)(prop-types@15.8.1)(react-dom@19.0.0(react@19.0.0))(react-is@18.3.1)(react@19.0.0)
@@ -59,6 +62,9 @@ importers:
       '@aws-sdk/client-ses':
         specifier: ^3.734.0
         version: 3.734.0
+      '@babel/plugin-syntax-import-assertions':
+        specifier: ^7.26.0
+        version: 7.26.0(@babel/core@7.26.7)
       '@date-fns/tz':
         specifier: ^1.2.0
         version: 1.2.0
@@ -312,9 +318,6 @@ importers:
         specifier: ^3.24.1
         version: 3.24.1
     devDependencies:
-      '@adminjs/adonis':
-        specifier: ^1.1.0
-        version: 1.1.1(@adonisjs/core@6.17.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.7.3))(@vinejs/vine@3.0.0)(edge.js@6.2.1))(@adonisjs/lucid@21.6.0(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.7.3))(@adonisjs/core@6.17.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.7.3))(@vinejs/vine@3.0.0)(edge.js@6.2.1))(@vinejs/vine@3.0.0)(better-sqlite3@11.8.1)(luxon@3.5.0)(pg@8.13.1))(@adonisjs/session@7.5.1(@adonisjs/core@6.17.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.7.3))(@vinejs/vine@3.0.0)(edge.js@6.2.1))(@adonisjs/redis@9.1.0(@adonisjs/core@6.17.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.7.3))(@vinejs/vine@3.0.0)(edge.js@6.2.1)))(edge.js@6.2.1))(reflect-metadata@0.2.2)
       '@adonisjs/assembler':
         specifier: ^7.8.2
         version: 7.8.2(babel-plugin-macros@3.1.0)(typescript@5.7.3)
@@ -327,9 +330,6 @@ importers:
       '@adonisjs/tsconfig':
         specifier: ^1.4.0
         version: 1.4.0
-      '@babel/plugin-syntax-import-assertions':
-        specifier: ^7.26.0
-        version: 7.26.0(@babel/core@7.26.7)
       '@japa/assert':
         specifier: ^4.0.1
         version: 4.0.1(@japa/runner@4.1.0)
