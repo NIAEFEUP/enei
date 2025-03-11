@@ -16,6 +16,7 @@ export default defineConfig({
     () => import('@adonisjs/mail/commands'),
     () => import('@tuyau/core/commands'),
     () => import('adonisjs-jobs/commands'),
+    () => import('adonis-cockpit/commands')
   ],
 
   /*
@@ -50,7 +51,8 @@ export default defineConfig({
     () => import('@adonisjs/ally/ally_provider'),
     () => import('@adonisjs/limiter/limiter_provider'),
     () => import('@adonisjs/redis/redis_provider'),
-    () => import('@adonisjs/drive/drive_provider')
+    () => import('@adonisjs/drive/drive_provider'),
+    () => import('adonis-cockpit/providers/cockpit_provider')
   ],
 
   /*
@@ -66,6 +68,7 @@ export default defineConfig({
     () => import('#start/kernel'),
     () => import('#start/events'),
     () => import('#start/validator'),
+    () => import('#start/cockpit')
   ],
 
   /*

@@ -5,6 +5,7 @@
     "outDir": "./build",
     "resolveJsonModule": true,
     "verbatimModuleSyntax": true,
+    "esModuleInterop": true,
     "jsx": "react-jsx"
   },
   "exclude": ["./inertia/**/*", "node_modules", "build"]

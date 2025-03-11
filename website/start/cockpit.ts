@@ -1,0 +1,1 @@
+import cockpit from 'adonis-cockpit/services/main'
