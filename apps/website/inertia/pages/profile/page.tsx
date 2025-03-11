@@ -178,6 +178,7 @@ import { Link } from '@tuyau/inertia/react'
 import { cn } from '~/lib/utils'
 import { Badge } from '~/components/ui/badge'
 import { ENEI_EDITIONS } from '~/lib/enei/signup/editions'
+import { Avatar, AvatarImage } from '~/components/ui/avatar'
 
 interface SocialIconProps {
   icon: React.FC<LucideProps>;
@@ -200,8 +201,10 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
   useEffect(() => {
     setWindowHref(window.location.href)
   })
-  
-  const profileEditions = ENEI_EDITIONS.filter((edition) => profile.attendedBeforeEditions.includes(edition.value)).map((edition) => edition.label)
+
+  const profileEditions = profile.attendedBeforeEditions
+    ? ENEI_EDITIONS.filter((edition) => profile.attendedBeforeEditions.includes(edition.value)).map((edition) => edition.label)
+    : undefined
 
   const socials: SocialIconProps[] = []
 
@@ -210,11 +213,11 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
   if (profile.website) socials.push({ icon: Globe, link: profile.website })
 
   return (
-    <Page title={`${profile.firstName} ${profile.lastName}`} className="bg-enei-beige text-enei-blue">
+    <Page title={`${profile.firstName} ${profile.lastName}`} className="bg-enei-beige text-enei-blue" >
       <Container className='mt-8'>
         <section className="relative flex flex-col gap-8 md:justify-between z-10">
           <div className='flex flex-row justify-normal gap-4'>
-            <h3 className='text-2xl'>Perfil do Participante</h3>
+            <h3 className='text-2xl'>Perfil do Utilizador</h3>
             {isUser &&
               <Link route="pages:profile.edit" className={cn(buttonVariants({ variant: 'default' }), 'w-fit')}>
                 <Pencil />
@@ -225,16 +228,29 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
 
           <section className='grid md:grid-cols-[auto_1fr] items-center gap-4 md:gap-8'>
             <div className='size-fit rounded-sm bg-enei-blue mx-auto md:mx-0'>
-              <User className='w-48 h-48 text-enei-beige' />
+              {profile.logo
+                ?
+                <Avatar className='w-48 h-48 text-enei-beige'>
+                  <AvatarImage src={profile.logo} />
+                </Avatar>
+                : <User className='w-48 h-48 text-enei-beige' />}
             </div>
             <div className='h-full flex flex-col gap-2 justify-between text-center md:text-start'>
               <p className='text-3xl'>
-                {profile.firstName} {profile.lastName}
+                {profile.name ? profile.name : profile.firstName + " " + profile.lastName}
               </p>
-              <div>
-                <p className='text-lg'> {profile.course} &#183; {(profile.curricularYear === 'already-finished') ? ("Concluído em " + profile.finishedAt) : (profile.curricularYear + "º ano")} </p>
-                <p className='text-lg'> @ {getUniversityById(profile.university)!.name} </p>
-              </div>
+              {profile.course &&
+                <div>
+                  <p className='text-lg'> {profile.course} &#183; {(profile.curricularYear === 'already-finished') ? ("Concluído em " + profile.finishedAt) : (profile.curricularYear + "º ano")} </p>
+                  <p className='text-lg'> @ {getUniversityById(profile.university)!.name} </p>
+                </div>
+              }
+              {profile.jobTitle && profile.speakerRole &&
+                <div>
+                  <p className='text-lg'> &#183; {profile.jobTitle} &#183; </p>
+                  <p className='text-lg'> @{profile.speakerRole} </p>
+                </div>
+              }
               <div className='flex flex-row flex-wrap gap-2 justify-center md:justify-start'>
                 {socials.length > 0 &&
                   socials.map((social: SocialIconProps) => (
@@ -242,15 +258,25 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   ))
                 }
                 <div className='flex flex-row gap-2'>
-                  <Button className='w-fit'>
-                    <Download />
-                    Currículo
-                  </Button>
+                  {profile.orcidLink ?
+                    <a href={profile.orcidLink} target="_blank" rel="noopener noreferrer">
+                      <Button className='w-fit'>
+                        <Globe />
+                        ORCID Link
+                      </Button>
+                    </a>
+                    : (!profile.name &&
+                      <Button className='w-fit'>
+                        <Download />
+                        Currículo
+                      </Button>
+                    )
+                  }
                   <Dialog>
                     <DialogTrigger asChild>
                       <Button className='w-fit'>
                         <QrCode />
-                        Código QR
+                        Código QR
                       </Button>
                     </DialogTrigger>
                     <DialogContent className="w-4/5 max-w-96 sm:w-96 pt-12">
@@ -260,7 +286,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                   </Dialog>
                 </div>
               </div>
-              {profileEditions.length > 0 ?
+              {profileEditions !== undefined ? (profileEditions.length > 0 ?
                 <div className='flex flex-row flex-wrap gap-2 justify-center md:justify-normal'>
                   {profileEditions.map((edition) => (
                     <Badge>
@@ -274,6 +300,17 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                     Primeiro ENEI
                   </Badge>
                 </div>
+              ) :
+                <div>
+                  <Badge variant={'default'}>
+                    {profile.name ? "Company" :
+                      profile.speakerRole === "keynote_speaker" ? "Keynote Speaker" :
+                        profile.speakerRole === "panelist" ? "Panelist" :
+                          profile.speakerRole === "moderator" ? "Moderator" :
+                            "Speaker"
+                    }
+                  </Badge>
+                </div>
               }
             </div>
           </section>
@@ -283,13 +320,13 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                 Sobre
               </h4>
               <p>
-                {profile.about ?? "Sem informação."}
+                {profile.about ?? "Sem informação."}
               </p>
             </div>
           </section>
         </section>
       </Container>
-    </Page>
+    </Page >
   )
 }
 
