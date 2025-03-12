@@ -114,32 +114,33 @@ export default function EventRegistrationPage({
     }
   }
 
-  const activityClasses = {
-    activity: 'bg-enei-activity/30',
-    workshop: 'bg-enei-workshop/30',
-    other: 'bg-enei-other/30',
-  }
-
   const activityClassesPrimary = {
     activity: 'border-enei-activity',
     workshop: 'border-enei-workshop',
     other: 'border-enei-other',
   }
 
+  const activityColors = {
+    activity: '#5A8C86',
+    workshop: '#E28C40',
+    other: '#E2AD50',
+  }
+
   return (
-    <BaseLayout title="Registo de Evento" className="bg-enei-beige ">
-      <div className="flex justify-center mt-10">
-        <Card
-          className={cn(
-            'w-full max-w-7xl mx-auto border-transparent shadow-transparent',
-            activityClasses[type]
-          )}
-        >
+    <BaseLayout
+      title="Registo de Evento"
+      className="bg-enei-beige with-decorative-bars"
+      barColor={cn('', activityColors[type])}
+    >
+      <div className="flex justify-center mt-10 relative z-10">
+        <Card className="w-full max-w-7xl mx-auto border-transparent shadow-transparent bg-transparent">
           <CardHeader>
             {/* Title and important information (date, time, location) */}
             <div className="flex flex-row justify-between">
               <div>
-                <CardTitle className="text-2xl font-bold">{title}</CardTitle>
+                <CardTitle className="text-2xl font-bold" style={{ color: activityColors[type] }}>
+                  {title}
+                </CardTitle>
                 <div className="mt-4 flex flex-col gap-2 text-muted-foreground sm:flex-row sm:gap-6">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
@@ -166,7 +167,7 @@ export default function EventRegistrationPage({
           </CardHeader>
 
           {/* Event Description */}
-          <CardContent className="space-y-2 mt-2">
+          <CardContent className="space-y-2 mt-2" style={{ color: activityColors[type] }}>
             <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
               <Info className="h-5 w-5" />
               <p className="text-lg font-semibold">Acerca do Evento</p>
@@ -232,6 +233,7 @@ export default function EventRegistrationPage({
                   onClick={() => handleRegisterClick()}
                   disabled={ticketsRemaining <= 0 || !requiresRegistration || isLoading}
                   className="px-4"
+                  style={{ backgroundColor: activityColors[type] }}
                 >
                   {isLoading && <Loader2 className="animate-spin" />}
                   {requiresRegistration
@@ -251,7 +253,11 @@ export default function EventRegistrationPage({
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>
-                      <Button disabled={isLoading || isRegistered} className="px-4">
+                      <Button
+                        disabled={isLoading || isRegistered}
+                        className="px-4"
+                        style={{ backgroundColor: activityColors[type] }}
+                      >
                         {isLoading && <Loader2 className="animate-spin" />}
                         Inscrito
                       </Button>

@@ -1,4 +1,5 @@
 import { Head } from '@inertiajs/react'
+import DecorativeBars from '~/components/common/decorative_bars'
 import { Navbar } from '~/components/common/navbar'
 import { Toaster } from '~/components/ui/toaster'
 import { cn } from '~/lib/utils'
@@ -7,13 +8,17 @@ type Props = {
   title: string
   children?: React.ReactNode
   className?: string
+  barColor?: string
 }
 
-export default function BaseLayout({ title, children, className }: Props) {
+export default function BaseLayout({ title, children, className, barColor}: Props) {
+  const shouldShowBars = className?.includes('with-decorative-bars')
+
   return (
     <div className="w-full min-h-dvh bg-enei-blue scroll-smooth relative flex flex-col">
       <Head title={title} />
       <Navbar className="sticky top-0 z-20" variant="beige" />
+      {shouldShowBars && <DecorativeBars barColor={barColor} />}
       <div className={cn('flex-1', className)}>
         {children}
         <Toaster />
