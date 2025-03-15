@@ -206,5 +206,77 @@ export default class extends BaseSeeder {
       jobTitle: 'Investigador de Criptografia',
       company: 'Capgemini Engineering',
     })
+
+    await SpeakerProfile.create({
+      firstName: 'Carolina',
+      lastName: 'Trigo',
+      jobTitle: 'Senior Product Manager',
+      profilePicture: '/images/speakers/carolina-trigo.jpg',
+      company: 'Native Teams',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Joana',
+      lastName: 'Pereira',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Jorge',
+      lastName: 'Leitão',
+      profilePicture: '/images/speakers/jorge-cardoso.jpg',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Sandro',
+      lastName: 'Pereira',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Margarida',
+      lastName: 'Raposo',
+      jobTitle: 'Associate Software Engineer ',
+      profilePicture: '/images/speakers/margarida-raposo.jpg',
+      company: 'Feedzai',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Isabel',
+      lastName: 'Praça',
+      jobTitle: 'Professora Coordenadora',
+      profilePicture: '/images/speakers/isabel-praca.jpg',
+      company: 'ISEP',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'João',
+      lastName: 'Ferrão',
+      jobTitle: 'Product Designer',
+      profilePicture: '/images/speakers/joao-ferrao.jpg',
+      company: 'OLX',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Rui',
+      lastName: 'Alves',
+      jobTitle: 'Site Reliability Engineer',
+      profilePicture: '/images/speakers/rui-alves.jpg',
+      company: 'Kevel',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Manuel',
+      lastName: 'Luís Correia',
+      jobTitle: 'DevOps Engineer',
+      profilePicture: '/images/speakers/manuel-luis-correia.jpg',
+      company: 'Critical Techworks',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Mafalda',
+      lastName: 'Landeiro',
+      jobTitle: 'Senior Backend Developer',
+      profilePicture: '/images/speakers/mafalda-landeiro.jpg',
+      company: 'Blip.pt',
+    })
   }
 }
