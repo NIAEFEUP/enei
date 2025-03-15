@@ -1,4 +1,4 @@
-import type { AdminJSProviderConfig } from "@adminjs/adonis"
+import type { AdminJSProviderConfig } from '@adminjs/adonis'
 
 import componentLoader from '../app/admin/component_loader.js'
 import authProvider from '../app/admin/auth.js'
@@ -17,65 +17,22 @@ const resources = [
   ProductResource
 ]
 
-const adminjsConfig: AdminJSProviderConfig = {
+const adminjsConfig = {
   adapter: {
     enabled: true,
   },
   adminjs: {
-    dashboard: {
-      // component: components.CustomDashboard,
-      handler: async () => {
-        const userActivities = (await UserActivity.query().where('type', '=', 'referral'))
-        const points = 0 // (await User.all()).reduce((acc, user) => acc + user.points, 0)
-
-        return { 
-          userActivities, 
-          points 
-        }
-      },
-    },
-    rootPath: '/admin',
-    loginPath: '/admin/login',
-    logoutPath: '/admin/logout',
     componentLoader,
-    resources: resources,
-    pages: {},
-    locale: {
-      availableLanguages: ['en'],
-      language: 'en',
-      translations: {
-        en: {
-          actions: {},
-          messages: {},
-          labels: {},
-          buttons: {},
-          properties: {},
-          components: {},
-          pages: {},
-          ExampleResource: {
-            actions: {},
-            messages: {},
-            labels: {},
-            buttons: {},
-            properties: {},
-          },
-        },
-      },
-    },
+    resources,
     branding: {
       companyName: 'ENEI - Admin',
-      theme: {},
-    },
-    settings: {
-      defaultPerPage: 10,
+      logo: '/images/logo-blue.svg',
     },
   },
   auth: {
     enabled: true,
     provider: authProvider,
-    middlewares: [],
   },
-  middlewares: [],
-}
+} satisfies AdminJSProviderConfig
 
 export default adminjsConfig
