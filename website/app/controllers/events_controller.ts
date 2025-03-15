@@ -8,7 +8,7 @@ import { inject } from '@adonisjs/core'
 export default class EventsController {
   constructor(private eventService: EventService) { }
   async index({ inertia }: HttpContext) {
-    return inertia.render('events')
+    return inertia.render('events', {currentDay: new Date().toDateString()})
   }
   async show({ inertia, params }: HttpContext) {
     const event = await Event.findOrFail(params.id)
