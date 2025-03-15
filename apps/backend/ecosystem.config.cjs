@@ -1,5 +1,6 @@
+/** @type {import('pm2')} */
 module.exports = {
-  apps: [
+  apps: /** @type {import('pm2').StartOptions[]} */ ([
     {
       name: 'enei-website',
       script: './bin/server.js',
@@ -13,5 +14,5 @@ module.exports = {
       args: 'jobs:listen',
       autorestart: true,
     },
-  ],
+  ]),
 }

@@ -1,11 +1,12 @@
+// This file is used to allow IDEs to understand the project structure.
+// It is not used to compile the project.
 {
-  "extends": "@adonisjs/tsconfig/tsconfig.app.json",
-  "compilerOptions": {
-    "rootDir": "./",
-    "outDir": "./build",
-    "resolveJsonModule": true,
-    "verbatimModuleSyntax": true,
-    "jsx": "react-jsx"
-  },
-  "exclude": ["./inertia/**/*", "node_modules", "build"]
+    "files": [],
+    "references": [
+        { "path": "./tsconfig.lib.json" },
+      // Reference dependency projects
+      { "path": "../../packages/data" },
+      { "path": "../../packages/emails" },
+      { "path": "../../packages/utils" },
+    ]
 }

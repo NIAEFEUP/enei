@@ -3,7 +3,7 @@ import { BaseSchema } from '@adonisjs/lucid/schema'
 export default class extends BaseSchema {
   protected tableName = 'participant_profiles'
 
-  async up() {
+  override async up() {
     this.defer(async () => {
       await this.db.query()
         .update('purchased_ticket', 'early-bird-with-housing')
@@ -17,7 +17,7 @@ export default class extends BaseSchema {
     })
   }
 
-  async down() {
+  override async down() {
     this.defer(async () => {
       await this.db.query()
         .update('purchased_ticket', null)

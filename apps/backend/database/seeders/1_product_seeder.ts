@@ -2,7 +2,7 @@ import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import Product from '#models/product'
 import { UserTypes } from '../../types/user.js'
 export default class ProductSeeder extends BaseSeeder {
-  public async run() {
+  override async run() {
     await Product.create({
       name: 'Bilhete Early Bird - Com Alojamento',
       description:

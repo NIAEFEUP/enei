@@ -10,16 +10,11 @@ fi
 # Change current working directory to the root of the repository
 
 cd "$(dirname "$0")"
-cd ../..
+cd ../../..
 
-# Install Husky hooks
+# Change current working directory to the backend directory
 
-echo "Installing husky hooks..."
-husky website/.husky
-
-# Change current working directory to the website directory
-
-cd website
+cd apps/backend
 
 # Generate tuyau types
 

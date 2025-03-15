@@ -2,7 +2,7 @@ import User from '#models/user'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
-  async run() {
+  override async run() {
     const admin1 = await User.create({
       isAdmin: true, 
       email: "admin@eneiconf.pt"

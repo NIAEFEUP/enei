@@ -20,7 +20,7 @@ export default class ReferralService {
     const values = sqids.decode(hashId)
 
     if (values.length !== 1) return null
-    return values[0]
+    return values[0] ?? null
   }
 
   // To be moved to a policy once bouncer is installed

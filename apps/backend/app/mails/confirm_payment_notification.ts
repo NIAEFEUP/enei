@@ -1,36 +1,31 @@
-import env from '#start/env'
-import { ReactNotification } from './base/react_notification.js'
-import type { ProductWithQuantity, MailProps } from '#resources/emails/payment/confirm_purchase_email'
 import { staticUrl } from '../url.js'
+import { BaseMail } from '@adonisjs/mail'
+import { emails, type EmailProps } from "@enei/emails/registry";
+import { render } from '@enei/emails';
+import type { DeepPartial, OptionalKeys } from '@enei/utils/types';
 
-export default class ConfirmPaymentNotification extends ReactNotification {
-  private userEmail: string
-  private products: ProductWithQuantity[]
-  private total: number
-  private orderId: number
-  from = env.get('FROM_EMAIL')
-  subject = 'Your Payment was completed with Success'
+type Props = EmailProps<"payment/confirm-purchase-email">
 
-  constructor(userEmail: string, products: ProductWithQuantity[], total: number, orderId: number) {
+const defaultProps = {
+  logoUrl: staticUrl('/images/logo-white.png'),
+} satisfies DeepPartial<Props>;
+
+export default class ConfirmPaymentNotification extends BaseMail {
+  override subject = 'O teu pagamento foi concluído com sucesso!'
+
+  #props;
+
+  constructor(props: OptionalKeys<Props, keyof typeof defaultProps>) {
     super()
-    this.userEmail = userEmail
-    this.products = products
-    this.total = total
-    this.orderId = orderId
+    this.#props = { ...defaultProps, ...props };
   }
 
-  get props(): MailProps {
-    return {
-      logoUrl: staticUrl('/images/logo-white.png'),
-      userEmail: this.userEmail,
-      products: this.products,
-      total: this.total,
-      orderId: this.orderId,
-    }
-  }
-
-  async prepare() {
-    this.message.to(this.userEmail)
-    await this.jsx(() =>  import('#resources/emails/payment/confirm_purchase_email'), this.props)
+  override async prepare() {
+    const { html, plainText } = await render(emails.instantiate("payment/confirm-purchase-email", this.#props));
+    
+    this.message
+      .to(this.#props.email)
+      .html(html)
+      .text(plainText)
   }
 }

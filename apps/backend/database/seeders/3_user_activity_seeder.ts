@@ -2,7 +2,7 @@ import UserActivity from '#models/user_activity'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
-  async run() {
+  override async run() {
     await UserActivity.create(
       {
         type: 'referral',

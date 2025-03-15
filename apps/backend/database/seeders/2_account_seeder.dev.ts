@@ -7,7 +7,7 @@ import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import { DateTime } from 'luxon'
 
 export default class extends BaseSeeder {
-  async run() {
+  override async run() {
     if (!app.inDev) {
       logger().info('Not running in development environment, skipping...')
       return

@@ -1,7 +1,7 @@
 import UserCreated from '#events/user_created'
 import EmailVerificationNotification from '#mails/email_verification_notification'
 import mail from '@adonisjs/mail/services/main'
-import { buildUrl, staticUrl } from '../url.js'
+import { buildUrl } from '../url.js'
 import type UserRequestedVerificationEmail from '#events/user_requested_verification_email'
 
 export default class SendVerificationEmail {
@@ -12,7 +12,6 @@ export default class SendVerificationEmail {
     const email = event.user.email
     const notification = new EmailVerificationNotification({
       email,
-      logoUrl: staticUrl('/images/logo-white.png'),
 
       verificationLink: buildUrl()
         .qs({ email })

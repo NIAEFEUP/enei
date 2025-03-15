@@ -4,7 +4,7 @@ import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import { DateTime } from 'luxon'
 
 export default class extends BaseSeeder {
-  async run() {
+  override async run() {
     const email = 'promoter@eneiconf.pt'
 
     const user = new User()

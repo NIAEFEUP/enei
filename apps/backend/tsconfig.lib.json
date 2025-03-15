@@ -1,0 +1,38 @@
+{
+  "extends": [
+    "@enei/typescript-config/env/server",
+    "@enei/typescript-config/type/app"
+  ], 
+  "compilerOptions": {
+    // Modules
+    "rootDir": "./",
+
+    // Emit
+    "outDir": "./dist",
+
+    // Projects
+    "tsBuildInfoFile": "./dist/tsconfig.lib.tsbuildinfo",
+  },
+  "include": [
+    "app/**/*.ts",
+    "app/admin/components/**/*.tsx",
+    "bin/**/*.ts",
+    "config/**/*.ts",
+    "database/**/*.ts",
+    "lib/**/*.ts",
+    "resources/**/*.ts",
+    "start/**/*.ts",
+    "types/**/*.ts",
+    "adonisrc.ts",
+    "ecosystem.config.cjs",
+  ],
+  "exclude": [
+    "bin/test.ts",
+  ],
+  "references": [
+    // Reference dependency projects
+    { "path": "../../packages/data/tsconfig.lib.json" },
+    { "path": "../../packages/emails/tsconfig.lib.json" },
+    { "path": "../../packages/utils/tsconfig.lib.json" },
+  ]
+}

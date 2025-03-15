@@ -1,5 +1,5 @@
 {
-  "name": "website",
+  "name": "@enei/backend",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -14,7 +14,7 @@
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "typecheck": "tsc -p . -p ./inertia --noEmit",
-    "prepare": "sh -c './scripts/prepare.sh'"
+    "//prepare": "sh -c './scripts/prepare.sh'"
   },
   "imports": {
     "#.adonisjs/*": "./.adonisjs/*.ts",
@@ -43,6 +43,7 @@
     "@adonisjs/eslint-config": "2.0.0-beta.7",
     "@adonisjs/prettier-config": "^1.4.0",
     "@adonisjs/tsconfig": "^1.4.0",
+    "@enei/typescript-config": "workspace:*",
     "@japa/assert": "^4.0.1",
     "@japa/plugin-adonisjs": "^4.0.0",
     "@japa/runner": "^4.1.0",
@@ -51,7 +52,7 @@
     "@swc/core": "1.10.9",
     "@types/luxon": "^3.4.2",
     "@types/node": "^22.10.10",
-    "@types/react": "^19.0.8",
+    "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.3",
     "@types/slug": "^5.0.9",
     "@vitejs/plugin-react": "^4.3.4",
@@ -73,7 +74,6 @@
   },
   "dependencies": {
     "@adminjs/adonis": "^1.1.0",
-    "@babel/plugin-syntax-import-assertions": "^7.26.0",
     "@adminjs/design-system": "^4.1.1",
     "@adonisjs/ally": "^5.0.2",
     "@adonisjs/auth": "^9.3.1",
@@ -90,7 +90,11 @@
     "@adonisjs/static": "^1.1.1",
     "@adonisjs/vite": "^4.0.0",
     "@aws-sdk/client-ses": "^3.734.0",
+    "@babel/plugin-syntax-import-assertions": "^7.26.0",
     "@date-fns/tz": "^1.2.0",
+    "@enei/data": "workspace:*",
+    "@enei/emails": "workspace:*",
+    "@enei/utils": "workspace:*",
     "@hookform/resolvers": "^3.10.0",
     "@inertiajs/react": "^2.0.3",
     "@radix-ui/react-accordion": "^1.2.2",

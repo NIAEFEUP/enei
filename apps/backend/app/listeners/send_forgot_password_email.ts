@@ -1,5 +1,5 @@
 import mail from "@adonisjs/mail/services/main";
-import { buildUrl, staticUrl } from "../url.js";
+import { buildUrl } from "../url.js";
 import type UserForgotPassword from "#events/user_forgot_password";
 import ForgotPasswordNotification from "#mails/forgot_password_notification";
 
@@ -9,7 +9,6 @@ export default class SendForgotPasswordEmail {
     const email = event.email;
     const notification = new ForgotPasswordNotification({
       email,
-      logoUrl: staticUrl("/images/logo-white.png"),
 
       verificationLink: buildUrl()
         .qs({ email })

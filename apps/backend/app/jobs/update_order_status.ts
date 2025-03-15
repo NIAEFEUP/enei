@@ -60,9 +60,8 @@ export default class UpdateOrderStatus extends Job {
               .select('products.*', 'order_products.quantity as quantity')
 
             const total = order.total
-            const orderId = order.id
 
-            await mail.send(new ConfirmPaymentNotification(email, products, total, orderId))
+            await mail.send(new ConfirmPaymentNotification({ email, products, total })) 
 
             const user = await User.find(order.userId)
             if (user) {
@@ -84,8 +83,13 @@ export default class UpdateOrderStatus extends Job {
         await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 }) // Retry after 5 seconds
       }
     } catch (error) {
-      this.logger.error(`Error updating order status: ${error.message}`)
-      console.error(`Error updating order status: ${error.message}`)
+      if (error instanceof Error) {
+        this.logger.error(`Error updating order status: ${error.message}`)
+        console.error(`Error updating order status: ${error.message}`)
+      } else {
+        this.logger.error(`Error updating order status: ${error}`)
+        console.error(`Error updating order status: ${error}`)
+      }
 
       await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 })
     }
