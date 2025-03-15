@@ -14,12 +14,21 @@
   in {
     formatter.${system} = pkgs.alejandra;
 
-    devShells.${system}.website = pkgs.mkShell {
-      packages = with pkgs; [
-        nodejs_22
-        corepack_22
-        sqlite
-      ];
+    devShells.${system} = {
+      adminjs-license = pkgs.mkShell {
+        packages = with pkgs; [
+          nodejs_22
+          corepack_22
+        ];
+      };
+
+      website = pkgs.mkShell {
+        packages = with pkgs; [
+          nodejs_22
+          corepack_22
+          sqlite
+        ];
+      };
     };
   };
 }
