@@ -1,21 +1,61 @@
 import SpeakerProfile from '#models/speaker_profile'
-import app from '@adonisjs/core/services/app'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
   async run() {
-    // if (!app.inDev) {
-    //   console.log('Not running in development environment, skipping...')
-    //   return
-    // }
 
     await SpeakerProfile.create({
-      firstName: 'Patrícia',
-      lastName: 'Duarte Mateus',
-      jobTitle: 'Software Engineer',
+      firstName: 'Fernando',
+      lastName: 'Maia',
+      jobTitle: 'Engenheiro Óptico',
       profilePicture:
-        'https://cdn-images.dzcdn.net/images/artist/f99f8f4d32fb5c72add009ae44729981/1900x1900-000000-80-0-0.jpg',
-      company: 'Google',
+        '/images/speakers/fernando-maia.jpg',
+      company: 'iLoF',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Joaquim',
+      lastName: 'Jorge',
+      jobTitle: 'Professor Catedrático',
+      profilePicture:
+        '/images/speakers/joaquim-jorge.jpg',
+      company: 'Instituto Superior Técnico',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Leandro',
+      lastName: 'Sousa',
+      jobTitle: 'Engenheiro Informático',
+      profilePicture:
+        '/images/speakers/leandro-sousa.jpg',
+      company: 'Noesis',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Sílvia',
+      lastName: 'Tavares',
+      jobTitle: 'Data Engineer',
+      profilePicture:
+        '/images/speakers/silvia-tavares.jpg',
+      company: 'Permira',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Rojan',
+      lastName: 'Aslani',
+      jobTitle: 'Data Scientist',
+      profilePicture:
+        '/images/speakers/rojan-aslani.jpg',
+      company: 'MC Sonae',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Charalampos',
+      lastName: 'Patrikakis',
+      jobTitle: 'IEEE Distinguished Contributor',
+      profilePicture:
+        '/images/speakers/charalampos-patrikakis.jpg',
+      company: 'IEEE',
     })
   }
 }

@@ -1,21 +1,26 @@
 import Event from '#models/event'
-import app from '@adonisjs/core/services/app'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
-export default class extends BaseSeeder {
-  async run() {
-    if (!app.inDev) {
-      console.log('Not running in development environment, skipping...')
-      return
-    }
+async function attach( eventId: number, speakerId: number ) {
 
-    const event = await Event.find(1)
+    const event = await Event.find(eventId)
 
     if (!event) {
       console.log('Event not found, skipping...')
       return
     }
 
-    await event.related('speakers').attach([1])
+    await event.related('speakers').attach([speakerId])
+}
+
+export default class extends BaseSeeder {
+
+  async run() {
+    await attach(1, 1)
+    await attach(2, 2)
+    await attach(3, 3)
+    await attach(4, 4)
+    await attach(4, 5)
+    await attach(5, 6)
   }
 }

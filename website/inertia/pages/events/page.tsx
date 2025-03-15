@@ -80,7 +80,7 @@ export default function EventsPage({ currentDay }: EventsPageProps) {
                 {
                   firstName: 'Mike',
                   lastName: 'Pound',
-                  profilePicture: 'https://randomuser.me/api',
+                  profilePicture: '/images/speakers/afonso-santos.jpg',
                 },
                 {
                   firstName: 'Mike',

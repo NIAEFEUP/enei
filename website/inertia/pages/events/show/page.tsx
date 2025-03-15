@@ -82,6 +82,7 @@ export default function EventRegistrationPage({
       await fetchTicketsRemaining()
       await fetchRegistrationStatus()
       setIsLoading(false)
+      console.log(speakers[0].profilePicture)
     }
     fetchData()
   }, [])
@@ -200,9 +201,16 @@ export default function EventRegistrationPage({
                         <h3 className="font-medium">
                           {speaker.firstName + ' ' + speaker.lastName}
                         </h3>
-                        {speaker.jobTitle && (
-                          <p className="text-sm text-black">{speaker.jobTitle}</p>
-                        )}
+                        <div className="flex flex-row">
+                          {speaker.jobTitle && (
+                            <p className="text-sm text-black">{speaker.jobTitle}</p>
+                          )}
+                          {speaker.company && (
+                            <p className="text-sm text-black">
+                              {", " + speaker.company}
+                            </p>
+                          )}
+                        </div>
                       </div>
                     </div>
                   ))}
