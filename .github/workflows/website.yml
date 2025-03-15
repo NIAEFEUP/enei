@@ -26,6 +26,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
+            adminjs-license
             website
 
       - name: Install pnpm
@@ -58,6 +59,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
+            adminjs-license
             website
 
       - name: Install pnpm
