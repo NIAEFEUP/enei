@@ -73,8 +73,8 @@
   },
   "dependencies": {
     "@adminjs/adonis": "^1.1.0",
-    "@babel/plugin-syntax-import-assertions": "^7.26.0",
     "@adminjs/design-system": "^4.1.1",
+    "@adminjs/relations": "^1.1.2",
     "@adonisjs/ally": "^5.0.2",
     "@adonisjs/auth": "^9.3.1",
     "@adonisjs/core": "^6.17.1",
@@ -90,6 +90,7 @@
     "@adonisjs/static": "^1.1.1",
     "@adonisjs/vite": "^4.0.0",
     "@aws-sdk/client-ses": "^3.734.0",
+    "@babel/plugin-syntax-import-assertions": "^7.26.0",
     "@date-fns/tz": "^1.2.0",
     "@hookform/resolvers": "^3.10.0",
     "@inertiajs/react": "^2.0.3",
@@ -181,13 +182,16 @@
     ]
   },
   "overrides": {
+    "@adminjs/license": "file:../adminjs-license",
     "strtok3": "8.0.1"
   },
   "resolutions": {
+    "@adminjs/license": "file:../adminjs-license",
     "strtok3": "8.0.1"
   },
   "pnpm": {
     "overrides": {
+      "@adminjs/license": "file:../adminjs-license",
       "strtok3": "8.0.1"
     }
   },

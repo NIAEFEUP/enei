@@ -5,6 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  '@adminjs/license': file:../adminjs-license
   strtok3: 8.0.1
 
 importers:
@@ -17,6 +18,9 @@ importers:
       '@adminjs/design-system':
         specifier: ^4.1.1
         version: 4.1.1(@babel/core@7.26.7)(@types/react@19.0.8)(prop-types@15.8.1)(react-dom@19.0.0(react@19.0.0))(react-is@18.3.1)(react@19.0.0)
+      '@adminjs/relations':
+        specifier: ^1.1.2
+        version: 1.1.2(adminjs@7.8.15(@types/babel__core@7.20.5)(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8))
       '@adonisjs/ally':
         specifier: ^5.0.2
         version: 5.0.2(@adonisjs/core@6.17.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.7.3))(@vinejs/vine@3.0.0)(edge.js@6.2.1))
@@ -427,6 +431,14 @@ packages:
     peerDependencies:
       react: ^18.1.0
       react-dom: ^18.1.0
+
+  '@adminjs/license@file:../adminjs-license':
+    resolution: {directory: ../adminjs-license, type: directory}
+
+  '@adminjs/relations@1.1.2':
+    resolution: {integrity: sha512-uA7ekwCNUqvNgabipoZ0ShOEBK2aW3fzdqejriM+iunkAFqc08S05L7IrfPOOTYrgINSgzVHiLzstKyBam1DOg==}
+    peerDependencies:
+      adminjs: ^7.3.0
 
   '@adonisjs/ace@13.3.0':
     resolution: {integrity: sha512-68dveDFd766p69cBvK/MtOrOP0+YKYLeHspa9KLEWcWk9suPf3pbGkHQ2pwDnvLJxBPHk4932KbbSSzzpGNZGw==}
@@ -8672,6 +8684,14 @@ snapshots:
       - prop-types
       - react-is
       - supports-color
+
+  '@adminjs/license@file:../adminjs-license': {}
+
+  '@adminjs/relations@1.1.2(adminjs@7.8.15(@types/babel__core@7.20.5)(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8))':
+    dependencies:
+      '@adminjs/license': file:../adminjs-license
+      adminjs: 7.8.15(@types/babel__core@7.20.5)(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)
+      lodash: 4.17.21
 
   '@adonisjs/ace@13.3.0':
     dependencies:
