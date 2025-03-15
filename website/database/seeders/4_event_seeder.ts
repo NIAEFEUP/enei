@@ -219,5 +219,61 @@ export default class extends BaseSeeder {
       requiresRegistration: false,
       price: 0,
     })
+
+    await Event.create({
+      title: 'Workshop de Rust',
+      description: '',
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 13, minute: 0 }),
+      duration: 120,
+      type: 'workshop',
+      location: 'TBD - FEUP',
+      registrationRequirements: '',
+      requiresRegistration: true,
+      ticketsRemaining: 30,
+      ticketsTotal: 30,
+      price: 0,
+    })
+
+    await Event.create({
+      title: 'Functional Web Development with Phoenix LiveView',
+      description: 'Phoenix é a framework web mais popular de Elixir, uma linguagem funcional que equilibra simplicidade, concorrência e tolerância a falhas. Neste workshop, vais aprender a criar interfaces interativas e em tempo real sem escrever JavaScript, utilizando o Phoenix LiveView. Explora na prática como desenvolver aplicações escaláveis de forma produtiva, aproveitando todo o potencial deste ecossistema.',
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 13, minute: 0 }),
+      duration: 120,
+      type: 'workshop',
+      location: 'TBD - FEUP',
+      registrationRequirements: '',
+      requiresRegistration: true,
+      ticketsRemaining: 30,
+      ticketsTotal: 30,
+      price: 0,
+    })
+
+    await Event.create({
+      title: 'Flutter - Building an app for mobile, web and desktop using a single Framework!',
+      description: 'Um workshop prático onde podes experimentar o Flutter, esclarecer dúvidas e perceber porque pode ser a solução perfeita para a tua aplicação. Ideal para quem procura uma tecnologia que permite desenvolver apps para várias plataformas de forma eficiente e moderna!',
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 15, minute: 30 }),
+      duration: 120,
+      type: 'workshop',
+      location: 'TBD - FEUP',
+      registrationRequirements: '',
+      requiresRegistration: true,
+      ticketsRemaining: 30,
+      ticketsTotal: 30,
+      price: 0,
+    })
+
+    await Event.create({
+      title: 'Decoding the Blockchain: Cryptography and the Power of Proof',
+      description: 'Já te perguntaste “afinal, o que é a blockchain?” ao ver o valor de uma criptomoeda oscilar? Apesar da desinformação, esta tecnologia é fascinante e cheia de potencial. Neste workshop, vamos explorar os seus fundamentos criptográficos e o seu funcionamento. Vem desvendar este universo!',
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 16, minute: 30 }),
+      duration: 120,
+      type: 'workshop',
+      location: 'TBD - FEUP',
+      registrationRequirements: '',
+      requiresRegistration: true,
+      ticketsRemaining: 30,
+      ticketsTotal: 30,
+      price: 0,
+    })
   }
 }

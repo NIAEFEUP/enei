@@ -3,13 +3,11 @@ import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
   async run() {
-
     await SpeakerProfile.create({
       firstName: 'Fernando',
       lastName: 'Maia',
       jobTitle: 'Engenheiro Óptico',
-      profilePicture:
-        '/images/speakers/fernando-maia.jpg',
+      profilePicture: '/images/speakers/fernando-maia.jpg',
       company: 'iLoF',
     })
 
@@ -17,8 +15,7 @@ export default class extends BaseSeeder {
       firstName: 'Joaquim',
       lastName: 'Jorge',
       jobTitle: 'Professor Catedrático',
-      profilePicture:
-        '/images/speakers/joaquim-jorge.jpg',
+      profilePicture: '/images/speakers/joaquim-jorge.jpg',
       company: 'Instituto Superior Técnico',
     })
 
@@ -26,8 +23,7 @@ export default class extends BaseSeeder {
       firstName: 'Leandro',
       lastName: 'Sousa',
       jobTitle: 'Engenheiro Informático',
-      profilePicture:
-        '/images/speakers/leandro-sousa.jpg',
+      profilePicture: '/images/speakers/leandro-sousa.jpg',
       company: 'Noesis',
     })
 
@@ -35,8 +31,7 @@ export default class extends BaseSeeder {
       firstName: 'Sílvia',
       lastName: 'Tavares',
       jobTitle: 'Data Engineer',
-      profilePicture:
-        '/images/speakers/silvia-tavares.jpg',
+      profilePicture: '/images/speakers/silvia-tavares.jpg',
       company: 'Permira',
     })
 
@@ -44,8 +39,7 @@ export default class extends BaseSeeder {
       firstName: 'Rojan',
       lastName: 'Aslani',
       jobTitle: 'Data Scientist',
-      profilePicture:
-        '/images/speakers/rojan-aslani.jpg',
+      profilePicture: '/images/speakers/rojan-aslani.jpg',
       company: 'MC Sonae',
     })
 
@@ -53,8 +47,7 @@ export default class extends BaseSeeder {
       firstName: 'Charalampos',
       lastName: 'Patrikakis',
       jobTitle: 'IEEE Distinguished Contributor',
-      profilePicture:
-        '/images/speakers/charalampos-patrikakis.jpg',
+      profilePicture: '/images/speakers/charalampos-patrikakis.jpg',
       company: 'IEEE',
     })
 
@@ -62,8 +55,7 @@ export default class extends BaseSeeder {
       firstName: 'André',
       lastName: 'Oliveira',
       jobTitle: 'Fundador e CEO',
-      profilePicture:
-        '/images/speakers/andre-oliveira.jpg',
+      profilePicture: '/images/speakers/andre-oliveira.jpg',
       company: 'Pixelmatters',
     })
 
@@ -71,8 +63,7 @@ export default class extends BaseSeeder {
       firstName: 'Humberto',
       lastName: 'Ayres Pereira',
       jobTitle: 'Cofundador e CEO',
-      profilePicture:
-        '/images/speakers/humberto-ayres-pereira.jpg',
+      profilePicture: '/images/speakers/humberto-ayres-pereira.jpg',
       company: 'Rows',
     })
 
@@ -80,8 +71,7 @@ export default class extends BaseSeeder {
       firstName: 'Haider',
       lastName: 'Abbas',
       jobTitle: 'ACM Distinguished Speaker',
-      profilePicture:
-        '/images/speakers/haider-abbas.jpg',
+      profilePicture: '/images/speakers/haider-abbas.jpg',
       company: 'ACM',
     })
 
@@ -89,8 +79,7 @@ export default class extends BaseSeeder {
       firstName: 'Tiago',
       lastName: 'Rodrigues',
       jobTitle: 'Product Owner',
-      profilePicture:
-        '/images/speakers/tiago-rodrigues.jpg',
+      profilePicture: '/images/speakers/tiago-rodrigues.jpg',
       company: 'Critical Techworks',
     })
 
@@ -98,8 +87,7 @@ export default class extends BaseSeeder {
       firstName: 'Luís',
       lastName: 'Miguel Pinho',
       jobTitle: 'Senior Researcher & Professor',
-      profilePicture:
-        '/images/speakers/luis-pinho.jpg',
+      profilePicture: '/images/speakers/luis-pinho.jpg',
       company: 'INESC TEC & ISEP',
     })
 
@@ -107,8 +95,7 @@ export default class extends BaseSeeder {
       firstName: 'Bruno',
       lastName: 'Mendes',
       jobTitle: 'Engenheiro de Software',
-      profilePicture:
-        '/images/speakers/bruno-mendes.jpg',
+      profilePicture: '/images/speakers/bruno-mendes.jpg',
       company: 'Kevel',
     })
 
@@ -116,8 +103,7 @@ export default class extends BaseSeeder {
       firstName: 'Patrícia',
       lastName: 'Duarte Mateus',
       jobTitle: 'Criadora do A QA Portuguesa',
-      profilePicture:
-        '/images/speakers/patricia-duarte-mateus.jpg',
+      profilePicture: '/images/speakers/patricia-duarte-mateus.jpg',
       company: 'A QA Portuguesa',
     })
 
@@ -125,8 +111,7 @@ export default class extends BaseSeeder {
       firstName: 'João',
       lastName: 'Romão',
       jobTitle: 'Engenheiro Informático',
-      profilePicture:
-        '/images/speakers/joao-romao.jpg',
+      profilePicture: '/images/speakers/joao-romao.jpg',
       company: 'Aston Martin Aramco F1 Team',
     })
 
@@ -134,8 +119,7 @@ export default class extends BaseSeeder {
       firstName: 'Eddie',
       lastName: 'Aftandilian',
       jobTitle: 'Principal Researcher',
-      profilePicture:
-        '/images/speakers/eddie-aftandilian.jpg',
+      profilePicture: '/images/speakers/eddie-aftandilian.jpg',
       company: 'GitHub',
     })
 
@@ -143,44 +127,39 @@ export default class extends BaseSeeder {
       firstName: 'Francisco',
       lastName: 'Brito',
       jobTitle: 'Membro',
-      profilePicture:
-        '/images/speakers/francisco-brito.jpg',
-      company: 'wUMrm (Equipa de CTF\'s)',
+      profilePicture: '/images/speakers/francisco-brito.jpg',
+      company: "wUMrm (Equipa de CTF's)",
     })
 
     await SpeakerProfile.create({
       firstName: 'Álvaro',
       lastName: 'Oliveira',
       jobTitle: 'Membro',
-      profilePicture:
-        '/images/speakers/alvaro-oliveira.jpg',
-      company: 'wUMrm (Equipa de CTF\'s)',
+      profilePicture: '/images/speakers/alvaro-oliveira.jpg',
+      company: "wUMrm (Equipa de CTF's)",
     })
 
     await SpeakerProfile.create({
       firstName: 'Afonso',
       lastName: 'Santos',
       jobTitle: 'Membro',
-      profilePicture:
-        '/images/speakers/afonso-santos.jpg',
-      company: 'wUMrm (Equipa de CTF\'s)',
+      profilePicture: '/images/speakers/afonso-santos.jpg',
+      company: "wUMrm (Equipa de CTF's)",
     })
 
     await SpeakerProfile.create({
       firstName: 'Pedro',
       lastName: 'Sousa',
       jobTitle: 'Membro',
-      profilePicture:
-        '/images/speakers/pedro-sousa.jpg',
-      company: 'wUMrm (Equipa de CTF\'s)',
+      profilePicture: '/images/speakers/pedro-sousa.jpg',
+      company: "wUMrm (Equipa de CTF's)",
     })
 
     await SpeakerProfile.create({
       firstName: 'Carlos',
       lastName: 'Baquero',
       jobTitle: 'Professor',
-      profilePicture:
-        '/images/speakers/carlos-baquero.jpg',
+      profilePicture: '/images/speakers/carlos-baquero.jpg',
       company: 'FEUP',
     })
 
@@ -188,8 +167,7 @@ export default class extends BaseSeeder {
       firstName: 'Nuno',
       lastName: 'Preguiça',
       jobTitle: 'Professor',
-      profilePicture:
-        '/images/speakers/nuno-preguiça.jpg',
+      profilePicture: '/images/speakers/nuno-preguiça.jpg',
       company: 'U. Nova de Lisboa',
     })
 
@@ -197,10 +175,36 @@ export default class extends BaseSeeder {
       firstName: 'Nuno',
       lastName: 'Fonseca',
       jobTitle: 'Fundador  & CEO',
-      profilePicture:
-        '/images/speakers/nuno-fonseca.jpg',
+      profilePicture: '/images/speakers/nuno-fonseca.jpg',
       company: 'Sound Particles',
     })
 
+    await SpeakerProfile.create({
+      firstName: 'Luís',
+      lastName: 'Duarte',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Nélson',
+      lastName: 'Estevão',
+      jobTitle: 'Engenheiro de Software',
+      profilePicture: '/images/speakers/nelson-estevao.jpg',
+      company: 'Marmela',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Marco',
+      lastName: 'Ferreira',
+      jobTitle: 'Fundador',
+      profilePicture: '/images/speakers/marco-ferreira.jpg',
+      company: 'Xarlie',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Leonardo',
+      lastName: 'Moura',
+      jobTitle: 'Investigador de Criptografia',
+      company: 'Capgemini Engineering',
+    })
   }
 }
