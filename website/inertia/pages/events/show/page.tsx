@@ -82,7 +82,6 @@ export default function EventRegistrationPage({
       await fetchTicketsRemaining()
       await fetchRegistrationStatus()
       setIsLoading(false)
-      console.log(speakers[0].profilePicture)
     }
     fetchData()
   }, [])
@@ -123,7 +122,7 @@ export default function EventRegistrationPage({
 
   const activityColors = {
     activity: '#5A8C86',
-    workshop: '#E28C40',
+    workshop: '#5A8C86',
     other: '#E2AD50',
   }
 
@@ -194,7 +193,7 @@ export default function EventRegistrationPage({
                       )}
                     >
                       <Avatar className="h-12 w-12">
-                        <AvatarImage src={speaker.profilePicture} alt={speaker.firstName} />
+                        <AvatarImage src={speaker.profilePicture} alt={speaker.firstName} className="object-cover" />
                         <AvatarFallback>{speaker.firstName[0]}</AvatarFallback>
                       </Avatar>
                       <div className="space-y-1">
@@ -284,7 +283,7 @@ export default function EventRegistrationPage({
             {/* Seats Available */}
             {requiresRegistration && (
               <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                <Ticket className="h-4 w-4" />
+                <Ticket className="h-4 w-4"/>
                 <span>{ticketsRemaining} lugares disponíveis</span>
               </div>
             )}

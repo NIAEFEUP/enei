@@ -57,5 +57,150 @@ export default class extends BaseSeeder {
         '/images/speakers/charalampos-patrikakis.jpg',
       company: 'IEEE',
     })
+
+    await SpeakerProfile.create({
+      firstName: 'André',
+      lastName: 'Oliveira',
+      jobTitle: 'Fundador e CEO',
+      profilePicture:
+        '/images/speakers/andre-oliveira.jpg',
+      company: 'Pixelmatters',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Humberto',
+      lastName: 'Ayres Pereira',
+      jobTitle: 'Cofundador e CEO',
+      profilePicture:
+        '/images/speakers/humberto-ayres-pereira.jpg',
+      company: 'Rows',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Haider',
+      lastName: 'Abbas',
+      jobTitle: 'ACM Distinguished Speaker',
+      profilePicture:
+        '/images/speakers/haider-abbas.jpg',
+      company: 'ACM',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Tiago',
+      lastName: 'Rodrigues',
+      jobTitle: 'Product Owner',
+      profilePicture:
+        '/images/speakers/tiago-rodrigues.jpg',
+      company: 'Critical Techworks',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Luís',
+      lastName: 'Miguel Pinho',
+      jobTitle: 'Senior Researcher & Professor',
+      profilePicture:
+        '/images/speakers/luis-pinho.jpg',
+      company: 'INESC TEC & ISEP',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Bruno',
+      lastName: 'Mendes',
+      jobTitle: 'Engenheiro de Software',
+      profilePicture:
+        '/images/speakers/bruno-mendes.jpg',
+      company: 'Kevel',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Patrícia',
+      lastName: 'Duarte Mateus',
+      jobTitle: 'Criadora do A QA Portuguesa',
+      profilePicture:
+        '/images/speakers/patricia-duarte-mateus.jpg',
+      company: 'A QA Portuguesa',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'João',
+      lastName: 'Romão',
+      jobTitle: 'Engenheiro Informático',
+      profilePicture:
+        '/images/speakers/joao-romao.jpg',
+      company: 'Aston Martin Aramco F1 Team',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Eddie',
+      lastName: 'Aftandilian',
+      jobTitle: 'Principal Researcher',
+      profilePicture:
+        '/images/speakers/eddie-aftandilian.jpg',
+      company: 'GitHub',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Francisco',
+      lastName: 'Brito',
+      jobTitle: 'Membro',
+      profilePicture:
+        '/images/speakers/francisco-brito.jpg',
+      company: 'wUMrm (Equipa de CTF\'s)',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Álvaro',
+      lastName: 'Oliveira',
+      jobTitle: 'Membro',
+      profilePicture:
+        '/images/speakers/alvaro-oliveira.jpg',
+      company: 'wUMrm (Equipa de CTF\'s)',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Afonso',
+      lastName: 'Santos',
+      jobTitle: 'Membro',
+      profilePicture:
+        '/images/speakers/afonso-santos.jpg',
+      company: 'wUMrm (Equipa de CTF\'s)',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Pedro',
+      lastName: 'Sousa',
+      jobTitle: 'Membro',
+      profilePicture:
+        '/images/speakers/pedro-sousa.jpg',
+      company: 'wUMrm (Equipa de CTF\'s)',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Carlos',
+      lastName: 'Baquero',
+      jobTitle: 'Professor',
+      profilePicture:
+        '/images/speakers/carlos-baquero.jpg',
+      company: 'FEUP',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Nuno',
+      lastName: 'Preguiça',
+      jobTitle: 'Professor',
+      profilePicture:
+        '/images/speakers/nuno-preguiça.jpg',
+      company: 'U. Nova de Lisboa',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Nuno',
+      lastName: 'Fonseca',
+      jobTitle: 'Fundador  & CEO',
+      profilePicture:
+        '/images/speakers/nuno-fonseca.jpg',
+      company: 'Sound Particles',
+    })
+
   }
 }
