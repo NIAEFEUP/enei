@@ -1,4 +1,4 @@
-import { Calendar, Clock, MapPin, Ticket, Users, Info, ClipboardCheck, Loader2 } from 'lucide-react'
+import { Calendar, Clock, MapPin, Ticket, Users, Info, ClipboardCheck} from 'lucide-react'
 import { Button } from '~/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
@@ -7,8 +7,8 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useToast } from '~/hooks/use_toast'
 import { cn } from '~/lib/utils'
-import { Tooltip } from '~/components/ui/tooltip'
-import { TooltipContent, TooltipProvider, TooltipTrigger } from '@radix-ui/react-tooltip'
+// import { Tooltip } from '~/components/ui/tooltip'
+// import { TooltipContent, TooltipProvider, TooltipTrigger } from '@radix-ui/react-tooltip'
 import RegistrationConfirmationModal from '~/components/events/registration_confirmation_modal'
 
 interface Speaker {
@@ -50,7 +50,7 @@ export default function EventRegistrationPage({
   ticketsRemaining: initialTicketsRemaining,
   price,
 }: EventRegistrationProps) {
-  const [isRegistered, setIsRegistered] = useState(false)
+  // const [isRegistered, setIsRegistered] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [ticketsRemaining, setTicketsRemaining] = useState(initialTicketsRemaining)
   const [registrationConfirmationModalOpen, setRegistrationConfirmationModalOpen] = useState(false)
@@ -69,8 +69,8 @@ export default function EventRegistrationPage({
 
   const fetchRegistrationStatus = async () => {
     try {
-      const response = await axios.get('/events/' + eventId + '/is-registered')
-      setIsRegistered(response.data.isRegistered)
+      // const response = await axios.get('/events/' + eventId + '/is-registered')
+      // setIsRegistered(response.data.isRegistered)
     } catch (error) {
       console.error(error)
     }
@@ -86,9 +86,9 @@ export default function EventRegistrationPage({
     fetchData()
   }, [])
 
-  const handleRegisterClick = () => {
-    setRegistrationConfirmationModalOpen(true)
-  }
+  // const handleRegisterClick = () => {
+  //   setRegistrationConfirmationModalOpen(true)
+  // }
 
   const handleRegister = async () => {
     setIsLoading(true)
@@ -193,7 +193,11 @@ export default function EventRegistrationPage({
                       )}
                     >
                       <Avatar className="h-12 w-12">
-                        <AvatarImage src={speaker.profilePicture} alt={speaker.firstName} className="object-cover" />
+                        <AvatarImage
+                          src={speaker.profilePicture}
+                          alt={speaker.firstName}
+                          className="object-cover"
+                        />
                         <AvatarFallback>{speaker.firstName[0]}</AvatarFallback>
                       </Avatar>
                       <div className="space-y-1">
@@ -205,9 +209,7 @@ export default function EventRegistrationPage({
                             <p className="text-sm text-black">{speaker.jobTitle}</p>
                           )}
                           {speaker.company && (
-                            <p className="text-sm text-black">
-                              {", " + speaker.company}
-                            </p>
+                            <p className="text-sm text-black">{', ' + speaker.company}</p>
                           )}
                         </div>
                       </div>
@@ -234,7 +236,7 @@ export default function EventRegistrationPage({
             )}
 
             {/* Button to register */}
-            {!isRegistered && (
+            {/*!isRegistered && (
               <div className="flex justify-center">
                 <Button
                   onClick={() => handleRegisterClick()}
@@ -252,10 +254,21 @@ export default function EventRegistrationPage({
                     : 'Inscrição não necessária'}
                 </Button>
               </div>
-            )}
+            )*/}
+
+            {/* Temporary indication that registration is not possible yet */}
+            <div className="flex justify-center">
+              <Button
+                disabled={true}
+                className="px-4"
+                style={{ backgroundColor: activityColors[type] }}
+              >
+                Ainda não é possível inscrever
+              </Button>
+            </div>
 
             {/* Indicator if the user is registered */}
-            {isRegistered && (
+            {/*isRegistered && (
               <div className="flex justify-center">
                 <TooltipProvider>
                   <Tooltip>
@@ -278,12 +291,12 @@ export default function EventRegistrationPage({
                   </Tooltip>
                 </TooltipProvider>
               </div>
-            )}
+            )*/}
 
             {/* Seats Available */}
             {requiresRegistration && (
               <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                <Ticket className="h-4 w-4"/>
+                <Ticket className="h-4 w-4" />
                 <span>{ticketsRemaining} lugares disponíveis</span>
               </div>
             )}
