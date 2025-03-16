@@ -36,7 +36,7 @@ export default class Event extends BaseModel {
   declare location: string
 
   @manyToMany(() => SpeakerProfile, {
-    pivotTable: 'event_speaker',
+    pivotTable: 'event_speakers',
   })
   public speakers!: ManyToMany<typeof SpeakerProfile>
 

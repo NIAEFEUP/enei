@@ -1,9 +1,11 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, manyToMany } from '@adonisjs/lucid/orm'
 import type { ModelAttributes } from '@adonisjs/lucid/types/model'
+import type { ManyToMany } from '@adonisjs/lucid/types/relations'
 
 import type { ProductRestrictions } from '../../types/product.js'
 import { json } from '#lib/lucid/decorators.js'
+import Order from './order.js'
 
 export type SerializedProduct = ModelAttributes<Product>
 
@@ -40,6 +42,11 @@ export default class Product extends BaseModel {
 
   @json()
   declare restrictions: ProductRestrictions
+
+  @manyToMany(() => Order, {
+    pivotTable: 'order_products',
+  })
+  public orders!: ManyToMany<typeof Order>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

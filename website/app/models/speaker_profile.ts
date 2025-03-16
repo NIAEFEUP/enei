@@ -23,7 +23,7 @@ export default class SpeakerProfile extends BaseModel {
   declare company: string
 
   @manyToMany(() => Event, {
-    pivotTable: 'event_speaker',
+    pivotTable: 'event_speakers',
   })
   public events!: ManyToMany<typeof Event>
 
