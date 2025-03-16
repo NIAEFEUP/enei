@@ -23,7 +23,7 @@ export default class extends BaseSeeder {
       title: 'Abordagens e Desafios da Realidade Virtual e Aumentada na Saúde e Reabilitação',
       description:
         'A Realidade Aumentada (AR) e a Realidade Virtual (VR) estão a transformar a medicina, melhorando a visualização de imagens, o planeamento cirúrgico e a reabilitação. No entanto, a integração destas tecnologias ainda enfrenta desafios, como a adaptação aos fluxos de trabalho tradicionais e a necessidade de uma interação mais intuitiva.',
-      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 14, minute: 0 }),
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 14, minute: 30 }),
       duration: 45,
       type: 'other',
       location: 'Auditório - FEUP',
@@ -172,7 +172,7 @@ export default class extends BaseSeeder {
       title: 'Que impacto tem o desenvolvimento de software numa equipa de F1?',
       description:
         'Desde simulações, aerodinâmica e túnel de vento até decisões de estratégia, telemetria, car setup, performance e sistemas de controlo - como pode um engenheiro de software chegar ao mundo da F1 e ter um impacto positivo?',
-      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 11, minute: 15 }),
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 10, minute: 45 }),
       duration: 45,
       type: 'other',
       location: 'Auditório - ISEP',

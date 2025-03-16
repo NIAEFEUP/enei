@@ -3,6 +3,7 @@ import { DaySelector } from '~/components/events/day_selector'
 import { useState } from 'react'
 import { Card } from '~/components/ui/card'
 import EventsPageApril12 from '~/components/events/schedule/april12'
+import EventsPageApril11 from '~/components/events/schedule/april11'
 
 interface Speaker {
   firstName: string
@@ -95,6 +96,7 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
               ))}
           </div>
           */}
+          {currentActiveIndex === 0 && <EventsPageApril11 events={eventsByDay['11-04-2025']} />}
           {currentActiveIndex === 1 && <EventsPageApril12 events={eventsByDay['12-04-2025']} />}
         </Card>
       </div>
