@@ -294,5 +294,20 @@ export default class extends BaseSeeder {
       profilePicture: '/images/speakers/mariana-oliveira.jpg',
       company: '7.1 Tech Hub',
     })
+
+    await SpeakerProfile.create({
+      firstName: 'Paulo',
+      lastName: 'Gomes',
+      jobTitle: 'Fundados & CEO',
+      profilePicture: '/images/speakers/paulo-gomes.jpg',
+      company: 'Paulo Games Productions',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Bartek',
+      lastName: 'Pacia',
+      jobTitle: 'Software Engineer',
+      company: 'JetBrains',
+    })
   }
 }

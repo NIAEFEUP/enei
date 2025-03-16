@@ -92,7 +92,7 @@ export default class extends BaseSeeder {
       title: 'Montar Startups Ultra-ambiciosas - Pros & Contras',
       description:
         'Desafiar o domínio do Excel pode parecer arriscado, mas faz sentido - grandes avanços surgem quando questionamos o padrão. Os melhores investidores e engenheiros buscam desafios assim, pois neles estão as maiores oportunidades. Na palestra, trarei exemplos práticos de como repensar ferramentas pode abrir novas soluçoes e mudar a forma como lidamos com dados.',
-      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 16, minute: 0 }),
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 16, minute: 30 }),
       duration: 30,
       type: 'other',
       location: 'Auditório - FEUP',
@@ -185,7 +185,7 @@ export default class extends BaseSeeder {
       title: 'AI, Copilots, and the future of software development',
       description:
         "AI and large language models are transforming software development. Millions of developers use GitHub Copilot, and AI writes over 25% of code at major companies like Google. The next wave of agentic AI developer tools, including Copilot's Project Padawan, is set to further redefine software creation.",
-      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 10, minute: 30 }),
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 15, minute: 15 }),
       duration: 45,
       type: 'other',
       location: 'Auditório - ISEP',
@@ -238,7 +238,7 @@ export default class extends BaseSeeder {
     await Event.create({
       title: 'Workshop de Rust',
       description: '',
-      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 13, minute: 0 }),
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 14, minute: 0 }),
       duration: 120,
       type: 'workshop',
       location: 'TBD - FEUP',
@@ -253,7 +253,7 @@ export default class extends BaseSeeder {
       title: 'Functional Web Development with Phoenix LiveView',
       description:
         'Phoenix é a framework web mais popular de Elixir, uma linguagem funcional que equilibra simplicidade, concorrência e tolerância a falhas. Neste workshop, vais aprender a criar interfaces interativas e em tempo real sem escrever JavaScript, utilizando o Phoenix LiveView. Explora na prática como desenvolver aplicações escaláveis de forma produtiva, aproveitando todo o potencial deste ecossistema.',
-      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 13, minute: 0 }),
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 14, minute: 0 }),
       duration: 120,
       type: 'workshop',
       location: 'TBD - FEUP',
@@ -268,7 +268,7 @@ export default class extends BaseSeeder {
       title: 'Flutter - Building an app for mobile, web and desktop using a single Framework!',
       description:
         'Um workshop prático onde podes experimentar o Flutter, esclarecer dúvidas e perceber porque pode ser a solução perfeita para a tua aplicação. Ideal para quem procura uma tecnologia que permite desenvolver apps para várias plataformas de forma eficiente e moderna!',
-      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 15, minute: 30 }),
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 16, minute: 30 }),
       duration: 120,
       type: 'workshop',
       location: 'TBD - FEUP',
@@ -451,6 +451,34 @@ export default class extends BaseSeeder {
       description:
         'Descobre como o Power Automate e o Power Apps podem automatizar tarefas e criar aplicações personalizadas sem necessidade de programação. Neste workshop, vais aprender a desenvolver apps rapidamente com o Power Apps e a simplificar processos com o Power Automate, aumentando a eficiência e poupando tempo. Com exemplos práticos, vais ver como estas ferramentas são usadas no dia a dia das empresas. No final, estarás pronto para criar aplicações simples, automatizar tarefas repetitivas e identificar oportunidades para soluções low-code.',
       date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 10, minute: 0 }),
+      duration: 120,
+      type: 'workshop',
+      location: 'TBD - FEUP',
+      registrationRequirements: '',
+      requiresRegistration: true,
+      ticketsRemaining: 30,
+      ticketsTotal: 30,
+      price: 0,
+    })
+
+    await Event.create({
+      title: 'O futuro do desenvolvimento de videojogos: IA, Mundos procedimentais e tecnologia de próxima geração ',
+      description:
+        'A indústria dos videojogos está a evoluir rapidamente, impulsionada por Inteligência Artificial, geração procedural e cloud gaming, que estão a transformar o desenvolvimento de jogos AAA e AA. Nesta palestra, exploramos como as tecnologias de última geração moldam a próxima geração de videojogos e quais as competências e ferramentas essenciais para se destacar no setor.',
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 14, minute: 0 }),
+      duration: 45,
+      type: 'other',
+      location: 'Auditório - ISEP',
+      registrationRequirements: '',
+      requiresRegistration: false,
+      price: 0,
+    })
+
+    await Event.create({
+      title: 'Kotlin Advanced',
+      description:
+        '',
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 16, minute: 30 }),
       duration: 120,
       type: 'workshop',
       location: 'TBD - FEUP',

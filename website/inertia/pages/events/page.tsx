@@ -1,7 +1,7 @@
 import BaseLayout from '~/layouts/base'
 import { DaySelector } from '~/components/events/day_selector'
 import { useState } from 'react'
-import { Card} from '~/components/ui/card'
+import { Card } from '~/components/ui/card'
 import EventsPageApril12 from '~/components/events/schedule/april12'
 
 interface Speaker {
@@ -27,23 +27,22 @@ interface EventsPageProps {
 }
 
 function splitEventsByDay(events: Event[]) {
-  return events.reduce((acc, event) => {
-    if (!acc[event.date]) {
-      acc[event.date] = []
-    }
-    acc[event.date].push(event)
-    return acc
-  }, {} as Record<string, Event[]>)
+  return events.reduce(
+    (acc, event) => {
+      if (!acc[event.date]) {
+        acc[event.date] = []
+      }
+      acc[event.date].push(event)
+      return acc
+    },
+    {} as Record<string, Event[]>
+  )
 }
 
 export default function EventsPage({ currentDay, events }: EventsPageProps) {
   const [currentActiveIndex, setCurrentActiveIndex] = useState(0)
 
   const eventsByDay = splitEventsByDay(events)
-  console.log('Events by day:', eventsByDay)
-
-  // const dateMapping = ['11-04-2025', '12-04-2025', '13-04-2025', '14-04-2025']
-  // const activeDate = dateMapping[currentActiveIndex]
 
   // If the current day is an ENEI day, set the active index to the corresponding day.
   const eneiDates = [
@@ -63,14 +62,16 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
     <BaseLayout title="Eventos" className="bg-enei-beige ">
       <div className="flex justify-center mt-10 relative z-10">
         <Card className="w-full max-w-7xl mx-auto border-transparent shadow-transparent bg-transparent">
-          <DaySelector
-            activeIndex={currentActiveIndex}
-            setActiveIndex={(index) => {
-              console.log('Day selected:', index)
-              setCurrentActiveIndex(index)
-            }}
-            days={['11 de abril', '12 de abril', '13 de abril', '14 de abril']}
-          />
+          <div className="mb-10">
+            <DaySelector
+              activeIndex={currentActiveIndex}
+              setActiveIndex={(index) => {
+                console.log('Day selected:', index)
+                setCurrentActiveIndex(index)
+              }}
+              days={['11 de abril', '12 de abril', '13 de abril', '14 de abril']}
+            />
+          </div>
           {/*
             TODO: highlights
           <CardTitle className="mt-10">Destaques</CardTitle>
@@ -94,7 +95,7 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
               ))}
           </div>
           */}
-          <EventsPageApril12 events={eventsByDay['12-04-2025']} />
+          {currentActiveIndex === 1 && <EventsPageApril12 events={eventsByDay['12-04-2025']} />}
         </Card>
       </div>
     </BaseLayout>
