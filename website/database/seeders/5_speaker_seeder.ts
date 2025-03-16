@@ -309,5 +309,13 @@ export default class extends BaseSeeder {
       jobTitle: 'Software Engineer',
       company: 'JetBrains',
     })
+
+    await SpeakerProfile.create({
+      firstName: 'José',
+      lastName: 'Costa Pereira',
+      jobTitle: 'Professor',
+      profilePicture: '/images/speakers/jose-costa-pereira.jpg',
+      company: 'FEUP',
+    })
   }
 }

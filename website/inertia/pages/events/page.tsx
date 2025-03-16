@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { Card } from '~/components/ui/card'
 import EventsPageApril12 from '~/components/events/schedule/april12'
 import EventsPageApril11 from '~/components/events/schedule/april11'
+import EventsPageApril13 from '~/components/events/schedule/april13'
+import EventsPageApril14 from '~/components/events/schedule/april14'
 
 interface Speaker {
   firstName: string
@@ -98,6 +100,8 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
           */}
           {currentActiveIndex === 0 && <EventsPageApril11 events={eventsByDay['11-04-2025']} />}
           {currentActiveIndex === 1 && <EventsPageApril12 events={eventsByDay['12-04-2025']} />}
+          {currentActiveIndex === 2 && <EventsPageApril13 events={eventsByDay['13-04-2025']} />}
+          {currentActiveIndex === 3 && <EventsPageApril14 events={eventsByDay['14-04-2025']} />}
         </Card>
       </div>
     </BaseLayout>

@@ -1,5 +1,4 @@
-// import EventCard from '../event_card'
-// import { router } from '@inertiajs/react'
+import EventCard from '../event_card'
 
 interface Speaker {
   firstName: string
@@ -24,5 +23,38 @@ interface EventsPageProps {
 
 export default function EventsPageApril11({ events }: EventsPageProps) {
   console.log(events)
-  return <h1>Horário de dia 11 ainda por definir</h1>
+  return (
+    <div className="grid grid-cols-1 grid-rows-4 gap-4">
+      <div className="col-start-1 row-start-1 row-span-2">
+        <EventCard
+          title={'Boas-Vindas'}
+          type={'activity'}
+          time={'14:00 - 18:30'}
+          location={'TBD - ISEP'}
+          isRegistered={false}
+          speakers={[]}
+        />
+      </div>
+      <div className="col-start-1 row-start-3">
+        <EventCard
+          title={'Sessão de Abertura'}
+          type={'activity'}
+          time={'18:30 - 20:00'}
+          location={'Auditório - ISEP'}
+          isRegistered={false}
+          speakers={[]}
+        />
+      </div>
+      <div className="col-start-1 row-start-4">
+        <EventCard
+          title={'Convívio e Churrasco'}
+          type={'activity'}
+          time={'20:00 - 23:00'}
+          location={'AEISEP'}
+          isRegistered={false}
+          speakers={[]}
+        />
+      </div>
+    </div>
+  )
 }

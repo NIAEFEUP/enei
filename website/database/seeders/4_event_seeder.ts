@@ -462,7 +462,8 @@ export default class extends BaseSeeder {
     })
 
     await Event.create({
-      title: 'O futuro do desenvolvimento de videojogos: IA, Mundos procedimentais e tecnologia de próxima geração ',
+      title:
+        'O futuro do desenvolvimento de videojogos: IA, Mundos procedimentais e tecnologia de próxima geração ',
       description:
         'A indústria dos videojogos está a evoluir rapidamente, impulsionada por Inteligência Artificial, geração procedural e cloud gaming, que estão a transformar o desenvolvimento de jogos AAA e AA. Nesta palestra, exploramos como as tecnologias de última geração moldam a próxima geração de videojogos e quais as competências e ferramentas essenciais para se destacar no setor.',
       date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 14, minute: 0 }),
@@ -476,8 +477,7 @@ export default class extends BaseSeeder {
 
     await Event.create({
       title: 'Kotlin Advanced',
-      description:
-        '',
+      description: '',
       date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 16, minute: 30 }),
       duration: 120,
       type: 'workshop',
@@ -486,6 +486,19 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 30,
       ticketsTotal: 30,
+      price: 0,
+    })
+
+    await Event.create({
+      title: 'A story on Computer Vision: from zero to hero',
+      description:
+        'Nesta palestra, vou partilhar o meu percurso desde a investigação em Computer Vision no doutoramento até à transição para a indústria, abordando os desafios da integração laboral, a aplicação de Computer Vision em contextos empresariais e a continuidade da investigação neste setor.',
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 17, minute: 15 }),
+      duration: 45,
+      type: 'other',
+      location: 'Auditório - FEUP',
+      registrationRequirements: '',
+      requiresRegistration: false,
       price: 0,
     })
   }
