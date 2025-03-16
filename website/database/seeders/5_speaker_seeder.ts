@@ -278,5 +278,21 @@ export default class extends BaseSeeder {
       profilePicture: '/images/speakers/mafalda-landeiro.jpg',
       company: 'Blip.pt',
     })
+
+    await SpeakerProfile.create({
+      firstName: 'Dina',
+      lastName: 'Oliveira',
+      jobTitle: 'Fundadora',
+      profilePicture: '/images/speakers/dina-oliveira.jpg',
+      company: 'Limanade – Innovation & Marketing',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Mariana',
+      lastName: 'Oliveira',
+      jobTitle: 'Power Platform Engineer',
+      profilePicture: '/images/speakers/mariana-oliveira.jpg',
+      company: '7.1 Tech Hub',
+    })
   }
 }

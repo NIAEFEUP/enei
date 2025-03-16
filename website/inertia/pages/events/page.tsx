@@ -1,9 +1,8 @@
 import BaseLayout from '~/layouts/base'
 import { DaySelector } from '~/components/events/day_selector'
 import { useState } from 'react'
-import { Card, CardTitle } from '~/components/ui/card'
-import EventCard from '~/components/events/event_card'
-import { router } from '@inertiajs/react'
+import { Card} from '~/components/ui/card'
+import EventsPageApril12 from '~/components/events/schedule/april12'
 
 interface Speaker {
   firstName: string
@@ -14,7 +13,7 @@ interface Speaker {
 interface Event {
   id: number
   title: string
-  type: string
+  type: 'activity' | 'workshop' | 'other'
   date: string
   time: string
   location: string
@@ -27,11 +26,24 @@ interface EventsPageProps {
   events: Event[]
 }
 
+function splitEventsByDay(events: Event[]) {
+  return events.reduce((acc, event) => {
+    if (!acc[event.date]) {
+      acc[event.date] = []
+    }
+    acc[event.date].push(event)
+    return acc
+  }, {} as Record<string, Event[]>)
+}
+
 export default function EventsPage({ currentDay, events }: EventsPageProps) {
   const [currentActiveIndex, setCurrentActiveIndex] = useState(0)
 
-  const dateMapping = ['11-04-2025', '12-04-2025', '13-04-2025', '14-04-2025']
-  const activeDate = dateMapping[currentActiveIndex]
+  const eventsByDay = splitEventsByDay(events)
+  console.log('Events by day:', eventsByDay)
+
+  // const dateMapping = ['11-04-2025', '12-04-2025', '13-04-2025', '14-04-2025']
+  // const activeDate = dateMapping[currentActiveIndex]
 
   // If the current day is an ENEI day, set the active index to the corresponding day.
   const eneiDates = [
@@ -62,24 +74,27 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
           {/*
             TODO: highlights
           <CardTitle className="mt-10">Destaques</CardTitle>
-          */}
           <CardTitle className="mt-10">O dia todo</CardTitle>
-          {events
-            .filter((event) => event.date === activeDate)
-            .map((event) => (
-              <EventCard
-                key={event.id}
-                title={event.title}
-                type={event.type}
-                time={event.time}
-                location={event.location}
-                isRegistered={true}
-                speakers={event.speakers}
-                onClick={() => {
-                  router.visit(`/events/${event.id}`)
-                }}
-              />
-            ))}
+          <div className="space-y-3">
+            {events
+              .filter((event) => event.date === activeDate)
+              .map((event) => (
+                <EventCard
+                  key={event.id}
+                  title={event.title}
+                  type={event.type}
+                  time={event.time}
+                  location={event.location}
+                  isRegistered={true}
+                  speakers={event.speakers}
+                  onClick={() => {
+                    router.visit(`/events/${event.id}`)
+                  }}
+                />
+              ))}
+          </div>
+          */}
+          <EventsPageApril12 events={eventsByDay['12-04-2025']} />
         </Card>
       </div>
     </BaseLayout>

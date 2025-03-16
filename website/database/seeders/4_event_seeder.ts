@@ -66,10 +66,10 @@ export default class extends BaseSeeder {
       title: 'The programmer who didn’t know how to code. - Powered by IEEE Portugal',
       description:
         'AI is transforming every field, with an even greater impact on Electrical and Electronics Engineering. Combined with IoT/WoT, cloud computing, and networking, these changes are profound. One major shift is in code development, where AI is not just automating code generation but changing programming itself. This talk explores the future of programming, showcasing tools and platforms shaping this transformation',
-      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 15, minute: 15 }),
-      duration: 45,
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 10, minute: 30 }),
+      duration: 60,
       type: 'other',
-      location: 'Auditório - FEUP',
+      location: 'Auditório - ISEP',
       registrationRequirements: '',
       requiresRegistration: false,
       price: 0,
@@ -131,10 +131,10 @@ export default class extends BaseSeeder {
       title: 'Veículos Autónomos - o papel dos sistemas computacionais críticos',
       description:
         'A indústria automóvel evolui com a condução autónoma, sensores avançados e IA, preparando a transição para veículos definidos por software (SDV). O software torna-se central na personalização, atualização remota e controlo dos veículos. Esta palestra aborda os sistemas computacionais, destacando desafios, segurança e arquiteturas, essenciais para garantir fiabilidade e desempenho',
-      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 17, minute: 15 }),
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 11, minute: 30 }),
       duration: 30,
       type: 'other',
-      location: 'Auditório - FEUP',
+      location: 'Auditório -ISEP',
       registrationRequirements: '',
       requiresRegistration: false,
       price: 0,
@@ -421,6 +421,36 @@ export default class extends BaseSeeder {
       description:
         'Descobre o Kotlin, a linguagem moderna e eficiente que está a transformar o desenvolvimento de software. Neste workshop, vais aprender os conceitos essenciais, desde a sintaxe até à programação orientada a objetos, através de exercícios práticos. No final, estarás pronto para escrever os teus primeiros programas e explorar novas oportunidades em backend e projetos multiplataforma!',
       date: DateTime.fromObject({ year: 2025, month: 4, day: 14, hour: 9, minute: 30 }),
+      duration: 120,
+      type: 'workshop',
+      location: 'TBD - FEUP',
+      registrationRequirements: '',
+      requiresRegistration: true,
+      ticketsRemaining: 30,
+      ticketsTotal: 30,
+      price: 0,
+    })
+
+    await Event.create({
+      title: 'Digital Design Thinking',
+      description:
+        'Neste workshop, vamos explorar o Design Thinking como metodologia criativa para desenvolver produtos digitais. Em equipa, iremos passar por todo o processo, desde a identificação do problema até à criação de um protótipo de baixa fidelidade, aplicando as ferramentas essenciais ao longo do caminho.',
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 10, minute: 0 }),
+      duration: 120,
+      type: 'workshop',
+      location: 'TBD - ISEP',
+      registrationRequirements: '',
+      requiresRegistration: true,
+      ticketsRemaining: 30,
+      ticketsTotal: 30,
+      price: 0,
+    })
+
+    await Event.create({
+      title: 'Low-Code Magic: Accelerate Digital Transformation with Power Platform',
+      description:
+        'Descobre como o Power Automate e o Power Apps podem automatizar tarefas e criar aplicações personalizadas sem necessidade de programação. Neste workshop, vais aprender a desenvolver apps rapidamente com o Power Apps e a simplificar processos com o Power Automate, aumentando a eficiência e poupando tempo. Com exemplos práticos, vais ver como estas ferramentas são usadas no dia a dia das empresas. No final, estarás pronto para criar aplicações simples, automatizar tarefas repetitivas e identificar oportunidades para soluções low-code.',
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 10, minute: 0 }),
       duration: 120,
       type: 'workshop',
       location: 'TBD - FEUP',

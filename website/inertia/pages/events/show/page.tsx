@@ -121,9 +121,9 @@ export default function EventRegistrationPage({
   }
 
   const activityColors = {
-    activity: '#5A8C86',
+    activity: '#28282D',
     workshop: '#5A8C86',
-    other: '#E2AD50',
+    other: '#E28C40',
   }
 
   return (
