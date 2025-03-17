@@ -249,7 +249,7 @@ router
 router
   .group(() => {
     router
-      .get('/has-ticket/:id', [ProfilesController, 'hasTicket'])
+      .get('/has-ticket/', [ProfilesController, 'hasTicket'])
       .as('actions:has-ticket')
       .middleware(middleware.companyBearerAuth())
   })

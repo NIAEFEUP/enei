@@ -78,16 +78,24 @@ export default class ProfilesController {
   }
 
   async hasTicket({ response, request }: HttpContext) {
-    const user = await User.find(request.param('id'))
+    const user = await User.query()
+      .where('email', request.input('email'))
+      .preload('participantProfile')
+      .first()
 
     if (!user) {
-      return response.ok({ hasTicket: false })
+      return response.ok({ hasTicket: false, name: null })
     }
 
     if (user.participantProfileId === null) {
-      return response.ok({ hasTicket: false })
+      return response.ok({ hasTicket: false, name: null })
     }
 
-    return response.ok({ hasTicket: true })
+    console.log(user.participantProfile)
+
+    return response.ok({
+      hasTicket: true,
+      name: user.participantProfile.firstName + ' ' + user.participantProfile.lastName,
+    })
   }
 }
