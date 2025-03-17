@@ -1,13 +1,15 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, hasMany, manyToMany } from '@adonisjs/lucid/orm'
 import Account from './account.js'
 import { UserTypes } from '../../types/user.js'
 import PromoterInfo from './promoter_info.js'
-import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasMany, ManyToMany } from '@adonisjs/lucid/types/relations'
 import PromoterProfile from './promoter_profile.js'
 import ParticipantProfile from './participant_profile.js'
 import { attachment} from '@jrmc/adonis-attachment'
 import type { Attachment } from '@jrmc/adonis-attachment/types/attachment'
+import Event from './event.js'
+
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -46,6 +48,9 @@ export default class User extends BaseModel {
     foreignKey: 'referringPromoterId',
   })
   declare indirectReferrals: HasMany<typeof User>
+
+  @manyToMany (() => Event)
+  declare eventsRegistered: ManyToMany<typeof Event>
 
   @column()
   declare referrerId: number | null
