@@ -91,8 +91,6 @@ export default class ProfilesController {
       return response.ok({ hasTicket: false, name: null })
     }
 
-    console.log(user.participantProfile)
-
     return response.ok({
       hasTicket: true,
       name: user.participantProfile.firstName + ' ' + user.participantProfile.lastName,
