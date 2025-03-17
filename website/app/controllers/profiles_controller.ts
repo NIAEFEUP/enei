@@ -1,4 +1,5 @@
 import ParticipantProfile from '#models/participant_profile'
+import User from '#models/user'
 import { createProfileValidator } from '#validators/profile'
 import type { HttpContext } from '@adonisjs/core/http'
 import slug from 'slug'
@@ -74,5 +75,19 @@ export default class ProfilesController {
     await user.related('participantProfile').associate(profileAdd)
 
     return response.redirect().toRoute('pages:tickets')
+  }
+
+  async hasTicket({ response, request }: HttpContext) {
+    const user = await User.find(request.param('id'))
+
+    if (!user) {
+      return response.ok({ hasTicket: false })
+    }
+
+    if (user.participantProfileId === null) {
+      return response.ok({ hasTicket: false })
+    }
+
+    return response.ok({ hasTicket: true })
   }
 }
