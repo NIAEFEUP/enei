@@ -203,7 +203,7 @@ router.
     router.post('/avatar/upload', [UsersController, 'storeAvatar'])
     router.delete('/avatar/delete', [UsersController, 'deleteAvatar'])
   })
-  .use([middleware.auth()])
+  .use(middleware.auth())
   .prefix('user')
 
 

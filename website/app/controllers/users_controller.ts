@@ -11,64 +11,45 @@ export default class UsersController {
 
     async storeCV({ request, response, auth }: HttpContext) {
         const user = auth.user
-        if (!user) {
-            return response.unauthorized('User not authenticated')
-        }
         const cv = request.file('cv')!
-        user.resume = await attachmentManager.createFromFile(cv)
-        await user.save()
+        user!.resume = await attachmentManager.createFromFile(cv)
+        await user!.save()
         return response.ok({ message: 'CV uploaded' })
     }
 
     async deleteCV({ response, auth }: HttpContext) {
         const user = auth.user
-        if (!user) {
-            return response.unauthorized('User not authenticated')
-        }
-        user.resume = null
-        await user.save()
+        user!.resume = null
+        await user!.save()
         return response.ok({ message: 'CV deleted' })
     }
 
     async showCVName({ response, auth }: HttpContext) {
         const user = auth.user 
-        if (!user) {
-          return response.unauthorized('User not authenticated')
-        }
-        
-        if( user.resume === null) {
+        if( user!.resume === null) {
             return response.notFound('File not found')
           }
-        const fileName = user.resume.originalName
+        const fileName = user!.resume.originalName
         
         return response.ok({ fileName })
     
       }
     
     async downloadCV({ response, auth }: HttpContext) {
-        const userId = auth.user?.id
-        if (!userId) {
-            return response.unauthorized('User not authenticated')
-        }
-
-        const user = await User.find(userId)
-        if (!user) {
-            return response.notFound('User not found')
-        }
-
-
-        if (user.resume === null) {
+        const userId = auth.user!.id
+        const user = await User.find(userId);
+        if (user!.resume === null) {
             return response.notFound('File not found')
         }
 
-        const filePath = await user.resume.path
+        const filePath = await user!.resume.path
         if(!filePath) {
             return response.notFound('File not found')
         }
         const file = await drive.use().getStream(filePath)
 
         response.type('application/pdf')
-        response.header('Content-Disposition', `inline; filename="${user.resume.originalName}"`)
+        response.header('Content-Disposition', `inline; filename="${user!.resume.originalName}"`)
         return response.stream(file)
     }
 
@@ -81,39 +62,30 @@ export default class UsersController {
             return response.badRequest('No file uploaded')
         }
         const user = auth.user
-        if (!user) {
-            return response.unauthorized('User not authenticated')
-        }
         const avatar = request.file('avatar', {
             size: '2mb',
             extnames: ['jpg', 'jpeg', 'png']
         })!
-        user.avatar = await attachmentManager.createFromFile(avatar)
+        user!.avatar = await attachmentManager.createFromFile(avatar)
 
-        await user.save()
+        await user!.save()
         return response.ok({ message: 'Avatar uploaded' })
     }
 
     async deleteAvatar({ response, auth }: HttpContext) {
         const user = auth.user
-        if (!user) {
-            return response.unauthorized('User not authenticated')
-        }
-        user.avatar = null
-        await user.save()
+        user!.avatar = null
+        await user!.save()
         return response.ok({ message: 'Avatar deleted' })
     }
 
     async showAvatarName({ response, auth }: HttpContext) {
         const user = auth.user 
-        if (!user) {
-          return response.unauthorized('User not authenticated')
-        }
         
-        if( user.avatar === null) {
+        if( user!.avatar === null) {
             return response.notFound('File not found')
           }
-        const fileName = user.avatar.originalName
+        const fileName = user!.avatar.originalName
         
         return response.ok({ fileName })
     
@@ -121,22 +93,18 @@ export default class UsersController {
     
     async downloadAvatar({ response, auth }: HttpContext) {
         const user = auth.user
-        if (!user) {
-            return response.unauthorized('User not authenticated')
-        }
-
-        if (user.avatar === null) {
+        if (user!.avatar === null) {
             return response.notFound('File not found')
         }
 
-        const filePath = await user.avatar.path
+        const filePath = await user!.avatar.path
         if(!filePath) {
             return response.notFound('File not found')
         }
         const file = await drive.use().getStream(filePath)
 
         response.type('image/jpeg')
-        response.header('Content-Disposition', `inline; filename="${user.avatar.originalName}"`)
+        response.header('Content-Disposition', `inline; filename="${user!.avatar.originalName}"`)
         return response.stream(file)
     }
 }
