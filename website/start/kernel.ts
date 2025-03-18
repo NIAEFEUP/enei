@@ -51,6 +51,8 @@ router.use([
  * the routes or the routes group.
  */
 export const middleware = router.named({
+  companyBearerAuth: () => import('#middleware/company_bearer_auth_middleware'),
+  wip: () => import('#middleware/wip_middleware'),
   noVerifiedEmail: () => import('#middleware/auth/no_verified_email_middleware'),
   verifiedEmail: () => import('#middleware/auth/verified_email_middleware'),
   noProfile: () => import('#middleware/profile/no_profile_middleware'),

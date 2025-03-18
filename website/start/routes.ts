@@ -163,7 +163,8 @@ router
     router.get("/profile", [ProfilesController, 'default'])
       .as('pages:profile.default')
       .use([middleware.auth(), middleware.verifiedEmail()])
-    router.get("/profile/edit", [ProfilesController, 'edit'])
+    router
+      .get('/profile/edit', [ProfilesController, 'edit'])
       .as('pages:profile.edit')
       .use([middleware.auth(), middleware.verifiedEmail()])
     router.patch("/profile/edit", [ProfilesController, 'update'])
@@ -172,13 +173,28 @@ router
     router.get("/u/:slug/cv", [CvsController, 'show'])
       .as('pages:profile.cv.show')
   })
+  .use(middleware.wip())
 
 router
-  .on('/faq').renderInertia('faq').as('pages:faq')
+  .group(() => {
+    router.get('/', [EventsController, 'index']).as('pages:events')
+    router.get('/:id', [EventsController, 'show']).as('pages:events.show')
+    router
+      .post('/:id/register', [EventsController, 'register'])
+      .as('actions:events.register')
+      .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
+    router.get('/:id/tickets', [EventsController, 'ticketsRemaining']).as('actions:events.tickets')
+    router
+      .get('/:id/is-registered', [EventsController, 'isRegistered'])
+      .as('actions:events.isRegistered')
+    router
+      .get('/:id/is-registered-by-email', [EventsController, 'isRegisteredByEmail'])
+      .as('actions:events.isRegisteredByEmail')
+      .use(middleware.companyBearerAuth())
+  })
+  .prefix('events')
 
-
-router.get('/event', [EventsController, 'index']).as('pages:event')
-
+router.on('/faq').renderInertia('faq').as('pages:faq').use(middleware.wip())
 
 router.
   group(() => {
@@ -189,25 +205,24 @@ router.
     router.delete('cv/delete', [CvsController, 'delete'])
       .as('actions:cv.delete')
   })
-  .use([middleware.auth()])
+  .use([middleware.auth(), middleware.wip()])
   .prefix('user')
-
-
 
 router
   .group(() => {
     router.get('/', [StoreController, 'index']).as('pages:store')
     router.post('/products/:id/buy/', [StoreController, 'buy']).as('actions:store.buy')
   })
-  .use([middleware.auth(), middleware.verifiedEmail(), /*middleware.participant()*/])
+  .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant(), middleware.wip()])
   .prefix('/store')
 
 // Referrals
-router.get('/referrals', [ReferralsController, 'showReferralLink'])
+router
+  .get('/referrals', [ReferralsController, 'showReferralLink'])
   .middleware(middleware.auth())
   .as('pages:referrals')
 
-router.route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
+router
+  .route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
   .middleware([middleware.automaticSubmit(), middleware.silentAuth()])
   .as('actions:referrals.link')
-
