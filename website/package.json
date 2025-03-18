@@ -132,7 +132,7 @@
     "@vinejs/vine": "^3.0.0",
     "adminjs": "^7.8.13",
     "adonisjs-jobs": "^0.0.21",
-    "axios": "^1.7.9",
+    "axios": "^1.8.2",
     "badge": "^1.0.3",
     "better-sqlite3": "^11.8.1",
     "bull": "^4.16.5",
