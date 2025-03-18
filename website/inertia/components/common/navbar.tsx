@@ -99,7 +99,7 @@ export function Navbar({ className, variant = "blue" }: { className?: string, va
             </Link>
             <div className='flex gap-4 items-center justify-between'>
               <div className={auth.state === 'authenticated' ? 'block' : 'hidden'}>
-                <Link route="pages:profile.default" className={cn("", `text-${textColor}`)}>
+                <Link route="pages:profile.default" className={cn(buttonVariants({ variant: 'link' }), "text-enei-beige p-0")}>
                     <span>Perfil</span>
                 </Link>
               </div>
