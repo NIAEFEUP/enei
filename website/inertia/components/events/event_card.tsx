@@ -67,7 +67,7 @@ export default function EventCard({
   }
 
   return (
-    <div onClick={onClick} className="hover:cursor-pointer h-full">
+    <div onClick={onClick} className="hover:cursor-pointer h-full w-full">
       <Card className={cn('p-3 space-y-3 w-full h-full ', cardBackground[type])}>
         <CardTitle className="text-enei-beige text-xl">{title}</CardTitle>
         <div className="flex flex-row gap-3">
