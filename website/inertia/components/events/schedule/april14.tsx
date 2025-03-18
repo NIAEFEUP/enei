@@ -28,33 +28,33 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
     <div className="grid grid-cols-4 grid-rows-9 gap-4">
       <div>
         <EventCard
+          id={events[1].id}
           title={events[1].title}
           type={events[1].type}
           time={events[1].time}
           location={events[1].location}
-          isRegistered={false}
           speakers={events[1].speakers}
           onClick={() => router.visit(`/events/${events[1].id}`)}
         />
       </div>
       <div className="col-start-1 row-start-2">
         <EventCard
+          id={events[2].id}
           title={events[2].title}
           type={events[2].type}
           time={events[2].time}
           location={events[2].location}
-          isRegistered={false}
           speakers={events[2].speakers}
           onClick={() => router.visit(`/events/${events[2].id}`)}
         />
       </div>
       <div className="col-start-1 row-start-3">
         <EventCard
+          id={events[3].id}
           title={events[3].title}
           type={events[3].type}
           time={events[3].time}
           location={events[3].location}
-          isRegistered={false}
           speakers={events[3].speakers}
           onClick={() => router.visit(`/events/${events[3].id}`)}
         />
@@ -62,22 +62,22 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
 
       <div className="col-start-1 row-start-4">
         <EventCard
+          id={events[4].id}
           title={events[4].title}
           type={events[4].type}
           time={events[4].time}
           location={events[4].location}
-          isRegistered={false}
           speakers={events[4].speakers}
           onClick={() => router.visit(`/events/${events[4].id}`)}
         />
       </div>
       <div className="row-span-4 col-start-2 row-start-1">
         <EventCard
+          id={events[5].id}
           title={events[5].title}
           type={events[5].type}
           time={events[5].time}
           location={events[5].location}
-          isRegistered={false}
           speakers={events[5].speakers}
           onClick={() => router.visit(`/events/${events[5].id}`)}
         />
@@ -88,7 +88,6 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           type={'workshop'}
           time={'9:30 - 11:30'}
           location={'TBD - FEUP'}
-          isRegistered={false}
           speakers={[]}
         />
       </div>
@@ -98,7 +97,6 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           type={'workshop'}
           time={'9:30 - 11:30'}
           location={'TBD - FEUP'}
-          isRegistered={false}
           speakers={[]}
         />
       </div>
@@ -108,17 +106,16 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           type={'activity'}
           time={'11:30 - 12:00'}
           location={'Coffee Lounge - FEUP'}
-          isRegistered={false}
           speakers={[]}
         />
       </div>
       <div className="row-start-6">
         <EventCard
+          id={events[0].id}
           title={events[0].title}
           type={events[0].type}
           time={events[0].time}
           location={events[0].location}
-          isRegistered={false}
           speakers={events[0].speakers}
           onClick={() => router.visit(`/events/${events[0].id}`)}
         />
@@ -129,7 +126,6 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           type={'other'}
           time={'12:30 - 13:30'}
           location={'Auditório - FEUP'}
-          isRegistered={false}
           speakers={[]}
         />
       </div>
@@ -139,7 +135,6 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           type={'activity'}
           time={'12:00 - 13:30'}
           location={'Auditório - FEUP'}
-          isRegistered={false}
           speakers={[]}
         />
       </div>
@@ -149,7 +144,6 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           type={'activity'}
           time={'13:30 - 15:30'}
           location={'Relvado Central - FEUP'}
-          isRegistered={false}
           speakers={[]}
         />
       </div>
@@ -159,7 +153,6 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           type={'activity'}
           time={'15:30 - 17:00'}
           location={'Auditório - FEUP'}
-          isRegistered={false}
           speakers={[]}
         />
       </div>

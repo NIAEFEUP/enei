@@ -3,6 +3,7 @@ import { Badge } from '~/components/ui/badge'
 import { Ticket } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { cn } from '~/lib/utils'
+import { useEffect, useState } from 'react'
 
 interface Speaker {
   firstName: string
@@ -11,24 +12,42 @@ interface Speaker {
 }
 
 interface EventCardProps {
+  id?: number
   title: string
   type: 'activity' | 'workshop' | 'other'
   time: string
   location: string
-  isRegistered: boolean
   speakers: Speaker[]
   onClick?: () => void
 }
 
 export default function EventCard({
+  id,
   title,
   type,
   time,
   location,
-  isRegistered,
   speakers,
   onClick,
 }: EventCardProps) {
+  const [isRegistered, setIsRegistered] = useState(false)
+
+  useEffect(() => {
+    async function fetchRegistrationStatus() {
+      if (!id) return
+      try {
+        const response = await fetch(`/events/${id}/is-registered`)
+        if (!response.ok) throw new Error('Failed to fetch registration status')
+        const data = await response.json()
+        setIsRegistered(data.isRegistered) // Update state}
+      } catch (error) {
+        console.error(error)
+        setIsRegistered(false)
+      }
+    }
+    fetchRegistrationStatus()
+  })
+
   const cardBackground = {
     activity: 'bg-enei-activity',
     workshop: 'bg-enei-workshop',

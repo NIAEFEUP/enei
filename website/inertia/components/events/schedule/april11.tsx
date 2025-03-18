@@ -31,7 +31,6 @@ export default function EventsPageApril11({ events }: EventsPageProps) {
           type={'activity'}
           time={'14:00 - 18:30'}
           location={'TBD - ISEP'}
-          isRegistered={false}
           speakers={[]}
         />
       </div>
@@ -41,7 +40,6 @@ export default function EventsPageApril11({ events }: EventsPageProps) {
           type={'activity'}
           time={'18:30 - 20:00'}
           location={'Auditório - ISEP'}
-          isRegistered={false}
           speakers={[]}
         />
       </div>
@@ -51,7 +49,6 @@ export default function EventsPageApril11({ events }: EventsPageProps) {
           type={'activity'}
           time={'20:00 - 23:00'}
           location={'AEISEP'}
-          isRegistered={false}
           speakers={[]}
         />
       </div>
