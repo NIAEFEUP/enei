@@ -1,7 +1,7 @@
 import { InferPageProps } from '@adonisjs/inertia/types'
 import ProfilesController from '#controllers/profiles_controller'
 import ParticipantProfile from '#models/participant_profile'
-import { Button } from '~/components/ui/button'
+import { Button, buttonVariants } from '~/components/ui/button'
 import Page from '~/components/common/page'
 import Container from '~/components/common/containers'
 import { Card } from '~/components/ui/card'
@@ -146,9 +146,9 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
   }
 
   return (
-    <Page title={`${profile.firstName} ${profile.lastName}`} className="bg-enei-beige text-enei-blue">
+    <Page title={`${profile.firstName} ${profile.lastName}`} className='bg-enei-blue text-enei-blue'>
       <Container className='mt-8'>
-        <Card className='p-4'>
+        <Card className='p-4 bg-enei-beige'>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="flex flex-col gap-4">
@@ -165,7 +165,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                       <FormItem className="flex-1">
                         <FormLabel>Primeiro Nome</FormLabel>
                         <FormControl>
-                          <Input placeholder="Joca" type="text" {...field} />
+                          <Input placeholder="Joca" type="text" {...field} className='bg-enei-blue text-enei-beige' />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -178,7 +178,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                       <FormItem className="flex-1">
                         <FormLabel>Último Nome</FormLabel>
                         <FormControl>
-                          <Input placeholder="Costa" type="text" {...field} />
+                          <Input placeholder="Costa" type="text" {...field} className='bg-enei-blue text-enei-beige' />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -196,14 +196,14 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                           <Button
                             variant="outline"
                             role="combobox"
-                            className="w-full justify-between overflow-ellipsis font-normal"
+                            className="w-full justify-between overflow-ellipsis font-normal bg-enei-blue text-enei-beige hover:bg-enei-blue hover:text-enei-beige"
                           >
                             <UniversitySelection value={field.value} />
                             <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="p-0">
-                          <Command>
+                        <PopoverContent className="p-0 bg-enei-blue border-enei-blue">
+                          <Command className='bg-enei-blue text-enei-beige'>
                             <CommandInput placeholder="Procurar universidade..." />
                             <CommandList>
                               <CommandEmpty>Nenhuma universidade encontrada</CommandEmpty>
@@ -213,7 +213,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                                     key={id}
                                     value={name.toLowerCase()}
                                     onSelect={() => form.setValue(field.name, id, { shouldDirty: true })}
-                                    className="flex cursor-pointer items-center justify-between text-sm"
+                                    className="flex cursor-pointer items-center justify-between text-sm bg-enei-blue text-enei-beige data-[selected=true]:bg-enei-beige data-[selected=true]:text-enei-blue"
                                   >
                                     <span>{name}</span>
                                     <Check
@@ -244,6 +244,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                           onChange={field.onChange}
                           defaultValue={field.value}
                           placeholder="Introduz o teu curso"
+                          className='bg-enei-blue text-enei-beige'
                         />
                       </FormControl>
                       <FormMessage />
@@ -265,6 +266,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                               lastYear || null,
                             ] as CurricularYearSelectorType, { shouldDirty: true })
                           }}
+                          variant={'blue'}
                         />
                       </FormControl>
                       <FormMessage />
@@ -301,6 +303,10 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                           <MultipleSelector
                             {...field}
                             defaultOptions={ENEI_EDITIONS}
+                            className='bg-enei-blue text-enei-beige'
+                            badgeClassName='bg-enei-beige text-enei-blue hover:bg-enei-beige/80'
+                            commandGroupClassName='bg-enei-blue text-enei-beige'
+                            commandGroupInputClassName='data-[selected=true]:bg-enei-beige data-[selected=true]:text-enei-blue'
                             emptyIndicator={
                               <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
                                 Sem resultados
@@ -323,7 +329,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                       <FormControl>
                         <Textarea
                           placeholder="Aprender novas tecnologias, melhorar soft skills..."
-                          className="resize-none"
+                          className="resize-none bg-enei-blue text-enei-beige"
                           {...field}
                         />
                       </FormControl>
@@ -338,7 +344,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                     <FormItem className="flex-1">
                       <FormLabel>URL do teu GitHub</FormLabel>
                       <FormControl>
-                        <Input placeholder="https://github.com/NIAEFEUP" type="text" {...field} />
+                        <Input placeholder="https://github.com/NIAEFEUP" type="text" {...field} className='bg-enei-blue text-enei-beige' />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -351,7 +357,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                     <FormItem className="flex-1">
                       <FormLabel>URL do teu Linkedin</FormLabel>
                       <FormControl>
-                        <Input placeholder="https://www.linkedin.com/in/oteunome" type="text" {...field} />
+                        <Input placeholder="https://www.linkedin.com/in/oteunome" type="text" {...field} className='bg-enei-blue text-enei-beige' />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -364,7 +370,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                     <FormItem className="flex-1">
                       <FormLabel>URL do teu Website Pessoal</FormLabel>
                       <FormControl>
-                        <Input placeholder="https://ni.fe.up.pt" type="text" {...field} />
+                        <Input placeholder="https://ni.fe.up.pt" type="text" {...field} className='bg-enei-blue text-enei-beige' />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -400,7 +406,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                             <Button
                               variant={'outline'}
                               className={cn(
-                                'w-[240px] pl-3 text-left font-normal',
+                                'w-[240px] pl-3 text-left font-normal bg-enei-blue text-enei-beige hover:bg-enei-blue/90 hover:text-enei-beige',
                                 !field.value && 'text-muted-foreground'
                               )}
                             >
@@ -420,6 +426,14 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                             selected={field.value}
                             onSelect={field.onChange}
                             locale={pt}
+                            className='bg-enei-blue text-enei-beige'
+                            classNames={{
+                              day: cn(
+                                buttonVariants({ variant: 'ghost' }),
+                                'DAY table-cell h-8 w-8 p-0 font-normal aria-selected:opacity-100 hover:bg-enei-beige'
+                              ),
+                            }}
+                            monthButtonClassName='hover:bg-enei-beige hover:text-enei-blue border-enei-beige'
                           />
                         </PopoverContent>
                       </Popover>
@@ -442,7 +456,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription>Não incluas o código do país.</FormDescription>
+                      <FormDescription className='text-enei-blue'>Não incluas o código do país.</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -455,14 +469,14 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                       <FormLabel>Natural de</FormLabel>
                       <FormControl>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <SelectTrigger>
+                          <SelectTrigger className='bg-enei-blue text-enei-beige' >
                             <SelectValue placeholder="Selecionar distrito/região autónoma" />
                           </SelectTrigger>
 
-                          <SelectContent>
+                          <SelectContent className='bg-enei-blue text-enei-beige'>
                             {districts.map((dist) => {
                               return (
-                                <SelectItem key={dist.id} value={dist.id}>
+                                <SelectItem key={dist.id} value={dist.id} className='bg-enei-blue text-enei-beige focus:bg-enei-beige focus:text-enei-blue'>
                                   {dist.name}
                                 </SelectItem>
                               )
@@ -470,7 +484,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                           </SelectContent>
                         </Select>
                       </FormControl>
-                      <FormDescription>Indica o distrito onde nasceste.</FormDescription>
+                      <FormDescription className='text-enei-blue'>Indica o distrito onde nasceste.</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -484,12 +498,16 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                       <FormLabel>Tamanho da T-shirt</FormLabel>
                       <FormControl>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <SelectTrigger>
+                          <SelectTrigger className='bg-enei-blue text-enei-beige'>
                             <SelectValue placeholder="Selecionar tamanho" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className='bg-enei-blue text-enei-beige'>
                             {SIZES.map((size) => {
-                              return <SelectItem key={size} value={size}>{size}</SelectItem>
+                              return (
+                                <SelectItem key={size} value={size} className='bg-enei-blue text-enei-beige focus:bg-enei-beige focus:text-enei-blue'>
+                                  {size}
+                                </SelectItem>
+                              )
                             })}
                           </SelectContent>
                         </Select>
@@ -507,7 +525,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                     <FormItem>
                       <FormLabel>Restrições alimentares</FormLabel>
                       <FormControl>
-                        <Input placeholder="Intolerâncias, alergias, etc." {...field} />
+                        <Input placeholder="Intolerâncias, alergias, etc." {...field} className='bg-enei-blue text-enei-beige' />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -560,6 +578,10 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                           defaultOptions={TRANSPORTS}
                           placeholder="Selecionar meios de transporte"
                           hidePlaceholderWhenSelected={true}
+                          className='bg-enei-blue text-enei-beige'
+                          badgeClassName='bg-enei-beige text-enei-blue hover:bg-enei-beige/80'
+                          commandGroupClassName='bg-enei-blue text-enei-beige'
+                          commandGroupInputClassName='data-[selected=true]:bg-enei-beige data-[selected=true]:text-enei-blue'
                           emptyIndicator={
                             <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
                               Sem resultados
@@ -579,12 +601,12 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                       <FormLabel>Como ouviste falar do ENEI?</FormLabel>
                       <FormControl>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <SelectTrigger>
+                          <SelectTrigger className='bg-enei-blue text-enei-beige'>
                             <SelectValue placeholder="Seleciona uma opção" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className='bg-enei-blue text-enei-beige'>
                             {HEARD_ABOUT_FROM.map((source) => (
-                              <SelectItem key={source.value} value={source.value}>
+                              <SelectItem key={source.value} value={source.value} className='bg-enei-blue text-enei-beige focus:bg-enei-beige focus:text-enei-blue'>
                                 {source.label}
                               </SelectItem>
                             ))}
@@ -604,7 +626,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                       <FormControl>
                         <Textarea
                           placeholder="Aprender novas tecnologias, melhorar soft skills..."
-                          className="resize-none"
+                          className="resize-none  bg-enei-blue text-enei-beige"
                           {...field}
                         />
                       </FormControl>
