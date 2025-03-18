@@ -1,4 +1,4 @@
-import { Calendar, Clock, MapPin, Ticket, Users, Info, ClipboardCheck} from 'lucide-react'
+import { Calendar, Clock, MapPin, Ticket, Users, Info, ClipboardCheck } from 'lucide-react'
 import { Button } from '~/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
@@ -293,12 +293,14 @@ export default function EventRegistrationPage({
               </div>
             )*/}
 
-            {/* Seats Available */}
-            {requiresRegistration && (
+            {/* Seats Available (the empty element is a weird fix...) */}
+            {requiresRegistration ? (
               <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                 <Ticket className="h-4 w-4" />
                 <span>{ticketsRemaining} lugares disponíveis</span>
               </div>
+            ) : (
+              <></>
             )}
             <RegistrationConfirmationModal
               isOpen={registrationConfirmationModalOpen}
