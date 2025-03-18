@@ -176,10 +176,10 @@ router
   .group(() => {
     router.get('/', [EventsController, 'index']).as('pages:events')
     router.get('/:id', [EventsController, 'show']).as('pages:events.show')
-    router
-      .post('/:id/register', [EventsController, 'register'])
-      .as('actions:events.register')
-      .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
+    // router
+    //   .post('/:id/register', [EventsController, 'register'])
+    //   .as('actions:events.register')
+    //   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
     router.get('/:id/tickets', [EventsController, 'ticketsRemaining']).as('actions:events.tickets')
     router
       .get('/:id/is-registered', [EventsController, 'isRegistered'])
