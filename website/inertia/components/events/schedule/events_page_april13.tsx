@@ -25,7 +25,7 @@ interface EventsPageProps {
 export default function EventsPageApril13({ events }: EventsPageProps) {
   console.log(events)
   return (
-    <div className="grid grid-cols-4 grid-rows-12 gap-4">
+    <div className="flex flex-col space-y-4 md:grid md:grid-cols-4 md:grid-rows-12 md:gap-4 md:space-y-0">
       <div>
         <EventCard
           title={'Locked'}

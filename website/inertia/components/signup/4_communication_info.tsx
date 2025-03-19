@@ -9,10 +9,7 @@ import { Textarea } from '../ui/textarea'
 import editions from '#data/enei/editions.json' with { type: 'json' }
 import heardaboutfrom from '#data/enei/signup/heard-about.json' with { type: 'json' }
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  CommunicationsInfo,
-  communicationsInfoSchema,
-} from '~/pages/signup/schema'
+import { CommunicationsInfo, communicationsInfoSchema } from '~/pages/signup/schema'
 import { useAtom, useSetAtom } from 'jotai/react'
 import {
   personalInfoAtom,
@@ -38,7 +35,7 @@ const HEARD_ABOUT_FROM: Option[] = heardaboutfrom
 const CommunicationInfoForm = () => {
   const tuyau = useTuyau()
 
-  const { csrfToken } = usePage<PageProps & { csrfToken: string; }>().props;
+  const { csrfToken } = usePage<PageProps & { csrfToken: string }>().props
 
   const setCommunicationsInfo = useSetAtom(communicationsInfoAtom)
   const [communicationsInfo] = useAtom(communicationsInfoAtom)
@@ -67,9 +64,9 @@ const CommunicationInfoForm = () => {
       ...educationInfo,
       ...logisticsInfo,
       ...data,
-      _csrf: csrfToken
+      _csrf: csrfToken,
     }
-    
+
     router.post(tuyau.$url('actions:signup'), payload)
   }
 

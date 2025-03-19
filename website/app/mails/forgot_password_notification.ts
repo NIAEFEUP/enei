@@ -12,4 +12,3 @@ export default class ForgotPasswordNotification extends ReactNotification {
     await this.jsx(() => import('#resources/emails/auth/forgot_password'), this.props)
   }
 }
-

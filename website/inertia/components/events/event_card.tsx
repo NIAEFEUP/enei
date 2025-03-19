@@ -83,7 +83,7 @@ export default function EventCard({
           )}
         </div>
 
-        <div className="text-enei-beige flex flex-row gap-3">
+        <div className="text-enei-beige flex flex-col gap-3 lg:flex-row">
           <p className="font-bold">{time}</p>
           <p>{location}</p>
         </div>

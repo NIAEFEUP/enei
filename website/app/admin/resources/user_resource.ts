@@ -1,6 +1,6 @@
-import dbConfig from "#config/database"
-import User from "#models/user"
-import { LucidResource } from "@adminjs/adonis"
+import dbConfig from '#config/database'
+import User from '#models/user'
+import { LucidResource } from '@adminjs/adonis'
 
 const UserResource = {
   resource: new LucidResource(User, dbConfig.connection),
@@ -11,9 +11,9 @@ const UserResource = {
       },
       points: {
         isVisible: { list: true, filter: true, show: true, edit: false },
-      }
+      },
     },
-  }
+  },
 }
 
 export default UserResource

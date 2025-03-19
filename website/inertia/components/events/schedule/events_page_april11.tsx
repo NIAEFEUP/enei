@@ -24,7 +24,7 @@ interface EventsPageProps {
 export default function EventsPageApril11({ events }: EventsPageProps) {
   console.log(events)
   return (
-    <div className="grid grid-cols-1 grid-rows-4 gap-4">
+    <div className="flex flex-col spacae-y-4 md:grid md:grid-cols-1 md:grid-rows-4 md:gap-4 md:space-y-0">
       <div className="col-start-1 row-start-1 row-span-2">
         <EventCard
           title={'Boas-Vindas'}

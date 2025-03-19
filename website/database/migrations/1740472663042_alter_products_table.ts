@@ -5,13 +5,13 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.boolean("hidden").defaultTo(false)
+      table.boolean('hidden').defaultTo(false)
     })
   }
 
   async down() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.dropColumn("hidden")
+      table.dropColumn('hidden')
     })
   }
 }

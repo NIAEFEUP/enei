@@ -462,7 +462,8 @@ const verticalStepVariants = cva(
   {
     variants: {
       variant: {
-        circle: cn(
+        circle:
+          cn(),
           //'[&:not(:last-child)]:pb-[var(--step-gap)] [&:not(:last-child)]:gap-[var(--step-gap)]',
           //"[&:not(:last-child)]:after:content-[''] [&:not(:last-child)]:after:w-[2px] [&:not(:last-child)]:after:bg-border",
           //'[&:not(:last-child)]:after:inset-x-[calc(var(--step-icon-size)/2)]',
@@ -470,7 +471,6 @@ const verticalStepVariants = cva(
           //'[&:not(:last-child)]:after:top-[calc(var(--step-icon-size)+var(--step-gap))]',
           //'[&:not(:last-child)]:after:bottom-[var(--step-gap)]',
           //'[&:not(:last-child)]:after:transition-all [&:not(:last-child)]:after:duration-200'
-        ),
         line: 'flex-1 border-t-0 mb-4',
       },
     },

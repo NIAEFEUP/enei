@@ -28,9 +28,7 @@ export default function ForgotPassword() {
         <Card className={cn(oauthError && 'border-2 border-red-600')}>
           <CardHeader>
             <CardTitle className="text-2xl">Repor palavra-passe</CardTitle>
-            <CardDescription>
-              Introduz a tua nova palavra-passe
-            </CardDescription>
+            <CardDescription>Introduz a tua nova palavra-passe</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} method="POST" action="/auth/login">
@@ -60,7 +58,7 @@ export default function ForgotPassword() {
                 </div>
                 <div className="flex flex-col gap-4   ">
                   <Button type="submit" className="w-full bg-enei-blue">
-                     Definir palavra-passe
+                    Definir palavra-passe
                   </Button>
                 </div>
               </div>
@@ -71,4 +69,3 @@ export default function ForgotPassword() {
     </BaseLayout>
   )
 }
-

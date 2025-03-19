@@ -1,20 +1,18 @@
 import Event from '#models/event'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
-async function attach( eventId: number, speakerId: number ) {
+async function attach(eventId: number, speakerId: number) {
+  const event = await Event.find(eventId)
 
-    const event = await Event.find(eventId)
+  if (!event) {
+    console.log('Event not found, skipping...')
+    return
+  }
 
-    if (!event) {
-      console.log('Event not found, skipping...')
-      return
-    }
-
-    await event.related('speakers').attach([speakerId])
+  await event.related('speakers').attach([speakerId])
 }
 
 export default class extends BaseSeeder {
-
   async run() {
     await attach(1, 1)
     await attach(2, 2)

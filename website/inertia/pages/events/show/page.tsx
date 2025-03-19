@@ -60,7 +60,6 @@ export default function EventRegistrationPage({
   const fetchTicketsRemaining = async () => {
     try {
       const response = await axios.get('/events/' + eventId + '/tickets')
-      console.log(response)
       setTicketsRemaining(response.data.ticketsRemaining)
     } catch (error) {
       console.error(error)
