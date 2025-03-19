@@ -162,38 +162,49 @@ router
 
 router
   .group(() => {
-    router.get("/u/:slug", [ProfilesController, 'index']).as('pages:profile.show')
-    router.get("/profile", [ProfilesController, 'default'])
+    router.get('/u/:slug', [ProfilesController, 'index']).as('pages:profile.show')
+    router
+      .get('/profile', [ProfilesController, 'default'])
       .as('pages:profile.default')
       .use([middleware.auth(), middleware.verifiedEmail()])
-    router.get("/profile/edit", [ProfilesController, 'edit'])
+    router
+      .get('/profile/edit', [ProfilesController, 'edit'])
       .as('pages:profile.edit')
       .use([middleware.auth(), middleware.verifiedEmail()])
   })
   .use(middleware.wip())
 
 router
-  .on('/faq')
-  .renderInertia('faq')
-  .as('pages:faq')
-  .use(middleware.wip())
+  .group(() => {
+    router.get('/', [EventsController, 'index']).as('pages:events')
+    router.get('/:id', [EventsController, 'show']).as('pages:events.show')
+    // router
+    //   .post('/:id/register', [EventsController, 'register'])
+    //   .as('actions:events.register')
+    //   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
+    router.get('/:id/tickets', [EventsController, 'ticketsRemaining']).as('actions:events.tickets')
+    router
+      .get('/:id/is-registered', [EventsController, 'isRegistered'])
+      .as('actions:events.isRegistered')
+    router
+      .get('/:id/is-registered-by-email', [EventsController, 'isRegisteredByEmail'])
+      .as('actions:events.isRegisteredByEmail')
+      .use(middleware.companyBearerAuth())
+  })
+  .prefix('events')
+
+router.on('/faq').renderInertia('faq').as('pages:faq').use(middleware.wip())
 
 router
-  .get('/event', [EventsController, 'index'])
-  .as('pages:event')
-  .use(middleware.wip())
-
-
-router.
-  group(() => {
+  .group(() => {
     router.on('/').renderInertia('cv').as('pages:cv')
   })
   .use([middleware.auth(), middleware.verifiedEmail()])
   .prefix('cv') // dummy route for testing
   .use(middleware.wip())
 
-router.
-  group(() => {
+router
+  .group(() => {
     router.get('/cv/name', [CvsController, 'showName'])
     router.post('/cv/upload', [CvsController, 'upload'])
     router.delete('cv/delete', [CvsController, 'delete'])
@@ -210,7 +221,6 @@ router.
   })
   .use([middleware.auth(), middleware.wip()])
   .prefix('user')
-
 
 router
   .group(() => {

@@ -1,92 +1,222 @@
-import { Calendar, Clock, MapPin, Ticket, Users, Info, ClipboardCheck } from 'lucide-react'
-import { Button } from '~/components/ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
-import { Separator } from '~/components/ui/separator'
 import BaseLayout from '~/layouts/base'
+import { DaySelector } from '~/components/events/day_selector'
+import { useState } from 'react'
+import { Card, CardTitle } from '~/components/ui/card'
+import EventsPageApril11 from '~/components/events/schedule/events_page_april11'
+import EventsPageApril12 from '~/components/events/schedule/events_page_april12'
+import EventsPageApril13 from '~/components/events/schedule/events_page_april13'
+import EventsPageApril14 from '~/components/events/schedule/events_page_april14'
+import EventCard from '~/components/events/event_card'
 
-export default function EventRegistrationPage() {
-  const title = 'Cybersecurity & Password Cracking'
-  const description =
-    'Uma exploração profunda sobre técnicas de cibersegurança e como os hackers conseguem aceder a passwords. Vamos explorar as técnicas mais comuns e como as podemos prevenir.'
-  const date = '2025-03-03'
-  const time = '14:00 - 15:30'
-  const location = 'B107 - FEUP'
-  const speakers = [
-    {
-      name: 'Dr. Mike Pound',
-      role: 'Pesquisador na Universidade de Nottingham, Inglaterra',
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY5VZfZYg8fK226K1rD3uGZgKFyA59EkXify-5sPm9Eihp7K11As_fxdM&usqp=CAE&s',
+interface Speaker {
+  firstName: string
+  lastName: string
+  profilePicture: string
+}
+
+interface Event {
+  id: number
+  title: string
+  type: 'activity' | 'workshop' | 'other'
+  date: string
+  time: string
+  location: string
+  companyImage: string
+  speakers: Speaker[]
+}
+
+interface EventsPageProps {
+  currentDay: String
+  events: Event[]
+}
+
+function splitEventsByDay(events: Event[]) {
+  return events.reduce(
+    (acc, event) => {
+      if (!acc[event.date]) {
+        acc[event.date] = []
+      }
+      acc[event.date].push(event)
+      return acc
     },
+    {} as Record<string, Event[]>
+  )
+}
 
+export default function EventsPage({ currentDay, events }: EventsPageProps) {
+  const [currentActiveIndex, setCurrentActiveIndex] = useState(0)
+
+  const eventsByDay = splitEventsByDay(events)
+
+  // If the current day is an ENEI day, set the active index to the corresponding day.
+  const eneiDates = [
+    new Date('2025-04-11').toDateString(),
+    new Date('2025-04-12').toDateString(),
+    new Date('2025-04-13').toDateString(),
+    new Date('2025-04-14').toDateString(),
   ]
-  const registrationRequirements = 'Nada'
-  const ticketsRemaining = 10
+  for (const [i, eneiDate] of eneiDates.entries()) {
+    if (currentDay === eneiDate) {
+      setCurrentActiveIndex(i)
+      break
+    }
+  }
 
   return (
-    <BaseLayout title="Registo de Evento" className="bg-enei-beige ">
-      <div className="flex justify-center mt-10">
-        <Card className="w-full max-w-2xl mx-auto">
-          <CardHeader>
-            {/* Title and important information (date, time, location) */}
-            <CardTitle className="text-2xl font-bold">{title}</CardTitle>
-            <div className="mt-4 flex flex-col gap-2 text-muted-foreground sm:flex-row sm:gap-6">
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                <span>{date}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                <span>{time}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
-                <span>{location}</span>
-              </div>
-            </div>
-          </CardHeader>
-          <Separator />
-          <CardContent className="space-y-2 mt-2">
-            <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
-              <Info className="h-5 w-5" />
-              <h1 className="text-lg font-semibold">Acerca do Evento</h1>
-            </h2>
-            <CardDescription>{description}</CardDescription>
+    <BaseLayout title="Eventos" className="bg-enei-beige ">
+      <div className="flex justify-center mt-10 relative z-10">
+        <Card className="w-full max-w-7xl mx-auto border-transparent shadow-transparent bg-transparent">
+          <div className="mb-10">
+            <DaySelector
+              activeIndex={currentActiveIndex}
+              setActiveIndex={(index) => {
+                console.log('Day selected:', index)
+                setCurrentActiveIndex(index)
+              }}
+              days={['11 de abril', '12 de abril', '13 de abril', '14 de abril']}
+            />
+          </div>
+          {/*
+            TODO: highlights
 
-            <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
-              <Users className="h-5 w-5" />
-              <h1 className="text-lg font-semibold">{speakers.length === 1 ? "Orador" : "Oradores"}</h1>
-            </h2>
-            <div className="grid gap-4">
-              {speakers.map((speaker) => (
-                <div key={speaker.name} className="flex items-center gap-4 rounded-lg border p-4">
-                  <Avatar className="h-12 w-12">
-                    <AvatarImage src={speaker.image} alt={speaker.name} />
-                    <AvatarFallback>{speaker.name[0]}</AvatarFallback>
-                  </Avatar>
-                  <div className="space-y-1">
-                    <h3 className="font-medium">{speaker.name}</h3>
-                    {speaker.role && (
-                      <p className="text-sm text-muted-foreground">{speaker.role}</p>
-                    )}
-                  </div>
-                </div>
+          <CardTitle className="mt-10">Destaques</CardTitle>
+          <CardTitle className="mt-10">O dia todo</CardTitle>
+          <div className="space-y-3">
+            {events
+              .filter((event) => event.date === activeDate)
+              .map((event) => (
+                <EventCard
+                  key={event.id}
+                  title={event.title}
+                  type={event.type}
+                  time={event.time}
+                  location={event.location}
+                  isRegistered={true}
+                  speakers={event.speakers}
+                  onClick={() => {
+                    router.visit(`/events/${event.id}`)
+                  }}
+                />
               ))}
+          </div>
+          */}
+          <CardTitle className="mt-5 mb-5">Atividades Longas</CardTitle>
+          {currentActiveIndex === 0 && (
+            <div>
+              <EventCard
+                title={'Check-in'}
+                type={'activity'}
+                time={'14:00 - 23:00'}
+                location={'TBD - ISEP'}
+                speakers={[]}
+              />
             </div>
-            <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
-              <ClipboardCheck className="h-5 w-5" />
-              <h1 className="text-lg font-semibold">Requisitos de Inscrição</h1>
-            </h2>
-            <CardDescription>{registrationRequirements}</CardDescription>
-            <Button onClick={() => console.log('Hello!')} className="w-full">
-              Inscrever
-            </Button>
-            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-              <Ticket className="h-4 w-4" />
-              <span>{ticketsRemaining} lugares disponíveis</span>
+          )}
+
+          {currentActiveIndex === 1 && (
+            <div className="flex flex-row space-x-4">
+              <EventCard
+                title={'Check-in'}
+                type={'activity'}
+                time={'9:00 - 21:30'}
+                location={'TBD'}
+                speakers={[]}
+              />
+              <EventCard
+                title={'Feira de Emprego'}
+                type={'activity'}
+                time={'14:00 - 18:30'}
+                location={'Corredor B - FEUP'}
+                speakers={[]}
+              />
+
+              <EventCard
+                title={'Competição de Programação'}
+                type={'activity'}
+                time={'14:30 - 18:30'}
+                location={'TBD - FEUP'}
+                speakers={[]}
+              />
             </div>
-          </CardContent>
+          )}
+
+          {currentActiveIndex === 2 && (
+            <div className="flex flex-row space-x-4">
+              <EventCard
+                title={'Check-in'}
+                type={'activity'}
+                time={'9:00 - 21:30'}
+                location={'TBD'}
+                speakers={[]}
+              />
+              <EventCard
+                title={'Feira de Emprego'}
+                type={'activity'}
+                time={'14:00 - 18:30'}
+                location={'Corredor B - FEUP'}
+                speakers={[]}
+              />
+
+              <EventCard
+                title={'Competição de Pitches'}
+                type={'activity'}
+                time={'14:30 - 18:30'}
+                location={'TBD - FEUP'}
+                speakers={[]}
+              />
+
+              <EventCard
+                title={'Sessão de Cocktails'}
+                type={'activity'}
+                time={'18:00 - 19:30'}
+                location={'Coffee Lounge - FEUP'}
+                speakers={[]}
+              />
+            </div>
+          )}
+
+
+          {currentActiveIndex === 3 && (
+            <div className="flex flex-row space-x-4">
+              <EventCard
+                title={'Check-in'}
+                type={'activity'}
+                time={'9:00 - 12:00'}
+                location={'TBD - FEUP'}
+                speakers={[]}
+              />
+              <EventCard
+                title={'Feira de Emprego'}
+                type={'activity'}
+                time={'9:00 - 14:00'}
+                location={'Corredor B - FEUP'}
+                speakers={[]}
+              />
+
+              <EventCard
+                title={'Competição de Pitches'}
+                type={'activity'}
+                time={'14:30 - 18:30'}
+                location={'TBD - FEUP'}
+                speakers={[]}
+              />
+
+              <EventCard
+                title={'Sessão de Cocktails'}
+                type={'activity'}
+                time={'18:00 - 19:30'}
+                location={'Coffee Lounge - FEUP'}
+                speakers={[]}
+              />
+            </div>
+          )}
+
+          <CardTitle className="mt-5 mb-5">Programa</CardTitle>
+
+          {currentActiveIndex === 0 && <EventsPageApril11 events={eventsByDay['11-04-2025']} />}
+          {currentActiveIndex === 1 && <EventsPageApril12 events={eventsByDay['12-04-2025']} />}
+          {currentActiveIndex === 2 && <EventsPageApril13 events={eventsByDay['13-04-2025']} />}
+          {currentActiveIndex === 3 && <EventsPageApril14 events={eventsByDay['14-04-2025']} />}
         </Card>
       </div>
     </BaseLayout>
