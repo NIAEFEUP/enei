@@ -16,7 +16,8 @@ const ForgotPassword = ({ logoUrl, email, verificationLink }: EmailVerificationP
             <Img src={logoUrl} alt="Logótipo do ENEI 2025" height={50} />
             <Heading className="mt-[32px] text-[24px]">Repõe a tua palavra-passe!</Heading>
             <Text>
-              Ao clicares no botão abaixo, irás para uma página onde conseguirás repôr a tua palavra-passe.
+              Ao clicares no botão abaixo, irás para uma página onde conseguirás repôr a tua
+              palavra-passe.
             </Text>
             <Button
               href={verificationLink}
@@ -27,7 +28,8 @@ const ForgotPassword = ({ logoUrl, email, verificationLink }: EmailVerificationP
           </Section>
           <Section>
             <Text className="text-primary text-center px-[50px]">
-              Este e-mail foi enviado automaticamente para: <span className='underline'>{email}</span>.
+              Este e-mail foi enviado automaticamente para:{' '}
+              <span className="underline">{email}</span>.
               <br />
               Se não efetuaste este pedido, podes ignorar este e-mail.
             </Text>
@@ -45,4 +47,3 @@ ForgotPassword.defaultProps = {
 }
 
 export default ForgotPassword
-

@@ -6,7 +6,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 
 @inject()
 export default class TicketsController {
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService) {}
 
   async index({ inertia }: HttpContext) {
     const ticketTypes = await this.productService.getRealCurrencyProducts()

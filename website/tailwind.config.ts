@@ -22,9 +22,13 @@ export default {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
         },
-        'enei-activity': 'hsl(var(--enei-activity))',
+        'enei-meal': 'hsl(var(--enei-meal))',
         'enei-workshop': 'hsl(var(--enei-workshop))',
-        'enei-other': 'hsl(var(--enei-other))',
+        'enei-talk': 'hsl(var(--enei-talk))',
+        'enei-other': 'hsl(var(--enei-blue))',
+        'enei-night': 'hsl(var(--enei-night))',
+        'enei-competition': 'hsl(var(--enei-competition))',
+        'enei-networking': 'hsl(var(--enei-networking))',
 
         'persian-orange': '#E28C40',
         'dark-persian-orange': '#914E13',
@@ -117,8 +121,13 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
       screens: {
-        '3xl': '1800px'
-      }
+        '3xl': '1800px',
+      },
+      gridTemplateRows: {
+        '13': 'repeat(12, minmax(1rem, 1fr))',
+        '14': 'repeat(14, minmax(1rem, 1fr))',
+        '15': 'repeat(15, minmax(1rem, 1fr))',
+      },
     },
   },
   plugins: [tailwindcssAnimate],

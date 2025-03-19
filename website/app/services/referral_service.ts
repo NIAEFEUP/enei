@@ -67,11 +67,7 @@ export default class ReferralService {
   async getReferralCount(user: User): Promise<number | null> {
     if (!(await this.canUserRefer(user))) return null
 
-    const referrals = await user
-      .related('referrals')
-      .query()
-      .count('*', 'count')
-      .first()
+    const referrals = await user.related('referrals').query().count('*', 'count').first()
     return referrals?.$extras.count
   }
 

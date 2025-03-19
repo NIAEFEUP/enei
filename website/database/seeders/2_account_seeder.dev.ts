@@ -29,7 +29,7 @@ export default class extends BaseSeeder {
       lastName: 'Costa',
       dateOfBirth: DateTime.fromObject({ year: 2003, month: 5, day: 9 }),
       phone: '+351917777777',
-      slug: "1234",
+      slug: '1234',
       university: 'pt.up.fe',
       course: 'M.EIC',
       curricularYear: '2',
@@ -40,7 +40,7 @@ export default class extends BaseSeeder {
       isVegetarian: false,
       isVegan: false,
       transports: ['a-pe'],
-      attendedBeforeEditions: []
+      attendedBeforeEditions: [],
     })
 
     // const profile = await PromoterProfile.create({})

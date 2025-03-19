@@ -40,16 +40,12 @@ export class UserService {
       return user
     })
 
-    return [
-      committedUser,
-      UserCreated.tryDispatch(committedUser),
-    ] as const
+    return [committedUser, UserCreated.tryDispatch(committedUser)] as const
   }
 
   async sendVerificationEmail(user: User) {
     const listener = await app.container.make(SendVerificationEmail)
-    listener.handle(new UserCreated(user))
-      .catch((error) => this.logger.error(error))
+    listener.handle(new UserCreated(user)).catch((error) => this.logger.error(error))
   }
 
   async verifyEmail(email: string) {
@@ -79,10 +75,7 @@ export class UserService {
       return user
     })
 
-    return [
-      committedUser,
-      UserCreated.tryDispatch(committedUser),
-    ] as const
+    return [committedUser, UserCreated.tryDispatch(committedUser)] as const
   }
 
   async sendForgotPasswordEmail(email: string) {

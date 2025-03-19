@@ -61,7 +61,11 @@ const LogisticsInfoForm = () => {
                     </SelectTrigger>
                     <SelectContent>
                       {SIZES.map((size) => {
-                        return <SelectItem key={size} value={size}>{size}</SelectItem>
+                        return (
+                          <SelectItem key={size} value={size}>
+                            {size}
+                          </SelectItem>
+                        )
                       })}
                     </SelectContent>
                   </Select>

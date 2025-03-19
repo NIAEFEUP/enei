@@ -1,12 +1,9 @@
-import BaseLayout from '~/layouts/base'
 import { DaySelector } from '~/components/events/day_selector'
 import { useState } from 'react'
-import { Card, CardTitle } from '~/components/ui/card'
-import EventsPageApril11 from '~/components/events/schedule/events_page_april11'
-import EventsPageApril12 from '~/components/events/schedule/events_page_april12'
-import EventsPageApril13 from '~/components/events/schedule/events_page_april13'
-import EventsPageApril14 from '~/components/events/schedule/events_page_april14'
-import EventCard from '~/components/events/event_card'
+import { Card } from '~/components/ui/card'
+import LongActivities from '~/components/events/long_activities'
+import EventsProgram from '~/components/events/schedule/events_program'
+import Page from '~/components/common/page'
 
 interface Speaker {
   firstName: string
@@ -17,7 +14,7 @@ interface Speaker {
 interface Event {
   id: number
   title: string
-  type: 'activity' | 'workshop' | 'other'
+  type: 'talk' | 'workshop' | 'night' | 'meal' | 'competition' | 'networking' | 'other'
   date: string
   time: string
   location: string
@@ -63,14 +60,13 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
   }
 
   return (
-    <BaseLayout title="Eventos" className="bg-enei-beige ">
+    <Page title="Eventos" className="bg-enei-beige" variant="beige">
       <div className="flex justify-center mt-10 relative z-10">
-        <Card className="w-full max-w-7xl mx-auto border-transparent shadow-transparent bg-transparent">
+        <Card className="w-full max-w-7xl mx-4 border-transparent shadow-transparent bg-transparent">
           <div className="mb-10">
             <DaySelector
               activeIndex={currentActiveIndex}
               setActiveIndex={(index) => {
-                console.log('Day selected:', index)
                 setCurrentActiveIndex(index)
               }}
               days={['11 de abril', '12 de abril', '13 de abril', '14 de abril']}
@@ -100,125 +96,12 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
               ))}
           </div>
           */}
-          <CardTitle className="mt-5 mb-5">Atividades Longas</CardTitle>
-          {currentActiveIndex === 0 && (
-            <div>
-              <EventCard
-                title={'Check-in'}
-                type={'activity'}
-                time={'14:00 - 23:00'}
-                location={'TBD - ISEP'}
-                speakers={[]}
-              />
-            </div>
-          )}
 
-          {currentActiveIndex === 1 && (
-            <div className="flex flex-row space-x-4">
-              <EventCard
-                title={'Check-in'}
-                type={'activity'}
-                time={'9:00 - 21:30'}
-                location={'TBD'}
-                speakers={[]}
-              />
-              <EventCard
-                title={'Feira de Emprego'}
-                type={'activity'}
-                time={'14:00 - 18:30'}
-                location={'Corredor B - FEUP'}
-                speakers={[]}
-              />
+          <LongActivities currentActiveIndex={currentActiveIndex} />
 
-              <EventCard
-                title={'Competição de Programação'}
-                type={'activity'}
-                time={'14:30 - 18:30'}
-                location={'TBD - FEUP'}
-                speakers={[]}
-              />
-            </div>
-          )}
-
-          {currentActiveIndex === 2 && (
-            <div className="flex flex-row space-x-4">
-              <EventCard
-                title={'Check-in'}
-                type={'activity'}
-                time={'9:00 - 21:30'}
-                location={'TBD'}
-                speakers={[]}
-              />
-              <EventCard
-                title={'Feira de Emprego'}
-                type={'activity'}
-                time={'14:00 - 18:30'}
-                location={'Corredor B - FEUP'}
-                speakers={[]}
-              />
-
-              <EventCard
-                title={'Competição de Pitches'}
-                type={'activity'}
-                time={'14:30 - 18:30'}
-                location={'TBD - FEUP'}
-                speakers={[]}
-              />
-
-              <EventCard
-                title={'Sessão de Cocktails'}
-                type={'activity'}
-                time={'18:00 - 19:30'}
-                location={'Coffee Lounge - FEUP'}
-                speakers={[]}
-              />
-            </div>
-          )}
-
-
-          {currentActiveIndex === 3 && (
-            <div className="flex flex-row space-x-4">
-              <EventCard
-                title={'Check-in'}
-                type={'activity'}
-                time={'9:00 - 12:00'}
-                location={'TBD - FEUP'}
-                speakers={[]}
-              />
-              <EventCard
-                title={'Feira de Emprego'}
-                type={'activity'}
-                time={'9:00 - 14:00'}
-                location={'Corredor B - FEUP'}
-                speakers={[]}
-              />
-
-              <EventCard
-                title={'Competição de Pitches'}
-                type={'activity'}
-                time={'14:30 - 18:30'}
-                location={'TBD - FEUP'}
-                speakers={[]}
-              />
-
-              <EventCard
-                title={'Sessão de Cocktails'}
-                type={'activity'}
-                time={'18:00 - 19:30'}
-                location={'Coffee Lounge - FEUP'}
-                speakers={[]}
-              />
-            </div>
-          )}
-
-          <CardTitle className="mt-5 mb-5">Programa</CardTitle>
-
-          {currentActiveIndex === 0 && <EventsPageApril11 events={eventsByDay['11-04-2025']} />}
-          {currentActiveIndex === 1 && <EventsPageApril12 events={eventsByDay['12-04-2025']} />}
-          {currentActiveIndex === 2 && <EventsPageApril13 events={eventsByDay['13-04-2025']} />}
-          {currentActiveIndex === 3 && <EventsPageApril14 events={eventsByDay['14-04-2025']} />}
+          <EventsProgram currentActiveIndex={currentActiveIndex} eventsByDay={eventsByDay} />
         </Card>
       </div>
-    </BaseLayout>
+    </Page>
   )
 }

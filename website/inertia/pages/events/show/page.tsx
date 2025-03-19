@@ -26,7 +26,7 @@ interface EventRegistrationProps {
   date: string
   time: string
   location: string
-  type: 'activity' | 'workshop' | 'other'
+  type: 'talk' | 'workshop' | 'night' | 'meal' | 'competition' | 'networking' | 'other'
   companyImage: string
   speakers: Speaker[]
   registrationRequirements: string
@@ -60,7 +60,6 @@ export default function EventRegistrationPage({
   const fetchTicketsRemaining = async () => {
     try {
       const response = await axios.get('/events/' + eventId + '/tickets')
-      console.log(response)
       setTicketsRemaining(response.data.ticketsRemaining)
     } catch (error) {
       console.error(error)
@@ -115,15 +114,23 @@ export default function EventRegistrationPage({
   }
 
   const activityClassesPrimary = {
-    activity: 'border-enei-activity',
     workshop: 'border-enei-workshop',
     other: 'border-enei-other',
+    night: 'border-enei-blue',
+    talk: 'border-enei-blue',
+    networking: 'border-enei-blue',
+    competition: 'border-enei-blue',
+    meal: 'border-enei-blue',
   }
 
   const activityColors = {
-    activity: '#28282D',
     workshop: '#5A8C86',
     other: '#E28C40',
+    night: '#000000',
+    talk: '#000000',
+    networking: '#000000',
+    competition: '#000000',
+    meal: '#000000',
   }
 
   return (

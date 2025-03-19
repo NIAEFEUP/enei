@@ -58,7 +58,6 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     //RESEND_API_KEY: vine.string(),
     //BREVO_API_KEY: vine.string(),
 
-
     /*
     |----------------------------------------------------------
     | Variables for configuring the jobs package
@@ -122,7 +121,7 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     | Variables for configuring the drive package
     |----------------------------------------------------------
     */
-    DRIVE_DISK: vine.enum(["fs"])
+    DRIVE_DISK: vine.enum(['fs']),
   })
 })
 

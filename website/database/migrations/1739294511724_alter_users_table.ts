@@ -5,18 +5,11 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.integer('referring_promoter_id')
-        .references('id')
-        .inTable('users')
+      table.integer('referring_promoter_id').references('id').inTable('users')
 
-      table.integer('referrer_id')
-        .references('id')
-        .inTable('users')
+      table.integer('referrer_id').references('id').inTable('users')
 
-      table.integer('promoter_profile_id')
-        .unique()
-        .references('id')
-        .inTable('promoter_profiles')
+      table.integer('promoter_profile_id').unique().references('id').inTable('promoter_profiles')
     })
   }
 

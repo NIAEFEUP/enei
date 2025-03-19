@@ -2,7 +2,7 @@ type DecorativeBarsProps = {
   barColor?: string
 }
 
-export default function DecorativeBars({ barColor}: DecorativeBarsProps) {
+export default function DecorativeBars({ barColor }: DecorativeBarsProps) {
   return (
     <div className="3xl:block hidden">
       <div className="absolute left-0 top-0 h-full text-enei-workshop z-30 pointer-events-none">

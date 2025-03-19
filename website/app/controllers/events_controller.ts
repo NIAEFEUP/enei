@@ -6,25 +6,28 @@ import { inject } from '@adonisjs/core'
 
 @inject()
 export default class EventsController {
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService) {}
   async index({ inertia }: HttpContext) {
     const events = await Event.query().preload('speakers')
-    return inertia.render('events', {currentDay: new Date().toDateString(), events: events.map((event) => ({
-      id: event.id,
-      title: event.title,
-      type: event.type,
-      date: event.getFormattedDate(),
-      time: event.getFormattedTime(),
-      location: event.location,
-      companyImage: event.companyImage,
-      speakers: event.speakers.map((speaker) => ({
-        firstName: speaker.firstName,
-        lastName: speaker.lastName,
-        jobTitle: speaker.jobTitle,
-        profilePicture: speaker.profilePicture,
-        company: speaker.company,
+    return inertia.render('events', {
+      currentDay: new Date().toDateString(),
+      events: events.map((event) => ({
+        id: event.id,
+        title: event.title,
+        type: event.type,
+        date: event.getFormattedDate(),
+        time: event.getFormattedTime(),
+        location: event.location,
+        companyImage: event.companyImage,
+        speakers: event.speakers.map((speaker) => ({
+          firstName: speaker.firstName,
+          lastName: speaker.lastName,
+          jobTitle: speaker.jobTitle,
+          profilePicture: speaker.profilePicture,
+          company: speaker.company,
+        })),
       })),
-    }))})
+    })
   }
   async show({ inertia, params }: HttpContext) {
     const event = await Event.findOrFail(params.id)

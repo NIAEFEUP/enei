@@ -10,7 +10,7 @@ import { inject } from '@adonisjs/core'
 
 @inject()
 export class StoreService {
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService) {}
 
   async getProducts(user: User | undefined) {
     return await this.productService.getPointProducts(user)
@@ -29,19 +29,25 @@ export class StoreService {
       product.stock = Math.max(0, product.stock - 1)
       await product.save()
 
-      const order = await Order.create({
-        userId: user.id,
-      }, {
-        client: trx
-      })
+      const order = await Order.create(
+        {
+          userId: user.id,
+        },
+        {
+          client: trx,
+        }
+      )
 
-      return await OrderProduct.create({
-        orderId: order.id,
-        productId: product.id,
-        quantity: 1,
-      }, {
-        client: trx
-      })
+      return await OrderProduct.create(
+        {
+          orderId: order.id,
+          productId: product.id,
+          quantity: 1,
+        },
+        {
+          client: trx,
+        }
+      )
     })
   }
 }

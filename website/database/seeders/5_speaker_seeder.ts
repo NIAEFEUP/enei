@@ -317,5 +317,32 @@ export default class extends BaseSeeder {
       profilePicture: '/images/speakers/jose-costa-pereira.jpg',
       company: 'FEUP',
     })
+
+    await SpeakerProfile.create({
+      firstName: 'Diogo',
+      lastName: 'Correia',
+      jobTitle: '.NET Developer',
+      profilePicture: '',
+      company: 'Devexperts',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Francisco',
+      lastName: 'Loureiro',
+      jobTitle: 'Team Lead',
+      profilePicture: '',
+      company: 'Devexperts',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Nuno',
+      lastName: 'Miranda',
+      jobTitle: 'Data Engineer',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Rui',
+      lastName: 'Nascimento',
+    })
   }
 }
