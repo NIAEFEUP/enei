@@ -83,17 +83,16 @@ export default class ProfilesController {
       .preload('participantProfile')
       .first()
 
-    if (!user) {
-      return response.ok({ hasTicket: false, name: null })
-    }
+    const hasTicket = !!(
+      user &&
+      user.participantProfileId !== null &&
+      user.participantProfile.purchasedTicket !== null
+    )
 
-    if (user.participantProfileId === null) {
-      return response.ok({ hasTicket: false, name: null })
-    }
+    const name = hasTicket
+      ? `${user!.participantProfile.firstName} ${user!.participantProfile.lastName}`
+      : null
 
-    return response.ok({
-      hasTicket: true,
-      name: user.participantProfile.firstName + ' ' + user.participantProfile.lastName,
-    })
+    return response.ok({ hasTicket, name })
   }
 }
