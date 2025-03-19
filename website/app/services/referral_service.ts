@@ -121,8 +121,8 @@ export default class ReferralService {
     if (!referralUser) return
 
     UserActivity.dispatch(referredUser, {
-      type: UserActivityType.Referral,
       description: {
+        type: UserActivityType.Referral,
         referralCode,
         referralUser,
         referredUser,

@@ -86,7 +86,7 @@ export default class UpdateOrderStatus extends Job {
             
             await axios.post(tuyau.$url('actions:referrals.event.pointattribution.trigger', {
               params: { id: order.userId }
-            }), { "apiKey": new Env(env).get('APP_KEY') }, { withXSRFToken: true, withCredentials: true})
+            }), { "apiKey": new Env(env).get('JOBS_API_KEY') }, { withXSRFToken: true, withCredentials: true})
           }
         } else {
           await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 }) // Retry after 5 seconds

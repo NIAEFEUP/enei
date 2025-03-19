@@ -15,6 +15,6 @@ export default class UserActivityListener {
     }
 
     async handle(event: UserActivity) {
-        this.pointsAttributionMap.get(event.description.type)?.(event.description)
+        this.pointsAttributionMap.get(event.data.description.type)?.(event.data)
     }
 }

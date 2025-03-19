@@ -122,7 +122,14 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     | Variables for configuring the drive package
     |----------------------------------------------------------
     */
-    DRIVE_DISK: vine.enum(["fs"])
+    DRIVE_DISK: vine.enum(["fs"]),
+
+    /*
+    |----------------------------------------------------------
+    | Variables with api keys for calling protected routes
+    |----------------------------------------------------------
+    */
+    JOBS_API_KEY: vine.string()
   })
 })
 

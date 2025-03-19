@@ -8,11 +8,11 @@ export enum UserActivityType {
 }
 
 export type UserActivityDescription = {
-    type: UserActivityType
     description: ReferralDescription | AttendEventDescription | CompanyVisitDescription | CompletedChallengeDescription
 }
     
 export type ReferralDescription = {
+    type: UserActivityType.Referral
     referralCode: string
     referralUser: User, // The user that has the referral link may not be a promoter (e.g. may not be a student associatio)
     referredUser: User,
@@ -26,13 +26,13 @@ export type ReferralDescription = {
 }
 
 export type AttendEventDescription = {
-
+    type: UserActivityType.AttendEvent
 }
 
 export type CompanyVisitDescription = {
-
+    type: UserActivityType.CompanyVisit
 }
 
 export type CompletedChallengeDescription = {
-
+    type: UserActivityType.CompletedChallenge
 }

@@ -6,7 +6,7 @@ export default class ApiKeyProtectedMiddleware {
   async handle({ request, response }: HttpContext, next: NextFn) {
     const { apiKey } = request.only(['apiKey'])
 
-    if(apiKey !== env.get('APP_KEY')) response.badRequest("Invalid credentials")
+    if(apiKey !== env.get('JOBS_API_KEY')) response.badRequest("Invalid credentials")
 
     return await next()
   }
