@@ -125,7 +125,7 @@ export default function EventCard({ id, title, type, time, location, speakers }:
                     alt={speaker.firstName}
                     className="object-cover"
                   ></AvatarImage>
-                  <AvatarFallback className={cn('bg-enei-blue', textColor[type])}>
+                  <AvatarFallback className={cn('bg-enei-beige', textColor[type])}>
                     {speaker.firstName[0]}
                   </AvatarFallback>
                 </Avatar>
