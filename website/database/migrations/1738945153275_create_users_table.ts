@@ -10,6 +10,8 @@ export default class extends BaseSchema {
 
       table.string('email').unique().notNullable()
       table.timestamp('email_verified_at')
+      table.json('resume').nullable()
+      table.json('avatar').nullable()
     })
   }
 

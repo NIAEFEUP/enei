@@ -4,7 +4,7 @@ import { Button} from '~/components/ui/button';
 import { Input } from "~/components/ui/input"
 import { useEffect } from 'react';
 
-const CvUpload= () => {
+const AvatarUpload= () => {
     const [fetchedName, setfetchedName] = useState(false);
     const [file, setFile] = useState<File | null>(null);
     const [uploading, setUploading] = useState(false);
@@ -13,15 +13,17 @@ const CvUpload= () => {
     useEffect(() => {
         const fetchFileName = async () => {
             try {
-                const response = await axios.get('/user/cv/name');
+                const response = await axios.get('/user/avatar/name');
                 setFileName(response.data.fileName);
+                setfetchedName(true);
+
             } catch (error) {
                 setFileName(null);
+                setfetchedName(true);
             }
         };
 
         fetchFileName();
-        setfetchedName(true);
     }, [uploading]);
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
@@ -37,10 +39,10 @@ const CvUpload= () => {
         setUploading(true);
 
         const formData = new FormData();
-        formData.append('cv', file);
+        formData.append('avatar', file);
 
         try {
-            await axios.post('/user/cv/upload', formData, {
+            await axios.post('/user/avatar/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -54,7 +56,7 @@ const CvUpload= () => {
     const handleDelete = async () => {
         setUploading(true);
         try {
-            await axios.delete('/user/cv/delete', {
+            await axios.delete('/user/avatar/delete', {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -67,18 +69,18 @@ const CvUpload= () => {
 
     return (
         <div className='flex flex-col gap-2'>
-            {fileName ? (
+            {(fileName ) ? (
                 <div className='flex flex-row gap-2'>
                     <Input className="w-64" type="text" value={fileName} disabled />
-                    <Button onClick={handleDelete} disabled={uploading || !fetchedName}>
-                        {uploading ? 'Uploading...' : 'Clear CV'}
+                    <Button onClick={handleDelete} disabled={uploading || !fetchedName }>
+                        {uploading ? 'Uploading...' : 'Clear avatar'}
                     </Button>
                 </div>
             ) : (
-                <div className='flex flex-row gap-2 '>
-                    <Input className="w-64" type="file" accept=".pdf" onChange={handleFileChange} />
-                    <Button onClick={handleUpload} disabled={uploading || !fetchedName}>
-                        {uploading ? 'Uploading...' : 'Upload CV'}
+                <div className='flex flex-row gap-2'>
+                    <Input className="w-64" type="file" accept="image/*" onChange={handleFileChange} />
+                    <Button onClick={handleUpload} disabled={uploading || !fetchedName }>
+                        {uploading ? 'Uploading...' : 'Upload avatar'}
                     </Button>
                 </div>
             )}
@@ -89,4 +91,4 @@ const CvUpload= () => {
          
 };
 
-export default CvUpload;
+export default AvatarUpload;

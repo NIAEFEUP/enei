@@ -16,6 +16,7 @@ export default defineConfig({
     () => import('@adonisjs/mail/commands'),
     () => import('@tuyau/core/commands'),
     () => import('adonisjs-jobs/commands'),
+    () => import('@jrmc/adonis-attachment/commands')
   ],
 
   /*
@@ -54,7 +55,8 @@ export default defineConfig({
     () => import('@adonisjs/ally/ally_provider'),
     () => import('@adonisjs/limiter/limiter_provider'),
     () => import('@adonisjs/redis/redis_provider'),
-    () => import('@adonisjs/drive/drive_provider')
+    () => import('@adonisjs/drive/drive_provider'),
+    () => import('@jrmc/adonis-attachment/attachment_provider')
   ],
 
   /*

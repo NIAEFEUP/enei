@@ -6,7 +6,10 @@ import PromoterInfo from './promoter_info.js'
 import type { BelongsTo, HasMany, ManyToMany } from '@adonisjs/lucid/types/relations'
 import PromoterProfile from './promoter_profile.js'
 import ParticipantProfile from './participant_profile.js'
+import { attachment} from '@jrmc/adonis-attachment'
+import type { Attachment } from '@jrmc/adonis-attachment/types/attachment'
 import Event from './event.js'
+
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -81,6 +84,20 @@ export default class User extends BaseModel {
 
   @column()
   declare points: number
+
+  @attachment(
+    {
+      folder: 'resumes',
+    }
+  )
+  declare resume: Attachment | null 
+
+  @attachment({
+    folder: 'avatars',
+    variants: ['thumbnail'],
+    
+  })
+  declare avatar: Attachment | null
 
   @belongsTo(() => PromoterInfo)
   declare promoterInfo: BelongsTo<typeof PromoterInfo>

@@ -10,14 +10,12 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import { emailVerificationThrottle, sendForgotPasswordThrottle } from '#start/limiter'
 const EventsController = () => import('#controllers/events_controller')
-import { sep, normalize } from 'node:path'
-import app from '@adonisjs/core/services/app'
 
 const AuthenticationController = () => import('#controllers/authentication_controller')
 const OrdersController = () => import('#controllers/orders_controller')
 const TicketsController = () => import('#controllers/tickets_controller')
 const ProfilesController = () => import('#controllers/profiles_controller')
-const CvsController = () => import('#controllers/cvs_controller')
+const UsersController = () => import('#controllers/users_controller')
 
 const StoreController = () => import('#controllers/store_controller')
 const ReferralsController = () => import('#controllers/referrals_controller')
@@ -201,23 +199,23 @@ router
   .prefix('cv') // dummy route for testing
   .use(middleware.wip())
 
-router
-  .group(() => {
-    router.get('/cv/name', [CvsController, 'showName'])
-    router.post('/cv/upload', [CvsController, 'upload'])
-    router.delete('cv/delete', [CvsController, 'delete'])
-    router.get('cv/uploads/*', ({ request, response }) => {
-      const filePath = `${request.param('*').join(sep)}_resume.pdf`
-      const PATH_TRAVERSAL_REGEX = /(?:^|[\\/])\.\.(?:[\\/]|$)/
-      const normalizedPath = normalize(filePath)
-      if (PATH_TRAVERSAL_REGEX.test(normalizedPath)) {
-        return response.badRequest('Malformed path')
-      }
-      const absolutePath = app.makePath('storage/uploads/cvs', normalizedPath)
-      return response.download(absolutePath)
-    })
+
+router.
+  group(() => {
+    router.get('/cv', [UsersController, 'showCV'])
+    router.post('/cv/upload', [UsersController, 'storeCV'])
+    router.delete('cv/delete', [UsersController, 'deleteCV'])
+    router.get('/cv/name', [UsersController, 'showCVName'])
+    router.get('/:id/cv/download', [UsersController, 'downloadCV']).use( middleware.company())
+
+    // Avatar endpoints
+    router.get('/avatar', [UsersController, 'showAvatar'])
+    router.get('/avatar/name', [UsersController, 'showAvatarName'])
+    router.post('/avatar/upload', [UsersController, 'storeAvatar'])
+    router.delete('/avatar/delete', [UsersController, 'deleteAvatar'])
+
   })
-  .use([middleware.auth(), middleware.wip()])
+  .use(middleware.auth())
   .prefix('user')
 
 router
