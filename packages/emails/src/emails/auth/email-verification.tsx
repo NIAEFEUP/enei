@@ -52,6 +52,6 @@ EmailVerification.defaultProps = {
   logoUrl: 'https://eneiconf.pt/images/logo-white.svg',
   email: 'participante@eneiconf.pt',
   verificationLink: 'https://eneiconf.pt/auth/verify?email=participante@eneiconf.pt',
-}
+} satisfies React.ComponentProps<typeof EmailVerification>
 
 export default EmailVerification

@@ -1,8 +1,8 @@
 'use client'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@enei/shadcn/ui/card'
 import { InferPageProps } from '@adonisjs/inertia/types'
-import OrdersController from '#controllers/orders_controller'
-import Page from '~/components/common/page'
+import OrdersController from '@enei/backend/app/controllers/orders_controller'
+import Page from '#components/common/page'
 interface Order {
   id: number
   requestId: string

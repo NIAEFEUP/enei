@@ -1,6 +1,6 @@
 packages:
-  # - "apps/*"
-  # - "packages/*"
+  - apps/backend
+  - apps/frontend
   - packages/data
   - packages/emails
   - packages/prettier-config
@@ -8,3 +8,12 @@ packages:
   - packages/typescript-config
   - packages/utils
   - packages/vite-config
+  
+onlyBuiltDependencies:
+  - '@swc/core'
+  - better-sqlite3
+  - core-js-pure
+  - esbuild
+  - msgpackr-extract
+  - msw
+  - sharp

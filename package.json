@@ -13,14 +13,14 @@
     "@enei/prettier-config": "workspace:*",
     "@enei/typescript-config": "workspace:*",
     "concurrently": "^9.1.2",
-    "prettier": "^2.6.2",
-    "typescript": "5.7.3"
+    "prettier": "^2.8.8",
+    "typescript": "5.8.2"
   },
   "engines": {
     "node": ">=22"
   },
   "prettier": "@enei/prettier-config",
-  "packageManager": "pnpm@9.5.0",
+  "packageManager": "pnpm@10.6.4",
   "pnpm": {
     "overrides": {
       "strtok3": "8.0.1"

@@ -1,4 +1,4 @@
-import { cn } from '~/lib/utils'
+import { cn } from '@enei/utils/cn'
 
 export default function Container({
   className,

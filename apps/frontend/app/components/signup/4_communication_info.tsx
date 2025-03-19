@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { useTuyau } from '~/hooks/use_tuyau'
+import { useTuyau } from '#hooks/use_tuyau'
 import { Checkbox } from '../ui/checkbox'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import MultipleSelector, { Option } from '../ui/multiple-selector'
@@ -12,14 +12,14 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
   CommunicationsInfo,
   communicationsInfoSchema,
-} from '~/pages/signup/schema'
+} from '#pages/signup/schema'
 import { useAtom, useSetAtom } from 'jotai/react'
 import {
   personalInfoAtom,
   educationInfoAtom,
   logisticsInfoAtom,
   communicationsInfoAtom,
-} from '~/pages/signup/atoms'
+} from '#pages/signup/atoms'
 import StepperFormActions from './actions'
 import { PageProps } from '@adonisjs/inertia/types'
 import { router, usePage } from '@inertiajs/react'

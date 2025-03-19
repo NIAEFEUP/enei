@@ -1,11 +1,4 @@
-/// <reference path="../../adonisrc.ts" />
-/// <reference path="../../config/ally.ts" />
-/// <reference path="../../config/auth.ts" />
-/// <reference path="../../config/inertia.ts" />
-/// <reference path="../../config/limiter.ts" />
-/// <reference path="../../config/redis.ts" />
-
-import '../css/app.css'
+import '#resources/css/app.css'
 
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import { createInertiaApp } from '@inertiajs/react'

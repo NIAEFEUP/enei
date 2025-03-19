@@ -1,11 +1,11 @@
 import { useForm } from '@inertiajs/react'
-import { Button } from '~/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
-import { useCooldown } from '~/hooks/use_cooldown'
-import { useToast } from '~/hooks/use_toast'
-import { useTuyau } from '~/hooks/use_tuyau'
-import BaseLayout from '~/layouts/base'
-import CardLayout from '~/layouts/card'
+import { Button } from '@enei/shadcn/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@enei/shadcn/ui/card'
+import { useCooldown } from '#hooks/use_cooldown'
+import { useToast } from '#hooks/use_toast'
+import { useTuyau } from '#hooks/use_tuyau'
+import BaseLayout from '#layouts/base'
+import CardLayout from '#layouts/card'
 
 export default function EmailVerification() {
   const tuyau = useTuyau()

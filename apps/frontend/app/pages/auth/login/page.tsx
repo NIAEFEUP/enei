@@ -1,13 +1,13 @@
 import { Link } from '@tuyau/inertia/react'
-import { Button } from '~/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
-import { Input } from '~/components/ui/input'
-import { Label } from '~/components/ui/label'
-import { useError } from '~/hooks/use_error'
+import { Button } from '@enei/shadcn/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@enei/shadcn/ui/card'
+import { Input } from '@enei/shadcn/ui/input'
+import { Label } from '@enei/shadcn/ui/label'
+import { useError } from '#hooks/use_error'
 import { useForm } from '@inertiajs/react'
-import { cn } from '~/lib/utils'
-import Page from '~/components/common/page'
-import CardContainer from '~/components/common/containers/card'
+import { cn } from '@enei/utils/cn'
+import Page from '#components/common/page'
+import CardContainer from '#components/common/containers/card'
 
 export default function Login() {
   const oauthError = useError('oauth')

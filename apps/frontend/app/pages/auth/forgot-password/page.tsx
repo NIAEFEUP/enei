@@ -1,12 +1,12 @@
-import { Button } from '~/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
-import { Input } from '~/components/ui/input'
-import { Label } from '~/components/ui/label'
-import { useError } from '~/hooks/use_error'
+import { Button } from '@enei/shadcn/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@enei/shadcn/ui/card'
+import { Input } from '@enei/shadcn/ui/input'
+import { Label } from '@enei/shadcn/ui/label'
+import { useError } from '#hooks/use_error'
 import { useForm } from '@inertiajs/react'
-import { cn } from '~/lib/utils'
-import BaseLayout from '~/layouts/base'
-import CardLayout from '~/layouts/card'
+import { cn } from '@enei/utils/cn'
+import BaseLayout from '#layouts/base'
+import CardLayout from '#layouts/card'
 
 export default function ForgotPassword() {
   const oauthError = useError('oauth')

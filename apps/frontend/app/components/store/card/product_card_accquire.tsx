@@ -1,15 +1,15 @@
 import React, { useState, useContext } from 'react'
 
-import { StoreContext } from '~/pages/store/page'
-import { Button } from '~/components/ui/button'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog'
+import { StoreContext } from '#pages/store/page'
+import { Button } from '@enei/shadcn/ui/button'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@enei/shadcn/ui/dialog'
 
 import { useForm } from '@inertiajs/react'
-import { useToast } from '~/hooks/use_toast'
+import { useToast } from '#hooks/use_toast'
 
-import { canBuyProduct } from '~/lib/enei/store/utils'
+import { canBuyProduct } from '#lib/enei/store/utils'
 
-import type Product from '#models/product'
+import type Product from '@enei/backend/app/models/product'
 
 interface ProductAcquireDisplayTextProps {
   product: Product,

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { createCountdown, type CreateCountdownOptions, type TimeLeft } from '~/lib/countdown'
+import { createCountdown, type CreateCountdownOptions, type TimeLeft } from '#lib/countdown'
 
 export function useCountdown({
   utcTarget,

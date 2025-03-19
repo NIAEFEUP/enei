@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import transports from '#data/enei/signup/transports.json' with { type: 'json' }
 import shirts from '#data/enei/signup/shirts.json' with { type: 'json' }
-import { getUniversityById } from '~/lib/enei/signup/universities'
+import { getUniversityById } from '#lib/enei/signup/universities'
 
 const university = z
   .string()

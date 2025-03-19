@@ -14,13 +14,29 @@
     "@enei/typescript-config": "workspace:*"
   },
   "exports": {
+    "./signup/heard-about": {
+      "types": "./src/signup/heard-about.ts",
+      "default": "./dist/signup/heard-about.js"
+    },
     "./signup/shirts": {
       "types": "./src/signup/shirts.ts",
       "default": "./dist/signup/shirts.js"
     },
+    "./signup/transports": {
+      "types": "./src/signup/transports.ts",
+      "default": "./dist/signup/transports.js"
+    },
     "./districts": {
       "types": "./src/districts.ts",
       "default": "./dist/districts.js"
+    },
+    "./editions": {
+      "types": "./src/editions.ts",
+      "default": "./dist/editions.js"
+    },
+    "./universities": {
+      "types": "./src/universities.ts",
+      "default": "./dist/universities.js"
     }
   }
 }

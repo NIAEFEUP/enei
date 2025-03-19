@@ -14,6 +14,7 @@
     "src/**/*"
   ],
   "references": [
+    // Reference dependency projects
     { "path": "../utils/tsconfig.lib.json" },
   ]
 }

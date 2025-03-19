@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import Page from '~/components/common/page';
+import Page from '#components/common/page';
 
 export default function Faq() {
     const [openQuestions, setOpenQuestions] = useState<{ [key: string]: boolean }>({});

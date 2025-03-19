@@ -1,14 +1,14 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
 
-import Page from '~/components/common/page'
-import Container from '~/components/common/containers'
-import PointsStoreProductCard from '~/components/store/card/product_card'
+import Page from '#components/common/page'
+import Container from '#components/common/containers/index'
+import PointsStoreProductCard from '#components/store/card/product_card'
 
-import type Product from '#models/product'
+import type Product from '@enei/backend/app/models/product'
 
 import { useState, createContext } from 'react'
 
-import StoreController from '#controllers/store_controller'
+import StoreController from '@enei/backend/app/controllers/store_controller'
 
 type PointsStoreContextType = {
   userPoints: number,

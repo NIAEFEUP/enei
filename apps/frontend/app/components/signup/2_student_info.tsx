@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
-import { Button } from '~/components/ui/button'
+import { Button } from '@enei/shadcn/ui/button'
 import {
   Command,
   CommandEmpty,
@@ -8,20 +8,20 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '~/components/ui/command'
-import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
+} from '@enei/shadcn/ui/command'
+import { Popover, PopoverContent, PopoverTrigger } from '@enei/shadcn/ui/popover'
 import CurricularYearSelector, { CurricularYearSelectorType } from './input/curricular_year_input'
 
 import { Check, ChevronsUpDown } from 'lucide-react'
-import { cn } from '~/lib/utils'
+import { cn } from '@enei/utils/cn'
 import { Input } from '../ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { EducationInfo, educationInfoSchema } from '~/pages/signup/schema'
-import { getUniversityById, universities } from '~/lib/enei/signup/universities'
+import { EducationInfo, educationInfoSchema } from '#pages/signup/schema'
+import { getUniversityById, universities } from '#lib/enei/signup/universities'
 import { useMemo } from 'react'
 import { useStepper } from '../ui/stepper'
 import { useAtom, useSetAtom } from 'jotai/react'
-import { educationInfoAtom } from '~/pages/signup/atoms'
+import { educationInfoAtom } from '#pages/signup/atoms'
 import StepperFormActions from './actions'
 
 function UniversitySelection({ value }: { value?: string }) {

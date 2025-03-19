@@ -1,19 +1,19 @@
 import { InferPageProps } from '@adonisjs/inertia/types'
-import ProfilesController from '#controllers/profiles_controller'
-import ParticipantProfile from '#models/participant_profile'
-import { Button, buttonVariants } from '~/components/ui/button'
-import Page from '~/components/common/page'
-import Container from '~/components/common/containers'
-import { getUniversityById } from '~/lib/enei/signup/universities'
+import ProfilesController from '@enei/backend/app/controllers/profiles_controller'
+import ParticipantProfile from '@enei/backend/app/models/participant_profile'
+import { Button, buttonVariants } from '@enei/shadcn/ui/button'
+import Page from '#components/common/page'
+import Container from '#components/common/containers'
+import { getUniversityById } from '#lib/enei/signup/universities'
 import { Download, User, Github, Linkedin, Globe, QrCode, LucideProps, Pencil} from 'lucide-react'
-import { Dialog, DialogContent, DialogTrigger } from '~/components/ui/dialog'
+import { Dialog, DialogContent, DialogTrigger } from '@enei/shadcn/ui/dialog'
 import { QRCodeSVG } from 'qrcode.react';
 import { useEffect, useState } from 'react'
 import { Link } from '@tuyau/inertia/react'
-import { cn } from '~/lib/utils'
-import { Badge } from '~/components/ui/badge'
+import { cn } from '@enei/utils/cn'
+import { Badge } from '@enei/shadcn/ui/badge'
 import editions from '#data/enei/editions.json' with { type: 'json' }
-import { Option } from '~/components/ui/multiple-selector'
+import { Option } from '@enei/shadcn/ui/multiple-selector'
 
 interface SocialIconProps {
   icon: React.FC<LucideProps>;

@@ -5,17 +5,17 @@
   "type": "module",
   "scripts": {
     "build": "tsc -b tsconfig.lib.json --pretty --verbose",
-    "dev": "node --run build -- --watch --diagnostics false --preserveWatchOutput" 
+    "dev": "node --run build -- --watch --diagnostics false --preserveWatchOutput"
   },
   "dependencies": {
-    "vite-plugin-dts": "^4.5.0",
+    "vite-plugin-dts": "^4.5.3",
     "vite-plugin-externalize-deps": "^0.9.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
     "@enei/typescript-config": "workspace:*",
     "typescript": "^5.8.2",
-    "vite": "^6.1.0"
+    "vite": "^6.2.2"
   },
   "peerDependencies": {
     "vite": "^6.1.0"

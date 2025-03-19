@@ -1,9 +1,9 @@
 import { Calendar, Clock, MapPin, Ticket, Users, Info, ClipboardCheck } from 'lucide-react'
-import { Button } from '~/components/ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
-import { Separator } from '~/components/ui/separator'
-import BaseLayout from '~/layouts/base'
+import { Button } from '@enei/shadcn/ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from '@enei/shadcn/ui/avatar'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@enei/shadcn/ui/card'
+import { Separator } from '@enei/shadcn/ui/separator'
+import BaseLayout from '#layouts/base'
 
 export default function EventRegistrationPage() {
   const title = 'Cybersecurity & Password Cracking'

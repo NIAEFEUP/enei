@@ -1,9 +1,9 @@
 import { Head } from '@inertiajs/react'
 import React from 'react'
-import { cn } from '~/lib/utils'
+import { cn } from '@enei/utils/cn'
 import { Navbar } from './navbar'
-import {Toaster} from '~/components/ui/toaster'
-import { useAuth } from '~/hooks/use_auth'
+import {Toaster} from '@enei/shadcn/ui/toaster'
+import { useAuth } from '#hooks/use_auth'
 import { Notification } from '../notifications'
 
 function PromoterNotification() {

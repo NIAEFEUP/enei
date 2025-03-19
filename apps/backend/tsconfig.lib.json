@@ -11,7 +11,14 @@
     "outDir": "./dist",
 
     // Projects
-    "tsBuildInfoFile": "./dist/tsconfig.lib.tsbuildinfo",
+    "tsBuildInfoFile": "./dist/tsconfig.lib.tsbuildinfo"
+
+    // "baseUrl": "./",
+    // "paths": {
+    //   "@vinejs/vine/*": ["node_modules/@vinejs/vine/build/*.js"],
+      // "flydrive/*": ["node_modules/flydrive/build/*.js"],
+      // "@adonisjs/http-server/*": ["node_modules/.pnpm/@adonisjs+http-server@7.5.0_@adonisjs+application@8.3.1_@adonisjs+config@5.0.2_@adonisjs+fold_nvm6dxnyv45oxfqpc5637lybye/node_modules/@adonisjs/http-server/build/src/*.js"], 
+    // }
   },
   "include": [
     "app/**/*.ts",

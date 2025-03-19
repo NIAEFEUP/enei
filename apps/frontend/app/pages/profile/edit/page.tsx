@@ -1,11 +1,11 @@
 import { InferPageProps } from '@adonisjs/inertia/types'
-import ProfilesController from '#controllers/profiles_controller'
-import ParticipantProfile from '#models/participant_profile'
-import { Card } from '~/components/ui/card'
-import { Button } from '~/components/ui/button'
-import Page from '~/components/common/page'
-import Container from '~/components/common/containers'
-import { getUniversityById } from '~/lib/enei/signup/universities'
+import ProfilesController from '@enei/backend/app/controllers/profiles_controller'
+import ParticipantProfile from '@enei/backend/app/models/participant_profile'
+import { Card } from '@enei/shadcn/ui/card'
+import { Button } from '@enei/shadcn/ui/button'
+import Page from '#components/common/page'
+import Container from '#components/common/containers'
+import { getUniversityById } from '#lib/enei/signup/universities'
 import { Download, EyeOff, User, Github, Instagram, Linkedin, Globe, LucideProps } from 'lucide-react'
 
 interface SocialIconProps {

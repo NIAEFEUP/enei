@@ -1,13 +1,13 @@
-import { Card, CardFooter, CardHeader, CardContent } from '~/components/ui/card'
+import { Card, CardFooter, CardHeader, CardContent } from '@enei/shadcn/ui/card'
 import PointsStoreProductCardAccquire from './product_card_accquire'
 
-import { cn } from '~/lib/utils'
+import { cn } from '@enei/utils/cn'
 import { useContext, useState } from 'react'
-import { StoreContext } from '~/pages/store/page'
+import { StoreContext } from '#pages/store/page'
 
-import { canBuyProduct } from '~/lib/enei/store/utils'
+import { canBuyProduct } from '#lib/enei/store/utils'
 
-import type Product from '#models/product'
+import type Product from '@enei/backend/app/models/product'
 import ProductCardStock from './product_card_stock'
 
 interface StoreProductCardProps {

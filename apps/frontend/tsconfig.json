@@ -1,12 +1,13 @@
+// This file is used to allow IDEs to understand the project structure.
+// It is not used to compile the project.
 {
-  "extends": "@adonisjs/tsconfig/tsconfig.client.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "module": "ESNext",
-    "jsx": "react-jsx",
-    "paths": {
-      "~/*": ["./*"]
-    }
-  },
-  "include": ["./**/*.ts", "./**/*.tsx"]
+  "files": [],
+  "references": [
+      { "path": "./tsconfig.lib.json" },
+      { "path": "./tsconfig.tools.json" },
+    // Reference dependency projects
+    { "path": "../backend" },
+    // { "path": "../../packages/emails" },
+    // { "path": "../../packages/utils" },
+  ]
 }

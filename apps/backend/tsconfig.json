@@ -3,7 +3,7 @@
 {
     "files": [],
     "references": [
-        { "path": "./tsconfig.lib.json" },
+      { "path": "./tsconfig.lib.json" },
       // Reference dependency projects
       { "path": "../../packages/data" },
       { "path": "../../packages/emails" },

@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@enei/typescript-config": "workspace:*",
-    "prettier": "^3.5.0"
+    "prettier": "^3.5.3"
   },
   "dependencies": {
     "prettier-plugin-edgejs": "^1.0.0",

@@ -1,13 +1,13 @@
 import { Button, Container, Heading, Text, Img, Body, Section } from '@react-email/components'
 import { BaseLayout } from '#layouts/base.js'
 
-export type EmailVerificationProps = {
+export type ForgotPasswordProps = {
   logoUrl: string
   email: string
   verificationLink: string
 }
 
-const ForgotPassword = ({ logoUrl, email, verificationLink }: EmailVerificationProps) => {
+const ForgotPassword = ({ logoUrl, email, verificationLink }: ForgotPasswordProps) => {
   return (
     <BaseLayout>
       <Body>
@@ -42,7 +42,7 @@ ForgotPassword.defaultProps = {
   logoUrl: 'https://eneiconf.pt/images/logo-white.svg',
   email: 'participante@eneiconf.pt',
   verificationLink: 'https://eneiconf.pt/auth/forgot/callback?email=participante@eneiconf.pt',
-}
+} satisfies React.ComponentProps<typeof ForgotPassword>
 
 export default ForgotPassword
 

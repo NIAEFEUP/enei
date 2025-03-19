@@ -1,0 +1,26 @@
+{
+  "extends": [
+    "@enei/typescript-config/env/client",
+    "@enei/typescript-config/type/app"
+  ], 
+  "compilerOptions": {
+    // Modules
+    "rootDir": "./",
+
+    // Emit
+    "outDir": "./dist/tsc",
+
+    // Projects
+    "tsBuildInfoFile": "./dist/tsc/tsconfig.lib.tsbuildinfo",
+  },
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+  ],
+  "references": [
+    // Reference dependency projects
+    { "path": "../backend/tsconfig.lib.json" },
+    // { "path": "../../packages/emails/tsconfig.lib.json" },
+    // { "path": "../../packages/utils/tsconfig.lib.json" },
+  ]
+}

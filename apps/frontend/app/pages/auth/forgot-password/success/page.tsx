@@ -1,8 +1,8 @@
 import { Link } from '@tuyau/inertia/react'
-import { buttonVariants } from '~/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
-import BaseLayout from '~/layouts/base'
-import CardLayout from '~/layouts/card'
+import { buttonVariants } from '@enei/shadcn/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@enei/shadcn/ui/card'
+import BaseLayout from '#layouts/base'
+import CardLayout from '#layouts/card'
 
 export default function EmailVerification() {
   return (

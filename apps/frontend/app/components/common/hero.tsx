@@ -1,5 +1,5 @@
 import React from 'react'
-import { cn } from '~/lib/utils'
+import { cn } from '@enei/utils/cn'
 
 export default function Hero({
   className,

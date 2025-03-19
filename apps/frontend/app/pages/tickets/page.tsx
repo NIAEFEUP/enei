@@ -2,11 +2,11 @@
 
 import type { InferPageProps } from '@adonisjs/inertia/types'
 import { Link } from '@tuyau/inertia/react'
-import { Card, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
-import TicketsController from '#controllers/tickets_controller'
-import Page from '~/components/common/page'
-import Container from '~/components/common/containers'
-import { cn } from '~/lib/utils'
+import { Card, CardDescription, CardHeader, CardTitle } from '@enei/shadcn/ui/card'
+import TicketsController from '@enei/backend/app/controllers/tickets_controller'
+import Page from '#components/common/page'
+import Container from '#components/common/containers/index'
+import { cn } from '@enei/utils/cn'
 
 export default function SelectTicketsPage(props: InferPageProps<TicketsController, 'index'>) {
   const imageSrc = `favicon.svg`

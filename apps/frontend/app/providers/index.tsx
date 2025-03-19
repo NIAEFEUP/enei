@@ -1,6 +1,6 @@
 import { Provider as JotaiProvider } from 'jotai/react'
 import { TuyauProvider } from './tuyau'
-import { NotificationProvider } from '~/components/notifications'
+import { NotificationProvider } from '#components/notifications'
 
 export function Providers({ children }: { children?: React.ReactNode }) {
   return (

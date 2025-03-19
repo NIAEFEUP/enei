@@ -1,6 +1,12 @@
 {
     "compilerOptions": {
         // Emit
-        "removeComments": true
+        // "declaration": false,
+        // "declarationMap": false,
+        "removeComments": true,
+
+
+        // Projects
+        // "composite": false,
     }
 }

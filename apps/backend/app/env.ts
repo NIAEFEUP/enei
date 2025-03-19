@@ -1,5 +1,5 @@
 import vine from '@vinejs/vine'
-import type { ConstructableSchema, SchemaTypes } from '@vinejs/vine/types'
+import type { ConstructableSchema } from '@vinejs/vine/types'
 import { EnvProcessor, Env as AdonisEnv } from '@adonisjs/core/env'
 
 type Primitives = string | number | boolean | null | undefined
@@ -7,10 +7,10 @@ type Primitives = string | number | boolean | null | undefined
 function createObjectInterceptor() {
   const keys = new Set<string>()
 
-  function object<Properties extends Record<string, SchemaTypes>>(schema: Properties) {
+  const object: typeof vine.object = (schema) => {
     Object.keys(schema).forEach((key) => keys.add(key))
     return vine.object(schema)
-  }
+  };
 
   return {
     keys,

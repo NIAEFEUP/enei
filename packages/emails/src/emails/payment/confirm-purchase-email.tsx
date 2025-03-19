@@ -1,21 +1,20 @@
 import { Container, Heading, Text, Img, Body, Section} from '@react-email/components'
 import { BaseLayout } from '#layouts/base.js'
+
 export type ProductWithQuantity = {
-    id: number
     name: string
     price: number
     quantity: number
   }
   
-export type MailProps = {
+export type ConfirmPurchaseEmailProps = {
     logoUrl: string
-    userEmail: string
+    email: string
     products: ProductWithQuantity[]
     total: number
-    orderId: number
   }
 
-const ConfirmPurchaseEmail = ({ logoUrl, products, total, userEmail }: MailProps) => {
+const ConfirmPurchaseEmail = ({ logoUrl, products, total, email }: ConfirmPurchaseEmailProps) => {
     return (
         <BaseLayout>
             <Body>
@@ -36,7 +35,7 @@ const ConfirmPurchaseEmail = ({ logoUrl, products, total, userEmail }: MailProps
                     
                     <Section>
                         <Text className="text-primary text-center px-[50px]">
-                            Este e-mail foi enviado para: <span className="underline">{userEmail}</span>
+                            Este e-mail foi enviado para: <span className="underline">{email}</span>
                         </Text>
                     </Section>
                 </Container>
@@ -44,4 +43,18 @@ const ConfirmPurchaseEmail = ({ logoUrl, products, total, userEmail }: MailProps
         </BaseLayout>
     )
 }
+
+ConfirmPurchaseEmail.defaultProps = {
+    logoUrl: 'https://eneiconf.pt/images/logo-white.svg',
+    email: 'participante@eneiconf.pt',
+    products: [
+        {
+            name: 'Bilhete Early Bird - Com Alojamento',
+            price: 35,
+            quantity: 1
+        }
+    ],
+    total: 35,
+} satisfies React.ComponentProps<typeof ConfirmPurchaseEmail>;
+
 export default ConfirmPurchaseEmail

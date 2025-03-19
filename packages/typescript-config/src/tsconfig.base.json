@@ -20,6 +20,7 @@
     // Emit
     "declaration": true,
     "declarationMap": true,
+    "noEmitOnError": true,
     "sourceMap": true,
 
     // JavaScript Support

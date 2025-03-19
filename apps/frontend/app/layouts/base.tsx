@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react'
-import { Navbar } from '~/components/common/navbar'
-import { Toaster } from '~/components/ui/toaster'
-import { cn } from '~/lib/utils'
+import { Navbar } from '#components/common/navbar'
+import { Toaster } from '@enei/shadcn/ui/toaster'
+import { cn } from '@enei/utils/cn'
 
 type Props = {
   title: string
