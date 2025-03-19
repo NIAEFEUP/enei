@@ -1,9 +1,9 @@
-import BaseLayout from '~/layouts/base'
 import { DaySelector } from '~/components/events/day_selector'
 import { useState } from 'react'
 import { Card } from '~/components/ui/card'
 import LongActivities from '~/components/events/long_activities'
 import EventsProgram from '~/components/events/schedule/events_program'
+import Page from '~/components/common/page'
 
 interface Speaker {
   firstName: string
@@ -14,7 +14,7 @@ interface Speaker {
 interface Event {
   id: number
   title: string
-  type: 'activity' | 'workshop' | 'other'
+  type: 'talk' | 'workshop' | 'night' | 'meal' | 'competition' | 'networking' | 'other'
   date: string
   time: string
   location: string
@@ -60,9 +60,9 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
   }
 
   return (
-    <BaseLayout title="Eventos" className="bg-enei-beige ">
+    <Page title="Eventos" className="bg-enei-beige" variant="beige">
       <div className="flex justify-center mt-10 relative z-10">
-        <Card className="w-full max-w-7xl mx-auto border-transparent shadow-transparent bg-transparent">
+        <Card className="w-full max-w-7xl mx-4 border-transparent shadow-transparent bg-transparent">
           <div className="mb-10">
             <DaySelector
               activeIndex={currentActiveIndex}
@@ -99,11 +99,9 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
 
           <LongActivities currentActiveIndex={currentActiveIndex} />
 
-          <div className="mt-5">
-            <EventsProgram currentActiveIndex={currentActiveIndex} eventsByDay={eventsByDay} />
-          </div>
+          <EventsProgram currentActiveIndex={currentActiveIndex} eventsByDay={eventsByDay} />
         </Card>
       </div>
-    </BaseLayout>
+    </Page>
   )
 }

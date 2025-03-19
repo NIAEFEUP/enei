@@ -13,7 +13,7 @@ interface Speaker {
 interface Event {
   id: number
   title: string
-  type: 'activity' | 'workshop' | 'other'
+  type: 'talk' | 'workshop' | 'night' | 'meal' | 'competition' | 'networking' | 'other'
   date: string
   time: string
   location: string
