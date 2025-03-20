@@ -160,7 +160,7 @@ export default function EventsPageApril13({ events }: EventsPageProps) {
           speakers={[]}
         />
       </div>
-      <div className="row-start-7">
+      {/* <div className="row-start-7"> */}
         {/*
         <EventCard
           id={events[9].id}
@@ -172,7 +172,7 @@ export default function EventsPageApril13({ events }: EventsPageProps) {
           onClick={() => router.visit(`/events/${events[9].id}`)}
         />
         */}
-      </div>
+      {/* </div> */}
       <div className="col-start-1 row-start-8">
         <EventCard
           id={events[11].id}
