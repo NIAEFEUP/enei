@@ -33,12 +33,14 @@ export default function Page({
   children?: React.ReactNode
 }) {
   return (
-    <div className="w-full min-h-dvh scroll-smooth relative flex flex-col">
+    <div className={cn("w-full min-h-dvh scroll-smooth flex flex-col", variant === "blue" ? "bg-enei-blue" : "bg-enei-beige")}>
       <Head title={title} />
-      <Navbar className="sticky top-0 z-20 grow-0" variant={variant} />
-      <PromoterNotification />
+      <div className="relative pb-48">
+        <Navbar className="sticky top-0 z-20 grow-0" variant={variant} />
+        <PromoterNotification />
+        <div className={className}>{children}</div>
+      </div>
       <Toaster />
-      <div className={cn('relative pb-48', className)}>{children}</div>
       <Footer />
     </div>
   )

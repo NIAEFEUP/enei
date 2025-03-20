@@ -91,7 +91,7 @@ function BackgroundGradient({ className }: { className?: string }) {
 
 function Background() {
   return (
-    <div className="absolute inset-0 isolate -z-10">
+    <div className="absolute inset-0 isolate">
       <div className="relative size-full">
         <BackgroundGradient className="z-10" />
         <img

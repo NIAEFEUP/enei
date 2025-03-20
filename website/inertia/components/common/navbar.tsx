@@ -84,12 +84,11 @@ export function Navbar({ className, variant }: { className?: string; variant?: '
 
   return (
     <>
-      <NotificationContainer className="w-full flex flex-col" />
+      <NotificationContainer className="w-full flex flex-col relative z-20" />
       <nav
         className={cn(
           'w-full transition-colors duration-300',
-          !onTop && 'bg-enei-blue',
-          `bg-${bgColor}`,
+          !onTop && `bg-${bgColor}`,
           className
         )}
       >
