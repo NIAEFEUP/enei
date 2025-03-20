@@ -23,7 +23,6 @@ interface EventsPageProps {
 }
 
 export default function EventsPageApril13({ events }: EventsPageProps) {
-  console.log(events)
   return (
     <div className="flex flex-col space-y-4 md:grid md:grid-cols-4 md:grid-rows-11 md:gap-4 md:space-y-0">
       <div className="col-start-1 row-start-1 col-span-4">

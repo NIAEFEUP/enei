@@ -176,22 +176,25 @@ router
   .group(() => {
     router.get('/', [EventsController, 'index']).as('pages:events')
 
-    router.group(() => {
-      router.get('/:id', [EventsController, 'show']).as('pages:events.show')
-      // router
-      //   .post('/:id/register', [EventsController, 'register'])
-      //   .as('actions:events.register')
-      //   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
-      router.get('/:id/tickets', [EventsController, 'ticketsRemaining']).as('actions:events.tickets')
-      router
-        .get('/:id/is-registered', [EventsController, 'isRegistered'])
-        .as('actions:events.isRegistered')
-      router
-        .get('/:id/is-registered-by-email', [EventsController, 'isRegisteredByEmail'])
-        .as('actions:events.isRegisteredByEmail')
-        .use(middleware.companyBearerAuth())
-    })
-    .use(middleware.wip())
+    router
+      .group(() => {
+        router.get('/:id', [EventsController, 'show']).as('pages:events.show')
+        // router
+        //   .post('/:id/register', [EventsController, 'register'])
+        //   .as('actions:events.register')
+        //   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
+        router
+          .get('/:id/tickets', [EventsController, 'ticketsRemaining'])
+          .as('actions:events.tickets')
+        router
+          .get('/:id/is-registered', [EventsController, 'isRegistered'])
+          .as('actions:events.isRegistered')
+        router
+          .get('/:id/is-registered-by-email', [EventsController, 'isRegisteredByEmail'])
+          .as('actions:events.isRegisteredByEmail')
+          .use(middleware.companyBearerAuth())
+      })
+      .use(middleware.wip())
   })
   .prefix('events')
 

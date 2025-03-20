@@ -33,7 +33,12 @@ export default function Page({
   children?: React.ReactNode
 }) {
   return (
-    <div className={cn("w-full min-h-dvh scroll-smooth flex flex-col", variant === "blue" ? "bg-enei-blue" : "bg-enei-beige")}>
+    <div
+      className={cn(
+        'w-full min-h-dvh scroll-smooth flex flex-col',
+        variant === 'blue' ? 'bg-enei-blue' : 'bg-enei-beige'
+      )}
+    >
       <Head title={title} />
       <div className="relative pb-48">
         <Navbar className="sticky top-0 z-20 grow-0" variant={variant} />
