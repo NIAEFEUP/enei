@@ -161,7 +161,7 @@ export default function EventsPageApril13({ events }: EventsPageProps) {
         />
       </div>
       {/* <div className="row-start-7"> */}
-        {/*
+      {/*
         <EventCard
           id={events[9].id}
           title={events[9].title}
