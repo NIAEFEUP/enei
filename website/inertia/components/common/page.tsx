@@ -5,6 +5,7 @@ import { Navbar } from './navbar'
 import { Toaster } from '~/components/ui/toaster'
 import { useAuth } from '~/hooks/use_auth'
 import { Notification } from '../notifications'
+import Footer from './footer'
 
 function PromoterNotification() {
   const auth = useAuth()
@@ -28,16 +29,19 @@ export default function Page({
 }: {
   title: string
   className?: string
-  variant?: string
+  variant?: "blue" | "beige"
   children?: React.ReactNode
 }) {
   return (
-    <div className={cn('w-full min-h-dvh scroll-smooth relative flex flex-col', className)}>
+    <div className='w-full min-h-dvh scroll-smooth relative flex flex-col'>
       <Head title={title} />
       <Navbar className="sticky top-0 z-20 grow-0" variant={variant} />
       <PromoterNotification />
       <Toaster />
-      {children}
+      <div className={cn("relative pb-40", className)}>
+        {children}
+      </div>
+      <Footer />
     </div>
   )
 }

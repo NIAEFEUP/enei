@@ -1,9 +1,28 @@
 import { DaySelector } from '~/components/events/day_selector'
 import { useState } from 'react'
+<<<<<<< HEAD
 import { Card } from '~/components/ui/card'
 import LongActivities from '~/components/events/long_activities'
 import EventsProgram from '~/components/events/schedule/events_program'
 import Page from '~/components/common/page'
+import Container from '~/components/common/containers'
+||||||| parent of 0f5561b (feat: add footer)
+import { Card, CardTitle } from '~/components/ui/card'
+import EventsPageApril11 from '~/components/events/schedule/events_page_april11'
+import EventsPageApril12 from '~/components/events/schedule/events_page_april12'
+import EventsPageApril13 from '~/components/events/schedule/events_page_april13'
+import EventsPageApril14 from '~/components/events/schedule/events_page_april14'
+import EventCard from '~/components/events/event_card'
+=======
+import { Card, CardTitle } from '~/components/ui/card'
+import EventsPageApril11 from '~/components/events/schedule/events_page_april11'
+import EventsPageApril12 from '~/components/events/schedule/events_page_april12'
+import EventsPageApril13 from '~/components/events/schedule/events_page_april13'
+import EventsPageApril14 from '~/components/events/schedule/events_page_april14'
+import EventCard from '~/components/events/event_card'
+import Page from '~/components/common/page'
+import Container from '~/components/common/containers'
+>>>>>>> 0f5561b (feat: add footer)
 
 interface Speaker {
   firstName: string
@@ -60,7 +79,8 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
   }
 
   return (
-    <Page title="Eventos" className="bg-enei-beige" variant="beige">
+    <Page title="Eventos" variant="beige" className="bg-enei-beige pb-48">
+      <Container>
       <div className="flex justify-center mt-10 relative z-10">
         <Card className="w-full max-w-7xl mx-4 border-transparent shadow-transparent bg-transparent">
           <div className="mb-10">
@@ -82,16 +102,11 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
               .filter((event) => event.date === activeDate)
               .map((event) => (
                 <EventCard
-                  key={event.id}
-                  title={event.title}
-                  type={event.type}
-                  time={event.time}
-                  location={event.location}
-                  isRegistered={true}
-                  speakers={event.speakers}
-                  onClick={() => {
-                    router.visit(`/events/${event.id}`)
-                  }}
+                  title={'Check-in'}
+                  type={'activity'}
+                  time={'14:00 - 23:00'}
+                  location={'TBD - ISEP'}
+                  speakers={[]}
                 />
               ))}
           </div>
@@ -102,6 +117,7 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
           <EventsProgram currentActiveIndex={currentActiveIndex} eventsByDay={eventsByDay} />
         </Card>
       </div>
+      </Container>
     </Page>
   )
 }
