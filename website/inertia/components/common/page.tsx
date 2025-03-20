@@ -38,7 +38,7 @@ export default function Page({
       <Navbar className="sticky top-0 z-20 grow-0" variant={variant} />
       <PromoterNotification />
       <Toaster />
-      <div className={cn("relative pb-40", className)}>
+      <div className={cn("relative pb-48", className)}>
         {children}
       </div>
       <Footer />
