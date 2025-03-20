@@ -73,6 +73,6 @@ export default class ProfilesController {
 
     await user.related('participantProfile').associate(profileAdd)
 
-    return response.redirect().toRoute('pages:home')
+    return response.redirect().toRoute('pages:tickets')
   }
 }
