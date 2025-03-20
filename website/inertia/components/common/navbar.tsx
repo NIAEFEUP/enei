@@ -35,7 +35,7 @@ type PageRoute = {
 
 */
 
-function LoginButton({ variant }: { variant?: VariantProps<typeof buttonVariants>["variant"] }) {
+function LoginButton({ variant }: { variant?: VariantProps<typeof buttonVariants>['variant'] }) {
   return (
     <Link route="pages:auth.login" className={buttonVariants({ variant })}>
       Entrar
@@ -43,7 +43,7 @@ function LoginButton({ variant }: { variant?: VariantProps<typeof buttonVariants
   )
 }
 
-function LogoutButton({ variant }: { variant?: VariantProps<typeof buttonVariants>["variant"] }) {
+function LogoutButton({ variant }: { variant?: VariantProps<typeof buttonVariants>['variant'] }) {
   const tuyau = useTuyau()
   const { post } = useForm()
 
@@ -61,7 +61,7 @@ function LogoutButton({ variant }: { variant?: VariantProps<typeof buttonVariant
   )
 }
 
-export function Navbar({ className, variant }: { className?: string; variant?: "blue" | "beige" }) {
+export function Navbar({ className, variant }: { className?: string; variant?: 'blue' | 'beige' }) {
   const auth = useAuth()
   const [onTop, setOnTop] = useState(true)
 
@@ -80,7 +80,7 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
   }, [])
 
   const bgColor = variant === 'blue' ? 'enei-blue' : 'enei-beige'
-  const textColor = variant === "blue" ? "enei-beige" : "enei-blue"
+  const textColor = variant === 'blue' ? 'enei-beige' : 'enei-blue'
 
   return (
     <>
@@ -126,9 +126,11 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
               </Link>
               <div>
                 {auth.state === 'authenticated' ? (
-                  <LogoutButton variant={variant === "blue" ? "secondary" : "default"} />
+                  <LogoutButton variant={variant === 'blue' ? 'secondary' : 'default'} />
                 ) : (
-                  auth.state === 'unauthenticated' && <LoginButton variant={variant === "blue" ? "secondary" : "default"} />
+                  auth.state === 'unauthenticated' && (
+                    <LoginButton variant={variant === 'blue' ? 'secondary' : 'default'} />
+                  )
                 )}
               </div>
             </div>

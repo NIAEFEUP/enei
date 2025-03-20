@@ -29,18 +29,16 @@ export default function Page({
 }: {
   title: string
   className?: string
-  variant?: "blue" | "beige"
+  variant?: 'blue' | 'beige'
   children?: React.ReactNode
 }) {
   return (
-    <div className='w-full min-h-dvh scroll-smooth relative flex flex-col'>
+    <div className="w-full min-h-dvh scroll-smooth relative flex flex-col">
       <Head title={title} />
       <Navbar className="sticky top-0 z-20 grow-0" variant={variant} />
       <PromoterNotification />
       <Toaster />
-      <div className={cn("relative pb-48", className)}>
-        {children}
-      </div>
+      <div className={cn('relative pb-48', className)}>{children}</div>
       <Footer />
     </div>
   )
