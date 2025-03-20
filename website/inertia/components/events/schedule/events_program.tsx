@@ -31,7 +31,7 @@ export default function EventsProgram({ currentActiveIndex, eventsByDay }: Event
     <div className="flex flex-col space-y-5">
       <CardTitle>Programa</CardTitle>
 
-      {currentActiveIndex === 0 && <EventsPageApril11 events={eventsByDay['11-04-2025']} />}
+      {currentActiveIndex === 0 && <EventsPageApril11 />}
       {currentActiveIndex === 1 && <EventsPageApril12 events={eventsByDay['12-04-2025']} />}
       {currentActiveIndex === 2 && <EventsPageApril13 events={eventsByDay['13-04-2025']} />}
       {currentActiveIndex === 3 && <EventsPageApril14 events={eventsByDay['14-04-2025']} />}
