@@ -3,7 +3,7 @@ import { Badge } from '~/components/ui/badge'
 import { Ticket } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { cn } from '~/lib/utils'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 interface Speaker {
   firstName: string
@@ -21,24 +21,24 @@ interface EventCardProps {
   onClick?: () => void
 }
 
-export default function EventCard({ id, title, type, time, location, speakers }: EventCardProps) {
-  const [isRegistered, setIsRegistered] = useState(false)
+export default function EventCard({ title, type, time, location, speakers }: EventCardProps) {
+  const [isRegistered] = useState(false)
 
-  useEffect(() => {
-    async function fetchRegistrationStatus() {
-      if (!id) return
-      try {
-        const response = await fetch(`/events/${id}/is-registered`)
-        if (!response.ok) throw new Error('Failed to fetch registration status')
-        const data = await response.json()
-        setIsRegistered(data.isRegistered) // Update state}
-      } catch (error) {
-        console.error(error)
-        setIsRegistered(false)
-      }
-    }
-    fetchRegistrationStatus()
-  })
+  // useEffect(() => {
+  //   async function fetchRegistrationStatus() {
+  //     if (!id) return
+  //     try {
+  //       const response = await fetch(`/events/${id}/is-registered`)
+  //       if (!response.ok) throw new Error('Failed to fetch registration status')
+  //       const data = await response.json()
+  //       setIsRegistered(data.isRegistered) // Update state}
+  //     } catch (error) {
+  //       console.error(error)
+  //       setIsRegistered(false)
+  //     }
+  //   }
+  //   fetchRegistrationStatus()
+  // })
 
   const cardBackground = {
     talk: 'bg-enei-talk',
