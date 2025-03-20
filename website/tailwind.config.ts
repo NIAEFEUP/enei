@@ -18,6 +18,7 @@ export default {
       colors: {
         'enei-blue': 'hsl(var(--enei-blue))',
         'enei-beige': 'hsl(var(--enei-beige))',
+        'enei-emerald': 'hsl(var(--enei-emerald))',
         'primary': {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',

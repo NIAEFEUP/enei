@@ -1,9 +1,10 @@
 import { DaySelector } from '~/components/events/day_selector'
 import { useState } from 'react'
-import { Card } from '~/components/ui/card'
 import LongActivities from '~/components/events/long_activities'
 import EventsProgram from '~/components/events/schedule/events_program'
 import Page from '~/components/common/page'
+import Container from '~/components/common/containers'
+import { Card } from '~/components/ui/card'
 
 interface Speaker {
   firstName: string
@@ -60,19 +61,20 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
   }
 
   return (
-    <Page title="Eventos" className="bg-enei-beige" variant="beige">
-      <div className="flex justify-center mt-10 relative z-10">
-        <Card className="w-full max-w-7xl mx-4 border-transparent shadow-transparent bg-transparent">
-          <div className="mb-10">
-            <DaySelector
-              activeIndex={currentActiveIndex}
-              setActiveIndex={(index) => {
-                setCurrentActiveIndex(index)
-              }}
-              days={['11 de abril', '12 de abril', '13 de abril', '14 de abril']}
-            />
-          </div>
-          {/*
+    <Page title="Eventos" variant="beige" className="bg-enei-beige">
+      <Container>
+        <div className="flex justify-center mt-10 relative z-10">
+          <Card className="w-full max-w-7xl mx-4 border-transparent shadow-transparent bg-transparent">
+            <div className="mb-10">
+              <DaySelector
+                activeIndex={currentActiveIndex}
+                setActiveIndex={(index) => {
+                  setCurrentActiveIndex(index)
+                }}
+                days={['11 de abril', '12 de abril', '13 de abril', '14 de abril']}
+              />
+            </div>
+            {/*
             TODO: highlights
 
           <CardTitle className="mt-10">Destaques</CardTitle>
@@ -82,26 +84,22 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
               .filter((event) => event.date === activeDate)
               .map((event) => (
                 <EventCard
-                  key={event.id}
-                  title={event.title}
-                  type={event.type}
-                  time={event.time}
-                  location={event.location}
-                  isRegistered={true}
-                  speakers={event.speakers}
-                  onClick={() => {
-                    router.visit(`/events/${event.id}`)
-                  }}
+                  title={'Check-in'}
+                  type={'activity'}
+                  time={'14:00 - 23:00'}
+                  location={'TBD - ISEP'}
+                  speakers={[]}
                 />
               ))}
           </div>
           */}
 
-          <LongActivities currentActiveIndex={currentActiveIndex} />
+            <LongActivities currentActiveIndex={currentActiveIndex} />
 
-          <EventsProgram currentActiveIndex={currentActiveIndex} eventsByDay={eventsByDay} />
-        </Card>
-      </div>
+            <EventsProgram currentActiveIndex={currentActiveIndex} eventsByDay={eventsByDay} />
+          </Card>
+        </div>
+      </Container>
     </Page>
   )
 }

@@ -8,5 +8,5 @@ export default function CardContainer({
   className?: string
   children?: React.ReactNode
 }) {
-  return <Container className={cn('mt-24 w-full max-w-md', className)}>{children}</Container>
+  return <Container className={cn('mt-24 mb-40 w-full max-w-md', className)}>{children}</Container>
 }
