@@ -15,8 +15,6 @@ export default class CompanyBearerAuthMiddleware {
 
     const token = authHeader.replace('Bearer ', '')
 
-    console.log('Token:', env.get('COMPANY_BEARER_TOKEN'))
-
     if (token !== env.get('COMPANY_BEARER_TOKEN')) {
       return ctx.response.unauthorized({ error: 'Invalid token' })
     }

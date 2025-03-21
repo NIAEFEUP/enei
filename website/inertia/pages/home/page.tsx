@@ -91,7 +91,7 @@ function BackgroundGradient({ className }: { className?: string }) {
 
 function Background() {
   return (
-    <div className="absolute inset-0 isolate -z-10">
+    <div className="absolute inset-0 isolate">
       <div className="relative size-full">
         <BackgroundGradient className="z-10" />
         <img
@@ -109,18 +109,22 @@ export default function Home() {
     <Page title="Home">
       <Notification>
         <div className="bg-enei-beige px-4 py-4 bg-opacity-[62%] shadow-[0_4px_4px_rgba(0_0_0_/_25%)] text-enei-blue flex flex-col lg:flex-row gap-2 items-center justify-center">
-            <p className='text-center lg:text-left'><span>🎉</span> Os bilhetes para o ENEI 2025 já estão disponíveis!{' '}</p>
-            <Link
-              route="pages:tickets"
-              className={cn(buttonVariants({ variant: 'link' }), 'p-0 text-md h-fit')}
-            >
-              <p className='text-center'>Garante já o teu bilhete <ArrowRight className="inline-block" /></p>
-            </Link>
+          <p className="text-center lg:text-left">
+            <span>⏳</span> As inscrições para o ENEI fecham dia 30 de março!{' '}
+          </p>
+          <Link
+            route="pages:tickets"
+            className={cn(buttonVariants({ variant: 'link' }), 'p-0 text-md h-fit')}
+          >
+            <p className="text-center">
+              Garante já o teu bilhete <ArrowRight className="inline-block" />
+            </p>
+          </Link>
         </div>
       </Notification>
       <Background />
       <Hero className="h-auto flex-grow">
-        <Container>
+        <Container className="pb-32">
           <section className="relative flex flex-col gap-8 md:justify-between z-10">
             <div className="flex-grow md:flex-grow-0 py-4 sm:py-24 lg:py-20">
               <h1 className="w-3/12 text-justify font-space-grotesk text-5xl font-bold tracking-tight text-enei-beige leading-[60px] md:leading-[90px] md:text-7xl ">

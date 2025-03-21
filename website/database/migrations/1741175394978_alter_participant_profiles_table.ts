@@ -5,11 +5,13 @@ export default class extends BaseSchema {
 
   async up() {
     this.defer(async () => {
-      await this.db.query()
+      await this.db
+        .query()
         .update('purchased_ticket', 'early-bird-with-housing')
         .from(this.tableName)
         .whereIn(`${this.tableName}.id`, (db) => {
-          return db.select('users.participant_profile_id')
+          return db
+            .select('users.participant_profile_id')
             .from('users')
             .join('orders', 'users.id', 'orders.user_id')
             .where('orders.status', 'Success')
@@ -19,9 +21,7 @@ export default class extends BaseSchema {
 
   async down() {
     this.defer(async () => {
-      await this.db.query()
-        .update('purchased_ticket', null)
-        .from(this.tableName)
+      await this.db.query().update('purchased_ticket', null).from(this.tableName)
     })
   }
 }

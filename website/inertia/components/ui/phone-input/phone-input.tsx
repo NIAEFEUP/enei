@@ -35,7 +35,7 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> = React.forwa
       countrySelectComponent={CountrySelect}
       inputComponent={InputComponent}
       labels={pt}
-      locales='pt'
+      locales="pt"
       smartCaret={false}
       /**
        * Handles the onChange event.

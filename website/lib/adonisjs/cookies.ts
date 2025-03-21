@@ -6,27 +6,27 @@ type TypedCookieOptions = { kind: 'signed' } | { kind: 'encrypted' }
 const defaultOptions: TypedCookieOptions = { kind: 'signed' }
 
 class RawSignedCookie {
-    constructor(public name: string) {}
+  constructor(public name: string) {}
 
-    get(ctx: HttpContext, defaultValue?: string) {
-        return ctx.request.cookie(this.name, defaultValue)
-    }
+  get(ctx: HttpContext, defaultValue?: string) {
+    return ctx.request.cookie(this.name, defaultValue)
+  }
 
-    set(ctx: HttpContext, value: any, options?: Partial<CookieOptions>) {
-        ctx.response.cookie(this.name, value, options)
-    }
+  set(ctx: HttpContext, value: any, options?: Partial<CookieOptions>) {
+    ctx.response.cookie(this.name, value, options)
+  }
 }
 
 class RawEncryptedCookie {
-    constructor(public name: string) {}
+  constructor(public name: string) {}
 
-    get(ctx: HttpContext, defaultValue?: string) {
-        return ctx.request.encryptedCookie(this.name, defaultValue)
-    }
+  get(ctx: HttpContext, defaultValue?: string) {
+    return ctx.request.encryptedCookie(this.name, defaultValue)
+  }
 
-    set(ctx: HttpContext, value: any, options?: Partial<CookieOptions>) {
-        ctx.response.encryptedCookie(this.name, value, options)
-    }
+  set(ctx: HttpContext, value: any, options?: Partial<CookieOptions>) {
+    ctx.response.encryptedCookie(this.name, value, options)
+  }
 }
 
 export class TypedCookie<T> {
@@ -37,7 +37,7 @@ export class TypedCookie<T> {
     options?: Partial<TypedCookieOptions>
   ) {
     const resolvedOptions = { ...defaultOptions, ...options }
-    
+
     switch (resolvedOptions.kind) {
       case 'signed':
         this.#cookie = new RawSignedCookie(name)

@@ -46,7 +46,7 @@ export default class User extends BaseModel {
   })
   declare indirectReferrals: HasMany<typeof User>
 
-  @manyToMany (() => Event)
+  @manyToMany(() => Event)
   declare eventsRegistered: ManyToMany<typeof Event>
 
   @column()

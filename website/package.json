@@ -12,7 +12,8 @@
     "test": "node ace test",
     "lint:fix": "eslint . --fix",
     "lint": "eslint . --max-warnings 0",
-    "format": "prettier --write .",
+    "format:fix": "prettier --write .",
+    "format": "prettier --check .",
     "typecheck": "tsc -p . -p ./inertia --noEmit",
     "prepare": "sh -c './scripts/prepare.sh'"
   },
