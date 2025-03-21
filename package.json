@@ -1,0 +1,9 @@
+{
+  "name": "enei",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {},
+  "keywords": [],
+  "packageManager": "pnpm@9.12.3",
+  "license": "MIT"
+}
