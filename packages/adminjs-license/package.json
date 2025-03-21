@@ -7,7 +7,6 @@
     "import": "./lib/index.js",
     "types": "./types/index.d.ts"
   },
-  "license": "",
   "scripts": {},
   "devDependencies": {},
   "dependencies": {}
