@@ -1,0 +1,19 @@
+{
+  "name": "enei",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {},
+  "keywords": [],
+  "license": "MIT",
+  "prettier": "@adonisjs/prettier-config",
+  "packageManager": "pnpm@9.12.3",
+  "pnpm": {
+    "overrides": {
+      "@adminjs/license": "workspace:*",
+      "strtok3": "8.0.1"
+    }
+  },
+  "devDependencies": {
+    "@adonisjs/prettier-config": "^1.4.0"
+  }
+}
