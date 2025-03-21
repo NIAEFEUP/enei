@@ -1,5 +1,5 @@
 import Account from '#models/account'
-import { targetRelationFeature } from "../relations.js"
+import { targetRelationFeature } from '../relations.js'
 import { createResource } from '../resource.js'
 
 const AccountResource = createResource({

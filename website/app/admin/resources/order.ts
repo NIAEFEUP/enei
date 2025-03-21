@@ -15,7 +15,7 @@ const OrderResource = createResource({
     targetRelationFeature(),
     owningRelationFeature({
       products: {
-        type: "many-to-many",
+        type: 'many-to-many',
         junction: {
           joinKey: 'orderId',
           inverseJoinKey: 'productId',
