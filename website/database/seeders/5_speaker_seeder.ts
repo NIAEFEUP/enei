@@ -357,5 +357,12 @@ export default class extends BaseSeeder {
       profilePicture: '/images/speakers/michael-pound.jpg',
       company: 'University of Nottingham',
     })
+
+    await SpeakerProfile.create({
+      firstName: 'Fellyph',
+      lastName: 'Rozendo',
+      jobTitle: 'Senior Front-End Developer',
+      profilePicture: '/images/speakers/fellyph-rozendo.jpg',
+    })
   }
 }

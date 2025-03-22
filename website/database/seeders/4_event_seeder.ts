@@ -543,5 +543,18 @@ export default class extends BaseSeeder {
       requiresRegistration: false,
       price: 0,
     })
+
+    await Event.create({
+      title: 'Unlocking the Power of AI on Chrome',
+      description:
+        'Junta-te a nós para explorar a IA em dispositivos com o Gemini Nano! Esta palestra apresenta a nova Prompt API do Chrome, que funciona localmente sem enviar dados para servidores. Aprende a criar aplicações inovadoras com IA que oferecem privacidade reforçada, respostas ultrarrápidas e que funcionam offline. Seja qual for o teu nível de experiência, esta palestra é para ti!',
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 10, minute: 0 }),
+      duration: 45,
+      type: 'talk',
+      location: 'Auditório - ISEP',
+      registrationRequirements: '',
+      requiresRegistration: false,
+      price: 0,
+    })
   }
 }
