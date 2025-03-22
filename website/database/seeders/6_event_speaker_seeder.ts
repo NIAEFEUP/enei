@@ -62,5 +62,7 @@ export default class extends BaseSeeder {
     await attach(39, 46)
     await attach(40, 47)
     await attach(41, 48)
+    await attach(42, 49)
+    await attach(42, 50)
   }
 }

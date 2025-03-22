@@ -570,5 +570,19 @@ export default class extends BaseSeeder {
       ticketsTotal: 20,
       price: 0,
     })
+
+    await Event.create({
+      title: 'Drupal CMS: Cria o teu website com ajuda de AI!',
+      description: '',
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 14, minute: 0 }),
+      duration: 120,
+      type: 'workshop',
+      location: 'TBD - FEUP',
+      registrationRequirements: '',
+      requiresRegistration: true,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
+      price: 0,
+    })
   }
 }

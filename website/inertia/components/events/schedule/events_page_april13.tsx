@@ -166,11 +166,13 @@ export default function EventsPageApril13({ events }: EventsPageProps) {
       </div>
       <div className="row-span-3 col-start-4 row-start-6">
         <EventCard
-          title={'Workshop TBD'}
-          type={'workshop'}
-          time={'14:00 - 16:00'}
-          location={'TBD - FEUP'}
-          speakers={[]}
+          id={events[16].id}
+          title={events[16].title}
+          type={events[16].type}
+          time={events[16].time}
+          location={events[16].location}
+          speakers={events[16].speakers}
+          onClick={() => router.visit(`/events/${events[16].id}`)}
         />
       </div>
       <div className="col-span-4 row-start-9">

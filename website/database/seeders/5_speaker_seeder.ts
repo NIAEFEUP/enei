@@ -372,5 +372,15 @@ export default class extends BaseSeeder {
       profilePicture: '/images/speakers/hugo-queiros.jpg',
       company: 'Blip.pt',
     })
+
+    await SpeakerProfile.create({
+      firstName: 'António',
+      lastName: 'Aragão',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Filipe',
+      lastName: 'Pereira',
+    })
   }
 }
