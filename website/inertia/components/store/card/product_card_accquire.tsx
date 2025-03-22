@@ -43,9 +43,7 @@ interface PointsStoreProductCardAccquireProps {
   product: Product
 }
 
-function PointsStoreProductCardAccquire({
-  product,
-}: PointsStoreProductCardAccquireProps) {
+function PointsStoreProductCardAccquire({ product }: PointsStoreProductCardAccquireProps) {
   const [open, setOpen] = useState<boolean>(false)
 
   const { toast } = useToast()

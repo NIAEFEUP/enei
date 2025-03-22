@@ -25,28 +25,6 @@ export default class ProductSeeder extends BaseSeeder {
       productGroupId: 1,
       image: '/favicon.svg',
     })
-    await Product.create({
-      name: 'Rato',
-      description: 'I am a mouse',
-      price: 30,
-      stock: 50,
-      currency: 'points',
-      maxOrder: 1,
-      image: 'hyprxmouse.png',
-    })
-
-    await Product.create({
-      name: 'Promoter Rato',
-      description: 'I am a mouse',
-      price: 30,
-      stock: 50,
-      currency: 'points',
-      maxOrder: 1,
-      image: 'hyprxmouse.png',
-      restrictions: {
-        groups: [UserTypes.PROMOTER],
-      },
-    })
 
     await Product.createMany([
       {
@@ -56,7 +34,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 1,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/switch-lite.png',
+        image: 'switch-lite.png',
       },
       {
         name: 'GoPro Hero 4K 12MP Wi-Fi Bluetooth',
@@ -65,7 +43,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 1,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/gopro-hero4.png',
+        image: 'gopro-hero4.png',
       },
       {
         name: 'Monitor AOC 180Hz 23.8" FullHD 0.5ms',
@@ -74,16 +52,16 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 1,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/aoc-monitor.png',
+        image: 'aoc-monitor.png',
       },
       {
         name: 'Instax Mini 12',
         description: 'Compact instant camera for instant photo prints.',
         price: 11800,
         stock: 1,
-        currency: 'EUR',
+        currency: 'points',
         maxOrder: 1,
-        image: '/images/instax-mini.png',
+        image: 'instax-mini.png',
       },
       {
         name: 'Sony WH-CH720N Bluetooth',
@@ -92,7 +70,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 2,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/sony-wh-ch720n.png',
+        image: 'sony-wh-ch720n.png',
       },
       {
         name: 'Mini projetor HD WIFI',
@@ -101,7 +79,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 1,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/mini-projector.png',
+        image: 'mini-projector.png',
       },
       {
         name: 'Telado DuckyOne2 Pro',
@@ -110,7 +88,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 1,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/ducky-one-pro.png',
+        image: 'ducky-one-pro.png',
       },
       {
         name: 'Anbernicn Consola Portátil Retro RG35XX',
@@ -119,7 +97,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 1,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/consola-retro.png',
+        image: 'consola-retro.png',
       },
       {
         name: 'Raspberry Pi 4 Modelo B 2GB',
@@ -128,7 +106,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 1,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/raspberry-pi4.png',
+        image: 'raspberry-pi4.png',
       },
       {
         name: 'Xiaomi TV Box S 8GB Google TV 4K',
@@ -137,7 +115,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 1,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/xiaomi-tv-box.png',
+        image: 'xiaomi-tv-box.png',
       },
       {
         name: 'Coluna JBL GO 4',
@@ -146,7 +124,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 5,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/jbl-go4.png',
+        image: 'jbl-go4.png',
       },
       {
         name: 'Xiaomi Smart Band 9 Active',
@@ -155,7 +133,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 4,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/xiaomi-smart-band.png',
+        image: 'xiaomi-smart-band.png',
       },
       {
         name: 'Logitech G203 Prodigy',
@@ -164,7 +142,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 3,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/logitech-g203.png',
+        image: 'logitech-g203.png',
       },
       {
         name: 'JLAB Go Air Pop',
@@ -173,7 +151,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 5,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/jlab-go-air-pop.png',
+        image: 'jlab-go-air-pop.png',
       },
       {
         name: 'Teclado NPLAY Control 3.1',
@@ -182,7 +160,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 5,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/nplay-keyboard.png',
+        image: 'nplay-keyboard.png',
       },
       {
         name: 'Kodak descartável',
@@ -191,7 +169,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 4,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/kodak-descartavel.png',
+        image: 'kodak-descartavel.png',
       },
       {
         name: 'Raspberry Pi Zero WH 1GHz 512MB',
@@ -200,7 +178,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 2,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/raspberry-pi-zero.png',
+        image: 'raspberry-pi-zero.png',
       },
       {
         name: 'Xiaomi Redmi Buds 6 Play',
@@ -209,7 +187,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 3,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/xiaomi-redmi-buds.png',
+        image: 'xiaomi-redmi-buds.png',
       },
       {
         name: 'Power Bank Goodis 10mAh',
@@ -218,7 +196,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 20,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/power-bank-goodis.png',
+        image: 'power-bank-goodis.png',
       },
       {
         name: 'Carregador Usb-C Fast Charge',
@@ -227,7 +205,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 1,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/usb-c-charger.png',
+        image: 'usb-c-charger.png',
       },
       {
         name: 'LED Strip',
@@ -236,7 +214,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 10,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/led-strip.png',
+        image: 'led-strip.png',
       },
       {
         name: 'JBL T110',
@@ -245,7 +223,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 10,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/jbl-t110.png',
+        image: 'jbl-t110.png',
       },
       {
         name: 'NPLAY Glide 1.1',
@@ -254,7 +232,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 10,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/nplay-glide.png',
+        image: 'nplay-glide.png',
       },
       {
         name: 'Organizador de cabos',
@@ -263,7 +241,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 10,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/cable-organizer.png',
+        image: 'cable-organizer.png',
       },
       {
         name: 'Protetores de Cabo 20 pcs',
@@ -272,7 +250,7 @@ export default class ProductSeeder extends BaseSeeder {
         stock: 20,
         currency: 'points',
         maxOrder: 1,
-        image: '/images/cable-protectors.png',
+        image: 'cable-protectors.png',
       },
       {
         name: 'Bilhete',
@@ -280,8 +258,11 @@ export default class ProductSeeder extends BaseSeeder {
         price: 500,
         stock: 50,
         currency: 'points',
+        restrictions: {
+          groups: [UserTypes.PROMOTER],
+        },
         image: '/favicon.svg',
-      }
+      },
     ])
   }
 }

@@ -2,7 +2,7 @@ import { Card, CardFooter, CardContent } from '~/components/ui/card'
 import PointsStoreProductCardAccquire from './product_card_accquire'
 
 import { cn } from '~/lib/utils'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { StoreContext } from '~/pages/store/page'
 
 import { canBuyProduct } from '~/lib/enei/store/utils'
@@ -20,18 +20,13 @@ function PointsStoreProductCard({ product }: StoreProductCardProps) {
   const { userPoints } = useContext(StoreContext)
 
   return (
-    <Card
-      className={cn(
-        'bg-persian-orange flex flex-col',
-        !canBuyProduct(product, userPoints)
-      )}
-    >
+    <Card className={cn('bg-persian-orange flex flex-col', !canBuyProduct(product, userPoints))}>
       <CardContent className="p-12 h-72">
         <img
           src={`/images/products/${product.image ?? 'default-product.jpg'}`}
           className={cn(
             'w-full h-full object-contain rounded-md',
-            !canBuyProduct(product, userPoints) && 'blur-sm'
+            !canBuyProduct(product, userPoints) //&& 'blur-sm'
           )}
         />
       </CardContent>
