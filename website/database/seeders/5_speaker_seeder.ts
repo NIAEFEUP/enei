@@ -349,5 +349,13 @@ export default class extends BaseSeeder {
       firstName: 'Rui',
       lastName: 'Nascimento',
     })
+
+    await SpeakerProfile.create({
+      firstName: 'Michael',
+      lastName: 'Pound',
+      jobTitle: 'Associate Professor & Contributor of Computerphile',
+      profilePicture: '/images/speakers/michael-pound.jpg',
+      company: 'University of Nottingham',
+    })
   }
 }

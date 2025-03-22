@@ -308,7 +308,8 @@ export default class extends BaseSeeder {
     })
 
     await Event.create({
-      title: 'A Hands-on workshop on how to build scalable ETL Pipelines on AWS using S3, Glue, Lambda, and Athena',
+      title:
+        'A Hands-on workshop on how to build scalable ETL Pipelines on AWS using S3, Glue, Lambda, and Athena',
       description: '',
       date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 13, minute: 0 }),
       duration: 120,
@@ -527,6 +528,19 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 30,
       ticketsTotal: 30,
+      price: 0,
+    })
+
+    await Event.create({
+      title: 'How to look through skin with AI',
+      description:
+        'This talk will introduce the exciting role of AI in science beyond the media hype around chatbots, image generation, and AI music. We’ll explore how generative AI enables optical correction in microscope images, offering potential for harmless disease diagnosis through skin. I’ll also discuss the challenges of capturing images through skin, managing distortions, and the need for interdisciplinary collaboration to solve these issues. Additionally, I’ll share my experiences producing videos for the Computerphile YouTube channel, which has grown into a global platform. I’ll discuss the channel’s backstory, the filming process, and my future aspirations. Ultimately, I hope to inspire you to share the wonders of computer science with the world!',
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 15, minute: 15 }),
+      duration: 60,
+      type: 'talk',
+      location: 'Auditório - FEUP',
+      registrationRequirements: '',
+      requiresRegistration: false,
       price: 0,
     })
   }
