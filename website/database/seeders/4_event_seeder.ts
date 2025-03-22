@@ -188,7 +188,7 @@ export default class extends BaseSeeder {
       date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 15, minute: 15 }),
       duration: 60,
       type: 'talk',
-      location: 'Auditório - ISEP',
+      location: 'Auditório - FEUP',
       registrationRequirements: '',
       requiresRegistration: false,
       price: 0,
