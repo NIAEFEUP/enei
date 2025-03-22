@@ -37,9 +37,9 @@ export default function Store(props: InferPageProps<StoreController, 'index'>) {
           <Container className="mt-4 flex flex-col gap-y-24 justify-center">
             <div className="flex flex-col gap-y-2">
               <h1 className="text-center text-3xl font-bold">Loja</h1>
-              <p className="text-center text-persian-orange text-2xl font-bold">
-                {userPoints} pontos
-              </p>
+              {/* <p className="text-center text-persian-orange text-2xl font-bold"> */}
+              {/* {userPoints} pontos */}
+              {/* </p> */}
             </div>
             <Container className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 gap-y-32 justify-center">
               {products.length === 0 && (
