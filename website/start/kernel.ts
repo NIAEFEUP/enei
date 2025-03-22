@@ -44,6 +44,7 @@ router.use([
   () => import('#middleware/log_user_middleware'),
   () => import('#middleware/update_logger_storage_middleware'),
   () => import('#middleware/link_to_user_middleware'),
+  () => import('#middleware/initialize_bouncer_middleware'),
 ])
 
 /**
