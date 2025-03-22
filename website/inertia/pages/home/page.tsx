@@ -10,6 +10,11 @@ import { Notification } from '~/components/notifications'
 import { Link } from '@tuyau/inertia/react'
 import { buttonVariants } from '~/components/ui/button'
 import { ArrowRight } from 'lucide-react'
+import ReasonsToEnroll from '~/components/home/reasons-to-enroll'
+import Highlights from '~/components/home/highlights/highlights'
+import Statistics from '~/components/home/statistics'
+import Partners from '~/components/home/partners/partners'
+import About from '~/components/home/about'
 
 function useUtcTarget() {
   return useEnvironment((env) =>
@@ -91,7 +96,7 @@ function BackgroundGradient({ className }: { className?: string }) {
 
 function Background() {
   return (
-    <div className="absolute inset-0 isolate">
+    <div className="absolute inset-0 isolate h-screen">
       <div className="relative size-full">
         <BackgroundGradient className="z-10" />
         <img
@@ -106,7 +111,7 @@ function Background() {
 
 export default function Home() {
   return (
-    <Page title="Home">
+    <Page title="Home" className="bg-enei-beige">
       <Notification>
         <div className="bg-enei-beige px-4 py-4 bg-opacity-[62%] shadow-[0_4px_4px_rgba(0_0_0_/_25%)] text-enei-blue flex flex-col lg:flex-row gap-2 items-center justify-center">
           <p className="text-center lg:text-left">
@@ -153,6 +158,21 @@ export default function Home() {
           </section>
         </Container>
       </Hero>
+
+      <Container className="flex flex-col justify-center gap-y-32">
+        {/* <About /> */}
+        <ReasonsToEnroll />
+      </Container>
+
+      <section className="mt-32 mb-32">
+        <Highlights />
+      </section>
+
+      <Container className="flex flex-col justify-center gap-y-32">
+        <Statistics />
+      </Container>
+
+      <Partners />
     </Page>
   )
 }

@@ -35,12 +35,12 @@ export default function Page({
   return (
     <div
       className={cn(
-        'w-full min-h-dvh scroll-smooth flex flex-col',
+        'w-full min-h-dvh scroll-smooth flex flex-col h-screen',
         variant === 'blue' ? 'bg-enei-blue' : 'bg-enei-beige'
       )}
     >
       <Head title={title} />
-      <div className="relative pb-48">
+      <div className="relative pb-48 bg-enei-beige">
         <Navbar className="sticky top-0 z-20 grow-0" variant={variant} />
         <PromoterNotification />
         <div className={className}>{children}</div>
