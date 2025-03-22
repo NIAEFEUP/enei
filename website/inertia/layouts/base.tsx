@@ -11,7 +11,7 @@ type Props = {
   barColor?: string
 }
 
-export default function BaseLayout({ title, children, className, barColor}: Props) {
+export default function BaseLayout({ title, children, className, barColor }: Props) {
   const shouldShowBars = className?.includes('with-decorative-bars')
 
   return (

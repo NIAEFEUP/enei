@@ -19,7 +19,7 @@ export default class ParticipantProfile extends BaseModel {
 
   // Ticket Info
   @column()
-  declare purchasedTicket: "early-bird-without-housing" | "early-bird-with-housing" | null
+  declare purchasedTicket: 'early-bird-without-housing' | 'early-bird-with-housing' | null
 
   // General Info
 

@@ -17,7 +17,7 @@ export const passwordResetValidator = vine.compile(
 
 export const passwordSendForgotPasswordValidator = vine.compile(
   vine.object({
-    email: vine.string().email()
+    email: vine.string().email(),
   })
 )
 

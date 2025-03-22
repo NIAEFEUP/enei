@@ -16,7 +16,7 @@ const dbConfig = defineConfig({
       migrations: {
         naturalSort: true,
         paths: ['database/migrations'],
-      },  
+      },
     },
     postgres: {
       client: 'pg',
@@ -27,7 +27,7 @@ const dbConfig = defineConfig({
         password: env.get('POSTGRES_PASSWORD'),
         database: env.get('POSTGRES_DB', 'postgres'),
       },
-    }
+    },
   },
 })
 

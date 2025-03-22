@@ -13,7 +13,7 @@ export default function EmailVerification() {
   const cooldown = useCooldown({
     seconds: 60,
   })
-  
+
   const { post } = useForm()
   const { toast } = useToast()
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -34,11 +34,12 @@ export default function EmailVerification() {
       <CardLayout>
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl">E-mail de recuperação de palavra-passe enviado</CardTitle>
+            <CardTitle className="text-2xl">
+              E-mail de recuperação de palavra-passe enviado
+            </CardTitle>
             <CardDescription>
-              Um e-mail de confirmação foi enviado para o e-mail indicado.
-              Por favor, verifica a tua caixa de entrada 
-              , <span className="font-bold">incluindo o spam</span>!
+              Um e-mail de confirmação foi enviado para o e-mail indicado. Por favor, verifica a tua
+              caixa de entrada , <span className="font-bold">incluindo o spam</span>!
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -58,5 +59,3 @@ export default function EmailVerification() {
     </BaseLayout>
   )
 }
-
-

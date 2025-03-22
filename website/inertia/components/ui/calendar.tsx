@@ -30,9 +30,8 @@ function ChangeYearButton({ className, ...props }: React.ButtonHTMLAttributes<HT
 
 function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
   const [month, setMonth] = React.useState(() => {
-    if (props.mode === "single" && props.selected)
-      return props.selected
-    
+    if (props.mode === 'single' && props.selected) return props.selected
+
     return props.initialMonth ?? new Date()
   })
 

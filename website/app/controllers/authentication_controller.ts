@@ -13,7 +13,7 @@ import Account from '#models/account'
 
 @inject()
 export default class AuthenticationController {
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {}
 
   async login({ request, auth, session, response }: HttpContext) {
     const { email, password } = await request.validateUsing(loginWithCredentialsValidator)
@@ -38,11 +38,10 @@ export default class AuthenticationController {
 
   async register({ request, auth, response }: HttpContext) {
     const { email, password } = await request.validateUsing(registerWithCredentialsValidator)
-    
+
     const [user, events] = await this.userService.createUserWithCredentials(email, password)
     const [success] = await events
     if (!success) {
-
     }
 
     await auth.use('web').login(user)
@@ -81,10 +80,7 @@ export default class AuthenticationController {
   }
 
   async callbackForForgotPassword({ request, response }: HttpContext) {
-    const {
-      password,
-      email
-    } = await request.validateUsing(passwordResetValidator)
+    const { password, email } = await request.validateUsing(passwordResetValidator)
 
     const account = await Account.find(`credentials:${email}`)
     if (account) {

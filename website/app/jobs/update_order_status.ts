@@ -44,7 +44,7 @@ export default class UpdateOrderStatus extends Job {
         let status = apiResponse.data.Message
         if (status) {
           if (app.inDev) {
-            status = "Success"
+            status = 'Success'
           }
 
           if (status === 'Pending') {

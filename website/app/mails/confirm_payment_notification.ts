@@ -1,6 +1,9 @@
 import env from '#start/env'
 import { ReactNotification } from './base/react_notification.js'
-import type { ProductWithQuantity, MailProps } from '#resources/emails/payment/confirm_purchase_email'
+import type {
+  ProductWithQuantity,
+  MailProps,
+} from '#resources/emails/payment/confirm_purchase_email'
 import { staticUrl } from '../url.js'
 
 export default class ConfirmPaymentNotification extends ReactNotification {
@@ -31,6 +34,6 @@ export default class ConfirmPaymentNotification extends ReactNotification {
 
   async prepare() {
     this.message.to(this.userEmail)
-    await this.jsx(() =>  import('#resources/emails/payment/confirm_purchase_email'), this.props)
+    await this.jsx(() => import('#resources/emails/payment/confirm_purchase_email'), this.props)
   }
 }

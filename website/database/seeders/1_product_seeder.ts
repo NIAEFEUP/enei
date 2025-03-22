@@ -27,8 +27,7 @@ export default class ProductSeeder extends BaseSeeder {
     })
     await Product.create({
       name: 'Rato',
-      description:
-        'I am a mouse',
+      description: 'I am a mouse',
       price: 30,
       stock: 50,
       currency: 'points',
@@ -37,8 +36,7 @@ export default class ProductSeeder extends BaseSeeder {
     })
     await Product.create({
       name: 'Rato',
-      description:
-        'I am a mouse',
+      description: 'I am a mouse',
       price: 30,
       stock: 0,
       currency: 'points',
@@ -47,8 +45,7 @@ export default class ProductSeeder extends BaseSeeder {
     })
     await Product.create({
       name: 'Rato',
-      description:
-        'I am a mouse',
+      description: 'I am a mouse',
       price: 30,
       stock: 50,
       currency: 'points',
@@ -57,33 +54,27 @@ export default class ProductSeeder extends BaseSeeder {
     })
     await Product.create({
       name: 'Participant Rato',
-      description:
-        'I am a mouse',
+      description: 'I am a mouse',
       price: 30,
       stock: 50,
       currency: 'points',
       maxOrder: 1,
       image: 'hyprxmouse.png',
       restrictions: {
-        groups: [
-          UserTypes.PARTICIPANT
-        ]
-      }
+        groups: [UserTypes.PARTICIPANT],
+      },
     })
     await Product.create({
       name: 'Promoter Rato',
-      description:
-        'I am a mouse',
+      description: 'I am a mouse',
       price: 30,
       stock: 50,
       currency: 'points',
       maxOrder: 1,
       image: 'hyprxmouse.png',
       restrictions: {
-        groups: [
-          UserTypes.PROMOTER
-        ]
-      }
+        groups: [UserTypes.PROMOTER],
+      },
     })
   }
 }

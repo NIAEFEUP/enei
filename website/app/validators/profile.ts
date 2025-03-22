@@ -15,9 +15,7 @@ export const createProfileValidator = vine.compile(
     dateOfBirth: vine
       .date({ formats: { utc: true } })
       .transform((date) => DateTime.fromJSDate(date)),
-    phone: vine
-      .string()
-      .mobile(),
+    phone: vine.string().mobile(),
     university: vine.string().in(universities.map((val) => val.id)),
     course: vine.string(),
     curricularYear: vine.string().in(['1', '2', '3', '4', '5', 'already-finished']),
@@ -30,6 +28,8 @@ export const createProfileValidator = vine.compile(
     transports: vine.array(vine.string().in(transports.map((item) => item.id))),
     heardAboutENEI: vine.string().in(heardaboutfrom.map((item) => item.value)),
     reasonForSignup: vine.string().nullable(),
-    attendedBeforeEditions: vine.array(vine.string().in(editions.map((item) => item.year.toString()))),
+    attendedBeforeEditions: vine.array(
+      vine.string().in(editions.map((item) => item.year.toString()))
+    ),
   })
 )

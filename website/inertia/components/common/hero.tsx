@@ -9,6 +9,6 @@ export default function Hero({
   children?: React.ReactNode
 }) {
   return (
-    <div className={cn('h-screen overflow-y-clip relative flex-non', className)}>{children}</div>
+    <div className={cn('h-screen overflow-y-clip relative flex-none', className)}>{children}</div>
   )
 }

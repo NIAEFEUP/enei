@@ -15,5 +15,4 @@ export default class PromoterInfo extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
-
 }

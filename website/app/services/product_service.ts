@@ -23,7 +23,7 @@ export class ProductService {
 
   validGroup(user: User, product: Product) {
     const groupRestrictionDefined = product.restrictions && product.restrictions.groups
-    if(!groupRestrictionDefined) return true
+    if (!groupRestrictionDefined) return true
 
     return groupRestrictionDefined.some((group: UserTypes) => user.groups().includes(group))
   }

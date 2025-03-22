@@ -1,34 +1,12 @@
 import EventCard from '../event_card'
 
-interface Speaker {
-  firstName: string
-  lastName: string
-  profilePicture: string
-}
-
-interface Event {
-  id: number
-  title: string
-  type: 'activity' | 'workshop' | 'other'
-  date: string
-  time: string
-  location: string
-  companyImage: string
-  speakers: Speaker[]
-}
-
-interface EventsPageProps {
-  events: Event[]
-}
-
-export default function EventsPageApril11({ events }: EventsPageProps) {
-  console.log(events)
+export default function EventsPageApril11() {
   return (
-    <div className="grid grid-cols-1 grid-rows-4 gap-4">
+    <div className="flex flex-col space-y-4 md:grid md:grid-cols-1 md:grid-rows-4 md:gap-4 md:space-y-0">
       <div className="col-start-1 row-start-1 row-span-2">
         <EventCard
-          title={'Boas-Vindas'}
-          type={'activity'}
+          title={'Check-in e Boas-Vindas'}
+          type={'other'}
           time={'14:00 - 18:30'}
           location={'TBD - ISEP'}
           speakers={[]}
@@ -37,7 +15,7 @@ export default function EventsPageApril11({ events }: EventsPageProps) {
       <div className="col-start-1 row-start-3">
         <EventCard
           title={'Sessão de Abertura'}
-          type={'activity'}
+          type={'other'}
           time={'18:30 - 20:00'}
           location={'Auditório - ISEP'}
           speakers={[]}
@@ -46,9 +24,18 @@ export default function EventsPageApril11({ events }: EventsPageProps) {
       <div className="col-start-1 row-start-4">
         <EventCard
           title={'Convívio e Churrasco'}
-          type={'activity'}
+          type={'night'}
           time={'20:00 - 23:00'}
-          location={'AEISEP'}
+          location={'aeISEP'}
+          speakers={[]}
+        />
+      </div>
+      <div className="col-start-1 row-start-5">
+        <EventCard
+          title={'Snap Shots'}
+          type={'night'}
+          time={'23:00 - 4:00'}
+          location={'aeISEP'}
           speakers={[]}
         />
       </div>
