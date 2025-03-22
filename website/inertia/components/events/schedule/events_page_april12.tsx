@@ -285,7 +285,7 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
           title={'Visita às Galerias'}
           type={'night'}
           time={'00:00 - 04:00'}
-          location={'AEFEUP'}
+          location={'Baixa do Porto'}
           speakers={[]}
         />
       </div>

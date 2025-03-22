@@ -182,6 +182,7 @@ export default class extends BaseSeeder {
     await SpeakerProfile.create({
       firstName: 'Luís',
       lastName: 'Duarte',
+      profilePicture: '/images/speakers/luis-duarte.jpg',
     })
 
     await SpeakerProfile.create({
@@ -204,6 +205,7 @@ export default class extends BaseSeeder {
       firstName: 'Leonardo',
       lastName: 'Moura',
       jobTitle: 'Investigador de Criptografia',
+      profilePicture: '/images/speakers/leonardo-moura.jpg',
       company: 'Capgemini Engineering',
     })
 
@@ -218,6 +220,7 @@ export default class extends BaseSeeder {
     await SpeakerProfile.create({
       firstName: 'Joana',
       lastName: 'Pereira',
+      profilePicture: '/images/speakers/joana-pereira.jpg',
     })
 
     await SpeakerProfile.create({
@@ -307,6 +310,7 @@ export default class extends BaseSeeder {
       firstName: 'Bartek',
       lastName: 'Pacia',
       jobTitle: 'Software Engineer',
+      profilePicture: '/images/speakers/bartek-pacia.jpg',
       company: 'JetBrains',
     })
 
@@ -322,7 +326,7 @@ export default class extends BaseSeeder {
       firstName: 'Diogo',
       lastName: 'Correia',
       jobTitle: '.NET Developer',
-      profilePicture: '',
+      profilePicture: '/images/speakers/diogo-correia.jpg',
       company: 'Devexperts',
     })
 
@@ -330,7 +334,7 @@ export default class extends BaseSeeder {
       firstName: 'Francisco',
       lastName: 'Loureiro',
       jobTitle: 'Team Lead',
-      profilePicture: '',
+      profilePicture: '/images/speakers/francisco-loureiro.jpg',
       company: 'Devexperts',
     })
 
@@ -338,11 +342,45 @@ export default class extends BaseSeeder {
       firstName: 'Nuno',
       lastName: 'Miranda',
       jobTitle: 'Data Engineer',
+      profilePicture: '/images/speakers/nuno-miranda.jpg',
     })
 
     await SpeakerProfile.create({
       firstName: 'Rui',
       lastName: 'Nascimento',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Michael',
+      lastName: 'Pound',
+      jobTitle: 'Associate Professor & Contributor of Computerphile',
+      profilePicture: '/images/speakers/michael-pound.jpg',
+      company: 'University of Nottingham',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Fellyph',
+      lastName: 'Rozendo',
+      jobTitle: 'Senior Front-End Developer',
+      profilePicture: '/images/speakers/fellyph-rozendo.jpg',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Hugo',
+      lastName: 'Queirós',
+      jobTitle: 'Engenheiro de Software',
+      profilePicture: '/images/speakers/hugo-queiros.jpg',
+      company: 'Blip.pt',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'António',
+      lastName: 'Aragão',
+    })
+
+    await SpeakerProfile.create({
+      firstName: 'Filipe',
+      lastName: 'Pereira',
     })
   }
 }
