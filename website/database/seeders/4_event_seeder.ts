@@ -14,8 +14,8 @@ export default class extends BaseSeeder {
       location: 'TBD - ISEP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -42,8 +42,8 @@ export default class extends BaseSeeder {
       location: 'TBD - ISEP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -57,8 +57,8 @@ export default class extends BaseSeeder {
       location: 'TBD - FEUP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -150,8 +150,8 @@ export default class extends BaseSeeder {
       location: 'TBD - ISEP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -204,8 +204,8 @@ export default class extends BaseSeeder {
       location: 'TBD - FEUP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -244,8 +244,8 @@ export default class extends BaseSeeder {
       location: 'TBD - FEUP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -259,8 +259,8 @@ export default class extends BaseSeeder {
       location: 'TBD - FEUP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -274,8 +274,8 @@ export default class extends BaseSeeder {
       location: 'TBD - FEUP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -289,8 +289,8 @@ export default class extends BaseSeeder {
       location: 'TBD - FEUP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -317,8 +317,8 @@ export default class extends BaseSeeder {
       location: 'TBD - FEUP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -332,8 +332,8 @@ export default class extends BaseSeeder {
       location: 'TBD - FEUP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -360,8 +360,8 @@ export default class extends BaseSeeder {
       location: 'TBD - FEUP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -427,8 +427,8 @@ export default class extends BaseSeeder {
       location: 'TBD - FEUP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -442,8 +442,8 @@ export default class extends BaseSeeder {
       location: 'TBD - ISEP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -457,8 +457,8 @@ export default class extends BaseSeeder {
       location: 'TBD - ISEP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -485,8 +485,8 @@ export default class extends BaseSeeder {
       location: 'TBD - FEUP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -512,8 +512,8 @@ export default class extends BaseSeeder {
       location: 'TBD - ISEP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -526,8 +526,8 @@ export default class extends BaseSeeder {
       location: 'TBD - FEUP',
       registrationRequirements: '',
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
 
@@ -554,6 +554,20 @@ export default class extends BaseSeeder {
       location: 'Auditório - ISEP',
       registrationRequirements: '',
       requiresRegistration: false,
+      price: 0,
+    })
+
+    await Event.create({
+      title: 'React Basics & The Importance of Testing',
+      description: 'O React é uma biblioteca JavaScript que transformou o desenvolvimento de interfaces dinâmicas e interativas. Neste workshop, vais explorar os conceitos essenciais desta tecnologia, bem como a importância de integrar testes para garantir a qualidade do código. Tudo isso será demonstrado através da construção de uma simples aplicação, onde vais aprender na prática como combinar React com boas práticas de teste.',
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 14, hour: 9, minute: 30 }),
+      duration: 120,
+      type: 'workshop',
+      location: 'TBD - FEUP',
+      registrationRequirements: '',
+      requiresRegistration: true,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     })
   }

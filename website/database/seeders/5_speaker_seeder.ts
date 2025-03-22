@@ -364,5 +364,13 @@ export default class extends BaseSeeder {
       jobTitle: 'Senior Front-End Developer',
       profilePicture: '/images/speakers/fellyph-rozendo.jpg',
     })
+
+    await SpeakerProfile.create({
+      firstName: 'Hugo',
+      lastName: 'Queirós',
+      jobTitle: 'Engenheiro de Software',
+      profilePicture: '/images/speakers/hugo-queiros.jpg',
+      company: 'Blip.pt',
+    })
   }
 }
