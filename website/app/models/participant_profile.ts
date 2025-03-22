@@ -96,4 +96,8 @@ export default class ParticipantProfile extends BaseModel {
 
   @column()
   declare website: string | null
+
+  points(): number {
+    return this.user.points
+  }
 }

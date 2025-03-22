@@ -13,6 +13,8 @@ const EventsController = () => import('#controllers/events_controller')
 import { sep, normalize } from 'node:path'
 import app from '@adonisjs/core/services/app'
 
+const LeaderboardController = () => import('#controllers/leaderboard_controller')
+
 const AuthenticationController = () => import('#controllers/authentication_controller')
 const OrdersController = () => import('#controllers/orders_controller')
 const TicketsController = () => import('#controllers/tickets_controller')
@@ -236,12 +238,18 @@ router
   .prefix('/store')
 
 // Referrals
-router
-  .get('/referrals', [ReferralsController, 'showReferralLink'])
-  .middleware(middleware.auth())
-  .as('pages:referrals')
+router.group(() => {
+  router.get('/', [ReferralsController, 'showReferralLink'])
+    .middleware(middleware.auth())
+    .as('pages:referrals')
 
-router
-  .route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
+  router.post('/event/points/trigger/:id', [ReferralsController, 'referralPointsAttribution']).as('actions:referrals.event.pointattribution.trigger').use(middleware.apiKeyProtected())
+}).prefix('/referrals')
+
+router.route(`/r/:referralCode`, ['GET', 'POST'], [ReferralsController, 'link'])
   .middleware([middleware.automaticSubmit(), middleware.silentAuth()])
   .as('actions:referrals.link')
+
+router.group(() => {
+  router.get('/', [LeaderboardController, 'index']).as('pages:leaderboard')
+}).prefix('/leaderboard')

@@ -123,7 +123,7 @@ export default class User extends BaseModel {
     if (!user.isParticipant()) return false
 
     await user.load('participantProfile')
-    return !!user.participantProfile.purchasedTicket
+    return !!user.participantProfile?.purchasedTicket
   }
 
   static async getReferringPromoter(user: User) {
