@@ -30,7 +30,7 @@ function AcquireDisplayText({ product, userPoints }: ProductAcquireDisplayTextPr
   return (
     <>
       <div className="flex flex-col">
-        <span className="text-xl font-bold">
+        <span className="text-lg font-bold">
           {product.price <= userPoints ? `${displayText}` : 'Sem pontos'}
         </span>
         <span>{product.price} pontos</span>
@@ -41,13 +41,9 @@ function AcquireDisplayText({ product, userPoints }: ProductAcquireDisplayTextPr
 
 interface PointsStoreProductCardAccquireProps {
   product: Product
-  setStock: React.Dispatch<React.SetStateAction<number>>
 }
 
-function PointsStoreProductCardAccquire({
-  product,
-  setStock,
-}: PointsStoreProductCardAccquireProps) {
+function PointsStoreProductCardAccquire({ product }: PointsStoreProductCardAccquireProps) {
   const [open, setOpen] = useState<boolean>(false)
 
   const { toast } = useToast()
@@ -69,7 +65,6 @@ function PointsStoreProductCardAccquire({
         })
 
         setUserPoints((prev) => prev - product.price)
-        setStock((prev) => prev - 1)
         setOpen(false)
       },
       onError: () => {
@@ -85,7 +80,7 @@ function PointsStoreProductCardAccquire({
 
   return (
     <>
-      <div className="flex flex-row justify-between items-center w-full">
+      <div className="flex flex-row gap-x-8 justify-between items-center w-full">
         <p className="text-white font-bold">{product.name}</p>
         <Dialog open={open} onOpenChange={setOpen}>
           {product.stock > 0 ? (
