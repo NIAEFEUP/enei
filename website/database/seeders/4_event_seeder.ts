@@ -311,7 +311,7 @@ export default class extends BaseSeeder {
       title:
         'A Hands-on workshop on how to build scalable ETL Pipelines on AWS using S3, Glue, Lambda, and Athena',
       description: '',
-      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 13, minute: 0 }),
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 14, minute: 0 }),
       duration: 120,
       type: 'workshop',
       location: 'TBD - FEUP',
