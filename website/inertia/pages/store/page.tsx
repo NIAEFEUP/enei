@@ -41,7 +41,7 @@ export default function Store(props: InferPageProps<StoreController, 'index'>) {
                 {userPoints} pontos
               </p>
             </div>
-            <Container className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
+            <Container className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 gap-y-32 justify-center">
               {products.length === 0 && (
                 <p className="text-center mx-auto w-full text-2xl">Não há produtos disponíveis</p>
               )}
