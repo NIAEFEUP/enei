@@ -6,8 +6,9 @@ import {
   DialogFooter,
   DialogDescription,
 } from '~/components/ui/dialog'
-import { Button } from '~/components/ui/button'
+import { Button, buttonVariants } from '~/components/ui/button'
 import { Loader2 } from 'lucide-react'
+import { cn } from '~/lib/utils'
 
 interface RegistrationConfirmationModalProps {
   isOpen: boolean
@@ -37,11 +38,17 @@ function RegistrationConfirmationModal({
           <DialogTitle>Confirmação</DialogTitle>
         </DialogHeader>
         <DialogDescription>
-          Após confirmar a tua inscrição terás de contactar{' '}
-          <Button className="p-0" variant="link">
-            <a href="mailto:geral@eneiconf.pt">geral@eneiconf.pt</a>
-          </Button>{' '}
-          para cancelar a tua inscrição
+          <p className="leading-tight">
+            Depois de te inscreveres, se precisares de cancelar a tua inscrição por algum motivo,
+            terás de enviar um email para{' '}
+            <a
+              className={cn(buttonVariants({ variant: 'link' }), 'p-0')}
+              href="mailto:geral@eneiconf.pt"
+            >
+              geral@eneiconf.pt
+            </a>{' '}
+            para cancelar a tua inscrição.
+          </p>
         </DialogDescription>
         <DialogFooter className="mt-4">
           <Button variant="secondary" onClick={onClose}>
