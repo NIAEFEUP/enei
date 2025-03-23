@@ -95,7 +95,7 @@ export default function EventRegistrationPage({
   const handleRegister = async () => {
     setIsLoading(true)
     try {
-      router.post('/events/' + eventId + '/register', undefined)
+      router.post('/events/' + eventId + '/register', undefined, { onFinish: () => fetchRegistrationStatus() })
     } catch (error) {
       console.error(error)
       if (error.response?.status === 302) {
