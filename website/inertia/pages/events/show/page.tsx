@@ -307,9 +307,9 @@ export default function EventRegistrationPage({
                         </span>
                       </TooltipTrigger>
                       <TooltipContent>
-                        <div>
+                        <div className='max-w-[30ch]'>
                           <p>Depois de te inscreveres, se precisares de cancelar a tua inscrição por algum motivo, terás de enviar um email para</p>
-                          <a className={cn(buttonVariants({ variant: "link" }), "p-0 inline text-enei-beige font-normal")} href="mailto:geral@eneiconf.pt">
+                          <a className={cn(buttonVariants({ variant: "link" }), "p-0 inline text-enei-beige text-xs")} href="mailto:geral@eneiconf.pt"> 
                             geral@eneiconf.pt
                           </a>
                         </div>
