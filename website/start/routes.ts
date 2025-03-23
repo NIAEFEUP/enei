@@ -181,7 +181,7 @@ router
       .post('/:id/register', [EventsController, 'register'])
       .as('actions:events.register')
       .where('id', '39')
-      .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
+      .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant(), middleware.hasPurchasedTicket()])
     router
       .get('/:id/tickets', [EventsController, 'ticketsRemaining'])
       .where('id', '39')
