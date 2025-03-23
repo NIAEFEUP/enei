@@ -181,7 +181,12 @@ router
       .post('/:id/register', [EventsController, 'register'])
       .as('actions:events.register')
       .where('id', '39')
-      .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant(), middleware.hasPurchasedTicket()])
+      .use([
+        middleware.auth(),
+        middleware.verifiedEmail(),
+        middleware.participant(),
+        middleware.hasPurchasedTicket(),
+      ])
     router
       .get('/:id/tickets', [EventsController, 'ticketsRemaining'])
       .where('id', '39')
@@ -195,7 +200,7 @@ router
     router
       .get('/:id/is-registered-by-email', [EventsController, 'isRegisteredByEmail'])
       .as('actions:events.isRegisteredByEmail')
-      .use([middleware.companyBearerAuth(), middleware.wip()]) 
+      .use([middleware.companyBearerAuth(), middleware.wip()])
   })
   .prefix('events')
 

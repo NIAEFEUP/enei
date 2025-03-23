@@ -18,11 +18,19 @@ interface EventCardProps {
   time: string
   location: string
   speakers: Speaker[]
-  allowClick?: boolean,
-  onClick?: () => void,
+  allowClick?: boolean
+  onClick?: () => void
 }
 
-export default function EventCard({ title, type, time, location, speakers, allowClick = false, onClick }: EventCardProps) {
+export default function EventCard({
+  title,
+  type,
+  time,
+  location,
+  speakers,
+  allowClick = false,
+  onClick,
+}: EventCardProps) {
   const [isRegistered] = useState(false)
 
   // useEffect(() => {
@@ -92,7 +100,10 @@ export default function EventCard({ title, type, time, location, speakers, allow
   }
 
   return (
-    <div onClick={allowClick ? onClick : undefined} className={cn("h-full w-full", allowClick && "cursor-pointer")}> 
+    <div
+      onClick={allowClick ? onClick : undefined}
+      className={cn('h-full w-full', allowClick && 'cursor-pointer')}
+    >
       <Card className={cn('p-3 space-y-3 w-full h-full border-none', cardBackground[type])}>
         <CardTitle className={cn('text-xl', textColor[type])}>{title}</CardTitle>
         <div className="flex flex-row gap-3">

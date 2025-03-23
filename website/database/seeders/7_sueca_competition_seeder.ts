@@ -6,8 +6,7 @@ export default class extends BaseSeeder {
   async run() {
     await Event.create({
       title: 'Torneio de Bots de Sueca',
-      description:
-        '',
+      description: '',
       date: DateTime.fromObject({ year: 2025, month: 4, day: 14, hour: 12, minute: 30 }),
       duration: 60,
       type: 'competition',

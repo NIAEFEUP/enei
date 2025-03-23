@@ -95,7 +95,9 @@ export default function EventRegistrationPage({
   const handleRegister = async () => {
     setIsLoading(true)
     try {
-      router.post('/events/' + eventId + '/register', undefined, { onFinish: () => fetchRegistrationStatus() })
+      router.post('/events/' + eventId + '/register', undefined, {
+        onFinish: () => fetchRegistrationStatus(),
+      })
     } catch (error) {
       console.error(error)
       if (error.response?.status === 302) {
@@ -143,11 +145,7 @@ export default function EventRegistrationPage({
   }
 
   return (
-    <Page
-      title="Registo de Evento"
-      className="bg-enei-beige"
-      variant="beige"
-    >
+    <Page title="Registo de Evento" className="bg-enei-beige" variant="beige">
       <Container>
         <div className="flex justify-center mt-10 relative z-10">
           <Card className="w-full max-w-7xl mx-auto border-transparent shadow-transparent bg-transparent">
@@ -188,18 +186,46 @@ export default function EventRegistrationPage({
                 <Info className="h-5 w-5" />
                 <p className="text-lg font-semibold">Acerca do Evento</p>
               </h1>
-              <div className='space-y-2'>
-                {description.split("\n\n").map((paragraph, index) => (
-                  <p key={index} className="text-black max-w-[70ch]">{paragraph}</p>
+              <div className="space-y-2">
+                {description.split('\n\n').map((paragraph, index) => (
+                  <p key={index} className="text-black max-w-[70ch]">
+                    {paragraph}
+                  </p>
                 ))}
               </div>
               {isRegistered && (
                 <div className="flex flex-col pb-4">
-                  <h2 className='text-md font-semibold mb-2'>Informação complementar para participantes</h2>
-                  <ul className='list-disc list-inside flex flex-col gap-2'>
-                    <li className='text-sm'>Organização de Github: <a href="https://github.com/ENEI-Competicoes" className={cn(buttonVariants({variant: 'link'}), "h-auto p-0 pl-1")}>https://github.com/ENEI-Competicoes</a></li>
-                    <li className='text-sm'>Grupo de WhatsApp para avisos: <a href="https://chat.whatsapp.com/Kea4ya7tEyl5FELOiQmdWf" className={cn(buttonVariants({variant: 'link'}), "h-auto p-0 pl-1")}>https://chat.whatsapp.com/Kea4ya7tEyl5FELOiQmdWf</a></li>
-                    <li className='text-sm'>Grupo de WhatsApp para a competição: <a href="https://chat.whatsapp.com/GQckBEHqETVHqnVp7XFhO8" className={cn(buttonVariants({variant: 'link'}), "h-auto p-0 pl-1")}>https://chat.whatsapp.com/GQckBEHqETVHqnVp7XFhO8</a></li>
+                  <h2 className="text-md font-semibold mb-2">
+                    Informação complementar para participantes
+                  </h2>
+                  <ul className="list-disc list-inside flex flex-col gap-2">
+                    <li className="text-sm">
+                      Organização de Github:{' '}
+                      <a
+                        href="https://github.com/ENEI-Competicoes"
+                        className={cn(buttonVariants({ variant: 'link' }), 'h-auto p-0 pl-1')}
+                      >
+                        https://github.com/ENEI-Competicoes
+                      </a>
+                    </li>
+                    <li className="text-sm">
+                      Grupo de WhatsApp para avisos:{' '}
+                      <a
+                        href="https://chat.whatsapp.com/Kea4ya7tEyl5FELOiQmdWf"
+                        className={cn(buttonVariants({ variant: 'link' }), 'h-auto p-0 pl-1')}
+                      >
+                        https://chat.whatsapp.com/Kea4ya7tEyl5FELOiQmdWf
+                      </a>
+                    </li>
+                    <li className="text-sm">
+                      Grupo de WhatsApp para a competição:{' '}
+                      <a
+                        href="https://chat.whatsapp.com/GQckBEHqETVHqnVp7XFhO8"
+                        className={cn(buttonVariants({ variant: 'link' }), 'h-auto p-0 pl-1')}
+                      >
+                        https://chat.whatsapp.com/GQckBEHqETVHqnVp7XFhO8
+                      </a>
+                    </li>
                   </ul>
                 </div>
               )}
@@ -298,7 +324,10 @@ export default function EventRegistrationPage({
                     <Tooltip>
                       <TooltipTrigger>
                         <span
-                          className={cn(buttonVariants({ variant: "default" }), "px-4 aria-disabled:pointer-events-none aria-disabled:opacity-50")}
+                          className={cn(
+                            buttonVariants({ variant: 'default' }),
+                            'px-4 aria-disabled:pointer-events-none aria-disabled:opacity-50'
+                          )}
                           style={{ backgroundColor: activityColors[type] }}
                           aria-disabled={isLoading || isRegistered}
                         >
@@ -307,9 +336,18 @@ export default function EventRegistrationPage({
                         </span>
                       </TooltipTrigger>
                       <TooltipContent>
-                        <div className='max-w-[30ch]'>
-                          <p>Depois de te inscreveres, se precisares de cancelar a tua inscrição por algum motivo, terás de enviar um email para</p>
-                          <a className={cn(buttonVariants({ variant: "link" }), "p-0 inline text-enei-beige text-xs")} href="mailto:geral@eneiconf.pt"> 
+                        <div className="max-w-[30ch]">
+                          <p>
+                            Depois de te inscreveres, se precisares de cancelar a tua inscrição por
+                            algum motivo, terás de enviar um email para
+                          </p>
+                          <a
+                            className={cn(
+                              buttonVariants({ variant: 'link' }),
+                              'p-0 inline text-enei-beige text-xs'
+                            )}
+                            href="mailto:geral@eneiconf.pt"
+                          >
                             geral@eneiconf.pt
                           </a>
                         </div>
