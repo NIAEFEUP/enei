@@ -1,5 +1,5 @@
-import { Calendar, Clock, MapPin, Ticket, Users, Info, ClipboardCheck } from 'lucide-react'
-import { Button } from '~/components/ui/button'
+import { Calendar, Clock, MapPin, Ticket, Users, Info, ClipboardCheck, Loader2 } from 'lucide-react'
+import { Button, buttonVariants } from '~/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import BaseLayout from '~/layouts/base'
@@ -10,6 +10,7 @@ import { cn } from '~/lib/utils'
 // import { Tooltip } from '~/components/ui/tooltip'
 // import { TooltipContent, TooltipProvider, TooltipTrigger } from '@radix-ui/react-tooltip'
 import RegistrationConfirmationModal from '~/components/events/registration_confirmation_modal'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip'
 
 interface Speaker {
   firstName: string
@@ -50,7 +51,7 @@ export default function EventRegistrationPage({
   ticketsRemaining: initialTicketsRemaining,
   price,
 }: EventRegistrationProps) {
-  // const [isRegistered, setIsRegistered] = useState(false)
+  const [isRegistered, setIsRegistered] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [ticketsRemaining, setTicketsRemaining] = useState(initialTicketsRemaining)
   const [registrationConfirmationModalOpen, setRegistrationConfirmationModalOpen] = useState(false)
@@ -68,8 +69,8 @@ export default function EventRegistrationPage({
 
   const fetchRegistrationStatus = async () => {
     try {
-      // const response = await axios.get('/events/' + eventId + '/is-registered')
-      // setIsRegistered(response.data.isRegistered)
+      const response = await axios.get('/events/' + eventId + '/is-registered')
+      setIsRegistered(response.data.isRegistered)
     } catch (error) {
       console.error(error)
     }
@@ -85,9 +86,9 @@ export default function EventRegistrationPage({
     fetchData()
   }, [])
 
-  // const handleRegisterClick = () => {
-  //   setRegistrationConfirmationModalOpen(true)
-  // }
+  const handleRegisterClick = () => {
+    setRegistrationConfirmationModalOpen(true)
+  }
 
   const handleRegister = async () => {
     setIsLoading(true)
@@ -136,7 +137,7 @@ export default function EventRegistrationPage({
   return (
     <BaseLayout
       title="Registo de Evento"
-      className="bg-enei-beige with-decorative-bars"
+      className="bg-enei-beige"
       barColor={cn('', activityColors[type])}
     >
       <div className="flex justify-center mt-10 relative z-10">
@@ -179,7 +180,18 @@ export default function EventRegistrationPage({
               <Info className="h-5 w-5" />
               <p className="text-lg font-semibold">Acerca do Evento</p>
             </h1>
-            <p className="text-black">{description}</p>
+            {description.split("\n\n").map((paragraph, index) => <p key={index} className="text-black max-w-[70ch]">{paragraph}</p>)}
+
+            {isRegistered && (
+              <div className="flex flex-col pb-4">
+                <h2 className='text-md font-semibold mt-4 mb-2'>Informação complementar para participantes</h2>
+                <ul className='list-disc list-inside flex flex-col gap-2'>
+                  <li className='text-sm'>Organização de Github: <a href="https://github.com/ENEI-Competicoes" className={cn(buttonVariants({variant: 'link'}), "h-auto p-0 pl-1")}>https://github.com/ENEI-Competicoes</a></li> 
+                  <li className='text-sm'>Grupo de WhatsApp para avisos: <a href="https://chat.whatsapp.com/Kea4ya7tEyl5FELOiQmdWf" className={cn(buttonVariants({variant: 'link'}), "h-auto p-0 pl-1")}>https://chat.whatsapp.com/Kea4ya7tEyl5FELOiQmdWf</a></li> 
+                  <li className='text-sm'>Grupo de WhatsApp para a competição: <a href="https://chat.whatsapp.com/GQckBEHqETVHqnVp7XFhO8" className={cn(buttonVariants({variant: 'link'}), "h-auto p-0 pl-1")}>https://chat.whatsapp.com/GQckBEHqETVHqnVp7XFhO8</a></li> 
+                </ul>
+              </div>
+            )}
 
             {/* Speakers (if applicable) */}
             {speakers.length > 0 && (
@@ -243,7 +255,7 @@ export default function EventRegistrationPage({
             )}
 
             {/* Button to register */}
-            {/*!isRegistered && (
+            {!isRegistered && (
               <div className="flex justify-center">
                 <Button
                   onClick={() => handleRegisterClick()}
@@ -261,10 +273,10 @@ export default function EventRegistrationPage({
                     : 'Inscrição não necessária'}
                 </Button>
               </div>
-            )*/}
+            )}
 
             {/* Temporary indication that registration is not possible yet */}
-            <div className="flex justify-center">
+            {/* <div className="flex justify-center">
               <Button
                 disabled={true}
                 className="px-4"
@@ -272,33 +284,35 @@ export default function EventRegistrationPage({
               >
                 Ainda não é possível inscrever
               </Button>
-            </div>
+            </div> */}
 
             {/* Indicator if the user is registered */}
-            {/*isRegistered && (
+            {isRegistered && (
               <div className="flex justify-center">
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>
-                      <Button
-                        disabled={isLoading || isRegistered}
-                        className="px-4"
+                      <span
+                        className={cn(buttonVariants({ variant: "default" }), "px-4 aria-disabled:pointer-events-none aria-disabled:opacity-50")} 
                         style={{ backgroundColor: activityColors[type] }}
+                        aria-disabled={isLoading || isRegistered}
                       >
                         {isLoading && <Loader2 className="animate-spin" />}
                         Inscrito
-                      </Button>
+                      </span>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>Para cancelares a tua inscrição contacta </p>
-                      <Button className="p-0" variant="link">
-                        <a href="mailto:geral@eneiconf.pt">geral@eneiconf.pt</a>
-                      </Button>
+                      <div>
+                        <p>Para cancelares a tua inscrição contacta </p>
+                        <a className={cn(buttonVariants({ variant: "link" }), "p-0 inline text-enei-beige font-normal")} href="mailto:geral@eneiconf.pt">
+                          geral@eneiconf.pt
+                        </a>
+                      </div>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
               </div>
-            )*/}
+            )}
 
             {/* Seats Available (the empty element is a weird fix...) */}
             {requiresRegistration ? (
