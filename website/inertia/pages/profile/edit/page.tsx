@@ -453,6 +453,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
                           defaultCountry="PT"
                           locales="pt"
                           countryOptionsOrder={['PT', '...']}
+                          blueVariant
                           {...field}
                         />
                       </FormControl>
