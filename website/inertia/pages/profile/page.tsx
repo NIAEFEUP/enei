@@ -6,7 +6,7 @@ import { Button, buttonVariants } from '~/components/ui/button'
 import Page from '~/components/common/page'
 import Container from '~/components/common/containers'
 import { getUniversityById } from '~/lib/enei/signup/universities'
-import { Download, User, Github, Linkedin, Globe, QrCode, LucideProps, Pencil } from 'lucide-react'
+import { Download, User, Github, Linkedin, Globe, QrCode, LucideProps, Pencil, Landmark, GraduationCap } from 'lucide-react'
 import { Dialog, DialogContent, DialogTrigger } from '~/components/ui/dialog'
 import { QRCodeSVG } from 'qrcode.react';
 import { useEffect, useState } from 'react'
@@ -30,6 +30,34 @@ const SocialIcon = ({ icon: Icon, link }: SocialIconProps) => {
   )
 }
 
+
+const SocialItem = ({ icon: Icon, link }: SocialIconProps) => {
+  return (
+    <li className='w-fit flex flex-row items-center gap-6'>
+      <span className='h-9 w-9'>
+        <Icon className='h-9 w-9' />
+      </span>
+      <a href={link} className='text-sm font-bold' target="_blank" rel="noopener noreferrer">
+        {link}
+      </a>
+    </li>
+  )
+}
+
+interface RoundBadgeProps {
+  icon: React.FC<LucideProps>;
+  text: string;
+}
+
+const RoundBadge = ({ icon: Icon, text }: RoundBadgeProps) => {
+  return (
+    <span className='bg-cambridge-blue text-enei-beige h-fit w-fit py-[0.375rem] px-[0.625rem] gap-[0.625rem] rounded-full flex flex-row items-center'>
+      <Icon className='h-6 flex-shrink-0' />
+      <p className='text-sm font-bold'>{text}</p>
+    </span>
+  )
+}
+
 export default function ProfilePage(props: InferPageProps<ProfilesController, 'index'> & { profile: ParticipantProfile }) {
   const tuyau = useTuyau()
   const { profile, isUser } = props
@@ -40,7 +68,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
     setWindowHref(window.location.href)
   })
 
-  const profileEditions = ENEI_EDITIONS.filter((edition) => profile.attendedBeforeEditions.includes(edition.value)).map((edition) => edition.label)
+  const profileEditions = ENEI_EDITIONS.filter((edition) => profile.attendedBeforeEditions.includes(edition.value)).map((edition) => edition.value)
 
   const socials: SocialIconProps[] = []
 
@@ -65,6 +93,67 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
 
   return (
     <Page title={`${profile.firstName} ${profile.lastName}`} className="bg-enei-beige text-enei-blue">
+      <Container className='mt-8 grid grid-cols-[auto_3fr] gap-16 min-h-screen'>
+        <section className='bg-dark-cyan bg-opacity-20 h-full w-[22rem] px-12 pt-12'>
+          <div className='size-fit rounded-full overflow-clip bg-enei-blue mb-12'>
+            <User className='w-64 h-64 text-enei-beige' />
+          </div>
+          <ul className='flex flex-col gap-5 mt-7'>
+            {socials.length > 0 &&
+              socials.map((social: SocialIconProps) => (
+                <SocialItem {...social} />
+              ))
+            }
+          </ul>
+        </section>
+
+        <section className='pt-12 flex flex-col gap-20'>
+          <header>
+            <p className='text-5xl uppercase font-bold mb-5'>
+              {profile.firstName} {profile.lastName}
+            </p>
+
+            <p className='text-xl font-bold mb-4'>
+              {profile.about ?? "Sem informação."}
+            </p>
+
+            <div className='flex flex-row flex-wrap mb-4 gap-5 gap-y-2'>
+              <RoundBadge icon={Landmark} text={getUniversityById(profile.university)!.name} />
+              <RoundBadge icon={GraduationCap} text={profile.course} />
+              <RoundBadge icon={GraduationCap} text={(profile.curricularYear === 'already-finished') ? ("Concluído em " + profile.finishedAt) : (profile.curricularYear + "º ano")} />
+            </div>
+
+            {profileEditions.length > 0 ?
+              <div className='flex flex-row flex-wrap gap-4 gap-y-2'>
+                {profileEditions.map((edition) => (
+                  <span className='bg-sunray rounded-lg px-[0.625rem] py-1'>
+                    <p className='text-base font-bold text-enei-beige'>
+                      ENEI {edition}
+                    </p>
+                  </span>
+                ))}
+              </div>
+              :
+              <div>
+                <Badge variant={'default'}>
+                  <p className='text-base font-bold'>
+                    Primeiro ENEI
+                  </p>
+                </Badge>
+              </div>
+            }
+          </header>
+
+          <div>
+            <p className='text-persian-orange text-3xl uppercase font-bold mb-5'>
+              Currículo
+            </p>
+            Visualizar Curriculo aqui!
+          </div>
+
+        </section>
+      </Container>
+
       <Container className='mt-8'>
         <section className="relative flex flex-col gap-8 md:justify-between z-10">
           <div className='flex flex-row justify-normal gap-4'>
@@ -146,6 +235,6 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
           </section>
         </section>
       </Container>
-    </Page>
+    </Page >
   )
 }

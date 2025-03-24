@@ -27,6 +27,9 @@ export default {
         'enei-other': 'hsl(var(--enei-other))',
 
         'persian-orange': '#E28C40',
+        'cambridge-blue': '#9EBD9F',
+        'dark-cyan': '#5A8C86',
+        'sunray': '#E2AD50',
         'dark-persian-orange': '#914E13',
         'sand': {
           '1': '#fdfdfc',
