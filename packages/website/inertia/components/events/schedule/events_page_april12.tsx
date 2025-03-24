@@ -1,36 +1,36 @@
-import EventCard from '../event_card'
-import { router } from '@inertiajs/react'
+import EventCard from "../event_card";
+import { router } from "@inertiajs/react";
 
 interface Speaker {
-  firstName: string
-  lastName: string
-  profilePicture: string
+  firstName: string;
+  lastName: string;
+  profilePicture: string;
 }
 
 interface Event {
-  id: number
-  title: string
-  type: 'talk' | 'workshop' | 'night' | 'meal' | 'competition' | 'networking' | 'other'
-  date: string
-  time: string
-  location: string
-  companyImage: string
-  speakers: Speaker[]
+  id: number;
+  title: string;
+  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other";
+  date: string;
+  time: string;
+  location: string;
+  companyImage: string;
+  speakers: Speaker[];
 }
 
 interface EventsPageProps {
-  events: Event[]
+  events: Event[];
 }
 
 export default function EventsPageApril12({ events }: EventsPageProps) {
   return (
-    <div className="flex flex-col space-y-4 md:grid md:grid-cols-4 md:grid-rows-15 md:gap-4 md:space-y-0">
-      <div className="col-start-1 row-start-1 col-span-4">
+    <div className="md:grid-rows-15 flex flex-col space-y-4 md:grid md:grid-cols-4 md:gap-4 md:space-y-0">
+      <div className="col-span-4 col-start-1 row-start-1">
         <EventCard
-          title={'Pequeno-Almoço'}
-          type={'meal'}
-          time={'09:00 - 10:00'}
-          location={'Pavilhão Desportivo Luís Falcão'}
+          title={"Pequeno-Almoço"}
+          type={"meal"}
+          time={"09:00 - 10:00"}
+          location={"Pavilhão Desportivo Luís Falcão"}
           speakers={[]}
         />
       </div>
@@ -67,7 +67,7 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
           onClick={() => router.visit(`/events/${events[4].id}`)}
         />
       </div>
-      <div className="row-span-3 col-start-2 row-start-2">
+      <div className="col-start-2 row-span-3 row-start-2">
         <EventCard
           id={events[0].id}
           title={events[0].title}
@@ -78,7 +78,7 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
           onClick={() => router.visit(`/events/${events[0].id}`)}
         />
       </div>
-      <div className="row-span-3 col-start-3 row-start-2">
+      <div className="col-start-3 row-span-3 row-start-2">
         <EventCard
           id={events[14].id}
           title={events[14].title}
@@ -89,7 +89,7 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
           onClick={() => router.visit(`/events/${events[14].id}`)}
         />
       </div>
-      <div className="row-span-3 col-start-4 row-start-2">
+      <div className="col-start-4 row-span-3 row-start-2">
         <EventCard
           id={events[15].id}
           title={events[15].title}
@@ -102,10 +102,10 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
       </div>
       <div className="col-span-4 row-start-5">
         <EventCard
-          title={'Almoço'}
-          type={'meal'}
-          time={'12:00 - 14:00'}
-          location={'Cantina de Engenharia - FEUP'}
+          title={"Almoço"}
+          type={"meal"}
+          time={"12:00 - 14:00"}
+          location={"Cantina de Engenharia - FEUP"}
           speakers={[]}
         />
       </div>
@@ -142,7 +142,7 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
           onClick={() => router.visit(`/events/${events[6].id}`)}
         />
       </div>
-      <div className="row-span-3 col-start-2 row-start-6">
+      <div className="col-start-2 row-span-3 row-start-6">
         <EventCard
           id={events[10].id}
           title={events[10].title}
@@ -153,7 +153,7 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
           onClick={() => router.visit(`/events/${events[10].id}`)}
         />
       </div>
-      <div className="row-span-3 col-start-3 row-start-6">
+      <div className="col-start-3 row-span-3 row-start-6">
         <EventCard
           id={events[7].id}
           title={events[7].title}
@@ -164,7 +164,7 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
           onClick={() => router.visit(`/events/${events[7].id}`)}
         />
       </div>
-      <div className="row-span-3 col-start-4 row-start-6">
+      <div className="col-start-4 row-span-3 row-start-6">
         <EventCard
           id={events[11].id}
           title={events[11].title}
@@ -177,10 +177,10 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
       </div>
       <div className="col-span-4 row-start-9">
         <EventCard
-          title={'Coffee Break'}
-          type={'meal'}
-          time={'16:00 - 16:30'}
-          location={'Coffee Lounge - FEUP'}
+          title={"Coffee Break"}
+          type={"meal"}
+          time={"16:00 - 16:30"}
+          location={"Coffee Lounge - FEUP"}
           speakers={[]}
         />
       </div>
@@ -217,7 +217,7 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
           onClick={() => router.visit(`/events/${events[8].id}`)}
         />
       </div>
-      <div className="row-span-3 col-start-2 row-start-10">
+      <div className="col-start-2 row-span-3 row-start-10">
         <EventCard
           id={events[12].id}
           title={events[12].title}
@@ -228,7 +228,7 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
           onClick={() => router.visit(`/events/${events[12].id}`)}
         />
       </div>
-      <div className="row-span-3 col-start-3 row-start-10">
+      <div className="col-start-3 row-span-3 row-start-10">
         <EventCard
           id={events[13].id}
           title={events[13].title}
@@ -239,7 +239,7 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
           onClick={() => router.visit(`/events/${events[13].id}`)}
         />
       </div>
-      <div className="row-span-3 col-start-4 row-start-10">
+      <div className="col-start-4 row-span-3 row-start-10">
         <EventCard
           id={events[17].id}
           title={events[17].title}
@@ -252,43 +252,43 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
       </div>
       <div className="col-span-4 row-start-13">
         <EventCard
-          title={'Jantar'}
-          type={'meal'}
-          time={'18:30 - 20:30'}
-          location={'Cantina de Engenharia - FEUP'}
+          title={"Jantar"}
+          type={"meal"}
+          time={"18:30 - 20:30"}
+          location={"Cantina de Engenharia - FEUP"}
           speakers={[]}
         />
       </div>
 
-      <div className=" col-start-1 col-span-2 row-start-14">
+      <div className="row-start-14 col-span-2 col-start-1">
         <EventCard
-          title={'Rally Tascas'}
-          type={'night'}
-          time={'21:30 - 00:00'}
-          location={'Baixa do Porto'}
+          title={"Rally Tascas"}
+          type={"night"}
+          time={"21:30 - 00:00"}
+          location={"Baixa do Porto"}
           speakers={[]}
         />
       </div>
 
-      <div className=" col-start-3 col-span-2 row-start-14">
+      <div className="row-start-14 col-span-2 col-start-3">
         <EventCard
-          title={'Game Show'}
-          type={'night'}
-          time={'20:30 - 23:00'}
-          location={'AEFEUP'}
+          title={"Game Show"}
+          type={"night"}
+          time={"20:30 - 23:00"}
+          location={"AEFEUP"}
           speakers={[]}
         />
       </div>
 
-      <div className=" col-start-1 col-span-4 row-start-54">
+      <div className="row-start-54 col-span-4 col-start-1">
         <EventCard
-          title={'Visita às Galerias'}
-          type={'night'}
-          time={'00:00 - 04:00'}
-          location={'AEFEUP'}
+          title={"Visita às Galerias"}
+          type={"night"}
+          time={"00:00 - 04:00"}
+          location={"AEFEUP"}
           speakers={[]}
         />
       </div>
     </div>
-  )
+  );
 }

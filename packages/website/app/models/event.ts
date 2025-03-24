@@ -1,71 +1,71 @@
-import { DateTime } from 'luxon'
-import { BaseModel, column, manyToMany } from '@adonisjs/lucid/orm'
-import SpeakerProfile from './speaker_profile.js'
-import type { ManyToMany } from '@adonisjs/lucid/types/relations'
-import User from './user.js'
+import { DateTime } from "luxon";
+import { BaseModel, column, manyToMany } from "@adonisjs/lucid/orm";
+import SpeakerProfile from "./speaker_profile.js";
+import type { ManyToMany } from "@adonisjs/lucid/types/relations";
+import User from "./user.js";
 
 export default class Event extends BaseModel {
   @column({ isPrimary: true })
-  declare id: number
+  declare id: number;
 
   @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
+  declare createdAt: DateTime;
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
+  declare updatedAt: DateTime;
 
   @column()
-  declare title: string
+  declare title: string;
 
   @column()
-  declare description: string
+  declare description: string;
 
   @column()
-  declare type: string
+  declare type: string;
 
   @column()
-  declare companyImage: string
+  declare companyImage: string;
 
   @column.dateTime()
-  declare date: DateTime
+  declare date: DateTime;
 
   @column()
-  declare duration: number
+  declare duration: number;
 
   @column()
-  declare location: string
+  declare location: string;
 
   @manyToMany(() => SpeakerProfile, {
-    pivotTable: 'event_speakers',
+    pivotTable: "event_speakers",
   })
-  public speakers!: ManyToMany<typeof SpeakerProfile>
+  public speakers!: ManyToMany<typeof SpeakerProfile>;
 
   @manyToMany(() => User, {
-    pivotTable: 'event_users',
+    pivotTable: "event_users",
   })
-  public registeredUsers!: ManyToMany<typeof User>
+  public registeredUsers!: ManyToMany<typeof User>;
 
   @column()
-  declare registrationRequirements: string
+  declare registrationRequirements: string;
 
   @column()
-  declare requiresRegistration: boolean
+  declare requiresRegistration: boolean;
 
   @column()
-  declare ticketsTotal: number
+  declare ticketsTotal: number;
 
   @column()
-  declare ticketsRemaining: number
+  declare ticketsRemaining: number;
 
   @column()
-  declare price: number
+  declare price: number;
 
   public getFormattedDate() {
-    return this.date.toFormat('dd-MM-yyyy')
+    return this.date.toFormat("dd-MM-yyyy");
   }
 
   public getFormattedTime() {
-    const endTime = this.date.plus({ minutes: this.duration })
-    return `${this.date.toFormat('HH:mm')} - ${endTime.toFormat('HH:mm')}`
+    const endTime = this.date.plus({ minutes: this.duration });
+    return `${this.date.toFormat("HH:mm")} - ${endTime.toFormat("HH:mm")}`;
   }
 }

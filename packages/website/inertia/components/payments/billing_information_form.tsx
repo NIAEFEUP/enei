@@ -1,16 +1,16 @@
-import { Checkbox } from '~/components/ui/checkbox'
-import { Label } from '~/components/ui/label'
-import { Input } from '~/components/ui/input'
+import { Checkbox } from "~/components/ui/checkbox";
+import { Label } from "~/components/ui/label";
+import { Input } from "~/components/ui/input";
 
 interface BillingInformationFormProps {
-  enableBillingInfo: boolean
-  setEnableBillingInfo: (checked: boolean) => void
+  enableBillingInfo: boolean;
+  setEnableBillingInfo: (checked: boolean) => void;
   billingInfo: {
-    name: string
-    vat: string
-    address: string
-  }
-  onBillingInfoChange: (field: string, value: string) => void
+    name: string;
+    vat: string;
+    address: string;
+  };
+  onBillingInfoChange: (field: string, value: string) => void;
 }
 
 export default function BillingInformationForm({
@@ -20,13 +20,13 @@ export default function BillingInformationForm({
   onBillingInfoChange,
 }: BillingInformationFormProps) {
   const handleInputChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    onBillingInfoChange(key, event.target.value)
-  }
+    onBillingInfoChange(key, event.target.value);
+  };
   return (
     <section>
       {/* Checkbox */}
-      <h2 className="text-xl font-semibold mb-4">2. Dados de faturação</h2>
-      <div className="flex items-center space-x-2 mb-4">
+      <h2 className="mb-4 text-xl font-semibold">2. Dados de faturação</h2>
+      <div className="mb-4 flex items-center space-x-2">
         <Checkbox
           id="billingAddress"
           checked={enableBillingInfo}
@@ -44,7 +44,7 @@ export default function BillingInformationForm({
             placeholder="Nome completo"
             disabled={!enableBillingInfo}
             value={billingInfo.name}
-            onChange={handleInputChange('name')}
+            onChange={handleInputChange("name")}
           />
         </div>
         <div className="grid gap-2">
@@ -54,7 +54,7 @@ export default function BillingInformationForm({
             placeholder="Número de identificação fiscal"
             disabled={!enableBillingInfo}
             value={billingInfo.vat}
-            onChange={handleInputChange('vat')}
+            onChange={handleInputChange("vat")}
           />
         </div>
         <div className="grid gap-2">
@@ -64,10 +64,10 @@ export default function BillingInformationForm({
             placeholder="Insere a tua morada"
             disabled={!enableBillingInfo}
             value={billingInfo.address}
-            onChange={handleInputChange('address')}
+            onChange={handleInputChange("address")}
           />
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import BaseLayout from '~/layouts/base'
+import BaseLayout from "~/layouts/base";
 
 export default function Forbidden() {
   return (
@@ -7,5 +7,5 @@ export default function Forbidden() {
         <h1>You should not be here</h1>
       </div>
     </BaseLayout>
-  )
+  );
 }

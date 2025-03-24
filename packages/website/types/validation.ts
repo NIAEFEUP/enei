@@ -3,12 +3,12 @@
  */
 
 export type VineValidationError = {
-  code: string
-  messages: Array<VineValidationErrorMessage>
-}
+  code: string;
+  messages: Array<VineValidationErrorMessage>;
+};
 
 export type VineValidationErrorMessage = {
-  rule: string
-  message: string
-  field: string
-}
+  rule: string;
+  message: string;
+  field: string;
+};

@@ -1,32 +1,32 @@
-import { useForm } from '@inertiajs/react'
-import { Button } from '~/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
-import { useCooldown } from '~/hooks/use_cooldown'
-import { useToast } from '~/hooks/use_toast'
-import { useTuyau } from '~/hooks/use_tuyau'
-import BaseLayout from '~/layouts/base'
-import CardLayout from '~/layouts/card'
+import { useForm } from "@inertiajs/react";
+import { Button } from "~/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
+import { useCooldown } from "~/hooks/use_cooldown";
+import { useToast } from "~/hooks/use_toast";
+import { useTuyau } from "~/hooks/use_tuyau";
+import BaseLayout from "~/layouts/base";
+import CardLayout from "~/layouts/card";
 
 export default function EmailVerification() {
-  const tuyau = useTuyau()
+  const tuyau = useTuyau();
 
   const cooldown = useCooldown({
     seconds: 60,
-  })
+  });
 
-  const { post } = useForm()
-  const { toast } = useToast()
+  const { post } = useForm();
+  const { toast } = useToast();
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    post(tuyau.$url('actions:auth.forgot-password.send'), {
+    e.preventDefault();
+    post(tuyau.$url("actions:auth.forgot-password.send"), {
       onSuccess: () => {
         toast({
-          title: 'E-mail reenviado!',
-          description: 'Por favor, verifica a tua caixa de entrada, incluindo o spam!',
+          title: "E-mail reenviado!",
+          description: "Por favor, verifica a tua caixa de entrada, incluindo o spam!",
           duration: 5000,
-        })
+        });
       },
-    })
+    });
   }
 
   return (
@@ -48,7 +48,7 @@ export default function EmailVerification() {
                 Não recebi nada...
               </Button>
               {cooldown.active && (
-                <p className="text-muted-foreground text-xs mt-2">
+                <p className="text-muted-foreground mt-2 text-xs">
                   Por favor espera {cooldown.secondsLeft} segundos antes de tentar novamente.
                 </p>
               )}
@@ -57,5 +57,5 @@ export default function EmailVerification() {
         </Card>
       </CardLayout>
     </BaseLayout>
-  )
+  );
 }

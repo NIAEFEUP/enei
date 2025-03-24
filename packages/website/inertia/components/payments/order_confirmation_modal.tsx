@@ -5,12 +5,12 @@ import {
   DialogHeader,
   DialogFooter,
   DialogDescription,
-} from '~/components/ui/dialog'
-import { Button } from '~/components/ui/button'
+} from "~/components/ui/dialog";
+import { Button } from "~/components/ui/button";
 
 interface OrderConfirmationModalProps {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 function OrderConfirmationModal({ isOpen, onClose }: OrderConfirmationModalProps) {
@@ -30,7 +30,7 @@ function OrderConfirmationModal({ isOpen, onClose }: OrderConfirmationModalProps
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
-export default OrderConfirmationModal
+export default OrderConfirmationModal;

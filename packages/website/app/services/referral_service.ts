@@ -1,102 +1,102 @@
-import User from '#models/user'
-import Sqids from 'sqids'
-import { buildUrl } from '../url.js'
+import User from "#models/user";
+import Sqids from "sqids";
+import { buildUrl } from "../url.js";
 
 // const POINTS_FOR_PROMOTER = 20
 // const POINTS_FOR_PARTICIPANT = 10
 
 const sqids = new Sqids({
   minLength: 8,
-})
+});
 
 export default class ReferralService {
   // Low-level encoding/decoding
 
   #encode(id: number) {
-    return sqids.encode([id])
+    return sqids.encode([id]);
   }
 
   #decode(hashId: string): number | null {
-    const values = sqids.decode(hashId)
+    const values = sqids.decode(hashId);
 
-    if (values.length !== 1) return null
-    return values[0]
+    if (values.length !== 1) return null;
+    return values[0];
   }
 
   // To be moved to a policy once bouncer is installed
 
   async canUserRefer(user: User) {
-    if (user.isPromoter()) return true
+    if (user.isPromoter()) return true;
 
-    return await User.hasPurchasedTicket(user)
+    return await User.hasPurchasedTicket(user);
   }
 
   async canUserBeLinked(user: User) {
-    return !user.isPromoter() && !user.wasReferred() && !(await User.hasPurchasedTicket(user))
+    return !user.isPromoter() && !user.wasReferred() && !(await User.hasPurchasedTicket(user));
   }
 
   // High-level methods
 
   async #getReferralCode(user: User) {
     if (!(await this.canUserRefer(user))) {
-      return null
+      return null;
     }
 
-    return this.#encode(user.id)
+    return this.#encode(user.id);
   }
 
   async getReferralLink(user: User) {
-    const referralCode = await this.#getReferralCode(user)
+    const referralCode = await this.#getReferralCode(user);
     if (!referralCode) {
-      return null
+      return null;
     }
 
-    return buildUrl().params({ referralCode: referralCode }).make('actions:referrals.link')
+    return buildUrl().params({ referralCode: referralCode }).make("actions:referrals.link");
   }
 
   async getReferrerByCode(referralCode: string): Promise<User | null> {
-    const referralUserId = this.#decode(referralCode)
-    if (!referralUserId) return null
+    const referralUserId = this.#decode(referralCode);
+    if (!referralUserId) return null;
 
-    const referrer = await User.find(referralUserId)
-    if (!referrer || !(await this.canUserRefer(referrer))) return null
+    const referrer = await User.find(referralUserId);
+    if (!referrer || !(await this.canUserRefer(referrer))) return null;
 
-    return referrer
+    return referrer;
   }
 
   async getReferralCount(user: User): Promise<number | null> {
-    if (!(await this.canUserRefer(user))) return null
+    if (!(await this.canUserRefer(user))) return null;
 
-    const referrals = await user.related('referrals').query().count('*', 'count').first()
-    return referrals?.$extras.count
+    const referrals = await user.related("referrals").query().count("*", "count").first();
+    return referrals?.$extras.count;
   }
 
   async getIndirectReferralCount(user: User): Promise<number | null> {
-    if (!user.isPromoter() || !(await this.canUserRefer(user))) return null
+    if (!user.isPromoter() || !(await this.canUserRefer(user))) return null;
 
     const indirectReferrals = await user
-      .related('indirectReferrals')
+      .related("indirectReferrals")
       .query()
-      .count('*', 'count')
-      .first()
-    return indirectReferrals?.$extras.count
+      .count("*", "count")
+      .first();
+    return indirectReferrals?.$extras.count;
   }
 
   async linkUserToReferrer(referredUser: User, referrer: User) {
     if (!(await this.canUserBeLinked(referredUser))) {
-      return
+      return;
     }
 
-    await referredUser.related('referrer').associate(referrer)
+    await referredUser.related("referrer").associate(referrer);
 
     const referringPromoter = referrer.isPromoter()
       ? referrer
       : referrer.referringPromoterId !== null
         ? await User.getReferringPromoter(referrer)
-        : null
+        : null;
 
     if (referringPromoter) {
-      await referredUser.related('referringPromoter').associate(referringPromoter)
+      await referredUser.related("referringPromoter").associate(referringPromoter);
     }
   }
 

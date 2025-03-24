@@ -1,11 +1,11 @@
 type DecorativeBarsProps = {
-  barColor?: string
-}
+  barColor?: string;
+};
 
 export default function DecorativeBars({ barColor }: DecorativeBarsProps) {
   return (
     <div className="3xl:block hidden">
-      <div className="absolute left-0 top-0 h-full text-enei-workshop z-30 pointer-events-none">
+      <div className="text-enei-workshop pointer-events-none absolute left-0 top-0 z-30 h-full">
         <svg
           width="100%"
           height="100%"
@@ -21,7 +21,7 @@ export default function DecorativeBars({ barColor }: DecorativeBarsProps) {
         </svg>
       </div>
 
-      <div className="absolute right-0 top-0 h-full text-enei-workshop z-30 pointer-events-none">
+      <div className="text-enei-workshop pointer-events-none absolute right-0 top-0 z-30 h-full">
         <svg
           width="100%"
           height="100%"
@@ -37,5 +37,5 @@ export default function DecorativeBars({ barColor }: DecorativeBarsProps) {
         </svg>
       </div>
     </div>
-  )
+  );
 }

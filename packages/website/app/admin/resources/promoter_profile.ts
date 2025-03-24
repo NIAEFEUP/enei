@@ -1,20 +1,20 @@
-import PromoterProfile from '#models/promoter_profile'
-import { owningRelationFeature } from '../relations.js'
-import { createResource } from '../resource.js'
+import PromoterProfile from "#models/promoter_profile";
+import { owningRelationFeature } from "../relations.js";
+import { createResource } from "../resource.js";
 
 const PromoterProfileResource = createResource({
   model: PromoterProfile,
   features: [
     owningRelationFeature({
       users: {
-        type: 'one-to-many',
+        type: "one-to-many",
         target: {
-          resourceId: 'users',
-          joinKey: 'promoterProfileId',
+          resourceId: "users",
+          joinKey: "promoterProfileId",
         },
       },
     }),
   ],
-})
+});
 
-export default PromoterProfileResource
+export default PromoterProfileResource;

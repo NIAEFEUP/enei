@@ -1,13 +1,13 @@
-import Event from '#models/event'
-import { owningRelationFeature, targetRelationFeature } from '../relations.js'
-import { createResource } from '../resource.js'
+import Event from "#models/event";
+import { owningRelationFeature, targetRelationFeature } from "../relations.js";
+import { createResource } from "../resource.js";
 
 const EventResource = createResource({
   model: Event,
   options: {
     properties: {
       description: {
-        type: 'richtext',
+        type: "richtext",
       },
     },
   },
@@ -15,29 +15,29 @@ const EventResource = createResource({
     targetRelationFeature(),
     owningRelationFeature({
       speakers: {
-        type: 'many-to-many',
+        type: "many-to-many",
         target: {
-          resourceId: 'speaker_profiles',
+          resourceId: "speaker_profiles",
         },
         junction: {
-          joinKey: 'eventId',
-          inverseJoinKey: 'speakerProfileId',
-          throughResourceId: 'event_speakers',
+          joinKey: "eventId",
+          inverseJoinKey: "speakerProfileId",
+          throughResourceId: "event_speakers",
         },
       },
       registeredUsers: {
-        type: 'many-to-many',
+        type: "many-to-many",
         target: {
-          resourceId: 'users',
+          resourceId: "users",
         },
         junction: {
-          joinKey: 'eventId',
-          inverseJoinKey: 'userId',
-          throughResourceId: 'event_users',
+          joinKey: "eventId",
+          inverseJoinKey: "userId",
+          throughResourceId: "event_users",
         },
       },
     }),
   ],
-})
+});
 
-export default EventResource
+export default EventResource;

@@ -1,29 +1,29 @@
-'use client'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
-import { InferPageProps } from '@adonisjs/inertia/types'
-import OrdersController from '#controllers/orders_controller'
-import Page from '~/components/common/page'
+"use client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
+import { InferPageProps } from "@adonisjs/inertia/types";
+import OrdersController from "#controllers/orders_controller";
+import Page from "~/components/common/page";
 interface Order {
-  id: number
-  requestId: string
-  userId: number
-  nif: number
-  address: string
-  status: string
-  total: number
-  createdAt: string
-  updatedAt: string
+  id: number;
+  requestId: string;
+  userId: number;
+  nif: number;
+  address: string;
+  status: string;
+  total: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export default function TicketSalePage(
-  props: InferPageProps<OrdersController, 'show'> & { order: Order }
+  props: InferPageProps<OrdersController, "show"> & { order: Order },
 ) {
-  const { order } = props
+  const { order } = props;
 
   return (
     <Page title="Order Details" className="bg-enei-blue">
-      <div className="min-h-screen flex items-center justify-center m-5">
-        <Card className="w-full max-w-2xl mx-auto">
+      <div className="m-5 flex min-h-screen items-center justify-center">
+        <Card className="mx-auto w-full max-w-2xl">
           <CardHeader>
             <CardTitle>Order Details</CardTitle>
             <CardDescription>Information about your order</CardDescription>
@@ -58,5 +58,5 @@ export default function TicketSalePage(
         </Card>
       </div>
     </Page>
-  )
+  );
 }

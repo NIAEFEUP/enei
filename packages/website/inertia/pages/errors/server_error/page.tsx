@@ -7,5 +7,5 @@ export default function ServerError(props: { error: any }) {
         <span>{props.error.message}</span>
       </div>
     </>
-  )
+  );
 }

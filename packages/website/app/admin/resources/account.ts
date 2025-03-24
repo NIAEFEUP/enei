@@ -1,17 +1,17 @@
-import Account from '#models/account'
-import { targetRelationFeature } from '../relations.js'
-import { createResource } from '../resource.js'
+import Account from "#models/account";
+import { targetRelationFeature } from "../relations.js";
+import { createResource } from "../resource.js";
 
 const AccountResource = createResource({
   model: Account,
   options: {
     properties: {
       userId: {
-        reference: 'users',
+        reference: "users",
       },
     },
   },
   features: [targetRelationFeature()],
-})
+});
 
-export default AccountResource
+export default AccountResource;

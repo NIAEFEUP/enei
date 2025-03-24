@@ -1,5 +1,5 @@
-import UserActivity from '#models/user_activity'
-import { createResource } from '../resource.js'
+import UserActivity from "#models/user_activity";
+import { createResource } from "../resource.js";
 
 const UserActivityResource = createResource({
   model: UserActivity,
@@ -8,16 +8,16 @@ const UserActivityResource = createResource({
       type: {
         availableValues: [
           {
-            value: 'referral',
-            label: 'Referral',
+            value: "referral",
+            label: "Referral",
           },
         ],
       },
       description: {
-        type: 'key-value',
+        type: "key-value",
       },
     },
   },
-})
+});
 
-export default UserActivityResource
+export default UserActivityResource;

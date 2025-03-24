@@ -1,4 +1,4 @@
-import { defineConfig } from '@adonisjs/core/app'
+import { defineConfig } from "@adonisjs/core/app";
 
 export default defineConfig({
   /*
@@ -11,12 +11,12 @@ export default defineConfig({
   |
   */
   commands: [
-    () => import('@adonisjs/core/commands'),
-    () => import('@adonisjs/lucid/commands'),
-    () => import('@adonisjs/mail/commands'),
-    () => import('@tuyau/core/commands'),
-    () => import('adonisjs-jobs/commands'),
-    () => import('@adonisjs/bouncer/commands'),
+    () => import("@adonisjs/core/commands"),
+    () => import("@adonisjs/lucid/commands"),
+    () => import("@adonisjs/mail/commands"),
+    () => import("@tuyau/core/commands"),
+    () => import("adonisjs-jobs/commands"),
+    () => import("@adonisjs/bouncer/commands"),
   ],
 
   /*
@@ -29,34 +29,34 @@ export default defineConfig({
   |
   */
   providers: [
-    () => import('@adonisjs/core/providers/app_provider'),
-    () => import('@adonisjs/core/providers/hash_provider'),
+    () => import("@adonisjs/core/providers/app_provider"),
+    () => import("@adonisjs/core/providers/hash_provider"),
     {
-      file: () => import('@adonisjs/core/providers/repl_provider'),
-      environment: ['repl', 'test'],
+      file: () => import("@adonisjs/core/providers/repl_provider"),
+      environment: ["repl", "test"],
     },
-    () => import('@adonisjs/core/providers/vinejs_provider'),
-    () => import('@adonisjs/core/providers/edge_provider'),
-    () => import('@adonisjs/session/session_provider'),
-    () => import('@adonisjs/vite/vite_provider'),
-    () => import('@adonisjs/shield/shield_provider'),
-    () => import('@adonisjs/static/static_provider'),
-    () => import('@adonisjs/cors/cors_provider'),
-    () => import('@adonisjs/lucid/database_provider'),
-    () => import('@adonisjs/auth/auth_provider'),
-    () => import('@adonisjs/inertia/inertia_provider'),
-    () => import('adonisjs-jobs/jobs_provider'),
-    () => import('@adonisjs/mail/mail_provider'),
-    () => import('@tuyau/core/tuyau_provider'),
+    () => import("@adonisjs/core/providers/vinejs_provider"),
+    () => import("@adonisjs/core/providers/edge_provider"),
+    () => import("@adonisjs/session/session_provider"),
+    () => import("@adonisjs/vite/vite_provider"),
+    () => import("@adonisjs/shield/shield_provider"),
+    () => import("@adonisjs/static/static_provider"),
+    () => import("@adonisjs/cors/cors_provider"),
+    () => import("@adonisjs/lucid/database_provider"),
+    () => import("@adonisjs/auth/auth_provider"),
+    () => import("@adonisjs/inertia/inertia_provider"),
+    () => import("adonisjs-jobs/jobs_provider"),
+    () => import("@adonisjs/mail/mail_provider"),
+    () => import("@tuyau/core/tuyau_provider"),
     {
-      file: () => import('@adminjs/adonis/adminjs_provider'),
-      environment: ['web'],
+      file: () => import("@adminjs/adonis/adminjs_provider"),
+      environment: ["web"],
     },
-    () => import('@adonisjs/ally/ally_provider'),
-    () => import('@adonisjs/limiter/limiter_provider'),
-    () => import('@adonisjs/redis/redis_provider'),
-    () => import('@adonisjs/drive/drive_provider'),
-    () => import('@adonisjs/bouncer/bouncer_provider'),
+    () => import("@adonisjs/ally/ally_provider"),
+    () => import("@adonisjs/limiter/limiter_provider"),
+    () => import("@adonisjs/redis/redis_provider"),
+    () => import("@adonisjs/drive/drive_provider"),
+    () => import("@adonisjs/bouncer/bouncer_provider"),
   ],
 
   /*
@@ -68,10 +68,10 @@ export default defineConfig({
   |
   */
   preloads: [
-    () => import('#start/routes'),
-    () => import('#start/kernel'),
-    () => import('#start/events'),
-    () => import('#start/validator'),
+    () => import("#start/routes"),
+    () => import("#start/kernel"),
+    () => import("#start/events"),
+    () => import("#start/validator"),
   ],
 
   /*
@@ -86,13 +86,13 @@ export default defineConfig({
   tests: {
     suites: [
       {
-        files: ['tests/unit/**/*.spec(.ts|.js)'],
-        name: 'unit',
+        files: ["tests/unit/**/*.spec(.ts|.js)"],
+        name: "unit",
         timeout: 2000,
       },
       {
-        files: ['tests/functional/**/*.spec(.ts|.js)'],
-        name: 'functional',
+        files: ["tests/functional/**/*.spec(.ts|.js)"],
+        name: "functional",
         timeout: 30000,
       },
     ],
@@ -110,17 +110,17 @@ export default defineConfig({
   */
   metaFiles: [
     {
-      pattern: 'resources/views/**/*.edge',
+      pattern: "resources/views/**/*.edge",
       reloadServer: false,
     },
     {
-      pattern: 'public/**',
+      pattern: "public/**",
       reloadServer: false,
     },
   ],
 
   assetsBundler: false,
   hooks: {
-    onBuildStarting: [() => import('@adonisjs/vite/build_hook')],
+    onBuildStarting: [() => import("@adonisjs/vite/build_hook")],
   },
-})
+});

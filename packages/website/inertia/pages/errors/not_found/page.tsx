@@ -7,5 +7,5 @@ export default function NotFound() {
         <span>This page does not exist.</span>
       </div>
     </>
-  )
+  );
 }

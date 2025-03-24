@@ -1,17 +1,17 @@
-import env from '#start/env'
-import { defineConfig } from 'adonisjs-jobs'
+import env from "#start/env";
+import { defineConfig } from "adonisjs-jobs";
 
 const jobsConfig = defineConfig({
   connection: {
-    host: env.get('REDIS_HOST', 'localhost'),
-    port: env.get('REDIS_PORT', 6379),
-    password: env.get('REDIS_PASSWORD'),
+    host: env.get("REDIS_HOST", "localhost"),
+    port: env.get("REDIS_PORT", 6379),
+    password: env.get("REDIS_PASSWORD"),
     family: 0,
   },
 
-  queue: env.get('REDIS_QUEUE', 'default'),
+  queue: env.get("REDIS_QUEUE", "default"),
 
-  queues: ['default'],
+  queues: ["default"],
 
   options: {
     /**
@@ -23,7 +23,7 @@ const jobsConfig = defineConfig({
      * Backoff setting for automatic retries if the job fails
      */
     backoff: {
-      type: 'exponential',
+      type: "exponential",
       delay: 5000,
     },
 
@@ -45,6 +45,6 @@ const jobsConfig = defineConfig({
      */
     removeOnFail: 1000,
   },
-})
+});
 
-export default jobsConfig
+export default jobsConfig;

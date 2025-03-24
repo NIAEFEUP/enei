@@ -1,29 +1,29 @@
-import type { InferPageProps } from '@adonisjs/inertia/types'
+import type { InferPageProps } from "@adonisjs/inertia/types";
 
-import Page from '~/components/common/page'
-import Container from '~/components/common/containers'
-import PointsStoreProductCard from '~/components/store/card/product_card'
+import Page from "~/components/common/page";
+import Container from "~/components/common/containers";
+import PointsStoreProductCard from "~/components/store/card/product_card";
 
-import type Product from '#models/product'
+import type Product from "#models/product";
 
-import { useState, createContext } from 'react'
+import { useState, createContext } from "react";
 
-import StoreController from '#controllers/store_controller'
+import StoreController from "#controllers/store_controller";
 
 type PointsStoreContextType = {
-  userPoints: number
-  setUserPoints: React.Dispatch<React.SetStateAction<number>>
-}
+  userPoints: number;
+  setUserPoints: React.Dispatch<React.SetStateAction<number>>;
+};
 
 export const StoreContext = createContext<PointsStoreContextType>({
   userPoints: 0,
   setUserPoints: () => {},
-})
+});
 
-export default function Store(props: InferPageProps<StoreController, 'index'>) {
-  const { products, user } = props
+export default function Store(props: InferPageProps<StoreController, "index">) {
+  const { products, user } = props;
 
-  const [userPoints, setUserPoints] = useState<number>(user?.points ?? 0)
+  const [userPoints, setUserPoints] = useState<number>(user?.points ?? 0);
 
   return (
     <StoreContext.Provider
@@ -34,16 +34,16 @@ export default function Store(props: InferPageProps<StoreController, 'index'>) {
     >
       <Page title="Loja" className="bg-enei-blue text-enei-beige" variant="beige">
         <div className="bg-enei-beige text-enei-blue min-h-dvh">
-          <Container className="mt-4 flex flex-col gap-y-24 justify-center">
+          <Container className="mt-4 flex flex-col justify-center gap-y-24">
             <div className="flex flex-col gap-y-2">
               <h1 className="text-center text-3xl font-bold">Loja</h1>
-              <p className="text-center text-persian-orange text-2xl font-bold">
+              <p className="text-persian-orange text-center text-2xl font-bold">
                 {userPoints} pontos
               </p>
             </div>
-            <Container className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
+            <Container className="grid grid-cols-1 justify-center gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {products.length === 0 && (
-                <p className="text-center mx-auto w-full text-2xl">Não há produtos disponíveis</p>
+                <p className="mx-auto w-full text-center text-2xl">Não há produtos disponíveis</p>
               )}
 
               {products?.map((product) => (
@@ -57,5 +57,5 @@ export default function Store(props: InferPageProps<StoreController, 'index'>) {
         </div>
       </Page>
     </StoreContext.Provider>
-  )
+  );
 }

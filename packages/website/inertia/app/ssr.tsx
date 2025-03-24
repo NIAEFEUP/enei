@@ -1,14 +1,14 @@
-import ReactDOMServer from 'react-dom/server'
-import { createInertiaApp } from '@inertiajs/react'
-import { Providers } from './providers'
+import ReactDOMServer from "react-dom/server";
+import { createInertiaApp } from "@inertiajs/react";
+import { Providers } from "./providers";
 
 export default function render(intialPage: any) {
   return createInertiaApp({
     page: intialPage,
     render: ReactDOMServer.renderToString,
     resolve: (name) => {
-      const pages = import.meta.glob('../pages/**/page.tsx', { eager: true })
-      return pages[`../pages/${name}/page.tsx`]
+      const pages = import.meta.glob("../pages/**/page.tsx", { eager: true });
+      return pages[`../pages/${name}/page.tsx`];
     },
     setup: ({ App, props }) => (
       <>
@@ -21,5 +21,5 @@ export default function render(intialPage: any) {
         </App>
       </>
     ),
-  })
+  });
 }

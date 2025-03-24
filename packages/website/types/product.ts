@@ -1,5 +1,5 @@
-import type { UserTypes } from './user.js'
+import type { UserTypes } from "./user.js";
 
 export type ProductRestrictions = {
-  groups: Array<UserTypes>
-}
+  groups: Array<UserTypes>;
+};

@@ -1,25 +1,25 @@
-import EventCard from '../event_card'
-import { router } from '@inertiajs/react'
+import EventCard from "../event_card";
+import { router } from "@inertiajs/react";
 
 interface Speaker {
-  firstName: string
-  lastName: string
-  profilePicture: string
+  firstName: string;
+  lastName: string;
+  profilePicture: string;
 }
 
 interface Event {
-  id: number
-  title: string
-  type: 'talk' | 'workshop' | 'night' | 'meal' | 'competition' | 'networking' | 'other'
-  date: string
-  time: string
-  location: string
-  companyImage: string
-  speakers: Speaker[]
+  id: number;
+  title: string;
+  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other";
+  date: string;
+  time: string;
+  location: string;
+  companyImage: string;
+  speakers: Speaker[];
 }
 
 interface EventsPageProps {
-  events: Event[]
+  events: Event[];
 }
 
 export default function EventsPageApril14({ events }: EventsPageProps) {
@@ -59,7 +59,7 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           onClick={() => router.visit(`/events/${events[4].id}`)}
         />
       </div>
-      <div className="row-span-3 col-start-2 row-start-1">
+      <div className="col-start-2 row-span-3 row-start-1">
         <EventCard
           id={events[5].id}
           title={events[5].title}
@@ -70,30 +70,30 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           onClick={() => router.visit(`/events/${events[5].id}`)}
         />
       </div>
-      <div className="row-span-3 col-start-3 row-start-1">
+      <div className="col-start-3 row-span-3 row-start-1">
         <EventCard
-          title={'Workshop TBD'}
-          type={'workshop'}
-          time={'9:30 - 11:30'}
-          location={'TBD - FEUP'}
+          title={"Workshop TBD"}
+          type={"workshop"}
+          time={"9:30 - 11:30"}
+          location={"TBD - FEUP"}
           speakers={[]}
         />
       </div>
-      <div className="row-span-3 col-start-4 row-start-1">
+      <div className="col-start-4 row-span-3 row-start-1">
         <EventCard
-          title={'Workshop TBD'}
-          type={'workshop'}
-          time={'9:30 - 11:30'}
-          location={'TBD - FEUP'}
+          title={"Workshop TBD"}
+          type={"workshop"}
+          time={"9:30 - 11:30"}
+          location={"TBD - FEUP"}
           speakers={[]}
         />
       </div>
       <div className="col-span-4 row-start-4">
         <EventCard
-          title={'Coffee Break'}
-          type={'meal'}
-          time={'11:30 - 12:00'}
-          location={'Coffee Lounge - FEUP'}
+          title={"Coffee Break"}
+          type={"meal"}
+          time={"11:30 - 12:00"}
+          location={"Coffee Lounge - FEUP"}
           speakers={[]}
         />
       </div>
@@ -110,14 +110,14 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
       </div>
       <div className="col-start-1 row-start-6">
         <EventCard
-          title={'Painel de Empresas'}
-          type={'other'}
-          time={'12:30 - 13:30'}
-          location={'Auditório - FEUP'}
+          title={"Painel de Empresas"}
+          type={"other"}
+          time={"12:30 - 13:30"}
+          location={"Auditório - FEUP"}
           speakers={[]}
         />
       </div>
-      <div className="row-span-2 col-start-2 row-start-5 col-span-3">
+      <div className="col-span-3 col-start-2 row-span-2 row-start-5">
         <EventCard
           title={events[6].title}
           type={events[6].type}
@@ -128,24 +128,24 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           onClick={() => router.visit(`/events/${events[6].id}`)}
         />
       </div>
-      <div className="row-span-1 col-start-1 col-span-4 row-start-7">
+      <div className="col-span-4 col-start-1 row-span-1 row-start-7">
         <EventCard
-          title={'Almoço'}
-          type={'meal'}
-          time={'13:30 - 15:30'}
-          location={'Relvado Central - FEUP'}
+          title={"Almoço"}
+          type={"meal"}
+          time={"13:30 - 15:30"}
+          location={"Relvado Central - FEUP"}
           speakers={[]}
         />
       </div>
-      <div className="row-span-1 col-start-1 col-span-4 row-start-8">
+      <div className="col-span-4 col-start-1 row-span-1 row-start-8">
         <EventCard
-          title={'Sessão de Encerramento'}
-          type={'other'}
-          time={'15:30 - 17:00'}
-          location={'Auditório - FEUP'}
+          title={"Sessão de Encerramento"}
+          type={"other"}
+          time={"15:30 - 17:00"}
+          location={"Auditório - FEUP"}
           speakers={[]}
         />
       </div>
     </div>
-  )
+  );
 }

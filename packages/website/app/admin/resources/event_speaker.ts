@@ -1,5 +1,5 @@
-import EventSpeaker from '#models/event_speaker'
-import { createResource } from '../resource.js'
+import EventSpeaker from "#models/event_speaker";
+import { createResource } from "../resource.js";
 
 const EventSpeakerResource = createResource({
   model: EventSpeaker,
@@ -7,13 +7,13 @@ const EventSpeakerResource = createResource({
     navigation: false,
     properties: {
       eventId: {
-        reference: 'events',
+        reference: "events",
       },
       speakerProfileId: {
-        reference: 'speaker_profiles',
+        reference: "speaker_profiles",
       },
     },
   },
-})
+});
 
-export default EventSpeakerResource
+export default EventSpeakerResource;

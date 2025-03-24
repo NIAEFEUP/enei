@@ -1,19 +1,19 @@
-import Product from '#models/product'
-import { createResource } from '../resource.js'
-import { owningRelationFeature, targetRelationFeature } from '../relations.js'
+import Product from "#models/product";
+import { createResource } from "../resource.js";
+import { owningRelationFeature, targetRelationFeature } from "../relations.js";
 
 const ProductResource = createResource({
   model: Product,
   options: {
     properties: {
       description: {
-        type: 'richtext',
+        type: "richtext",
       },
       productGroupId: {
-        reference: 'product_groups',
+        reference: "product_groups",
       },
       restrictions: {
-        type: 'key-value',
+        type: "key-value",
       },
     },
   },
@@ -21,18 +21,18 @@ const ProductResource = createResource({
     targetRelationFeature(),
     owningRelationFeature({
       orders: {
-        type: 'many-to-many',
+        type: "many-to-many",
         junction: {
-          joinKey: 'productId',
-          inverseJoinKey: 'orderId',
-          throughResourceId: 'order_products',
+          joinKey: "productId",
+          inverseJoinKey: "orderId",
+          throughResourceId: "order_products",
         },
         target: {
-          resourceId: 'orders',
+          resourceId: "orders",
         },
       },
     }),
   ],
-})
+});
 
-export default ProductResource
+export default ProductResource;

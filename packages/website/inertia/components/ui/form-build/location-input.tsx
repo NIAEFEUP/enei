@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { Check, ChevronsUpDown } from 'lucide-react'
-import { Button } from '~/components/ui/button'
-import { ScrollArea, ScrollBar } from '~/components/ui/scroll-area'
+import { useState } from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { Button } from "~/components/ui/button";
+import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import {
   Command,
   CommandList,
@@ -9,89 +9,89 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
-} from '~/components/ui/command'
-import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
-import { cn } from '~/lib/utils'
+} from "~/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
+import { cn } from "~/lib/utils";
 
-import countries from '#data/location-input/countries.json' with { type: 'json' }
-import states from '#data/location-input/states.json' with { type: 'json' }
+import countries from "#data/location-input/countries.json" with { type: "json" };
+import states from "#data/location-input/states.json" with { type: "json" };
 
 interface Timezone {
-  zoneName: string
-  gmtOffset: number
-  gmtOffsetName: string
-  abbreviation: string
-  tzName: string
+  zoneName: string;
+  gmtOffset: number;
+  gmtOffsetName: string;
+  abbreviation: string;
+  tzName: string;
 }
 
 interface CountryProps {
-  id: number
-  name: string
-  iso3: string
-  iso2: string
-  numeric_code: string
-  phone_code: string
-  capital: string
-  currency: string
-  currency_name: string
-  currency_symbol: string
-  tld: string
-  native: string
-  region: string
-  region_id: string
-  subregion: string
-  subregion_id: string
-  nationality: string
-  timezones: Timezone[]
-  translations: Record<string, string>
-  latitude: string
-  longitude: string
-  emoji: string
-  emojiU: string
+  id: number;
+  name: string;
+  iso3: string;
+  iso2: string;
+  numeric_code: string;
+  phone_code: string;
+  capital: string;
+  currency: string;
+  currency_name: string;
+  currency_symbol: string;
+  tld: string;
+  native: string;
+  region: string;
+  region_id: string;
+  subregion: string;
+  subregion_id: string;
+  nationality: string;
+  timezones: Timezone[];
+  translations: Record<string, string>;
+  latitude: string;
+  longitude: string;
+  emoji: string;
+  emojiU: string;
 }
 
 interface StateProps {
-  id: number
-  name: string
-  country_id: number
-  country_code: string
-  country_name: string
-  state_code: string
-  type: string | null
-  latitude: string
-  longitude: string
+  id: number;
+  name: string;
+  country_id: number;
+  country_code: string;
+  country_name: string;
+  state_code: string;
+  type: string | null;
+  latitude: string;
+  longitude: string;
 }
 
 interface LocationSelectorProps {
-  disabled?: boolean
-  onCountryChange?: (country: CountryProps | null) => void
-  onStateChange?: (state: StateProps | null) => void
+  disabled?: boolean;
+  onCountryChange?: (country: CountryProps | null) => void;
+  onStateChange?: (state: StateProps | null) => void;
 }
 
 const LocationSelector = ({ disabled, onCountryChange, onStateChange }: LocationSelectorProps) => {
-  const [selectedCountry, setSelectedCountry] = useState<CountryProps | null>(null)
-  const [selectedState, setSelectedState] = useState<StateProps | null>(null)
-  const [openCountryDropdown, setOpenCountryDropdown] = useState(false)
-  const [openStateDropdown, setOpenStateDropdown] = useState(false)
+  const [selectedCountry, setSelectedCountry] = useState<CountryProps | null>(null);
+  const [selectedState, setSelectedState] = useState<StateProps | null>(null);
+  const [openCountryDropdown, setOpenCountryDropdown] = useState(false);
+  const [openStateDropdown, setOpenStateDropdown] = useState(false);
 
   // Cast imported JSON data to their respective types
-  const countriesData = countries as CountryProps[]
-  const statesData = states as StateProps[]
+  const countriesData = countries as CountryProps[];
+  const statesData = states as StateProps[];
 
   // Filter states for selected country
-  const availableStates = statesData.filter((state) => state.country_id === selectedCountry?.id)
+  const availableStates = statesData.filter((state) => state.country_id === selectedCountry?.id);
 
   const handleCountrySelect = (country: CountryProps | null) => {
-    setSelectedCountry(country)
-    setSelectedState(null) // Reset state when country changes
-    onCountryChange?.(country)
-    onStateChange?.(null)
-  }
+    setSelectedCountry(country);
+    setSelectedState(null); // Reset state when country changes
+    onCountryChange?.(country);
+    onStateChange?.(null);
+  };
 
   const handleStateSelect = (state: StateProps | null) => {
-    setSelectedState(state)
-    onStateChange?.(state)
-  }
+    setSelectedState(state);
+    onStateChange?.(state);
+  };
 
   return (
     <div className="flex gap-4">
@@ -128,8 +128,8 @@ const LocationSelector = ({ disabled, onCountryChange, onStateChange }: Location
                       key={country.id}
                       value={country.name}
                       onSelect={() => {
-                        handleCountrySelect(country)
-                        setOpenCountryDropdown(false)
+                        handleCountrySelect(country);
+                        setOpenCountryDropdown(false);
                       }}
                       className="flex cursor-pointer items-center justify-between text-sm"
                     >
@@ -139,8 +139,8 @@ const LocationSelector = ({ disabled, onCountryChange, onStateChange }: Location
                       </div>
                       <Check
                         className={cn(
-                          'h-4 w-4',
-                          selectedCountry?.id === country.id ? 'opacity-100' : 'opacity-0'
+                          "h-4 w-4",
+                          selectedCountry?.id === country.id ? "opacity-100" : "opacity-0",
                         )}
                       />
                     </CommandItem>
@@ -180,16 +180,16 @@ const LocationSelector = ({ disabled, onCountryChange, onStateChange }: Location
                         key={state.id}
                         value={state.name}
                         onSelect={() => {
-                          handleStateSelect(state)
-                          setOpenStateDropdown(false)
+                          handleStateSelect(state);
+                          setOpenStateDropdown(false);
                         }}
                         className="flex cursor-pointer items-center justify-between text-sm"
                       >
                         <span>{state.name}</span>
                         <Check
                           className={cn(
-                            'h-4 w-4',
-                            selectedState?.id === state.id ? 'opacity-100' : 'opacity-0'
+                            "h-4 w-4",
+                            selectedState?.id === state.id ? "opacity-100" : "opacity-0",
                           )}
                         />
                       </CommandItem>
@@ -203,7 +203,7 @@ const LocationSelector = ({ disabled, onCountryChange, onStateChange }: Location
         </Popover>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default LocationSelector
+export default LocationSelector;

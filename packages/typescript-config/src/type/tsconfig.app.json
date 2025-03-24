@@ -1,11 +1,11 @@
 {
-    "compilerOptions": {
-        // Emit
-        "declaration": false,
-        "declarationMap": false,
-        "removeComments": true,
+  "compilerOptions": {
+    // Emit
+    "declaration": false,
+    "declarationMap": false,
+    "removeComments": true,
 
-        // Projects
-        "composite": false,
-    }
+    // Projects
+    "composite": false
+  }
 }

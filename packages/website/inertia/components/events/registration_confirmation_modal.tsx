@@ -5,16 +5,16 @@ import {
   DialogHeader,
   DialogFooter,
   DialogDescription,
-} from '~/components/ui/dialog'
-import { Button, buttonVariants } from '~/components/ui/button'
-import { Loader2 } from 'lucide-react'
-import { cn } from '~/lib/utils'
+} from "~/components/ui/dialog";
+import { Button, buttonVariants } from "~/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { cn } from "~/lib/utils";
 
 interface RegistrationConfirmationModalProps {
-  isOpen: boolean
-  isLoading: boolean
-  onClose: () => void
-  onSubmit: () => void
+  isOpen: boolean;
+  isLoading: boolean;
+  onClose: () => void;
+  onSubmit: () => void;
 }
 
 function RegistrationConfirmationModal({
@@ -24,11 +24,11 @@ function RegistrationConfirmationModal({
   onSubmit,
 }: RegistrationConfirmationModalProps) {
   function handleSubmit() {
-    onSubmit()
+    onSubmit();
   }
 
   if (!isOpen) {
-    return null
+    return null;
   }
 
   return (
@@ -40,13 +40,13 @@ function RegistrationConfirmationModal({
         <DialogDescription>
           <p className="leading-tight">
             Depois de te inscreveres, se precisares de cancelar a tua inscrição por algum motivo,
-            terás de enviar um email para{' '}
+            terás de enviar um email para{" "}
             <a
-              className={cn(buttonVariants({ variant: 'link' }), 'p-0')}
+              className={cn(buttonVariants({ variant: "link" }), "p-0")}
               href="mailto:geral@eneiconf.pt"
             >
               geral@eneiconf.pt
-            </a>{' '}
+            </a>{" "}
             para cancelar a tua inscrição.
           </p>
         </DialogDescription>
@@ -61,7 +61,7 @@ function RegistrationConfirmationModal({
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
-export default RegistrationConfirmationModal
+export default RegistrationConfirmationModal;

@@ -5,14 +5,14 @@
 |
 */
 
-import vine from '@vinejs/vine'
-import { defineEnv } from '../app/env.js'
+import vine from "@vinejs/vine";
+import { defineEnv } from "../app/env.js";
 
-vine.convertEmptyStringsToNull = true
+vine.convertEmptyStringsToNull = true;
 
-const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', ({ object }) => {
+const env = await defineEnv(new URL("../", import.meta.url), "INERTIA_PUBLIC_", ({ object }) => {
   return object({
-    NODE_ENV: vine.enum(['development', 'production', 'test'] as const),
+    NODE_ENV: vine.enum(["development", "production", "test"] as const),
     PORT: vine.number(),
     HOST: vine.string(),
     LOG_LEVEL: vine.string(),
@@ -30,7 +30,7 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     | Variables for configuring session package
     |----------------------------------------------------------
     */
-    SESSION_DRIVER: vine.enum(['cookie', 'memory'] as const),
+    SESSION_DRIVER: vine.enum(["cookie", "memory"] as const),
 
     /*
     |----------------------------------------------------------
@@ -73,7 +73,7 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     | Variables for configuring the limiter package
     |----------------------------------------------------------
     */
-    LIMITER_STORE: vine.enum(['redis', 'memory'] as const),
+    LIMITER_STORE: vine.enum(["redis", "memory"] as const),
 
     /*
     |----------------------------------------------------------
@@ -121,8 +121,8 @@ const env = await defineEnv(new URL('../', import.meta.url), 'INERTIA_PUBLIC_', 
     | Variables for configuring the drive package
     |----------------------------------------------------------
     */
-    DRIVE_DISK: vine.enum(['fs']),
-  })
-})
+    DRIVE_DISK: vine.enum(["fs"]),
+  });
+});
 
-export default env
+export default env;

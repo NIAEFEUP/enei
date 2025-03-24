@@ -1,10 +1,10 @@
-import { defineConfig } from 'vite'
-import { getDirname } from '@adonisjs/core/helpers'
-import inertia from '@adonisjs/inertia/client'
-import react from '@vitejs/plugin-react'
-import adonisjs from '@adonisjs/vite/client'
-import tailwindcss from 'tailwindcss'
-import autoprefixer from 'autoprefixer'
+import { defineConfig } from "vite";
+import { getDirname } from "@adonisjs/core/helpers";
+import inertia from "@adonisjs/inertia/client";
+import react from "@vitejs/plugin-react";
+import adonisjs from "@adonisjs/vite/client";
+import tailwindcss from "tailwindcss";
+import autoprefixer from "autoprefixer";
 
 export default defineConfig({
   css: {
@@ -13,9 +13,9 @@ export default defineConfig({
     },
   },
   plugins: [
-    inertia({ ssr: { enabled: true, entrypoint: 'inertia/app/ssr.tsx' } }),
+    inertia({ ssr: { enabled: true, entrypoint: "inertia/app/ssr.tsx" } }),
     react(),
-    adonisjs({ entrypoints: ['inertia/app/app.tsx'], reload: ['resources/views/**/*.edge'] }),
+    adonisjs({ entrypoints: ["inertia/app/app.tsx"], reload: ["resources/views/**/*.edge"] }),
   ],
 
   /**
@@ -24,7 +24,7 @@ export default defineConfig({
    */
   resolve: {
     alias: {
-      '~/': `${getDirname(import.meta.url)}/inertia/`,
+      "~/": `${getDirname(import.meta.url)}/inertia/`,
     },
   },
-})
+});

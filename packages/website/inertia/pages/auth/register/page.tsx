@@ -1,32 +1,32 @@
-import { Button } from '~/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '~/components/ui/card'
-import { Input } from '~/components/ui/input'
-import { Label } from '~/components/ui/label'
-import { useError } from '~/hooks/use_error'
-import { cn } from '~/lib/utils'
-import { useForm } from '@inertiajs/react'
-import Page from '~/components/common/page'
-import CardContainer from '~/components/common/containers/card'
-import { Link } from '@tuyau/inertia/react'
+import { Button } from "~/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "~/components/ui/card";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
+import { useError } from "~/hooks/use_error";
+import { cn } from "~/lib/utils";
+import { useForm } from "@inertiajs/react";
+import Page from "~/components/common/page";
+import CardContainer from "~/components/common/containers/card";
+import { Link } from "@tuyau/inertia/react";
 
 export default function Login() {
-  const oauthError = useError('oauth')
+  const oauthError = useError("oauth");
 
   const { data, setData, post, errors } = useForm({
-    email: '',
-    password: '',
-    password_confirmation: '',
-  })
+    email: "",
+    password: "",
+    password_confirmation: "",
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    post('/auth/register')
-  }
+    e.preventDefault();
+    post("/auth/register");
+  };
 
   return (
     <Page title="Criar conta" className="bg-enei-blue">
       <CardContainer>
-        <Card className={cn(oauthError && 'border-2 border-red-600')}>
+        <Card className={cn(oauthError && "border-2 border-red-600")}>
           <CardHeader>
             <CardTitle className="text-2xl">Criar conta</CardTitle>
             <CardDescription>
@@ -44,7 +44,7 @@ export default function Login() {
                     type="text"
                     placeholder="alice@eneiconf.pt"
                     value={data.email}
-                    onChange={(e) => setData('email', e.target.value)}
+                    onChange={(e) => setData("email", e.target.value)}
                     required
                   />
                   {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
@@ -56,7 +56,7 @@ export default function Login() {
                     type="password"
                     placeholder="••••••••••••"
                     value={data.password}
-                    onChange={(e) => setData('password', e.target.value)}
+                    onChange={(e) => setData("password", e.target.value)}
                     required
                   />
                   {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
@@ -68,7 +68,7 @@ export default function Login() {
                     type="password"
                     placeholder="••••••••••••"
                     value={data.password_confirmation}
-                    onChange={(e) => setData('password_confirmation', e.target.value)}
+                    onChange={(e) => setData("password_confirmation", e.target.value)}
                     required
                   />
                   {errors.password_confirmation && (
@@ -111,16 +111,16 @@ export default function Login() {
                 </div>
               </div>
               <div className="mt-4 text-center text-sm">
-                Já tens conta?{' '}
+                Já tens conta?{" "}
                 <Link route="pages:auth.login">
                   <span className="underline">Iniciar sessão</span>
                 </Link>
               </div>
             </form>
-            {oauthError && <p className="text-sm text-red-600 text-center mt-4">{oauthError}</p>}
+            {oauthError && <p className="mt-4 text-center text-sm text-red-600">{oauthError}</p>}
           </CardContent>
         </Card>
       </CardContainer>
     </Page>
-  )
+  );
 }

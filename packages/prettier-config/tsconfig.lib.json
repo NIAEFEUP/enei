@@ -8,7 +8,7 @@
     "outDir": "./dist",
 
     // Project
-    "tsBuildInfoFile": "./dist/tsconfig.lib.tsbuildinfo",
+    "tsBuildInfoFile": "./dist/tsconfig.lib.tsbuildinfo"
   },
   "include": ["src/**/*"]
 }

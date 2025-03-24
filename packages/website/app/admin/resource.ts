@@ -5,50 +5,50 @@ import {
   type FeatureType,
   type ResourceOptions,
   type ResourceWithOptions,
-} from 'adminjs'
-import type { LucidModel } from '@adonisjs/lucid/types/model'
-import dbConfig from '#config/database'
-import { LucidResource } from '@adminjs/adonis'
-import { DateTime } from 'luxon'
+} from "adminjs";
+import type { LucidModel } from "@adonisjs/lucid/types/model";
+import dbConfig from "#config/database";
+import { LucidResource } from "@adminjs/adonis";
+import { DateTime } from "luxon";
 
 const beforeEdit: Before = async (request, context) => {
-  if (request.payload === undefined) return request
+  if (request.payload === undefined) return request;
 
   for (const property of context.resource.properties()) {
-    let type = property.type()
+    let type = property.type();
 
-    if (type === 'date' || type === 'datetime') {
+    if (type === "date" || type === "datetime") {
       // @ts-expect-error: This is cringe but it's the only way to use luxon's DateTime
-      property.type = () => `_${type}`
-      type = property.type()
+      property.type = () => `_${type}`;
+      type = property.type();
     }
 
     if (
       // @ts-expect-error: See above
-      (type === '_date' || type === '_datetime') &&
-      flat.get(request.payload, property.path())
+      (type === "_date" || type === "_datetime")
+      && flat.get(request.payload, property.path())
     )
       flat.set(
         request.payload,
         property.path(),
-        DateTime.fromISO(flat.get(request.payload, property.path()))
-      )
+        DateTime.fromISO(flat.get(request.payload, property.path())),
+      );
   }
 
-  delete request.payload.createdAt
-  delete request.payload.updatedAt
+  delete request.payload.createdAt;
+  delete request.payload.updatedAt;
 
-  return request
-}
+  return request;
+};
 
 export const createResource = ({
   model,
   options,
   features,
 }: {
-  model: LucidModel
-  options?: ResourceOptions
-  features?: FeatureType[]
+  model: LucidModel;
+  options?: ResourceOptions;
+  features?: FeatureType[];
 }) =>
   ({
     resource: new LucidResource(model, dbConfig.connection),
@@ -74,6 +74,6 @@ export const createResource = ({
           },
         },
       },
-      options
+      options,
     ),
-  }) satisfies ResourceWithOptions
+  }) satisfies ResourceWithOptions;

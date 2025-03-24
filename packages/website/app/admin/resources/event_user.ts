@@ -1,5 +1,5 @@
-import EventUser from '#models/event_user'
-import { createResource } from '../resource.js'
+import EventUser from "#models/event_user";
+import { createResource } from "../resource.js";
 
 const EventUserResource = createResource({
   model: EventUser,
@@ -7,13 +7,13 @@ const EventUserResource = createResource({
     navigation: false,
     properties: {
       eventId: {
-        reference: 'events',
+        reference: "events",
       },
       userId: {
-        reference: 'users',
+        reference: "users",
       },
     },
   },
-})
+});
 
-export default EventUserResource
+export default EventUserResource;

@@ -1,11 +1,11 @@
-import { Button } from '~/components/ui/button'
-import { cn } from '~/lib/utils'
-import { ScrollArea, ScrollBar } from '../ui/scroll-area'
+import { Button } from "~/components/ui/button";
+import { cn } from "~/lib/utils";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 interface DaySelectorProps {
-  activeIndex: number
-  setActiveIndex: (index: number) => void
-  days: String[]
+  activeIndex: number;
+  setActiveIndex: (index: number) => void;
+  days: String[];
 }
 
 export function DaySelector({ activeIndex, setActiveIndex, days }: DaySelectorProps) {
@@ -16,17 +16,17 @@ export function DaySelector({ activeIndex, setActiveIndex, days }: DaySelectorPr
           <Button
             key={index}
             className={cn(
-              'text-enei-beige transition-all duration-300',
-              index === activeIndex ? 'font-bold' : 'opacity-50'
+              "text-enei-beige transition-all duration-300",
+              index === activeIndex ? "font-bold" : "opacity-50",
             )}
             onClick={() => setActiveIndex(index)}
           >
             Dia {index + 1}
-            {index === activeIndex ? ' - ' + day : ''}
+            {index === activeIndex ? " - " + day : ""}
           </Button>
         ))}
       </div>
       <ScrollBar orientation="horizontal" />
     </ScrollArea>
-  )
+  );
 }

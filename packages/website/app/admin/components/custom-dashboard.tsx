@@ -1,5 +1,5 @@
 function CustomDashboard() {
-  return <div></div>
+  return <div></div>;
   // const [data, setData] = useState(null)
   // const api = new ApiClient()
 
@@ -28,4 +28,4 @@ function CustomDashboard() {
   // )
 }
 
-export default CustomDashboard
+export default CustomDashboard;

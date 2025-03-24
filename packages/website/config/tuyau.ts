@@ -1,4 +1,4 @@
-import { defineConfig } from '@tuyau/core'
+import { defineConfig } from "@tuyau/core";
 
 const tuyauConfig = defineConfig({
   codegen: {
@@ -12,6 +12,6 @@ const tuyauConfig = defineConfig({
     //  only: [],
     // }
   },
-})
+});
 
-export default tuyauConfig
+export default tuyauConfig;

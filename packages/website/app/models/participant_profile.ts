@@ -1,99 +1,99 @@
-import { DateTime } from 'luxon'
-import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
-import User from './user.js'
-import type { HasOne } from '@adonisjs/lucid/types/relations'
-import { json } from '#lib/lucid/decorators.js'
+import { DateTime } from "luxon";
+import { BaseModel, column, hasOne } from "@adonisjs/lucid/orm";
+import User from "./user.js";
+import type { HasOne } from "@adonisjs/lucid/types/relations";
+import { json } from "#lib/lucid/decorators.js";
 
 export default class ParticipantProfile extends BaseModel {
   @column({ isPrimary: true })
-  declare id: number
+  declare id: number;
 
   @hasOne(() => User)
-  declare user: HasOne<typeof User>
+  declare user: HasOne<typeof User>;
 
   @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
+  declare createdAt: DateTime;
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
+  declare updatedAt: DateTime;
 
   // Ticket Info
   @column()
-  declare purchasedTicket: 'early-bird-without-housing' | 'early-bird-with-housing' | null
+  declare purchasedTicket: "early-bird-without-housing" | "early-bird-with-housing" | null;
 
   // General Info
 
   @column()
-  declare firstName: string
+  declare firstName: string;
 
   @column()
-  declare lastName: string
+  declare lastName: string;
 
   @column.date()
-  declare dateOfBirth: DateTime
+  declare dateOfBirth: DateTime;
 
   @column()
-  declare phone: string
+  declare phone: string;
 
   // Student Info
 
   @column()
-  declare university: string
+  declare university: string;
 
   @column()
-  declare course: string
+  declare course: string;
 
   @column()
-  declare curricularYear: string
+  declare curricularYear: string;
 
   @column()
-  declare finishedAt: number | null
+  declare finishedAt: number | null;
 
   @column()
-  declare municipality: string
+  declare municipality: string;
 
   // Logistics Info
 
   @column()
-  declare shirtSize: string
+  declare shirtSize: string;
 
   @column()
-  declare dietaryRestrictions: string | null
+  declare dietaryRestrictions: string | null;
 
   @column()
-  declare isVegetarian: boolean
+  declare isVegetarian: boolean;
 
   @column()
-  declare isVegan: boolean
+  declare isVegan: boolean;
 
   @json()
-  declare transports: string[]
+  declare transports: string[];
 
   // Communication Info
 
   @column()
-  declare heardAboutEnei: string
+  declare heardAboutEnei: string;
 
   @column()
-  declare reasonForSignup: string | null
+  declare reasonForSignup: string | null;
 
   @json()
-  declare attendedBeforeEditions: string[]
+  declare attendedBeforeEditions: string[];
 
   // Profile Info
 
   @column()
-  declare slug: string | null
+  declare slug: string | null;
 
   @column()
-  declare about: string | null
+  declare about: string | null;
 
   @column()
-  declare github: string | null
+  declare github: string | null;
 
   @column()
-  declare linkedin: string | null
+  declare linkedin: string | null;
 
   @column()
-  declare website: string | null
+  declare website: string | null;
 }

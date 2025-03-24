@@ -1,19 +1,19 @@
-import { HttpContext } from '@adonisjs/core/http'
-import type { CookieOptions } from '@adonisjs/core/types/http'
+import { HttpContext } from "@adonisjs/core/http";
+import type { CookieOptions } from "@adonisjs/core/types/http";
 
-type TypedCookieOptions = { kind: 'signed' } | { kind: 'encrypted' }
+type TypedCookieOptions = { kind: "signed" } | { kind: "encrypted" };
 
-const defaultOptions: TypedCookieOptions = { kind: 'signed' }
+const defaultOptions: TypedCookieOptions = { kind: "signed" };
 
 class RawSignedCookie {
   constructor(public name: string) {}
 
   get(ctx: HttpContext, defaultValue?: string) {
-    return ctx.request.cookie(this.name, defaultValue)
+    return ctx.request.cookie(this.name, defaultValue);
   }
 
   set(ctx: HttpContext, value: any, options?: Partial<CookieOptions>) {
-    ctx.response.cookie(this.name, value, options)
+    ctx.response.cookie(this.name, value, options);
   }
 }
 
@@ -21,32 +21,32 @@ class RawEncryptedCookie {
   constructor(public name: string) {}
 
   get(ctx: HttpContext, defaultValue?: string) {
-    return ctx.request.encryptedCookie(this.name, defaultValue)
+    return ctx.request.encryptedCookie(this.name, defaultValue);
   }
 
   set(ctx: HttpContext, value: any, options?: Partial<CookieOptions>) {
-    ctx.response.encryptedCookie(this.name, value, options)
+    ctx.response.encryptedCookie(this.name, value, options);
   }
 }
 
 export class TypedCookie<T> {
-  #cookie: RawSignedCookie | RawEncryptedCookie
+  #cookie: RawSignedCookie | RawEncryptedCookie;
 
   constructor(
     public name: string,
-    options?: Partial<TypedCookieOptions>
+    options?: Partial<TypedCookieOptions>,
   ) {
-    const resolvedOptions = { ...defaultOptions, ...options }
+    const resolvedOptions = { ...defaultOptions, ...options };
 
     switch (resolvedOptions.kind) {
-      case 'signed':
-        this.#cookie = new RawSignedCookie(name)
-        break
-      case 'encrypted':
-        this.#cookie = new RawEncryptedCookie(name)
-        break
+      case "signed":
+        this.#cookie = new RawSignedCookie(name);
+        break;
+      case "encrypted":
+        this.#cookie = new RawEncryptedCookie(name);
+        break;
       default:
-        throw new Error('Invalid cookie kind')
+        throw new Error("Invalid cookie kind");
     }
   }
 
@@ -56,15 +56,15 @@ export class TypedCookie<T> {
     //
     // https://github.com/adonisjs/http-server/blob/d23061c14fda34ca082e731f16b161a8e1f4a2b3/src/request.ts#L894
 
-    const value = this.#cookie.get(ctx, defaultValue as unknown as string)
-    return value as T | null
+    const value = this.#cookie.get(ctx, defaultValue as unknown as string);
+    return value as T | null;
   }
 
   set(ctx: HttpContext, value: T, options?: Partial<CookieOptions>) {
-    this.#cookie.set(ctx, value, options)
+    this.#cookie.set(ctx, value, options);
   }
 
   clear(ctx: HttpContext) {
-    ctx.response.clearCookie(this.name)
+    ctx.response.clearCookie(this.name);
   }
 }

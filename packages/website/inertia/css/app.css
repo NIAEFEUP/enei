@@ -165,7 +165,7 @@
 
 @layer enei {
   .enei-footer-waves {
-    background-image: url('/images/footer/waves.svg');
+    background-image: url("/images/footer/waves.svg");
     background-position: bottom center;
     background-size: contain cover;
     background-repeat: repeat-x;

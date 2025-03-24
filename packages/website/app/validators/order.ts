@@ -1,4 +1,4 @@
-import vine from '@vinejs/vine'
+import vine from "@vinejs/vine";
 
 export const createMBWayOrderValidator = vine.compile(
   vine.object({
@@ -7,10 +7,10 @@ export const createMBWayOrderValidator = vine.compile(
       vine.object({
         productId: vine.number(),
         quantity: vine.number(),
-      })
+      }),
     ),
     nif: vine.string().optional(),
     address: vine.string().optional(),
     mobileNumber: vine.string(),
-  })
-)
+  }),
+);
