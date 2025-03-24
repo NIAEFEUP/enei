@@ -12,7 +12,7 @@ export default configApp(
   },
   {
     linterOptions: {
-      reportUnusedDisableDirectives: "off"
+      reportUnusedDisableDirectives: "off",
     },
     rules: {
       "prettier/prettier": "off",
