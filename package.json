@@ -1,0 +1,28 @@
+{
+  "name": "enei",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "husky",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "dev": "pnpm run --parallel dev",
+    "lint": "pnpm run -r lint",
+    "typecheck": "pnpm run --parallel typecheck"
+  },
+  "license": "MIT",
+  "prettier": "@enei/prettier-config",
+  "packageManager": "pnpm@9.12.3",
+  "pnpm": {
+    "overrides": {
+      "@adminjs/license": "workspace:*",
+      "strtok3": "8.0.1"
+    }
+  },
+  "devDependencies": {
+    "@enei/prettier-config": "workspace:*",
+    "husky": "^9.1.7",
+    "typescript": "catalog:"
+  }
+}
