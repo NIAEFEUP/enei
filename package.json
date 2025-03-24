@@ -7,9 +7,9 @@
     "prepare": "husky",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "dev": "pnpm run --parallel dev",
-    "lint": "pnpm run -r lint",
-    "typecheck": "pnpm run --parallel typecheck"
+    "dev": "pnpm run --color --parallel dev",
+    "lint": "pnpm run --color --recursive lint",
+    "typecheck": "pnpm run --color --parallel typecheck"
   },
   "license": "MIT",
   "prettier": "@enei/prettier-config",
