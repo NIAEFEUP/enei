@@ -4,8 +4,7 @@
   "private": true,
   "exports": "./src/config.js",
   "scripts": {
-    "typecheck": "tsc -b tsconfig.lib.json --pretty --verbose --noEmit",
-    "dev": "node --run typecheck -- --watch --diagnostics false --preserveWatchOutput"
+    "typecheck": "tsc -b tsconfig.lib.json --pretty --verbose --noEmit"
   },
   "devDependencies": {
     "@enei/typescript-config": "workspace:*",
