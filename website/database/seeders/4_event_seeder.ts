@@ -16,7 +16,8 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 30,
       ticketsTotal: 30,
-      price: 0,
+      price: 4,
+      productId: 1,
     })
 
     await Event.create({

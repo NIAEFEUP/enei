@@ -9,5 +9,6 @@ export default class ProductGroupSeeder extends BaseSeeder {
         maxAmountPerGroup: 1,
       },
     ])
+    
   }
 }

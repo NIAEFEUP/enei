@@ -14,7 +14,7 @@ import Page from '~/components/common/page'
 import axios from 'axios'
 import { useToast } from '~/hooks/use_toast'
 
-interface Ticket {
+interface Product {
   id: number
   name: string
   description: string
@@ -26,9 +26,10 @@ interface User {
   id: number
 }
 
-export default function TicketSalePage(
-  props: InferPageProps<TicketsController, 'showPayment'> & { ticket: Ticket; user: User }
+export default function SalePage(
+  props: InferPageProps<TicketsController, 'showPayment'> & { product: Product; user: User }
 ) {
+
   const [enableBillingInfo, setEnableBillingInfo] = useState(false)
   const [phoneModalOpen, setPhoneModalOpen] = useState(false)
   const [orderConfirmationModalOpen, setOrderConfirmationModalOpen] = useState(false)
@@ -38,7 +39,7 @@ export default function TicketSalePage(
     vat: '',
     address: '',
   })
-  const item = props.ticket
+  const item = props.product
   const { toast } = useToast()
 
   // Clear billing info when the component mounts (to prevent stale data)

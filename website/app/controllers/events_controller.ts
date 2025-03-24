@@ -3,6 +3,7 @@ import Event from '#models/event'
 import EventService from '#services/event_service'
 import User from '#models/user'
 import { inject } from '@adonisjs/core'
+import Product from '#models/product'
 
 @inject()
 export default class EventsController {
@@ -24,13 +25,14 @@ export default class EventsController {
         profilePicture: speaker.profilePicture,
         company: speaker.company,
       })),
+      productId: event.productId
     }))})
   }
   async show({ inertia, params }: HttpContext) {
     const event = await Event.findOrFail(params.id)
 
     const speakers = await event.related('speakers').query()
-
+    console.log("Event: ", event)
     return inertia.render('events/show', {
       eventId: event.id,
       title: event.title,
@@ -51,6 +53,7 @@ export default class EventsController {
       requiresRegistration: event.requiresRegistration,
       ticketsRemaining: event.ticketsRemaining,
       price: event.price,
+      productId: event.productId,
     })
   }
 
@@ -111,4 +114,12 @@ export default class EventsController {
 
     return response.ok({ isRegistered: isRegistered })
   }
+
+  async showPayment({ inertia,auth,  params }: HttpContext) {
+    const product = await Product.find(params.id)
+    
+    return inertia.render('payments', { product: product, user: auth.user })
+    }
+
+  
 }
