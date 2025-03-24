@@ -2,11 +2,14 @@
   "name": "enei",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "pnpm run -r lint",
+    "format": "prettier --check ."
   },
   "license": "MIT",
-  "prettier": "@adonisjs/prettier-config",
+  "prettier": "@enei/prettier-config",
   "packageManager": "pnpm@9.12.3",
   "pnpm": {
     "overrides": {
@@ -15,7 +18,7 @@
     }
   },
   "devDependencies": {
-    "@adonisjs/prettier-config": "^1.4.0",
+    "@enei/prettier-config": "workspace:*",
     "husky": "^9.1.7"
   }
 }
