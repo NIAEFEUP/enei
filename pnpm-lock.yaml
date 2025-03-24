@@ -15,6 +15,9 @@ importers:
       '@adonisjs/prettier-config':
         specifier: ^1.4.0
         version: 1.4.4
+      husky:
+        specifier: ^9.1.7
+        version: 9.1.7
 
   packages/adminjs-license: {}
 
