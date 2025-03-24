@@ -93,7 +93,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, 'i
 
   return (
     <Page title={`${profile.firstName} ${profile.lastName}`} className="bg-enei-beige text-enei-blue">
-      <Container className='mt-8 grid grid-cols-[auto_3fr] gap-16 min-h-screen'>
+      <Container className='mt-8 grid grid-cols-[auto_1fr] gap-16 min-h-screen md:px-0'>
         <section className='bg-dark-cyan bg-opacity-20 h-full w-[22rem] px-12 pt-12'>
           <div className='size-fit rounded-full overflow-clip bg-enei-blue mb-12'>
             <User className='w-64 h-64 text-enei-beige' />
