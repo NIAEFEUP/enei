@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Order from '#models/order'
+import Event from '#models/event'
 import env from '#start/env'
 import { Job } from 'adonisjs-jobs'
 import ConfirmPaymentNotification from '#mails/confirm_payment_notification'
@@ -7,7 +8,7 @@ import mail from '@adonisjs/mail/services/main'
 import db from '@adonisjs/lucid/services/db'
 import app from '@adonisjs/core/services/app'
 import User from '#models/user'
-
+import EventService from '#services/event_service'
 type UpdateOrderStatusPayload = {
   requestId: string
   email: string
@@ -61,10 +62,18 @@ export default class UpdateOrderStatus extends Job {
 
             const total = order.total
             const orderId = order.id
+            const user = await User.find(order.userId)
+            for (const product of products) {
+              const event = await Event.query().where('product_id', product.id).first()
+              if (event) {
+                const eventService = new EventService()
+                await eventService.register(user!, event)
+              }
+            }
 
             await mail.send(new ConfirmPaymentNotification(email, products, total, orderId))
 
-            const user = await User.find(order.userId)
+            
             if (user) {
               await user.load('participantProfile')
               const participantProfile = user.participantProfile

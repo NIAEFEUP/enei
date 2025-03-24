@@ -7,7 +7,7 @@ export default class ProductSeeder extends BaseSeeder {
       name: 'Cheira a Computação Quântica',
       description:
         'Este bilhete dá-te acesso a um cheirinho de Computação Quântica',
-      price: 30,
+      price: 0.01,
       stock: 50,
       currency: 'points',
       maxOrder: 1,
