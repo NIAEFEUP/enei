@@ -49,9 +49,9 @@ const EmailVerification = ({ logoUrl, email, verificationLink }: EmailVerificati
 }
 
 EmailVerification.defaultProps = {
-  logoUrl: 'https://eneiconf.pt/images/logo-white.svg',
+  logoUrl: 'https://www.eneiconf.pt/images/logo-white.svg',
   email: 'participante@eneiconf.pt',
-  verificationLink: 'https://eneiconf.pt/auth/verify?email=participante@eneiconf.pt',
+  verificationLink: 'https://www.eneiconf.pt/auth/verify?email=participante@eneiconf.pt',
 }
 
 export default EmailVerification

@@ -75,7 +75,7 @@ export default class EventsController {
     // Register
     await this.eventService.register(user!, event)
 
-    return response.ok({ message: 'Registado com sucesso' })
+    return response.redirect().toRoute('pages:events.show', { id: event.id })
   }
 
   async ticketsRemaining({ response, params }: HttpContext) {

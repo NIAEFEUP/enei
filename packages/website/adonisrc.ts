@@ -16,6 +16,7 @@ export default defineConfig({
     () => import('@adonisjs/mail/commands'),
     () => import('@tuyau/core/commands'),
     () => import('adonisjs-jobs/commands'),
+    () => import('@adonisjs/bouncer/commands'),
   ],
 
   /*
@@ -55,6 +56,7 @@ export default defineConfig({
     () => import('@adonisjs/limiter/limiter_provider'),
     () => import('@adonisjs/redis/redis_provider'),
     () => import('@adonisjs/drive/drive_provider'),
+    () => import('@adonisjs/bouncer/bouncer_provider'),
   ],
 
   /*
