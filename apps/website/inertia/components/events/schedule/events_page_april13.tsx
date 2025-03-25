@@ -280,7 +280,7 @@ export default function EventsPageApril13({ events }: EventsPageProps) {
         />
       </div>
 
-      <div className="col-span-4 col-start-1 row-start-14">
+      <div className="row-start-14 col-span-4 col-start-1">
         <EventCard
           title={"Snap Shots"}
           type={"night"}
