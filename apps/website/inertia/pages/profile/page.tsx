@@ -71,7 +71,7 @@ export default function ProfilePage(
   if (profile.linkedin) socials.push({ icon: Linkedin, link: profile.linkedin });
   if (profile.website) socials.push({ icon: Globe, link: profile.website });
 
-  const [_, setHasCv] = useState<boolean>(false);
+  const [, setHasCv] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchFileName = async () => {
