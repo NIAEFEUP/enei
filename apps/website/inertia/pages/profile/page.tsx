@@ -87,10 +87,7 @@ export default function ProfilePage(
   }, []);
 
   return (
-    <Page
-      title={`${profile.firstName} ${profile.lastName}`}
-      variant="beige"
-    >
+    <Page title={`${profile.firstName} ${profile.lastName}`} variant="beige">
       <Container className="mt-8 grid min-h-screen max-w-7xl grid-cols-[auto_1fr] gap-16">
         <section className="bg-dark-cyan hidden h-full w-[22rem] bg-opacity-20 p-12 md:block">
           <div className="bg-enei-blue mb-12 size-fit overflow-clip rounded-full">
