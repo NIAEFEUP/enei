@@ -255,4 +255,4 @@ router
   .as("actions:referrals.link");
 
 // 404
-router.any('*', ({ inertia }) => inertia.render('errors/not_found')).as('pages:404')
+router.any("*", ({ inertia }) => inertia.render("errors/not_found")).as("pages:404");
