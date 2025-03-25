@@ -1,0 +1,13 @@
+{
+  "name": "@enei/typescript-config",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "exports": {
+    "./env/client": "./src/env/tsconfig.client.json",
+    "./env/common": "./src/env/tsconfig.common.json",
+    "./env/server": "./src/env/tsconfig.server.json",
+    "./env/tools": "./src/env/tsconfig.tools.json",
+    "./type/app": "./src/type/tsconfig.app.json"
+  }
+}
