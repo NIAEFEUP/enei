@@ -21,18 +21,20 @@ import { cn } from "~/lib/utils";
 type PhoneInputProps = Omit<React.ComponentProps<"input">, "onChange" | "value" | "ref">
   & Omit<RPNInput.Props<typeof RPNInput.default>, "onChange"> & {
     onChange?: (value: RPNInput.Value) => void;
+  } & {
+    blueVariant?: boolean;
   };
 
 const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> = React.forwardRef<
   React.ElementRef<typeof RPNInput.default>,
   PhoneInputProps
->(({ className, onChange, ...props }, ref) => {
+>(({ className, onChange, blueVariant, ...props }, ref) => {
   return (
     <RPNInput.default
       ref={ref}
       className={cn("flex", className)}
       flagComponent={FlagComponent}
-      countrySelectComponent={CountrySelect}
+      countrySelectComponent={(props) => <CountrySelect {...props} blueVariant={blueVariant} />}
       inputComponent={InputComponent}
       labels={pt}
       locales="pt"
@@ -73,15 +75,20 @@ const CountrySelect = ({
   disabled,
   value: selectedCountry,
   options: countryList,
+  blueVariant,
   onChange,
-}: CountrySelectProps) => {
+}: CountrySelectProps & { blueVariant?: boolean }) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
           type="button"
           variant="outline"
-          className="flex gap-1 rounded-e-none rounded-s-lg border-r-0 px-3 focus:z-10"
+          className={cn(
+            "flex gap-1 rounded-e-none rounded-s-lg border-r-0 px-3 focus:z-10",
+            blueVariant
+              && "bg-enei-blue text-enei-beige hover:bg-enei-blue/90 hover:text-enei-beige",
+          )}
           disabled={disabled}
         >
           <FlagComponent country={selectedCountry} countryName={selectedCountry} />
@@ -90,13 +97,13 @@ const CountrySelect = ({
           />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0">
-        <Command>
+      <PopoverContent className={cn("w-[300px] p-0", blueVariant && "border-enei-beige")}>
+        <Command className={cn("", blueVariant && "bg-enei-blue text-enei-beige")}>
           <CommandInput placeholder="Procurar país..." />
           <CommandList>
             <ScrollArea className="h-72">
               <CommandEmpty>No country found.</CommandEmpty>
-              <CommandGroup>
+              <CommandGroup className={cn("", blueVariant && "bg-enei-blue text-enei-beige")}>
                 {countryList.map(({ value, label }) =>
                   value ? (
                     <CountrySelectOption
@@ -104,6 +111,7 @@ const CountrySelect = ({
                       country={value}
                       countryName={label}
                       selectedCountry={selectedCountry}
+                      blueVariant={blueVariant}
                       onChange={onChange}
                     />
                   ) : null,
@@ -119,6 +127,7 @@ const CountrySelect = ({
 
 interface CountrySelectOptionProps extends RPNInput.FlagProps {
   selectedCountry: RPNInput.Country;
+  blueVariant?: boolean;
   onChange: (country: RPNInput.Country) => void;
 }
 
@@ -126,13 +135,28 @@ const CountrySelectOption = ({
   country,
   countryName,
   selectedCountry,
+  blueVariant,
   onChange,
 }: CountrySelectOptionProps) => {
   return (
-    <CommandItem className="gap-2" onSelect={() => onChange(country)}>
+    <CommandItem
+      className={cn(
+        "group gap-2",
+        blueVariant
+          && "bg-enei-blue text-enei-beige data-[selected=true]:bg-enei-beige data-[selected=true]:text-enei-blue",
+      )}
+      onSelect={() => onChange(country)}
+    >
       <FlagComponent country={country} countryName={countryName} />
       <span className="flex-1 text-sm">{countryName}</span>
-      <span className="text-foreground/50 text-sm">{`+${RPNInput.getCountryCallingCode(country)}`}</span>
+      <span
+        className={cn(
+          "text-foreground/50 text-sm",
+          blueVariant && "text-enei-beige group-data-[selected=true]:text-enei-blue",
+        )}
+      >
+        {`+${RPNInput.getCountryCallingCode(country)}`}
+      </span>
       <CheckIcon
         className={`ml-auto size-4 ${country === selectedCountry ? "opacity-100" : "opacity-0"}`}
       />

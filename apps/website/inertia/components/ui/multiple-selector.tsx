@@ -59,6 +59,8 @@ interface MultipleSelectorProps {
   groupBy?: string;
   className?: string;
   badgeClassName?: string;
+  commandGroupClassName?: string;
+  commandGroupInputClassName?: string;
   /**
    * First item selected is a default behavior by cmdk. That is why the default is true.
    * This is a workaround solution by add a dummy item.
@@ -186,6 +188,8 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
       groupBy,
       className,
       badgeClassName,
+      commandGroupClassName,
+      commandGroupInputClassName,
       selectFirstItem = true,
       creatable = false,
       triggerSearchOnFocus = false,
@@ -395,13 +399,15 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
       // For async search that showing emptyIndicator
       if (onSearch && !creatable && Object.keys(options).length === 0) {
         return (
-          <CommandItem value="-" disabled>
+          <CommandItem value="-" disabled className={cn("", commandGroupClassName)}>
             {emptyIndicator}
           </CommandItem>
         );
       }
 
-      return <CommandEmpty>{emptyIndicator}</CommandEmpty>;
+      return (
+        <CommandEmpty className={cn("", commandGroupClassName)}>{emptyIndicator}</CommandEmpty>
+      );
     }, [creatable, emptyIndicator, onSearch, options]);
 
     const selectables = React.useMemo<GroupOption>(
@@ -560,7 +566,11 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                   {CreatableItem()}
                   {!selectFirstItem && <CommandItem value="-" className="hidden" />}
                   {Object.entries(selectables).map(([key, dropdowns]) => (
-                    <CommandGroup key={key} heading={key} className="h-full overflow-auto">
+                    <CommandGroup
+                      key={key}
+                      heading={key}
+                      className={cn("h-full overflow-auto", commandGroupClassName)}
+                    >
                       <>
                         {dropdowns.map((option) => {
                           return (
@@ -585,6 +595,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                               className={cn(
                                 "cursor-pointer",
                                 option.disable && "text-muted-foreground cursor-default",
+                                commandGroupInputClassName,
                               )}
                             >
                               {option.label}

@@ -31,6 +31,9 @@ export default {
         "enei-competition": "hsl(var(--enei-competition))",
         "enei-networking": "hsl(var(--enei-networking))",
 
+        "cambridge-blue": "#9EBD9F",
+        "dark-cyan": "#5A8C86",
+        "sunray": "#E2AD50",
         "persian-orange": "#E28C40",
         "dark-persian-orange": "#914E13",
         "sand": {

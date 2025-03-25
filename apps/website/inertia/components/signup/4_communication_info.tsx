@@ -6,7 +6,6 @@ import MultipleSelector, { Option } from "../ui/multiple-selector";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 
-import editions from "#data/enei/editions.json" with { type: "json" };
 import heardaboutfrom from "#data/enei/signup/heard-about.json" with { type: "json" };
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CommunicationsInfo, communicationsInfoSchema } from "~/pages/signup/schema";
@@ -20,15 +19,7 @@ import {
 import StepperFormActions from "./actions";
 import { PageProps } from "@adonisjs/inertia/types";
 import { router, usePage } from "@inertiajs/react";
-
-const ENEI_EDITIONS: Option[] = editions
-  .sort((a, b) => b.year - a.year)
-  .map(({ year, location }) => {
-    return {
-      label: location + ", " + year.toString(),
-      value: year.toString(),
-    };
-  });
+import { ENEI_EDITIONS } from "~/lib/enei/signup/editions";
 
 const HEARD_ABOUT_FROM: Option[] = heardaboutfrom;
 
@@ -46,7 +37,7 @@ const CommunicationInfoForm = () => {
   const form = useForm({
     resolver: zodResolver(communicationsInfoSchema),
     defaultValues: communicationsInfo || {
-      heardAboutENEI: "",
+      heardAboutEnei: "",
       reasonForSignup: "",
       attendedBefore: false,
       attendedBeforeEditions: [],
@@ -76,7 +67,7 @@ const CommunicationInfoForm = () => {
         <div className="flex flex-col gap-4">
           <FormField
             control={form.control}
-            name="heardAboutENEI"
+            name="heardAboutEnei"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Como ouviste falar do ENEI?</FormLabel>
@@ -124,7 +115,14 @@ const CommunicationInfoForm = () => {
               <FormItem>
                 <FormLabel className="flex items-center gap-2">
                   <FormControl>
-                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={(checked) => {
+                        field.onChange(checked);
+                        if (!checked)
+                          form.setValue("attendedBeforeEditions", [], { shouldDirty: true });
+                      }}
+                    />
                   </FormControl>
                   <p>Já participaste em alguma edição do ENEI?</p>
                 </FormLabel>

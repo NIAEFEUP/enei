@@ -77,7 +77,7 @@ export const logisticsInfoSchema = z.object({
 
 export type CommunicationsInfo = z.output<typeof communicationsInfoSchema>;
 export const communicationsInfoSchema = z.object({
-  heardAboutENEI: z.string().min(1, { message: "Seleciona uma opção" }),
+  heardAboutEnei: z.string().min(1, { message: "Seleciona uma opção" }),
   participationReason: z.string().optional(),
   reasonForSignup: z.string().optional(),
   attendedBefore: z.boolean(),
@@ -90,4 +90,12 @@ export const communicationsInfoSchema = z.object({
     )
     .optional(),
   termsAndConditions,
+});
+
+export type AdditionalInfo = z.output<typeof additionalInfoSchema>;
+export const additionalInfoSchema = z.object({
+  about: z.string().optional(),
+  github: z.union([z.literal(""), z.string().url({ message: "URL inválida" })]),
+  linkedin: z.union([z.literal(""), z.string().url({ message: "URL inválida" })]),
+  website: z.union([z.literal(""), z.string().url({ message: "URL inválida" })]),
 });
