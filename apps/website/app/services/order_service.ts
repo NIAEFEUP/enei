@@ -1,5 +1,6 @@
 import OrderProduct from "#models/order_product";
 import type Product from "#models/product";
+import ProductGroup from "#models/product_group";
 import type User from "#models/user";
 
 export class OrderService {
@@ -36,5 +37,37 @@ export class OrderService {
       item.order.status = "Success";
       await item.order.save();
     });
+  }
+  
+  async checkProductStock(product: Product, quantity: number) {
+    const successfulOrdersOfGivenProduct = await OrderProduct.query()
+      .join("orders", "order_products.order_id", "orders.id")
+      .where("order_products.product_id", product.id)
+      .whereIn("orders.status", ["Success", "Pending"]);
+
+    const stockUsed = successfulOrdersOfGivenProduct.reduce(
+      (acc, orderProduct) => acc + orderProduct.quantity,
+      0,
+    );
+
+    return product.stock >= quantity + stockUsed;
+  }
+
+  async checkUserMaxGroupOrders(user: User, product: Product, quantity: number) {
+    const productGroup = await ProductGroup.find(product.productGroupId);
+    if (!productGroup) return true;
+    const sucessfulOrdersOfGivenGroup = await OrderProduct.query()
+      .join("orders", "order_products.order_id", "orders.id")
+      .join("products", "order_products.product_id", "products.id")
+      .where("orders.user_id", user.id)
+      .where("products.product_group_id", product.productGroupId)
+      .where("orders.status", "Success");
+
+    const totalGroupQuantity = sucessfulOrdersOfGivenGroup.reduce(
+      (acc, orderProduct) => acc + orderProduct.quantity,
+      0,
+    );
+
+    return totalGroupQuantity + quantity <= productGroup.maxAmountPerGroup;
   }
 }
