@@ -282,10 +282,10 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
 
       <div className="row-start-54 col-span-4 col-start-1">
         <EventCard
-          title={'Visita às Galerias'}
-          type={'night'}
-          time={'00:00 - 04:00'}
-          location={'Baixa do Porto'}
+          title={"Visita às Galerias"}
+          type={"night"}
+          time={"00:00 - 04:00"}
+          location={"Baixa do Porto"}
           speakers={[]}
         />
       </div>
