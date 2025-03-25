@@ -338,9 +338,9 @@ export default class extends BaseSeeder {
     });
 
     await Event.create({
-      title: "Integração de Sistemas",
+      title: "Enterprise Integration: Uma competência para a era dos Dados e IA",
       description:
-        "Neste workshop, vamos explorar os conceitos fundamentais de Infrastructure as Code (IaC) e aplicá-los na prática com Terraform. Geriremos recursos na Azure, uma conta de identidades no KeyCloak e a configuração de um repositório GitHub.",
+        "Os dados são o novo petróleo e a IA está a transformar os setores, impulsionada pela Enterprise Integration. Nesta palestra, vais explorar como as tecnologias da Microsoft - BizTalk Server, Azure Integration Services, Power Platform e Azure Logic Apps - conectam aplicações, automatizam processos e alimentam a IA em tempo real.  Queres ser apenas mais um peixe num tanque de tubarões… ou o tubarão que lidera a próxima geração de integração e inteligência?",
       date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 15, minute: 30 }),
       duration: 45,
       type: "talk",

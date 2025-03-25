@@ -229,6 +229,7 @@ export default class extends BaseSeeder {
     await SpeakerProfile.create({
       firstName: "Sandro",
       lastName: "Pereira",
+      profilePicture: "/images/speakers/sandro-pereira.jpg",
     });
 
     await SpeakerProfile.create({
