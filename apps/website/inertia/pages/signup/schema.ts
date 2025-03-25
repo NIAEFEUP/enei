@@ -90,12 +90,12 @@ export const communicationsInfoSchema = z.object({
     )
     .optional(),
   termsAndConditions,
-})
+});
 
-export type AdditionalInfo = z.output<typeof additionalInfoSchema>
+export type AdditionalInfo = z.output<typeof additionalInfoSchema>;
 export const additionalInfoSchema = z.object({
   about: z.string().optional(),
-  github: z.union([z.literal(''), z.string().url({ message: 'URL inválida' })]),
-  linkedin: z.union([z.literal(''), z.string().url({ message: 'URL inválida' })]),
-  website: z.union([z.literal(''), z.string().url({ message: 'URL inválida' })]),
-})
+  github: z.union([z.literal(""), z.string().url({ message: "URL inválida" })]),
+  linkedin: z.union([z.literal(""), z.string().url({ message: "URL inválida" })]),
+  website: z.union([z.literal(""), z.string().url({ message: "URL inválida" })]),
+});

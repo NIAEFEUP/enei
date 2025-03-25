@@ -56,11 +56,11 @@ interface MultipleSelectorProps {
   hidePlaceholderWhenSelected?: boolean;
   disabled?: boolean;
   /** Group the options base on provided key. */
-  groupBy?: string
-  className?: string
-  badgeClassName?: string
-  commandGroupClassName?: string
-  commandGroupInputClassName?: string
+  groupBy?: string;
+  className?: string;
+  badgeClassName?: string;
+  commandGroupClassName?: string;
+  commandGroupInputClassName?: string;
   /**
    * First item selected is a default behavior by cmdk. That is why the default is true.
    * This is a workaround solution by add a dummy item.
@@ -399,14 +399,16 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
       // For async search that showing emptyIndicator
       if (onSearch && !creatable && Object.keys(options).length === 0) {
         return (
-          <CommandItem value="-" disabled className={cn('', commandGroupClassName)}>
+          <CommandItem value="-" disabled className={cn("", commandGroupClassName)}>
             {emptyIndicator}
           </CommandItem>
         );
       }
 
-      return <CommandEmpty className={cn('', commandGroupClassName)}>{emptyIndicator}</CommandEmpty>
-    }, [creatable, emptyIndicator, onSearch, options])
+      return (
+        <CommandEmpty className={cn("", commandGroupClassName)}>{emptyIndicator}</CommandEmpty>
+      );
+    }, [creatable, emptyIndicator, onSearch, options]);
 
     const selectables = React.useMemo<GroupOption>(
       () => removePickedOption(options, selected),
@@ -564,7 +566,11 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                   {CreatableItem()}
                   {!selectFirstItem && <CommandItem value="-" className="hidden" />}
                   {Object.entries(selectables).map(([key, dropdowns]) => (
-                    <CommandGroup key={key} heading={key} className={cn("h-full overflow-auto", commandGroupClassName)}>
+                    <CommandGroup
+                      key={key}
+                      heading={key}
+                      className={cn("h-full overflow-auto", commandGroupClassName)}
+                    >
                       <>
                         {dropdowns.map((option) => {
                           return (
@@ -587,8 +593,8 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                                 onChange?.(newOptions);
                               }}
                               className={cn(
-                                'cursor-pointer',
-                                option.disable && 'cursor-default text-muted-foreground',
+                                "cursor-pointer",
+                                option.disable && "text-muted-foreground cursor-default",
                                 commandGroupInputClassName,
                               )}
                             >

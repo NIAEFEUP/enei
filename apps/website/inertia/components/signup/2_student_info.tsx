@@ -12,17 +12,17 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
 import CurricularYearSelector, { CurricularYearSelectorType } from "./input/curricular_year_input";
 
-import { Check, ChevronsUpDown } from 'lucide-react'
-import { cn } from '~/lib/utils'
-import { Input } from '../ui/input'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { EducationInfo, educationInfoSchema } from '~/pages/signup/schema'
-import { universities } from '~/lib/enei/signup/universities'
-import { useStepper } from '../ui/stepper'
-import { useAtom, useSetAtom } from 'jotai/react'
-import { educationInfoAtom } from '~/pages/signup/atoms'
-import StepperFormActions from './actions'
-import UniversitySelection from './common/university_selection'
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "~/lib/utils";
+import { Input } from "../ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { EducationInfo, educationInfoSchema } from "~/pages/signup/schema";
+import { universities } from "~/lib/enei/signup/universities";
+import { useStepper } from "../ui/stepper";
+import { useAtom, useSetAtom } from "jotai/react";
+import { educationInfoAtom } from "~/pages/signup/atoms";
+import StepperFormActions from "./actions";
+import UniversitySelection from "./common/university_selection";
 
 function EducationInfoForm() {
   const { nextStep } = useStepper();

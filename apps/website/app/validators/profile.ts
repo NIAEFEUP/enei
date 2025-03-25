@@ -28,9 +28,11 @@ export const createProfileValidator = vine.compile(
     transports: vine.array(vine.string().in(transports.map((item) => item.id))),
     heardAboutEnei: vine.string().in(heardaboutfrom.map((item) => item.value)),
     reasonForSignup: vine.string().nullable(),
-    attendedBeforeEditions: vine.array(vine.string().in(editions.map((item) => item.year.toString()))),
-  })
-)
+    attendedBeforeEditions: vine.array(
+      vine.string().in(editions.map((item) => item.year.toString())),
+    ),
+  }),
+);
 
 export const updateProfileValidator = vine.compile(
   vine.object({
@@ -40,26 +42,34 @@ export const updateProfileValidator = vine.compile(
       .date({ formats: { utc: true } })
       .transform((date) => DateTime.fromJSDate(date))
       .optional(),
-    phone: vine
+    phone: vine.string().mobile().optional(),
+    university: vine
       .string()
-      .mobile().
-      optional(),
-    university: vine.string().in(universities.map((val) => val.id)).optional(),
+      .in(universities.map((val) => val.id))
+      .optional(),
     course: vine.string().optional(),
-    curricularYear: vine.string().in(['1', '2', '3', '4', '5', 'already-finished']).optional(),
+    curricularYear: vine.string().in(["1", "2", "3", "4", "5", "already-finished"]).optional(),
     finishedAt: vine.number().range([1930, new Date().getFullYear()]).nullable().optional(),
-    municipality: vine.string().in(districts.map((dist) => dist.id)).optional(),
+    municipality: vine
+      .string()
+      .in(districts.map((dist) => dist.id))
+      .optional(),
     shirtSize: vine.string().in(shirts).optional(),
     dietaryRestrictions: vine.string().trim().escape().nullable().optional(),
     isVegetarian: vine.boolean().optional(),
     isVegan: vine.boolean().optional(),
     transports: vine.array(vine.string().in(transports.map((item) => item.id))).optional(),
-    heardAboutEnei: vine.string().in(heardaboutfrom.map((item) => item.value)).optional(),
+    heardAboutEnei: vine
+      .string()
+      .in(heardaboutfrom.map((item) => item.value))
+      .optional(),
     reasonForSignup: vine.string().nullable().optional(),
-    attendedBeforeEditions: vine.array(vine.string().in(editions.map((item) => item.year.toString()))).optional(),
+    attendedBeforeEditions: vine
+      .array(vine.string().in(editions.map((item) => item.year.toString())))
+      .optional(),
     about: vine.string().optional().optional(),
     github: vine.string().url().nullable().optional(),
     linkedin: vine.string().url().nullable().optional(),
     website: vine.string().url().nullable().optional(),
-  })
-)
+  }),
+);

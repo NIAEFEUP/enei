@@ -160,20 +160,20 @@ router
 
 router
   .group(() => {
-    router.get("/u/:slug", [ProfilesController, 'index'])
-      .as('pages:profile.show')
-    router.get("/profile", [ProfilesController, 'default'])
+    router.get("/u/:slug", [ProfilesController, "index"]).as("pages:profile.show");
+    router
+      .get("/profile", [ProfilesController, "default"])
       .as("pages:profile.default")
       .use([middleware.auth(), middleware.verifiedEmail()]);
     router
       .get("/profile/edit", [ProfilesController, "edit"])
       .as("pages:profile.edit")
       .use([middleware.auth(), middleware.verifiedEmail()]);
-    router.patch("/profile/edit", [ProfilesController, 'update'])
-      .as('actions:profile.update')
-      .use([middleware.auth(), middleware.verifiedEmail()])
-    router.get("/u/:slug/cv", [CvsController, 'show'])
-      .as('pages:profile.cv.show')
+    router
+      .patch("/profile/edit", [ProfilesController, "update"])
+      .as("actions:profile.update")
+      .use([middleware.auth(), middleware.verifiedEmail()]);
+    router.get("/u/:slug/cv", [CvsController, "show"]).as("pages:profile.cv.show");
   })
   .use(middleware.wip());
 
@@ -211,17 +211,14 @@ router
 
 router.on("/faq").renderInertia("faq").as("pages:faq").use(middleware.wip());
 
-router.
-  group(() => {
-    router.get('/cv/name', [CvsController, 'showName'])
-      .as('actions:cv.name')
-    router.post('/cv/upload', [CvsController, 'upload'])
-      .as('actions:cv.upload')
-    router.delete('cv/delete', [CvsController, 'delete'])
-      .as('actions:cv.delete')
+router
+  .group(() => {
+    router.get("/cv/name", [CvsController, "showName"]).as("actions:cv.name");
+    router.post("/cv/upload", [CvsController, "upload"]).as("actions:cv.upload");
+    router.delete("cv/delete", [CvsController, "delete"]).as("actions:cv.delete");
   })
   .use([middleware.auth(), middleware.wip()])
-  .prefix('user')
+  .prefix("user");
 
 router
   .group(() => {

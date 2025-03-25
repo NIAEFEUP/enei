@@ -18,12 +18,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { cn } from "~/lib/utils";
 
-type PhoneInputProps = Omit<React.ComponentProps<'input'>, 'onChange' | 'value' | 'ref'> &
-  Omit<RPNInput.Props<typeof RPNInput.default>, 'onChange'> & {
-    onChange?: (value: RPNInput.Value) => void
+type PhoneInputProps = Omit<React.ComponentProps<"input">, "onChange" | "value" | "ref">
+  & Omit<RPNInput.Props<typeof RPNInput.default>, "onChange"> & {
+    onChange?: (value: RPNInput.Value) => void;
   } & {
-    blueVariant?: boolean
-  }
+    blueVariant?: boolean;
+  };
 
 const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> = React.forwardRef<
   React.ElementRef<typeof RPNInput.default>,
@@ -84,7 +84,11 @@ const CountrySelect = ({
         <Button
           type="button"
           variant="outline"
-          className={cn('flex gap-1 rounded-e-none rounded-s-lg border-r-0 px-3 focus:z-10', blueVariant && 'bg-enei-blue text-enei-beige hover:bg-enei-blue/90 hover:text-enei-beige')}
+          className={cn(
+            "flex gap-1 rounded-e-none rounded-s-lg border-r-0 px-3 focus:z-10",
+            blueVariant
+              && "bg-enei-blue text-enei-beige hover:bg-enei-blue/90 hover:text-enei-beige",
+          )}
           disabled={disabled}
         >
           <FlagComponent country={selectedCountry} countryName={selectedCountry} />
@@ -93,13 +97,13 @@ const CountrySelect = ({
           />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className={cn('w-[300px] p-0', blueVariant && 'border-enei-beige')} >
-        <Command className={cn('', blueVariant && 'bg-enei-blue text-enei-beige')} >
+      <PopoverContent className={cn("w-[300px] p-0", blueVariant && "border-enei-beige")}>
+        <Command className={cn("", blueVariant && "bg-enei-blue text-enei-beige")}>
           <CommandInput placeholder="Procurar país..." />
           <CommandList>
             <ScrollArea className="h-72">
               <CommandEmpty>No country found.</CommandEmpty>
-              <CommandGroup className={cn('', blueVariant && 'bg-enei-blue text-enei-beige')}>
+              <CommandGroup className={cn("", blueVariant && "bg-enei-blue text-enei-beige")}>
                 {countryList.map(({ value, label }) =>
                   value ? (
                     <CountrySelectOption
@@ -122,9 +126,9 @@ const CountrySelect = ({
 };
 
 interface CountrySelectOptionProps extends RPNInput.FlagProps {
-  selectedCountry: RPNInput.Country
-  blueVariant?: boolean
-  onChange: (country: RPNInput.Country) => void
+  selectedCountry: RPNInput.Country;
+  blueVariant?: boolean;
+  onChange: (country: RPNInput.Country) => void;
 }
 
 const CountrySelectOption = ({
@@ -135,10 +139,22 @@ const CountrySelectOption = ({
   onChange,
 }: CountrySelectOptionProps) => {
   return (
-    <CommandItem className={cn('gap-2 group', blueVariant && 'bg-enei-blue text-enei-beige data-[selected=true]:bg-enei-beige data-[selected=true]:text-enei-blue')} onSelect={() => onChange(country)}>
+    <CommandItem
+      className={cn(
+        "group gap-2",
+        blueVariant
+          && "bg-enei-blue text-enei-beige data-[selected=true]:bg-enei-beige data-[selected=true]:text-enei-blue",
+      )}
+      onSelect={() => onChange(country)}
+    >
       <FlagComponent country={country} countryName={countryName} />
       <span className="flex-1 text-sm">{countryName}</span>
-      <span className={cn('text-sm text-foreground/50', blueVariant && 'text-enei-beige group-data-[selected=true]:text-enei-blue')} >
+      <span
+        className={cn(
+          "text-foreground/50 text-sm",
+          blueVariant && "text-enei-beige group-data-[selected=true]:text-enei-blue",
+        )}
+      >
         {`+${RPNInput.getCountryCallingCode(country)}`}
       </span>
       <CheckIcon
