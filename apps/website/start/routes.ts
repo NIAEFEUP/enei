@@ -279,3 +279,5 @@ router
   .prefix("/qrcode");
 
 router.on("/nfc").renderInertia("nfc").as("pages:nfc");
+// 404
+router.any('*', ({ inertia }) => inertia.render('errors/not_found')).as('pages:404')
