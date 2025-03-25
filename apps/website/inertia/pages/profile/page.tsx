@@ -19,7 +19,6 @@ import {
 import { useEffect, useState } from "react";
 import { Link } from "@tuyau/inertia/react";
 import { cn } from "~/lib/utils";
-import { Badge } from "~/components/ui/badge";
 import { ENEI_EDITIONS } from "~/lib/enei/signup/editions";
 import { useTuyau } from "~/hooks/use_tuyau";
 
@@ -92,8 +91,8 @@ export default function ProfilePage(
       title={`${profile.firstName} ${profile.lastName}`}
       className="bg-enei-beige text-enei-blue"
     >
-      <Container className="mt-8 grid min-h-screen grid-cols-[auto_1fr] gap-16 md:px-0">
-        <section className="bg-dark-cyan hidden h-full w-[22rem] bg-opacity-20 px-12 pt-12 md:block">
+      <Container className="mt-8 grid min-h-screen max-w-7xl grid-cols-[auto_1fr] gap-16">
+        <section className="bg-dark-cyan hidden h-full w-[22rem] bg-opacity-20 p-12 md:block">
           <div className="bg-enei-blue mb-12 size-fit overflow-clip rounded-full">
             <User className="text-enei-beige h-64 w-64" />
           </div>
@@ -114,7 +113,7 @@ export default function ProfilePage(
           </ul>
         </section>
 
-        <section className="flex flex-col gap-20 pt-12">
+        <section className="flex flex-col gap-20 py-12">
           <header>
             <p className="mb-5 text-5xl font-bold uppercase">
               {profile.firstName} {profile.lastName}
@@ -144,10 +143,10 @@ export default function ProfilePage(
                 ))}
               </div>
             ) : (
-              <div>
-                <Badge variant={"default"}>
-                  <p className="text-base font-bold">Primeiro ENEI</p>
-                </Badge>
+              <div className="flex flex-row flex-wrap gap-4 gap-y-2">
+                <span className="bg-enei-blue rounded-lg px-[0.625rem] py-1">
+                  <p className="text-enei-beige text-base font-bold">Primeiro ENEI</p>
+                </span>
               </div>
             )}
           </header>

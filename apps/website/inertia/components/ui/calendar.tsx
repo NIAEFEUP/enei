@@ -44,6 +44,9 @@ function Calendar({
     return props.initialMonth ?? new Date();
   });
 
+  // FIXME: The selected date is highlighted only in the previous month
+  // Select the last day of a month and switch to the next month to see it
+
   return (
     <DayPicker
       month={month}
