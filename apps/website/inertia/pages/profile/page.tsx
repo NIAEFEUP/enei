@@ -89,7 +89,7 @@ export default function ProfilePage(
   return (
     <Page
       title={`${profile.firstName} ${profile.lastName}`}
-      className="bg-enei-beige text-enei-blue"
+      variant="beige"
     >
       <Container className="mt-8 grid min-h-screen max-w-7xl grid-cols-[auto_1fr] gap-16">
         <section className="bg-dark-cyan hidden h-full w-[22rem] bg-opacity-20 p-12 md:block">
