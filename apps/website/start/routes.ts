@@ -243,7 +243,6 @@ router
       .as("actions:store.buy")
       .use(middleware.wip());
   })
-  .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix("/store");
 
 // Referrals

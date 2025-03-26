@@ -41,7 +41,7 @@ export default class Product extends BaseModel {
   declare productGroupId: number;
 
   @json()
-  declare restrictions: ProductRestrictions;
+  declare restrictions: ProductRestrictions | null;
 
   @manyToMany(() => Order, {
     pivotTable: "order_products",

@@ -16,7 +16,7 @@ export class ProductService {
   }
 
   applyRestrictions(products: Array<Product>, user: User | undefined = undefined) {
-    if (!user) return products;
+    if (!user) return products.filter((product) => product.restrictions === null);
 
     return products.filter((product: Product) => this.validGroup(user, product));
   }
