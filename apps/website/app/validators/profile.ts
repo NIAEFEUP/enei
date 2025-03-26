@@ -26,7 +26,7 @@ export const createProfileValidator = vine.compile(
     isVegetarian: vine.boolean(),
     isVegan: vine.boolean(),
     transports: vine.array(vine.string().in(transports.map((item) => item.id))),
-    heardAboutENEI: vine.string().in(heardaboutfrom.map((item) => item.value)),
+    heardAboutEnei: vine.string().in(heardaboutfrom.map((item) => item.value)),
     reasonForSignup: vine.string().nullable(),
     attendedBeforeEditions: vine.array(
       vine.string().in(editions.map((item) => item.year.toString())),
