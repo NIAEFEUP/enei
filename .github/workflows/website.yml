@@ -2,43 +2,26 @@ name: Website Code Checks
 
 on:
   push:
-    branches:
-      - main
-      - develop
-    paths: ["website/**"]
+    branches: [main, develop]
   pull_request:
-    branches:
-      - main
-      - develop
-    paths: ["website/**"]
+    branches: [main, develop]
 
 jobs:
   format:
     name: Formatting
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: website
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            adminjs-license
-            website
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        with:
-          package_json_file: website/package.json
 
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: "pnpm"
-          cache-dependency-path: website/pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -50,27 +33,17 @@ jobs:
     name: Linting
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: website
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            website
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        with:
-          package_json_file: website/package.json
 
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: "pnpm"
-          cache-dependency-path: website/pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -82,27 +55,17 @@ jobs:
     name: Typechecking
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: website
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            website
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        with:
-          package_json_file: website/package.json
 
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: "pnpm"
-          cache-dependency-path: website/pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
