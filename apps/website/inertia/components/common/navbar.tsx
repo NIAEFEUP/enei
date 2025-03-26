@@ -103,11 +103,14 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
               <span className="sr-only">Ir para a página inicial</span>
             </Link>
             <div className="flex items-center justify-between gap-4">
-              {/* <div className={auth.state === 'authenticated' ? 'block' : 'hidden'}>
-                <Link route="pages:store" className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}>
-                    <span>Loja</span>
+              <div className={auth.state === "authenticated" ? "block" : "hidden"}>
+                <Link
+                  route="pages:store"
+                  className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
+                >
+                  <span>Loja</span>
                 </Link>
-              </div> */}
+              </div>
               <div className={auth.state === "authenticated" ? "block" : "hidden"}>
                 <Link
                   route="pages:referrals"

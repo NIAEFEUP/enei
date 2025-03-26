@@ -238,9 +238,12 @@ router
 router
   .group(() => {
     router.get("/", [StoreController, "index"]).as("pages:store");
-    router.post("/products/:id/buy/", [StoreController, "buy"]).as("actions:store.buy");
+    router
+      .post("/products/:id/buy/", [StoreController, "buy"])
+      .as("actions:store.buy")
+      .use(middleware.wip());
   })
-  .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant(), middleware.wip()])
+  .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix("/store");
 
 // Referrals
