@@ -35,7 +35,7 @@ export default class extends BaseSeeder {
       curricularYear: "2",
       finishedAt: null,
       municipality: "Braga",
-      heardAboutENEI: "friends",
+      heardAboutEnei: "friends",
       shirtSize: "M",
       isVegetarian: false,
       isVegan: false,

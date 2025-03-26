@@ -3,6 +3,9 @@
   "version": "1.0.1",
   "description": "Licensing library for AdminJS premium packages",
   "type": "module",
+  "files": [
+    "lib"
+  ],
   "exports": {
     "import": "./lib/index.js",
     "types": "./types/index.d.ts"
