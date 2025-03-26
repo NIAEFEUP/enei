@@ -90,24 +90,26 @@ export default function ProfilePage(
     <Page title={`${profile.firstName} ${profile.lastName}`} variant="beige">
       <Container className="mt-8 grid min-h-screen max-w-7xl grid-cols-[auto_1fr] gap-16">
         <section className="bg-dark-cyan hidden h-full w-[22rem] bg-opacity-20 p-12 md:block">
-          <div className="bg-enei-blue mb-12 size-fit overflow-clip rounded-full">
-            <User className="text-enei-beige h-64 w-64" />
+          <div className="sticky top-28">
+            <div className="bg-enei-blue mb-12 size-fit overflow-clip rounded-full">
+              <User className="text-enei-beige h-64 w-64" />
+            </div>
+
+            {isUser && (
+              <Link
+                route="pages:profile.edit"
+                className={cn(buttonVariants({ variant: "default" }), "w-full")}
+              >
+                <Pencil />
+                <p>Editar Informações</p>
+              </Link>
+            )}
+
+            <ul className="mt-7 flex flex-col gap-5">
+              {socials.length > 0
+                && socials.map((social: SocialIconProps) => <SocialItem {...social} />)}
+            </ul>
           </div>
-
-          {isUser && (
-            <Link
-              route="pages:profile.edit"
-              className={cn(buttonVariants({ variant: "default" }), "w-full")}
-            >
-              <Pencil />
-              <p>Editar Informações</p>
-            </Link>
-          )}
-
-          <ul className="mt-7 flex flex-col gap-5">
-            {socials.length > 0
-              && socials.map((social: SocialIconProps) => <SocialItem {...social} />)}
-          </ul>
         </section>
 
         <section className="flex flex-col gap-20 py-12">
