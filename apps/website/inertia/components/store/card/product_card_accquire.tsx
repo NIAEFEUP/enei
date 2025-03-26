@@ -82,7 +82,7 @@ function PointsStoreProductCardAccquire({ product }: PointsStoreProductCardAccqu
     <>
       <div className="flex w-full flex-col justify-between gap-x-8">
         <p className="font-bold text-white">{product.name}</p>
-        <p className="text-white">{product.price} pontos • {product.stock} unidades</p>
+        <p className="text-white">{product.price} pontos • {product.stock} {product.stock === 1 ? "unidade" : "unidades"}</p>
         {/* <Dialog open={open} onOpenChange={setOpen}>
           {product.stock > 0 ? (
             <DialogTrigger disabled={!canBuyProduct(product, userPoints)} asChild>
