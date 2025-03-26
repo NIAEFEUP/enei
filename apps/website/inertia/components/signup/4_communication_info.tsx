@@ -46,7 +46,7 @@ const CommunicationInfoForm = () => {
   const form = useForm({
     resolver: zodResolver(communicationsInfoSchema),
     defaultValues: communicationsInfo || {
-      heardAboutENEI: "",
+      heardAboutEnei: "",
       reasonForSignup: "",
       attendedBefore: false,
       attendedBeforeEditions: [],
