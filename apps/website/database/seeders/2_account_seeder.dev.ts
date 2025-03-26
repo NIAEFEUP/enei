@@ -42,7 +42,7 @@ export default class extends BaseSeeder {
       transports: ["carro"],
       attendedBeforeEditions: [],
       about:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc laoreet eu enim vel semper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum eu est vitae ex sodales consequat. In hac habitasse platea dictumst. Donec sed sodales arcu. Ut ultrices risus ipsum, sed iaculis libero auctor quis. Praesent eu fermentum enim, in egestas eros. Curabitur ac eros ut erat varius pretium eu eu turpis. Pellentesque tristique neque mauris. Morbi ultricies et justo sed suscipit. Praesent maximus arcu eu urna consequat consectetur. Nam pellentesque iaculis fringilla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin massa orci, sed posuere mi imperdiet non.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc laoreet eu enim vel semper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum eu est vitae ex sodales consequat.",
       github: "https://github.com/JorgeCostaDevPT",
       website: "https://eneiconf.pt",
     });
