@@ -31,7 +31,7 @@ function PointsStoreProductCard({ product }: StoreProductCardProps) {
         />
       </CardContent>
       <div className="flex flex-grow flex-col gap-0">
-        <div className="bg-enei-blue wave-clip-path h-12"></div>
+        <div className="bg-enei-blue wave-clip-path -mb-1 h-12"></div>
         <CardFooter className="bg-enei-blue flex flex-grow flex-col rounded-b-md p-8">
           <PointsStoreProductCardAccquire product={product} />
         </CardFooter>
