@@ -25,8 +25,8 @@ export class ProductService {
     const groupRestrictionDefined = product.restrictions && product.restrictions.groups;
     if (!groupRestrictionDefined) return true;
 
-    console.log("USER GROUPS", user.groups());
-    console.log("GROUP RESTRICTION", product.restrictions.groups);
+    // console.log("USER GROUPS", user.groups());
+    // console.log("GROUP RESTRICTION", product.restrictions.groups);
 
     return groupRestrictionDefined.some((group: UserTypes) => user.groups().includes(group));
   }
