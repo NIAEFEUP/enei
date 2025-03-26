@@ -80,7 +80,7 @@ function PointsStoreProductCardAccquire({ product }: PointsStoreProductCardAccqu
 
   return (
     <>
-      <div className="flex w-full flex-col  justify-between gap-x-8">
+      <div className="flex w-full flex-col justify-between gap-x-8">
         <p className="font-bold text-white">{product.name}</p>
         <p className="text-white">{product.price} pontos</p>
         {/* <Dialog open={open} onOpenChange={setOpen}>
