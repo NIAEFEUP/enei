@@ -27,7 +27,7 @@ export default function ReferralsPage({
                 <h1>Referenciações</h1>
               </CardTitle>
               <CardDescription>
-                No ENEI, ao convidares pessoas para o evento, ganhas pontos para trocar por
+                No ENEI, ao convidares pessoas para o evento, ganhas bytes para trocar por
                 recompensas!
               </CardDescription>
             </CardHeader>
@@ -47,7 +47,7 @@ export default function ReferralsPage({
                   Partilha o teu link de referenciação com os teus amigos ou colegas.
                   <br />
                   Por cada pessoa que se inscrever e comprar bilhete para o ENEI 2025 usando o teu
-                  link, receberás pontos como recompensa.
+                  link, receberás bytes como recompensa.
                 </p>
                 {referralCount !== null && (
                   <div className="bg-primary/90 text-primary-foreground mt-4 flex flex-row items-center gap-2 rounded-md px-4 py-2 text-sm">

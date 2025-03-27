@@ -34,7 +34,7 @@ export default class StoreController {
     }
 
     if (auth.user!.points < cost) {
-      session.flashErrors({ cost: "Não tens pontos suficientes" });
+      session.flashErrors({ cost: "Não tens bytes suficientes" });
       return response.redirect().back();
     }
 
