@@ -1,0 +1,7 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    // Language and Environment
+    "target": "ES6"
+  }
+}
