@@ -46,7 +46,7 @@ const CommunicationInfoForm = () => {
   const form = useForm({
     resolver: zodResolver(communicationsInfoSchema),
     defaultValues: communicationsInfo || {
-      heardAboutENEI: "",
+      heardAboutEnei: "",
       reasonForSignup: "",
       attendedBefore: false,
       attendedBeforeEditions: [],
@@ -76,7 +76,7 @@ const CommunicationInfoForm = () => {
         <div className="flex flex-col gap-4">
           <FormField
             control={form.control}
-            name="heardAboutENEI"
+            name="heardAboutEnei"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Como ouviste falar do ENEI?</FormLabel>

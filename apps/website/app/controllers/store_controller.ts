@@ -16,6 +16,9 @@ export default class StoreController {
     const products = await this.storeService.getProducts(auth.user);
     const user = auth.user!;
 
+    // Orders products by price in non-increasing order
+    products.sort((a, b) => b.price - a.price);
+
     return inertia.render("store", { products, user });
   }
 
@@ -31,7 +34,7 @@ export default class StoreController {
     }
 
     if (auth.user!.points < cost) {
-      session.flashErrors({ cost: "Não tens pontos suficientes" });
+      session.flashErrors({ cost: "Não tens bytes suficientes" });
       return response.redirect().back();
     }
 

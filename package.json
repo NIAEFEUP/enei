@@ -7,22 +7,24 @@
     "prepare": "husky",
     "format": "prettier --cache --check .",
     "format:fix": "prettier --cache --write .",
+    "build": "pnpm run --color --recursive build",
     "dev": "pnpm run --color --parallel dev",
     "lint": "pnpm run --color --recursive lint",
     "typecheck": "pnpm run --color --parallel typecheck"
   },
   "license": "MIT",
   "prettier": "@enei/prettier-config",
-  "packageManager": "pnpm@9.12.3",
-  "pnpm": {
-    "overrides": {
-      "@adminjs/license": "workspace:*",
-      "strtok3": "8.0.1"
-    }
-  },
   "devDependencies": {
     "@enei/prettier-config": "workspace:*",
     "husky": "^9.1.7",
+    "prettier": "^3.5.3",
     "typescript": "catalog:"
+  },
+  "packageManager": "pnpm@10.7.0",
+  "pnpm": {
+    "overrides": {
+      "strtok3": "8.0.1"
+    },
+    "neverBuiltDependencies": []
   }
 }

@@ -77,7 +77,7 @@ export const logisticsInfoSchema = z.object({
 
 export type CommunicationsInfo = z.output<typeof communicationsInfoSchema>;
 export const communicationsInfoSchema = z.object({
-  heardAboutENEI: z.string().min(1, { message: "Seleciona uma opção" }),
+  heardAboutEnei: z.string().min(1, { message: "Seleciona uma opção" }),
   participationReason: z.string().optional(),
   reasonForSignup: z.string().optional(),
   attendedBefore: z.boolean(),

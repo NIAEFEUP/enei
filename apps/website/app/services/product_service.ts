@@ -16,7 +16,7 @@ export class ProductService {
   }
 
   applyRestrictions(products: Array<Product>, user: User | undefined = undefined) {
-    if (!user) return products;
+    if (!user) return products.filter((product) => product.restrictions === null);
 
     return products.filter((product: Product) => this.validGroup(user, product));
   }
@@ -25,8 +25,8 @@ export class ProductService {
     const groupRestrictionDefined = product.restrictions && product.restrictions.groups;
     if (!groupRestrictionDefined) return true;
 
-    console.log("USER GROUPS", user.groups());
-    console.log("GROUP RESTRICTION", product.restrictions.groups);
+    // console.log("USER GROUPS", user.groups());
+    // console.log("GROUP RESTRICTION", product.restrictions.groups);
 
     return groupRestrictionDefined.some((group: UserTypes) => user.groups().includes(group));
   }

@@ -4,8 +4,12 @@
   "private": true,
   "type": "module",
   "license": "MIT",
+  "files": [
+    "build",
+    "scripts"
+  ],
   "scripts": {
-    "start": "node bin/server.js",
+    "start": "pm2-runtime ecosystem.config.cjs",
     "build": "node ace build",
     "dev": "node ace serve --hmr",
     "dev:email": "email dev --dir ./resources/emails",
@@ -13,7 +17,8 @@
     "lint:fix": "eslint . --fix",
     "lint": "eslint . --max-warnings 0",
     "typecheck": "tsc -p . -p ./inertia --noEmit",
-    "prepare": "sh -c './scripts/prepare.sh'"
+    "prepare": "sh -c './scripts/prepare.sh'",
+    "run": ""
   },
   "imports": {
     "#.adonisjs/*": "./.adonisjs/*.ts",
