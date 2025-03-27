@@ -29,11 +29,18 @@ export default function Highlights() {
               image="michael-pound.jpg"
             />
             <HighlightCard
-              title="Cenas"
+              title="AI, Copilots, and the future of software development"
+              person="Eddie Aftandilian"
+              schedule="12 Abril - Auditório ISEP - 15:15"
+              type={EventType.Talk}
+              image="eddie-aftandilian.jpg"
+            />
+            <HighlightCard
+              title="CRDTs: Building blocks for high availability and beyond"
               person="Carlos Baquero, Nuno Preguiça"
               schedule="13 Abril - Auditório FEUP - 15:15"
               type={EventType.Talk}
-              image="baqueropreguica.png"
+              image="baqueropreguica.jpg"
             />
             <HighlightCard
               title="Como fazer software para estúdios de Holywood"
@@ -41,13 +48,6 @@ export default function Highlights() {
               schedule="12 Abril - Auditório FEUP - 14:45"
               type={EventType.Talk}
               image="nuno-fonseca.jpg"
-            />
-            <HighlightCard
-              title="AI, Copilots, and the future of software development"
-              person="Eddie Aftandilian"
-              schedule="12 Abril - Auditório ISEP - 15:15"
-              type={EventType.Talk}
-              image="eddie-aftandilian.jpg"
             />
             <HighlightCard
               title="The programmer who didn’t know how to code"

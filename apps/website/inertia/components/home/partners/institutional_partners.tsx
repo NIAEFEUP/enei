@@ -15,7 +15,7 @@ export default function InstitutionalPartners() {
 
         <img
           className="w-24"
-          src="/images/institution/ordemengenheiros2.png"
+          src="/images/institution/ordemengenheiros.png"
           alt="Ordem engenheiros logo"
         />
 

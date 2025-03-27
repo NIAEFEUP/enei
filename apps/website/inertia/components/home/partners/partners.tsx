@@ -18,7 +18,7 @@ export default function Partners() {
         <SilverPartners />
         <BronzePartners />
       </div>
-      <div className="mt-[20em] flex w-full flex-col gap-y-16">
+      <div className="mt-[5em] flex w-full flex-col gap-y-16 md:mt-[10em]">
         <Sponsors />
         <InstitutionalPartners />
         <Orgs />
