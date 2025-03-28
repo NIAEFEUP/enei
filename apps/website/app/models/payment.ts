@@ -6,6 +6,8 @@ import * as is from "@sindresorhus/is";
 import type { StrictExclude, StrictExtract } from "#lib/types.js";
 import type { CreateReadonlyModel } from "../../types/lucid.js";
 import Order from "./order.js";
+import { Money } from "#lib/money.js";
+import { money } from "#lib/lucid/decorators.js";
 
 type PaymentStatus = "pending" | "successful" | "declined" | "expired" | "unknown";
 
@@ -37,8 +39,8 @@ export default class Payment extends BaseModel {
   @column()
   declare requestId: string;
 
-  @column()
-  declare amount: number;
+  @money()
+  declare amount: Money;
 
   @column()
   declare reason: string | null;
