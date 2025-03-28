@@ -10,7 +10,7 @@ export enum EventType {
 
 export default function Highlights() {
   return (
-    <div className="w-full">
+    <section className="w-full">
       <div className="flex flex-col gap-y-4">
         <h3 className="text-enei-blue text-center text-3xl font-bold lowercase">Destaques</h3>
         <Link
@@ -74,6 +74,6 @@ export default function Highlights() {
           <ScrollBar orientation="horizontal" className="hidden" />
         </ScrollArea>
       </div>
-    </div>
+    </section>
   );
 }

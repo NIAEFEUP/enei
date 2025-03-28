@@ -1,6 +1,6 @@
 export default function Orgs() {
   return (
-    <div className="flex w-full flex-col items-center gap-y-8">
+    <section className="flex w-full flex-col items-center gap-y-8">
       <h3 className="text-enei-blue text-center text-3xl font-bold lowercase">
         organizações parceiras
       </h3>
@@ -9,6 +9,6 @@ export default function Orgs() {
 
         <img className="w-24" src="/images/institution/aeisep.png" alt="AEISEP logo" />
       </div>
-    </div>
+    </section>
   );
 }

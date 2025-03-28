@@ -1,10 +1,10 @@
 export default function InstitutionalPartners() {
   return (
-    <div className="flex w-full flex-col items-center gap-y-8">
+    <section className="flex w-full flex-col items-center gap-y-8">
       <h3 className="text-enei-blue text-center text-3xl font-bold lowercase">
         Parceiros Institucionais
       </h3>
-      <div className="grid grid-cols-2 items-center gap-x-32 gap-y-8">
+      <div className="grid grid-cols-2 items-center gap-x-32 gap-y-8 md:grid-cols-3">
         <img className="w-24" src="/images/institution/feup.png" alt="FEUP logo" />
 
         <img className="w-24" src="/images/institution/isep.png" alt="ISEP logo" />
@@ -28,7 +28,9 @@ export default function InstitutionalPartners() {
         />
 
         <img className="w-24" src="/images/institution/cgd.png" alt="CGD logo" />
+
+        <img className="w-24" src="/images/institution/cmporto.png" alt="CMPorto logo" />
       </div>
-    </div>
+    </section>
   );
 }

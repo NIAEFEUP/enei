@@ -6,7 +6,7 @@ import BookOpen from "../icons/book_open";
 
 export default function ReasonsToEnroll() {
   return (
-    <div className="grid grid-cols-1 items-center justify-center gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <section className="grid grid-cols-1 items-center justify-center gap-6 sm:grid-cols-2 lg:grid-cols-4">
       <ReasonsToEnrollItem
         icon={<LegoTool />}
         title="01 Inspiração"
@@ -27,6 +27,6 @@ export default function ReasonsToEnroll() {
         title="04 Festa"
         description="Descontrair e celebrar com festas e atividades inesquecíveis. Afinal, networking também se faz a divertir!"
       />
-    </div>
+    </section>
   );
 }

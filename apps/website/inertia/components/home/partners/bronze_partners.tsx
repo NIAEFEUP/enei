@@ -1,6 +1,6 @@
 export default function BronzePartners() {
   return (
-    <div className="relative flex w-full flex-col items-center gap-y-8">
+    <section className="relative flex w-full flex-col items-center gap-y-8">
       <div className="bronze-partner-waves absolute inset-x-0 bottom-[-6em]" />
       <div className="relative flex flex-col gap-y-4">
         <h3 className="text-center text-3xl font-bold text-white">Bronze</h3>
@@ -18,6 +18,6 @@ export default function BronzePartners() {
           <img className="w-24" src="/images/company/ubiwhere.png" alt="Ubiwhere logo" />
         </div>
       </div>
-    </div>
+    </section>
   );
 }

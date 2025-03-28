@@ -1,6 +1,6 @@
 export default function SilverPartners() {
   return (
-    <div className="relative flex h-[25em] w-full flex-col items-center gap-y-8">
+    <section className="relative flex h-[25em] w-full flex-col items-center gap-y-8">
       <div className="silver-partner-waves absolute inset-x-0 bottom-[-4em]" />
       <div className="relative bottom-[2em] flex flex-col gap-y-4">
         <h3 className="text-center text-4xl font-bold text-white">Silver</h3>
@@ -16,6 +16,6 @@ export default function SilverPartners() {
           <img className="w-32" src="/images/company/olisipo.png" alt="Olisipo logo" />
         </div>
       </div>
-    </div>
+    </section>
   );
 }

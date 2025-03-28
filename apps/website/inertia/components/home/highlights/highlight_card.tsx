@@ -12,7 +12,7 @@ interface HighlightCardProps {
 }
 
 const highlightCardVariants = cva(
-  "border border-2 rounded-xl w-fit py-0 max-w-xl h-fit h-[16.35em]",
+  "flex flex-row gap-x-4 rounded-xl w-fit py-0 max-w-xl h-[16.35em]",
   {
     variants: {
       variant: {
@@ -44,20 +44,18 @@ export default function HighlightCard({
 }: HighlightCardProps) {
   return (
     <article className={cn(highlightCardVariants({ variant: getVariant(type) }))}>
-      <div className="flex flex-row gap-x-4">
-        <img
-          className="h-64 w-48 rounded-xl object-cover"
-          src={`/images/people/${image}`}
-          alt={`${person} picture`}
-        />
-        <div className="flex flex-col gap-y-2 px-4 py-8">
-          <div>
-            <h3 className="text-enei-blue text-xl font-bold">{title}</h3>
-            <p className="text-enei-blue text-lg">{person}</p>
-            <p className="text-enei-blue text-sm">{schedule}</p>
-          </div>
-          <Badge className="bg-enei-beige text-enei-blue w-1/3">{type}</Badge>
+      <img
+        className="h-full w-48 rounded-xl object-cover"
+        src={`/images/people/${image}`}
+        alt={`${person} picture`}
+      />
+      <div className="flex flex-col gap-y-2 px-4 py-8">
+        <div>
+          <h4 className="text-enei-blue text-xl font-bold">{title}</h4>
+          <p className="text-enei-blue text-lg">{person}</p>
+          <p className="text-enei-blue text-sm">{schedule}</p>
         </div>
+        <Badge className="bg-enei-beige text-enei-blue w-fit">{type}</Badge>
       </div>
     </article>
   );

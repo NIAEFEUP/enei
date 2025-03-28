@@ -1,6 +1,6 @@
 export default function Organizers() {
   return (
-    <div className="flex w-full flex-col items-center gap-y-8">
+    <section className="flex w-full flex-col items-center gap-y-8">
       <h3 className="text-enei-blue text-center text-3xl font-bold lowercase">Organizadores</h3>
       <div className="flex flex-row items-center gap-x-8">
         <img className="w-24" src="/images/institution/ni.png" alt="NIAEFEUP logo" />
@@ -9,6 +9,6 @@ export default function Organizers() {
 
         <img className="w-24" src="/images/institution/ncgm.png" alt="NCGM logo" />
       </div>
-    </div>
+    </section>
   );
 }
