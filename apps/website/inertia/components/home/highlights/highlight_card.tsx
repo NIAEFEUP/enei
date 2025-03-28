@@ -12,7 +12,7 @@ interface HighlightCardProps {
 }
 
 const highlightCardVariants = cva(
-  "flex flex-row gap-x-4 rounded-xl w-fit py-0 max-w-xl h-[16.35em]",
+  "flex flex-row gap-x-4 rounded-xl w-fit py-0 max-w-sm md:max-w-xl h-[16.35em]",
   {
     variants: {
       variant: {
