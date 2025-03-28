@@ -19,12 +19,12 @@ export default function LeaderboardList({ leaderboard }: LeaderbordListProps) {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-16">Lugar</TableHead>
-          <TableHead>Participante</TableHead>
-          <TableHead className="text-right">Pontos</TableHead>
+          <TableHead className="text-enei-blue w-16">Lugar</TableHead>
+          <TableHead className="text-enei-blue">Participante</TableHead>
+          <TableHead className="text-enei-blue text-right">Pontos</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>
+      <TableBody className="border-t-enei-blue border-t-[0.15em]">
         {leaderboard?.map((user, idx) => {
           const slug = user.participantProfile.slug ?? " ";
 
