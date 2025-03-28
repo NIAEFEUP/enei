@@ -14,8 +14,8 @@ export default class extends BaseSeeder {
       location: "TBD - ISEP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
@@ -42,8 +42,8 @@ export default class extends BaseSeeder {
       location: "TBD - ISEP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
@@ -57,8 +57,8 @@ export default class extends BaseSeeder {
       location: "TBD - FEUP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
@@ -150,8 +150,8 @@ export default class extends BaseSeeder {
       location: "TBD - ISEP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
@@ -188,7 +188,7 @@ export default class extends BaseSeeder {
       date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 15, minute: 15 }),
       duration: 60,
       type: "talk",
-      location: "Auditório - ISEP",
+      location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
       price: 0,
@@ -204,8 +204,8 @@ export default class extends BaseSeeder {
       location: "TBD - FEUP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
@@ -244,8 +244,8 @@ export default class extends BaseSeeder {
       location: "TBD - FEUP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
@@ -259,8 +259,8 @@ export default class extends BaseSeeder {
       location: "TBD - FEUP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
@@ -274,8 +274,8 @@ export default class extends BaseSeeder {
       location: "TBD - FEUP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
@@ -289,8 +289,8 @@ export default class extends BaseSeeder {
       location: "TBD - FEUP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
@@ -308,16 +308,17 @@ export default class extends BaseSeeder {
     });
 
     await Event.create({
-      title: "Workshop de Serviços Cloud",
+      title:
+        "A Hands-on workshop on how to build scalable ETL Pipelines on AWS using S3, Glue, Lambda, and Athena",
       description: "",
-      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 13, minute: 0 }),
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 14, minute: 0 }),
       duration: 120,
       type: "workshop",
       location: "TBD - FEUP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
@@ -331,15 +332,15 @@ export default class extends BaseSeeder {
       location: "TBD - FEUP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
     await Event.create({
-      title: "Integração de Sistemas",
+      title: "Enterprise Integration: Uma competência para a era dos Dados e IA",
       description:
-        "Neste workshop, vamos explorar os conceitos fundamentais de Infrastructure as Code (IaC) e aplicá-los na prática com Terraform. Geriremos recursos na Azure, uma conta de identidades no KeyCloak e a configuração de um repositório GitHub.",
+        "Os dados são o novo petróleo e a IA está a transformar os setores, impulsionada pela Enterprise Integration. Nesta palestra, vais explorar como as tecnologias da Microsoft - BizTalk Server, Azure Integration Services, Power Platform e Azure Logic Apps - conectam aplicações, automatizam processos e alimentam a IA em tempo real.  Queres ser apenas mais um peixe num tanque de tubarões… ou o tubarão que lidera a próxima geração de integração e inteligência?",
       date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 15, minute: 30 }),
       duration: 45,
       type: "talk",
@@ -359,8 +360,8 @@ export default class extends BaseSeeder {
       location: "TBD - FEUP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
@@ -426,8 +427,8 @@ export default class extends BaseSeeder {
       location: "TBD - FEUP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
@@ -441,8 +442,8 @@ export default class extends BaseSeeder {
       location: "TBD - ISEP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
@@ -456,8 +457,8 @@ export default class extends BaseSeeder {
       location: "TBD - ISEP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
@@ -484,8 +485,8 @@ export default class extends BaseSeeder {
       location: "TBD - FEUP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
@@ -511,8 +512,8 @@ export default class extends BaseSeeder {
       location: "TBD - ISEP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
 
@@ -525,8 +526,63 @@ export default class extends BaseSeeder {
       location: "TBD - FEUP",
       registrationRequirements: "",
       requiresRegistration: true,
-      ticketsRemaining: 30,
-      ticketsTotal: 30,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
+      price: 0,
+    });
+
+    await Event.create({
+      title: "How to look through skin with AI",
+      description:
+        "This talk will introduce the exciting role of AI in science beyond the media hype around chatbots, image generation, and AI music. We’ll explore how generative AI enables optical correction in microscope images, offering potential for harmless disease diagnosis through skin. I’ll also discuss the challenges of capturing images through skin, managing distortions, and the need for interdisciplinary collaboration to solve these issues. Additionally, I’ll share my experiences producing videos for the Computerphile YouTube channel, which has grown into a global platform. I’ll discuss the channel’s backstory, the filming process, and my future aspirations. Ultimately, I hope to inspire you to share the wonders of computer science with the world!",
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 15, minute: 15 }),
+      duration: 60,
+      type: "talk",
+      location: "Auditório - FEUP",
+      registrationRequirements: "",
+      requiresRegistration: false,
+      price: 0,
+    });
+
+    await Event.create({
+      title: "Unlocking the Power of AI on Chrome",
+      description:
+        "Junta-te a nós para explorar a IA em dispositivos com o Gemini Nano! Esta palestra apresenta a nova Prompt API do Chrome, que funciona localmente sem enviar dados para servidores. Aprende a criar aplicações inovadoras com IA que oferecem privacidade reforçada, respostas ultrarrápidas e que funcionam offline. Seja qual for o teu nível de experiência, esta palestra é para ti!",
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 10, minute: 0 }),
+      duration: 45,
+      type: "talk",
+      location: "Auditório - ISEP",
+      registrationRequirements: "",
+      requiresRegistration: false,
+      price: 0,
+    });
+
+    await Event.create({
+      title: "React Basics & The Importance of Testing",
+      description:
+        "O React é uma biblioteca JavaScript que transformou o desenvolvimento de interfaces dinâmicas e interativas. Neste workshop, vais explorar os conceitos essenciais desta tecnologia, bem como a importância de integrar testes para garantir a qualidade do código. Tudo isso será demonstrado através da construção de uma simples aplicação, onde vais aprender na prática como combinar React com boas práticas de teste.",
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 14, hour: 9, minute: 30 }),
+      duration: 120,
+      type: "workshop",
+      location: "TBD - FEUP",
+      registrationRequirements: "",
+      requiresRegistration: true,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
+      price: 0,
+    });
+
+    await Event.create({
+      title: "Drupal CMS: Cria o teu website com ajuda de AI!",
+      description: "",
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 14, minute: 0 }),
+      duration: 120,
+      type: "workshop",
+      location: "TBD - FEUP",
+      registrationRequirements: "",
+      requiresRegistration: true,
+      ticketsRemaining: 20,
+      ticketsTotal: 20,
       price: 0,
     });
   }
