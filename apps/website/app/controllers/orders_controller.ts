@@ -69,7 +69,7 @@ export default class OrdersController {
       description = `Payment for order: ${description.slice(0, -2)}`;
 
       // Create the order and associated products
-      const order = await Order.create({ userId: authUser.id, name, nif, address });
+      const order = await this.orderService.createOrder(authUser.id, name, nif, address);
 
       for (const { product, quantity } of productDetails) {
         await OrderProduct.create({

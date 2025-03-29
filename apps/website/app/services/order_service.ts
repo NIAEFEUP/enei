@@ -1,3 +1,4 @@
+import Order from "#models/order";
 import OrderProduct from "#models/order_product";
 import type Product from "#models/product";
 import ProductGroup from "#models/product_group";
@@ -46,5 +47,9 @@ export class OrderService {
     );
 
     return totalGroupQuantity + quantity <= productGroup.maxAmountPerGroup;
+  }
+
+  async createOrder(userId: number, name: string, nif: number, address: string) {
+    return await Order.create({ userId, name, nif, address });
   }
 }
