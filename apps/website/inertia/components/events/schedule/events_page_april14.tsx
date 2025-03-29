@@ -111,7 +111,7 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           onClick={() => router.visit(`/events/${events[2].id}`)}
         />
       </div>
-      <div className="col-span-4 row-start-6">
+      <div className="col-span-2 row-start-6">
         <EventCard
           title={"Coffee Break"}
           type={"meal"}
@@ -120,7 +120,7 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           speakers={[]}
         />
       </div>
-      <div className="row-start-7">
+      <div className="col-span-2 row-start-7">
         <EventCard
           id={events[7].id}
           title={events[7].title}
@@ -131,7 +131,7 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           onClick={() => router.visit(`/events/${events[7].id}`)}
         />
       </div>
-      <div className="col-start-1 row-start-8">
+      <div className="col-span-4 col-start-1 row-start-8">
         <EventCard
           title={"Painel de Empresas"}
           type={"other"}
@@ -140,7 +140,7 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           speakers={[]}
         />
       </div>
-      <div className="col-span-3 col-start-2 row-span-2 row-start-7">
+      <div className="col-span-2 col-start-3 row-span-2 row-start-6">
         <EventCard
           title={events[8].title}
           type={events[8].type}

@@ -663,7 +663,7 @@ export default class extends BaseSeeder {
       title: "Torneio de Bots de Sueca",
       description:
         '"Então, com o trunfo não cortas o Ás!?" – estas palavras revelam a confiança de quem conhece bem o jogo, mas será mesmo esta a melhor forma de jogar?\n\nO Torneio de Bots de Sueca é uma competição em que cada equipa, composta por 1 a 3 jogadores, tem de desenvolver dois bots capazes de jogar o tradicional jogo de cartas português, a Sueca. Os bots podem ser idênticos ou diferentes, conforme o critério de cada equipa. Demonstra, através da vossa linguagem de programação favorita, como é que se joga!',
-      date: DateTime.fromObject({ year: 2025, month: 4, day: 14, hour: 12, minute: 30 }),
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 14, hour: 11, minute: 30 }),
       duration: 60,
       type: "competition",
       location: "Auditório - FEUP",
