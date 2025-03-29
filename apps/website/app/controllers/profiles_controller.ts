@@ -1,5 +1,6 @@
 import ParticipantProfile from "#models/participant_profile";
-import { createProfileValidator } from "#validators/profile";
+import User from "#models/user";
+import { createProfileValidator, hasTicketValidator } from "#validators/profile";
 import type { HttpContext } from "@adonisjs/core/http";
 import slug from "slug";
 import Sqids from "sqids";
@@ -76,5 +77,23 @@ export default class ProfilesController {
     await user.related("participantProfile").associate(profileAdd);
 
     return response.redirect().toRoute("pages:tickets");
+  }
+
+  async hasTicket({ response, request }: HttpContext) {
+    const { email } = await request.validateUsing(hasTicketValidator);
+
+    const user = await User.query().where("email", email).preload("participantProfile").first();
+
+    const hasTicket = !!(
+      user
+      && user.participantProfileId !== null
+      && user.participantProfile.purchasedTicket !== null
+    );
+
+    const name = hasTicket
+      ? `${user!.participantProfile.firstName} ${user!.participantProfile.lastName}`
+      : null;
+
+    return response.ok({ hasTicket, name });
   }
 }

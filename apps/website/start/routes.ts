@@ -255,3 +255,12 @@ router
   .route(`/r/:referralCode`, ["GET", "POST"], [ReferralsController, "link"])
   .middleware([middleware.automaticSubmit(), middleware.silentAuth()])
   .as("actions:referrals.link");
+
+router
+  .group(() => {
+    router
+      .get("/has-ticket/", [ProfilesController, "hasTicket"])
+      .as("actions:has-ticket")
+      .middleware(middleware.companyBearerAuth());
+  })
+  .prefix("api");
