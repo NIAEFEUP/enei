@@ -15,6 +15,7 @@ import { Badge } from "~/components/ui/badge";
 import editions from "#data/enei/editions.json" with { type: "json" };
 import { Option } from "~/components/ui/multiple-selector";
 import ProfileActivityInfo from "~/components/profile/profile_activity_info";
+import { useAuth } from "~/hooks/use_auth";
 
 export const ProfileContext = createContext<{ slug: string | number }>({
   slug: "",
@@ -49,6 +50,7 @@ export default function ProfilePage(
   props: InferPageProps<ProfilesController, "index"> & { profile: ParticipantProfile },
 ) {
   const { profile, isUser, activityInformation } = props;
+  const auth = useAuth();
 
   const [windowHref, setWindowHref] = useState("");
 
@@ -150,7 +152,9 @@ export default function ProfilePage(
             </section>
           </section>
           <section>
-            <ProfileActivityInfo activityInformation={activityInformation} />
+            {auth.user?.role === "staff" && (
+              <ProfileActivityInfo activityInformation={activityInformation} />
+            )}
           </section>
         </Container>
       </Page>
