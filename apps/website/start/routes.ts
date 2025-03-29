@@ -167,7 +167,8 @@ router
     router.get("/u/:slug", [ProfilesController, "index"]).as("pages:profile.show");
     router
       .post("/u/:slug/product/collect", [ProductReservationController, "collect"])
-      .as("actions:profile.product.collect");
+      .as("actions:profile.product.collect")
+      .use(middleware.staff());
     router
       .get("/profile", [ProfilesController, "default"])
       .as("pages:profile.default")

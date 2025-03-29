@@ -49,8 +49,8 @@ const SocialIcon = ({ icon: Icon, link }: SocialIconProps) => {
 export default function ProfilePage(
   props: InferPageProps<ProfilesController, "index"> & { profile: ParticipantProfile },
 ) {
-  const { profile, isUser, activityInformation } = props;
   const auth = useAuth();
+  const { profile, isUser, activityInformation } = props;
 
   const [windowHref, setWindowHref] = useState("");
 
@@ -152,7 +152,7 @@ export default function ProfilePage(
             </section>
           </section>
           <section>
-            {auth.user?.role === "staff" && (
+            {auth.state === "authenticated" && auth.user?.role === "staff" && (
               <ProfileActivityInfo activityInformation={activityInformation} />
             )}
           </section>
