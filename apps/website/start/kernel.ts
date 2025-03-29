@@ -52,6 +52,7 @@ router.use([
  * the routes or the routes group.
  */
 export const middleware = router.named({
+  staff: () => import("#middleware/staff_middleware"),
   hasPurchasedTicket: () => import("#middleware/has_purchased_ticket_middleware"),
   companyBearerAuth: () => import("#middleware/company_bearer_auth_middleware"),
   wip: () => import("#middleware/wip_middleware"),
