@@ -415,7 +415,7 @@ export default class extends BaseSeeder {
       title: "Cyberwarfare: Who needs a gun when you have a keyboard? Powered by ACM FEUP",
       description:
         "As governments depend more on technology, Cyberwarfare has become a major threat. Hackers can cripple nations by targeting critial systems like transport and finance – no physical force needed. Once, only nuclear or biological weapons were seen as destructive, but now, a few lines of code can cause chaos. This talk will explore types of cyber warfare, real-world cases, and strategies to combat these threats.",
-      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 14, minute: 0 }),
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 13, minute: 45 }),
       duration: 30,
       type: "talk",
       location: "Auditório - FEUP",
@@ -504,7 +504,7 @@ export default class extends BaseSeeder {
       title: "Enterprise Integration: Uma competência para a era dos Dados e IA",
       description:
         "Os dados são o novo petróleo e a IA está a transformar os setores, impulsionada pela Enterprise Integration. Nesta palestra, vais explorar como as tecnologias da Microsoft – BizTalk Server, Azure Integration Services, Power Platform e Azure Logic Apps – conectam aplicações, automatizam processos e alimentam a IA em tempo real.  Queres ser apenas mais um peixe num tanque de tubarões… ou o tubarão que lidera a próxima geração de integração e inteligência?",
-      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 15, minute: 30 }),
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 13, hour: 16, minute: 30 }),
       duration: 45,
       type: "talk",
       location: "TBD - FEUP",
@@ -576,7 +576,8 @@ export default class extends BaseSeeder {
 
     await Event.create({
       title: "Workshop de Golang",
-      description: "",
+      description:
+        "Go é uma linguagem moderna, simples e eficiente. Mas o que a torna tão poderosa? - Powered by AlumniEI",
       date: DateTime.fromObject({ year: 2025, month: 4, day: 14, hour: 9, minute: 30 }),
       duration: 120,
       type: "workshop",

@@ -66,6 +66,7 @@ export default class extends BaseSeeder {
     await SpeakerProfile.create({
       firstName: "Luís",
       lastName: "Duarte",
+      profilePicture: "/images/speakers/luis-duarte.jpg",
     });
 
     await SpeakerProfile.create({
@@ -151,6 +152,7 @@ export default class extends BaseSeeder {
       lastName: "Moura",
       jobTitle: "Investigador de Criptografia",
       company: "Capgemini Engineering",
+      profilePicture: "/images/speakers/leonardo-moura.jpg",
     });
 
     await SpeakerProfile.create({
@@ -158,6 +160,7 @@ export default class extends BaseSeeder {
       lastName: "Pacia",
       jobTitle: "Software Engineer",
       company: "JetBrains",
+      profilePicture: "/images/speakers/bartek-pacia.jpg",
     });
 
     await SpeakerProfile.create({
@@ -218,7 +221,7 @@ export default class extends BaseSeeder {
       firstName: "Diogo",
       lastName: "Correia",
       jobTitle: ".NET Developer",
-      profilePicture: "",
+      profilePicture: "/images/speakers/diogo-correia.jpg",
       company: "Devexperts",
     });
 
@@ -226,13 +229,14 @@ export default class extends BaseSeeder {
       firstName: "Francisco",
       lastName: "Loureiro",
       jobTitle: "Team Lead",
-      profilePicture: "",
+      profilePicture: "/images/speakers/francisco-loureiro.jpg",
       company: "Devexperts",
     });
 
     await SpeakerProfile.create({
       firstName: "Fellyph",
       lastName: "Cintra",
+      profilePicture: "/images/speakers/fellyph-cintra.jpg",
     });
 
     await SpeakerProfile.create({
@@ -260,22 +264,26 @@ export default class extends BaseSeeder {
     await SpeakerProfile.create({
       firstName: "António",
       lastName: "Aragão",
+      profilePicture: "/images/speakers/antonio-aragao.jpg",
     });
 
     await SpeakerProfile.create({
       firstName: "Filipe",
       lastName: "Pereira",
+      profilePicture: "/images/speakers/filipe-pereira.jpg",
     });
 
     await SpeakerProfile.create({
       firstName: "Joana",
       lastName: "Pereira",
+      profilePicture: "/images/speakers/joana-pereira.jpg",
     });
 
     await SpeakerProfile.create({
       firstName: "Nuno",
       lastName: "Miranda",
       jobTitle: "Data Engineer",
+      profilePicture: "/images/speakers/nuno-miranda.jpg",
     });
 
     await SpeakerProfile.create({
@@ -303,6 +311,7 @@ export default class extends BaseSeeder {
     await SpeakerProfile.create({
       firstName: "Michael",
       lastName: "Pound",
+      profilePicture: "/images/speakers/michael-pound.jpg",
     });
 
     /*
@@ -338,6 +347,7 @@ export default class extends BaseSeeder {
     await SpeakerProfile.create({
       firstName: "Rui",
       lastName: "Nascimento",
+      profilePicture: "/images/speakers/rui-nascimento.jpg",
     });
 
     await SpeakerProfile.create({
@@ -357,6 +367,7 @@ export default class extends BaseSeeder {
     await SpeakerProfile.create({
       firstName: "André",
       lastName: "Restivo",
+      profilePicture: "/images/speakers/andre-restivo.jpg",
     });
 
     /*
@@ -376,11 +387,19 @@ export default class extends BaseSeeder {
     await SpeakerProfile.create({
       firstName: "Hugo",
       lastName: "Queirós",
+      profilePicture: "/images/speakers/hugo-queiros.jpg",
     });
 
     await SpeakerProfile.create({
       firstName: "André",
       lastName: "Moreira",
+      profilePicture: "/images/speakers/andre-moreira.jpg",
+    });
+
+    await SpeakerProfile.create({
+      firstName: "Eduardo",
+      lastName: "Guedes",
+      profilePicture: "/images/speakers/eduardo-guedes.jpg",
     });
 
     await SpeakerProfile.create({
