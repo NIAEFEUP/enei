@@ -1,0 +1,14 @@
+{
+  "extends": "@enei/typescript-config/env/tools",
+  "compilerOptions": {
+    // Modules
+    "rootDir": "./src",
+
+    // Emit
+    "outDir": "./dist",
+
+    // Project
+    "tsBuildInfoFile": "./dist/tsconfig.lib.tsbuildinfo"
+  },
+  "include": ["src/**/*"]
+}
