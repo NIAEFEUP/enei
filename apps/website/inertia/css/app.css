@@ -151,6 +151,38 @@
       100% 45.41%
     );
   }
+
+  .official-partner-waves {
+    background-image: url("/images/waves/official-waves.svg");
+    background-position: top center;
+    background-size: cover;
+    background-repeat: repeat;
+    height: 40rem;
+  }
+
+  .gold-partner-waves {
+    background-image: url("/images/waves/gold-waves.svg");
+    background-position: top center;
+    background-size: cover;
+    background-repeat: repeat;
+    height: 40rem;
+  }
+
+  .silver-partner-waves {
+    background-image: url("/images/waves/silver-waves.svg");
+    background-position: top center;
+    background-size: cover;
+    background-repeat: repeat;
+    height: 40rem;
+  }
+
+  .bronze-partner-waves {
+    background-image: url("/images/waves/bronze-waves.svg");
+    background-position: top center;
+    background-size: cover;
+    background-repeat: repeat;
+    height: 32rem;
+  }
 }
 
 @layer base {
