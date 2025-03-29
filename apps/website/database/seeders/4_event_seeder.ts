@@ -88,7 +88,7 @@ export default class extends BaseSeeder {
       date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 11, minute: 30 }),
       duration: 30,
       type: "talk",
-      location: "Auditório -ISEP",
+      location: "Auditório - ISEP",
       registrationRequirements: "",
       requiresRegistration: false,
       price: 0,
@@ -152,7 +152,7 @@ export default class extends BaseSeeder {
       date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 14, minute: 0 }),
       duration: 45,
       type: "talk",
-      location: "Auditório - ISEP",
+      location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
       price: 0,
@@ -602,7 +602,7 @@ export default class extends BaseSeeder {
     });
 
     await Event.create({
-      title: "Talk TBD - Manhã, dia 14",
+      title: "Talk TBD",
       description: "",
       date: DateTime.fromObject({ year: 2025, month: 4, day: 14, hour: 10, minute: 0 }),
       duration: 30,
