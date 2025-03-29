@@ -7,6 +7,7 @@ import {
   Info,
   ClipboardCheck,
   Loader2,
+  QrCode,
 } from "lucide-react";
 import { Button, buttonVariants } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -22,6 +23,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/comp
 import Page from "~/components/common/page";
 import { router } from "@inertiajs/react";
 import Container from "~/components/common/containers";
+import DialogScanner from "~/components/credentials/scanner_dialog";
 
 interface Speaker {
   firstName: string;
@@ -66,6 +68,7 @@ export default function EventRegistrationPage({
   const [isLoading, setIsLoading] = useState(true);
   const [ticketsRemaining, setTicketsRemaining] = useState(initialTicketsRemaining);
   const [registrationConfirmationModalOpen, setRegistrationConfirmationModalOpen] = useState(false);
+  const [scannerModalOpen, setScannerModalOpen] = useState(false);
 
   const { toast } = useToast();
 
@@ -100,6 +103,10 @@ export default function EventRegistrationPage({
   const handleRegisterClick = () => {
     setRegistrationConfirmationModalOpen(true);
   };
+
+  const handleCheckIn = (slug: string) => {
+     return slug
+  }
 
   const handleRegister = async () => {
     setIsLoading(true);
@@ -298,7 +305,7 @@ export default function EventRegistrationPage({
               )}
               {/* Button to register */}
               {!isRegistered && (
-                <div className="flex justify-center">
+                <div className="flex justify-center items-center gap-3">
                   <Button
                     onClick={() => handleRegisterClick()}
                     disabled={ticketsRemaining <= 0 || !requiresRegistration || isLoading}
@@ -314,6 +321,8 @@ export default function EventRegistrationPage({
                         : "Esgotado"
                       : "Inscrição não necessária"}
                   </Button>
+                  
+                  <QrCode onClick={() => setScannerModalOpen(true)}/>
                 </div>
               )}
               {/* Temporary indication that registration is not possible yet */}
@@ -378,6 +387,7 @@ export default function EventRegistrationPage({
                 onClose={() => setRegistrationConfirmationModalOpen(false)}
                 onSubmit={handleRegister}
               />
+              <DialogScanner isOpen={scannerModalOpen} onClose={() => setScannerModalOpen(false)} onScan={(slug) => handleCheckIn(slug)}/>
             </CardContent>
           </Card>
         </div>
