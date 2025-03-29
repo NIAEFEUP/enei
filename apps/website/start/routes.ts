@@ -22,6 +22,8 @@ const CvsController = () => import("#controllers/cvs_controller");
 const StoreController = () => import("#controllers/store_controller");
 const ReferralsController = () => import("#controllers/referrals_controller");
 
+const ProductReservationController = () => import("#controllers/product_reservation_controller");
+
 router.on("/").renderInertia("home").as("pages:home");
 
 router
@@ -164,6 +166,10 @@ router
   .group(() => {
     router.get("/u/:slug", [ProfilesController, "index"]).as("pages:profile.show");
     router
+      .post("/u/:slug/product/collect", [ProductReservationController, "collect"])
+      .as("actions:profile.product.collect")
+      .use(middleware.staff());
+    router
       .get("/profile", [ProfilesController, "default"])
       .as("pages:profile.default")
       .use([middleware.auth(), middleware.verifiedEmail()]);
@@ -171,6 +177,7 @@ router
       .get("/profile/edit", [ProfilesController, "edit"])
       .as("pages:profile.edit")
       .use([middleware.auth(), middleware.verifiedEmail()]);
+    router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
   })
   .use(middleware.wip());
 
@@ -264,3 +271,9 @@ router
       .middleware(middleware.companyBearerAuth());
   })
   .prefix("api");
+
+router
+  .group(() => {
+    router.on("/scan").renderInertia("qrscanner").as("pages:staff.qrcode.scan");
+  })
+  .prefix("/qrcode");

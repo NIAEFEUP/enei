@@ -7,6 +7,7 @@ import OrderProduct from "#models/order_product";
 import { ProductService } from "./product_service.js";
 
 import { inject } from "@adonisjs/core";
+import { OrderService } from "./order_service.js";
 
 @inject()
 export class StoreService {
@@ -49,5 +50,13 @@ export class StoreService {
         },
       );
     });
+  }
+
+  async getReservedProducts(user: User) {
+    const userOrders = await OrderService.getOrdersForUser(user, ["points"]);
+    return userOrders.map((orderProduct) => ({
+      order: orderProduct.order,
+      product: orderProduct.product,
+    }));
   }
 }

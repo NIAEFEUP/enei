@@ -25,3 +25,9 @@ export const storeValidator = vine.compile(
     cost: vine.number().min(0),
   }),
 );
+
+export const reserveProductValidator = vine.compile(
+  vine.object({
+    productId: vine.number().use(productMustExistAndBeInStock()),
+  }),
+);
