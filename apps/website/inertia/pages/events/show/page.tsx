@@ -104,6 +104,10 @@ export default function EventRegistrationPage({
     setRegistrationConfirmationModalOpen(true);
   };
 
+  const handleCheckIn = (slug: string) => {
+     return slug
+  }
+
   const handleRegister = async () => {
     setIsLoading(true);
     try {
@@ -383,7 +387,7 @@ export default function EventRegistrationPage({
                 onClose={() => setRegistrationConfirmationModalOpen(false)}
                 onSubmit={handleRegister}
               />
-              <DialogScanner isOpen={scannerModalOpen} onClose={() => setScannerModalOpen(false)}/>
+              <DialogScanner isOpen={scannerModalOpen} onClose={() => setScannerModalOpen(false)} onScan={(slug) => handleCheckIn(slug)}/>
             </CardContent>
           </Card>
         </div>
