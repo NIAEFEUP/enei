@@ -1,7 +1,7 @@
 import { Link } from "@tuyau/inertia/react";
 import HighlightCard from "./highlight_card";
 
-import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
+import { Carousel, CarouselContent, CarouselItem } from "~/components/ui/carousel";
 
 export enum EventType {
   Workshop = "Workshop",
@@ -19,60 +19,79 @@ export default function Highlights() {
         >
           Ver programa
         </Link>
-        <ScrollArea className="w-full">
-          <div className="flex w-max flex-row space-x-4 p-4">
-            <HighlightCard
-              title="How to look through skin with AI"
-              person="Michael Pound"
-              schedule="13 Abril - Auditório FEUP - 15:15"
-              type={EventType.Talk}
-              image="michael-pound.jpg"
-            />
-            <HighlightCard
-              title="AI, Copilots, and the future of software development"
-              person="Eddie Aftandilian"
-              schedule="12 Abril - Auditório ISEP - 15:15"
-              type={EventType.Talk}
-              image="eddie-aftandilian.jpg"
-            />
-            <HighlightCard
-              title="CRDTs: Building blocks for high availability and beyond"
-              person="Carlos Baquero, Nuno Preguiça"
-              schedule="13 Abril - Auditório FEUP - 15:15"
-              type={EventType.Talk}
-              image="baqueropreguica.jpg"
-            />
-            <HighlightCard
-              title="Como fazer software para estúdios de Holywood"
-              person="Nuno Fonseca"
-              schedule="12 Abril - Auditório FEUP - 14:45"
-              type={EventType.Talk}
-              image="nuno-fonseca.jpg"
-            />
-            <HighlightCard
-              title="The programmer who didn’t know how to code"
-              person="Charalampos Patrikakis"
-              schedule="12 Abril - Auditório ISEP - 10:30"
-              type={EventType.Talk}
-              image="charalampos-patrikakis.jpg"
-            />
-            <HighlightCard
-              title="Cyberwarfare: Who Needs a Gun when you have a Keyboard?"
-              person="Haider Abbas"
-              schedule="13 Abril - Auditório FEUP - 14:00"
-              type={EventType.Talk}
-              image="haider-abbas.jpg"
-            />
-            <HighlightCard
-              title="Abordagens e Desafios da Realidade Virtual e Aumentada na Saúde e Reabilitação"
-              person="Joaquim Jorge"
-              schedule="13 Abril - Auditório FEUP - 14:30"
-              type={EventType.Talk}
-              image="joaquim-jorge.jpg"
-            />
-          </div>
-          <ScrollBar orientation="horizontal" className="hidden" />
-        </ScrollArea>
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          loopDuration={2500}
+        >
+          <CarouselContent>
+            <CarouselItem className="basis-auto">
+              <HighlightCard
+                title="How to look through skin with AI"
+                person="Michael Pound"
+                schedule="13 Abril - Auditório FEUP - 15:15"
+                type={EventType.Talk}
+                image="michael-pound.jpg"
+              />
+            </CarouselItem>
+            <CarouselItem className="basis-auto">
+              <HighlightCard
+                title="AI, Copilots, and the future of software development"
+                person="Eddie Aftandilian"
+                schedule="12 Abril - Auditório ISEP - 15:15"
+                type={EventType.Talk}
+                image="eddie-aftandilian.jpg"
+              />
+            </CarouselItem>
+            <CarouselItem className="basis-auto">
+              <HighlightCard
+                title="CRDTs: Building blocks for high availability and beyond"
+                person="Carlos Baquero, Nuno Preguiça"
+                schedule="13 Abril - Auditório FEUP - 15:15"
+                type={EventType.Talk}
+                image="baqueropreguica.jpg"
+              />
+            </CarouselItem>
+            <CarouselItem className="basis-auto">
+              <HighlightCard
+                title="Como fazer software para estúdios de Holywood"
+                person="Nuno Fonseca"
+                schedule="12 Abril - Auditório FEUP - 14:45"
+                type={EventType.Talk}
+                image="nuno-fonseca.jpg"
+              />
+            </CarouselItem>
+            <CarouselItem className="basis-auto">
+              <HighlightCard
+                title="The programmer who didn’t know how to code"
+                person="Charalampos Patrikakis"
+                schedule="12 Abril - Auditório ISEP - 10:30"
+                type={EventType.Talk}
+                image="charalampos-patrikakis.jpg"
+              />
+            </CarouselItem>
+            <CarouselItem className="basis-auto">
+              <HighlightCard
+                title="Cyberwarfare: Who Needs a Gun when you have a Keyboard?"
+                person="Haider Abbas"
+                schedule="13 Abril - Auditório FEUP - 14:00"
+                type={EventType.Talk}
+                image="haider-abbas.jpg"
+              />
+            </CarouselItem>
+            <CarouselItem className="basis-auto">
+              <HighlightCard
+                title="Abordagens e Desafios da Realidade Virtual e Aumentada na Saúde e Reabilitação"
+                person="Joaquim Jorge"
+                schedule="13 Abril - Auditório FEUP - 14:30"
+                type={EventType.Talk}
+                image="joaquim-jorge.jpg"
+              />
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
       </div>
     </section>
   );
