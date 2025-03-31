@@ -89,7 +89,7 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
       <nav
         className={cn(
           "w-full transition-colors duration-300",
-          !onTop && `bg-${bgColor}`,
+          !onTop && `bg-${bgColor} shadow-md`,
           className,
         )}
       >

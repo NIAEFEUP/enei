@@ -6,10 +6,6 @@ import background from "~/images/background.jpeg";
 import Page from "~/components/common/page";
 import Hero from "~/components/common/hero";
 import Container from "~/components/common/containers";
-import { Notification } from "~/components/notifications";
-import { Link } from "@tuyau/inertia/react";
-import { buttonVariants } from "~/components/ui/button";
-import { ArrowRight } from "lucide-react";
 import ReasonsToEnroll from "~/components/home/reasons_to_enroll";
 import Highlights from "~/components/home/highlights/highlights";
 import Statistics from "~/components/home/statistics";
@@ -110,24 +106,9 @@ function Background() {
 
 export default function Home() {
   return (
-    <Page title="Home" className="bg-enei-beige">
-      <Notification>
-        <div className="bg-enei-beige text-enei-blue flex flex-col items-center justify-center gap-2 bg-opacity-[62%] px-4 py-4 shadow-[0_4px_4px_rgba(0_0_0_/_25%)] lg:flex-row">
-          <p className="text-center lg:text-left">
-            <span>⏳</span> As inscrições para o ENEI fecham dia 30 de março!{" "}
-          </p>
-          <Link
-            route="pages:tickets"
-            className={cn(buttonVariants({ variant: "link" }), "text-md h-fit p-0")}
-          >
-            <p className="text-center">
-              Garante já o teu bilhete <ArrowRight className="inline-block" />
-            </p>
-          </Link>
-        </div>
-      </Notification>
+    <Page title="Home" background="beige">
       <Background />
-      <Hero className="h-auto flex-grow">
+      <Hero className="relative h-screen flex-grow">
         <Container className="pb-32">
           <section className="relative z-10 flex flex-col gap-8 md:justify-between">
             <div className="flex-grow py-4 sm:py-24 md:flex-grow-0 lg:py-20">
@@ -157,19 +138,15 @@ export default function Home() {
           </section>
         </Container>
       </Hero>
-
       <Container className="flex flex-col justify-center gap-y-32">
         <ReasonsToEnroll />
       </Container>
-
       <section className="mb-32 mt-32">
         <Highlights />
       </section>
-
       <Container className="flex flex-col justify-center gap-y-32">
         <Statistics />
       </Container>
-
       <Partners />
     </Page>
   );
