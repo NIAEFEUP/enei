@@ -10,7 +10,7 @@ type NfcSupport =
       error: string;
     };
 
-function determineNfcSupport(): NfcSupport {
+async function determineNfcSupport(): Promise<NfcSupport> {
   if ("NDEFReader" in window) {
     const NDEFReader = window.NDEFReader as any;
 
@@ -35,7 +35,7 @@ export default function NfcSupportPage() {
   }, []);
 
   async function handleClick() {
-    const nfcSupport = determineNfcSupport();
+    const nfcSupport = await determineNfcSupport();
     if (!mounted.current) {
       return;
     }
