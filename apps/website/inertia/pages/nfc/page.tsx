@@ -3,7 +3,7 @@ import { cn } from "~/lib/utils";
 
 export default function NfcSupportPage() {
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
-  const mounted = useRef(false);
+  const mounted = useRef(true);
 
   useEffect(() => {
     if ("NDEFReader" in window) {
@@ -26,7 +26,7 @@ export default function NfcSupportPage() {
     return () => {
       mounted.current = false;
     };
-  });
+  }, []);
 
   return (
     <div
