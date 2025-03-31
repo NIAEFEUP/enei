@@ -111,21 +111,6 @@ function Background() {
 export default function Home() {
   return (
     <Page title="Home" background="beige">
-      <Notification>
-        <div className="bg-enei-beige text-enei-blue flex flex-col items-center justify-center gap-2 bg-opacity-[62%] px-4 py-4 shadow-[0_4px_4px_rgba(0_0_0_/_25%)] lg:flex-row">
-          <p className="text-center lg:text-left">
-            <span>⏳</span> As inscrições para o ENEI fecham dia 30 de março!{" "}
-          </p>
-          <Link
-            route="pages:tickets"
-            className={cn(buttonVariants({ variant: "link" }), "text-md h-fit p-0")}
-          >
-            <p className="text-center">
-              Garante já o teu bilhete <ArrowRight className="inline-block" />
-            </p>
-          </Link>
-        </div>
-      </Notification>
       <Background />
       <Hero className="h-auto flex-grow">
         <Container className="pb-32">
