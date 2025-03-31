@@ -5,7 +5,7 @@ export default class UserPolicy extends BasePolicy {
   async canUserHandleStoreProductCollection(user: User) {
     return user.role === "staff";
   }
-  
+
   /**
    * Only promoters or users with purchased tickets can refer other users
    */
