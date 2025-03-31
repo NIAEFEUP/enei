@@ -15,10 +15,7 @@ import {
   Pencil,
   Landmark,
   GraduationCap,
-  SquareArrowOutUpRight,
   ExternalLink,
-  Expand,
-  Minimize,
   Minimize2,
   Maximize2,
 } from "lucide-react";
