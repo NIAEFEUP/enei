@@ -24,23 +24,27 @@ function PromoterNotification() {
 export default function Page({
   title,
   className,
-  children,
   variant = "blue",
+  background,
+  children,
 }: {
   title: string;
   className?: string;
   variant?: "blue" | "beige";
+  background?: "blue" | "beige";
   children?: React.ReactNode;
 }) {
+  const actualBackground = background ?? variant;
+
   return (
     <div
       className={cn(
         "flex min-h-dvh w-full flex-col scroll-smooth",
-        variant === "blue" ? "bg-enei-blue" : "bg-enei-beige",
+        actualBackground === "blue" ? "bg-enei-blue" : "bg-enei-beige",
       )}
     >
       <Head title={title} />
-      <div className="relative flex-grow pb-48">
+      <div className="relative flex-grow pb-32">
         <Navbar className="sticky top-0 z-20 grow-0" variant={variant} />
         <PromoterNotification />
         <div className={className}>{children}</div>

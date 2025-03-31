@@ -110,7 +110,7 @@ function Background() {
 
 export default function Home() {
   return (
-    <Page title="Home" className="bg-enei-beige">
+    <Page title="Home" background="beige">
       <Notification>
         <div className="bg-enei-beige text-enei-blue flex flex-col items-center justify-center gap-2 bg-opacity-[62%] px-4 py-4 shadow-[0_4px_4px_rgba(0_0_0_/_25%)] lg:flex-row">
           <p className="text-center lg:text-left">
@@ -157,19 +157,15 @@ export default function Home() {
           </section>
         </Container>
       </Hero>
-
       <Container className="flex flex-col justify-center gap-y-32">
         <ReasonsToEnroll />
       </Container>
-
       <section className="mb-32 mt-32">
         <Highlights />
       </section>
-
       <Container className="flex flex-col justify-center gap-y-32">
         <Statistics />
       </Container>
-
       <Partners />
     </Page>
   );
