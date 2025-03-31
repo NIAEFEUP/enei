@@ -1,8 +1,6 @@
 import Product from "#models/product";
 import User from "#models/user";
-import type { ModelQueryBuilderContract } from "@adonisjs/lucid/types/model";
 import type { UserTypes } from "../../types/user.js";
-import type OrderProduct from "#models/order_product";
 
 export class ProductService {
   productBaseQuery() {
@@ -28,11 +26,5 @@ export class ProductService {
     if (!groupRestrictionDefined) return true;
 
     return groupRestrictionDefined.some((group: UserTypes) => user.groups().includes(group));
-  }
-
-  static applyPointProductRestriction(
-    query: ModelQueryBuilderContract<typeof Product | typeof OrderProduct>,
-  ) {
-    return query.where("currency", "points");
   }
 }

@@ -5,7 +5,7 @@ export default class StaffMiddleware {
   async handle(ctx: HttpContext, next: NextFn) {
     const user = ctx.auth.getUserOrFail();
 
-    if (user.isStaff()) {
+    if (!user.isStaff()) {
       return ctx.response.redirect().toRoute("pages:signup");
     }
 
