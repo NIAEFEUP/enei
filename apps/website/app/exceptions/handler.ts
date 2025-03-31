@@ -26,7 +26,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
     // '403': (error, { inertia }) => inertia.render('errors/forbidden', { error }),
     "403": (_error, { response }) => response.status(403).finish(),
     // '404': (error, { inertia }) => inertia.render('errors/not_found', { error }),
-    "404": (_error, { response }) => response.status(404).finish(),
+    "404": (_error, { inertia }) => inertia.render("errors/not_found"),
     // '500..599': (error, { inertia }) => inertia.render('errors/server_error', { error }),
     "500..599": (_error, { response }) => response.status(500).finish(),
   };

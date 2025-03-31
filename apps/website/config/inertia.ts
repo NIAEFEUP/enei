@@ -20,7 +20,7 @@ const inertiaConfig = defineConfig({
   sharedData: {
     environment: env.public(),
     auth: async ({ auth }): Promise<AuthenticationData> => {
-      if (env.get("FEATURES_DISABLE_AUTH")) return { state: "disabled" };
+      if (!auth || env.get("FEATURES_DISABLE_AUTH")) return { state: "disabled" };
 
       if (!auth.authenticationAttempted) await auth.check();
       const user = auth.user;
