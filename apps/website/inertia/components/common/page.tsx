@@ -40,7 +40,7 @@ export default function Page({
       )}
     >
       <Head title={title} />
-      <div className="relative flex-grow pb-48">
+      <div className="bg-enei-beige relative flex-grow pb-48">
         <Navbar className="sticky top-0 z-20 grow-0" variant={variant} />
         <PromoterNotification />
         <div className={className}>{children}</div>
