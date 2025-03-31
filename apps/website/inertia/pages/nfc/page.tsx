@@ -1,8 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "~/lib/utils";
 
+type NfcSupport =
+  | {
+      status: "loading" | "success";
+    }
+  | {
+      status: "error";
+      error: string;
+    };
+
 export default function NfcSupportPage() {
-  const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
+  const [support, setSupport] = useState<NfcSupport>({ status: "loading" });
   const mounted = useRef(true);
 
   useEffect(() => {
@@ -12,15 +21,15 @@ export default function NfcSupportPage() {
       const reader = new NDEFReader();
       reader
         .scan()
-        .then(() => true)
-        .catch(() => false)
-        .then((supports: boolean) => {
+        .then(() => ({ status: "success" }) satisfies NfcSupport)
+        .catch((error: unknown) => ({ status: "error", error: `${error}` }) satisfies NfcSupport)
+        .then((detectedSupport: NfcSupport) => {
           if (mounted.current) {
-            setStatus(supports ? "success" : "error");
+            setSupport(detectedSupport);
           }
         });
     } else {
-      setStatus("error");
+      setSupport({ status: "error", error: "NDEFReader not supported" });
     }
 
     return () => {
@@ -31,14 +40,19 @@ export default function NfcSupportPage() {
   return (
     <div
       className={cn("flex h-screen items-center justify-center", {
-        "bg-yellow-500": status === "loading",
-        "bg-red-500": status === "error",
-        "bg-green-500": status === "success",
+        "bg-yellow-400": support.status === "loading",
+        "bg-red-400": support.status === "error",
+        "bg-green-400": support.status === "success",
       })}
     >
       <div className="text-center">
         <h1 className="text-4xl font-bold">NFC</h1>
-        <p className="text-xl">NFC support</p>
+        <p className="text-xl">
+          {support.status === "loading" && "Checking..."}
+          {support.status === "success" && "NFC is supported on this device"}
+          {support.status === "error" && "NFC is not supported on this device"}
+        </p>
+        {support.status === "error" && <p className="mt-10 font-light">Reason: {support.error}</p>}
       </div>
     </div>
   );
