@@ -2,7 +2,7 @@ import axios from "axios";
 import { InferPageProps } from "@adonisjs/inertia/types";
 import ProfilesController from "#controllers/profiles_controller";
 import ParticipantProfile from "#models/participant_profile";
-import { buttonVariants } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import Page from "~/components/common/page";
 import Container from "~/components/common/containers";
 import { getUniversityById } from "~/lib/enei/signup/universities";
@@ -15,6 +15,12 @@ import {
   Pencil,
   Landmark,
   GraduationCap,
+  SquareArrowOutUpRight,
+  ExternalLink,
+  Expand,
+  Minimize,
+  Minimize2,
+  Maximize2,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "@tuyau/inertia/react";
@@ -70,7 +76,8 @@ export default function ProfilePage(
   if (profile.linkedin) socials.push({ icon: Linkedin, link: profile.linkedin });
   if (profile.website) socials.push({ icon: Globe, link: profile.website });
 
-  const [, setHasCv] = useState<boolean>(false);
+  const [cvExpanded, setCvExpanded] = useState<boolean>(false);
+  const [hasCv, setHasCv] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchFileName = async () => {
@@ -88,7 +95,7 @@ export default function ProfilePage(
 
   return (
     <Page title={`${profile.firstName} ${profile.lastName}`} variant="beige">
-      <Container className="mt-8 grid min-h-screen max-w-7xl grid-cols-[auto_1fr] gap-16">
+      <Container className="mt-8 grid min-h-screen max-w-7xl grid-cols-1 gap-16 md:grid-cols-[auto_1fr]">
         <section className="bg-dark-cyan hidden h-full w-[22rem] bg-opacity-20 p-12 md:block">
           <div className="sticky top-28">
             <div className="bg-enei-blue mb-12 size-fit overflow-clip rounded-full">
@@ -118,7 +125,7 @@ export default function ProfilePage(
               {profile.firstName} {profile.lastName}
             </p>
 
-            <p className="mb-4 text-xl font-bold">{profile.about ?? "Sem informação."}</p>
+            <p className="mb-4 text-xl font-bold">{profile.about ?? "Sem descrição."}</p>
 
             <div className="mb-4 flex flex-row flex-wrap gap-5 gap-y-2">
               <RoundBadge icon={Landmark} text={getUniversityById(profile.university)!.name} />
@@ -150,10 +157,56 @@ export default function ProfilePage(
             )}
           </header>
 
-          <div>
-            <p className="text-persian-orange mb-5 text-3xl font-bold uppercase">Currículo</p>
-            Visualizar Curriculo aqui!
-          </div>
+          {hasCv && (
+            <div>
+              <h3 className="text-persian-orange mb-5 text-3xl font-bold uppercase">Currículo</h3>
+              <div className="mb-4 flex flex-row flex-wrap gap-4 gap-y-2">
+                {cvExpanded ? (
+                  <Button
+                    onClick={() => setCvExpanded(false)}
+                    className={cn(buttonVariants({ variant: "destructive" }))}
+                  >
+                    Recolher
+                    <Minimize2 className="h-6 flex-shrink-0" />
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => setCvExpanded(true)}
+                    className={cn(buttonVariants({ variant: "default" }))}
+                  >
+                    Expandir
+                    <Maximize2 className="h-6 flex-shrink-0" />
+                  </Button>
+                )}
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={tuyau.$url("pages:profile.cv.show", { params: { slug: profile.slug } })}
+                  className={cn(buttonVariants({ variant: "default" }))}
+                >
+                  Abrir noutro separador
+                  <ExternalLink className="h-6 flex-shrink-0" />
+                </a>
+              </div>
+
+              <div
+                className={cn(
+                  "max-h-screen overflow-y-hidden transition-all duration-500",
+                  !cvExpanded && "max-h-64",
+                )}
+              >
+                <object
+                  data={tuyau.$url("pages:profile.cv.show", { params: { slug: profile.slug } })}
+                  type="application/pdf"
+                  width="100%"
+                  height="100%"
+                  className={cn("h-64", cvExpanded && "h-screen")}
+                >
+                  <p>Não foi possível mostrar o ficheiro nesta página.</p>
+                </object>
+              </div>
+            </div>
+          )}
         </section>
       </Container>
     </Page>
