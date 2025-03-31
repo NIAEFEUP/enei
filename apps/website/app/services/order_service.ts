@@ -1,3 +1,4 @@
+import Order from "#models/order";
 import OrderProduct from "#models/order_product";
 import type Product from "#models/product";
 import ProductGroup from "#models/product_group";
@@ -38,7 +39,7 @@ export class OrderService {
       await item.order.save();
     });
   }
-  
+
   async checkProductStock(product: Product, quantity: number) {
     const successfulOrdersOfGivenProduct = await OrderProduct.query()
       .join("orders", "order_products.order_id", "orders.id")
@@ -69,5 +70,9 @@ export class OrderService {
     );
 
     return totalGroupQuantity + quantity <= productGroup.maxAmountPerGroup;
+  }
+
+  async createOrder(userId: number, name: string, nif: number, address: string) {
+    return await Order.create({ userId, name, nif, address });
   }
 }
