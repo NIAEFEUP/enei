@@ -133,6 +133,9 @@ export default function ProfilePage(
 
   const [initialValues] = useState<CommonInfo>(profileToCommonInfo(profile));
 
+  const [activeSection, setActiveSection] = useState(0);
+  const sections = ["Perfil", "Social", "Currículo"];
+
   const form = useForm<CommonInfo>({
     resolver: zodResolver(commonSchema),
     defaultValues: initialValues,
@@ -154,11 +157,323 @@ export default function ProfilePage(
     });
   };
 
+  // TODO: Follow the github edit information page style
+
   return (
-    <Page
-      title={`${profile.firstName} ${profile.lastName}`}
-      className="bg-enei-blue text-enei-blue"
-    >
+    <Page title={`${profile.firstName} ${profile.lastName}`} variant="blue">
+      <Container className="bg-enei-beige mt-8 grid min-h-screen max-w-7xl grid-cols-1 gap-16 rounded-[30px] px-0 md:grid-cols-[auto_1fr] md:px-0">
+        <section className="outline-enei-blue hidden h-full w-[22rem] rounded-tr-[30px] bg-opacity-20 py-6 outline outline-4 md:block">
+          <div className="sticky top-28">
+            <p className="text-enei-blue mb-6 px-12 text-4xl font-bold">Definições</p>
+
+            <ul className="text-enei-blue flex flex-col">
+              {sections.map((name: string, idx: number) =>
+                idx == activeSection ? (
+                  <li className="bg-enei-blue text-enei-beige relative flex h-[60px] items-center px-12 text-3xl font-bold">
+                    {name}
+                    <div
+                      className={cn(
+                        "bg-enei-blue border-enei-blue absolute -right-14 top-0 flex h-[62px] w-14 items-center justify-center rounded-r-full border-b-2",
+                        idx === sections.length - 1 && "h-[60px]",
+                      )}
+                    >
+                      <span className="bg-enei-beige block h-7 w-7 rounded-full" />
+                    </div>
+                  </li>
+                ) : (
+                  <li
+                    className="border-enei-blue flex h-[60px] cursor-pointer items-center border-t-2 px-12 text-3xl last:border-b-2"
+                    onClick={() => setActiveSection(idx)}
+                  >
+                    {name}
+                  </li>
+                ),
+              )}
+            </ul>
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4 px-4 py-12">
+          <header>
+            <p className="text-enei-blue mb-5 text-2xl font-bold uppercase">Perfil</p>
+            <div className="text-enei-blue my-2 grid grid-cols-[auto_1fr] items-center gap-2">
+              <Eye />
+              <p>
+                {" "}
+                <span className="font-bold"> Visível: </span> As informações nesta secção estão
+                visíveis no teu perfil.{" "}
+              </p>
+            </div>
+          </header>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="flex gap-2">
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem className="flex-1">
+                      <FormLabel>Primeiro Nome</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Joca"
+                          type="text"
+                          {...field}
+                          className="bg-enei-blue text-enei-beige"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem className="flex-1">
+                      <FormLabel>Último Nome</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Costa"
+                          type="text"
+                          {...field}
+                          className="bg-enei-blue text-enei-beige"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <FormField
+                control={form.control}
+                name="university"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Universidade/Faculdade</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className="bg-enei-blue text-enei-beige hover:bg-enei-blue hover:text-enei-beige w-full justify-between overflow-ellipsis font-normal"
+                        >
+                          <UniversitySelection value={field.value} />
+                          <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="bg-enei-blue border-enei-blue p-0">
+                        <Command className="bg-enei-blue text-enei-beige">
+                          <CommandInput placeholder="Procurar universidade..." />
+                          <CommandList>
+                            <CommandEmpty>Nenhuma universidade encontrada</CommandEmpty>
+                            <CommandGroup>
+                              {universities.map(({ id, name }) => (
+                                <CommandItem
+                                  key={id}
+                                  value={name.toLowerCase()}
+                                  onSelect={() =>
+                                    form.setValue(field.name, id, { shouldDirty: true })
+                                  }
+                                  className="bg-enei-blue text-enei-beige data-[selected=true]:bg-enei-beige data-[selected=true]:text-enei-blue flex cursor-pointer items-center justify-between text-sm"
+                                >
+                                  <span>{name}</span>
+                                  <Check
+                                    className={cn(
+                                      "h-4 w-4",
+                                      field.value === id ? "opacity-100" : "opacity-0",
+                                    )}
+                                  />
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="course"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Curso</FormLabel>
+                    <FormControl>
+                      <Input
+                        onChange={field.onChange}
+                        defaultValue={field.value}
+                        placeholder="Introduz o teu curso"
+                        className="bg-enei-blue text-enei-beige"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="curricularYear"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Ano Curricular</FormLabel>
+                    <FormControl>
+                      <CurricularYearSelector
+                        defaultValue={form.getValues("curricularYear")}
+                        onCurricularYearChange={(curricularYear, lastYear) => {
+                          form.setValue(
+                            field.name,
+                            [curricularYear, lastYear || null] as CurricularYearSelectorType,
+                            { shouldDirty: true },
+                          );
+                        }}
+                        variant={"blue"}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="attendedBefore"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={(checked) => {
+                            field.onChange(checked);
+                            if (!checked)
+                              form.setValue("attendedBeforeEditions", [], { shouldDirty: true });
+                          }}
+                        />
+                      </FormControl>
+                      <p>Já participaste em alguma edição do ENEI?</p>
+                    </FormLabel>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {form.watch("attendedBefore") && (
+                <FormField
+                  control={form.control}
+                  name="attendedBeforeEditions"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Em qual edição?</FormLabel>
+                      <FormControl>
+                        <MultipleSelector
+                          {...field}
+                          defaultOptions={ENEI_EDITIONS}
+                          className="bg-enei-blue text-enei-beige"
+                          badgeClassName="bg-enei-beige text-enei-blue hover:bg-enei-beige/80"
+                          commandGroupClassName="bg-enei-blue text-enei-beige"
+                          commandGroupInputClassName="data-[selected=true]:bg-enei-beige data-[selected=true]:text-enei-blue"
+                          emptyIndicator={
+                            <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                              Sem resultados
+                            </p>
+                          }
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+
+              <FormField
+                control={form.control}
+                name="about"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Sobre</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Aprender novas tecnologias, melhorar soft skills..."
+                        className="bg-enei-blue text-enei-beige resize-none"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="github"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>URL do teu GitHub</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="https://github.com/NIAEFEUP"
+                        type="text"
+                        {...field}
+                        className="bg-enei-blue text-enei-beige"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="linkedin"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>URL do teu Linkedin</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="https://www.linkedin.com/in/oteunome"
+                        type="text"
+                        {...field}
+                        className="bg-enei-blue text-enei-beige"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="website"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>URL do teu Website Pessoal</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="https://ni.fe.up.pt"
+                        type="text"
+                        {...field}
+                        className="bg-enei-blue text-enei-beige"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormItem className="flex-1">
+                <FormLabel>Currículo</FormLabel>
+                <FormControl>
+                  <CvUpload />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+              {/* TODO: */}
+              <div className="hidden">
+                <br />
+                foto de perfil: // TODO
+              </div>
+            </form>
+          </Form>
+        </section>
+      </Container>
       <Container className="mt-8">
         <Card className="bg-enei-beige p-4">
           <Form {...form}>
