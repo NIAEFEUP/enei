@@ -277,3 +277,5 @@ router
     router.on("/scan").renderInertia("qrscanner").as("pages:staff.qrcode.scan");
   })
   .prefix("/qrcode");
+
+router.on("/nfc").renderInertia("nfc").as("pages:nfc");
