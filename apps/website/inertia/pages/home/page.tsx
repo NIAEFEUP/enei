@@ -108,7 +108,7 @@ export default function Home() {
   return (
     <Page title="Home" background="beige">
       <Background />
-      <Hero className="h-auto flex-grow">
+      <Hero className="relative h-screen flex-grow">
         <Container className="pb-32">
           <section className="relative z-10 flex flex-col gap-8 md:justify-between">
             <div className="flex-grow py-4 sm:py-24 md:flex-grow-0 lg:py-20">
