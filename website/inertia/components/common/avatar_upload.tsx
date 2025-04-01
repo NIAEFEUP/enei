@@ -3,8 +3,9 @@ import axios from 'axios';
 import { Button} from '~/components/ui/button';
 import { Input } from "~/components/ui/input"
 import { useEffect } from 'react';
-
+import { useTuyau } from '~/hooks/use_tuyau' 
 const AvatarUpload= () => {
+    const tuyau = useTuyau()
     const [fetchedName, setfetchedName] = useState(false);
     const [file, setFile] = useState<File | null>(null);
     const [uploading, setUploading] = useState(false);
@@ -13,7 +14,7 @@ const AvatarUpload= () => {
     useEffect(() => {
         const fetchFileName = async () => {
             try {
-                const response = await axios.get('/user/avatar/name');
+                const response = await axios.get(tuyau.$url('actions:avatar_name'))
                 setFileName(response.data.fileName);
                 setfetchedName(true);
 
@@ -42,7 +43,7 @@ const AvatarUpload= () => {
         formData.append('avatar', file);
 
         try {
-            await axios.post('/user/avatar/upload', formData, {
+            await axios.post(tuyau.$url('actions:avatar_upload'), formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -56,7 +57,7 @@ const AvatarUpload= () => {
     const handleDelete = async () => {
         setUploading(true);
         try {
-            await axios.delete('/user/avatar/delete', {
+            await axios.delete(tuyau.$url('actions:avatar_delete'), {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

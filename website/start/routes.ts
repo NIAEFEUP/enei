@@ -203,16 +203,16 @@ router
 router.
   group(() => {
     router.get('/cv', [UsersController, 'showCV'])
-    router.post('/cv/upload', [UsersController, 'storeCV'])
-    router.delete('cv/delete', [UsersController, 'deleteCV'])
-    router.get('/cv/name', [UsersController, 'showCVName'])
+    router.post('/cv/upload', [UsersController, 'storeCV']).as('actions:cv_upload')
+    router.delete('cv/delete', [UsersController, 'deleteCV']).as('actions:cv_delete')
+    router.get('/cv/name', [UsersController, 'showCVName']).as('actions:cv_name')
     router.get('/:id/cv/download', [UsersController, 'downloadCV']).use( middleware.company())
 
     // Avatar endpoints
     router.get('/avatar', [UsersController, 'showAvatar'])
-    router.get('/avatar/name', [UsersController, 'showAvatarName'])
-    router.post('/avatar/upload', [UsersController, 'storeAvatar'])
-    router.delete('/avatar/delete', [UsersController, 'deleteAvatar'])
+    router.get('/avatar/name', [UsersController, 'showAvatarName']).as('actions:avatar_name')
+    router.post('/avatar/upload', [UsersController, 'storeAvatar']).as('actions:avatar_upload')
+    router.delete('/avatar/delete', [UsersController, 'deleteAvatar']).as('actions:avatar_delete')
 
   })
   .use(middleware.auth())
