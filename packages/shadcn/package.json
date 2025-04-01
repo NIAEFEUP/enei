@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
+    "@radix-ui/react-accessible-icon": "^1.1.2",
     "@radix-ui/react-accordion": "^1.2.2",
     "@radix-ui/react-alert-dialog": "^1.1.5",
     "@radix-ui/react-aspect-ratio": "^1.1.1",
@@ -30,6 +31,7 @@
     "@radix-ui/react-menubar": "^1.1.5",
     "@radix-ui/react-navigation-menu": "^1.2.4",
     "@radix-ui/react-popover": "^1.1.6",
+    "@radix-ui/react-portal": "^1.1.4",
     "@radix-ui/react-progress": "^1.1.1",
     "@radix-ui/react-radio-group": "^1.2.2",
     "@radix-ui/react-scroll-area": "^1.2.3",
@@ -42,6 +44,7 @@
     "@radix-ui/react-toggle": "^1.1.1",
     "@radix-ui/react-toggle-group": "^1.1.1",
     "@radix-ui/react-tooltip": "^1.1.7",
+    "@radix-ui/react-visually-hidden": "^1.1.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",

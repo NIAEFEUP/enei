@@ -8,5 +8,6 @@
       "~/*": ["./*"]
     }
   },
-  "include": ["./**/*.ts", "./**/*.tsx"]
+  "include": ["./**/*.ts", "./**/*.tsx"],
+  "references": [{ "path": "../../../packages/shadcn" }]
 }
