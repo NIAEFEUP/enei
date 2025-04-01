@@ -303,7 +303,9 @@ export const BreadCrumbPopover = forwardRef<
 
 BreadCrumbPopover.displayName = "BreadCrumbPopover";
 
-export const BreadCrumbTrigger = PopoverTrigger;
+export const BreadCrumbTrigger = PopoverTrigger as React.FunctionComponent<
+  React.ComponentProps<typeof PopoverTrigger>
+>;
 
 BreadCrumbTrigger.displayName = "BreadCrumbTrigger";
 
