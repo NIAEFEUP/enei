@@ -70,7 +70,6 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
             <DaySelector
               activeIndex={currentActiveIndex}
               setActiveIndex={(index) => {
-                console.log('Day selected:', index)
                 setCurrentActiveIndex(index)
               }}
               days={['11 de abril', '12 de abril', '13 de abril', '14 de abril']}

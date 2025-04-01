@@ -8,7 +8,6 @@ interface DaySelectorProps {
 }
 
 export function DaySelector({ activeIndex, setActiveIndex, days }: DaySelectorProps) {
-  console.log(activeIndex)
   return (
     <div className="flex flex-row space-x-3">
       {days.map((day, index) => (

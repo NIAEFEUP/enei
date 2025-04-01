@@ -32,7 +32,6 @@ export default class EventsController {
     const event = await Event.findOrFail(params.id)
 
     const speakers = await event.related('speakers').query()
-    console.log("Event: ", event)
     return inertia.render('events/show', {
       eventId: event.id,
       title: event.title,

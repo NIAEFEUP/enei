@@ -23,7 +23,6 @@ interface EventsPageProps {
 }
 
 export default function EventsPageApril13({ events }: EventsPageProps) {
-  console.log(events)
   return (
     <div className="grid grid-cols-4 grid-rows-12 gap-4">
       <div>

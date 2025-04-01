@@ -52,7 +52,6 @@ export default function EventRegistrationPage({
   productId,
   price,
 }: EventRegistrationProps) {
-  console.log('productId', productId)
   const [isRegistered, setIsRegistered] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [ticketsRemaining, setTicketsRemaining] = useState(initialTicketsRemaining)
