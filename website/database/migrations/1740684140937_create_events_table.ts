@@ -19,8 +19,7 @@ export default class extends BaseSchema {
       table.integer('tickets_total').defaultTo(0)
       table.integer('tickets_remaining').defaultTo(0)
       table.decimal('price', 10, 2).defaultTo(0)
-      table.integer('product_id').unsigned().references('id').inTable('product_groups')
-
+      
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })
