@@ -1,10 +1,12 @@
+import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
-import { attachmentManager } from '@jrmc/adonis-attachment'
-import drive from "@adonisjs/drive/services/main"
 import User from '#models/user'
+import { UserService } from '#services/user_service'
 
+@inject()
 export default class UsersController {
-    
+  constructor(private userService: UserService) {} 
+
     async showCV({ inertia }: HttpContext) {
         return inertia.render('cv')
     }
@@ -12,15 +14,13 @@ export default class UsersController {
     async storeCV({ request, response, auth }: HttpContext) {
         const user = auth.user
         const cv = request.file('cv')!
-        user!.resume = await attachmentManager.createFromFile(cv)
-        await user!.save()
+        await this.userService.storeCV(user!, cv)
         return response.ok({ message: 'CV uploaded' })
     }
 
     async deleteCV({ response, auth }: HttpContext) {
         const user = auth.user
-        user!.resume = null
-        await user!.save()
+        await this.userService.deleteCV(user!)
         return response.ok({ message: 'CV deleted' })
     }
 
@@ -29,8 +29,10 @@ export default class UsersController {
         if( user!.resume === null) {
             return response.notFound('File not found')
           }
-        const fileName = user!.resume.originalName
-        
+        const fileName = await this.userService.getCVName(user!)
+        if (!fileName) {
+            return response.notFound('File not found')
+        }
         return response.ok({ fileName })
     
       }
@@ -38,18 +40,14 @@ export default class UsersController {
     async downloadCV({ response, auth }: HttpContext) {
         const userId = auth.user!.id
         const user = await User.find(userId);
-        if (user!.resume === null) {
+        const userCV = await this.userService.getCV(user!)
+        if (!userCV) {
             return response.notFound('File not found')
         }
-
-        const filePath = await user!.resume.path
-        if(!filePath) {
-            return response.notFound('File not found')
-        }
-        const file = await drive.use().getStream(filePath)
-
+        const { file, fileName } = userCV
+        
         response.type('application/pdf')
-        response.header('Content-Disposition', `inline; filename="${user!.resume.originalName}"`)
+        response.header('Content-Disposition', `inline; filename="${fileName}"`)
         return response.stream(file)
     }
 
@@ -66,16 +64,13 @@ export default class UsersController {
             size: '2mb',
             extnames: ['jpg', 'jpeg', 'png']
         })!
-        user!.avatar = await attachmentManager.createFromFile(avatar)
-
-        await user!.save()
+        await this.userService.storeAvatar(user!, avatar)
         return response.ok({ message: 'Avatar uploaded' })
     }
 
     async deleteAvatar({ response, auth }: HttpContext) {
         const user = auth.user
-        user!.avatar = null
-        await user!.save()
+        await this.userService.deleteAvatar(user!)
         return response.ok({ message: 'Avatar deleted' })
     }
 
@@ -85,7 +80,7 @@ export default class UsersController {
         if( user!.avatar === null) {
             return response.notFound('File not found')
           }
-        const fileName = user!.avatar.originalName
+        const fileName = await this.userService.getAvatarName(user!)
         
         return response.ok({ fileName })
     
@@ -93,18 +88,14 @@ export default class UsersController {
     
     async downloadAvatar({ response, auth }: HttpContext) {
         const user = auth.user
-        if (user!.avatar === null) {
+        const userAvatar = await this.userService.getAvatar(user!)
+        if (!userAvatar) {
             return response.notFound('File not found')
         }
-
-        const filePath = await user!.avatar.path
-        if(!filePath) {
-            return response.notFound('File not found')
-        }
-        const file = await drive.use().getStream(filePath)
+        const { file, fileName } = userAvatar
 
         response.type('image/jpeg')
-        response.header('Content-Disposition', `inline; filename="${user!.avatar.originalName}"`)
+        response.header('Content-Disposition', `inline; filename="${fileName}"`)
         return response.stream(file)
     }
 }
