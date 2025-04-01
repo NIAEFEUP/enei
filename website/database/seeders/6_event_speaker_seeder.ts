@@ -6,7 +6,6 @@ async function attach( eventId: number, speakerId: number ) {
     const event = await Event.find(eventId)
 
     if (!event) {
-      console.log('Event not found, skipping...')
       return
     }
 
