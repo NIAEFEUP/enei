@@ -150,6 +150,7 @@
     "ifthenpay": "^0.3.4",
     "input-otp": "^1.4.2",
     "jotai": "^2.11.1",
+    "js-md5": "^0.8.3",
     "leaflet-geosearch": "^4.0.0",
     "lucide-react": "^0.473.0",
     "luxon": "^3.5.0",

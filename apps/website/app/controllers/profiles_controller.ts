@@ -3,6 +3,7 @@ import { createProfileValidator, updateProfileValidator } from "#validators/prof
 import type { HttpContext } from "@adonisjs/core/http";
 import slug from "slug";
 import Sqids from "sqids";
+import { md5 } from "js-md5";
 
 const slugSqids = new Sqids({
   alphabet: "nkzm6vl3170gtx8uro9aj4iyqhwdpcebsf52", // lowercase letters and numbers
@@ -89,9 +90,13 @@ export default class ProfilesController {
     const data = request.body();
 
     const formattedData = toParticipantProfileFormat(data);
-    formattedData.slug = slug(
-      `${formattedData.firstName} ${formattedData.lastName} ${slugSqids.encode([user.id])}`,
-    );
+    // encode firstName and lastName to a number under 1000
+    // Guaranteed to be unique between users with the same name (since we have under 1000 participants)
+    const userMd5 = md5(slug(`${formattedData.firstName} ${formattedData.lastName}`));
+    const userNumber =
+      (Number.parseInt(userMd5.replace(/[^1-9]/g, "").substring(0, 3)) + user.id) % 1000;
+    const userCode = userNumber.toString().padStart(3, "0");
+    formattedData.slug = slug(`${formattedData.firstName} ${formattedData.lastName} ${userCode}`);
 
     const profile = await createProfileValidator.validate(formattedData);
 
