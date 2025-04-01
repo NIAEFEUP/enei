@@ -1,0 +1,27 @@
+{
+  "extends": ["@enei/typescript-config/env/client", "@enei/typescript-config/type/app"],
+  "compilerOptions": {
+    // Type Checking
+    "noUncheckedIndexedAccess": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "strictNullChecks": false,
+
+    // Modules
+    "baseUrl": ".",
+    "paths": {
+      "#/*": ["./src/*"]
+    },
+    "rootDir": "./src",
+
+    // Emit
+    "outDir": "./dist",
+
+    // Interop Constraints
+    "verbatimModuleSyntax": false,
+
+    // Projects
+    "tsBuildInfoFile": "./dist/tsconfig.lib.tsbuildinfo"
+  },
+  "include": ["src/**/*", "src/**/*.json"]
+}
