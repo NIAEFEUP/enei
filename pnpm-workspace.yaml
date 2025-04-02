@@ -3,4 +3,12 @@ packages:
   - packages/*
 
 catalog:
+  lucide-react: ^0.486.0
   typescript: ^5.8.2
+
+overrides:
+  strtok: 8.0.1
+
+neverBuiltDependencies: []
+
+linkWorkspacePackages: deep
