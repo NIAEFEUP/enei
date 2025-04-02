@@ -122,6 +122,13 @@ const env = await defineEnv(new URL("../", import.meta.url), "INERTIA_PUBLIC_", 
     |----------------------------------------------------------
     */
     DRIVE_DISK: vine.enum(["fs"]),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring the API endpoints for Kevel
+    |----------------------------------------------------------
+    */
+    COMPANY_BEARER_TOKEN: vine.string(),
   });
 });
 

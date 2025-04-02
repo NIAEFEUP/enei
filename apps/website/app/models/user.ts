@@ -7,6 +7,7 @@ import type { BelongsTo, HasMany, ManyToMany } from "@adonisjs/lucid/types/relat
 import PromoterProfile from "./promoter_profile.js";
 import ParticipantProfile from "./participant_profile.js";
 import Event from "./event.js";
+import StaffProfile from "./staff_profile.js";
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -85,12 +86,23 @@ export default class User extends BaseModel {
   @belongsTo(() => PromoterInfo)
   declare promoterInfo: BelongsTo<typeof PromoterInfo>;
 
+  @column()
+  declare staffProfileId: number | undefined;
+
+  @belongsTo(() => StaffProfile)
+  declare staffProfile: BelongsTo<typeof StaffProfile>;
+
   // Functions
 
   get role() {
     if (this.isParticipant()) return "participant" as const;
     if (this.isPromoter()) return "promoter" as const;
+    if (this.isStaff()) return "staff" as const;
     return "unknown" as const;
+  }
+
+  isStaff() {
+    return this.staffProfile;
   }
 
   isPromoter() {

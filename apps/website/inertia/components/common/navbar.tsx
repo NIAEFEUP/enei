@@ -8,6 +8,7 @@ import Container from "./containers";
 import { useEffect, useState } from "react";
 import { NotificationContainer } from "../notifications";
 import { VariantProps } from "class-variance-authority";
+import { QrCode } from "lucide-react";
 
 /*
 import { Menu } from "lucide-react";
@@ -88,7 +89,7 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
       <nav
         className={cn(
           "w-full transition-colors duration-300",
-          !onTop && `bg-${bgColor}`,
+          !onTop && `bg-${bgColor} shadow-md`,
           className,
         )}
       >
@@ -103,6 +104,14 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
               <span className="sr-only">Ir para a página inicial</span>
             </Link>
             <div className="flex items-center justify-between gap-4">
+              <div className={auth.state === "authenticated" ? "block" : "hidden"}>
+                <Link
+                  route="pages:staff.qrcode.scan"
+                  className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
+                >
+                  <QrCode />
+                </Link>
+              </div>
               <div>
                 <Link
                   route="pages:store"

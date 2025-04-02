@@ -22,6 +22,8 @@ const CvsController = () => import("#controllers/cvs_controller");
 const StoreController = () => import("#controllers/store_controller");
 const ReferralsController = () => import("#controllers/referrals_controller");
 
+const ProductReservationController = () => import("#controllers/product_reservation_controller");
+
 router.on("/").renderInertia("home").as("pages:home");
 
 router
@@ -164,6 +166,10 @@ router
   .group(() => {
     router.get("/u/:slug", [ProfilesController, "index"]).as("pages:profile.show");
     router
+      .post("/u/:slug/product/collect", [ProductReservationController, "collect"])
+      .as("actions:profile.product.collect")
+      .use(middleware.staff());
+    router
       .get("/profile", [ProfilesController, "default"])
       .as("pages:profile.default")
       .use([middleware.auth(), middleware.verifiedEmail()]);
@@ -171,6 +177,7 @@ router
       .get("/profile/edit", [ProfilesController, "edit"])
       .as("pages:profile.edit")
       .use([middleware.auth(), middleware.verifiedEmail()]);
+    router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
   })
   .use(middleware.wip());
 
@@ -178,11 +185,11 @@ router
   .group(() => {
     router.get("/", [EventsController, "index"]).as("pages:events");
 
-    router.get("/:id", [EventsController, "show"]).as("pages:events.show");
+    router.get("/:id", [EventsController, "show"]).as("pages:events.show").where("id", "45");
     router
       .post("/:id/register", [EventsController, "register"])
       .as("actions:events.register")
-      .where("id", "39")
+      .where("id", "45")
       .use([
         middleware.auth(),
         middleware.verifiedEmail(),
@@ -191,12 +198,12 @@ router
       ]);
     router
       .get("/:id/tickets", [EventsController, "ticketsRemaining"])
-      .where("id", "39")
+      .where("id", "45")
       .as("actions:events.tickets");
 
     router
       .get("/:id/is-registered", [EventsController, "isRegistered"])
-      .where("id", "39")
+      .where("id", "45")
       .as("actions:events.isRegistered");
 
     router
@@ -255,3 +262,20 @@ router
   .route(`/r/:referralCode`, ["GET", "POST"], [ReferralsController, "link"])
   .middleware([middleware.automaticSubmit(), middleware.silentAuth()])
   .as("actions:referrals.link");
+
+router
+  .group(() => {
+    router
+      .get("/has-ticket/", [ProfilesController, "hasTicket"])
+      .as("actions:has-ticket")
+      .middleware(middleware.companyBearerAuth());
+  })
+  .prefix("api");
+
+router
+  .group(() => {
+    router.on("/scan").renderInertia("qrscanner").as("pages:staff.qrcode.scan");
+  })
+  .prefix("/qrcode");
+
+router.on("/nfc").renderInertia("nfc").as("pages:nfc");
