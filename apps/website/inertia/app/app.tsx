@@ -29,15 +29,13 @@ createInertiaApp({
   setup({ el, App, props }) {
     hydrateRoot(
       el,
-      <>
-        <App {...props}>
-          {(page) => (
-            <Providers>
-              <page.Component key={page.key} {...page.props} />
-            </Providers>
-          )}
-        </App>
-      </>,
+      <App {...props}>
+        {(page) => (
+          <Providers>
+            <page.Component key={page.key} {...page.props} />
+          </Providers>
+        )}
+      </App>,
     );
   },
 });

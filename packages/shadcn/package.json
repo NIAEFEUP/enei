@@ -2,6 +2,7 @@
   "name": "@enei/shadcn",
   "version": "1.0.0",
   "description": "",
+  "sideEffects": false,
   "scripts": {},
   "packageManager": "pnpm@10.7.0",
   "devDependencies": {

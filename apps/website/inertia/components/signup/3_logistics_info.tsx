@@ -152,7 +152,7 @@ const LogisticsInfoForm = () => {
               <FormItem>
                 <FormLabel>Como estou a pensar deslocar-me para o evento</FormLabel>
                 <FormControl>
-                  <MultiSelector {...field}>
+                  {/* <MultiSelector {...field}>
                     <MultiSelectorTrigger>
                       <MultiSelectorInput placeholder="Selecionar meios de transporte" />
                     </MultiSelectorTrigger>
@@ -165,7 +165,7 @@ const LogisticsInfoForm = () => {
                         ))}
                       </MultiSelectorList>
                     </MultiSelectorContent>
-                  </MultiSelector>
+                  </MultiSelector> */}
                   {/* defaultOptions={TRANSPORTS}
                     placeholder="Selecionar meios de transporte"
                     hidePlaceholderWhenSelected={true}

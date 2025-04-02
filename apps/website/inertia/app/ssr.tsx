@@ -11,15 +11,13 @@ export default function render(intialPage: any) {
       return pages[`../pages/${name}/page.tsx`];
     },
     setup: ({ App, props }) => (
-      <>
-        <App {...props}>
-          {(page) => (
-            <Providers>
-              <page.Component key={page.key} {...page.props} />
-            </Providers>
-          )}
-        </App>
-      </>
+      <App {...props}>
+        {(page) => (
+          <Providers>
+            <page.Component key={page.key} {...page.props} />
+          </Providers>
+        )}
+      </App>
     ),
   });
 }
