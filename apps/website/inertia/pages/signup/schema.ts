@@ -72,7 +72,7 @@ export const logisticsInfoSchema = z.object({
   dietaryRestrictions: z.string().optional(),
   isVegetarian: z.boolean(),
   isVegan: z.boolean(),
-  transports: z.array(transport),
+  transports: z.array(z.string()),
 });
 
 export type CommunicationsInfo = z.output<typeof communicationsInfoSchema>;

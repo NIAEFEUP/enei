@@ -24,13 +24,22 @@ import { useStepper } from "@enei/shadcn/ui/preview/stepper";
 import { useAtom, useSetAtom } from "jotai/react";
 import { logisticsInfoAtom } from "~/pages/signup/atoms";
 import StepperFormActions from "./actions";
+import {
+  MultiSelector,
+  MultiSelectorContent,
+  MultiSelectorInput,
+  MultiSelectorItem,
+  MultiSelectorList,
+  MultiSelectorTrigger,
+} from "@enei/shadcn/extension/multi-select";
+import transports from "#data/enei/signup/transports.json" with { type: "json" };
 
-// const TRANSPORTS: Option[] = transports.map(({ id, description }) => {
-//   return {
-//     label: description,
-//     value: id,
-//   };
-// });
+const TRANSPORTS = transports.map(({ id, description }) => {
+  return {
+    label: description,
+    value: id,
+  };
+});
 
 const SIZES = sizes;
 
@@ -143,9 +152,21 @@ const LogisticsInfoForm = () => {
               <FormItem>
                 <FormLabel>Como estou a pensar deslocar-me para o evento</FormLabel>
                 <FormControl>
-                  {/* <Select
-                    {...field}
-                    defaultOptions={TRANSPORTS}
+                  <MultiSelector {...field}>
+                    <MultiSelectorTrigger>
+                      <MultiSelectorInput placeholder="Selecionar meios de transporte" />
+                    </MultiSelectorTrigger>
+                    <MultiSelectorContent>
+                      <MultiSelectorList>
+                        {TRANSPORTS.map((option, i) => (
+                          <MultiSelectorItem key={i} value={option.value}>
+                            {option.label}
+                          </MultiSelectorItem>
+                        ))}
+                      </MultiSelectorList>
+                    </MultiSelectorContent>
+                  </MultiSelector>
+                  {/* defaultOptions={TRANSPORTS}
                     placeholder="Selecionar meios de transporte"
                     hidePlaceholderWhenSelected={true}
                     emptyIndicator={
