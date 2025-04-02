@@ -78,6 +78,25 @@ export default class EventsController {
     return response.redirect().toRoute("pages:events.show", { id: event.id });
   }
 
+  async checkin({ response, request, params }: HttpContext) {
+    const { eventID } = request.input("eventID")
+    
+    const event = await Event.findByOrFail(eventID)
+    const user = await User.findBy("slug", params.slug)
+
+    if (!user) {
+      return response.badRequest("Utilizador não encontrado");
+    }
+    
+    if(await this.eventService.isRegistered(user, event)) {
+      return response.badRequest("Utilizador não registado no evento");
+    }
+
+    await this.eventService.checkin(user!, event);
+
+    return response.redirect().back(); 
+  }
+
   async ticketsRemaining({ response, params }: HttpContext) {
     const event = await Event.findOrFail(params.id);
 

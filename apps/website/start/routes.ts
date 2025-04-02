@@ -202,6 +202,13 @@ router
       .as("actions:events.tickets");
 
     router
+      .get("/:slug/check-in", [EventsController, "checkin"])
+      .as("actions:events.checkin")
+      .use([
+        middleware.staff(),
+      ])
+
+    router
       .get("/:id/is-registered", [EventsController, "isRegistered"])
       .where("id", "45")
       .as("actions:events.isRegistered");

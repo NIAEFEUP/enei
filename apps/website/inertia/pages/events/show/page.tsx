@@ -23,7 +23,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/comp
 import Page from "~/components/common/page";
 import { router } from "@inertiajs/react";
 import Container from "~/components/common/containers";
-import DialogScanner from "~/components/credentials/scanner_dialog";
+import EventCheckInDialog from "~/components/events/event_check-in_dialog";
 
 interface Speaker {
   firstName: string;
@@ -103,10 +103,6 @@ export default function EventRegistrationPage({
   const handleRegisterClick = () => {
     setRegistrationConfirmationModalOpen(true);
   };
-
-  const handleCheckIn = (slug: string) => {
-     return slug
-  }
 
   const handleRegister = async () => {
     setIsLoading(true);
@@ -387,7 +383,7 @@ export default function EventRegistrationPage({
                 onClose={() => setRegistrationConfirmationModalOpen(false)}
                 onSubmit={handleRegister}
               />
-              <DialogScanner isOpen={scannerModalOpen} onClose={() => setScannerModalOpen(false)} onScan={(slug) => handleCheckIn(slug)}/>
+              <EventCheckInDialog isOpen={scannerModalOpen} setOpen={setScannerModalOpen} eventID={eventId} eventTitle={title}/>
             </CardContent>
           </Card>
         </div>
