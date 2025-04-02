@@ -34,13 +34,14 @@ interface Speaker {
 interface EventRegistrationProps {
   eventId: number;
   title: string;
-  description: string;
+  description?: string;
   date: string;
   time: string;
   location: string;
   type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other";
   companyImage: string;
   speakers: Speaker[];
+  extraInfo?: string;
   registrationRequirements: string;
   requiresRegistration: boolean;
   ticketsRemaining: number;
@@ -57,6 +58,7 @@ export default function EventRegistrationPage({
   type,
   companyImage,
   speakers,
+  extraInfo,
   registrationRequirements,
   requiresRegistration,
   ticketsRemaining: initialTicketsRemaining,
@@ -190,18 +192,23 @@ export default function EventRegistrationPage({
               </div>
             </CardHeader>
             {/* Event Description */}
+
             <CardContent className="mt-2 space-y-4" style={{ color: activityColors[type] }}>
-              <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
-                <Info className="h-5 w-5" />
-                <p className="text-lg font-semibold">Acerca do Evento</p>
-              </h1>
-              <div className="space-y-2">
-                {description.split("\n\n").map((paragraph, index) => (
-                  <p key={index} className="max-w-[70ch] text-black">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
+              {description && (
+                <div>
+                  <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+                    <Info className="h-5 w-5" />
+                    <p className="text-lg font-semibold">Acerca do Evento</p>
+                  </h1>
+                  <div className="space-y-2">
+                    {description.split("\n\n").map((paragraph, index) => (
+                      <p key={index} className="max-w-[70ch] text-black">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              )}
               {isRegistered && (
                 <div className="flex flex-col pb-4">
                   <h2 className="text-md mb-2 font-semibold">
@@ -288,6 +295,16 @@ export default function EventRegistrationPage({
                   <ClipboardCheck className="h-5 w-5" />
                   <p className="text-lg font-semibold">Requisitos de Inscrição</p>
                 </h1>
+              )}
+              {/* Extra Information */}
+              {extraInfo && (
+                <div>
+                  <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+                    <Info className="h-5 w-5" />
+                    <p className="text-lg font-semibold">Informação Extra</p>
+                  </h1>
+                  <div dangerouslySetInnerHTML={{ __html: extraInfo }} />
+                </div>
               )}
               <p className="text-black">{registrationRequirements}</p>
               {/* Price Display */}

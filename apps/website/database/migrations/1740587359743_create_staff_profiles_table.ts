@@ -9,7 +9,7 @@ export default class extends BaseSchema {
 
       table.boolean("is_admin").defaultTo(false);
 
-      table.integer("department_id").unsigned().index().references("id").inTable("departments");
+      // table.integer("department_id").unsigned().index().references("id").inTable("departments");
 
       table.timestamp("created_at");
       table.timestamp("updated_at");

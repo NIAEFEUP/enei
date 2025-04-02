@@ -9,6 +9,9 @@ const EventResource = createResource({
       description: {
         type: "richtext",
       },
+      extraInfo: {
+        type: "richtext",
+      },
     },
   },
   features: [

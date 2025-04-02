@@ -18,7 +18,7 @@ export default class Event extends BaseModel {
   declare title: string;
 
   @column()
-  declare description: string;
+  declare description: string | null;
 
   @column()
   declare type: string;
@@ -36,7 +36,7 @@ export default class Event extends BaseModel {
   declare location: string;
 
   @column()
-  declare extraInfo: string;
+  declare extraInfo: string | null;
 
   @manyToMany(() => SpeakerProfile, {
     pivotTable: "event_speakers",
