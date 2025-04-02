@@ -1,4 +1,4 @@
-import { CardTitle } from "~/components/ui/card";
+import { CardTitle } from "@enei/shadcn/ui/card";
 import EventsPageApril11 from "./events_page_april11";
 import EventsPageApril12 from "./events_page_april12";
 import EventsPageApril13 from "./events_page_april13";

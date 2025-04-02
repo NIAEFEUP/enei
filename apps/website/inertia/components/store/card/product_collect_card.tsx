@@ -1,4 +1,4 @@
-import { Card, CardFooter, CardContent } from "~/components/ui/card";
+import { Card, CardFooter, CardContent } from "@enei/shadcn/ui/card";
 
 import { cn } from "~/lib/utils";
 import { useContext } from "react";
@@ -27,13 +27,13 @@ function PointsStoreProductCollectCard({ product, status }: StoreProductCardProp
           src={`/images/products/${product.image ?? "default-product.jpg"}`}
           className={cn(
             "h-full w-full rounded-md object-cover",
-            !canBuyProduct(product, userPoints) && "blur-sm",
+            !canBuyProduct(product, userPoints) && "blur-xs",
           )}
         />
       </CardContent>
-      <div className="flex flex-grow flex-col gap-0">
+      <div className="flex grow flex-col gap-0">
         <div className="bg-enei-blue wave-clip-path h-12"></div>
-        <CardFooter className="bg-enei-blue flex flex-grow flex-col rounded-b-md p-8">
+        <CardFooter className="bg-enei-blue flex grow flex-col rounded-b-md p-8">
           <PointsStoreProductCardCollectAction product={product} status={status} />
         </CardFooter>
       </div>

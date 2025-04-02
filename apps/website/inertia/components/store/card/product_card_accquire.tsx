@@ -1,7 +1,7 @@
 // import React, { useState, useContext } from 'react'
 
 // import { StoreContext } from '~/pages/store/page'
-// import { Button } from '~/components/ui/button'
+// import { Button } from '@enei/shadcn/ui/button'
 // import {
 //   Dialog,
 //   DialogContent,
@@ -10,7 +10,7 @@
 //   DialogHeader,
 //   DialogTitle,
 //   DialogTrigger,
-// } from '~/components/ui/dialog'
+// } from '@enei/shadcn/ui/dialog'
 
 // import { useForm } from '@inertiajs/react'
 // import { useToast } from '~/hooks/use_toast'

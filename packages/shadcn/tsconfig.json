@@ -1,17 +1,21 @@
 {
-  "extends": ["@enei/typescript-config/env/client", "@enei/typescript-config/type/app"],
+  "extends": ["@enei/typescript-config/env/client", "@enei/typescript-config/type/bundled"],
   "compilerOptions": {
     // Type Checking
     "noUncheckedIndexedAccess": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "strictNullChecks": false,
+    // "strictNullChecks": true,
 
     // Modules
     "baseUrl": ".",
     "paths": {
-      "#/*": ["./src/*"]
+      "#/components/*": ["./src/components/*.tsx"],
+      "#/data/*": ["./src/data/*"],
+      "#/hooks/*": ["./src/hooks/*.ts"],
+      "#/lib/*": ["./src/lib/*.ts"]
     },
+
     "rootDir": "./src",
 
     // Emit

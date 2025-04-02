@@ -1,24 +1,36 @@
 import { useForm } from "react-hook-form";
-import { Checkbox } from "../ui/checkbox";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { Input } from "../ui/input";
-import MultipleSelector, { Option } from "../ui/multiple-selector";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Checkbox } from "@enei/shadcn/ui/checkbox";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@enei/shadcn/ui/form";
+import { Input } from "@enei/shadcn/ui/input";
+// import MultipleSelector, { Option } from "@enei/shadcn/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@enei/shadcn/ui/select";
 import { LogisticsInfo, logisticsInfoSchema } from "~/pages/signup/schema";
-import transports from "#data/enei/signup/transports.json" with { type: "json" };
 import sizes from "#data/enei/signup/shirts.json" with { type: "json" };
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useStepper } from "../ui/stepper";
+import { useStepper } from "@enei/shadcn/ui/preview/stepper";
 import { useAtom, useSetAtom } from "jotai/react";
 import { logisticsInfoAtom } from "~/pages/signup/atoms";
 import StepperFormActions from "./actions";
 
-const TRANSPORTS: Option[] = transports.map(({ id, description }) => {
-  return {
-    label: description,
-    value: id,
-  };
-});
+// const TRANSPORTS: Option[] = transports.map(({ id, description }) => {
+//   return {
+//     label: description,
+//     value: id,
+//   };
+// });
 
 const SIZES = sizes;
 
@@ -131,7 +143,7 @@ const LogisticsInfoForm = () => {
               <FormItem>
                 <FormLabel>Como estou a pensar deslocar-me para o evento</FormLabel>
                 <FormControl>
-                  <MultipleSelector
+                  {/* <Select
                     {...field}
                     defaultOptions={TRANSPORTS}
                     placeholder="Selecionar meios de transporte"
@@ -141,7 +153,7 @@ const LogisticsInfoForm = () => {
                         Sem resultados
                       </p>
                     }
-                  />
+                  /> */}
                 </FormControl>
                 <FormMessage />
               </FormItem>

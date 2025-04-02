@@ -1,5 +1,5 @@
-import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
-import { Label } from "~/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@enei/shadcn/ui/radio-group";
+import { Label } from "@enei/shadcn/ui/label";
 
 interface PaymentMethodSelectorProps {
   paymentMethod: string;

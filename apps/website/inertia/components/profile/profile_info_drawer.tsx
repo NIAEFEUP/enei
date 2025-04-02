@@ -1,9 +1,9 @@
 import ParticipantProfile from "#models/participant_profile";
 import { Link } from "@tuyau/inertia/react";
-import { User } from "lucide-react";
+import { User } from "@enei/shadcn/icons";
 import { useState } from "react";
-import { Drawer, DrawerContent } from "~/components/ui/drawer";
-import { Button } from "~/components/ui/button";
+import { Drawer, DrawerContent } from "@enei/shadcn/ui/drawer";
+import { Button } from "@enei/shadcn/ui/button";
 
 interface ProfileInfoDrawerProps {
   profile: ParticipantProfile;

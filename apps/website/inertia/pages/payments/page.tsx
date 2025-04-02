@@ -1,8 +1,8 @@
 "use client";
 import { router } from "@inertiajs/react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
-import { Button } from "~/components/ui/button";
-import { Separator } from "~/components/ui/separator";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@enei/shadcn/ui/card";
+import { Button } from "@enei/shadcn/ui/button";
+import { Separator } from "@enei/shadcn/ui/separator";
 import { useState, useEffect } from "react";
 import { InferPageProps } from "@adonisjs/inertia/types";
 import TicketsController from "#controllers/tickets_controller";

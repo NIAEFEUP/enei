@@ -1,5 +1,5 @@
-import { TabsContent } from "@radix-ui/react-tabs";
-import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import { TabsContent } from "@enei/shadcn/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@enei/shadcn/ui/tabs";
 import StoreReservedProducts from "./store_reserved_products";
 import Container from "../common/containers";
 import { UserActivityInformation } from "../../../types/user_activity";

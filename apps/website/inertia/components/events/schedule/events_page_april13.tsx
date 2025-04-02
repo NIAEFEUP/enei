@@ -270,7 +270,7 @@ export default function EventsPageApril13({ events }: EventsPageProps) {
         />
       </div>
 
-      <div className="col-span-1 col-start-1 row-start-[14]">
+      <div className="row-start-14 col-span-1 col-start-1">
         <EventCard
           title={"Jantar de Networking powered by Ordem dos Engenheiros da Região Norte (OERN)"}
           type={"networking"}
@@ -280,7 +280,7 @@ export default function EventsPageApril13({ events }: EventsPageProps) {
         />
       </div>
 
-      <div className="col-span-4 col-start-1 row-start-[15]">
+      <div className="row-start-15 col-span-4 col-start-1">
         <EventCard
           title={"Snap Shots"}
           type={"night"}

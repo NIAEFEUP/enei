@@ -1,6 +1,6 @@
-import { Button } from "~/components/ui/button";
+import { Button } from "@enei/shadcn/ui/button";
 import { cn } from "~/lib/utils";
-import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@enei/shadcn/ui/scroll-area";
 
 interface DaySelectorProps {
   activeIndex: number;

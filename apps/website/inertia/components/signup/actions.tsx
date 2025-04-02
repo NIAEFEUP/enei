@@ -1,5 +1,5 @@
-import { Button } from "../ui/button";
-import { useStepper } from "../ui/stepper";
+import { Button } from "@enei/shadcn/ui/button";
+import { useStepper } from "@enei/shadcn/ui/preview/stepper";
 
 function StepperFormActions() {
   const { prevStep, resetSteps, isDisabledStep, hasCompletedAllSteps, isLastStep, isOptionalStep } =

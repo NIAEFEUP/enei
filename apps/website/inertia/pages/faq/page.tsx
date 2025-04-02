@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp } from "@enei/shadcn/icons";
 import Page from "~/components/common/page";
 
 export default function Faq() {

@@ -7,15 +7,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import { PhoneInput } from "../ui/phone-input/phone-input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { Button } from "~/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
+} from "@enei/shadcn/ui/form";
+import { Input } from "@enei/shadcn/ui/input";
+import { PhoneInput } from "@enei/shadcn/phone-input/phone-input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@enei/shadcn/ui/select";
+import { Button } from "@enei/shadcn/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@enei/shadcn/ui/popover";
 import { cn } from "~/lib/utils";
-import { Calendar } from "~/components/ui/calendar";
-import { CalendarIcon } from "lucide-react";
+import { Calendar } from "@enei/shadcn/ui/calendar";
+import { CalendarIcon } from "@enei/shadcn/icons";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
 import { useForm } from "react-hook-form";
@@ -23,7 +29,7 @@ import { PersonalInfo, personalInfoSchema } from "~/pages/signup/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom } from "jotai/react";
 import { personalInfoAtom } from "~/pages/signup/atoms";
-import { useStepper } from "../ui/stepper";
+import { useStepper } from "@enei/shadcn/ui/preview/stepper";
 import StepperFormActions from "./actions";
 
 const INITIAL_MONTH = new Date(2004, 0, 1);

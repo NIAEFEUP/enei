@@ -5,9 +5,9 @@ import {
   DialogHeader,
   DialogFooter,
   DialogDescription,
-} from "~/components/ui/dialog";
-import { Button, buttonVariants } from "~/components/ui/button";
-import { Loader2 } from "lucide-react";
+} from "@enei/shadcn/ui/dialog";
+import { Button, buttonVariants } from "@enei/shadcn/ui/button";
+import { Loader2 } from "@enei/shadcn/icons";
 import { cn } from "~/lib/utils";
 
 interface RegistrationConfirmationModalProps {

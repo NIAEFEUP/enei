@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
+import { Button } from "@enei/shadcn/ui/button";
+import { Input } from "@enei/shadcn/ui/input";
 import { useEffect } from "react";
 
 const CvUpload = () => {

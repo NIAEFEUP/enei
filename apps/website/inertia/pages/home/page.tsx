@@ -82,8 +82,8 @@ function BackgroundGradient({ className }: { className?: string }) {
   return (
     <div className={cn("absolute inset-0 isolate mix-blend-plus-darker", className)}>
       <div className="relative size-full">
-        <div className="from-enei-blue via-enei-blue/90 to-enei-beige absolute inset-0 bg-gradient-to-b via-40%" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-transparent" />
+        <div className="from-enei-blue via-enei-blue/90 to-enei-beige bg-linear-to-b absolute inset-0 via-40%" />
+        <div className="bg-linear-to-b absolute inset-0 from-black/10 to-transparent" />
       </div>
     </div>
   );
@@ -108,10 +108,10 @@ export default function Home() {
   return (
     <Page title="Home" background="beige">
       <Background />
-      <Hero className="relative h-screen flex-grow">
+      <Hero className="relative h-screen grow">
         <Container className="pb-32">
           <section className="relative z-10 flex flex-col gap-8 md:justify-between">
-            <div className="flex-grow py-4 sm:py-24 md:flex-grow-0 lg:py-20">
+            <div className="grow py-4 sm:py-24 md:grow-0 lg:py-20">
               <h1 className="font-space-grotesk text-enei-beige w-3/12 text-justify text-5xl font-bold leading-[60px] tracking-tight md:text-7xl md:leading-[90px]">
                 <div className="block flex-row gap-10 sm:flex sm:gap-0 md:block md:gap-10 lg:flex lg:gap-0">
                   <p className="whitespace-nowrap lowercase [text-shadow:_0_4px_4px_rgb(0_0_0_/_25%)]">

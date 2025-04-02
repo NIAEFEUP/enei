@@ -5,8 +5,8 @@ import {
   DialogHeader,
   DialogFooter,
   DialogDescription,
-} from "~/components/ui/dialog";
-import { Button } from "~/components/ui/button";
+} from "@enei/shadcn/ui/dialog";
+import { Button } from "@enei/shadcn/ui/button";
 
 interface OrderConfirmationModalProps {
   isOpen: boolean;

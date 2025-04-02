@@ -1,7 +1,7 @@
 import { Head } from "@inertiajs/react";
 import DecorativeBars from "~/components/common/decorative_bars";
 import { Navbar } from "~/components/common/navbar";
-import { Toaster } from "~/components/ui/toaster";
+import { Toaster } from "@enei/shadcn/ui/sonner";
 import { cn } from "~/lib/utils";
 
 type Props = {

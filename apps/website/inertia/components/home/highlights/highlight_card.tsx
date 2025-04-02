@@ -1,4 +1,4 @@
-import { Badge } from "~/components/ui/badge";
+import { Badge } from "@enei/shadcn/ui/badge";
 import { EventType } from "./highlights";
 import { cva } from "class-variance-authority";
 import { cn } from "~/lib/utils";

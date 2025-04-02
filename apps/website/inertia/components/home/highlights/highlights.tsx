@@ -1,7 +1,7 @@
 import { Link } from "@tuyau/inertia/react";
 import HighlightCard from "./highlight_card";
 
-import { Carousel, CarouselContent, CarouselItem } from "~/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "@enei/shadcn/ui/carousel";
 
 export enum EventType {
   Workshop = "Workshop",
@@ -23,8 +23,8 @@ export default function Highlights() {
           opts={{
             align: "start",
             loop: true,
+            duration: 2,
           }}
-          loopDuration={2500}
         >
           <CarouselContent>
             <CarouselItem className="basis-auto">

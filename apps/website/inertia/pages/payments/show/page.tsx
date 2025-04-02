@@ -1,5 +1,5 @@
 "use client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@enei/shadcn/ui/card";
 import { InferPageProps } from "@adonisjs/inertia/types";
 import OrdersController from "#controllers/orders_controller";
 import Page from "~/components/common/page";

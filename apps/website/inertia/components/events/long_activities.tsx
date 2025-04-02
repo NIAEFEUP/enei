@@ -1,5 +1,5 @@
 import { cn } from "~/lib/utils";
-import { CardTitle } from "../ui/card";
+import { CardTitle } from "@enei/shadcn/ui/card";
 import EventCard from "./event_card";
 
 interface LongActivitesProps {
@@ -12,7 +12,7 @@ export default function LongActivities({ currentActiveIndex }: LongActivitesProp
       {currentActiveIndex !== 0 && <CardTitle>Atividades Longas</CardTitle>}
 
       {currentActiveIndex === 1 && (
-        <div className="flex flex-grow flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+        <div className="flex grow flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
           <EventCard
             title={"Check-in"}
             type={"other"}
@@ -39,7 +39,7 @@ export default function LongActivities({ currentActiveIndex }: LongActivitesProp
       )}
 
       {currentActiveIndex === 2 && (
-        <div className="flex flex-grow flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+        <div className="flex grow flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
           <EventCard
             title={"Check-in"}
             type={"other"}
@@ -66,7 +66,7 @@ export default function LongActivities({ currentActiveIndex }: LongActivitesProp
       )}
 
       {currentActiveIndex === 3 && (
-        <div className="flex flex-grow flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
+        <div className="flex grow flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
           <EventCard
             title={"Check-in"}
             type={"other"}

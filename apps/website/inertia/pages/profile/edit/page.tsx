@@ -1,8 +1,8 @@
 import { InferPageProps } from "@adonisjs/inertia/types";
 import ProfilesController from "#controllers/profiles_controller";
 import ParticipantProfile from "#models/participant_profile";
-import { Card } from "~/components/ui/card";
-import { Button } from "~/components/ui/button";
+import { Card } from "@enei/shadcn/ui/card";
+import { Button } from "@enei/shadcn/ui/button";
 import Page from "~/components/common/page";
 import Container from "~/components/common/containers";
 import { getUniversityById } from "~/lib/enei/signup/universities";
@@ -15,7 +15,7 @@ import {
   Linkedin,
   Globe,
   LucideProps,
-} from "lucide-react";
+} from "@enei/shadcn/icons";
 
 interface SocialIconProps {
   icon: React.FC<LucideProps>;

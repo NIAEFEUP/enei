@@ -7,7 +7,7 @@ export default configApp(
   {
     name: "Custom config for Inertia",
     files: ["inertia/**/*.ts", "inertia/**/*.tsx"],
-    ignores: ["inertia/components/ui/**/*", ".adonisjs/**/*"],
+    ignores: [".adonisjs/**/*"],
     rules: RULES_LIST,
   },
   {

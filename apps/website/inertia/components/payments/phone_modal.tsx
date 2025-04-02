@@ -5,11 +5,11 @@ import {
   DialogHeader,
   DialogFooter,
   DialogDescription,
-} from "~/components/ui/dialog";
-import { Button } from "~/components/ui/button";
+} from "@enei/shadcn/ui/dialog";
+import { Button } from "@enei/shadcn/ui/button";
 import { useState } from "react";
-import { PhoneInput } from "~/components/ui/phone-input";
-import { Loader2 } from "lucide-react";
+import { PhoneInput } from "@enei/shadcn/phone-input/phone-input";
+import { Loader2 } from "@enei/shadcn/icons";
 
 interface PhoneNumberModalProps {
   isOpen: boolean;

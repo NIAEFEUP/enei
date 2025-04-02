@@ -4,7 +4,7 @@ import LongActivities from "~/components/events/long_activities";
 import EventsProgram from "~/components/events/schedule/events_program";
 import Page from "~/components/common/page";
 import Container from "~/components/common/containers";
-import { Card } from "~/components/ui/card";
+import { Card } from "@enei/shadcn/ui/card";
 
 interface Speaker {
   firstName: string;

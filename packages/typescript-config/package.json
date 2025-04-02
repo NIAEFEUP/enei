@@ -8,6 +8,7 @@
     "./env/common": "./src/env/tsconfig.common.json",
     "./env/server": "./src/env/tsconfig.server.json",
     "./env/tools": "./src/env/tsconfig.tools.json",
-    "./type/app": "./src/type/tsconfig.app.json"
+    "./type/app": "./src/type/tsconfig.app.json",
+    "./type/bundled": "./src/type/tsconfig.bundled.json"
   }
 }

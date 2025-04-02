@@ -1,14 +1,14 @@
 import ReferralsController from "#controllers/referrals_controller";
 import { InferPageProps } from "@adonisjs/inertia/types";
 import { Link } from "@tuyau/inertia/react";
-import { CircleAlert, Info } from "lucide-react";
+import { CircleAlert, Info } from "@enei/shadcn/icons";
 import Container from "~/components/common/containers";
 import CardContainer from "~/components/common/containers/card";
 import Page from "~/components/common/page";
-import { buttonVariants } from "~/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
+import { buttonVariants } from "@enei/shadcn/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@enei/shadcn/ui/card";
+import { Input } from "@enei/shadcn/ui/input";
+import { Label } from "@enei/shadcn/ui/label";
 import { cn } from "~/lib/utils";
 
 export default function ReferralsPage({
@@ -39,7 +39,7 @@ export default function ReferralsPage({
                   type="text"
                   defaultValue={referralLink ?? ""}
                   readOnly
-                  className="focus-visible:ring-none placeholder:select-none placeholder:blur-sm"
+                  className="focus-visible:ring-none placeholder:blur-xs placeholder:select-none"
                   placeholder="Precisas de comprar um bilhete para referenciar pessoas..."
                   disabled={!hasReferralLink}
                 />
@@ -51,7 +51,7 @@ export default function ReferralsPage({
                 </p>
                 {referralCount !== null && (
                   <div className="bg-primary/90 text-primary-foreground mt-4 flex flex-row items-center gap-2 rounded-md px-4 py-2 text-sm">
-                    <Info className="inline-block size-4 flex-shrink-0" />
+                    <Info className="inline-block size-4 shrink-0" />
                     {referralCount === 0 ? (
                       <p>O teu link ainda não foi utilizado.</p>
                     ) : (
@@ -72,7 +72,7 @@ export default function ReferralsPage({
               </div>
               {!hasReferralLink && (
                 <div className="mt-4 flex flex-row items-center gap-2 rounded-md bg-red-500 px-4 py-2 text-sm text-white">
-                  <CircleAlert className="inline-block size-4 flex-shrink-0" />
+                  <CircleAlert className="inline-block size-4 shrink-0" />
                   <p>
                     O link de referenciação só ficará disponível quando{" "}
                     <Link

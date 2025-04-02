@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    // Modules
+    "allowImportingTsExtensions": true,
+    "moduleResolution": "bundler",
+
+    // Emit
+    "emitDeclarationOnly": true
+  }
+}

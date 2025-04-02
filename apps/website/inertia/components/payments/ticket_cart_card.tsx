@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardTitle, CardDescription, CardContent } from "~/components/ui/card";
+import { Card, CardTitle, CardDescription, CardContent } from "@enei/shadcn/ui/card";
 
 interface TicketCartCardProps {
   title: string;

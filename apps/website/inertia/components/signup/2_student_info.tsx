@@ -1,6 +1,13 @@
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { Button } from "~/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@enei/shadcn/ui/form";
+import { Button } from "@enei/shadcn/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -8,18 +15,18 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "~/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
+} from "@enei/shadcn/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@enei/shadcn/ui/popover";
 import CurricularYearSelector, { CurricularYearSelectorType } from "./input/curricular_year_input";
 
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown } from "@enei/shadcn/icons";
 import { cn } from "~/lib/utils";
-import { Input } from "../ui/input";
+import { Input } from "@enei/shadcn/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EducationInfo, educationInfoSchema } from "~/pages/signup/schema";
 import { getUniversityById, universities } from "~/lib/enei/signup/universities";
 import { useMemo } from "react";
-import { useStepper } from "../ui/stepper";
+import { useStepper } from "@enei/shadcn/ui/preview/stepper";
 import { useAtom, useSetAtom } from "jotai/react";
 import { educationInfoAtom } from "~/pages/signup/atoms";
 import StepperFormActions from "./actions";
@@ -28,7 +35,7 @@ function UniversitySelection({ value }: { value?: string }) {
   const name = useMemo(() => value && getUniversityById(value)?.name, [value]);
 
   return name ? (
-    <span className="max-w-full overflow-hidden overflow-ellipsis">{name}</span>
+    <span className="max-w-full overflow-hidden text-ellipsis">{name}</span>
   ) : (
     <span>Selecionar Universidade...</span>
   );
@@ -69,7 +76,7 @@ function EducationInfoForm() {
                     <Button
                       variant="outline"
                       role="combobox"
-                      className="w-full justify-between overflow-ellipsis font-normal"
+                      className="w-full justify-between text-ellipsis font-normal"
                     >
                       <UniversitySelection value={field.value} />
                       <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />

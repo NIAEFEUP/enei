@@ -1,6 +1,6 @@
 import { useForm } from "@inertiajs/react";
 import { Link } from "@tuyau/inertia/react";
-import { Button, buttonVariants } from "~/components/ui/button";
+import { Button, buttonVariants } from "@enei/shadcn/ui/button";
 import { useAuth } from "~/hooks/use_auth";
 import { useTuyau } from "~/hooks/use_tuyau";
 import { cn } from "~/lib/utils";
@@ -8,16 +8,16 @@ import Container from "./containers";
 import { useEffect, useState } from "react";
 import { NotificationContainer } from "../notifications";
 import { VariantProps } from "class-variance-authority";
-import { QrCode } from "lucide-react";
+import { QrCode } from "@enei/shadcn/icons";
 
 /*
-import { Menu } from "lucide-react";
+import { Menu } from "@enei/shadcn/icons";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "./ui/navigation-menu";
+} from "@enei/shadcn/ui/navigation-menu";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,9 +25,9 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "@enei/shadcn/ui/dropdown-menu";
 
-import { Button } from "./ui/button";
+import { Button } from "@enei/shadcn/ui/button";
 
 type PageRoute = {
   href: string;

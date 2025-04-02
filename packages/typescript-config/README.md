@@ -30,5 +30,6 @@ This package provides the following server configurations:
 - `env/server`: Configuration for server-side applications and libraries (e.g., an AdonisJS backend).
 - `env/tools`: Configuration for tools (e.g., to lint an ESLint configuration).
 - `type/app`: Configuration for applications.
+- `type/bundled`: Configuration for bundled libraries.
 
 In your project, you should extend one environment configuration from the `env` directory, and at most one type configuration from the `type` directory.

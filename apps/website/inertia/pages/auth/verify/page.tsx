@@ -1,8 +1,8 @@
 import { useForm } from "@inertiajs/react";
 import CardContainer from "~/components/common/containers/card";
 import Page from "~/components/common/page";
-import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
+import { Button } from "@enei/shadcn/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@enei/shadcn/ui/card";
 import { useAuth } from "~/hooks/use_auth";
 import { useCooldown } from "~/hooks/use_cooldown";
 import { useToast } from "~/hooks/use_toast";

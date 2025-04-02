@@ -1,7 +1,7 @@
-import { Card, CardTitle } from "~/components/ui/card";
-import { Badge } from "~/components/ui/badge";
-import { Ticket } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { Card, CardTitle } from "@enei/shadcn/ui/card";
+import { Badge } from "@enei/shadcn/ui/badge";
+import { Ticket } from "@enei/shadcn/icons";
+import { Avatar, AvatarFallback, AvatarImage } from "@enei/shadcn/ui/avatar";
 import { cn } from "~/lib/utils";
 import { useState } from "react";
 

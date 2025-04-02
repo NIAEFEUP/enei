@@ -7,18 +7,18 @@ import {
   Info,
   ClipboardCheck,
   Loader2,
-} from "lucide-react";
-import { Button, buttonVariants } from "~/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+} from "@enei/shadcn/icons";
+import { Button, buttonVariants } from "@enei/shadcn/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@enei/shadcn/ui/avatar";
+import { Card, CardContent, CardHeader, CardTitle } from "@enei/shadcn/ui/card";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useToast } from "~/hooks/use_toast";
 import { cn } from "~/lib/utils";
-// import { Tooltip } from '~/components/ui/tooltip'
+// import { Tooltip } from '@enei/shadcn/ui/tooltip'
 // import { TooltipContent, TooltipProvider, TooltipTrigger } from '@radix-ui/react-tooltip'
 import RegistrationConfirmationModal from "~/components/events/registration_confirmation_modal";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@enei/shadcn/ui/tooltip";
 import Page from "~/components/common/page";
 import { router } from "@inertiajs/react";
 import Container from "~/components/common/containers";

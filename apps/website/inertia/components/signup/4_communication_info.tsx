@@ -1,10 +1,23 @@
 import { useForm } from "react-hook-form";
 import { useTuyau } from "~/hooks/use_tuyau";
-import { Checkbox } from "../ui/checkbox";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import MultipleSelector, { Option } from "../ui/multiple-selector";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { Textarea } from "../ui/textarea";
+import { Checkbox } from "@enei/shadcn/ui/checkbox";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@enei/shadcn/ui/form";
+// import MultipleSelector, { Option } from "@enei/shadcn/extension/multi-select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@enei/shadcn/ui/select";
+import { Textarea } from "@enei/shadcn/ui/textarea";
 
 import editions from "#data/enei/editions.json" with { type: "json" };
 import heardaboutfrom from "#data/enei/signup/heard-about.json" with { type: "json" };
@@ -21,16 +34,16 @@ import StepperFormActions from "./actions";
 import { PageProps } from "@adonisjs/inertia/types";
 import { router, usePage } from "@inertiajs/react";
 
-const ENEI_EDITIONS: Option[] = editions
-  .sort((a, b) => b.year - a.year)
-  .map(({ year, location }) => {
-    return {
-      label: location + ", " + year.toString(),
-      value: year.toString(),
-    };
-  });
+// const ENEI_EDITIONS: Option[] = editions
+//   .sort((a, b) => b.year - a.year)
+//   .map(({ year, location }) => {
+//     return {
+//       label: location + ", " + year.toString(),
+//       value: year.toString(),
+//     };
+//   });
 
-const HEARD_ABOUT_FROM: Option[] = heardaboutfrom;
+// const HEARD_ABOUT_FROM: Option[] = heardaboutfrom;
 
 const CommunicationInfoForm = () => {
   const tuyau = useTuyau();
@@ -86,11 +99,11 @@ const CommunicationInfoForm = () => {
                       <SelectValue placeholder="Seleciona uma opção" />
                     </SelectTrigger>
                     <SelectContent>
-                      {HEARD_ABOUT_FROM.map((source) => (
+                      {/* {HEARD_ABOUT_FROM.map((source) => (
                         <SelectItem key={source.value} value={source.value}>
                           {source.label}
                         </SelectItem>
-                      ))}
+                      ))} */}
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -141,7 +154,7 @@ const CommunicationInfoForm = () => {
                 <FormItem>
                   <FormLabel>Em qual edição?</FormLabel>
                   <FormControl>
-                    <MultipleSelector
+                    {/* <MultipleSelector
                       {...field}
                       defaultOptions={ENEI_EDITIONS}
                       emptyIndicator={
@@ -149,7 +162,7 @@ const CommunicationInfoForm = () => {
                           Sem resultados
                         </p>
                       }
-                    />
+                    /> */}
                   </FormControl>
                   <FormMessage />
                 </FormItem>

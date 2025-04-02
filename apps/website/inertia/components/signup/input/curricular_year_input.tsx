@@ -5,7 +5,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "~/components/ui/select";
+} from "@enei/shadcn/ui/select";
 
 export type CurricularYearSelectorType =
   | ["1" | "2" | "3" | "4" | "5", null]

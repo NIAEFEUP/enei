@@ -1,8 +1,8 @@
 import { Link } from "@tuyau/inertia/react";
-import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
+import { Button } from "@enei/shadcn/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@enei/shadcn/ui/card";
+import { Input } from "@enei/shadcn/ui/input";
+import { Label } from "@enei/shadcn/ui/label";
 import { useError } from "~/hooks/use_error";
 import { useForm } from "@inertiajs/react";
 import { cn } from "~/lib/utils";

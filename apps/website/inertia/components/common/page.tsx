@@ -2,7 +2,7 @@ import { Head } from "@inertiajs/react";
 import React from "react";
 import { cn } from "~/lib/utils";
 import { Navbar } from "./navbar";
-import { Toaster } from "~/components/ui/toaster";
+import { Toaster } from "@enei/shadcn/ui/sonner";
 import { useAuth } from "~/hooks/use_auth";
 import { Notification } from "../notifications";
 import Footer from "./footer";
@@ -44,7 +44,7 @@ export default function Page({
       )}
     >
       <Head title={title} />
-      <div className="relative flex-grow pb-32">
+      <div className="relative grow pb-32">
         <Navbar className="sticky top-0 z-20 grow-0" variant={variant} />
         <PromoterNotification />
         <div className={className}>{children}</div>

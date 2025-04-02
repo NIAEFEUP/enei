@@ -1,4 +1,4 @@
-import { Step, Stepper } from "~/components/ui/stepper";
+import { Step, Stepper } from "@enei/shadcn/ui/preview/stepper";
 import PersonalInfoForm from "~/components/signup/1_personal_info";
 import EducationInfoForm from "~/components/signup/2_student_info";
 import LogisticsInfoForm from "~/components/signup/3_logistics_info";
@@ -12,7 +12,7 @@ const steps = [
 ];
 
 import Page from "~/components/common/page";
-import { Card } from "~/components/ui/card";
+import { Card } from "@enei/shadcn/ui/card";
 import Container from "~/components/common/containers";
 
 export default function Signup() {

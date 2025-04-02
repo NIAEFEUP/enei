@@ -3,9 +3,9 @@
 import * as React from "react";
 import { cva } from "class-variance-authority";
 import { CheckIcon, Loader2, LucideIcon, X } from "lucide-react";
-import { cn } from "~/lib/utils";
-import { Collapsible, CollapsibleContent } from "./collapsible";
-import { Button } from "./button";
+import { cn } from "#/lib/utils";
+import { Collapsible, CollapsibleContent } from "#/components/ui/collapsible";
+import { Button } from "#/components/ui/button";
 
 // <---------- CONTEXT ---------->
 
