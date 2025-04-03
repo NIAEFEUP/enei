@@ -1,15 +1,16 @@
 import { api } from "#.adonisjs/api";
 import { createTuyau } from "@tuyau/client";
 import { TuyauProvider as $TuyauProvider } from "@tuyau/inertia/react";
+import { useEnvironment } from "~/hooks/use_env";
 import { useBaseUrl } from "~/hooks/use_host";
 
 export type TuyauClient = ReturnType<typeof useTuyau>;
 
 function useTuyau() {
-  const tuyau = useBaseUrl((baseUrl) =>
+  const tuyau = useEnvironment((env) =>
     createTuyau({
       api,
-      baseUrl,
+      baseUrl: env.INERTIA_PUBLIC_APP_URL,
     }),
   );
 
