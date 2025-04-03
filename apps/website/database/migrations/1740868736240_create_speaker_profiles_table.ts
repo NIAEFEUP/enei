@@ -11,13 +11,16 @@ export default class extends BaseSchema {
       table.string("first_name").notNullable();
       table.string("last_name").notNullable();
       table.string("job_title");
-      table.enum('speaker_role', ['keynote_speaker', 'panelist', 'moderator']).notNullable()
+      // table.enum('speaker_role', ['keynote_speaker', 'panelist', 'moderator']).notNullable()
+      table
+        .enum("speaker_role", ["keynote_speaker", "panelist", "moderator"])
+        .notNullable()
+        .defaultTo("keynote_speaker"); // assume that every speaker is a keynote_speaker, and modify otherwise
       table.string("profile_picture");
 
-      table.string('orcid_link').nullable();
-      table.string('about').nullable()
-      table.integer('company_id').references('id').inTable('company')
-
+      table.string("orcid_link").nullable();
+      table.string("about").nullable();
+      table.integer("company_id").references("id").inTable("company_profiles");
     });
   }
 

@@ -8,6 +8,9 @@ import PromoterProfile from "./promoter_profile.js";
 import ParticipantProfile from "./participant_profile.js";
 import Event from "./event.js";
 import StaffProfile from "./staff_profile.js";
+import CompanyProfile from "./company.js";
+import SpeakerProfile from "./speaker_profile.js";
+import RepresentativeProfile from "./representative_profile.js";
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -30,6 +33,9 @@ export default class User extends BaseModel {
 
   @hasMany(() => Account)
   declare accounts: HasMany<typeof Account>;
+
+  @column()
+  declare slug: string | null;
 
   // Referrals
 
@@ -86,6 +92,30 @@ export default class User extends BaseModel {
   @belongsTo(() => PromoterInfo)
   declare promoterInfo: BelongsTo<typeof PromoterInfo>;
 
+  // CompanyProfile
+
+  @column()
+  declare companyId: number | null;
+
+  @belongsTo(() => CompanyProfile)
+  declare companyProfile: BelongsTo<typeof CompanyProfile>;
+
+  // SpeakerProfile
+
+  @column()
+  declare speakerProfileId: number | null;
+
+  @belongsTo(() => SpeakerProfile)
+  declare speakerProfile: BelongsTo<typeof SpeakerProfile>;
+
+  // RepresentantiveProfile
+
+  @column()
+  declare representativeProfileId: number | null;
+
+  @belongsTo(() => RepresentativeProfile)
+  declare representativeProfile: BelongsTo<typeof RepresentativeProfile>;
+
   @column()
   declare staffProfileId: number | undefined;
 
@@ -98,6 +128,9 @@ export default class User extends BaseModel {
     if (this.isParticipant()) return "participant" as const;
     if (this.isPromoter()) return "promoter" as const;
     if (this.isStaff()) return "staff" as const;
+    if (this.isSpeaker()) return "speaker" as const;
+    if (this.isCompany()) return "company" as const;
+    if (this.isRepresentative()) return "representative" as const;
     return "unknown" as const;
   }
 
@@ -111,6 +144,18 @@ export default class User extends BaseModel {
 
   isParticipant() {
     return this.participantProfileId !== null;
+  }
+
+  isSpeaker() {
+    return this.speakerProfileId;
+  }
+
+  isCompany() {
+    return this.companyId;
+  }
+
+  isRepresentative() {
+    return this.representativeProfileId;
   }
 
   isEmailVerified() {
@@ -131,6 +176,37 @@ export default class User extends BaseModel {
     return this.referrerId !== null;
   }
 
+  static async getProfile(
+    user: User,
+  ): Promise<
+    | ParticipantProfile
+    | PromoterProfile
+    | SpeakerProfile
+    | CompanyProfile
+    | RepresentativeProfile
+    | null
+  > {
+    switch (user.role) {
+      case "participant":
+        await user.loadOnce("participantProfile");
+        return user.participantProfile;
+      case "promoter":
+        await user.loadOnce("promoterProfile");
+        return user.promoterProfile;
+      case "speaker":
+        await user.loadOnce("speakerProfile");
+        return user.speakerProfile;
+      case "company":
+        await user.loadOnce("companyProfile");
+        return user.companyProfile;
+      case "representative":
+        await user.loadOnce("representativeProfile");
+        return user.representativeProfile;
+      default:
+        return null;
+    }
+  }
+
   static async hasPurchasedTicket(user: User) {
     if (!user.isParticipant()) return false;
 
@@ -148,199 +224,3 @@ export default class User extends BaseModel {
     return user.referrer;
   }
 }
-
-/*
-
-
-import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
-import Account from './account.js'
-import { UserTypes } from '../../types/user.js'
-import PromoterInfo from './promoter_info.js'
-import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
-import PromoterProfile from './promoter_profile.js'
-import ParticipantProfile from './participant_profile.js'
-import CompanyProfile from './company.js'
-import SpeakerProfile from './speaker_profile.js'
-import RepresentativeProfile from './representative_profile.js'
-
-export default class User extends BaseModel {
-  @column({ isPrimary: true })
-  declare id: number
-
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
-
-  @column()
-  declare email: string
-
-  @column.dateTime()
-  declare emailVerifiedAt: DateTime | null
-
-  @column()
-  declare isAdmin: boolean
-
-  @hasMany(() => Account)
-  declare accounts: HasMany<typeof Account>
-
-  @column()
-  declare slug: string | null
-
-  // Referrals
-
-  @column()
-  declare referringPromoterId: number | undefined
-
-  @belongsTo(() => User, {
-    foreignKey: 'promoterId',
-  })
-  declare referringPromoter: BelongsTo<typeof User>
-
-  @column()
-  declare referrerId: number | undefined
-
-  @belongsTo(() => User, {
-    foreignKey: 'referrerId',
-  })
-  declare referrer: BelongsTo<typeof User>
-
-  // PromoterProfile
-
-  @column()
-  declare promoterProfileId: number | null
-
-  @belongsTo(() => PromoterProfile)
-  declare promoterProfile: BelongsTo<typeof PromoterProfile>
-
-  // ParticipantProfile
-
-  @column()
-  declare participantProfileId: number | null
-
-  @belongsTo(() => ParticipantProfile)
-  declare participantProfile: BelongsTo<typeof ParticipantProfile>
-
-  @column()
-  declare points: number
-
-  @belongsTo(() => PromoterInfo)
-  declare promoterInfo: BelongsTo<typeof PromoterInfo>
-
-  // CompanyProfile
-
-  @column()
-  declare companyId: number | null
-
-  @belongsTo(() => CompanyProfile)
-  declare companyProfile: BelongsTo<typeof CompanyProfile>
-
-  // SpeakerProfile
-
-  @column()
-  declare speakerProfileId: number | null
-
-  @belongsTo(() => SpeakerProfile)
-  declare speakerProfile: BelongsTo<typeof SpeakerProfile>
-
-  // RepresentantiveProfile
-
-  @column()
-  declare representativeProfileId: number | null
-
-  @belongsTo(() => RepresentativeProfile)
-  declare representativeProfile: BelongsTo<typeof RepresentativeProfile>
-
-  // Functions
-
-  get role() {
-    if (this.isParticipant()) return 'participant' as const
-    if (this.isPromoter()) return 'promoter' as const
-    if (this.isSpeaker()) return 'speaker' as const
-    if (this.isCompany()) return 'company' as const
-    if (this.isRepresentative()) return 'representative' as const
-    return 'unknown' as const
-  }
-
-  isPromoter() {
-    return this.promoterProfileId
-  }
-
-  isParticipant() {null
-    return this.participantProfileId
-  }
-
-  isSpeaker() {
-    return this.speakerProfileId
-  }
-
-  isCompany() {
-    return this.companyId
-  }
-
-  isRepresentative() {
-    return this.representativeProfileId
-  }
-  
-  isEmailVerified() {
-    return this.emailVerifiedAt !== null
-  }
-
-  groups() {
-    const groups = []
-
-    if (this.participantProfile) groups.push(UserTypes.PARTICIPANT)
-
-    if (this.promoterInfo) groups.push(UserTypes.PROMOTER)
-
-    return groups
-  }
-
-  wasReferred() {
-    return !this.referrerId
-  }
-
-  static async getProfile(user: User): Promise<ParticipantProfile | PromoterProfile | SpeakerProfile | CompanyProfile | RepresentativeProfile | null> {
-    switch (user.role) {
-      case 'participant':
-        await user.loadOnce('participantProfile')
-        return user.participantProfile
-      case 'promoter':
-        await user.loadOnce('promoterProfile')
-        return user.promoterProfile
-      case 'speaker':
-        await user.loadOnce('speakerProfile')
-        return user.speakerProfile
-      case 'company':
-        await user.loadOnce('companyProfile')
-        return user.companyProfile
-      case 'representative':
-        await user.loadOnce('representativeProfile')
-        return user.representativeProfile
-      default:
-        return null
-    }
-  }  
-
-  static async hasPurchasedTicket(user: User) {
-    if (!user.isParticipant()) return false
-
-    await user.load('participantProfile')
-    return !!user.participantProfile.purchasedTicket
-  }
-
-  static async getReferringPromoter(user: User) {
-    await user.load('referringPromoter')
-    return user.referringPromoter
-  }
-
-  static async getReferrer(user: User) {
-    await user.load('referrer')
-    return user.referrer
-  }
-}
-
-
-*/

@@ -6,23 +6,20 @@ import MultipleSelector, { Option } from "../ui/multiple-selector";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 
-import heardaboutfrom from '#data/enei/signup/heard-about.json' with { type: 'json' }
-import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  CommunicationsInfo,
-  communicationsInfoSchema,
-} from '~/pages/signup/schema'
-import { useAtom, useSetAtom } from 'jotai/react'
+import heardaboutfrom from "#data/enei/signup/heard-about.json" with { type: "json" };
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CommunicationsInfo, communicationsInfoSchema } from "~/pages/signup/schema";
+import { useAtom, useSetAtom } from "jotai/react";
 import {
   personalInfoAtom,
   educationInfoAtom,
   logisticsInfoAtom,
   communicationsInfoAtom,
-} from '~/pages/signup/atoms'
-import StepperFormActions from './actions'
-import { PageProps } from '@adonisjs/inertia/types'
-import { router, usePage } from '@inertiajs/react'
-import { ENEI_EDITIONS } from '~/lib/enei/signup/editions'
+} from "~/pages/signup/atoms";
+import StepperFormActions from "./actions";
+import { PageProps } from "@adonisjs/inertia/types";
+import { router, usePage } from "@inertiajs/react";
+import { ENEI_EDITIONS } from "~/lib/enei/signup/editions";
 
 const HEARD_ABOUT_FROM: Option[] = heardaboutfrom;
 
@@ -58,11 +55,11 @@ const CommunicationInfoForm = () => {
       ...educationInfo,
       ...logisticsInfo,
       ...data,
-      _csrf: csrfToken
-    }
+      _csrf: csrfToken,
+    };
 
-    router.post(tuyau.$url('actions:signup'), payload)
-  }
+    router.post(tuyau.$url("actions:signup"), payload);
+  };
 
   return (
     <Form {...form}>
@@ -118,10 +115,14 @@ const CommunicationInfoForm = () => {
               <FormItem>
                 <FormLabel className="flex items-center gap-2">
                   <FormControl>
-                    <Checkbox checked={field.value} onCheckedChange={(checked) => {
-                      field.onChange(checked)
-                      if (!checked) form.setValue("attendedBeforeEditions", [], { shouldDirty: true })
-                    }} />
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={(checked) => {
+                        field.onChange(checked);
+                        if (!checked)
+                          form.setValue("attendedBeforeEditions", [], { shouldDirty: true });
+                      }}
+                    />
                   </FormControl>
                   <p>Já participaste em alguma edição do ENEI?</p>
                 </FormLabel>
