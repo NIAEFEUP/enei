@@ -18,6 +18,7 @@ import ProfileActivityInfo from "~/components/profile/profile_activity_info";
 import { useAuth } from "~/hooks/use_auth";
 import { ENEI_EDITIONS } from "~/lib/enei/signup/editions";
 import { Avatar, AvatarImage } from "~/components/ui/avatar";
+import ParticipantProfilePage from "./page.participant";
 
 export const ProfileContext = createContext<{ slug: string | number }>({
   slug: "",
@@ -63,66 +64,67 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, "i
   if (profile.linkedin) socials.push({ icon: Linkedin, link: profile.linkedin });
   if (profile.website) socials.push({ icon: Globe, link: profile.website });
 
-  return (
-    <ProfileContext.Provider
-      value={{ slug: auth.state === "authenticated" && isUser ? auth.user.slug : "" }}
-    >
-      <Page
-        title={`${profile.firstName} ${profile.lastName}`}
-        className="bg-enei-beige text-enei-blue"
-        variant="beige"
-      >
-        <Container className="mt-8">
-          <section className="relative z-10 flex flex-col gap-8 md:justify-between">
-            <div className="flex flex-row justify-normal gap-4">
-              <h3 className="text-2xl">Perfil do Utilizador</h3>
-              {isUser && (
-                <Link
-                  route="pages:profile.edit"
-                  className={cn(buttonVariants({ variant: "default" }), "w-fit")}
-                >
-                  <Pencil />
-                  <p className="">Editar</p>
-                </Link>
-              )}
-            </div>
+  const newUI = true;
 
-            <section className="grid items-center gap-4 md:grid-cols-[auto_1fr] md:gap-8">
-              <div className="bg-enei-blue mx-auto size-fit rounded-sm md:mx-0">
-                {profile.logo ? (
-                  <Avatar className="text-enei-beige h-48 w-48">
-                    <AvatarImage src={profile.logo} />
-                  </Avatar>
-                ) : (
-                  <User className="text-enei-beige h-48 w-48" />
+  if (newUI) return <ParticipantProfilePage profile={profile as ParticipantProfile} />;
+  else
+    return (
+      <ProfileContext.Provider value={{ slug: profile.user?.slug ?? "" }}>
+        <Page
+          title={`${profile.firstName} ${profile.lastName}`}
+          className="bg-enei-beige text-enei-blue"
+          variant="beige"
+        >
+          <Container className="mt-8">
+            <section className="relative z-10 flex flex-col gap-8 md:justify-between">
+              <div className="flex flex-row justify-normal gap-4">
+                <h3 className="text-2xl">Perfil do Utilizador</h3>
+                {isUser && "purchasedTicket" in profile && (
+                  <Link
+                    route="pages:profile.edit"
+                    className={cn(buttonVariants({ variant: "default" }), "w-fit")}
+                  >
+                    <Pencil />
+                    <p className="">Editar {profile.speakerRole}</p>
+                  </Link>
                 )}
               </div>
-              <div className="flex h-full flex-col justify-between gap-2 text-center md:text-start">
-                <p className="text-3xl">
-                  {profile.name ? profile.name : profile.firstName + " " + profile.lastName}
-                </p>
-                {profile.course && (
-                  <div>
-                    <p className="text-lg">
-                      {" "}
-                      {profile.course} &#183;{" "}
-                      {profile.curricularYear === "already-finished"
-                        ? "Concluído em " + profile.finishedAt
-                        : profile.curricularYear + "º ano"}{" "}
-                    </p>
-                    <p className="text-lg"> @ {getUniversityById(profile.university)!.name} </p>
-                  </div>
-                )}
-                {profile.jobTitle && profile.company && (
-                  <div>
-                    <p className="text-lg"> &#183; {profile.jobTitle} &#183; </p>
-                    <p className="text-lg"> @ {profile.company.name} </p>
-                  </div>
-                )}
-                <div className="flex flex-row flex-wrap justify-center gap-2 md:justify-start">
-                  {socials.length > 0
-                    && socials.map((social: SocialIconProps) => <SocialIcon {...social} />)}
-                  <div className="flex flex-row gap-2">
+
+              <section className="grid items-center gap-4 md:grid-cols-[auto_1fr] md:gap-8">
+                <div className="bg-enei-blue mx-auto size-fit rounded-sm md:mx-0">
+                  {profile.logo ? (
+                    <Avatar className="text-enei-beige h-48 w-48">
+                      <AvatarImage src={profile.logo} />
+                    </Avatar>
+                  ) : (
+                    <User className="text-enei-beige h-48 w-48" />
+                  )}
+                </div>
+                <div className="flex h-full flex-col justify-between gap-2 text-center md:text-start">
+                  <p className="text-3xl">
+                    {profile.name ? profile.name : profile.firstName + " " + profile.lastName}
+                  </p>
+                  {profile.course && (
+                    <div>
+                      <p className="text-lg">
+                        {" "}
+                        {profile.course} &#183;{" "}
+                        {profile.curricularYear === "already-finished"
+                          ? "Concluído em " + profile.finishedAt
+                          : profile.curricularYear + "º ano"}{" "}
+                      </p>
+                      <p className="text-lg"> @ {getUniversityById(profile.university)!.name} </p>
+                    </div>
+                  )}
+                  {profile.jobTitle && profile.company && (
+                    <div>
+                      <p className="text-lg"> &#183; {profile.jobTitle} &#183; </p>
+                      <p className="text-lg"> @ {profile.company.name} </p>
+                    </div>
+                  )}
+                  <div className="flex flex-row flex-wrap justify-center gap-2 md:justify-start">
+                    {socials.length > 0
+                      && socials.map((social: SocialIconProps) => <SocialIcon {...social} />)}
                     {profile.orcidLink ? (
                       <a href={profile.orcidLink} target="_blank" rel="noopener noreferrer">
                         <Button className="w-fit">
@@ -151,50 +153,49 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, "i
                       </DialogContent>
                     </Dialog>
                   </div>
-                </div>
-                {profileEditions !== undefined ? (
-                  profileEditions.length > 0 ? (
-                    <div className="flex flex-row flex-wrap justify-center gap-2 md:justify-normal">
-                      {profileEditions.map((edition) => (
-                        <Badge>{edition}</Badge>
-                      ))}
-                    </div>
+                  {profileEditions !== undefined ? (
+                    profileEditions.length > 0 ? (
+                      <div className="flex flex-row flex-wrap justify-center gap-2 md:justify-normal">
+                        {profileEditions.map((edition) => (
+                          <Badge>{edition}</Badge>
+                        ))}
+                      </div>
+                    ) : (
+                      <div>
+                        <Badge variant={"default"}>Primeiro ENEI</Badge>
+                      </div>
+                    )
                   ) : (
                     <div>
-                      <Badge variant={"default"}>Primeiro ENEI</Badge>
+                      <Badge variant={"default"}>
+                        {profile.name
+                          ? "Company"
+                          : profile.speakerRole === "keynote_speaker"
+                            ? "Keynote Speaker"
+                            : profile.speakerRole === "panelist"
+                              ? "Panelist"
+                              : profile.speakerRole === "moderator"
+                                ? "Moderator"
+                                : "Speaker"}
+                      </Badge>
                     </div>
-                  )
-                ) : (
-                  <div>
-                    <Badge variant={"default"}>
-                      {profile.name
-                        ? "Company"
-                        : profile.speakerRole === "keynote_speaker"
-                          ? "Keynote Speaker"
-                          : profile.speakerRole === "panelist"
-                            ? "Panelist"
-                            : profile.speakerRole === "moderator"
-                              ? "Moderator"
-                              : "Speaker"}
-                    </Badge>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              </section>
+              <section className="mt-4 grid grid-rows-[auto_1fr] gap-4">
+                <div>
+                  <h4 className="text-center text-lg font-bold md:text-left">Sobre</h4>
+                  <p>{profile.about ?? "Sem informação."}</p>
+                </div>
+              </section>
             </section>
-            <section className="mt-4 grid grid-rows-[auto_1fr] gap-4">
-              <div>
-                <h4 className="text-center text-lg font-bold md:text-left">Sobre</h4>
-                <p>{profile.about ?? "Sem informação."}</p>
-              </div>
+            <section>
+              {auth.state === "authenticated" && auth.user?.role === "staff" && (
+                <ProfileActivityInfo activityInformation={activityInformation} />
+              )}
             </section>
-          </section>
-          <section>
-            {auth.state === "authenticated" && auth.user?.role === "staff" && (
-              <ProfileActivityInfo activityInformation={activityInformation} />
-            )}
-          </section>
-        </Container>
-      </Page>
-    </ProfileContext.Provider>
-  );
+          </Container>
+        </Page>
+      </ProfileContext.Provider>
+    );
 }

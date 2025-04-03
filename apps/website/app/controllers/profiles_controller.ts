@@ -73,6 +73,7 @@ export default class ProfilesController {
     }
 
     const profile = await User.getProfile(user);
+    await profile?.loadOnce("user"); // HACK: is this needed?
 
     if (!profile) {
       response.notFound("Perfil não encontrado");

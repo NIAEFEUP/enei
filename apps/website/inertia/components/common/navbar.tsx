@@ -109,7 +109,11 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
                   <span>Perfil</span>
                 </Link>
               </div>
-              <div className={auth.state === "authenticated" && auth.user.role === "staff" ? "block" : "hidden"}>
+              <div
+                className={
+                  auth.state === "authenticated" && auth.user.role === "staff" ? "block" : "hidden"
+                }
+              >
                 <Link
                   route="pages:staff.qrcode.scan"
                   className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
