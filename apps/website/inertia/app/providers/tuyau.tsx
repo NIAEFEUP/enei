@@ -2,7 +2,6 @@ import { api } from "#.adonisjs/api";
 import { createTuyau } from "@tuyau/client";
 import { TuyauProvider as $TuyauProvider } from "@tuyau/inertia/react";
 import { useEnvironment } from "~/hooks/use_env";
-import { useBaseUrl } from "~/hooks/use_host";
 
 export type TuyauClient = ReturnType<typeof useTuyau>;
 
