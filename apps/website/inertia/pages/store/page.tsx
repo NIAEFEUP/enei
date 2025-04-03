@@ -7,18 +7,8 @@ import PointsStoreProductCard from "~/components/store/card/product_card";
 import type Product from "#models/product";
 import type StoreController from "#controllers/store_controller";
 
-import { useState, createContext } from "react";
-
-
-type PointsStoreContextType = {
-  userPoints: number;
-  setUserPoints: React.Dispatch<React.SetStateAction<number>>;
-};
-
-export const StoreContext = createContext<PointsStoreContextType>({
-  userPoints: 0,
-  setUserPoints: () => {},
-});
+import { useState } from "react";
+import { StoreContext } from "./context";
 
 export default function Store(props: InferPageProps<StoreController, "index">) {
   const { products, user } = props;
