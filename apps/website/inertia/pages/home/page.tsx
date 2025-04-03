@@ -11,6 +11,19 @@ import Highlights from "~/components/home/highlights/highlights";
 import Statistics from "~/components/home/statistics";
 import Partners from "~/components/home/partners/partners";
 
+import { AppSidebar } from "./app-sidebar";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@enei/shadcn/ui/breadcrumb";
+import { Separator } from "@enei/shadcn/ui/separator";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@enei/shadcn/ui/sidebar";
+import { useEffect, useState } from "react";
+
 function useUtcTarget() {
   return useEnvironment((env) =>
     new TZDateMini(env.INERTIA_PUBLIC_EVENT_COUNTDOWN_DATE, env.INERTIA_PUBLIC_TZ).getTime(),
@@ -104,50 +117,92 @@ function Background() {
   );
 }
 
+function ClientOnly({ children }: { children?: React.ReactNode }) {
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  return hasMounted ? <>{children}</> : null;
+}
+
 export default function Home() {
   return (
-    <Page title="Home" background="beige">
-      <Background />
-      <Hero className="relative h-screen grow">
-        <Container className="pb-32">
-          <section className="relative z-10 flex flex-col gap-8 md:justify-between">
-            <div className="grow py-4 sm:py-24 md:grow-0 lg:py-20">
-              <h1 className="font-space-grotesk text-enei-beige w-3/12 text-justify text-5xl font-bold leading-[60px] tracking-tight md:text-7xl md:leading-[90px]">
-                <div className="block flex-row gap-10 sm:flex sm:gap-0 md:block md:gap-10 lg:flex lg:gap-0">
-                  <p className="whitespace-nowrap lowercase [text-shadow:_0_4px_4px_rgb(0_0_0_/_25%)]">
-                    Encontro&nbsp;
-                  </p>
-                  <p className="whitespace-nowrap lowercase [text-shadow:_0_4px_4px_rgb(0_0_0_/_25%)]">
-                    Nacional de
-                  </p>
-                </div>
-                <div className="block flex-row gap-10 sm:flex sm:gap-0 md:block md:gap-10 lg:flex lg:gap-0">
-                  <p className="whitespace-nowrap lowercase [text-shadow:_0_4px_4px_rgb(0_0_0_/_25%)]">
-                    Estudantes de&nbsp;
-                  </p>
-                  <p className="whitespace-nowrap lowercase [text-shadow:_0_4px_4px_rgb(0_0_0_/_25%)]">
-                    Informática
-                  </p>
-                </div>
-              </h1>
-              <p className="text-enei-beige mt-2 text-2xl [text-shadow:_0_4px_4px_rgb(0_0_0_/_25%)] md:text-4xl">
-                Porto 2025 | 11-14 de abril
-              </p>
-              <Countdown />
+    <ClientOnly>
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>
+          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+            <div className="flex items-center gap-2 px-4">
+              <SidebarTrigger className="-ml-1" />
+              <Separator orientation="vertical" className="mr-2 h-4" />
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem className="hidden md:block">
+                    <BreadcrumbLink href="#">Building Your Application</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator className="hidden md:block" />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
             </div>
-          </section>
-        </Container>
-      </Hero>
-      <Container className="flex flex-col justify-center gap-y-32">
-        <ReasonsToEnroll />
-      </Container>
-      <section className="mb-32 mt-32">
-        <Highlights />
-      </section>
-      <Container className="flex flex-col justify-center gap-y-32">
-        <Statistics />
-      </Container>
-      <Partners />
-    </Page>
+          </header>
+          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+            <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+              <div className="bg-muted/50 aspect-video rounded-xl" />
+              <div className="bg-muted/50 aspect-video rounded-xl" />
+              <div className="bg-muted/50 aspect-video rounded-xl" />
+            </div>
+            <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
+    </ClientOnly>
+    // <Page title="Home" variant="beige" background="beige">
+    //   <Background />
+    //   <Hero className="relative h-screen grow">
+    //     <Container className="pb-32">
+    //       <section className="relative z-10 flex flex-col gap-8 md:justify-between">
+    //         <div className="grow py-4 sm:py-24 md:grow-0 lg:py-20">
+    //           <h1 className="font-space-grotesk text-enei-beige w-3/12 text-justify text-5xl font-bold leading-[60px] tracking-tight md:text-7xl md:leading-[90px]">
+    //             <div className="block flex-row gap-10 sm:flex sm:gap-0 md:block md:gap-10 lg:flex lg:gap-0">
+    //               <p className="whitespace-nowrap lowercase [text-shadow:_0_4px_4px_rgb(0_0_0_/_25%)]">
+    //                 Encontro&nbsp;
+    //               </p>
+    //               <p className="whitespace-nowrap lowercase [text-shadow:_0_4px_4px_rgb(0_0_0_/_25%)]">
+    //                 Nacional de
+    //               </p>
+    //             </div>
+    //             <div className="block flex-row gap-10 sm:flex sm:gap-0 md:block md:gap-10 lg:flex lg:gap-0">
+    //               <p className="whitespace-nowrap lowercase [text-shadow:_0_4px_4px_rgb(0_0_0_/_25%)]">
+    //                 Estudantes de&nbsp;
+    //               </p>
+    //               <p className="whitespace-nowrap lowercase [text-shadow:_0_4px_4px_rgb(0_0_0_/_25%)]">
+    //                 Informática
+    //               </p>
+    //             </div>
+    //           </h1>
+    //           <p className="text-enei-beige mt-2 text-2xl [text-shadow:_0_4px_4px_rgb(0_0_0_/_25%)] md:text-4xl">
+    //             Porto 2025 | 11-14 de abril
+    //           </p>
+    //           <Countdown />
+    //         </div>
+    //       </section>
+    //     </Container>
+    //   </Hero>
+    //   <Container className="flex flex-col justify-center gap-y-32">
+    //     <ReasonsToEnroll />
+    //   </Container>
+    //   <section className="mb-32 mt-32">
+    //     <Highlights />
+    //   </section>
+    //   <Container className="flex flex-col justify-center gap-y-32">
+    //     <Statistics />
+    //   </Container>
+    //   <Partners />
+    // </Page>
   );
 }

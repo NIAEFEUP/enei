@@ -36,15 +36,15 @@ type PageRoute = {
 
 */
 
-function LoginButton({ variant }: { variant?: VariantProps<typeof buttonVariants>["variant"] }) {
+function LoginButton() {
   return (
-    <Link route="pages:auth.login" className={buttonVariants({ variant })}>
+    <Link route="pages:auth.login" className={buttonVariants()}>
       Entrar
     </Link>
   );
 }
 
-function LogoutButton({ variant }: { variant?: VariantProps<typeof buttonVariants>["variant"] }) {
+function LogoutButton() {
   const tuyau = useTuyau();
   const { post } = useForm();
 
@@ -55,14 +55,12 @@ function LogoutButton({ variant }: { variant?: VariantProps<typeof buttonVariant
 
   return (
     <form onSubmit={onSubmit} method="post">
-      <Button type="submit" variant={variant}>
-        Logout
-      </Button>
+      <Button type="submit">Logout</Button>
     </form>
   );
 }
 
-export function Navbar({ className, variant }: { className?: string; variant?: "blue" | "beige" }) {
+export function Navbar({ className }: { className?: string }) {
   const auth = useAuth();
   const [onTop, setOnTop] = useState(true);
 
@@ -80,16 +78,13 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
     return () => controller.abort();
   }, []);
 
-  const bgColor = variant === "blue" ? "enei-blue" : "enei-beige";
-  const textColor = variant === "blue" ? "enei-beige" : "enei-blue";
-
   return (
     <>
       <NotificationContainer className="relative z-20 flex w-full flex-col" />
       <nav
         className={cn(
           "w-full transition-colors duration-300",
-          !onTop && `bg-${bgColor} shadow-md`,
+          !onTop && `bg-background shadow-md`,
           className,
         )}
       >
@@ -98,7 +93,7 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
             <Link route="pages:home">
               <img
                 className="h-auto w-20 md:w-28"
-                src={variant === "blue" ? "/images/logo-white.svg" : "/images/logo-blue.svg"}
+                src={"/images/logo-white.svg" /* : "/images/logo-blue.svg"*/}
                 alt="Logótipo do ENEI"
               />
               <span className="sr-only">Ir para a página inicial</span>
@@ -107,41 +102,33 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
               <div className={auth.state === "authenticated" ? "block" : "hidden"}>
                 <Link
                   route="pages:staff.qrcode.scan"
-                  className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
+                  className={cn(buttonVariants({ variant: "link" }))}
                 >
                   <QrCode />
                 </Link>
               </div>
               <div>
-                <Link
-                  route="pages:store"
-                  className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
-                >
+                <Link route="pages:store" className={cn(buttonVariants({ variant: "link" }))}>
                   <span>Loja</span>
                 </Link>
               </div>
               <div className={auth.state === "authenticated" ? "block" : "hidden"}>
                 <Link
                   route="pages:referrals"
-                  className={cn(buttonVariants({ variant: "link" }), `text-${textColor} p-0`)}
+                  className={cn(buttonVariants({ variant: "link" }), `p-0`)}
                 >
                   Referenciações
                 </Link>
               </div>
 
-              <Link
-                route="pages:events"
-                className={cn(buttonVariants({ variant: "link" }), `text-${textColor} p-0`)}
-              >
+              <Link route="pages:events" className={cn(buttonVariants({ variant: "link" }), `p-0`)}>
                 Programa
               </Link>
               <div>
                 {auth.state === "authenticated" ? (
-                  <LogoutButton variant={variant === "blue" ? "secondary" : "default"} />
+                  <LogoutButton />
                 ) : (
-                  auth.state === "unauthenticated" && (
-                    <LoginButton variant={variant === "blue" ? "secondary" : "default"} />
-                  )
+                  auth.state === "unauthenticated" && <LoginButton />
                 )}
               </div>
             </div>

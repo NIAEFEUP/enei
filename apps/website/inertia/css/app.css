@@ -6,16 +6,22 @@
     Space Grotesk, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", "Noto Color Emoji";
 
-  --color-enei-blue: hsl(198 82% 23%);
-  --color-enei-beige: hsl(41 54% 86%);
-  --color-enei-emerald: hsl(173 22% 45%);
-  --color-enei-night: hsl(240 6% 17%);
-  --color-enei-workshop: hsl(78 29% 77%);
+  --color-enei-blue: var(--color-enei-indigo-blue);
+  --color-enei-beige: var(--color-enei-pearl);
+  --color-enei-emerald: var(--color-enei-dark-cyan);
+  --color-enei-night: var(--color-enei-raisin-black);
+  --color-enei-workshop: var(--color-enei-tea-green);
   --color-enei-meal: var(--color-enei-emerald);
-  --color-enei-talk: hsl(38 68% 73%);
-  --color-enei-competition: hsl(38 72% 60%);
-  --color-enei-networking: hsl(122 19% 68%);
+  --color-enei-talk: var(--color-enei-hunyadi-yellow);
+  --color-enei-competition: var(--color-enei-persian-orange);
+  --color-enei-networking: var(--color-enei-cambridge-blue);
   --color-enei-other: var(--color-enei-blue);
+}
+
+html,
+body,
+#app {
+  height: 100%;
 }
 
 .wave-clip-path {

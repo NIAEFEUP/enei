@@ -34,18 +34,16 @@ export default function Page({
   background?: "blue" | "beige";
   children?: React.ReactNode;
 }) {
-  const actualBackground = background ?? variant;
-
   return (
     <div
       className={cn(
-        "flex min-h-dvh w-full flex-col scroll-smooth",
-        actualBackground === "blue" ? "bg-enei-blue" : "bg-enei-beige",
+        "bg-background text-foreground flex min-h-dvh w-full flex-col scroll-smooth",
+        variant === "blue" ? "attention" : [],
       )}
     >
       <Head title={title} />
       <div className="relative grow pb-32">
-        <Navbar className="sticky top-0 z-20 grow-0" variant={variant} />
+        <Navbar className="sticky top-0 z-20 grow-0" />
         <PromoterNotification />
         <div className={className}>{children}</div>
       </div>

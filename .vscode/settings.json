@@ -1,6 +1,14 @@
 {
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+
+  "tailwindCSS.emmetCompletions": true,
+
+  "tailwindCSS.classFunctions": ["cva", "cn"],
+
   "tailwindCSS.experimental.configFile": {
     "apps/website/inertia/css/app.css": "apps/website/**",
-    "packages/shadcn/src/styles.css": "packages/shadcn/src/**"
+    "packages/shadcn/src/css/styles.css": "packages/shadcn/src/**"
   }
 }

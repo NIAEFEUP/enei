@@ -307,7 +307,7 @@ const MultiSelectorList = forwardRef<
     <CommandList
       ref={ref}
       className={cn(
-        "scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted-foreground dark:scrollbar-thumb-muted scrollbar-thumb-rounded-lg bg-background border-muted absolute top-0 z-10 flex w-full flex-col gap-2 rounded-md border p-2 shadow-md transition-colors",
+        "scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted-foreground attention:scrollbar-thumb-muted scrollbar-thumb-rounded-lg bg-background border-muted absolute top-0 z-10 flex w-full flex-col gap-2 rounded-md border p-2 shadow-md transition-colors",
         className,
       )}
     >

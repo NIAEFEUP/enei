@@ -5,8 +5,8 @@ import { Label } from "@enei/shadcn/ui/label";
 import { useError } from "~/hooks/use_error";
 import { useForm } from "@inertiajs/react";
 import { cn } from "~/lib/utils";
-import BaseLayout from "~/layouts/base";
 import CardLayout from "~/layouts/card";
+import Page from "~/components/common/page";
 
 export default function ForgotPassword() {
   const oauthError = useError("oauth");
@@ -22,7 +22,7 @@ export default function ForgotPassword() {
   };
 
   return (
-    <BaseLayout title="Repor palavra-passe">
+    <Page title="Repor palavra-passe" variant="blue">
       <CardLayout>
         <Card className={cn(oauthError && "border-2 border-red-600")}>
           <CardHeader>
@@ -56,6 +56,6 @@ export default function ForgotPassword() {
           </CardContent>
         </Card>
       </CardLayout>
-    </BaseLayout>
+    </Page>
   );
 }

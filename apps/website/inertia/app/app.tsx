@@ -11,6 +11,7 @@ import { resolvePageComponent } from "@adonisjs/inertia/helpers";
 import { createInertiaApp } from "@inertiajs/react";
 import { hydrateRoot } from "react-dom/client";
 import { Providers } from "./providers";
+import { StrictMode } from "react";
 
 const appName = import.meta.env.VITE_APP_NAME || "ENEI";
 
@@ -29,13 +30,15 @@ createInertiaApp({
   setup({ el, App, props }) {
     hydrateRoot(
       el,
-      <App {...props}>
-        {(page) => (
-          <Providers>
-            <page.Component key={page.key} {...page.props} />
-          </Providers>
-        )}
-      </App>,
+      <StrictMode>
+        <App {...props}>
+          {(page) => (
+            <Providers>
+              <page.Component key={page.key} {...page.props} />
+            </Providers>
+          )}
+        </App>
+      </StrictMode>,
     );
   },
 });

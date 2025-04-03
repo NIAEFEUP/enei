@@ -1,19 +1,23 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./palette.css";
 
 @source "./**/*.tsx";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant attention (&:is(.attention *));
 
 :root {
-  --background: oklch(1 0 0);
+  /* --background: oklch(1 0 0); */
+  --background: var(--color-enei-pearl);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
+  /* --primary: oklch(0.205 0 0); */
+  --primary: var(--color-enei-indigo-blue);
+  /* --primary-foreground: oklch(0.985 0 0); */
+  --primary-foreground: var(--color-enei-pearl);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
@@ -41,22 +45,29 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
+.attention {
+  /* --background: oklch(0.145 0 0); */
+  --background: var(--color-enei-indigo-blue);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
+  /* --card: oklch(0.145 0 0); */
+  --card: var(--color-white);
+  /* --card-foreground: oklch(0.985 0 0); */
+  --card-foreground: var(--color-enei-indigo-blue);
   --popover: oklch(0.145 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
+  /* --primary: oklch(0.985 0 0); */
+  --primary: var(--color-enei-pearl);
+  /* --primary-foreground: oklch(0.205 0 0); */
+  --primary-foreground: var(--color-enei-indigo-blue);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
+  /* --muted-foreground: oklch(0.708 0 0); */
+  --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
+  /* --destructive: oklch(0.396 0.141 25.723); */
+  --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.637 0.237 25.331);
   --border: oklch(0.269 0 0);
   --input: oklch(0.269 0 0);
@@ -74,6 +85,11 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+
+  & [data-slot="card"] {
+    --primary: var(--color-enei-indigo-blue);
+    --primary-foreground: var(--color-white);
+  }
 }
 
 @theme inline {

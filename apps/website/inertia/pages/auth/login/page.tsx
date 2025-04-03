@@ -24,7 +24,7 @@ export default function Login() {
   };
 
   return (
-    <Page title="Iniciar Sessão" className="bg-enei-blue">
+    <Page title="Iniciar Sessão" variant="blue">
       <CardContainer>
         <Card className={cn(oauthError && "border-2 border-red-600")}>
           <CardHeader>
@@ -69,7 +69,7 @@ export default function Login() {
                   {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
                 </div>
                 <div className="flex flex-col gap-4">
-                  <Button type="submit" className="bg-enei-blue w-full">
+                  <Button type="submit" className="w-full">
                     Iniciar Sessão
                   </Button>
                   {/* <div className="flex gap-2 items-center"> */}

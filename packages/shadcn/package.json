@@ -72,7 +72,7 @@
     "#/lib/*": "./src/lib/*.ts"
   },
   "exports": {
-    "./styles.css": "./src/styles.css",
+    "./styles.css": "./src/css/styles.css",
     "./icons": "./src/icons.ts",
     "./extension/*": "./src/components/extension/*.tsx",
     "./form/*": "./src/components/form/*.tsx",

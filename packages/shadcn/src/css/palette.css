@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme {
+  --color-enei-indigo-blue: #0b4f6c;
+  --color-enei-pearl: #efe3ca;
+  --color-enei-persian-orange: #e28c40;
+  --color-enei-hunyadi-yellow: #e2ad50;
+  --color-enei-tea-green: #ccd6b5;
+  --color-enei-cambridge-blue: #9ebd9f;
+  --color-enei-dark-cyan: #5a8c86;
+  --color-enei-raisin-black: #28282d;
+}
