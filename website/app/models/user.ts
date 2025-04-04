@@ -1,155 +1,151 @@
-import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column, hasMany, manyToMany } from '@adonisjs/lucid/orm'
-import Account from './account.js'
-import { UserTypes } from '../../types/user.js'
-import PromoterInfo from './promoter_info.js'
-import type { BelongsTo, HasMany, ManyToMany } from '@adonisjs/lucid/types/relations'
-import PromoterProfile from './promoter_profile.js'
-import ParticipantProfile from './participant_profile.js'
-import { attachment} from '@jrmc/adonis-attachment'
-import type { Attachment } from '@jrmc/adonis-attachment/types/attachment'
-import Event from './event.js'
-
+import { DateTime } from "luxon";
+import { BaseModel, belongsTo, column, hasMany, manyToMany } from "@adonisjs/lucid/orm";
+import Account from "./account.js";
+import { UserTypes } from "../../types/user.js";
+import PromoterInfo from "./promoter_info.js";
+import type { BelongsTo, HasMany, ManyToMany } from "@adonisjs/lucid/types/relations";
+import PromoterProfile from "./promoter_profile.js";
+import ParticipantProfile from "./participant_profile.js";
+import { attachment } from "@jrmc/adonis-attachment";
+import type { Attachment } from "@jrmc/adonis-attachment/types/attachment";
+import Event from "./event.js";
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
-  declare id: number
+  declare id: number;
 
   @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
+  declare createdAt: DateTime;
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
+  declare updatedAt: DateTime;
 
   @column()
-  declare email: string
+  declare email: string;
 
   @column.dateTime()
-  declare emailVerifiedAt: DateTime | null
+  declare emailVerifiedAt: DateTime | null;
 
   @column()
-  declare isAdmin: boolean
+  declare isAdmin: boolean;
 
   @hasMany(() => Account)
-  declare accounts: HasMany<typeof Account>
+  declare accounts: HasMany<typeof Account>;
 
   // Referrals
 
   @column()
-  declare referringPromoterId: number | null
+  declare referringPromoterId: number | null;
 
   @belongsTo(() => User, {
-    foreignKey: 'referringPromoterId',
+    foreignKey: "referringPromoterId",
   })
-  declare referringPromoter: BelongsTo<typeof User>
+  declare referringPromoter: BelongsTo<typeof User>;
 
   @hasMany(() => User, {
-    localKey: 'id',
-    foreignKey: 'referringPromoterId',
+    localKey: "id",
+    foreignKey: "referringPromoterId",
   })
-  declare indirectReferrals: HasMany<typeof User>
+  declare indirectReferrals: HasMany<typeof User>;
 
-  @manyToMany (() => Event)
-  declare eventsRegistered: ManyToMany<typeof Event>
+  @manyToMany(() => Event)
+  declare eventsRegistered: ManyToMany<typeof Event>;
 
   @column()
-  declare referrerId: number | null
+  declare referrerId: number | null;
 
   @belongsTo(() => User, {
-    foreignKey: 'referrerId',
+    foreignKey: "referrerId",
   })
-  declare referrer: BelongsTo<typeof User>
+  declare referrer: BelongsTo<typeof User>;
 
   @hasMany(() => User, {
-    localKey: 'id',
-    foreignKey: 'referrerId',
+    localKey: "id",
+    foreignKey: "referrerId",
   })
-  declare referrals: HasMany<typeof User>
+  declare referrals: HasMany<typeof User>;
 
   // PromoterProfile
 
   @column()
-  declare promoterProfileId: number | null
+  declare promoterProfileId: number | null;
 
   @belongsTo(() => PromoterProfile)
-  declare promoterProfile: BelongsTo<typeof PromoterProfile>
+  declare promoterProfile: BelongsTo<typeof PromoterProfile>;
 
   // ParticipantProfile
 
   @column()
-  declare participantProfileId: number | null
+  declare participantProfileId: number | null;
 
   @belongsTo(() => ParticipantProfile)
-  declare participantProfile: BelongsTo<typeof ParticipantProfile>
+  declare participantProfile: BelongsTo<typeof ParticipantProfile>;
 
   @column()
-  declare points: number
-
-  @attachment(
-    {
-      folder: 'resumes',
-    }
-  )
-  declare resume: Attachment | null 
+  declare points: number;
 
   @attachment({
-    folder: 'avatars',
-    variants: ['thumbnail'],
-    
+    folder: "resumes",
   })
-  declare avatar: Attachment | null
+  declare resume: Attachment | null;
+
+  @attachment({
+    folder: "avatars",
+    variants: ["thumbnail"],
+  })
+  declare avatar: Attachment | null;
 
   @belongsTo(() => PromoterInfo)
-  declare promoterInfo: BelongsTo<typeof PromoterInfo>
+  declare promoterInfo: BelongsTo<typeof PromoterInfo>;
 
   // Functions
 
   get role() {
-    if (this.isParticipant()) return 'participant' as const
-    if (this.isPromoter()) return 'promoter' as const
-    return 'unknown' as const
+    if (this.isParticipant()) return "participant" as const;
+    if (this.isPromoter()) return "promoter" as const;
+    return "unknown" as const;
   }
 
   isPromoter() {
-    return this.promoterProfileId !== null
+    return this.promoterProfileId !== null;
   }
 
   isParticipant() {
-    return this.participantProfileId !== null
+    return this.participantProfileId !== null;
   }
 
   isEmailVerified() {
-    return this.emailVerifiedAt !== null
+    return this.emailVerifiedAt !== null;
   }
 
   groups() {
-    const groups = []
+    const groups = [];
 
-    if (this.participantProfile) groups.push(UserTypes.PARTICIPANT)
+    if (this.participantProfile) groups.push(UserTypes.PARTICIPANT);
 
-    if (this.promoterInfo) groups.push(UserTypes.PROMOTER)
+    if (this.promoterInfo) groups.push(UserTypes.PROMOTER);
 
-    return groups
+    return groups;
   }
 
   wasReferred() {
-    return this.referrerId !== null
+    return this.referrerId !== null;
   }
 
   static async hasPurchasedTicket(user: User) {
-    if (!user.isParticipant()) return false
+    if (!user.isParticipant()) return false;
 
-    await user.load('participantProfile')
-    return !!user.participantProfile.purchasedTicket
+    await user.load("participantProfile");
+    return !!user.participantProfile.purchasedTicket;
   }
 
   static async getReferringPromoter(user: User) {
-    await user.load('referringPromoter')
-    return user.referringPromoter
+    await user.load("referringPromoter");
+    return user.referringPromoter;
   }
 
   static async getReferrer(user: User) {
-    await user.load('referrer')
-    return user.referrer
+    await user.load("referrer");
+    return user.referrer;
   }
 }
