@@ -50,7 +50,6 @@ export default function ParticipantProfilePage(props: Props) {
 
   return (
     <BaseProfilePage
-      canEditProfile={true}
       profileName={`${profile.firstName} ${profile.lastName}`}
       about={profile.about ?? undefined}
       {...props}
