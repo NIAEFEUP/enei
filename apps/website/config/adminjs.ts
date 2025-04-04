@@ -18,6 +18,8 @@ import SpeakerProfileResource from "../app/admin/resources/speaker_profile.js";
 import StaffProfileResource from "../app/admin/resources/staff_profile.js";
 import UserActivityResource from "../app/admin/resources/user_activity.js";
 import UserResource from "../app/admin/resources/user.js";
+import CompanyResource from "../app/admin/resources/company.js";
+import RepresentativeProfileResource from "../app/admin/resources/representative_profile.js";
 
 const resources = [
   AccountResource,
@@ -35,6 +37,8 @@ const resources = [
   StaffProfileResource,
   UserActivityResource,
   UserResource,
+  CompanyResource,
+  RepresentativeProfileResource
 ];
 
 const adminjsConfig = {
