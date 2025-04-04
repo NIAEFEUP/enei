@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.increments("id");
 
       table.string("title").notNullable();
-      table.text("description").notNullable();
+      table.text("description");
       table.dateTime("date").notNullable();
       table.string("duration").notNullable();
       table.string("location").notNullable();
