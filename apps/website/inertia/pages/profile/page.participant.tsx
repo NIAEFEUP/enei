@@ -11,7 +11,7 @@ import { Button } from "~/components/ui/button";
 import { ENEI_EDITIONS } from "~/lib/enei/signup/editions";
 import { Badge } from "~/components/ui/badge";
 
-type Props = Omit<BaseProfilePageProps, "canEditProfile" | "profileName"> & {
+type Props = Omit<BaseProfilePageProps, "profileName"> & {
   profile: ParticipantProfile;
 };
 
