@@ -109,6 +109,7 @@ export default function ProfilePage(
               </Link>
             )}
 
+            {/* FIXME: On chrome, the text does not wrap, for some reason. */}
             <ul className="mt-7 flex flex-col gap-5">
               {socials.length > 0
                 && socials.map((social: SocialIconProps) => <SocialItem {...social} />)}
