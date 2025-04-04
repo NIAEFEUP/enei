@@ -2,12 +2,12 @@ import { Card, CardFooter, CardContent } from "~/components/ui/card";
 
 import { cn } from "~/lib/utils";
 import { useContext } from "react";
-import { StoreContext } from "~/pages/store/page";
 
 import { canBuyProduct } from "~/lib/enei/store/utils";
 
 import type Product from "#models/product";
 import PointsStoreProductCardCollectAction from "./product_card_collection_card";
+import { StoreContext } from "~/pages/store/context";
 
 interface StoreProductCardProps {
   product: Product;

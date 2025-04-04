@@ -20,7 +20,7 @@ export default function ReasonsToEnroll() {
       <ReasonsToEnrollItem
         icon={<Crowd />}
         title="03 Chat"
-        description="Conhece estudantes com o mesmo gosto que tu e as empresas relevantes da tua area, onde podes seguir a tua carreia"
+        description="Conhece estudantes com o mesmo gosto que tu e as empresas relevantes da tua área, onde podes seguir a tua carreira"
       />
       <ReasonsToEnrollItem
         icon={<WineGlass />}

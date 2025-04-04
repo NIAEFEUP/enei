@@ -104,7 +104,11 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
               <span className="sr-only">Ir para a página inicial</span>
             </Link>
             <div className="flex items-center justify-between gap-4">
-              <div className={auth.state === "authenticated" ? "block" : "hidden"}>
+              <div
+                className={
+                  auth.state === "authenticated" && auth.user.role === "staff" ? "block" : "hidden"
+                }
+              >
                 <Link
                   route="pages:staff.qrcode.scan"
                   className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
