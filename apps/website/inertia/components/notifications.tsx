@@ -20,11 +20,9 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   );
 
   return (
-    <div>
-      <NotificationContext.Provider value={{ setContainer, render }}>
-        {children}
-      </NotificationContext.Provider>
-    </div>
+    <NotificationContext.Provider value={{ setContainer, render }}>
+      {children}
+    </NotificationContext.Provider>
   );
 }
 

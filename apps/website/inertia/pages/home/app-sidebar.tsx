@@ -24,6 +24,7 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
+  SidebarTrigger,
 } from "@enei/shadcn/ui/sidebar";
 
 // This is sample data.
@@ -31,7 +32,7 @@ const data = {
   user: {
     name: "shadcn",
     email: "m@example.com",
-    avatar: "/favicon.ico",
+    avatar: "https://static-production.npmjs.com/c426a1116301d1fd178c51522484127a.png",
   },
   teams: [
     {
@@ -166,8 +167,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
       </SidebarContent>
-      <SidebarFooter>
+      {/* <SidebarFooter>
         <NavUser user={data.user} />
+      </SidebarFooter> */}
+      <SidebarFooter className="items-start group-data-[side=right]:items-end">
+        <SidebarTrigger className="size-8 rotate-180" />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
