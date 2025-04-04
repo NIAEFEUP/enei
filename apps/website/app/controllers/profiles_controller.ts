@@ -11,12 +11,13 @@ import type { HttpContext } from "@adonisjs/core/http";
 import slug from "slug";
 import SpeakerProfile from "#models/speaker_profile";
 import Sqids from "sqids";
+import { errors } from "@adonisjs/core";
 
 const sludSqids = new Sqids({
   alphabet: "nkzm6vl3170gtx8uro9aj4iyqhwdpcebsf52", // lowercase letters and numbers
 });
 
-function toParticipantProfileFormat(data: any): Partial<ParticipantProfile> {
+function toParticipantProfileFormat(data: Record<string, any>): Partial<ParticipantProfile> {
   if ("curricularYear" in data) {
     data.finishedAt = data.curricularYear[1];
     data.curricularYear = data.curricularYear[0];
@@ -42,11 +43,16 @@ export default class ProfilesController {
     const user = auth.user;
 
     if (!user) {
-      response.notFound("Utilizador não encontrado");
-      return;
+      // TODO: Should create custom exception classes
+      throw errors.E_HTTP_EXCEPTION.invoke(
+        {
+          errors: ["Utilizador não encontrado"],
+        },
+        404,
+      );
     }
 
-    const profile = User.getProfile(user);
+    const profile = await User.getProfile(user);
 
     if (!profile) return response.redirect().toRoute("pages:signup");
 
@@ -57,27 +63,39 @@ export default class ProfilesController {
     const profile = await ParticipantProfile.findBy("slug", params.slug);
 
     if (!profile) {
-      response.notFound("Participante não encontrado");
-      return;
+      throw errors.E_HTTP_EXCEPTION.invoke(
+        {
+          errors: ["Participante não encontrado"],
+        },
+        404,
+      );
     }
 
     return response.send({ profile: profile });
   }
 
-  async index({ auth, inertia, params, response }: HttpContext) {
+  async index({ auth, inertia, params }: HttpContext) {
     const user = await User.findBy("slug", params.slug);
 
     if (!user) {
-      response.notFound("Participante não encontrado");
-      return;
+      throw errors.E_HTTP_EXCEPTION.invoke(
+        {
+          errors: ["Utilizador não encontrado"],
+        },
+        404,
+      );
     }
 
     const profile = await User.getProfile(user);
     await profile?.loadOnce("user"); // HACK: is this needed?
 
     if (!profile) {
-      response.notFound("Perfil não encontrado");
-      return;
+      throw errors.E_HTTP_EXCEPTION.invoke(
+        {
+          errors: ["Perfil de utilizador não encontrado"],
+        },
+        404,
+      );
     }
 
     if (profile instanceof SpeakerProfile) {
