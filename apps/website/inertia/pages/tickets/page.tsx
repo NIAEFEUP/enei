@@ -6,7 +6,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@enei/shadcn/ui/ca
 import TicketsController from "#controllers/tickets_controller";
 import Page from "~/components/common/page";
 import Container from "~/components/common/containers";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 
 export default function SelectTicketsPage(props: InferPageProps<TicketsController, "index">) {
   const imageSrc = `favicon.svg`;

@@ -1,8 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+
 @import "./palette.css";
 
-@source "./**/*.tsx";
+@source "../**/*.tsx";
 
 @custom-variant attention (&:is(.attention *));
 

@@ -12,7 +12,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "shadcn": "2.4.0-canary.20",
-    "tailwindcss": "^4.1.0",
+    "tailwindcss": "catalog:",
     "typescript": "catalog:"
   },
   "dependencies": {
@@ -73,6 +73,7 @@
   },
   "exports": {
     "./styles.css": "./src/css/styles.css",
+    "./cn": "./src/lib/utils.ts",
     "./icons": "./src/icons.ts",
     "./extension/*": "./src/components/extension/*.tsx",
     "./form/*": "./src/components/form/*.tsx",

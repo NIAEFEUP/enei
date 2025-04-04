@@ -1,5 +1,5 @@
 import { Button } from "@enei/shadcn/ui/button";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 import { ScrollArea, ScrollBar } from "@enei/shadcn/ui/scroll-area";
 
 interface DaySelectorProps {

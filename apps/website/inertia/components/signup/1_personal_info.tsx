@@ -19,7 +19,7 @@ import {
 } from "@enei/shadcn/ui/select";
 import { Button } from "@enei/shadcn/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@enei/shadcn/ui/popover";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 import { Calendar } from "@enei/shadcn/ui/calendar";
 import { CalendarIcon } from "@enei/shadcn/icons";
 import { format } from "date-fns";

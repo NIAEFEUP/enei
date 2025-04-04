@@ -1,4 +1,4 @@
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 
 export default function Container({
   className,

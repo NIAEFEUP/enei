@@ -5,7 +5,7 @@ import { Input } from "@enei/shadcn/ui/input";
 import { Label } from "@enei/shadcn/ui/label";
 import { useError } from "~/hooks/use_error";
 import { useForm } from "@inertiajs/react";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 import Page from "~/components/common/page";
 import CardContainer from "~/components/common/containers/card";
 

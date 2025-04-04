@@ -19,7 +19,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@enei/shadcn/ui/dialog";
 import { QRCodeSVG } from "qrcode.react";
 import { useEffect, useState, createContext } from "react";
 import { Link } from "@tuyau/inertia/react";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 import { Badge } from "@enei/shadcn/ui/badge";
 import editions from "#data/enei/editions.json" with { type: "json" };
 import { Option } from "@enei/shadcn/extension/multi-select";

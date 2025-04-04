@@ -20,7 +20,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@enei/shadcn/ui/popover
 import CurricularYearSelector, { CurricularYearSelectorType } from "./input/curricular_year_input";
 
 import { Check, ChevronsUpDown } from "@enei/shadcn/icons";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 import { Input } from "@enei/shadcn/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EducationInfo, educationInfoSchema } from "~/pages/signup/schema";

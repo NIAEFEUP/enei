@@ -1,7 +1,7 @@
 import { Card, CardFooter, CardContent } from "@enei/shadcn/ui/card";
 import PointsStoreProductCardAccquire from "./product_card_accquire";
 
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 import { useContext } from "react";
 import { StoreContext } from "~/pages/store/page";
 

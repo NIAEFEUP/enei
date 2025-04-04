@@ -1,4 +1,4 @@
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 import { CardTitle } from "@enei/shadcn/ui/card";
 import EventCard from "./event_card";
 

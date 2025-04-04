@@ -9,7 +9,7 @@ import { buttonVariants } from "@enei/shadcn/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@enei/shadcn/ui/card";
 import { Input } from "@enei/shadcn/ui/input";
 import { Label } from "@enei/shadcn/ui/label";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 
 export default function ReferralsPage({
   referralLink,

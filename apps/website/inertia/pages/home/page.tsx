@@ -1,7 +1,7 @@
 import { TZDateMini } from "@date-fns/tz";
 import { useCountdown } from "~/hooks/use_countdown";
 import { useEnvironment } from "~/hooks/use_env";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 import background from "~/images/background.jpeg";
 import Page from "~/components/common/page";
 import Hero from "~/components/common/hero";
@@ -129,7 +129,7 @@ function ClientOnly({ children }: { children?: React.ReactNode }) {
 
 export default function Home() {
   return (
-    <ClientOnly>
+    <div className="h-screen w-screen">
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset>
@@ -160,7 +160,7 @@ export default function Home() {
           </div>
         </SidebarInset>
       </SidebarProvider>
-    </ClientOnly>
+    </div>
     // <Page title="Home" variant="beige" background="beige">
     //   <Background />
     //   <Hero className="relative h-screen grow">

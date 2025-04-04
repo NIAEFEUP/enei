@@ -4,6 +4,7 @@ packages:
 
 catalog:
   lucide-react: ^0.486.0
+  tailwindcss: ^4.1.2
   typescript: ^5.8.2
 
 overrides:

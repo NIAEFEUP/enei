@@ -3,7 +3,7 @@ import { Link } from "@tuyau/inertia/react";
 import { Button, buttonVariants } from "@enei/shadcn/ui/button";
 import { useAuth } from "~/hooks/use_auth";
 import { useTuyau } from "~/hooks/use_tuyau";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 import Container from "./containers";
 import { useEffect, useState } from "react";
 import { NotificationContainer } from "../notifications";

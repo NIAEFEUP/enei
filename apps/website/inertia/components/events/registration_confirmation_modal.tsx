@@ -8,7 +8,7 @@ import {
 } from "@enei/shadcn/ui/dialog";
 import { Button, buttonVariants } from "@enei/shadcn/ui/button";
 import { Loader2 } from "@enei/shadcn/icons";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 
 interface RegistrationConfirmationModalProps {
   isOpen: boolean;

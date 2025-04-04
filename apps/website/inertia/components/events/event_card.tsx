@@ -2,7 +2,7 @@ import { Card, CardTitle } from "@enei/shadcn/ui/card";
 import { Badge } from "@enei/shadcn/ui/badge";
 import { Ticket } from "@enei/shadcn/icons";
 import { Avatar, AvatarFallback, AvatarImage } from "@enei/shadcn/ui/avatar";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 import { useState } from "react";
 
 interface Speaker {

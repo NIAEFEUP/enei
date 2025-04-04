@@ -1,6 +1,6 @@
 import { Card, CardFooter, CardContent } from "@enei/shadcn/ui/card";
 
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 import { useContext } from "react";
 import { StoreContext } from "~/pages/store/page";
 

@@ -14,7 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@enei/shadcn/ui/card";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useToast } from "~/hooks/use_toast";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 // import { Tooltip } from '@enei/shadcn/ui/tooltip'
 // import { TooltipContent, TooltipProvider, TooltipTrigger } from '@radix-ui/react-tooltip'
 import RegistrationConfirmationModal from "~/components/events/registration_confirmation_modal";

@@ -1,7 +1,7 @@
 import { Badge } from "@enei/shadcn/ui/badge";
 import { EventType } from "./highlights";
 import { cva } from "class-variance-authority";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 
 interface HighlightCardProps {
   title: string;

@@ -3,6 +3,7 @@
 import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from "@enei/shadcn/icons";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@enei/shadcn/ui/avatar";
+import { Button } from "@enei/shadcn/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,6 +37,7 @@ export function NavUser({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
+              lol="debug"
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >

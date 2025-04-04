@@ -1,6 +1,6 @@
 import { Head } from "@inertiajs/react";
 import React from "react";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 import { Navbar } from "./navbar";
 import { Toaster } from "@enei/shadcn/ui/sonner";
 import { useAuth } from "~/hooks/use_auth";
