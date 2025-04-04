@@ -1,0 +1,6 @@
+// This file is used to allow IDEs to understand the project structure.
+// It is not used to compile the project.
+{
+  "files": [],
+  "references": [{ "path": "./tsconfig.lib.json" }]
+}

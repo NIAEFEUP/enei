@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    // Modules
+    "module": "Preserve",
+    "moduleResolution": "bundler",
+
+    // Language and Environment
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "target": "ES6"
+  }
+}
