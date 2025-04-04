@@ -17,7 +17,7 @@ const AuthenticationController = () => import("#controllers/authentication_contr
 const OrdersController = () => import("#controllers/orders_controller");
 const TicketsController = () => import("#controllers/tickets_controller");
 const ProfilesController = () => import("#controllers/profiles_controller");
-const UsersController = () => import('#controllers/users_controller')
+const UsersController = () => import("#controllers/users_controller");
 const StoreController = () => import("#controllers/store_controller");
 const ReferralsController = () => import("#controllers/referrals_controller");
 
@@ -222,21 +222,20 @@ router
   .prefix("cv") // dummy route for testing
   .use(middleware.wip());
 
-router.
-  group(() => {
-    router.post('/cv/upload', [UsersController, 'storeCV']).as('actions:cv_upload')
-    router.delete('cv/delete', [UsersController, 'deleteCV']).as('actions:cv_delete')
-    router.get('/cv/name', [UsersController, 'showCVName']).as('actions:cv_name')
-    router.get('/:id/cv/download', [UsersController, 'downloadCV']).use( middleware.company())
+router
+  .group(() => {
+    router.post("/cv/upload", [UsersController, "storeCV"]).as("actions:cv_upload");
+    router.delete("cv/delete", [UsersController, "deleteCV"]).as("actions:cv_delete");
+    router.get("/cv/name", [UsersController, "showCVName"]).as("actions:cv_name");
+    router.get("/:id/cv/download", [UsersController, "downloadCV"]).use(middleware.company());
 
     // Avatar endpoints
-    router.get('/avatar/name', [UsersController, 'showAvatarName']).as('actions:avatar_name')
-    router.post('/avatar/upload', [UsersController, 'storeAvatar']).as('actions:avatar_upload')
-    router.delete('/avatar/delete', [UsersController, 'deleteAvatar']).as('actions:avatar_delete')
-
+    router.get("/avatar/name", [UsersController, "showAvatarName"]).as("actions:avatar_name");
+    router.post("/avatar/upload", [UsersController, "storeAvatar"]).as("actions:avatar_upload");
+    router.delete("/avatar/delete", [UsersController, "deleteAvatar"]).as("actions:avatar_delete");
   })
   .use(middleware.auth())
-  .prefix('user')
+  .prefix("user");
 
 router
   .group(() => {
