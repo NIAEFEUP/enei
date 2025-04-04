@@ -56,14 +56,16 @@ export default function ParticipantProfilePage(props: Props) {
       {...props}
     >
       <ProfileDetailsSlot>
-        <p className="text-lg">
-          {" "}
-          {profile.course} &#183;{" "}
-          {profile.curricularYear === "already-finished"
-            ? "Concluído em " + profile.finishedAt
-            : profile.curricularYear + "º ano"}{" "}
-        </p>
-        <p className="text-lg"> @ {getUniversityById(profile.university)!.name} </p>
+        <div>
+          <p className="text-lg">
+            {" "}
+            {profile.course} &#183;{" "}
+            {profile.curricularYear === "already-finished"
+              ? "Concluído em " + profile.finishedAt
+              : profile.curricularYear + "º ano"}{" "}
+          </p>
+          <p className="text-lg"> @ {getUniversityById(profile.university)!.name} </p>
+        </div>
       </ProfileDetailsSlot>
 
       <LinksSlot>

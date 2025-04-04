@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import { cn } from "~/lib/utils";
 
 // Slot components - based on https://dev.to/neetigyachahar/what-is-the-react-slots-pattern-2ld9
-// Nuno: I ABSOLUTELY HATE REACT AND HOW THEY HANDLE THIS
+// Nuno: I ABSOLUTELY HATE REACT AND HOW THEY HANDLE SLOTS
 export const ProfileDetailsSlot: React.FC<React.PropsWithChildren> = ({ children }) => (
   <>{children}</>
 );
@@ -27,6 +27,11 @@ export type BaseProfilePageProps = React.PropsWithChildren<{
 
 export default function ProfilePageBase(props: BaseProfilePageProps) {
   const { canEditProfile, avatarLogo, profileName, about, children } = props;
+
+  // Ideally we would pass the profile as a prop to this component.
+  // With that, we could make this component generic on the type of profile.
+  // However, since there is no common ancestor for Profile types, this is tricky.
+  // TS and JS use structural typing so things could be done there but they're not necessary now.
 
   // TODO: Nuno: see if this impacts performance
   const childrenAsArray = React.Children.toArray(children);

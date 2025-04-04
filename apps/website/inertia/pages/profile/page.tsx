@@ -19,6 +19,10 @@ import { useAuth } from "~/hooks/use_auth";
 import { ENEI_EDITIONS } from "~/lib/enei/signup/editions";
 import { Avatar, AvatarImage } from "~/components/ui/avatar";
 import ParticipantProfilePage from "./page.participant";
+import SpeakerProfilePage from "./page.speaker";
+import SpeakerProfile from "#models/speaker_profile";
+import CompanyProfilePage from "./page.company";
+import Company from "#models/company";
 
 export const ProfileContext = createContext<{ slug: string | number }>({
   slug: "",
@@ -66,7 +70,7 @@ export default function ProfilePage(props: InferPageProps<ProfilesController, "i
 
   const newUI = true;
 
-  if (newUI) return <ParticipantProfilePage profile={profile as ParticipantProfile} />;
+  if (newUI) return <CompanyProfilePage profile={profile as Company} />;
   else
     return (
       <ProfileContext.Provider value={{ slug: profile.user?.slug ?? "" }}>
