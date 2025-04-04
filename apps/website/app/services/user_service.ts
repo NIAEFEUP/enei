@@ -12,6 +12,11 @@ import app from "@adonisjs/core/services/app";
 import { inject } from "@adonisjs/core";
 import { Logger } from "@adonisjs/core/logger";
 import PromoterProfile from "#models/promoter_profile";
+import UserChangeEmail from "#events/user_change_email";
+import SendChangeEmailEmail from "#listeners/send_change_email_email";
+import ChangeEmail from "#models/email_change";
+import UserEmailChangedConfirmation from "#events/user_email_changed";
+import SendEmailChangedConfirmationEmail from "#listeners/send_email_changed_email";
 
 @inject()
 export class UserService {
@@ -81,5 +86,25 @@ export class UserService {
   async sendForgotPasswordEmail(email: string) {
     const listener = new SendForgotPasswordEmail();
     listener.handle(new UserForgotPassword(email));
+  }
+
+  async sendChangeEmailEmail(userId: number, oldEmail: string, newEmail: string) {
+    const committedChangeEmail = await db.transaction(async (trx) => {
+      await ChangeEmail.query({ client: trx })
+        .where("user_id", userId)
+        .andWhere("performed", false)
+        .update({ canceled: true });
+
+      return await ChangeEmail.create({ userId, oldEmail, newEmail }, { client: trx });
+    });
+
+    const listener = new SendChangeEmailEmail();
+    // TODO: hide changeId using sqids
+    listener.handle(new UserChangeEmail(committedChangeEmail.id, oldEmail, newEmail));
+  }
+
+  async sendEmailChangedConfirmationEmail(oldEmail: string, newEmail: string) {
+    const listener = new SendEmailChangedConfirmationEmail();
+    listener.handle(new UserEmailChangedConfirmation(oldEmail, newEmail));
   }
 }

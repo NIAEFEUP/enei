@@ -53,6 +53,34 @@ router
       .use(middleware.auth());
 
     router
+      .post("/password/change/new", [AuthenticationController, "sendChangePassword"])
+      .as("actions:auth.change-password.send")
+      .use([middleware.auth(), sendForgotPasswordThrottle]); //TODO: change this throttle
+
+    router
+      .post("/email/change/new", [AuthenticationController, "sendChangeEmail"])
+      .as("actions:auth.change-email.send")
+      .use([middleware.auth(), sendForgotPasswordThrottle]); //TODO: change this throttle
+
+    router
+      .route(
+        "/email/change/confirm/callback",
+        ["GET", "POST"],
+        [AuthenticationController, "callbackForEmailChangeConfirmation"],
+      )
+      .as("actions:auth.change-email.confirm.callback")
+      .middleware([middleware.verifyUrlSignature(), middleware.automaticSubmit()]);
+
+    router
+      .route(
+        "/email/change/cancel/callback",
+        ["GET", "POST"],
+        [AuthenticationController, "callbackForEmailChangeCancelation"],
+      )
+      .as("actions:auth.change-email.cancel.callback")
+      .middleware([middleware.verifyUrlSignature(), middleware.automaticSubmit()]);
+
+    router
       .on("/password/forgot")
       .renderInertia("auth/forgot-password")
       .as("pages:auth.forgot-password")

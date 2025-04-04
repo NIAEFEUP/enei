@@ -2,12 +2,7 @@ import ParticipantProfile from "#models/participant_profile";
 import { createProfileValidator, updateProfileValidator } from "#validators/profile";
 import type { HttpContext } from "@adonisjs/core/http";
 import slug from "slug";
-import Sqids from "sqids";
 import { md5 } from "js-md5";
-
-const slugSqids = new Sqids({
-  alphabet: "nkzm6vl3170gtx8uro9aj4iyqhwdpcebsf52", // lowercase letters and numbers
-});
 
 function toParticipantProfileFormat(data: any): Partial<ParticipantProfile> {
   if ("curricularYear" in data) {

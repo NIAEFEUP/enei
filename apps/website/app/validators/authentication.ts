@@ -27,6 +27,19 @@ export const emailVerificationCallbackValidator = vine.compile(
   }),
 );
 
+export const emailChangeValidator = vine.compile(
+  vine.object({
+    email: vine.string().email().unique({ table: User.table, column: "email" }),
+  }),
+);
+
+export const emailChangeCallbackValidator = vine.compile(
+  vine.object({
+    id: vine.string(),
+    email: vine.string().email(),
+  }),
+);
+
 export const loginWithCredentialsValidator = vine.compile(
   vine.object({
     email: vine.string().email(),
