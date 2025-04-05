@@ -1,15 +1,39 @@
 import ParticipantProfile from "#models/participant_profile";
 import User from "#models/user";
 import { UserActivityService } from "#services/user_activity_service";
-import { createProfileValidator, hasTicketValidator } from "#validators/profile";
+import {
+  createProfileValidator,
+  hasTicketValidator,
+  updateProfileValidator,
+} from "#validators/profile";
 import { inject } from "@adonisjs/core";
 import type { HttpContext } from "@adonisjs/core/http";
 import slug from "slug";
+import SpeakerProfile from "#models/speaker_profile";
 import Sqids from "sqids";
+import { errors } from "@adonisjs/core";
 
 const sludSqids = new Sqids({
   alphabet: "nkzm6vl3170gtx8uro9aj4iyqhwdpcebsf52", // lowercase letters and numbers
 });
+
+function toParticipantProfileFormat(data: Record<string, any>): Partial<ParticipantProfile> {
+  if ("curricularYear" in data) {
+    data.finishedAt = data.curricularYear[1];
+    data.curricularYear = data.curricularYear[0];
+  }
+  // HACK
+  if ("transports" in data)
+    data.transports = data.transports.map((item: { label: string; value: string }) => item.value);
+  if ("attendedBeforeEditions" in data)
+    data.attendedBeforeEditions = data.attendedBeforeEditions.map(
+      (item: { label: string; value: string }) => item.value,
+    );
+  if ("dietaryRestrictions" in data) data.dietaryRestrictions ||= "";
+  if ("reasonForSignup" in data) data.reasonForSignup ||= "";
+
+  return data;
+}
 
 @inject()
 export default class ProfilesController {
@@ -17,46 +41,84 @@ export default class ProfilesController {
 
   async default({ auth, response }: HttpContext) {
     const user = auth.user;
-    await user!.load("participantProfile");
 
-    if (!user?.participantProfile) return response.redirect().toRoute("pages:signup");
+    if (!user) {
+      // TODO: Should create custom exception classes
+      throw errors.E_HTTP_EXCEPTION.invoke(
+        {
+          errors: ["Utilizador não encontrado"],
+        },
+        404,
+      );
+    }
 
-    return response
-      .redirect()
-      .toRoute("pages:profile.show", { slug: user.participantProfile.slug });
+    const profile = await User.getProfile(user);
+
+    if (!profile) return response.redirect().toRoute("pages:signup");
+
+    return response.redirect().toRoute("pages:profile.show", { slug: user.slug });
   }
 
   async getInfo({ params, response }: HttpContext) {
     const profile = await ParticipantProfile.findBy("slug", params.slug);
 
     if (!profile) {
-      response.notFound("Participante não encontrado");
-      return;
+      throw errors.E_HTTP_EXCEPTION.invoke(
+        {
+          errors: ["Participante não encontrado"],
+        },
+        404,
+      );
     }
 
     return response.send({ profile: profile });
   }
 
-  async index({ auth, inertia, params, response }: HttpContext) {
-    const profile = await ParticipantProfile.findBy("slug", params.slug);
+  async index({ auth, inertia, params }: HttpContext) {
+    const user = await User.findBy("slug", params.slug);
+
+    if (!user) {
+      throw errors.E_HTTP_EXCEPTION.invoke(
+        {
+          errors: ["Utilizador não encontrado"],
+        },
+        404,
+      );
+    }
+
+    const profile = await User.getProfile(user);
+    await profile?.loadOnce("user"); // HACK: is this needed?
 
     if (!profile) {
-      response.notFound("Participante não encontrado");
-      return;
+      throw errors.E_HTTP_EXCEPTION.invoke(
+        {
+          errors: ["Perfil de utilizador não encontrado"],
+        },
+        404,
+      );
     }
 
-    await profile.load("user");
-    if (!profile.user) {
-      response.notFound("Participante não encontrado");
-      return;
+    if (profile instanceof SpeakerProfile) {
+      profile.loadOnce("company");
     }
 
-    const isUser = profile.user ? profile.user.id === auth.user?.id : false;
-    const activityInformation = await this.userActivityService.getActivityInformation(
-      profile.user!,
-    );
+    const isUser = user ? user.id === auth.user?.id : false;
+    const activityInformation = await this.userActivityService.getActivityInformation(user);
 
     return inertia.render("profile", { profile, isUser, activityInformation });
+  }
+
+  async update({ auth, request, response }: HttpContext) {
+    const user = auth.getUserOrFail();
+    const data = request.body();
+
+    await user.load("participantProfile");
+
+    const newFields = await updateProfileValidator.validate(toParticipantProfileFormat(data));
+
+    await user.participantProfile.merge(newFields).save();
+
+    return response.redirect().toRoute("pages:profile.default");
   }
 
   async edit({ auth, inertia, response }: HttpContext) {
@@ -76,19 +138,12 @@ export default class ProfilesController {
     const user = auth.getUserOrFail();
 
     const data = request.body();
-    data.finishedAt = data.curricularYear[1];
-    data.curricularYear = data.curricularYear[0];
-    // HACK
-    data.transports = data.transports.map((item: { label: string; value: string }) => item.value);
-    data.attendedBeforeEditions = data.attendedBeforeEditions.map(
-      (item: { label: string; value: string }) => item.value,
+    const formattedData = toParticipantProfileFormat(data);
+
+    const profile = await createProfileValidator.validate(formattedData);
+    user.slug = slug(
+      `${formattedData.firstName} ${formattedData.lastName} ${sludSqids.encode([user.id])}`,
     );
-    data.dietaryRestrictions ||= "";
-    data.reasonForSignup ||= "";
-
-    data.slug = slug(`${data.firstName} ${data.lastName} ${sludSqids.encode([user.id])}`);
-
-    const profile = await createProfileValidator.validate(data);
 
     const profileAdd = new ParticipantProfile();
     profileAdd.fill(profile);

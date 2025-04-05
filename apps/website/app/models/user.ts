@@ -8,6 +8,9 @@ import PromoterProfile from "./promoter_profile.js";
 import ParticipantProfile from "./participant_profile.js";
 import Event from "./event.js";
 import StaffProfile from "./staff_profile.js";
+import CompanyProfile from "./company.js";
+import SpeakerProfile from "./speaker_profile.js";
+import RepresentativeProfile from "./representative_profile.js";
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -30,6 +33,9 @@ export default class User extends BaseModel {
 
   @hasMany(() => Account)
   declare accounts: HasMany<typeof Account>;
+
+  @column()
+  declare slug: string | null;
 
   // Referrals
 
@@ -86,6 +92,30 @@ export default class User extends BaseModel {
   @belongsTo(() => PromoterInfo)
   declare promoterInfo: BelongsTo<typeof PromoterInfo>;
 
+  // CompanyProfile
+
+  @column()
+  declare companyId: number | null;
+
+  @belongsTo(() => CompanyProfile)
+  declare companyProfile: BelongsTo<typeof CompanyProfile>;
+
+  // SpeakerProfile
+
+  @column()
+  declare speakerProfileId: number | null;
+
+  @belongsTo(() => SpeakerProfile)
+  declare speakerProfile: BelongsTo<typeof SpeakerProfile>;
+
+  // RepresentantiveProfile
+
+  @column()
+  declare representativeProfileId: number | null;
+
+  @belongsTo(() => RepresentativeProfile)
+  declare representativeProfile: BelongsTo<typeof RepresentativeProfile>;
+
   @column()
   declare staffProfileId: number | undefined;
 
@@ -98,6 +128,9 @@ export default class User extends BaseModel {
     if (this.isParticipant()) return "participant" as const;
     if (this.isPromoter()) return "promoter" as const;
     if (this.isStaff()) return "staff" as const;
+    if (this.isSpeaker()) return "speaker" as const;
+    if (this.isCompany()) return "company" as const;
+    if (this.isRepresentative()) return "representative" as const;
     return "unknown" as const;
   }
 
@@ -111,6 +144,18 @@ export default class User extends BaseModel {
 
   isParticipant() {
     return this.participantProfileId !== null;
+  }
+
+  isSpeaker() {
+    return this.speakerProfileId;
+  }
+
+  isCompany() {
+    return this.companyId;
+  }
+
+  isRepresentative() {
+    return this.representativeProfileId;
   }
 
   isEmailVerified() {
@@ -129,6 +174,37 @@ export default class User extends BaseModel {
 
   wasReferred() {
     return this.referrerId !== null;
+  }
+
+  static async getProfile(
+    user: User,
+  ): Promise<
+    | ParticipantProfile
+    | PromoterProfile
+    | SpeakerProfile
+    | CompanyProfile
+    | RepresentativeProfile
+    | null
+  > {
+    switch (user.role) {
+      case "participant":
+        await user.loadOnce("participantProfile");
+        return user.participantProfile;
+      case "promoter":
+        await user.loadOnce("promoterProfile");
+        return user.promoterProfile;
+      case "speaker":
+        await user.loadOnce("speakerProfile");
+        return user.speakerProfile;
+      case "company":
+        await user.loadOnce("companyProfile");
+        return user.companyProfile;
+      case "representative":
+        await user.loadOnce("representativeProfile");
+        return user.representativeProfile;
+      default:
+        return null;
+    }
   }
 
   static async hasPurchasedTicket(user: User) {

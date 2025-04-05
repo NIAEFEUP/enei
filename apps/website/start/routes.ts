@@ -177,6 +177,12 @@ router
       .get("/profile/edit", [ProfilesController, "edit"])
       .as("pages:profile.edit")
       .use([middleware.auth(), middleware.verifiedEmail()]);
+
+    router
+      .patch("/profile/edit", [ProfilesController, "update"])
+      .as("actions:profile.update")
+      .use([middleware.auth(), middleware.verifiedEmail()]);
+
     router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
   })
   .use(middleware.wip());
