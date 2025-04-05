@@ -6,10 +6,9 @@ import PromoterInfo from "./promoter_info.js";
 import type { BelongsTo, HasMany, ManyToMany } from "@adonisjs/lucid/types/relations";
 import PromoterProfile from "./promoter_profile.js";
 import ParticipantProfile from "./participant_profile.js";
-import Event from "./event.js";
-import StaffProfile from "./staff_profile.js";
 import { attachment } from "@jrmc/adonis-attachment";
 import type { Attachment } from "@jrmc/adonis-attachment/types/attachment";
+import Event from "./event.js";
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -85,16 +84,6 @@ export default class User extends BaseModel {
   @column()
   declare points: number;
 
-  @belongsTo(() => PromoterInfo)
-  declare promoterInfo: BelongsTo<typeof PromoterInfo>;
-
-  @column()
-  declare staffProfileId: number | undefined;
-
-  @belongsTo(() => StaffProfile)
-  declare staffProfile: BelongsTo<typeof StaffProfile>;
-
-  // Attachments
   @attachment({
     folder: "resumes",
   })
@@ -106,17 +95,15 @@ export default class User extends BaseModel {
   })
   declare avatar: Attachment | null;
 
+  @belongsTo(() => PromoterInfo)
+  declare promoterInfo: BelongsTo<typeof PromoterInfo>;
+
   // Functions
 
   get role() {
     if (this.isParticipant()) return "participant" as const;
     if (this.isPromoter()) return "promoter" as const;
-    if (this.isStaff()) return "staff" as const;
     return "unknown" as const;
-  }
-
-  isStaff() {
-    return this.staffProfile;
   }
 
   isPromoter() {

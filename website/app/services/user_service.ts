@@ -15,7 +15,6 @@ import PromoterProfile from "#models/promoter_profile";
 import { attachmentManager } from "@jrmc/adonis-attachment";
 import type { MultipartFile } from "@adonisjs/core/bodyparser";
 import drive from "@adonisjs/drive/services/main";
-
 @inject()
 export class UserService {
   constructor(private logger: Logger) {}
