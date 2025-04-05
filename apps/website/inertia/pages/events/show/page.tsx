@@ -306,7 +306,9 @@ export default function EventRegistrationPage({
                 <div>
                   <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
                     <Info className="h-5 w-5" />
-                    <p className="text-lg font-semibold">Informação Extra</p>
+                    <p className="text-lg font-semibold">
+                      Informação complementar para participantes
+                    </p>
                   </h1>
                   <div dangerouslySetInnerHTML={{ __html: extraInfo }} />
                 </div>
