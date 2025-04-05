@@ -202,13 +202,10 @@ export default function EventRegistrationPage({
                     <Info className="h-5 w-5" />
                     <p className="text-lg font-semibold">Acerca do Evento</p>
                   </h1>
-                  <div className="space-y-2">
-                    {description.split("\n\n").map((paragraph, index) => (
-                      <p key={index} className="max-w-[70ch] text-black">
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
+                  <div
+                    className="**:max-w-[70ch] space-y-2 text-black"
+                    dangerouslySetInnerHTML={{ __html: description }}
+                  />
                 </div>
               )}
               {/* {isRegistered && (
