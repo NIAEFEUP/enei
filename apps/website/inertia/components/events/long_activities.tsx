@@ -32,7 +32,6 @@ export default function LongActivities({ currentActiveIndex, eventsByDay }: Long
     return eventsByDay[day];
   }, [currentActiveIndex, eventsByDay]);
 
-  console.log(events);
   return (
     <div className={cn("flex flex-col space-y-5", currentActiveIndex !== 0 ? "mb-5" : "")}>
       {currentActiveIndex !== 0 && <CardTitle>Atividades Longas</CardTitle>}
