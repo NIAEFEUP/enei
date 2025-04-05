@@ -2,11 +2,11 @@ import type Order from "#models/order";
 
 import env from "#start/env";
 import axios from "axios";
-import UpdateOrderStatus from "../jobs/update_order_status.js";
+import PollPaymentJob from "../jobs/poll_payment.js";
 import db from "@adonisjs/lucid/services/db";
 import InvoiceInfo from "#models/invoice_info";
 import Payment, { type PaymentStatus } from "#models/payment";
-import type { Money } from "#lib/money.js";
+import type { Money } from "#lib/payments/money.js";
 import app from "@adonisjs/core/services/app";
 import { storeValidator } from "#validators/store";
 import { paymentValidator } from "#validators/payment";
@@ -84,8 +84,8 @@ export class PaymentService {
       order.status = "pending-payment";
       await order.save();
 
-      await UpdateOrderStatus.dispatch(
-        { paymentId: paymentId, email: data.email },
+      await PollPaymentJob.dispatch(
+        { paymentId: paymentId, baseUrl: "123" },
         { delay: 10000 },
       ).catch((error) => {
         console.error("Error dispatching job", error);
@@ -93,7 +93,7 @@ export class PaymentService {
     }
   }
 
-  static async getStatus(payment: Payment): Promise<PaymentStatus> {
+  async getStatus(payment: Payment): Promise<PaymentStatus> {
     const apiResponse = await axios.get(
       `https://api.ifthenpay.com/spg/payment/mbway/status?mbWayKey=${env.get("IFTHENPAY_MBWAY_KEY")}&requestId=${payment.requestId}`,
     );

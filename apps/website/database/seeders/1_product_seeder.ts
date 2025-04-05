@@ -1,6 +1,6 @@
 import { BaseSeeder } from "@adonisjs/lucid/seeders";
 import Product from "#models/product";
-import { Money } from "#lib/money.js";
+import { Money } from "#lib/payments/money.js";
 
 export default class ProductSeeder extends BaseSeeder {
   public async run() {

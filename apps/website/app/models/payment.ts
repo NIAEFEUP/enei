@@ -6,7 +6,7 @@ import * as is from "@sindresorhus/is";
 import type { StrictExclude, StrictExtract } from "#lib/types.js";
 import type { CreateReadonlyModel } from "../../types/lucid.js";
 import Order from "./order.js";
-import { Money } from "#lib/money.js";
+import { Money } from "#lib/payments/money.js";
 import { money } from "#lib/lucid/decorators.js";
 
 export type PaymentStatus = "pending" | "successful" | "declined" | "expired" | "unknown";

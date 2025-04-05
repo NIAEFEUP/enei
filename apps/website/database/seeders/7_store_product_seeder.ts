@@ -2,7 +2,7 @@ import Product from "#models/product";
 import { BaseSeeder } from "@adonisjs/lucid/seeders";
 
 import { UserTypes } from "../../types/user.js";
-import { Money } from "#lib/money.js";
+import { Money } from "#lib/payments/money.js";
 
 export default class extends BaseSeeder {
   async run() {

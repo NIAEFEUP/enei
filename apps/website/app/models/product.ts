@@ -6,7 +6,7 @@ import type { ManyToMany } from "@adonisjs/lucid/types/relations";
 import type { ProductRestrictions } from "../../types/product.js";
 import { json, money } from "#lib/lucid/decorators.js";
 import Order from "./order.js";
-import { Money } from "#lib/money.js";
+import { Money } from "#lib/payments/money.js";
 
 export type SerializedProduct = ModelAttributes<Product>;
 

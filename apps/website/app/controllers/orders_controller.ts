@@ -7,7 +7,7 @@ import { createMBWayOrderValidator } from "#validators/order";
 import { inject } from "@adonisjs/core";
 import type { PaymentService } from "#services/payment_service";
 
-import { Money } from "#lib/money.js";
+import { Money } from "#lib/payments/money.js";
 
 @inject()
 export default class OrdersController {

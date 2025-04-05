@@ -3,28 +3,30 @@ import ConfirmPaymentNotification from "#mails/confirm_payment_notification";
 import mail from "@adonisjs/mail/services/main";
 import User from "#models/user";
 import Payment from "#models/payment";
-import { PaymentService } from "#services/payment_service";
 import OrderProduct from "#models/order_product";
 import app from "@adonisjs/core/services/app";
+import { PaymentService } from "#services/payment_service";
 
-type UpdateOrderStatusPayload = {
+type PollPaymentPayload = {
   paymentId: number;
-  email: string;
+  baseUrl: string;
 };
 
-export default class UpdateOrderStatus extends Job {
-  async handle({ paymentId, email }: UpdateOrderStatusPayload) {
+export default class PollPayment extends Job {
+  async handle({ paymentId, baseUrl }: PollPaymentPayload) {
+    const paymentsService = await app.container.make(PaymentService);
+    const payment = await Payment.findOrFail(paymentId);
+
+    const logger = this.logger.child({ paymentId });
+
+    logger.debug("Polling payment...");
+
+    if (payment.status !== "pending") {
+      this.logger.debug("Payment is no longer pending, stopping...");
+      return;
+    }
     try {
-      const payment = await Payment.findOrFail(paymentId);
-
-      this.logger.debug(`Processing status update for payment: ${payment}`);
-
-      if (payment.status !== "successful") {
-        this.logger.debug(`Payment status did not change: ${payment.status}`);
-        return;
-      }
-
-      const paymentStatus = await PaymentService.getStatus(payment);
+      const paymentStatus = await paymentsService.getStatus(payment);
       if (paymentStatus === "successful") {
         payment.order.status = "delivered";
         await payment.order.save();
@@ -33,19 +35,19 @@ export default class UpdateOrderStatus extends Job {
           .where("order_id", payment.order.id)
           .preload("product");
 
-        await mail.send(
-          new ConfirmPaymentNotification(
-            email,
-            orderProducts.map((orderProduct) => ({
-              id: orderProduct.product.id,
-              name: orderProduct.product.name,
-              price: orderProduct.product.price.toCents(),
-              quantity: orderProduct.quantity,
-            })),
-            payment.amount.toCents(),
-            payment.order.id,
-          ),
-        );
+        // await mail.send(
+        //   new ConfirmPaymentNotification(
+        //     email,
+        //     orderProducts.map((orderProduct) => ({
+        //       id: orderProduct.product.id,
+        //       name: orderProduct.product.name,
+        //       price: orderProduct.product.price.toCents(),
+        //       quantity: orderProduct.quantity,
+        //     })),
+        //     payment.amount.toCents(),
+        //     payment.order.id,
+        //   ),
+        // );
 
         const user = await User.find(payment.order.userId);
         if (user) {
@@ -62,7 +64,7 @@ export default class UpdateOrderStatus extends Job {
       this.logger.error(`Error updating order status: ${error.message}`);
       console.error(`Error updating order status: ${error.message}`);
 
-      await UpdateOrderStatus.dispatch({ paymentId, email }, { delay: 10000 });
+      // await PollPayment.dispatch({ paymentId, email }, { delay: 10000 });
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Money } from "#lib/money.js";
+import { Money } from "#lib/payments/money.js";
 import env from "#start/env";
 import { column } from "@adonisjs/lucid/orm";
 import type { ColumnOptions } from "@adonisjs/lucid/types/model";
@@ -25,7 +25,8 @@ export function json(options?: Partial<ColumnOptions>) {
 export function money(options?: Partial<ColumnOptions>) {
   return typed<Money>({
     ...options,
-    serialize: (val: Money) => val.toCents(),
+    serialize: (val: Money) => val.toEuros(),
+    prepare: (val: Money) => val.toCents(),
     consume: (cents: number) => Money.fromCents(cents),
   });
 }
