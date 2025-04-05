@@ -1,5 +1,6 @@
 import { Container, Heading, Text, Img, Body, Section } from "@react-email/components";
 import { BaseLayout } from "../common/layouts/base.js";
+
 export type ProductWithQuantity = {
   id: number;
   name: string;
