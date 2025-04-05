@@ -8,6 +8,13 @@ export default class extends BaseSchema {
       table.dropColumn("name");
       table.dropColumn("nif");
       table.dropColumn("address");
+      table.dropColumn("request_id");
+      table.dropColumn("total");
+      table.integer("points_used").notNullable().defaultTo(0);
+    });
+
+    this.schema.alterTable(this.tableName, (table) => {
+      table.integer("points_used").notNullable().alter();
     });
   }
 
@@ -15,7 +22,10 @@ export default class extends BaseSchema {
     this.schema.alterTable(this.tableName, (table) => {
       table.string("name").notNullable();
       table.string("nif").notNullable();
-      table.string("address").nullable();
+      table.string("address");
+      table.string("request_id");
+      table.float("total");
+      table.dropColumn("points_used");
     });
   }
 }

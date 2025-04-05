@@ -25,6 +25,9 @@ export default class Order extends BaseModel {
   declare status: OrderStatus;
 
   @column()
+  declare pointsUsed: number;
+
+  @column()
   declare userId: number;
 
   @belongsTo(() => User)
