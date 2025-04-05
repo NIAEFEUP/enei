@@ -189,21 +189,16 @@ router
     router
       .post("/:id/register", [EventsController, "register"])
       .as("actions:events.register")
-      .where("id", "45")
       .use([
         middleware.auth(),
         middleware.verifiedEmail(),
         middleware.participant(),
         middleware.hasPurchasedTicket(),
       ]);
-    router
-      .get("/:id/tickets", [EventsController, "ticketsRemaining"])
-      .where("id", "45")
-      .as("actions:events.tickets");
+    router.get("/:id/tickets", [EventsController, "ticketsRemaining"]).as("actions:events.tickets");
 
     router
       .get("/:id/is-registered", [EventsController, "isRegistered"])
-      .where("id", "45")
       .as("actions:events.isRegistered");
 
     router
