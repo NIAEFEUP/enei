@@ -9,7 +9,7 @@ import Order from "./order.js";
 import { Money } from "#lib/money.js";
 import { money } from "#lib/lucid/decorators.js";
 
-type PaymentStatus = "pending" | "successful" | "declined" | "expired" | "unknown";
+export type PaymentStatus = "pending" | "successful" | "declined" | "expired" | "unknown";
 
 export type ReadonlyPayment = CreateReadonlyModel<
   Payment,

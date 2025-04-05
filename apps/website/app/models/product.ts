@@ -4,8 +4,9 @@ import type { ModelAttributes } from "@adonisjs/lucid/types/model";
 import type { ManyToMany } from "@adonisjs/lucid/types/relations";
 
 import type { ProductRestrictions } from "../../types/product.js";
-import { json } from "#lib/lucid/decorators.js";
+import { json, money } from "#lib/lucid/decorators.js";
 import Order from "./order.js";
+import { Money } from "#lib/money.js";
 
 export type SerializedProduct = ModelAttributes<Product>;
 
@@ -19,14 +20,14 @@ export default class Product extends BaseModel {
   @column()
   declare description: string;
 
+  @money()
+  declare price: Money;
+
   @column()
-  declare price: number;
+  declare points: number;
 
   @column()
   declare stock: number;
-
-  @column()
-  declare currency: string;
 
   @column()
   declare maxOrder: number;

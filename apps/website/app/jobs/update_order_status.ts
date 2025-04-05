@@ -1,92 +1,68 @@
-import axios from "axios";
-import Order from "#models/order";
-import env from "#start/env";
 import { Job } from "adonisjs-jobs";
 import ConfirmPaymentNotification from "#mails/confirm_payment_notification";
 import mail from "@adonisjs/mail/services/main";
-import db from "@adonisjs/lucid/services/db";
-import app from "@adonisjs/core/services/app";
 import User from "#models/user";
+import Payment from "#models/payment";
+import { PaymentService } from "#services/payment_service";
+import OrderProduct from "#models/order_product";
+import app from "@adonisjs/core/services/app";
 
 type UpdateOrderStatusPayload = {
-  requestId: string;
+  paymentId: number;
   email: string;
 };
 
 export default class UpdateOrderStatus extends Job {
-  async handle({ requestId, email }: UpdateOrderStatusPayload) {
+  async handle({ paymentId, email }: UpdateOrderStatusPayload) {
     try {
-      this.logger.info(`Processing status update for requestId: ${requestId}`);
+      const payment = await Payment.findOrFail(paymentId);
 
-      // Fetch the order based on the requestId
-      const order = await Order.query().where("request_id", requestId).first();
-      if (!order) {
-        this.logger.error(`Order with requestId ${requestId} not found`);
-        console.error(`Order with requestId ${requestId} not found`);
+      this.logger.debug(`Processing status update for payment: ${payment}`);
+
+      if (payment.status !== "successful") {
+        this.logger.debug(`Payment status did not change: ${payment.status}`);
         return;
       }
 
-      if (order.status !== "Pending") {
-        this.logger.info(`Order status is no longer pending: ${order.status}`);
-        return; // Exit if the status is no longer "Pending"
-      }
+      const paymentStatus = await PaymentService.getStatus(payment);
+      if (paymentStatus === "successful") {
+        payment.order.status = "delivered";
+        await payment.order.save();
 
-      const apiResponse = await axios.get(
-        `https://api.ifthenpay.com/spg/payment/mbway/status?mbWayKey=${env.get("IFTHENPAY_MBWAY_KEY")}&requestId=${requestId}`,
-      );
+        const orderProducts = await OrderProduct.query()
+          .where("order_id", payment.order.id)
+          .preload("product");
 
-      if (apiResponse.status === 200) {
-        let status = apiResponse.data.Message;
-        if (status) {
-          if (app.inDev) {
-            status = "Success";
+        await mail.send(
+          new ConfirmPaymentNotification(
+            email,
+            orderProducts.map((orderProduct) => ({
+              id: orderProduct.product.id,
+              name: orderProduct.product.name,
+              price: orderProduct.product.price.toCents(),
+              quantity: orderProduct.quantity,
+            })),
+            payment.amount.toCents(),
+            payment.order.id,
+          ),
+        );
+
+        const user = await User.find(payment.order.userId);
+        if (user) {
+          await user.load("participantProfile");
+          const participantProfile = user.participantProfile;
+          if (participantProfile) {
+            // FIXME - this is a hack
+            participantProfile.purchasedTicket = "early-bird-with-housing";
+            await participantProfile.save();
           }
-
-          if (status === "Pending") {
-            await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 }); // Retry after 5 seconds
-            this.logger.info(`Requeued job for requestId: ${requestId}`);
-            return;
-          }
-          order.status = status;
-          await order.save();
-          this.logger.info(`Order status updated to: ${order.status}`);
-          if (order.status === "Success") {
-            this.logger.info(`Gonna send mail: ${order.status}`);
-            const products = await db
-              .from("products")
-              .join("order_products", "products.id", "order_products.product_id")
-              .where("order_products.order_id", order.id)
-              .select("products.*", "order_products.quantity as quantity");
-
-            const total = order.total;
-            const orderId = order.id;
-
-            await mail.send(new ConfirmPaymentNotification(email, products, total, orderId));
-
-            const user = await User.find(order.userId);
-            if (user) {
-              await user.load("participantProfile");
-              const participantProfile = user.participantProfile;
-              if (participantProfile) {
-                // FIXME - this is a hack
-                participantProfile.purchasedTicket = "early-bird-with-housing";
-                await participantProfile.save();
-              }
-            }
-          }
-        } else {
-          await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 }); // Retry after 5 seconds
         }
-      } else {
-        this.logger.error(`Failed to fetch payment status for requestId: ${requestId}`);
-        console.error(`Failed to fetch payment status for requestId: ${requestId}`);
-        await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 }); // Retry after 5 seconds
       }
     } catch (error) {
       this.logger.error(`Error updating order status: ${error.message}`);
       console.error(`Error updating order status: ${error.message}`);
 
-      await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 });
+      await UpdateOrderStatus.dispatch({ paymentId, email }, { delay: 10000 });
     }
   }
 }
