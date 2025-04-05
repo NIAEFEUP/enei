@@ -83,12 +83,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
               <FormItem className="flex-1">
                 <FormLabel>Primeiro Nome</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Joca"
-                    type="text"
-                    {...field}
-                    className="bg-enei-blue text-enei-beige"
-                  />
+                  <Input placeholder="Joca" type="text" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -101,12 +96,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
               <FormItem className="flex-1">
                 <FormLabel>Último Nome</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Costa"
-                    type="text"
-                    {...field}
-                    className="bg-enei-blue text-enei-beige"
-                  />
+                  <Input placeholder="Costa" type="text" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -124,14 +114,14 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
                   <Button
                     variant="outline"
                     role="combobox"
-                    className="bg-enei-blue text-enei-beige hover:bg-enei-blue hover:text-enei-beige w-full justify-between overflow-ellipsis font-normal"
+                    className="w-full justify-between overflow-ellipsis font-normal"
                   >
                     <UniversitySelection value={field.value} />
                     <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="bg-enei-blue border-enei-blue p-0">
-                  <Command className="bg-enei-blue text-enei-beige">
+                <PopoverContent className="p-0">
+                  <Command>
                     <CommandInput placeholder="Procurar universidade..." />
                     <CommandList>
                       <CommandEmpty>Nenhuma universidade encontrada</CommandEmpty>
@@ -141,7 +131,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
                             key={id}
                             value={name.toLowerCase()}
                             onSelect={() => form.setValue(field.name, id, { shouldDirty: true })}
-                            className="bg-enei-blue text-enei-beige data-[selected=true]:bg-enei-beige data-[selected=true]:text-enei-blue flex cursor-pointer items-center justify-between text-sm"
+                            className="flex cursor-pointer items-center justify-between text-sm"
                           >
                             <span>{name}</span>
                             <Check
@@ -172,7 +162,6 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
                   onChange={field.onChange}
                   defaultValue={field.value}
                   placeholder="Introduz o teu curso"
-                  className="bg-enei-blue text-enei-beige"
                 />
               </FormControl>
               <FormMessage />
@@ -195,7 +184,6 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
                       { shouldDirty: true },
                     );
                   }}
-                  variant={"blue"}
                 />
               </FormControl>
               <FormMessage />
@@ -207,7 +195,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
           name="attendedBefore"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="flex items-center gap-2">
+              <FormLabel className="mt-2 flex items-center gap-2">
                 <FormControl>
                   <Checkbox
                     checked={field.value}
@@ -236,10 +224,6 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
                   <MultipleSelector
                     {...field}
                     defaultOptions={ENEI_EDITIONS}
-                    className="bg-enei-blue text-enei-beige"
-                    badgeClassName="bg-enei-beige text-enei-blue hover:bg-enei-beige/80"
-                    commandGroupClassName="bg-enei-blue text-enei-beige"
-                    commandGroupInputClassName="data-[selected=true]:bg-enei-beige data-[selected=true]:text-enei-blue"
                     emptyIndicator={
                       <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
                         Sem resultados
@@ -262,7 +246,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
               <FormControl>
                 <Textarea
                   placeholder="Aprender novas tecnologias, melhorar soft skills..."
-                  className="bg-enei-blue text-enei-beige resize-none"
+                  className="resize-none"
                   {...field}
                 />
               </FormControl>
@@ -277,12 +261,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
             <FormItem className="flex-1">
               <FormLabel>URL do teu GitHub</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="https://github.com/NIAEFEUP"
-                  type="text"
-                  {...field}
-                  className="bg-enei-blue text-enei-beige"
-                />
+                <Input placeholder="https://github.com/NIAEFEUP" type="text" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -295,12 +274,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
             <FormItem className="flex-1">
               <FormLabel>URL do teu Linkedin</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="https://www.linkedin.com/in/oteunome"
-                  type="text"
-                  {...field}
-                  className="bg-enei-blue text-enei-beige"
-                />
+                <Input placeholder="https://www.linkedin.com/in/oteunome" type="text" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -313,12 +287,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
             <FormItem className="flex-1">
               <FormLabel>URL do teu Website Pessoal</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="https://ni.fe.up.pt"
-                  type="text"
-                  {...field}
-                  className="bg-enei-blue text-enei-beige"
-                />
+                <Input placeholder="https://ni.fe.up.pt" type="text" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
