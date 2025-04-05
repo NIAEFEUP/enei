@@ -55,6 +55,7 @@ export default class EventsController {
       requiresRegistration: event.requiresRegistration,
       ticketsRemaining: event.ticketsRemaining,
       price: event.price,
+      isAcceptingRegistrations: event.isAcceptingRegistrations,
     });
   }
 
@@ -65,6 +66,9 @@ export default class EventsController {
     // Get the event and check if it is possible do register
     const event = await Event.findOrFail(params.id);
 
+    if (!event.isAcceptingRegistrations) {
+      return response.badRequest("Este evento ainda não tem as inscrições abertas");
+    }
     if (event.ticketsRemaining <= 0) {
       return response.badRequest("Já não há bilhetes disponíveis para este evento");
     }

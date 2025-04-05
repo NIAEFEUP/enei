@@ -46,6 +46,7 @@ interface EventRegistrationProps {
   requiresRegistration: boolean;
   ticketsRemaining: number;
   price: number;
+  isAcceptingRegistrations: boolean;
 }
 
 export default function EventRegistrationPage({
@@ -63,6 +64,7 @@ export default function EventRegistrationPage({
   requiresRegistration,
   ticketsRemaining: initialTicketsRemaining,
   price,
+  isAcceptingRegistrations,
 }: EventRegistrationProps) {
   const [isRegistered, setIsRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -290,14 +292,17 @@ export default function EventRegistrationPage({
                 </div>
               )}
               {/* Registration Requirements (if applicable) */}
-              {registrationRequirements !== "" && (
-                <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
-                  <ClipboardCheck className="h-5 w-5" />
-                  <p className="text-lg font-semibold">Requisitos de Inscrição</p>
-                </h1>
+              {registrationRequirements && (
+                <>
+                  <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+                    <ClipboardCheck className="h-5 w-5" />
+                    <p className="text-lg font-semibold">Requisitos de Inscrição</p>
+                  </h1>
+                  <p className="text-black">{registrationRequirements}</p>
+                </>
               )}
               {/* Extra Information */}
-              {extraInfo && (
+              {extraInfo && isRegistered && (
                 <div>
                   <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
                     <Info className="h-5 w-5" />
@@ -306,7 +311,6 @@ export default function EventRegistrationPage({
                   <div dangerouslySetInnerHTML={{ __html: extraInfo }} />
                 </div>
               )}
-              <p className="text-black">{registrationRequirements}</p>
               {/* Price Display */}
               {price > 0 && (
                 <div className="flex items-center justify-center gap-2 py-2 text-lg font-medium">
@@ -318,7 +322,12 @@ export default function EventRegistrationPage({
                 <div className="flex justify-center">
                   <Button
                     onClick={() => handleRegisterClick()}
-                    disabled={ticketsRemaining <= 0 || !requiresRegistration || isLoading}
+                    disabled={
+                      ticketsRemaining <= 0
+                      || !requiresRegistration
+                      || !isAcceptingRegistrations
+                      || isLoading
+                    }
                     className="px-4"
                     style={{ backgroundColor: activityColors[type] }}
                   >
@@ -384,7 +393,13 @@ export default function EventRegistrationPage({
               {requiresRegistration ? (
                 <div className="text-muted-foreground flex items-center justify-center gap-2 text-sm">
                   <Ticket className="h-4 w-4" />
-                  <span>{ticketsRemaining} lugares disponíveis</span>
+                  <span>
+                    {isAcceptingRegistrations ? (
+                      <>{ticketsRemaining} lugares disponíveis</>
+                    ) : (
+                      <>De momento, não estamos a aceitar inscrições</>
+                    )}
+                  </span>
                 </div>
               ) : (
                 <></>
