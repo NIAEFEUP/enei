@@ -450,7 +450,7 @@ export default class extends BaseSeeder {
       lastName: "Loechel",
       jobTitle: "Senior IT Manager",
       profilePicture: "/images/speakers/alexander-loechel.jpeg",
-      company: "LMU Munich Unviersity",
+      company: "LMU Munich University",
     });
   }
 }
