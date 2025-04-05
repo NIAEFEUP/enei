@@ -6,14 +6,14 @@ import PollPaymentJob from "../jobs/poll_payment.js";
 import db from "@adonisjs/lucid/services/db";
 import InvoiceInfo from "#models/invoice_info";
 import Payment, { type PaymentStatus } from "#models/payment";
-import type { Money } from "#lib/payments/money.js";
+import { Money } from "#lib/payments/money.js";
 import app from "@adonisjs/core/services/app";
 import { paymentValidator } from "#validators/payment";
 
 type PaymentData = {
   mbWayKey: string;
   orderId: number;
-  amount: Money;
+  amount: number;
   mobileNumber: string;
   description: string;
 };
@@ -76,7 +76,7 @@ export class PaymentService {
           {
             status: "pending",
             requestId: RequestId,
-            amount: data.amount as Money,
+            amount: Money.fromEuros(data.amount),
             orderId: order.id,
             invoiceInfoId: invoiceInfo.id,
             reason: null,
