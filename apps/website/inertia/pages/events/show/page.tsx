@@ -211,7 +211,7 @@ export default function EventRegistrationPage({
                   </div>
                 </div>
               )}
-              {isRegistered && (
+              {/* {isRegistered && (
                 <div className="flex flex-col pb-4">
                   <h2 className="text-md mb-2 font-semibold">
                     Informação complementar para participantes
@@ -246,7 +246,7 @@ export default function EventRegistrationPage({
                     </li>
                   </ul>
                 </div>
-              )}
+              )} */}
               {/* Speakers (if applicable) */}
               {speakers.length > 0 && (
                 <div>
@@ -304,12 +304,12 @@ export default function EventRegistrationPage({
               {/* Extra Information */}
               {extraInfo && isRegistered && (
                 <div>
-                  <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+                  <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
                     <Info className="h-5 w-5" />
                     <p className="text-lg font-semibold">
                       Informação complementar para participantes
                     </p>
-                  </h1>
+                  </h2>
                   <div dangerouslySetInnerHTML={{ __html: extraInfo }} />
                 </div>
               )}

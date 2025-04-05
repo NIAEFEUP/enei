@@ -98,7 +98,7 @@ export default function EventCard({
   };
 
   return (
-    <div onClick={onClick} className="h-full w-full cursor-pointer">
+    <div onClick={onClick} className={cn("h-full w-full", onClick && "cursor-pointer")}>
       <Card className={cn("h-full w-full space-y-3 border-none p-3", cardBackground[type])}>
         <CardTitle className={cn("text-xl", textColor[type])}>{title}</CardTitle>
         <div className="flex flex-row gap-3">

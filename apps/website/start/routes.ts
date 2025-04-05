@@ -185,7 +185,7 @@ router
   .group(() => {
     router.get("/", [EventsController, "index"]).as("pages:events");
 
-    router.get("/:id", [EventsController, "show"]).as("pages:events.show").where("id", "45");
+    router.get("/:id", [EventsController, "show"]).as("pages:events.show");
     router
       .post("/:id/register", [EventsController, "register"])
       .as("actions:events.register")

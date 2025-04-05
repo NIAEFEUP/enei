@@ -147,7 +147,6 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           time={events[8].time}
           location={events[8].location}
           speakers={events[8].speakers}
-          allowClick
           onClick={() => router.visit(`/events/${events[8].id}`)}
         />
       </div>
