@@ -14,12 +14,16 @@ type PaymentStatus = "pending" | "successful" | "declined" | "expired" | "unknow
 export type ReadonlyPayment = CreateReadonlyModel<
   Payment,
   | {
-      status: StrictExclude<Payment["status"], "unknown">;
+      status: StrictExclude<Payment["status"], "declined" | "unknown">;
       reason: StrictExtract<Payment["reason"], null>;
     }
   | {
       status: StrictExtract<Payment["status"], "unknown">;
       reason: StrictExclude<Payment["reason"], null>;
+    }
+  | {
+      status: StrictExtract<Payment["status"], "declined">;
+      reason: Payment["reason"];
     }
 >;
 
