@@ -13,14 +13,13 @@ import { createInertiaApp } from "@inertiajs/react";
 import { hydrateRoot } from "react-dom/client";
 import { Providers } from "./providers";
 
-import { registerSW } from 'virtual:pwa-register';
+import { registerSW } from "virtual:pwa-register";
 
 const appName = import.meta.env.VITE_APP_NAME || "ENEI";
 
-console.log("rip")
+console.log("rip");
 
-if ('serviceWorker' in navigator) {
-  console.log("AHHHHHHHHHHHHH")
+if ("serviceWorker" in navigator) {
   registerSW();
 }
 
