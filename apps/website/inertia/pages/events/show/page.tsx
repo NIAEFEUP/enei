@@ -34,17 +34,19 @@ interface Speaker {
 interface EventRegistrationProps {
   eventId: number;
   title: string;
-  description: string;
+  description?: string;
   date: string;
   time: string;
   location: string;
   type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other";
   companyImage: string;
   speakers: Speaker[];
+  extraInfo?: string;
   registrationRequirements: string;
   requiresRegistration: boolean;
   ticketsRemaining: number;
   price: number;
+  isAcceptingRegistrations: boolean;
 }
 
 export default function EventRegistrationPage({
@@ -57,10 +59,12 @@ export default function EventRegistrationPage({
   type,
   companyImage,
   speakers,
+  extraInfo,
   registrationRequirements,
   requiresRegistration,
   ticketsRemaining: initialTicketsRemaining,
   price,
+  isAcceptingRegistrations,
 }: EventRegistrationProps) {
   const [isRegistered, setIsRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -190,19 +194,24 @@ export default function EventRegistrationPage({
               </div>
             </CardHeader>
             {/* Event Description */}
+
             <CardContent className="mt-2 space-y-4" style={{ color: activityColors[type] }}>
-              <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
-                <Info className="h-5 w-5" />
-                <p className="text-lg font-semibold">Acerca do Evento</p>
-              </h1>
-              <div className="space-y-2">
-                {description.split("\n\n").map((paragraph, index) => (
-                  <p key={index} className="max-w-[70ch] text-black">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-              {isRegistered && (
+              {description && (
+                <div>
+                  <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+                    <Info className="h-5 w-5" />
+                    <p className="text-lg font-semibold">Acerca do Evento</p>
+                  </h1>
+                  <div className="space-y-2">
+                    {description.split("\n\n").map((paragraph, index) => (
+                      <p key={index} className="max-w-[70ch] text-black">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {/* {isRegistered && (
                 <div className="flex flex-col pb-4">
                   <h2 className="text-md mb-2 font-semibold">
                     Informação complementar para participantes
@@ -237,7 +246,7 @@ export default function EventRegistrationPage({
                     </li>
                   </ul>
                 </div>
-              )}
+              )} */}
               {/* Speakers (if applicable) */}
               {speakers.length > 0 && (
                 <div>
@@ -283,13 +292,27 @@ export default function EventRegistrationPage({
                 </div>
               )}
               {/* Registration Requirements (if applicable) */}
-              {registrationRequirements !== "" && (
-                <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
-                  <ClipboardCheck className="h-5 w-5" />
-                  <p className="text-lg font-semibold">Requisitos de Inscrição</p>
-                </h1>
+              {registrationRequirements && (
+                <>
+                  <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+                    <ClipboardCheck className="h-5 w-5" />
+                    <p className="text-lg font-semibold">Requisitos de Inscrição</p>
+                  </h1>
+                  <p className="text-black">{registrationRequirements}</p>
+                </>
               )}
-              <p className="text-black">{registrationRequirements}</p>
+              {/* Extra Information */}
+              {extraInfo && isRegistered && (
+                <div>
+                  <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+                    <Info className="h-5 w-5" />
+                    <p className="text-lg font-semibold">
+                      Informação complementar para participantes
+                    </p>
+                  </h2>
+                  <div dangerouslySetInnerHTML={{ __html: extraInfo }} />
+                </div>
+              )}
               {/* Price Display */}
               {price > 0 && (
                 <div className="flex items-center justify-center gap-2 py-2 text-lg font-medium">
@@ -301,7 +324,12 @@ export default function EventRegistrationPage({
                 <div className="flex justify-center">
                   <Button
                     onClick={() => handleRegisterClick()}
-                    disabled={ticketsRemaining <= 0 || !requiresRegistration || isLoading}
+                    disabled={
+                      ticketsRemaining <= 0
+                      || !requiresRegistration
+                      || !isAcceptingRegistrations
+                      || isLoading
+                    }
                     className="px-4"
                     style={{ backgroundColor: activityColors[type] }}
                   >
@@ -367,7 +395,13 @@ export default function EventRegistrationPage({
               {requiresRegistration ? (
                 <div className="text-muted-foreground flex items-center justify-center gap-2 text-sm">
                   <Ticket className="h-4 w-4" />
-                  <span>{ticketsRemaining} lugares disponíveis</span>
+                  <span>
+                    {isAcceptingRegistrations ? (
+                      <>{ticketsRemaining} lugares disponíveis</>
+                    ) : (
+                      <>De momento, não estamos a aceitar inscrições</>
+                    )}
+                  </span>
                 </div>
               ) : (
                 <></>

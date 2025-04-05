@@ -9,10 +9,10 @@
 import router from "@adonisjs/core/services/router";
 import { middleware } from "#start/kernel";
 import { emailVerificationThrottle, sendForgotPasswordThrottle } from "#start/limiter";
-const EventsController = () => import("#controllers/events_controller");
 import { sep, normalize } from "node:path";
 import app from "@adonisjs/core/services/app";
 
+const EventsController = () => import("#controllers/events_controller");
 const AuthenticationController = () => import("#controllers/authentication_controller");
 const OrdersController = () => import("#controllers/orders_controller");
 const TicketsController = () => import("#controllers/tickets_controller");
@@ -185,25 +185,20 @@ router
   .group(() => {
     router.get("/", [EventsController, "index"]).as("pages:events");
 
-    router.get("/:id", [EventsController, "show"]).as("pages:events.show").where("id", "45");
+    router.get("/:id", [EventsController, "show"]).as("pages:events.show");
     router
       .post("/:id/register", [EventsController, "register"])
       .as("actions:events.register")
-      .where("id", "45")
       .use([
         middleware.auth(),
         middleware.verifiedEmail(),
         middleware.participant(),
         middleware.hasPurchasedTicket(),
       ]);
-    router
-      .get("/:id/tickets", [EventsController, "ticketsRemaining"])
-      .where("id", "45")
-      .as("actions:events.tickets");
+    router.get("/:id/tickets", [EventsController, "ticketsRemaining"]).as("actions:events.tickets");
 
     router
       .get("/:id/is-registered", [EventsController, "isRegistered"])
-      .where("id", "45")
       .as("actions:events.isRegistered");
 
     router
