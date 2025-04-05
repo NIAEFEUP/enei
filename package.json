@@ -25,6 +25,9 @@
     "overrides": {
       "strtok3": "8.0.1"
     },
-    "neverBuiltDependencies": []
+    "neverBuiltDependencies": [],
+    "patchedDependencies": {
+      "@adminjs/adonis": "patches/@adminjs__adonis.patch"
+    }
   }
 }

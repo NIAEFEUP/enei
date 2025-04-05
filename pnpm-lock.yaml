@@ -14,6 +14,11 @@ catalogs:
 overrides:
   strtok3: 8.0.1
 
+patchedDependencies:
+  '@adminjs/adonis':
+    hash: 34afa3dea7eb1cf1153321a1f1330769bd95f81df8cc40aaa147ba37ff3cd9f9
+    path: patches/@adminjs__adonis.patch
+
 importers:
 
   .:
@@ -35,7 +40,7 @@ importers:
     dependencies:
       '@adminjs/adonis':
         specifier: ^1.1.0
-        version: 1.1.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))(@adonisjs/session@7.5.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))(edge.js@6.2.1))(reflect-metadata@0.2.2)
+        version: 1.1.1(patch_hash=34afa3dea7eb1cf1153321a1f1330769bd95f81df8cc40aaa147ba37ff3cd9f9)(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))(@adonisjs/session@7.5.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))(edge.js@6.2.1))(reflect-metadata@0.2.2)
       '@adminjs/design-system':
         specifier: ^4.1.1
         version: 4.1.1(@babel/core@7.26.10)(@types/react@19.0.12)(prop-types@15.8.1)(react-dom@19.0.0(react@19.0.0))(react-is@18.3.1)(react@19.0.0)
@@ -8901,7 +8906,7 @@ packages:
 
 snapshots:
 
-  '@adminjs/adonis@1.1.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))(@adonisjs/session@7.5.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))(edge.js@6.2.1))(reflect-metadata@0.2.2)':
+  '@adminjs/adonis@1.1.1(patch_hash=34afa3dea7eb1cf1153321a1f1330769bd95f81df8cc40aaa147ba37ff3cd9f9)(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))(@adonisjs/session@7.5.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))(edge.js@6.2.1))(reflect-metadata@0.2.2)':
     dependencies:
       '@adonisjs/core': 6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)
       '@adonisjs/session': 7.5.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))(edge.js@6.2.1)
