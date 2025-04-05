@@ -15,7 +15,7 @@ type PollPaymentPayload = {
 export default class PollPayment extends Job {
   async handle({ paymentId, baseUrl }: PollPaymentPayload) {
     const paymentsService = await app.container.make(PaymentService);
-    const payment = await Payment.findOrFail(paymentId);
+    const payment = await Payment.query().where("id", paymentId).preload("order").firstOrFail();
 
     const logger = this.logger.child({ paymentId });
 

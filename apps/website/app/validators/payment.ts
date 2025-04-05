@@ -10,7 +10,7 @@ const map: Record<string, { status: PaymentStatus; reason?: string | null }> = {
 
 export const paymentValidator = vine.compile(
   vine.object({
-    status: vine
+    info: vine
       .string()
       .in(["Success", "Declined by user", "Declined", "Expired"])
       .transform((value) => {

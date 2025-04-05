@@ -55,7 +55,6 @@ export class PaymentService {
   }
 
   async issuePayment(order: Order, data: PaymentData, userMetadata: UserMetadata) {
-    console.log("DATA: ", data);
     const apiResponse = await axios.post("https://api.ifthenpay.com/spg/payment/mbway", data);
 
     if (apiResponse.status === 200) {
@@ -105,13 +104,16 @@ export class PaymentService {
     );
 
     if (apiResponse.status === 200) {
-      const { status } = await paymentValidator.validate(apiResponse.data.Message);
+      const { info } = await paymentValidator.validate({ info: apiResponse.data.Message });
+
+      const { status } = info;
+
       if (status) {
         if (app.inDev) {
           return "successful";
         }
 
-        return status.status;
+        return status;
       }
     }
 
