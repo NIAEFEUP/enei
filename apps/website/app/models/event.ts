@@ -51,6 +51,11 @@ export default class Event extends BaseModel {
   })
   declare registeredUsers: ManyToMany<typeof User>;
 
+  @manyToMany(() => User, {
+    pivotTable: "event_checkins",
+  })
+  public checkedInUsers!: ManyToMany<typeof User>;
+
   @column()
   declare registrationRequirements: string;
 
