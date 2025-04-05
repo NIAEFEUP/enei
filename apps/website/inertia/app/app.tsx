@@ -4,6 +4,7 @@
 /// <reference path="../../config/inertia.ts" />
 /// <reference path="../../config/limiter.ts" />
 /// <reference path="../../config/redis.ts" />
+/// <reference types="vite-plugin-pwa/client" />
 
 import "../css/app.css";
 
@@ -12,7 +13,16 @@ import { createInertiaApp } from "@inertiajs/react";
 import { hydrateRoot } from "react-dom/client";
 import { Providers } from "./providers";
 
+import { registerSW } from 'virtual:pwa-register';
+
 const appName = import.meta.env.VITE_APP_NAME || "ENEI";
+
+console.log("rip")
+
+if ('serviceWorker' in navigator) {
+  console.log("AHHHHHHHHHHHHH")
+  registerSW();
+}
 
 createInertiaApp({
   progress: { color: "var(--progress-bar)" },
