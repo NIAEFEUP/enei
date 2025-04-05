@@ -24,6 +24,8 @@ const ReferralsController = () => import("#controllers/referrals_controller");
 
 const ProductReservationController = () => import("#controllers/product_reservation_controller");
 
+const TeamController = () => import("#controllers/team_controller");
+
 router.on("/").renderInertia("home").as("pages:home");
 
 router
@@ -279,3 +281,5 @@ router
   .prefix("/qrcode");
 
 router.on("/nfc").renderInertia("nfc").as("pages:nfc");
+
+router.get("/team", [TeamController, "index"]).as("pages:team");

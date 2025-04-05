@@ -96,4 +96,14 @@ export default class ParticipantProfile extends BaseModel {
 
   @column()
   declare website: string | null;
+
+  get socials(): Array<{ github: string } | { linkedin: string } | { website: string }> {
+    const socials = [];
+
+    if (this.github) socials.push({ github: this.github });
+    if (this.linkedin) socials.push({ linkedin: this.linkedin });
+    if (this.website) socials.push({ website: this.website });
+
+    return socials;
+  }
 }

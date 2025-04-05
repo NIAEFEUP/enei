@@ -1,14 +1,21 @@
 import { DateTime } from "luxon";
-import { BaseModel, belongsTo, column } from "@adonisjs/lucid/orm";
+import { BaseModel, belongsTo, column, hasOne } from "@adonisjs/lucid/orm";
 import Department from "./department.js";
-import type { BelongsTo } from "@adonisjs/lucid/types/relations";
+import type { BelongsTo, HasOne } from "@adonisjs/lucid/types/relations";
+import User from "./user.js";
 
 export default class StaffProfile extends BaseModel {
   @column({ isPrimary: true })
   declare id: number;
 
+  @column()
+  declare departmentId: number;
+
   @belongsTo(() => Department)
   declare department: BelongsTo<typeof Department>;
+
+  @hasOne(() => User)
+  declare user: HasOne<typeof User>;
 
   @column()
   declare isAdmin: boolean;

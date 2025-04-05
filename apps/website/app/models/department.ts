@@ -6,6 +6,9 @@ export default class Department extends BaseModel {
   declare id: number;
 
   @column()
+  declare orderPriority: number;
+
+  @column()
   declare name: string;
 
   @column.dateTime({ autoCreate: true })
