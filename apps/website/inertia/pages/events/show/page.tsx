@@ -11,8 +11,7 @@ import {
 import { Button, buttonVariants } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { useToast } from "~/hooks/use_toast";
 import { cn } from "~/lib/utils";
 // import { Tooltip } from '~/components/ui/tooltip'
@@ -20,7 +19,7 @@ import { cn } from "~/lib/utils";
 import RegistrationConfirmationModal from "~/components/events/registration_confirmation_modal";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 import Page from "~/components/common/page";
-import { router } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
 import Container from "~/components/common/containers";
 
 interface Speaker {
@@ -47,6 +46,7 @@ interface EventRegistrationProps {
   ticketsRemaining: number;
   price: number;
   isAcceptingRegistrations: boolean;
+  isRegistered: boolean;
 }
 
 export default function EventRegistrationPage({
@@ -62,79 +62,39 @@ export default function EventRegistrationPage({
   extraInfo,
   registrationRequirements,
   requiresRegistration,
-  ticketsRemaining: initialTicketsRemaining,
+  ticketsRemaining,
   price,
   isAcceptingRegistrations,
+  isRegistered,
 }: EventRegistrationProps) {
-  const [isRegistered, setIsRegistered] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [ticketsRemaining, setTicketsRemaining] = useState(initialTicketsRemaining);
   const [registrationConfirmationModalOpen, setRegistrationConfirmationModalOpen] = useState(false);
-
   const { toast } = useToast();
 
-  const fetchTicketsRemaining = async () => {
-    try {
-      const response = await axios.get("/events/" + eventId + "/tickets");
-      setTicketsRemaining(response.data.ticketsRemaining);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { post, processing } = useForm({});
 
-  const fetchRegistrationStatus = async () => {
-    try {
-      const response = await axios.get("/events/" + eventId + "/is-registered");
-      setIsRegistered(response.data.isRegistered);
-    } catch (error) {
-      console.error(error);
-    }
+  const handleRegister = () => {
+    post(`/events/${eventId}/register`, {
+      onSuccess: () => {
+        setRegistrationConfirmationModalOpen(false);
+        toast({
+          title: "Sucesso",
+          description: "Estás inscrito. Diverte-te!",
+        });
+      },
+      onError: (errors) => {
+        toast({
+          title: "Erro ao registar",
+          description:
+            errors.message
+            || "Ocorreu um erro ao registar para o evento. Por favor, tenta novamente.",
+          duration: 5000,
+        });
+      },
+    });
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      await fetchTicketsRemaining();
-      await fetchRegistrationStatus();
-      setIsLoading(false);
-    };
-    fetchData();
-  }, []);
 
   const handleRegisterClick = () => {
     setRegistrationConfirmationModalOpen(true);
-  };
-
-  const handleRegister = async () => {
-    setIsLoading(true);
-    try {
-      router.post("/events/" + eventId + "/register", undefined, {
-        onFinish: () => fetchRegistrationStatus(),
-      });
-    } catch (error) {
-      console.error(error);
-      if (error.response?.status === 302) {
-        window.location.href = "/signup";
-        return;
-      }
-
-      if (error.response?.status === 401) {
-        window.location.href = "/auth/login";
-        return;
-      }
-      toast({
-        title: "Erro ao registar",
-        description:
-          error.response?.data?.message
-          || "Ocorreu um erro ao registar para o evento. Por favor, tente novamente.",
-        duration: 5000,
-      });
-    } finally {
-      await fetchRegistrationStatus();
-      await fetchTicketsRemaining();
-      setIsLoading(false);
-      setRegistrationConfirmationModalOpen(false);
-    }
   };
 
   const activityClassesPrimary = {
@@ -328,12 +288,12 @@ export default function EventRegistrationPage({
                       ticketsRemaining <= 0
                       || !requiresRegistration
                       || !isAcceptingRegistrations
-                      || isLoading
+                      || processing
                     }
                     className="px-4"
                     style={{ backgroundColor: activityColors[type] }}
                   >
-                    {isLoading && <Loader2 className="animate-spin" />}
+                    {processing && <Loader2 className="animate-spin" />}
                     {requiresRegistration
                       ? ticketsRemaining > 0
                         ? price > 0
@@ -366,9 +326,9 @@ export default function EventRegistrationPage({
                             "px-4 aria-disabled:pointer-events-none aria-disabled:opacity-50",
                           )}
                           style={{ backgroundColor: activityColors[type] }}
-                          aria-disabled={isLoading || isRegistered}
+                          aria-disabled={processing || isRegistered}
                         >
-                          {isLoading && <Loader2 className="animate-spin" />}
+                          {processing && <Loader2 className="animate-spin" />}
                           Inscrito
                         </span>
                       </TooltipTrigger>
@@ -408,7 +368,7 @@ export default function EventRegistrationPage({
               )}
               <RegistrationConfirmationModal
                 isOpen={registrationConfirmationModalOpen}
-                isLoading={isLoading}
+                isLoading={processing}
                 onClose={() => setRegistrationConfirmationModalOpen(false)}
                 onSubmit={handleRegister}
               />
