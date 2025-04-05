@@ -5,7 +5,7 @@ import Product from "#models/product";
 import ProductGroup from "#models/product_group";
 import { createMBWayOrderValidator } from "#validators/order";
 import { inject } from "@adonisjs/core";
-import type { PaymentService } from "#services/payment_service";
+import { PaymentService } from "#services/payment_service";
 
 import { Money } from "#lib/payments/money.js";
 
@@ -100,7 +100,7 @@ export default class OrdersController {
       description = `Payment for order: ${description.slice(0, -2)}`;
 
       // Create the order and associated products
-      const order = await Order.create({ userId: authUser.id, status: "draft" });
+      const order = await Order.create({ userId: authUser.id, status: "draft", pointsUsed: 0 });
 
       for (const { product, quantity } of productDetails) {
         await OrderProduct.create({

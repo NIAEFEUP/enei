@@ -8,7 +8,6 @@ import InvoiceInfo from "#models/invoice_info";
 import Payment, { type PaymentStatus } from "#models/payment";
 import type { Money } from "#lib/payments/money.js";
 import app from "@adonisjs/core/services/app";
-import { storeValidator } from "#validators/store";
 import { paymentValidator } from "#validators/payment";
 
 type PaymentData = {
@@ -17,10 +16,12 @@ type PaymentData = {
   amount: Money;
   mobileNumber: string;
   description: string;
-  email: string;
+};
+
+type UserMetadata = {
+  name?: string;
   nif?: string;
   address?: string;
-  name?: string;
 };
 
 export class PaymentService {
@@ -37,8 +38,12 @@ export class PaymentService {
     const data = {
       mbWayKey: env.get("IFTHENPAY_MBWAY_KEY"),
       orderId: order.id,
-      amount: productAmount,
+      amount: productAmount.toEuros(),
       mobileNumber,
+      description,
+    };
+
+    const userMetadata = {
       description,
       email,
       nif,
@@ -46,10 +51,11 @@ export class PaymentService {
       name,
     };
 
-    await this.issuePayment(order, data);
+    await this.issuePayment(order, data, userMetadata);
   }
 
-  async issuePayment(order: Order, data: PaymentData) {
+  async issuePayment(order: Order, data: PaymentData, userMetadata: UserMetadata) {
+    console.log("DATA: ", data);
     const apiResponse = await axios.post("https://api.ifthenpay.com/spg/payment/mbway", data);
 
     if (apiResponse.status === 200) {
@@ -58,9 +64,9 @@ export class PaymentService {
       const paymentId = await db.transaction(async (trx) => {
         const invoiceInfo = await InvoiceInfo.create(
           {
-            name: data.name,
-            nif: data.nif,
-            address: data.address,
+            name: userMetadata.name,
+            nif: userMetadata.nif,
+            address: userMetadata.address,
             frozen: false,
           },
           { client: trx },
@@ -70,7 +76,7 @@ export class PaymentService {
           {
             status: "pending",
             requestId: RequestId,
-            amount: data.amount,
+            amount: data.amount as Money,
             orderId: order.id,
             invoiceInfoId: invoiceInfo.id,
             reason: null,

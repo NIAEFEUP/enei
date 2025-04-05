@@ -13,8 +13,8 @@ export default class extends BaseSchema {
 
       table.unique(["event_id", "user_id"]);
 
-      table.timestamp("created_at").defaultTo(this.raw("NOW()"));
-      table.timestamp("updated_at").defaultTo(this.raw("NOW()"));
+      table.timestamp("created_at");
+      table.timestamp("updated_at");
     });
   }
 
