@@ -53,13 +53,16 @@ export default class ProfilesController {
     return inertia.render("profile", { profile, isUser });
   }
 
-  async edit({ auth, inertia, response }: HttpContext) {
+  async edit({ auth, inertia, response, params }: HttpContext) {
     const user = auth.user;
     await user!.load("participantProfile");
 
     if (!user?.participantProfile) return response.redirect().toRoute("pages:signup");
 
-    return inertia.render("profile/edit", { profile: user!.participantProfile! });
+    return inertia.render("profile/edit", {
+      profile: user!.participantProfile!,
+      section: params.section,
+    });
   }
 
   async update({ auth, request, response }: HttpContext) {

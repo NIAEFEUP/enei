@@ -194,7 +194,7 @@ router
       .as("pages:profile.default")
       .use([middleware.auth(), middleware.verifiedEmail()]);
     router
-      .get("/profile/edit", [ProfilesController, "edit"])
+      .get("/profile/edit/:section", [ProfilesController, "edit"])
       .as("pages:profile.edit")
       .use([middleware.auth(), middleware.verifiedEmail()]);
     router
