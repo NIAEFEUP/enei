@@ -82,7 +82,7 @@ export default class AuthenticationController {
     return response.redirect().back();
   }
 
-  async sendChangeEmail({ request, auth, session, response }: HttpContext) {
+  async sendChangeEmail({ request, auth, response }: HttpContext) {
     const user: User = auth.user!;
     const { email } = await request.validateUsing(emailChangeValidator);
 
@@ -91,15 +91,26 @@ export default class AuthenticationController {
     return response.redirect().back();
   }
 
-  // TODO: Add a frontend page for the output
-  async callbackForEmailChangeConfirmation({ request }: HttpContext) {
+  async callbackForEmailChangeConfirmation({ inertia, request }: HttpContext) {
     const { id, email } = await request.validateUsing(emailChangeCallbackValidator);
 
     const changeEmail = await ChangeEmail.find(id);
 
-    if (!changeEmail) return "Falha ao confirmar, o pedido de alteração não existe.";
-    if (changeEmail.performed) return "Falha ao confirmar, a alteração já foi efetuada.";
-    if (changeEmail.canceled) return "Falha ao confirmar alteração, a alteração já foi cancelada.";
+    if (!changeEmail)
+      return inertia.render("auth/change-email", {
+        title: "Falha ao confirmar",
+        text: "Falha ao confirmar, o pedido de alteração não existe.",
+      });
+    if (changeEmail.performed)
+      return inertia.render("auth/change-email", {
+        title: "Falha ao confirmar",
+        text: "Falha ao confirmar, a alteração já foi efetuada.",
+      });
+    if (changeEmail.canceled)
+      return inertia.render("auth/change-email", {
+        title: "Falha ao confirmar",
+        text: "Falha ao confirmar, a alteração já foi cancelada.",
+      });
 
     try {
       const changed: boolean = await db.transaction(async (trx) => {
@@ -131,30 +142,57 @@ export default class AuthenticationController {
           changeEmail.oldEmail,
           changeEmail.newEmail,
         );
-        return "Alteração efetuada.";
+        return inertia.render("auth/change-email", {
+          title: "Alteração efetuada",
+          text: "A alteração foi efetuada após ser confirmada pelos dois e-mails.",
+        });
       } else {
-        return "Alteração confirmada, mas não efetuada.";
+        return inertia.render("auth/change-email", {
+          title: "Alteração confirmada",
+          text: "A alteração foi confirmada mas não efetuada. Tem de ser confirmada pelos dois e-mails.",
+        });
       }
     } catch {
-      return "Falha ao confirmar alteração.";
+      return inertia.render("auth/change-email", {
+        title: "Falha ao confirmar",
+        text: "Falha ao confirmar alteração.",
+      });
     }
   }
 
-  async callbackForEmailChangeCancelation({ request }: HttpContext) {
+  async callbackForEmailChangeCancelation({ request, inertia }: HttpContext) {
     const { id } = await request.validateUsing(emailChangeCallbackValidator);
 
     const changeEmail = await ChangeEmail.find(id);
 
-    if (!changeEmail) return "Falha ao cancelar, o pedido de alteração não existe.";
-    if (changeEmail.performed) return "Falha ao cancelar, a alteração já foi efetuada.";
-    if (changeEmail.canceled) return "A alteração já foi cancelada.";
+    if (!changeEmail)
+      return inertia.render("auth/change-email", {
+        title: "Falha ao cancelar",
+        text: "Falha ao cancelar, o pedido de alteração não existe.",
+      });
+    if (changeEmail.performed)
+      return inertia.render("auth/change-email", {
+        title: "Falha ao cancelar",
+        text: "Falha ao cancelar, a alteração já foi efetuada.",
+      });
+    if (changeEmail.canceled)
+      return inertia.render("auth/change-email", {
+        title: "Falha ao cancelar",
+        text: "Falha ao cancelar, a alteração já foi cancelada.",
+      });
 
     try {
       changeEmail.canceled = true;
       await changeEmail.save();
-      return "Alteração cancelada.";
+      return inertia.render("auth/change-email", {
+        title: "Alteração cancelada",
+        text: "Alteração cancelada.",
+      });
     } catch {
-      return "Falha ao cancelar alteração.";
+      return inertia.render("auth/change-email", {
+        title: "Falha ao cancelar",
+        text: "Falha ao cancelar alteração.",
+      });
     }
   }
 
