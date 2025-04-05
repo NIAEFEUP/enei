@@ -7,9 +7,8 @@ import { Card } from "~/components/ui/card";
 import { cn } from "~/lib/utils";
 import { useState } from "react";
 import ProfileInfoForm from "~/components/profile/1_profile_info";
-import CommunicationInfoForm from "~/components/signup/4_communication_info";
 import TbdInfoForm from "~/components/profile/2_tbd_info";
-import AccountInfoForm from "~/components/profile/4_account_info";
+import AccountInfoForm from "~/components/profile/3_account_info";
 
 export default function ProfilePage(
   props: InferPageProps<ProfilesController, "index"> & { profile: ParticipantProfile },
@@ -17,14 +16,15 @@ export default function ProfilePage(
   const { profile }: { profile: ParticipantProfile } = props;
 
   const [activeSection, setActiveSection] = useState(0);
-  const sections = ["Perfil", "Social", "Currículo", "Conta"];
+  // TODO: Rework how sections are choosen
+  const sections = ["Perfil", "Conta"]; // "Social"
 
   // TODO: Follow the github edit information page style, should be able to change profile image, email and password
 
   return (
     <Page title={`${profile.firstName} ${profile.lastName}`} variant="blue">
       <Container className="mt-8 min-h-screen max-w-7xl">
-        <Card className="bg-enei-beige grid grid-cols-1 gap-16 rounded-[30px] px-0 md:grid-cols-[auto_1fr] md:px-0">
+        <Card className="bg-enei-beige grid grid-cols-1 gap-16 rounded-[30px] px-0 md:grid-cols-[auto_1fr] md:px-0 min-h-[48rem]">
           <section className="outline-enei-blue hidden h-full w-[22rem] rounded-tr-[30px] bg-opacity-20 py-6 outline outline-4 md:block">
             <div className="sticky top-28">
               <p className="text-enei-blue mb-6 px-12 text-4xl font-bold">Definições</p>
@@ -58,9 +58,8 @@ export default function ProfilePage(
 
           <section className="flex flex-col gap-4 px-4 py-12">
             {activeSection === 0 && <ProfileInfoForm profile={profile} />}
-            {activeSection === 1 && <TbdInfoForm profile={profile} />}
-            {activeSection === 2 && <CommunicationInfoForm />}
-            {activeSection === 3 && <AccountInfoForm />}
+            {activeSection === 1 && <AccountInfoForm />}
+            {activeSection === 2 && <TbdInfoForm profile={profile} />}
           </section>
         </Card>
       </Container>
