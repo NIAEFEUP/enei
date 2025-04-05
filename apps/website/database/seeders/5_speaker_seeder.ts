@@ -444,5 +444,13 @@ export default class extends BaseSeeder {
       profilePicture: "/images/speakers/tiago-rodrigues.jpg",
       company: "Critical Techworks",
     });
+
+    await SpeakerProfile.create({
+      firstName: "Alexander",
+      lastName: "Loechel",
+      jobTitle: "Senior IT Manager",
+      profilePicture: "/images/speakers/alexander-loechel.jpeg",
+      company: "LMU Munich University",
+    });
   }
 }
