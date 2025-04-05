@@ -38,15 +38,18 @@ export default class Event extends BaseModel {
   @column()
   declare extraInfo: string | null;
 
+  @column()
+  declare isAcceptingRegistrations: boolean;
+
   @manyToMany(() => SpeakerProfile, {
     pivotTable: "event_speakers",
   })
-  public speakers!: ManyToMany<typeof SpeakerProfile>;
+  declare speakers: ManyToMany<typeof SpeakerProfile>;
 
   @manyToMany(() => User, {
     pivotTable: "event_users",
   })
-  public registeredUsers!: ManyToMany<typeof User>;
+  declare registeredUsers: ManyToMany<typeof User>;
 
   @column()
   declare registrationRequirements: string;

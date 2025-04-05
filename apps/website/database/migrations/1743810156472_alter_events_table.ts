@@ -5,16 +5,13 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.text("extra_info");
-      table.text("description").alter();
+      table.boolean("is_accepting_registrations").defaultTo(false);
     });
   }
 
   async down() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.dropColumn("extra_info");
-      // There is no need to restore the description column
-      // because it was already changed in a previous migration.
+      table.dropColumn("is_accepting_registrations");
     });
   }
 }
