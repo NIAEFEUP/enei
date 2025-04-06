@@ -24,6 +24,15 @@ import { Link } from "@tuyau/inertia/react";
 import { cn } from "~/lib/utils";
 import { ENEI_EDITIONS } from "~/lib/enei/signup/editions";
 import { useTuyau } from "~/hooks/use_tuyau";
+import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
+import { QRCodeSVG } from "qrcode.react";
+import { useEffect, useState, createContext } from "react";
+import ProfileActivityInfo from "~/components/profile/profile_activity_info";
+import { useAuth } from "~/hooks/use_auth";
+
+export const ProfileContext = createContext<{ slug: string | number }>({
+  slug: "",
+});
 
 interface SocialIconProps {
   icon: React.FC<LucideProps>;
@@ -60,8 +69,8 @@ const RoundBadge = ({ icon: Icon, text }: RoundBadgeProps) => {
 export default function ProfilePage(
   props: InferPageProps<ProfilesController, "index"> & { profile: ParticipantProfile },
 ) {
-  const tuyau = useTuyau();
-  const { profile, isUser } = props;
+  const auth = useAuth();
+  const { profile, isUser, activityInformation } = props;
 
   const profileEditions = ENEI_EDITIONS.filter((edition) =>
     profile.attendedBeforeEditions.includes(edition.value),
@@ -91,6 +100,7 @@ export default function ProfilePage(
   }, []);
 
   return (
+    <ProfileContext.Provider value={{ slug: profile.slug ?? "" }}>
     <Page title={`${profile.firstName} ${profile.lastName}`} variant="beige">
       <Container className="mt-8 grid min-h-screen max-w-7xl grid-cols-1 gap-16 md:grid-cols-[auto_1fr]">
         <section className="bg-dark-cyan hidden h-full w-[22rem] bg-opacity-20 p-12 md:block">
@@ -207,7 +217,14 @@ export default function ProfilePage(
             </div>
           )}
         </section>
+            <section className="mt-4 grid grid-rows-[auto_1fr] gap-4">
+              <div>
+                <h4 className="text-center text-lg font-bold md:text-left">Sobre</h4>
+                <p>{profile.about ?? "Sem informação."}</p>
+              </div>
+            </section>
       </Container>
     </Page>
+    </ProfileContext.Provider>
   );
 }

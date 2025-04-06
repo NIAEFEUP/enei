@@ -7,19 +7,17 @@ if [ -n "$SKIP_SCRIPTS" ]; then
   exit 0
 fi
 
-# Generate tuyau types
-
 echo "Ensuring .env file exists..."
 if [ ! -f ".env" ]; then
   cp .env.example .env
   node ace generate:key
 fi
 
+echo "Clearing vite cache..."
+rm -rf node_modules/.vite node_modules/.vite-temp
+
 echo "Generating Tuyau types..."
 node ace tuyau:generate
-
-# Prepend "// @ts-nocheck" to .adonsjs/api.ts
-sed -i '1s/^/\/\/ @ts-nocheck\n/' .adonisjs/api.ts
 
 # Preparation is complete
 

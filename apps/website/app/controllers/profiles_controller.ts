@@ -1,5 +1,8 @@
 import ParticipantProfile from "#models/participant_profile";
-import { createProfileValidator, updateProfileValidator } from "#validators/profile";
+import User from "#models/user";
+import { UserActivityService } from "#services/user_activity_service";
+import { createProfileValidator, updateProfileValidator, hasTicketValidator } from "#validators/profile";
+import { inject } from "@adonisjs/core";
 import type { HttpContext } from "@adonisjs/core/http";
 import slug from "slug";
 import { md5 } from "js-md5";
@@ -22,7 +25,10 @@ function toParticipantProfileFormat(data: any): Partial<ParticipantProfile> {
   return data;
 }
 
+@inject()
 export default class ProfilesController {
+  constructor(private userActivityService: UserActivityService) {}
+
   async default({ auth, response }: HttpContext) {
     const user = auth.user;
     await user!.load("participantProfile");
@@ -32,6 +38,17 @@ export default class ProfilesController {
     return response
       .redirect()
       .toRoute("pages:profile.show", { slug: user.participantProfile.slug });
+  }
+
+  async getInfo({ params, response }: HttpContext) {
+    const profile = await ParticipantProfile.findBy("slug", params.slug);
+
+    if (!profile) {
+      response.notFound("Participante não encontrado");
+      return;
+    }
+
+    return response.send({ profile: profile });
   }
 
   async index({ auth, inertia, params, response }: HttpContext) {
@@ -49,8 +66,11 @@ export default class ProfilesController {
     }
 
     const isUser = profile.user ? profile.user.id === auth.user?.id : false;
+    const activityInformation = await this.userActivityService.getActivityInformation(
+      profile.user!,
+    );
 
-    return inertia.render("profile", { profile, isUser });
+    return inertia.render("profile", { profile, isUser, activityInformation });
   }
 
   async edit({ auth, inertia, response, params }: HttpContext) {
@@ -104,5 +124,23 @@ export default class ProfilesController {
     await user.related("participantProfile").associate(profileAdd);
 
     return response.redirect().toRoute("pages:tickets");
+  }
+
+  async hasTicket({ response, request }: HttpContext) {
+    const { email } = await request.validateUsing(hasTicketValidator);
+
+    const user = await User.query().where("email", email).preload("participantProfile").first();
+
+    const hasTicket = !!(
+      user
+      && user.participantProfileId !== null
+      && user.participantProfile.purchasedTicket !== null
+    );
+
+    const name = hasTicket
+      ? `${user!.participantProfile.firstName} ${user!.participantProfile.lastName}`
+      : null;
+
+    return response.ok({ hasTicket, name });
   }
 }

@@ -1,6 +1,6 @@
 import { BaseSeeder } from "@adonisjs/lucid/seeders";
 import Product from "#models/product";
-import { UserTypes } from "../../types/user.js";
+
 export default class ProductSeeder extends BaseSeeder {
   public async run() {
     await Product.create({
@@ -24,57 +24,6 @@ export default class ProductSeeder extends BaseSeeder {
       maxOrder: 1,
       productGroupId: 1,
       image: "/favicon.svg",
-    });
-    await Product.create({
-      name: "Rato",
-      description: "I am a mouse",
-      price: 30,
-      stock: 50,
-      currency: "points",
-      maxOrder: 1,
-      image: "hyprxmouse.png",
-    });
-    await Product.create({
-      name: "Rato",
-      description: "I am a mouse",
-      price: 30,
-      stock: 0,
-      currency: "points",
-      maxOrder: 1,
-      image: "hyprxmouse.png",
-    });
-    await Product.create({
-      name: "Rato",
-      description: "I am a mouse",
-      price: 30,
-      stock: 50,
-      currency: "points",
-      maxOrder: 1,
-      image: "hyprxmouse.png",
-    });
-    await Product.create({
-      name: "Participant Rato",
-      description: "I am a mouse",
-      price: 30,
-      stock: 50,
-      currency: "points",
-      maxOrder: 1,
-      image: "hyprxmouse.png",
-      restrictions: {
-        groups: [UserTypes.PARTICIPANT],
-      },
-    });
-    await Product.create({
-      name: "Promoter Rato",
-      description: "I am a mouse",
-      price: 30,
-      stock: 50,
-      currency: "points",
-      maxOrder: 1,
-      image: "hyprxmouse.png",
-      restrictions: {
-        groups: [UserTypes.PROMOTER],
-      },
     });
   }
 }

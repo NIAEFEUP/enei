@@ -1,6 +1,7 @@
 import type { HttpContext } from "@adonisjs/core/http";
 import type { NextFn } from "@adonisjs/core/types/http";
 import env from "#start/env";
+import { safeEqual } from "@adonisjs/core/helpers";
 
 export default class CompanyBearerAuthMiddleware {
   async handle(ctx: HttpContext, next: NextFn) {
@@ -15,7 +16,7 @@ export default class CompanyBearerAuthMiddleware {
 
     const token = authHeader.replace("Bearer ", "");
 
-    if (token !== env.get("COMPANY_BEARER_TOKEN")) {
+    if (!safeEqual(env.get("COMPANY_BEARER_TOKEN"), token)) {
       return ctx.response.unauthorized({ error: "Invalid token" });
     }
 

@@ -73,3 +73,9 @@ export const updateProfileValidator = vine.compile(
     website: vine.string().url().nullable().optional(),
   }),
 );
+
+export const hasTicketValidator = vine.compile(
+  vine.object({
+    email: vine.string().email(),
+  }),
+);

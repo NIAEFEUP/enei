@@ -122,6 +122,27 @@ const env = await defineEnv(new URL("../", import.meta.url), "INERTIA_PUBLIC_", 
     |----------------------------------------------------------
     */
     DRIVE_DISK: vine.enum(["fs"]),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring the API endpoints for Kevel
+    |----------------------------------------------------------
+    */
+    COMPANY_BEARER_TOKEN: vine.string(),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring the proxy-level trust,
+    | used for determining the base URL of the application.
+    |----------------------------------------------------------
+    */
+    TRUST_PROXY: vine.union([
+      vine.union.if(
+        (_, field) => field.isDefined,
+        vine.unionOfTypes([vine.boolean(), vine.string().ipAddress(4)]),
+      ),
+      vine.union.else(vine.literal(undefined).optional()),
+    ]),
   });
 });
 

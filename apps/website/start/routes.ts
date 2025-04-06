@@ -10,7 +10,10 @@ import router from "@adonisjs/core/services/router";
 import { middleware } from "#start/kernel";
 import { emailVerificationThrottle, sendForgotPasswordThrottle } from "#start/limiter";
 const EventsController = () => import("#controllers/events_controller");
+import { sep, normalize } from "node:path";
+import app from "@adonisjs/core/services/app";
 
+const EventsController = () => import("#controllers/events_controller");
 const AuthenticationController = () => import("#controllers/authentication_controller");
 const OrdersController = () => import("#controllers/orders_controller");
 const TicketsController = () => import("#controllers/tickets_controller");
@@ -19,6 +22,8 @@ const CvsController = () => import("#controllers/cvs_controller");
 
 const StoreController = () => import("#controllers/store_controller");
 const ReferralsController = () => import("#controllers/referrals_controller");
+
+const ProductReservationController = () => import("#controllers/product_reservation_controller");
 
 router.on("/").renderInertia("home").as("pages:home");
 
@@ -190,6 +195,10 @@ router
   .group(() => {
     router.get("/u/:slug", [ProfilesController, "index"]).as("pages:profile.show");
     router
+      .post("/u/:slug/product/collect", [ProductReservationController, "collect"])
+      .as("actions:profile.product.collect")
+      .use(middleware.staff());
+    router
       .get("/profile", [ProfilesController, "default"])
       .as("pages:profile.default")
       .use([middleware.auth(), middleware.verifiedEmail()]);
@@ -202,6 +211,7 @@ router
       .as("actions:profile.update")
       .use([middleware.auth(), middleware.verifiedEmail()]);
     router.get("/u/:slug/cv", [CvsController, "show"]).as("pages:profile.cv.show");
+    router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
   })
   .use(middleware.wip());
 
@@ -213,21 +223,16 @@ router
     router
       .post("/:id/register", [EventsController, "register"])
       .as("actions:events.register")
-      .where("id", "39")
       .use([
         middleware.auth(),
         middleware.verifiedEmail(),
         middleware.participant(),
         middleware.hasPurchasedTicket(),
       ]);
-    router
-      .get("/:id/tickets", [EventsController, "ticketsRemaining"])
-      .where("id", "39")
-      .as("actions:events.tickets");
+    router.get("/:id/tickets", [EventsController, "ticketsRemaining"]).as("actions:events.tickets");
 
     router
       .get("/:id/is-registered", [EventsController, "isRegistered"])
-      .where("id", "39")
       .as("actions:events.isRegistered");
 
     router
@@ -251,9 +256,11 @@ router
 router
   .group(() => {
     router.get("/", [StoreController, "index"]).as("pages:store");
-    router.post("/products/:id/buy/", [StoreController, "buy"]).as("actions:store.buy");
+    router
+      .post("/products/:id/buy/", [StoreController, "buy"])
+      .as("actions:store.buy")
+      .use(middleware.wip());
   })
-  .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant(), middleware.wip()])
   .prefix("/store");
 
 // Referrals
@@ -266,3 +273,20 @@ router
   .route(`/r/:referralCode`, ["GET", "POST"], [ReferralsController, "link"])
   .middleware([middleware.automaticSubmit(), middleware.silentAuth()])
   .as("actions:referrals.link");
+
+router
+  .group(() => {
+    router
+      .get("/has-ticket/", [ProfilesController, "hasTicket"])
+      .as("actions:has-ticket")
+      .middleware(middleware.companyBearerAuth());
+  })
+  .prefix("api");
+
+router
+  .group(() => {
+    router.on("/scan").renderInertia("qrscanner").as("pages:staff.qrcode.scan");
+  })
+  .prefix("/qrcode");
+
+router.on("/nfc").renderInertia("nfc").as("pages:nfc");
