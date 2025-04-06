@@ -35,7 +35,7 @@ export const sendChangePasswordThrottle = limiter.define("profile.change-passwor
   return limiter.allowRequests(1).every("1 minute");
 });
 
-export const sendChangeEmailThrottle = limiter.define("auth.change-email", () => {
+export const sendChangeEmailThrottle = limiter.define("profile.change-email", () => {
   if (app.nodeEnvironment !== "production") return null;
 
   return limiter.allowRequests(1).every("1 minute");

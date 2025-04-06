@@ -1,6 +1,6 @@
 import { BaseEvent } from "@adonisjs/core/events";
 
-export default class UserChangeEmail extends BaseEvent {
+export default class UserChangeEmailRequest extends BaseEvent {
   constructor(
     public readonly changeId: number,
     public readonly oldEmail: string,

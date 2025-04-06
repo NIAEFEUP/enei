@@ -60,29 +60,6 @@ router
       .use(middleware.auth());
 
     router
-      .post("/email/change/new", [AuthenticationController, "sendChangeEmail"])
-      .as("actions:auth.change-email.send")
-      .use([middleware.auth(), sendChangeEmailThrottle]);
-
-    router
-      .route(
-        "/email/change/confirm/callback",
-        ["GET", "POST"],
-        [AuthenticationController, "callbackForEmailChangeConfirmation"],
-      )
-      .as("actions:auth.change-email.confirm.callback")
-      .middleware([middleware.verifyUrlSignature(), middleware.automaticSubmit()]);
-
-    router
-      .route(
-        "/email/change/cancel/callback",
-        ["GET", "POST"],
-        [AuthenticationController, "callbackForEmailChangeCancelation"],
-      )
-      .as("actions:auth.change-email.cancel.callback")
-      .middleware([middleware.verifyUrlSignature(), middleware.automaticSubmit()]);
-
-    router
       .on("/password/forgot")
       .renderInertia("auth/forgot-password")
       .as("pages:auth.forgot-password")
@@ -215,6 +192,34 @@ router
         middleware.requireAuthenticationEnabled(),
         middleware.auth(),
         sendChangePasswordThrottle,
+      ]);
+    router
+      .post("/profile/edit/email", [ProfilesController, "sendEditEmail"])
+      .as("actions:profile.edit-email.send")
+      .use([middleware.requireAuthenticationEnabled(), middleware.auth(), sendChangeEmailThrottle]);
+    router
+      .route(
+        "profile/edit/email/callback/confirm",
+        ["GET", "POST"],
+        [ProfilesController, "callbackForEmailChangeConfirmation"],
+      )
+      .as("actions:profile.edit-email.confirm.callback")
+      .middleware([
+        middleware.requireAuthenticationEnabled(),
+        middleware.verifyUrlSignature(),
+        middleware.automaticSubmit(),
+      ]);
+    router
+      .route(
+        "profile/edit/email/callback/cancel",
+        ["GET", "POST"],
+        [ProfilesController, "callbackForEmailChangeCancelation"],
+      )
+      .as("actions:profile.edit-email.cancel.callback")
+      .middleware([
+        middleware.requireAuthenticationEnabled(),
+        middleware.verifyUrlSignature(),
+        middleware.automaticSubmit(),
       ]);
 
     router.get("/u/:slug/cv", [CvsController, "show"]).as("pages:profile.cv.show");

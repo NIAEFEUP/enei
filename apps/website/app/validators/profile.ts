@@ -6,6 +6,7 @@ import transports from "#data/enei/signup/transports.json" with { type: "json" }
 import shirts from "#data/enei/signup/shirts.json" with { type: "json" };
 import heardaboutfrom from "#data/enei/signup/heard-about.json" with { type: "json" };
 import { DateTime } from "luxon";
+import User from "#models/user";
 
 export const createProfileValidator = vine.compile(
   vine.object({
@@ -76,6 +77,19 @@ export const updateProfileValidator = vine.compile(
 
 export const hasTicketValidator = vine.compile(
   vine.object({
+    email: vine.string().email(),
+  }),
+);
+
+export const emailEditValidator = vine.compile(
+  vine.object({
+    email: vine.string().email().unique({ table: User.table, column: "email" }),
+  }),
+);
+
+export const emailChangeCallbackValidator = vine.compile(
+  vine.object({
+    id: vine.string(),
     email: vine.string().email(),
   }),
 );

@@ -16,7 +16,7 @@ const AccountInfoForm = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    post(tuyau.$url("actions:auth.change-email.send"), {
+    post(tuyau.$url("actions:profile.edit-email.send"), {
       onSuccess: () => {
         toast({
           title: "E-mails para alterar e-mail enviados",
@@ -57,7 +57,7 @@ const AccountInfoForm = () => {
     <form
       onSubmit={handleSubmit}
       method="POST"
-      action={tuyau.$url("actions:auth.change-email.send")}
+      action={tuyau.$url("actions:profile.edit-email.send")}
     >
       <div className="flex flex-col gap-6">
         <div className="grid gap-2">

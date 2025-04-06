@@ -5,16 +5,11 @@ import {
   loginWithCredentialsValidator,
   passwordResetValidator,
   passwordSendForgotPasswordValidator,
-  emailChangeValidator,
-  emailChangeCallbackValidator,
 } from "#validators/authentication";
 import { UserService } from "#services/user_service";
 import { inject } from "@adonisjs/core";
 import UserRequestedVerificationEmail from "#events/user_requested_verification_email";
 import Account from "#models/account";
-import User from "#models/user";
-import ChangeEmail from "#models/email_change";
-import db from "@adonisjs/lucid/services/db";
 
 @inject()
 export default class AuthenticationController {
@@ -67,120 +62,6 @@ export default class AuthenticationController {
     await this.userService.verifyEmail(email);
 
     return response.redirect().toRoute("pages:auth.verify.success");
-  }
-
-  async sendChangeEmail({ request, auth, response }: HttpContext) {
-    const user: User = auth.user!;
-    const { email } = await request.validateUsing(emailChangeValidator);
-
-    await this.userService.sendChangeEmailEmail(user.id, user.email, email);
-
-    return response.redirect().back();
-  }
-
-  async callbackForEmailChangeConfirmation({ inertia, request }: HttpContext) {
-    const { id, email } = await request.validateUsing(emailChangeCallbackValidator);
-
-    const changeEmail = await ChangeEmail.find(id);
-
-    if (!changeEmail)
-      return inertia.render("auth/change-email", {
-        title: "Falha ao confirmar",
-        text: "Falha ao confirmar, o pedido de alteração não existe.",
-      });
-    if (changeEmail.performed)
-      return inertia.render("auth/change-email", {
-        title: "Falha ao confirmar",
-        text: "Falha ao confirmar, a alteração já foi efetuada.",
-      });
-    if (changeEmail.canceled)
-      return inertia.render("auth/change-email", {
-        title: "Falha ao confirmar",
-        text: "Falha ao confirmar, a alteração já foi cancelada.",
-      });
-
-    try {
-      const changed: boolean = await db.transaction(async (trx) => {
-        if (email === changeEmail.newEmail) {
-          changeEmail.newEmailConfirmed = true;
-        } else if (email === changeEmail.oldEmail) {
-          changeEmail.oldEmailConfirmed = true;
-        }
-
-        changeEmail.useTransaction(trx);
-        await changeEmail.save();
-
-        if (changeEmail.newEmailConfirmed && changeEmail.oldEmailConfirmed) {
-          const user = await User.findOrFail(changeEmail.userId);
-          user.email = changeEmail.newEmail;
-          user.useTransaction(trx);
-          await user.save();
-
-          changeEmail.performed = true;
-          await changeEmail.save();
-          return true;
-        }
-
-        return false;
-      });
-
-      if (changed) {
-        await this.userService.sendEmailChangedConfirmationEmail(
-          changeEmail.oldEmail,
-          changeEmail.newEmail,
-        );
-        return inertia.render("auth/change-email", {
-          title: "Alteração efetuada",
-          text: "A alteração foi efetuada após ser confirmada pelos dois e-mails.",
-        });
-      } else {
-        return inertia.render("auth/change-email", {
-          title: "Alteração confirmada",
-          text: "A alteração foi confirmada mas não efetuada. Tem de ser confirmada pelos dois e-mails.",
-        });
-      }
-    } catch {
-      return inertia.render("auth/change-email", {
-        title: "Falha ao confirmar",
-        text: "Falha ao confirmar alteração.",
-      });
-    }
-  }
-
-  async callbackForEmailChangeCancelation({ request, inertia }: HttpContext) {
-    const { id } = await request.validateUsing(emailChangeCallbackValidator);
-
-    const changeEmail = await ChangeEmail.find(id);
-
-    if (!changeEmail)
-      return inertia.render("auth/change-email", {
-        title: "Falha ao cancelar",
-        text: "Falha ao cancelar, o pedido de alteração não existe.",
-      });
-    if (changeEmail.performed)
-      return inertia.render("auth/change-email", {
-        title: "Falha ao cancelar",
-        text: "Falha ao cancelar, a alteração já foi efetuada.",
-      });
-    if (changeEmail.canceled)
-      return inertia.render("auth/change-email", {
-        title: "Falha ao cancelar",
-        text: "Falha ao cancelar, a alteração já foi cancelada.",
-      });
-
-    try {
-      changeEmail.canceled = true;
-      await changeEmail.save();
-      return inertia.render("auth/change-email", {
-        title: "Alteração cancelada",
-        text: "Alteração cancelada.",
-      });
-    } catch {
-      return inertia.render("auth/change-email", {
-        title: "Falha ao cancelar",
-        text: "Falha ao cancelar alteração.",
-      });
-    }
   }
 
   async sendForgotPassword({ request, response }: HttpContext) {
