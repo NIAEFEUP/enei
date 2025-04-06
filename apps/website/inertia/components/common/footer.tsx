@@ -7,7 +7,9 @@ export default function Footer() {
       <div className="enei-footer-waves absolute inset-x-0 bottom-full h-32" />
       <div className="text-enei-beige from-enei-blue to-enei-blue/50 h-40 bg-black bg-gradient-to-b">
         <div className="flex flex-col space-y-4 pt-12">
-          <a href="/regulamento-sistema-pontos.pdf" className="mx-auto hover:underline">Regulamento do Sistema de Pontos</a>
+          <a href="/regulamento-sistema-pontos.pdf" className="mx-auto hover:underline">
+            Regulamento do Sistema de Pontos
+          </a>
           <div className="flex flex-row items-center justify-center gap-4">
             <a href="https://instagram.com/eneiconf">
               <InstagramLogoIcon className="size-6" />
