@@ -17,6 +17,11 @@ import SendChangeEmailEmail from "#listeners/send_change_email_email";
 import ChangeEmailRequest from "#models/email_change";
 import UserEmailChangedConfirmation from "#events/user_email_changed";
 import SendEmailChangedConfirmationEmail from "#listeners/send_email_changed_email";
+import Sqids from "sqids";
+
+export const changeEmailSqids = new Sqids({
+  minLength: 4,
+});
 
 @inject()
 export class UserService {
@@ -99,8 +104,13 @@ export class UserService {
     });
 
     const listener = new SendChangeEmailEmail();
-    // TODO: hide changeId using sqids
-    listener.handle(new UserChangeEmailRequest(committedChangeEmail.id, oldEmail, newEmail));
+    listener.handle(
+      new UserChangeEmailRequest(
+        changeEmailSqids.encode([committedChangeEmail.id]),
+        oldEmail,
+        newEmail,
+      ),
+    );
   }
 
   async sendEmailChangedConfirmationEmail(oldEmail: string, newEmail: string) {

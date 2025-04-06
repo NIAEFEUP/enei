@@ -1,7 +1,7 @@
 import ParticipantProfile from "#models/participant_profile";
 import User from "#models/user";
 import { UserActivityService } from "#services/user_activity_service";
-import { UserService } from "#services/user_service";
+import { changeEmailSqids, UserService } from "#services/user_service";
 import {
   createProfileValidator,
   updateProfileValidator,
@@ -181,7 +181,17 @@ export default class ProfilesController {
   async callbackForEmailChangeConfirmation({ inertia, request }: HttpContext) {
     const { id, email } = await request.validateUsing(emailChangeCallbackValidator);
 
-    const changeEmail = await ChangeEmailRequest.find(id);
+    let decodedId;
+    try {
+      decodedId = changeEmailSqids.decode(id)[0];
+    } catch {
+      return inertia.render("auth/change-email", {
+        title: "Falha ao confirmar",
+        text: "Falha ao confirmar, o pedido de alteração não existe.",
+      });
+    }
+
+    const changeEmail = await ChangeEmailRequest.find(decodedId);
 
     if (!changeEmail)
       return inertia.render("auth/change-email", {
@@ -250,7 +260,17 @@ export default class ProfilesController {
   async callbackForEmailChangeCancelation({ request, inertia }: HttpContext) {
     const { id } = await request.validateUsing(emailChangeCallbackValidator);
 
-    const changeEmail = await ChangeEmailRequest.find(id);
+    let decodedId;
+    try {
+      decodedId = changeEmailSqids.decode(id)[0];
+    } catch {
+      return inertia.render("auth/change-email", {
+        title: "Falha ao confirmar",
+        text: "Falha ao confirmar, o pedido de alteração não existe.",
+      });
+    }
+
+    const changeEmail = await ChangeEmailRequest.find(decodedId);
 
     if (!changeEmail)
       return inertia.render("auth/change-email", {
