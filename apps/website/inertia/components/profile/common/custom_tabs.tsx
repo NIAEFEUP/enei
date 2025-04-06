@@ -34,7 +34,7 @@ const CustomTabTrigger = ({ className, active = false, children }: CustomTabTrig
     data-state={active ? "active" : "inactive"}
     aria-selected={active}
     className={cn(
-      "ring-offset-background data-[state=active]:bg-enei-blue flex h-[60px] w-full cursor-pointer items-center whitespace-nowrap rounded-md px-3 py-1 text-3xl transition-all data-[state=active]:text-white",
+      "ring-offset-background data-[state=active]:bg-enei-blue flex h-12 w-full cursor-pointer items-center whitespace-nowrap rounded-md px-3 py-1 text-2xl transition-all data-[state=active]:text-white",
       className,
     )}
   >
