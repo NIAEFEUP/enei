@@ -60,11 +60,6 @@ router
       .use(middleware.auth());
 
     router
-      .post("/password/change/new", [AuthenticationController, "sendChangePassword"])
-      .as("actions:auth.change-password.send")
-      .use([middleware.auth(), sendChangePasswordThrottle]);
-
-    router
       .post("/email/change/new", [AuthenticationController, "sendChangeEmail"])
       .as("actions:auth.change-email.send")
       .use([middleware.auth(), sendChangeEmailThrottle]);
@@ -212,6 +207,16 @@ router
       .patch("/profile/edit", [ProfilesController, "update"])
       .as("actions:profile.update")
       .use([middleware.auth(), middleware.verifiedEmail()]);
+
+    router
+      .post("/profile/edit/password", [ProfilesController, "sendChangePassword"])
+      .as("actions:profile.change-password.send")
+      .use([
+        middleware.requireAuthenticationEnabled(),
+        middleware.auth(),
+        sendChangePasswordThrottle,
+      ]);
+
     router.get("/u/:slug/cv", [CvsController, "show"]).as("pages:profile.cv.show");
     router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
   })

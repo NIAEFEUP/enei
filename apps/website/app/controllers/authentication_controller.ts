@@ -69,19 +69,6 @@ export default class AuthenticationController {
     return response.redirect().toRoute("pages:auth.verify.success");
   }
 
-  async sendChangePassword({ auth, response }: HttpContext) {
-    const user: User = auth.user!;
-
-    if (!user) {
-      return response.redirect().back();
-    }
-
-    // Reuses the forgot password workflow
-    await this.userService.sendForgotPasswordEmail(user.email);
-
-    return response.redirect().back();
-  }
-
   async sendChangeEmail({ request, auth, response }: HttpContext) {
     const user: User = auth.user!;
     const { email } = await request.validateUsing(emailChangeValidator);

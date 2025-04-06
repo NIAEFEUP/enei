@@ -1,6 +1,7 @@
 import ParticipantProfile from "#models/participant_profile";
 import User from "#models/user";
 import { UserActivityService } from "#services/user_activity_service";
+import { UserService } from "#services/user_service";
 import {
   createProfileValidator,
   updateProfileValidator,
@@ -31,7 +32,10 @@ function toParticipantProfileFormat(data: any): Partial<ParticipantProfile> {
 
 @inject()
 export default class ProfilesController {
-  constructor(private userActivityService: UserActivityService) {}
+  constructor(
+    private userActivityService: UserActivityService,
+    private userService: UserService,
+  ) {}
 
   async default({ auth, response }: HttpContext) {
     const user = auth.user;
@@ -146,5 +150,18 @@ export default class ProfilesController {
       : null;
 
     return response.ok({ hasTicket, name });
+  }
+
+  async sendChangePassword({ auth, response }: HttpContext) {
+    const user: User = auth.user!;
+
+    if (!user) {
+      return response.redirect().back();
+    }
+
+    // Reuses the forgot password workflow
+    await this.userService.sendForgotPasswordEmail(user.email);
+
+    return response.redirect().back();
   }
 }

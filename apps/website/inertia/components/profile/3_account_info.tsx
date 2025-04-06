@@ -35,7 +35,7 @@ const AccountInfoForm = () => {
   };
 
   const changePassword = () => {
-    post(tuyau.$url("actions:auth.change-password.send"), {
+    post(tuyau.$url("actions:profile.change-password.send"), {
       onSuccess: () => {
         toast({
           title: "E-mail para repor a palavra-passe enviado",
