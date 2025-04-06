@@ -156,7 +156,7 @@ export default class ProfilesController {
     return response.ok({ hasTicket, name });
   }
 
-  async sendChangePassword({ auth, response }: HttpContext) {
+  async sendEditPassword({ auth, response }: HttpContext) {
     const user: User = auth.user!;
 
     if (!user) {

@@ -186,7 +186,7 @@ router
       .use([middleware.auth(), middleware.verifiedEmail()]);
 
     router
-      .post("/profile/edit/password", [ProfilesController, "sendChangePassword"])
+      .post("/profile/edit/password", [ProfilesController, "sendEditPassword"])
       .as("actions:profile.change-password.send")
       .use([
         middleware.requireAuthenticationEnabled(),
