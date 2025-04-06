@@ -31,7 +31,7 @@ export default class EventsController {
       })),
     });
   }
-  async show({ inertia, params }: HttpContext) {
+  async show({ inertia, params, auth }: HttpContext) {
     const event = await Event.query()
       .where("id", params.id)
       .preload("speakers")
@@ -40,12 +40,16 @@ export default class EventsController {
       })
       .firstOrFail();
 
+    const user = auth.user;
+    const isRegistered = user ? await this.eventService.isRegistered(user, event) : false;
+
     return inertia.render("events/show", {
       event,
       formattedDate: event.getFormattedDate(),
       formattedTime: event.getFormattedTime(),
       price:
         event.productGroup.products.length > 0 ? event.productGroup.products[0].price.toEuros() : 0,
+      isRegistered: isRegistered,
     });
   }
 

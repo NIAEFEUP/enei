@@ -11,12 +11,12 @@ import {
 import { Button, buttonVariants } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { useToast } from "~/hooks/use_toast";
 import { cn } from "~/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 import Page from "~/components/common/page";
+import { useForm } from "@inertiajs/react";
 import Container from "~/components/common/containers";
 import PaidRegistrationConfirmationModal from "~/components/events/confirmation_modal/paid_registration_confirmation_modal";
 import PointsRegistrationConfirmationModal from "~/components/events/confirmation_modal/points_registration_confirmation_modal";
@@ -28,6 +28,7 @@ interface EventRegistrationProps {
   formattedDate: string;
   formattedTime: string;
   price: number;
+  isRegistered: boolean;
 }
 
 export default function EventRegistrationPage({
@@ -35,41 +36,12 @@ export default function EventRegistrationPage({
   formattedDate,
   formattedTime,
   price,
+  isRegistered,
 }: EventRegistrationProps) {
-  const [isRegistered, setIsRegistered] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [ticketsRemaining, setTicketsRemaining] = useState(event.ticketsRemaining);
   const [registrationConfirmationModalOpen, setRegistrationConfirmationModalOpen] = useState(false);
 
-  const { toast } = useToast();
-
-  const fetchTicketsRemaining = async () => {
-    try {
-      const response = await axios.get("/events/" + event.id + "/tickets");
-      setTicketsRemaining(response.data.ticketsRemaining);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const fetchRegistrationStatus = async () => {
-    try {
-      const response = await axios.get("/events/" + event.id + "/is-registered");
-      setIsRegistered(response.data.isRegistered);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      await fetchTicketsRemaining();
-      await fetchRegistrationStatus();
-      setIsLoading(false);
-    };
-    fetchData();
-  }, []);
+  const { processing } = useForm({});
 
   const handleRegisterClick = () => {
     setRegistrationConfirmationModalOpen(true);
@@ -268,12 +240,12 @@ export default function EventRegistrationPage({
                       ticketsRemaining <= 0
                       || !event.requiresRegistration
                       || !event.isAcceptingRegistrations
-                      || isLoading
+                      || processing
                     }
                     className="px-4"
                     style={{ backgroundColor: activityColors[event.type] }}
                   >
-                    {isLoading && <Loader2 className="animate-spin" />}
+                    {processing && <Loader2 className="animate-spin" />}
                     {event.requiresRegistration
                       ? ticketsRemaining > 0
                         ? price > 0
@@ -306,9 +278,9 @@ export default function EventRegistrationPage({
                             "px-4 aria-disabled:pointer-events-none aria-disabled:opacity-50",
                           )}
                           style={{ backgroundColor: activityColors[event.type] }}
-                          aria-disabled={isLoading || isRegistered}
+                          aria-disabled={processing || isRegistered}
                         >
-                          {isLoading && <Loader2 className="animate-spin" />}
+                          {processing && <Loader2 className="animate-spin" />}
                           Inscrito
                         </span>
                       </TooltipTrigger>
@@ -347,18 +319,17 @@ export default function EventRegistrationPage({
               ) : (
                 <></>
               )}
-
               {price > 0 ? (
                 <PaidRegistrationConfirmationModal
                   isOpen={registrationConfirmationModalOpen}
-                  isLoading={isLoading}
+                  isLoading={processing}
                   onClose={() => setRegistrationConfirmationModalOpen(false)}
                   event={event}
                 />
               ) : (
                 <PointsRegistrationConfirmationModal
                   isOpen={registrationConfirmationModalOpen}
-                  isLoading={isLoading}
+                  isLoading={processing}
                   onClose={() => setRegistrationConfirmationModalOpen(false)}
                   event={event}
                 />

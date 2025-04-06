@@ -1,6 +1,7 @@
 import RegistrationConfirmationModal from "./registration_confirmation_modal";
 import { cn } from "~/lib/utils";
 import { buttonVariants } from "~/components/ui/button";
+import Event from "#models/event";
 
 interface PointRegistrationConfirmationModalProps {
   isOpen: boolean;

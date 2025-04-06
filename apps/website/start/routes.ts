@@ -17,11 +17,11 @@ const AuthenticationController = () => import("#controllers/authentication_contr
 const OrdersController = () => import("#controllers/orders_controller");
 const TicketsController = () => import("#controllers/tickets_controller");
 const ProfilesController = () => import("#controllers/profiles_controller");
-const CvsController = () => import("#controllers/cvs_controller");
-
+const UsersController = () => import("#controllers/users_controller");
 const StoreController = () => import("#controllers/store_controller");
 const ReferralsController = () => import("#controllers/referrals_controller");
 
+const LeaderboardController = () => import("#controllers/leaderboard_controller");
 const ProductReservationController = () => import("#controllers/product_reservation_controller");
 
 router.on("/").renderInertia("home").as("pages:home");
@@ -217,21 +217,17 @@ router
 
 router
   .group(() => {
-    router.get("/cv/name", [CvsController, "showName"]);
-    router.post("/cv/upload", [CvsController, "upload"]);
-    router.delete("cv/delete", [CvsController, "delete"]);
-    router.get("cv/uploads/*", ({ request, response }) => {
-      const filePath = `${request.param("*").join(sep)}_resume.pdf`;
-      const PATH_TRAVERSAL_REGEX = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
-      const normalizedPath = normalize(filePath);
-      if (PATH_TRAVERSAL_REGEX.test(normalizedPath)) {
-        return response.badRequest("Malformed path");
-      }
-      const absolutePath = app.makePath("storage/uploads/cvs", normalizedPath);
-      return response.download(absolutePath);
-    });
+    router.post("/cv/upload", [UsersController, "storeCV"]).as("actions:cv_upload");
+    router.delete("cv/delete", [UsersController, "deleteCV"]).as("actions:cv_delete");
+    router.get("/cv/name", [UsersController, "showCVName"]).as("actions:cv_name");
+    router.get("/:id/cv/download", [UsersController, "downloadCV"]).use(middleware.company());
+
+    // Avatar endpoints
+    router.get("/avatar/name", [UsersController, "showAvatarName"]).as("actions:avatar_name");
+    router.post("/avatar/upload", [UsersController, "storeAvatar"]).as("actions:avatar_upload");
+    router.delete("/avatar/delete", [UsersController, "deleteAvatar"]).as("actions:avatar_delete");
   })
-  .use([middleware.auth(), middleware.wip()])
+  .use(middleware.auth())
   .prefix("user");
 
 router
@@ -246,14 +242,26 @@ router
 
 // Referrals
 router
-  .get("/referrals", [ReferralsController, "showReferralLink"])
-  .middleware(middleware.auth())
-  .as("pages:referrals");
+  .group(() => {
+    router.get("/", [ReferralsController, "showReferralLink"]).as("pages:referrals");
+    router
+      .post("/event/points/trigger/:id", [ReferralsController, "referralPointsAttribution"])
+      .as("actions:referrals.event.pointattribution.trigger")
+      .use(middleware.apiKeyProtected());
+  })
+  .prefix("/referrals")
+  .middleware(middleware.auth());
 
 router
   .route(`/r/:referralCode`, ["GET", "POST"], [ReferralsController, "link"])
   .middleware([middleware.automaticSubmit(), middleware.silentAuth()])
   .as("actions:referrals.link");
+
+router
+  .group(() => {
+    router.get("/", [LeaderboardController, "index"]).as("pages:leaderboard");
+  })
+  .prefix("/leaderboard");
 
 router
   .group(() => {
