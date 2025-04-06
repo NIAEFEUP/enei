@@ -26,251 +26,21 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 
-export type Participant = {
-  id: string;
+interface Participant {
+  id: number;
   name: string;
   photoUrl?: string;
-  faculty: string;
-  course: string;
-  year: string;
-  cvLink: string;
+  faculty?: string;
+  course?: string;
+  year?: string;
+  cvLink?: string;
   likedBy: string[];
   isLiked: boolean;
-};
+}
 
-const data: Participant[] = [
-  {
-    id: "1",
-    name: "Ana Silva",
-    photoUrl: "/avatars/ana.jpg",
-    faculty: "FEUP",
-    course: "Engenharia Informática",
-    year: "3º",
-    cvLink: "https://example.com/cv/ana",
-    likedBy: ["Empresa A", "Empresa B"],
-    isLiked: false,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-  {
-    id: "2",
-    name: "Carlos Sousa",
-    faculty: "FEP",
-    course: "Economia",
-    year: "2º",
-    cvLink: "https://example.com/cv/carlos",
-    likedBy: [],
-    isLiked: true,
-  },
-];
+interface ParticipantsTableProps {
+  participants: Participant[];
+}
 
 const columns: ColumnDef<Participant>[] = [
   {
@@ -307,7 +77,7 @@ const columns: ColumnDef<Participant>[] = [
       const faculty = row.original.faculty;
       return (
         <div className="flex items-center">
-          <span className="text-enei-blue text-sm font-medium">{faculty}</span>
+          <span className="text-enei-blue text-sm font-medium">{faculty || "-"}</span>
         </div>
       );
     },
@@ -319,7 +89,7 @@ const columns: ColumnDef<Participant>[] = [
       const course = row.original.course;
       return (
         <div className="flex items-center">
-          <span className="text-enei-blue text-sm font-medium">{course}</span>
+          <span className="text-enei-blue text-sm font-medium">{course || "-"}</span>
         </div>
       );
     },
@@ -331,7 +101,7 @@ const columns: ColumnDef<Participant>[] = [
       const year = row.original.year;
       return (
         <div className="flex items-center">
-          <span className="text-enei-blue text-sm font-medium">{year}</span>
+          <span className="text-enei-blue text-sm font-medium">{year || "-"}</span>
         </div>
       );
     },
@@ -375,7 +145,7 @@ const columns: ColumnDef<Participant>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem className="flex flex-row">
               <a
-                href={row.original.cvLink}
+                href={row.original.cvLink || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex flex-row"
@@ -393,9 +163,9 @@ const columns: ColumnDef<Participant>[] = [
   },
 ];
 
-export function ParticipantsTable() {
+export function ParticipantsTable({ participants }: ParticipantsTableProps) {
   const table = useReactTable({
-    data,
+    data: participants,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),

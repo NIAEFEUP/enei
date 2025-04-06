@@ -3,7 +3,23 @@ import Page from "~/components/common/page";
 import { ParticipantsTable } from "~/components/companies/participants/participants_table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
-export default function CompanyParticipantsPage() {
+interface Participant {
+  id: number;
+  name: string;
+  photoUrl?: string;
+  faculty: string;
+  course: string;
+  year: string;
+  cvLink: string;
+  likedBy: string[];
+  isLiked: boolean;
+}
+
+interface ParticipantsPageProps {
+  allParticipants: Participant[];
+}
+
+export default function CompanyParticipantsPage({ allParticipants }: ParticipantsPageProps) {
   return (
     <Page title="Participantes" variant="beige" className="bg-enei-beige">
       <Container>
@@ -29,7 +45,7 @@ export default function CompanyParticipantsPage() {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="all-participants">
-            <ParticipantsTable></ParticipantsTable>
+            <ParticipantsTable participants={allParticipants}></ParticipantsTable>
           </TabsContent>
         </Tabs>
       </Container>
