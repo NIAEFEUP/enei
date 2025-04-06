@@ -1,8 +1,11 @@
 import type { Money } from "../money.js";
 
 export type CreatePaymentHandleOptions = {
+  payment: {
+    id: string;
+    total: Money;
+  };
   phoneNumber: string;
-  total: Money;
   description: string;
 };
 
