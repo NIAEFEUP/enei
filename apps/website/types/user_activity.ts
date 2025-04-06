@@ -29,6 +29,7 @@ export type ReferralDescription = {
   pointsToPromoter?: number;
 };
 
+
 export type AttendEventDescription = {
   type: UserActivityType.AttendEvent;
 };
@@ -39,4 +40,3 @@ export type CompanyVisitDescription = {
 
 export type CompletedChallengeDescription = {
   type: UserActivityType.CompletedChallenge;
-};

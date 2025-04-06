@@ -3,11 +3,11 @@ import PointsStoreProductCardAccquire from "./product_card_accquire";
 
 import { cn } from "~/lib/utils";
 import { useContext } from "react";
-import { StoreContext } from "~/pages/store/page";
 
 import { canBuyProduct } from "~/lib/enei/store/utils";
 
 import type Product from "#models/product";
+import { StoreContext } from "~/pages/store/context";
 
 interface StoreProductCardProps {
   product: Product;

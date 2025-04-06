@@ -33,3 +33,9 @@ export const createProfileValidator = vine.compile(
     ),
   }),
 );
+
+export const hasTicketValidator = vine.compile(
+  vine.object({
+    email: vine.string().email(),
+  }),
+);

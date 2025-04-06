@@ -94,7 +94,7 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
           </div>
           */}
 
-            <LongActivities currentActiveIndex={currentActiveIndex} />
+            <LongActivities currentActiveIndex={currentActiveIndex} eventsByDay={eventsByDay} />
 
             <EventsProgram currentActiveIndex={currentActiveIndex} eventsByDay={eventsByDay} />
           </Card>

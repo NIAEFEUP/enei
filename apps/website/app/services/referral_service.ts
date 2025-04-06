@@ -4,6 +4,11 @@ import { buildUrl } from "../url.js";
 import UserActivity from "#events/user_activity";
 import { UserActivityType, type ReferralDescription } from "../../types/user_activity.js";
 import app from "@adonisjs/core/services/app";
+import { Bouncer } from "@adonisjs/bouncer";
+import UserPolicy from "../policies/user_policy.js";
+
+// const POINTS_FOR_PROMOTER = 20
+// const POINTS_FOR_PARTICIPANT = 10
 
 const sqids = new Sqids({
   minLength: 8,
@@ -23,26 +28,19 @@ export default class ReferralService {
     return values[0];
   }
 
-  // To be moved to a policy once bouncer is installed
-
   async canUserRefer(user: User) {
     if (app.inDev) return true;
-
-    if (user.isPromoter()) return true;
-
-    return await User.hasPurchasedTicket(user);
+    return await new Bouncer(user).with(UserPolicy).allows("refer");
   }
 
   async canUserBeLinked(user: User) {
-    return !user.isPromoter() && !user.wasReferred() && !(await User.hasPurchasedTicket(user));
+    return await new Bouncer(user).with(UserPolicy).allows("beLinked");
   }
 
   // High-level methods
 
   async #getReferralCode(user: User) {
-    if (!(await this.canUserRefer(user))) {
-      return null;
-    }
+    if (!(await this.canUserRefer(user))) return null;
 
     return this.#encode(user.id);
   }
@@ -74,7 +72,7 @@ export default class ReferralService {
   }
 
   async getIndirectReferralCount(user: User): Promise<number | null> {
-    if (!user.isPromoter() || !(await this.canUserRefer(user))) return null;
+    if (!(await this.canUserRefer(user))) return null;
 
     const indirectReferrals = await user
       .related("indirectReferrals")
@@ -85,9 +83,7 @@ export default class ReferralService {
   }
 
   async linkUserToReferrer(referredUser: User, referrer: User) {
-    if (!(await this.canUserBeLinked(referredUser))) {
-      return;
-    }
+    if (!(await this.canUserBeLinked(referredUser))) return;
 
     await referredUser.related("referrer").associate(referrer);
 

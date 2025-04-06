@@ -53,6 +53,7 @@ router.use([
  */
 export const middleware = router.named({
   apiKeyProtected: () => import("#middleware/api_key_protected_middleware"),
+  staff: () => import("#middleware/staff_middleware"),
   hasPurchasedTicket: () => import("#middleware/has_purchased_ticket_middleware"),
   companyBearerAuth: () => import("#middleware/company_bearer_auth_middleware"),
   wip: () => import("#middleware/wip_middleware"),

@@ -7,12 +7,12 @@ export class ProductService {
     return Product.query().where("hidden", false);
   }
 
-  async getPointProducts(user: User | undefined) {
-    return this.applyRestrictions(await this.productBaseQuery().where("currency", "points"), user);
+  async getPointProducts(user: User | undefined = undefined) {
+    return this.applyRestrictions(await Product.query().where("currency", "points"), user);
   }
 
-  async getRealCurrencyProducts() {
-    return this.applyRestrictions(await this.productBaseQuery().where("currency", "EUR"));
+  async getRealCurrencyProducts(user: User | undefined = undefined) {
+    return this.applyRestrictions(await Product.query().where("currency", "EUR"), user);
   }
 
   applyRestrictions(products: Array<Product>, user: User | undefined = undefined) {
