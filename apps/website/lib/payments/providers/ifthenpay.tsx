@@ -1,9 +1,7 @@
-import axios from "axios";
 import BasePaymentProvider, { type CreatePaymentHandleOptions } from "./base.js";
+import * as ifthenpay from "#lib/payments/api/ifthenpay.js";
 
-type IfthenpayPaymentResult = {
-  status: "success" | "expired" | "declined" | "declined-by-user";
-};
+export type IfthenpayPaymentResult = Awaited<ReturnType<(typeof ifthenpay)["checkPayment"]>>;
 
 export default class IfthenpayPaymentProvider extends BasePaymentProvider<
   string,
@@ -16,17 +14,22 @@ export default class IfthenpayPaymentProvider extends BasePaymentProvider<
     this.#mbwayKey = mbwayKey;
   }
 
-  override async createPaymentHandle(_opts: CreatePaymentHandleOptions) {
-    const apiResponse = await axios.post("https://api.ifthenpay.com/spg/payment/mbway", {
+  override async createPaymentHandle(opts: CreatePaymentHandleOptions) {
+    const payment = await ifthenpay.createNewPayment({
       mbWayKey: this.#mbwayKey,
+      orderId: opts.payment.id,
+      amount: opts.payment.total.toEuros().toFixed(2),
+      mobileNumber: opts.phoneNumber,
+      description: opts.description,
     });
 
-    throw new Error("Method not implemented.");
-    return "";
+    return payment.requestId;
   }
 
-  override async checkPayment(handle: string) {
-    throw new Error("Method not implemented.");
-    return { status: "success" as const };
+  override async checkPayment(requestId: string) {
+    return await ifthenpay.checkPayment({
+      mbWayKey: this.#mbwayKey,
+      requestId,
+    });
   }
 }
