@@ -25,7 +25,7 @@ type UserMetadata = {
 };
 
 export class PaymentService {
-  async create(
+  static async create(
     order: Order,
     productAmount: Money,
     mobileNumber: string,
@@ -51,10 +51,11 @@ export class PaymentService {
       name,
     };
 
-    await this.issuePayment(order, data, userMetadata);
+    await PaymentService.issuePayment(order, data, userMetadata);
   }
 
-  async issuePayment(order: Order, data: PaymentData, userMetadata: UserMetadata) {
+  static async issuePayment(order: Order, data: PaymentData, userMetadata: UserMetadata) {
+    console.log("data: ", data);
     const apiResponse = await axios.post("https://api.ifthenpay.com/spg/payment/mbway", data);
 
     if (apiResponse.status === 200) {

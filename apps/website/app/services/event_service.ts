@@ -1,8 +1,33 @@
 import User from "#models/user";
 import Event from "#models/event";
+import { OrderService } from "./order_service.js";
+import type { MBWayOrder } from "../../types/order.js";
+import { PaymentService } from "./payment_service.js";
+import Product from "#models/product";
+import OrderProduct from "#models/order_product";
 
 export default class EventService {
   async isRegistered(user: User, event: Event) {
+    if (event.price.toCents() > 0) return this.isRegisteredInPaidEvent(user, event);
+    else return this.isRegisteredInFreeEvent(user, event);
+  }
+
+  async isRegisteredInPaidEvent(user: User, event: Event) {
+    return (
+      (
+        await OrderProduct.query()
+          .join("orders", "order_products.order_id", "orders.id")
+          .join("products", "order_products.product_id", "products.id")
+          .where("user_id", user.id)
+          .whereIn("orders.status", ["delivery", "pending-delivery"])
+          .where("products.product_group_id", event.productGroupId)
+          .preload("product")
+          .preload("order")
+      ).length === 0
+    );
+  }
+
+  async isRegisteredInFreeEvent(user: User, event: Event) {
     const isRegistered = await event
       .related("registeredUsers")
       .query()
@@ -12,11 +37,38 @@ export default class EventService {
     return !!isRegistered;
   }
 
-  async register(user: User, event: Event) {
+  async register(user: User, event: Event, data: MBWayOrder | null) {
+    if (event.price.toCents() > 0) this.paidRegistration(user, event, data);
+    else this.freeRegistration(user, event);
+  }
+
+  private async paidRegistration(user: User, event: Event, data: MBWayOrder | null) {
+    const { products, name, nif, address, mobileNumber } = data!;
+    // 1. See if user already enrolled
+    if (await this.isRegistered(user, event)) return;
+
+    // 2. Issue order creation and job spawning to pay
+    for (const product of products) {
+      const order = await OrderService.createOrder(user, product);
+      const productModel = await Product.findOrFail(product.productId);
+
+      PaymentService.create(
+        order,
+        productModel.price,
+        mobileNumber,
+        "",
+        user.email,
+        nif,
+        address,
+        name,
+      );
+    }
+  }
+
+  private async freeRegistration(user: User, event: Event) {
     await event.related("registeredUsers").attach([user!.id]);
 
     event.ticketsRemaining--;
-
     event.save();
   }
 }

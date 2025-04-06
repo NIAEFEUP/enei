@@ -3,6 +3,8 @@ import Event from "#models/event";
 import EventService from "#services/event_service";
 import User from "#models/user";
 import { inject } from "@adonisjs/core";
+import { createMBWayOrderValidator } from "#validators/order";
+import type { OrderService } from "#services/order_service";
 
 @inject()
 export default class EventsController {
@@ -30,38 +32,29 @@ export default class EventsController {
     });
   }
   async show({ inertia, params }: HttpContext) {
-    const event = await Event.findOrFail(params.id);
-
-    const speakers = await event.related("speakers").query();
+    const event = await Event.query()
+      .where("id", params.id)
+      .preload("speakers")
+      .preload("productGroup", (q) => {
+        q.preload("products");
+      })
+      .firstOrFail();
 
     return inertia.render("events/show", {
-      eventId: event.id,
-      title: event.title,
-      description: event.description,
-      date: event.getFormattedDate(),
-      time: event.getFormattedTime(),
-      location: event.location,
-      type: event.type,
-      companyImage: event.companyImage,
-      extraInfo: event.extraInfo,
-      speakers: speakers.map((speaker) => ({
-        firstName: speaker.firstName,
-        lastName: speaker.lastName,
-        jobTitle: speaker.jobTitle,
-        profilePicture: speaker.profilePicture,
-        company: speaker.company,
-      })),
-      registrationRequirements: event.registrationRequirements,
-      requiresRegistration: event.requiresRegistration,
-      ticketsRemaining: event.ticketsRemaining,
-      price: event.price,
-      isAcceptingRegistrations: event.isAcceptingRegistrations,
+      event,
+      formattedDate: event.getFormattedDate(),
+      formattedTime: event.getFormattedTime(),
+      price:
+        event.productGroup.products.length > 0 ? event.productGroup.products[0].price.toEuros() : 0,
     });
   }
 
-  async register({ response, params, auth }: HttpContext) {
+  async register({ request, params, response, auth }: HttpContext) {
     // Get the authenticated user
     const user = auth.user;
+
+    const { products, name, nif, address, mobileNumber } =
+      await request.validateUsing(createMBWayOrderValidator);
 
     // Get the event and check if it is possible do register
     const event = await Event.findOrFail(params.id);
@@ -78,7 +71,13 @@ export default class EventsController {
     }
 
     // Register
-    await this.eventService.register(user!, event);
+    await this.eventService.register(user!, event, {
+      products,
+      name: name ?? "",
+      nif: nif ?? "",
+      address: address ?? "",
+      mobileNumber,
+    });
 
     return response.redirect().toRoute("pages:events.show", { id: event.id });
   }

@@ -1,8 +1,12 @@
 import { DateTime } from "luxon";
-import { BaseModel, column, manyToMany } from "@adonisjs/lucid/orm";
+import { BaseModel, belongsTo, column, hasOne, manyToMany } from "@adonisjs/lucid/orm";
 import SpeakerProfile from "./speaker_profile.js";
-import type { ManyToMany } from "@adonisjs/lucid/types/relations";
+import type { BelongsTo, HasOne, ManyToMany } from "@adonisjs/lucid/types/relations";
 import User from "./user.js";
+import type { Money } from "#lib/payments/money.js";
+import { money } from "#lib/lucid/decorators.js";
+import ProductGroup from "./product_group.js";
+import type Product from "./product.js";
 
 export default class Event extends BaseModel {
   @column({ isPrimary: true })
@@ -63,11 +67,21 @@ export default class Event extends BaseModel {
   @column()
   declare ticketsRemaining: number;
 
+  @money()
+  declare price: Money;
+
   @column()
-  declare price: number;
+  declare productGroupId: number;
+
+  @belongsTo(() => ProductGroup)
+  declare productGroup: BelongsTo<typeof ProductGroup>;
 
   public getFormattedDate() {
     return this.date.toFormat("dd-MM-yyyy");
+  }
+
+  get isPaid() {
+    return this.productGroup?.products?.filter((product) => product.price.toCents() > 0).length > 0;
   }
 
   public getFormattedTime() {

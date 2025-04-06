@@ -15,67 +15,37 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useToast } from "~/hooks/use_toast";
 import { cn } from "~/lib/utils";
-// import { Tooltip } from '~/components/ui/tooltip'
-// import { TooltipContent, TooltipProvider, TooltipTrigger } from '@radix-ui/react-tooltip'
-import RegistrationConfirmationModal from "~/components/events/registration_confirmation_modal";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 import Page from "~/components/common/page";
-import { router } from "@inertiajs/react";
 import Container from "~/components/common/containers";
-
-interface Speaker {
-  firstName: string;
-  lastName: string;
-  jobTitle: string;
-  profilePicture: string;
-  company: string;
-}
+import PaidRegistrationConfirmationModal from "~/components/events/confirmation_modal/paid_registration_confirmation_modal";
+import PointsRegistrationConfirmationModal from "~/components/events/confirmation_modal/points_registration_confirmation_modal";
+import Event from "#models/event";
+import { Money } from "#lib/payments/money.js";
 
 interface EventRegistrationProps {
-  eventId: number;
-  title: string;
-  description?: string;
-  date: string;
-  time: string;
-  location: string;
-  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other";
-  companyImage: string;
-  speakers: Speaker[];
-  extraInfo?: string;
-  registrationRequirements: string;
-  requiresRegistration: boolean;
-  ticketsRemaining: number;
+  event: Event;
+  formattedDate: string;
+  formattedTime: string;
   price: number;
-  isAcceptingRegistrations: boolean;
 }
 
 export default function EventRegistrationPage({
-  eventId,
-  title,
-  description,
-  date,
-  time,
-  location,
-  type,
-  companyImage,
-  speakers,
-  extraInfo,
-  registrationRequirements,
-  requiresRegistration,
-  ticketsRemaining: initialTicketsRemaining,
+  event,
+  formattedDate,
+  formattedTime,
   price,
-  isAcceptingRegistrations,
 }: EventRegistrationProps) {
   const [isRegistered, setIsRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [ticketsRemaining, setTicketsRemaining] = useState(initialTicketsRemaining);
+  const [ticketsRemaining, setTicketsRemaining] = useState(event.ticketsRemaining);
   const [registrationConfirmationModalOpen, setRegistrationConfirmationModalOpen] = useState(false);
 
   const { toast } = useToast();
 
   const fetchTicketsRemaining = async () => {
     try {
-      const response = await axios.get("/events/" + eventId + "/tickets");
+      const response = await axios.get("/events/" + event.id + "/tickets");
       setTicketsRemaining(response.data.ticketsRemaining);
     } catch (error) {
       console.error(error);
@@ -84,7 +54,7 @@ export default function EventRegistrationPage({
 
   const fetchRegistrationStatus = async () => {
     try {
-      const response = await axios.get("/events/" + eventId + "/is-registered");
+      const response = await axios.get("/events/" + event.id + "/is-registered");
       setIsRegistered(response.data.isRegistered);
     } catch (error) {
       console.error(error);
@@ -103,38 +73,6 @@ export default function EventRegistrationPage({
 
   const handleRegisterClick = () => {
     setRegistrationConfirmationModalOpen(true);
-  };
-
-  const handleRegister = async () => {
-    setIsLoading(true);
-    try {
-      router.post("/events/" + eventId + "/register", undefined, {
-        onFinish: () => fetchRegistrationStatus(),
-      });
-    } catch (error) {
-      console.error(error);
-      if (error.response?.status === 302) {
-        window.location.href = "/signup";
-        return;
-      }
-
-      if (error.response?.status === 401) {
-        window.location.href = "/auth/login";
-        return;
-      }
-      toast({
-        title: "Erro ao registar",
-        description:
-          error.response?.data?.message
-          || "Ocorreu um erro ao registar para o evento. Por favor, tente novamente.",
-        duration: 5000,
-      });
-    } finally {
-      await fetchRegistrationStatus();
-      await fetchTicketsRemaining();
-      setIsLoading(false);
-      setRegistrationConfirmationModalOpen(false);
-    }
   };
 
   const activityClassesPrimary = {
@@ -166,27 +104,30 @@ export default function EventRegistrationPage({
               {/* Title and important information (date, time, location) */}
               <div className="flex flex-row justify-between">
                 <div>
-                  <CardTitle className="text-2xl font-bold" style={{ color: activityColors[type] }}>
-                    {title}
+                  <CardTitle
+                    className="text-2xl font-bold"
+                    style={{ color: activityColors[event.type] }}
+                  >
+                    {event.title}
                   </CardTitle>
                   <div className="text-muted-foreground mt-4 flex flex-col gap-2 sm:flex-row sm:gap-6">
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4" />
-                      <span>{date}</span>
+                      <span>{formattedDate}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Clock className="h-4 w-4" />
-                      <span>{time}</span>
+                      <span>{formattedTime}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <MapPin className="h-4 w-4" />
-                      <span>{location}</span>
+                      <span>{event.location}</span>
                     </div>
                   </div>
                 </div>
-                {companyImage && (
+                {event.companyImage && (
                   <img
-                    src={companyImage}
+                    src={event.companyImage}
                     alt="Company Logo"
                     className="max-h-16 w-auto object-contain"
                   />
@@ -195,8 +136,8 @@ export default function EventRegistrationPage({
             </CardHeader>
             {/* Event Description */}
 
-            <CardContent className="mt-2 space-y-4" style={{ color: activityColors[type] }}>
-              {description && (
+            <CardContent className="mt-2 space-y-4" style={{ color: activityColors[event.type] }}>
+              {event.description && (
                 <div>
                   <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
                     <Info className="h-5 w-5" />
@@ -206,7 +147,7 @@ export default function EventRegistrationPage({
                     className={cn(
                       "[&_a]:focus-visible:ring-ring [&_a]:text-primary space-y-2 text-black [&_a]:inline-flex [&_a]:h-auto [&_a]:items-center [&_a]:justify-center [&_a]:gap-2 [&_a]:whitespace-nowrap [&_a]:text-wrap [&_a]:rounded-md [&_a]:p-0 [&_a]:pl-1 [&_a]:text-sm [&_a]:font-medium [&_a]:underline-offset-4 [&_a]:transition-colors [&_a]:hover:underline [&_a]:focus-visible:outline-none [&_a]:focus-visible:ring-1 [&_a]:disabled:pointer-events-none [&_a]:disabled:opacity-50 [&_li]:text-sm [&_p]:max-w-[70ch] [&_a]:[&_svg]:pointer-events-none [&_a]:[&_svg]:size-4 [&_a]:[&_svg]:shrink-0 [&_ul]:flex [&_ul]:list-inside [&_ul]:list-disc [&_ul]:flex-col [&_ul]:gap-2",
                     )}
-                    dangerouslySetInnerHTML={{ __html: description }}
+                    dangerouslySetInnerHTML={{ __html: event.description }}
                   />
                 </div>
               )}
@@ -247,21 +188,21 @@ export default function EventRegistrationPage({
                 </div>
               )} */}
               {/* Speakers (if applicable) */}
-              {speakers.length > 0 && (
+              {event.speakers.length > 0 && (
                 <div>
                   <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
                     <Users className="h-5 w-5" />
                     <p className="text-lg font-semibold">
-                      {speakers.length === 1 ? "Orador" : "Oradores"}
+                      {event.speakers.length === 1 ? "Orador" : "Oradores"}
                     </p>
                   </h1>
                   <div className="flex flex-wrap gap-4">
-                    {speakers.map((speaker) => (
+                    {event.speakers.map((speaker) => (
                       <div
                         key={speaker.firstName + speaker.lastName}
                         className={cn(
                           "flex w-auto items-center gap-4 rounded-lg border p-4",
-                          activityClassesPrimary[type],
+                          activityClassesPrimary[event.type],
                         )}
                       >
                         <Avatar className="h-12 w-12">
@@ -291,17 +232,17 @@ export default function EventRegistrationPage({
                 </div>
               )}
               {/* Registration Requirements (if applicable) */}
-              {registrationRequirements && (
+              {event.registrationRequirements && (
                 <>
                   <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
                     <ClipboardCheck className="h-5 w-5" />
                     <p className="text-lg font-semibold">Requisitos de Inscrição</p>
                   </h1>
-                  <p className="text-black">{registrationRequirements}</p>
+                  <p className="text-black">{event.registrationRequirements}</p>
                 </>
               )}
               {/* Extra Information */}
-              {extraInfo && isRegistered && (
+              {event.extraInfo && isRegistered && (
                 <div>
                   <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
                     <Info className="h-5 w-5" />
@@ -309,13 +250,13 @@ export default function EventRegistrationPage({
                       Informação complementar para participantes
                     </p>
                   </h2>
-                  <div dangerouslySetInnerHTML={{ __html: extraInfo }} />
+                  <div dangerouslySetInnerHTML={{ __html: event.extraInfo }} />
                 </div>
               )}
               {/* Price Display */}
               {price > 0 && (
                 <div className="flex items-center justify-center gap-2 py-2 text-lg font-medium">
-                  <span>{price.toFixed(2)}€</span>
+                  <span>{price}€</span>
                 </div>
               )}
               {/* Button to register */}
@@ -325,15 +266,15 @@ export default function EventRegistrationPage({
                     onClick={() => handleRegisterClick()}
                     disabled={
                       ticketsRemaining <= 0
-                      || !requiresRegistration
-                      || !isAcceptingRegistrations
+                      || !event.requiresRegistration
+                      || !event.isAcceptingRegistrations
                       || isLoading
                     }
                     className="px-4"
-                    style={{ backgroundColor: activityColors[type] }}
+                    style={{ backgroundColor: activityColors[event.type] }}
                   >
                     {isLoading && <Loader2 className="animate-spin" />}
-                    {requiresRegistration
+                    {event.requiresRegistration
                       ? ticketsRemaining > 0
                         ? price > 0
                           ? "Comprar"
@@ -364,7 +305,7 @@ export default function EventRegistrationPage({
                             buttonVariants({ variant: "default" }),
                             "px-4 aria-disabled:pointer-events-none aria-disabled:opacity-50",
                           )}
-                          style={{ backgroundColor: activityColors[type] }}
+                          style={{ backgroundColor: activityColors[event.type] }}
                           aria-disabled={isLoading || isRegistered}
                         >
                           {isLoading && <Loader2 className="animate-spin" />}
@@ -390,12 +331,13 @@ export default function EventRegistrationPage({
                   </TooltipProvider>
                 </div>
               )}
+
               {/* Seats Available (the empty element is a weird fix...) */}
-              {requiresRegistration ? (
+              {event.requiresRegistration ? (
                 <div className="text-muted-foreground flex items-center justify-center gap-2 text-sm">
                   <Ticket className="h-4 w-4" />
                   <span>
-                    {isAcceptingRegistrations ? (
+                    {event.isAcceptingRegistrations ? (
                       <>{ticketsRemaining} lugares disponíveis</>
                     ) : (
                       <>De momento, não estamos a aceitar inscrições</>
@@ -405,12 +347,22 @@ export default function EventRegistrationPage({
               ) : (
                 <></>
               )}
-              <RegistrationConfirmationModal
-                isOpen={registrationConfirmationModalOpen}
-                isLoading={isLoading}
-                onClose={() => setRegistrationConfirmationModalOpen(false)}
-                onSubmit={handleRegister}
-              />
+
+              {price > 0 ? (
+                <PaidRegistrationConfirmationModal
+                  isOpen={registrationConfirmationModalOpen}
+                  isLoading={isLoading}
+                  onClose={() => setRegistrationConfirmationModalOpen(false)}
+                  event={event}
+                />
+              ) : (
+                <PointsRegistrationConfirmationModal
+                  isOpen={registrationConfirmationModalOpen}
+                  isLoading={isLoading}
+                  onClose={() => setRegistrationConfirmationModalOpen(false)}
+                  event={event}
+                />
+              )}
             </CardContent>
           </Card>
         </div>

@@ -8,10 +8,14 @@ import { inject } from "@adonisjs/core";
 import { PaymentService } from "#services/payment_service";
 
 import { Money } from "#lib/payments/money.js";
+import { OrderService } from "#services/order_service";
 
 @inject()
 export default class OrdersController {
-  public constructor(private paymentService: PaymentService) {}
+  public constructor(
+    private paymentService: PaymentService,
+    private orderService: OrderService,
+  ) {}
 
   index({ inertia }: HttpContext) {
     return inertia.render("payments");
@@ -24,93 +28,23 @@ export default class OrdersController {
       const { products, nif, address, mobileNumber, name } =
         await request.validateUsing(createMBWayOrderValidator);
 
-      let totalAmount = Money.fromCents(0);
-      let description = "";
-
-      const productDetails = [];
-
-      for (const productItem of products) {
-        const { productId, quantity } = productItem;
-        const product = await Product.find(productId);
-
-        if (!product) {
-          return response
-            .status(404)
-            .json({ message: `Produto com id ${productId} não foi encontrado` });
-        }
-
-        const successfulOrdersOfGivenProduct = await OrderProduct.query()
-          .join("orders", "order_products.order_id", "orders.id")
-          .where("order_products.product_id", productId)
-          .whereIn("orders.status", ["Success", "Pending"]);
-
-        const successfulOrdersOfGivenProductPerUser = await OrderProduct.query()
-          .join("orders", "order_products.order_id", "orders.id")
-          .where("orders.user_id", authUser.id)
-          .where("order_products.product_id", productId)
-          .whereIn("orders.status", ["Success", "Pending"]);
-
-        const stockUsed = successfulOrdersOfGivenProduct.reduce(
-          (acc, orderProduct) => acc + orderProduct.quantity,
-          0,
-        );
-
-        const totalQuantity = successfulOrdersOfGivenProductPerUser.reduce(
-          (acc, orderProduct) => acc + orderProduct.quantity,
-          0,
-        );
-
-        if (product.stock < quantity + stockUsed) {
-          return response
-            .status(400)
-            .json({ message: `Não há mais stock do produto ${product.name}` });
-        }
-
-        if (quantity + totalQuantity > product.maxOrder) {
-          return response.status(400).json({
-            message: `Apenas podes comprar ${product.maxOrder} do produto ${product.name}`,
-          });
-        }
-
-        const productGroup = await ProductGroup.find(product.productGroupId);
-        if (productGroup) {
-          const sucessfulOrdersOfGivenGroup = await OrderProduct.query()
-            .join("orders", "order_products.order_id", "orders.id")
-            .join("products", "order_products.product_id", "products.id")
-            .where("orders.user_id", authUser.id)
-            .where("products.product_group_id", product.productGroupId)
-            .where("orders.status", "Success");
-
-          const totalGroupQuantity = sucessfulOrdersOfGivenGroup.reduce(
-            (acc, orderProduct) => acc + orderProduct.quantity,
-            0,
-          );
-
-          if (totalGroupQuantity + quantity > productGroup.maxAmountPerGroup) {
-            return response.status(400).json({
-              message: `Apenas podes comprar ${productGroup?.maxAmountPerGroup} produtos do grupo ${productGroup.name}`,
-            });
-          }
-        }
-        productDetails.push({ product, quantity });
-        totalAmount = totalAmount.add(product.price.multiply(quantity));
-        description += `${product.name} x${quantity}, `;
-      }
-
-      description = `Payment for order: ${description.slice(0, -2)}`;
+      const { productDetails, description, totalAmount } = await OrderService.buildProductDetails(
+        authUser,
+        products,
+      );
 
       // Create the order and associated products
       const order = await Order.create({ userId: authUser.id, status: "draft", pointsUsed: 0 });
 
-      for (const { product, quantity } of productDetails) {
+      for (const { productId, quantity } of productDetails) {
         await OrderProduct.create({
           orderId: order.id,
-          productId: product.id,
+          productId: productId,
           quantity,
         });
       }
 
-      this.paymentService.create(
+      PaymentService.create(
         order,
         totalAmount,
         mobileNumber,

@@ -12,6 +12,9 @@ const EventResource = createResource({
       extraInfo: {
         type: "richtext",
       },
+      productGroupId: {
+        reference: "product_groups",
+      },
     },
   },
   features: [
