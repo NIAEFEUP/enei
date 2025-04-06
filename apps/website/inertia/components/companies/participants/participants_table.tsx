@@ -18,7 +18,13 @@ import {
 } from "~/components/ui/table";
 import { Button } from "~/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
-import { Heart, HeartOff, ExternalLink } from "lucide-react";
+import { Heart, HeartOff, FileUser, MoreHorizontal } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
 
 export type Participant = {
   id: string;
@@ -43,6 +49,216 @@ const data: Participant[] = [
     cvLink: "https://example.com/cv/ana",
     likedBy: ["Empresa A", "Empresa B"],
     isLiked: false,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
+  },
+  {
+    id: "2",
+    name: "Carlos Sousa",
+    faculty: "FEP",
+    course: "Economia",
+    year: "2º",
+    cvLink: "https://example.com/cv/carlos",
+    likedBy: [],
+    isLiked: true,
   },
   {
     id: "2",
@@ -121,24 +337,23 @@ const columns: ColumnDef<Participant>[] = [
     },
   },
   {
-    id: "cv",
-    header: "CV",
-    cell: ({ row }) => (
-      <Button size="sm" className="text-enei-beige" asChild>
-        <a href={row.original.cvLink} target="_blank" rel="noopener noreferrer">
-          <ExternalLink className="mr-1 h-4 w-4" />
-          CV
-        </a>
-      </Button>
-    ),
-  },
-  {
     id: "likedBy",
     header: "Gostado por",
-    cell: ({ row }) => row.original.likedBy.join(", ") || "—",
+    cell: ({ row }) => {
+      const likedBy = row.original.likedBy;
+      return (
+        <div className="flex items-center">
+          {likedBy.length > 0 ? (
+            <span className="text-enei-blue text-sm font-medium">{likedBy.join(", ")}</span>
+          ) : (
+            <span className="text-muted-foreground text-sm font-medium">—</span>
+          )}
+        </div>
+      );
+    },
   },
   {
-    id: "like",
+    id: "actions",
     header: "",
     cell: ({ row }) => {
       const [liked, setLiked] = React.useState(row.original.isLiked);
@@ -146,13 +361,31 @@ const columns: ColumnDef<Participant>[] = [
       const toggleLike = () => setLiked((prev) => !prev);
 
       return (
-        <Button variant="ghost" size="icon" onClick={toggleLike}>
-          {liked ? (
-            <HeartOff className="text-red-500" />
-          ) : (
-            <Heart className="text-muted-foreground" />
-          )}
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="text-enei-blue h-8 w-8 p-0" size="sm">
+              <span className="sr-only">Ações</span>
+              <MoreHorizontal />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="">
+            <DropdownMenuItem onClick={toggleLike} className="cursor-pointer">
+              {liked ? <HeartOff className="mr-2 h-4 w-4" /> : <Heart className="mr-2 h-4 w-4" />}
+              Like
+            </DropdownMenuItem>
+            <DropdownMenuItem className="flex flex-row">
+              <a
+                href={row.original.cvLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-row"
+              >
+                <FileUser className="mr-2 h-4 w-4" />
+                CV
+              </a>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       );
     },
     enableSorting: false,
@@ -188,7 +421,7 @@ export function ParticipantsTable() {
           <TableBody>
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow key={row.id} className="border-transparent">
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
