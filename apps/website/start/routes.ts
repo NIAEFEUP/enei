@@ -22,6 +22,7 @@ const CvsController = () => import("#controllers/cvs_controller");
 const StoreController = () => import("#controllers/store_controller");
 const ReferralsController = () => import("#controllers/referrals_controller");
 
+const LeaderboardController = () => import("#controllers/leaderboard_controller");
 const ProductReservationController = () => import("#controllers/product_reservation_controller");
 
 router.on("/").renderInertia("home").as("pages:home");
@@ -249,14 +250,26 @@ router
 
 // Referrals
 router
-  .get("/referrals", [ReferralsController, "showReferralLink"])
-  .middleware(middleware.auth())
-  .as("pages:referrals");
+  .group(() => {
+    router.get("/", [ReferralsController, "showReferralLink"]).as("pages:referrals");
+    router
+      .post("/event/points/trigger/:id", [ReferralsController, "referralPointsAttribution"])
+      .as("actions:referrals.event.pointattribution.trigger")
+      .use(middleware.apiKeyProtected());
+  })
+  .prefix("/referrals")
+  .middleware(middleware.auth());
 
 router
   .route(`/r/:referralCode`, ["GET", "POST"], [ReferralsController, "link"])
   .middleware([middleware.automaticSubmit(), middleware.silentAuth()])
   .as("actions:referrals.link");
+
+router
+  .group(() => {
+    router.get("/", [LeaderboardController, "index"]).as("pages:leaderboard");
+  })
+  .prefix("/leaderboard");
 
 router
   .group(() => {
