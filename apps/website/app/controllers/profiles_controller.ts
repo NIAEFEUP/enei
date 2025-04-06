@@ -1,7 +1,11 @@
 import ParticipantProfile from "#models/participant_profile";
 import User from "#models/user";
 import { UserActivityService } from "#services/user_activity_service";
-import { createProfileValidator, updateProfileValidator, hasTicketValidator } from "#validators/profile";
+import {
+  createProfileValidator,
+  updateProfileValidator,
+  hasTicketValidator,
+} from "#validators/profile";
 import { inject } from "@adonisjs/core";
 import type { HttpContext } from "@adonisjs/core/http";
 import slug from "slug";

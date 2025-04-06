@@ -19,14 +19,11 @@ import {
   Minimize2,
   Maximize2,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext } from "react";
 import { Link } from "@tuyau/inertia/react";
 import { cn } from "~/lib/utils";
 import { ENEI_EDITIONS } from "~/lib/enei/signup/editions";
 import { useTuyau } from "~/hooks/use_tuyau";
-import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
-import { QRCodeSVG } from "qrcode.react";
-import { useEffect, useState, createContext } from "react";
 import ProfileActivityInfo from "~/components/profile/profile_activity_info";
 import { useAuth } from "~/hooks/use_auth";
 
@@ -69,6 +66,7 @@ const RoundBadge = ({ icon: Icon, text }: RoundBadgeProps) => {
 export default function ProfilePage(
   props: InferPageProps<ProfilesController, "index"> & { profile: ParticipantProfile },
 ) {
+  const tuyau = useTuyau();
   const auth = useAuth();
   const { profile, isUser, activityInformation } = props;
 
@@ -101,130 +99,129 @@ export default function ProfilePage(
 
   return (
     <ProfileContext.Provider value={{ slug: profile.slug ?? "" }}>
-    <Page title={`${profile.firstName} ${profile.lastName}`} variant="beige">
-      <Container className="mt-8 grid min-h-screen max-w-7xl grid-cols-1 gap-16 md:grid-cols-[auto_1fr]">
-        <section className="bg-dark-cyan hidden h-full w-[22rem] bg-opacity-20 p-12 md:block">
-          <div className="sticky top-28">
-            <div className="bg-enei-blue mb-12 size-fit overflow-clip rounded-full">
-              <User className="text-enei-beige h-64 w-64" />
+      <Page title={`${profile.firstName} ${profile.lastName}`} variant="beige">
+        <Container className="mt-8 grid min-h-screen max-w-7xl grid-cols-1 gap-16 md:grid-cols-[auto_1fr]">
+          <section className="bg-dark-cyan hidden h-full w-[22rem] bg-opacity-20 p-12 md:block">
+            <div className="sticky top-28">
+              <div className="bg-enei-blue mb-12 size-fit overflow-clip rounded-full">
+                <User className="text-enei-beige h-64 w-64" />
+              </div>
+
+              {isUser && (
+                <Link
+                  route="pages:profile.edit"
+                  params={{ section: "profile" }}
+                  className={cn(buttonVariants({ variant: "default" }), "w-full")}
+                >
+                  <Pencil />
+                  <p>Editar Informações</p>
+                </Link>
+              )}
+
+              {/* FIXME: On chrome, the text does not wrap, for some reason. */}
+              <ul className="mt-7 flex flex-col gap-5">
+                {socials.length > 0
+                  && socials.map((social: SocialIconProps) => <SocialItem {...social} />)}
+              </ul>
             </div>
+          </section>
 
-            {isUser && (
-              <Link
-                route="pages:profile.edit"
-                params={{ section: "profile" }}
-                className={cn(buttonVariants({ variant: "default" }), "w-full")}
-              >
-                <Pencil />
-                <p>Editar Informações</p>
-              </Link>
-            )}
+          <section className="flex flex-col gap-20 py-12">
+            <header>
+              <p className="mb-5 text-5xl font-bold uppercase">
+                {profile.firstName} {profile.lastName}
+              </p>
 
-            {/* FIXME: On chrome, the text does not wrap, for some reason. */}
-            <ul className="mt-7 flex flex-col gap-5">
-              {socials.length > 0
-                && socials.map((social: SocialIconProps) => <SocialItem {...social} />)}
-            </ul>
-          </div>
-        </section>
+              <p className="mb-4 text-xl font-bold">{profile.about ?? "Sem descrição."}</p>
 
-        <section className="flex flex-col gap-20 py-12">
-          <header>
-            <p className="mb-5 text-5xl font-bold uppercase">
-              {profile.firstName} {profile.lastName}
-            </p>
+              <div className="mb-4 flex flex-row flex-wrap gap-5 gap-y-2">
+                <RoundBadge icon={Landmark} text={getUniversityById(profile.university)!.name} />
+                <RoundBadge icon={GraduationCap} text={profile.course} />
+                <RoundBadge
+                  icon={GraduationCap}
+                  text={
+                    profile.curricularYear === "already-finished"
+                      ? "Concluído em " + profile.finishedAt
+                      : profile.curricularYear + "º ano"
+                  }
+                />
+              </div>
 
-            <p className="mb-4 text-xl font-bold">{profile.about ?? "Sem descrição."}</p>
-
-            <div className="mb-4 flex flex-row flex-wrap gap-5 gap-y-2">
-              <RoundBadge icon={Landmark} text={getUniversityById(profile.university)!.name} />
-              <RoundBadge icon={GraduationCap} text={profile.course} />
-              <RoundBadge
-                icon={GraduationCap}
-                text={
-                  profile.curricularYear === "already-finished"
-                    ? "Concluído em " + profile.finishedAt
-                    : profile.curricularYear + "º ano"
-                }
-              />
-            </div>
-
-            {profileEditions.length > 0 ? (
-              <div className="flex flex-row flex-wrap gap-4 gap-y-2">
-                {profileEditions.map((edition) => (
-                  <span className="bg-sunray rounded-lg px-[0.625rem] py-1">
-                    <p className="text-enei-beige text-base font-bold">ENEI {edition}</p>
+              {profileEditions.length > 0 ? (
+                <div className="flex flex-row flex-wrap gap-4 gap-y-2">
+                  {profileEditions.map((edition) => (
+                    <span className="bg-sunray rounded-lg px-[0.625rem] py-1">
+                      <p className="text-enei-beige text-base font-bold">ENEI {edition}</p>
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex flex-row flex-wrap gap-4 gap-y-2">
+                  <span className="bg-enei-blue rounded-lg px-[0.625rem] py-1">
+                    <p className="text-enei-beige text-base font-bold">Primeiro ENEI</p>
                   </span>
-                ))}
-              </div>
-            ) : (
-              <div className="flex flex-row flex-wrap gap-4 gap-y-2">
-                <span className="bg-enei-blue rounded-lg px-[0.625rem] py-1">
-                  <p className="text-enei-beige text-base font-bold">Primeiro ENEI</p>
-                </span>
-              </div>
-            )}
-          </header>
+                </div>
+              )}
+            </header>
 
-          {hasCv && (
-            <div>
-              <h3 className="text-persian-orange mb-5 text-3xl font-bold uppercase">Currículo</h3>
-              <div className="mb-4 flex flex-row flex-wrap gap-4 gap-y-2">
-                {cvExpanded ? (
-                  <Button
-                    onClick={() => setCvExpanded(false)}
-                    className={cn(buttonVariants({ variant: "destructive" }))}
-                  >
-                    Recolher
-                    <Minimize2 className="h-6 flex-shrink-0" />
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={() => setCvExpanded(true)}
+            {hasCv && (
+              <div>
+                <h3 className="text-persian-orange mb-5 text-3xl font-bold uppercase">Currículo</h3>
+                <div className="mb-4 flex flex-row flex-wrap gap-4 gap-y-2">
+                  {cvExpanded ? (
+                    <Button
+                      onClick={() => setCvExpanded(false)}
+                      className={cn(buttonVariants({ variant: "destructive" }))}
+                    >
+                      Recolher
+                      <Minimize2 className="h-6 flex-shrink-0" />
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => setCvExpanded(true)}
+                      className={cn(buttonVariants({ variant: "default" }))}
+                    >
+                      Expandir
+                      <Maximize2 className="h-6 flex-shrink-0" />
+                    </Button>
+                  )}
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={tuyau.$url("pages:profile.cv.show", { params: { slug: profile.slug } })}
                     className={cn(buttonVariants({ variant: "default" }))}
                   >
-                    Expandir
-                    <Maximize2 className="h-6 flex-shrink-0" />
-                  </Button>
-                )}
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={tuyau.$url("pages:profile.cv.show", { params: { slug: profile.slug } })}
-                  className={cn(buttonVariants({ variant: "default" }))}
-                >
-                  Abrir noutro separador
-                  <ExternalLink className="h-6 flex-shrink-0" />
-                </a>
-              </div>
+                    Abrir noutro separador
+                    <ExternalLink className="h-6 flex-shrink-0" />
+                  </a>
+                </div>
 
-              <div
-                className={cn(
-                  "max-h-screen overflow-y-hidden transition-all duration-500",
-                  !cvExpanded && "max-h-64",
-                )}
-              >
-                <object
-                  data={tuyau.$url("pages:profile.cv.show", { params: { slug: profile.slug } })}
-                  type="application/pdf"
-                  width="100%"
-                  height="100%"
-                  className={cn("h-64", cvExpanded && "h-screen")}
+                <div
+                  className={cn(
+                    "max-h-screen overflow-y-hidden transition-all duration-500",
+                    !cvExpanded && "max-h-64",
+                  )}
                 >
-                  <p>Não foi possível mostrar o ficheiro nesta página.</p>
-                </object>
+                  <object
+                    data={tuyau.$url("pages:profile.cv.show", { params: { slug: profile.slug } })}
+                    type="application/pdf"
+                    width="100%"
+                    height="100%"
+                    className={cn("h-64", cvExpanded && "h-screen")}
+                  >
+                    <p>Não foi possível mostrar o ficheiro nesta página.</p>
+                  </object>
+                </div>
               </div>
-            </div>
-          )}
-        </section>
-            <section className="mt-4 grid grid-rows-[auto_1fr] gap-4">
-              <div>
-                <h4 className="text-center text-lg font-bold md:text-left">Sobre</h4>
-                <p>{profile.about ?? "Sem informação."}</p>
-              </div>
-            </section>
-      </Container>
-    </Page>
+            )}
+          </section>
+          <section>
+            {auth.state === "authenticated" && auth.user?.role === "staff" && (
+              <ProfileActivityInfo activityInformation={activityInformation} />
+            )}
+          </section>
+        </Container>
+      </Page>
     </ProfileContext.Provider>
   );
 }
