@@ -12,7 +12,6 @@ import { Button, buttonVariants } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { useState } from "react";
-import { useToast } from "~/hooks/use_toast";
 import { cn } from "~/lib/utils";
 // import { Tooltip } from '~/components/ui/tooltip'
 // import { TooltipContent, TooltipProvider, TooltipTrigger } from '@radix-ui/react-tooltip'
@@ -68,7 +67,6 @@ export default function EventRegistrationPage({
   isRegistered,
 }: EventRegistrationProps) {
   const [registrationConfirmationModalOpen, setRegistrationConfirmationModalOpen] = useState(false);
-  const { toast } = useToast();
 
   const { post, processing } = useForm({});
 
@@ -76,19 +74,6 @@ export default function EventRegistrationPage({
     post(`/events/${eventId}/register`, {
       onSuccess: () => {
         setRegistrationConfirmationModalOpen(false);
-        toast({
-          title: "Sucesso",
-          description: "Estás inscrito. Diverte-te!",
-        });
-      },
-      onError: (errors) => {
-        toast({
-          title: "Erro ao registar",
-          description:
-            errors.message
-            || "Ocorreu um erro ao registar para o evento. Por favor, tenta novamente.",
-          duration: 5000,
-        });
       },
     });
   };

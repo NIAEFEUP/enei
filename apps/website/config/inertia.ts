@@ -1,3 +1,4 @@
+import { notifications } from "#lib/adonisjs/notifications.js";
 import type User from "#models/user";
 import env from "#start/env";
 import { defineConfig } from "@adonisjs/inertia";
@@ -29,6 +30,9 @@ const inertiaConfig = defineConfig({
       if (!user) return { state: "unauthenticated" };
       await user.load("participantProfile");
       return { state: "authenticated", user: { email: user.email, role: user.role } };
+    },
+    notifications: async ({ session }) => {
+      return notifications.get(session);
     },
   },
 

@@ -3,6 +3,7 @@ import Event from "#models/event";
 import EventService from "#services/event_service";
 import User from "#models/user";
 import { inject } from "@adonisjs/core";
+import { notifications } from "#lib/adonisjs/notifications.js";
 
 @inject()
 export default class EventsController {
@@ -63,26 +64,42 @@ export default class EventsController {
     });
   }
 
-  async register({ response, params, auth }: HttpContext) {
+  async register({ response, params, auth, session }: HttpContext) {
     // Get the authenticated user
     const user = auth.user;
+    let errorMessage;
 
     // Get the event and check if it is possible do register
     const event = await Event.findOrFail(params.id);
 
     if (!event.isAcceptingRegistrations) {
-      return response.badRequest("Este evento ainda não tem as inscrições abertas");
+      errorMessage = "Este evento ainda não tem as inscrições abertas";
     }
     if (event.ticketsRemaining <= 0) {
-      return response.badRequest("Já não há bilhetes disponíveis para este evento");
+      errorMessage = "Já não há bilhetes disponíveis para este evento";
     }
 
     if (!event.requiresRegistration) {
-      return response.badRequest("Este evento não requer registo");
+      errorMessage = "Este evento não requer registo";
+    }
+
+    if (errorMessage) {
+      notifications.push(session, {
+        title: "Erro",
+        description: errorMessage,
+        variant: "destructive",
+      });
+      return response.badRequest(errorMessage);
     }
 
     // Register
     await this.eventService.register(user!, event);
+
+    notifications.push(session, {
+      title: "Sucesso",
+      description: "Registo efetuado. Diverte-te!",
+      variant: "default",
+    });
 
     return response.redirect().toRoute("pages:events.show", { id: event.id });
   }
