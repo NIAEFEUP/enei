@@ -157,7 +157,6 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           time={events[9].time}
           location={events[9].location}
           speakers={events[9].speakers}
-          allowClick
         />
       </div>
       <div className="col-span-4 col-start-1 row-span-1 row-start-9">
