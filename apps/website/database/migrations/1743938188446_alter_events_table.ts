@@ -6,12 +6,14 @@ export default class extends BaseSchema {
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
       table.integer("product_group_id").references("product_groups.id");
+      table.integer("product_id").references("products.id");
     });
   }
 
   async down() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.dropChecks("product_group_id");
+      table.dropColumn("product_group_id");
+      table.dropColumn("product_id");
     });
   }
 }

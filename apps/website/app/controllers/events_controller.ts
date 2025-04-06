@@ -3,7 +3,7 @@ import Event from "#models/event";
 import EventService from "#services/event_service";
 import User from "#models/user";
 import { inject } from "@adonisjs/core";
-import { createMBWayOrderValidator } from "#validators/order";
+import { createMBWayOrderValidator, eventMBWayOrderValidator } from "#validators/order";
 import type { OrderService } from "#services/order_service";
 
 @inject()
@@ -48,7 +48,9 @@ export default class EventsController {
       formattedDate: event.getFormattedDate(),
       formattedTime: event.getFormattedTime(),
       price:
-        event.productGroup.products.length > 0 ? event.productGroup.products[0].price.toEuros() : 0,
+        event.productGroup?.products?.length > 0
+          ? event.productGroup.products[0].price.toEuros()
+          : 0,
       isRegistered: isRegistered,
     });
   }
@@ -57,33 +59,37 @@ export default class EventsController {
     // Get the authenticated user
     const user = auth.user;
 
-    const { products, name, nif, address, mobileNumber } =
-      await request.validateUsing(createMBWayOrderValidator);
+    try {
+      const { products, name, nif, address, mobileNumber } =
+        await request.validateUsing(eventMBWayOrderValidator);
 
-    // Get the event and check if it is possible do register
-    const event = await Event.findOrFail(params.id);
+      // Get the event and check if it is possible do register
+      const event = await Event.findOrFail(params.id);
 
-    if (!event.isAcceptingRegistrations) {
-      return response.badRequest("Este evento ainda não tem as inscrições abertas");
+      if (!event.isAcceptingRegistrations) {
+        return response.badRequest("Este evento ainda não tem as inscrições abertas");
+      }
+      if (event.ticketsRemaining <= 0) {
+        return response.badRequest("Já não há bilhetes disponíveis para este evento");
+      }
+
+      if (!event.requiresRegistration) {
+        return response.badRequest("Este evento não requer registo");
+      }
+
+      // Register
+      await this.eventService.register(user!, event, {
+        products: products ?? [],
+        name: name ?? "",
+        nif: nif ?? "",
+        address: address ?? "",
+        mobileNumber,
+      });
+
+      return response.redirect().toRoute("pages:events.show", { id: event.id });
+    } catch (error) {
+      console.error(error);
     }
-    if (event.ticketsRemaining <= 0) {
-      return response.badRequest("Já não há bilhetes disponíveis para este evento");
-    }
-
-    if (!event.requiresRegistration) {
-      return response.badRequest("Este evento não requer registo");
-    }
-
-    // Register
-    await this.eventService.register(user!, event, {
-      products,
-      name: name ?? "",
-      nif: nif ?? "",
-      address: address ?? "",
-      mobileNumber,
-    });
-
-    return response.redirect().toRoute("pages:events.show", { id: event.id });
   }
 
   async ticketsRemaining({ response, params }: HttpContext) {

@@ -2,6 +2,8 @@ import RegistrationConfirmationModal from "./registration_confirmation_modal";
 import { cn } from "~/lib/utils";
 import { buttonVariants } from "~/components/ui/button";
 import Event from "#models/event";
+import { useToast } from "~/hooks/use_toast";
+import { useForm } from "@inertiajs/react";
 
 interface PointRegistrationConfirmationModalProps {
   isOpen: boolean;
@@ -16,35 +18,31 @@ export default function PointsRegistrationConfirmationModal({
   onClose,
   event,
 }: PointRegistrationConfirmationModalProps) {
+  const { post } = useForm({
+    products: [],
+  });
+
+  const { toast } = useToast();
+
   const handleRegister = async () => {
-    // setIsLoading(true);
-    // try {
-    //     router.post("/events/" + eventId + "/register", undefined, {
-    //         onFinish: () => fetchRegistrationStatus(),
-    //     });
-    // } catch (error) {
-    //     console.error(error);
-    //     if (error.response?.status === 302) {
-    //         window.location.href = "/signup";
-    //         return;
-    //     }
-    //     if (error.response?.status === 401) {
-    //         window.location.href = "/auth/login";
-    //         return;
-    //     }
-    //     toast({
-    //         title: "Erro ao registar",
-    //         description:
-    //             error.response?.data?.message
-    //             || "Ocorreu um erro ao registar para o evento. Por favor, tente novamente.",
-    //         duration: 5000,
-    //     });
-    // } finally {
-    //     await fetchRegistrationStatus();
-    //     await fetchTicketsRemaining();
-    //     setIsLoading(false);
-    //     setRegistrationConfirmationModalOpen(false);
-    // }
+    post(`/events/${event.id}/register`, {
+      onSuccess: () => {
+        // setRegistrationConfirmationModalOpen(false);
+        toast({
+          title: "Sucesso",
+          description: "Estás inscrito. Diverte-te!",
+        });
+      },
+      onError: (errors) => {
+        toast({
+          title: "Erro ao registar",
+          description:
+            errors.message
+            || "Ocorreu um erro ao registar para o evento. Por favor, tenta novamente.",
+          duration: 5000,
+        });
+      },
+    });
   };
 
   return (

@@ -4,6 +4,7 @@ import OrderProduct from "#models/order_product";
 import Product from "#models/product";
 import ProductGroup from "#models/product_group";
 import type User from "#models/user";
+import type { TransactionClientContract } from "@adonisjs/lucid/types/database";
 import type { ProductDetails } from "../../types/product.js";
 
 export class OrderService {
@@ -109,15 +110,26 @@ export class OrderService {
     return { productDetails, description, totalAmount };
   }
 
-  static async createOrder(user: User, product: ProductDetails) {
+  static async createOrder(
+    user: User,
+    product: ProductDetails,
+    pointsUsed: number = 0,
+    trx?: TransactionClientContract,
+  ) {
     // Create the order and associated products
-    const order = await Order.create({ userId: user.id, status: "draft", pointsUsed: 0 });
+    const order = await Order.create(
+      { userId: user.id, status: "draft", pointsUsed },
+      { client: trx },
+    );
 
-    await OrderProduct.create({
-      orderId: order.id,
-      productId: product.productId,
-      quantity: product.quantity,
-    });
+    await OrderProduct.create(
+      {
+        orderId: order.id,
+        productId: product.productId,
+        quantity: product.quantity,
+      },
+      { client: trx },
+    );
 
     return order;
   }

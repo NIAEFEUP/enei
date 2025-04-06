@@ -6,7 +6,7 @@ import User from "./user.js";
 import type { Money } from "#lib/payments/money.js";
 import { money } from "#lib/lucid/decorators.js";
 import ProductGroup from "./product_group.js";
-import type Product from "./product.js";
+import Product from "./product.js";
 
 export default class Event extends BaseModel {
   @column({ isPrimary: true })
@@ -72,6 +72,12 @@ export default class Event extends BaseModel {
 
   @column()
   declare productGroupId: number;
+
+  @column()
+  declare productId: number;
+
+  @belongsTo(() => Product)
+  declare product: BelongsTo<typeof Product>;
 
   @belongsTo(() => ProductGroup)
   declare productGroup: BelongsTo<typeof ProductGroup>;

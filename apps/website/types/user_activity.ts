@@ -1,3 +1,4 @@
+import type Event from "#models/event";
 import type User from "#models/user";
 
 export enum UserActivityType {
@@ -5,6 +6,7 @@ export enum UserActivityType {
   AttendEvent = "attend_event",
   CompanyVisit = "company_visit",
   CompletedChallenge = "completed_challenge",
+  RegisteredInEvent = "registered_in_event",
 }
 
 export type UserActivityDescription = {
@@ -12,7 +14,14 @@ export type UserActivityDescription = {
     | ReferralDescription
     | AttendEventDescription
     | CompanyVisitDescription
-    | CompletedChallengeDescription;
+    | CompletedChallengeDescription
+    | RegisteredInEventDescription;
+};
+
+export type RegisteredInEventDescription = {
+  type: UserActivityType.RegisteredInEvent;
+  event: Event;
+  user: User;
 };
 
 export type ReferralDescription = {

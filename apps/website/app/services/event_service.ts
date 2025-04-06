@@ -5,6 +5,9 @@ import type { MBWayOrder } from "../../types/order.js";
 import { PaymentService } from "./payment_service.js";
 import Product from "#models/product";
 import OrderProduct from "#models/order_product";
+import PointsService from "./points_service.js";
+import { UserActivityType } from "../../types/user_activity.js";
+import db from "@adonisjs/lucid/services/db";
 
 export default class EventService {
   async isRegistered(user: User, event: Event) {
@@ -44,6 +47,9 @@ export default class EventService {
 
   private async paidRegistration(user: User, event: Event, data: MBWayOrder | null) {
     const { products, name, nif, address, mobileNumber } = data!;
+
+    if (!mobileNumber) return;
+
     // 1. See if user already enrolled
     if (await this.isRegistered(user, event)) return;
 
@@ -66,9 +72,25 @@ export default class EventService {
   }
 
   private async freeRegistration(user: User, event: Event) {
-    await event.related("registeredUsers").attach([user!.id]);
+    await event.loadOnce("product"); // deposits will be a product associated with the event
 
-    event.ticketsRemaining--;
-    event.save();
+    await db.transaction(async (trx) => {
+      if (event.product) {
+        await OrderService.createOrder(
+          user,
+          {
+            productId: event.product.id,
+            quantity: 1,
+          },
+          event.product.points,
+          trx,
+        );
+      }
+
+      await event.related("registeredUsers").attach([user!.id], trx);
+
+      event.ticketsRemaining--;
+      await event.useTransaction(trx).save();
+    });
   }
 }
