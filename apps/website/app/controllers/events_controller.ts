@@ -29,10 +29,13 @@ export default class EventsController {
       })),
     });
   }
-  async show({ inertia, params }: HttpContext) {
+  async show({ inertia, params, auth }: HttpContext) {
     const event = await Event.findOrFail(params.id);
 
     const speakers = await event.related("speakers").query();
+    const user = auth.user;
+
+    const isRegistered = user ? await this.eventService.isRegistered(user, event) : false;
 
     return inertia.render("events/show", {
       eventId: event.id,
@@ -56,6 +59,7 @@ export default class EventsController {
       ticketsRemaining: event.ticketsRemaining,
       price: event.price,
       isAcceptingRegistrations: event.isAcceptingRegistrations,
+      isRegistered: isRegistered,
     });
   }
 
