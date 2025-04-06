@@ -1,0 +1,33 @@
+diff --git a/lib/providers/adminjs_provider.js b/lib/providers/adminjs_provider.js
+index 159564d6a6ce8def153740448ff10f67a255e8a2..1eb030112d63108f2687f203f8f6d87f44774122 100644
+--- a/lib/providers/adminjs_provider.js
++++ b/lib/providers/adminjs_provider.js
+@@ -32,15 +32,19 @@ var AdminJSProvider = class {
+       const adminConfig = configService.get("adminjs");
+       const options = adminConfig.adminjs ?? {};
+       if (adminConfig.adapter.enabled) {
+-        for (const resource of adminConfig.adminjs.resources ?? []) {
+-          const knexInstance = db.connection(resource.connectionName).getReadClient();
+-          if (!knexInstance) {
+-            throw new RuntimeException("Could not load Knex instance to fetch database schema.");
+-          }
+-          const inspector = SchemaInspector.default(knexInstance);
+-          const actualResource = resource.resource ?? resource;
+-          await actualResource.assignMetadata(inspector);
+-        }
++        await Promise.all(
++          await Promise.resolve(adminConfig.adminjs.resources ?? [])
++            .then(resources => resources
++              .map(async resource => {
++                const knexInstance = db.connection(resource.connectionName).getReadClient();
++                if (!knexInstance) {
++                  throw new RuntimeException("Could not load Knex instance to fetch database schema.");
++                }
++                const inspector = SchemaInspector.default(knexInstance);
++                const actualResource = resource.resource ?? resource;
++                await actualResource.assignMetadata(inspector);
++              }))
++        )
+         AdminJS.registerAdapter({
+           Resource: resource_default,
+           Database

@@ -14,7 +14,7 @@
   in {
     formatter.${system} = pkgs.alejandra;
 
-    devShells.${system}.website = pkgs.mkShell {
+    devShell.${system} = pkgs.mkShell {
       packages = with pkgs; [
         nodejs_22
         corepack_22
