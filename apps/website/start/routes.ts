@@ -8,7 +8,12 @@
 */
 import router from "@adonisjs/core/services/router";
 import { middleware } from "#start/kernel";
-import { emailVerificationThrottle, sendForgotPasswordThrottle } from "#start/limiter";
+import {
+  emailVerificationThrottle,
+  sendChangeEmailThrottle,
+  sendChangePasswordThrottle,
+  sendForgotPasswordThrottle,
+} from "#start/limiter";
 
 const EventsController = () => import("#controllers/events_controller");
 const AuthenticationController = () => import("#controllers/authentication_controller");
@@ -57,12 +62,12 @@ router
     router
       .post("/password/change/new", [AuthenticationController, "sendChangePassword"])
       .as("actions:auth.change-password.send")
-      .use([middleware.auth(), sendForgotPasswordThrottle]); //TODO: change this throttle
+      .use([middleware.auth(), sendChangePasswordThrottle]);
 
     router
       .post("/email/change/new", [AuthenticationController, "sendChangeEmail"])
       .as("actions:auth.change-email.send")
-      .use([middleware.auth(), sendForgotPasswordThrottle]); //TODO: change this throttle
+      .use([middleware.auth(), sendChangeEmailThrottle]);
 
     router
       .route(

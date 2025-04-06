@@ -28,3 +28,15 @@ export const sendForgotPasswordThrottle = limiter.define("auth.forgot-password",
 
   return limiter.allowRequests(3).every("1 minute");
 });
+
+export const sendChangePasswordThrottle = limiter.define("auth.change-password", () => {
+  if (app.nodeEnvironment !== "production") return null;
+
+  return limiter.allowRequests(1).every("1 minute");
+});
+
+export const sendChangeEmailThrottle = limiter.define("auth.change-email", () => {
+  if (app.nodeEnvironment !== "production") return null;
+
+  return limiter.allowRequests(1).every("1 minute");
+});
