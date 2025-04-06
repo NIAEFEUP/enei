@@ -1,0 +1,38 @@
+import Container from "~/components/common/containers";
+import Page from "~/components/common/page";
+import { ParticipantsTable } from "~/components/companies/participants/participants_table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+
+export default function CompanyParticipantsPage() {
+  return (
+    <Page title="Participantes" variant="beige" className="bg-enei-beige">
+      <Container>
+        <Tabs defaultValue="all-participants">
+          <TabsList className="bg-enei-blue grid w-full grid-cols-3">
+            <TabsTrigger
+              value="all-participants"
+              className="text-enei-beige data-[state=active]:bg-enei-beige data-[state=active]:text-enei-blue"
+            >
+              Todos
+            </TabsTrigger>
+            <TabsTrigger
+              value="checked-participants"
+              className="text-enei-beige data-[state=active]:bg-enei-beige data-[state=active]:text-enei-blue"
+            >
+              Presentes
+            </TabsTrigger>
+            <TabsTrigger
+              value="liked-participants"
+              className="text-enei-beige data-[state=active]:bg-enei-beige data-[state=active]:text-enei-blue"
+            >
+              Favoritos
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="all-participants">
+            <ParticipantsTable></ParticipantsTable>
+          </TabsContent>
+        </Tabs>
+      </Container>
+    </Page>
+  );
+}

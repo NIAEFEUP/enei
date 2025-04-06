@@ -11,6 +11,7 @@ import { middleware } from "#start/kernel";
 import { emailVerificationThrottle, sendForgotPasswordThrottle } from "#start/limiter";
 import { sep, normalize } from "node:path";
 import app from "@adonisjs/core/services/app";
+const CompaniesController = () => import("#controllers/companies_controller");
 
 const EventsController = () => import("#controllers/events_controller");
 const AuthenticationController = () => import("#controllers/authentication_controller");
@@ -274,3 +275,7 @@ router
   .prefix("/qrcode");
 
 router.on("/nfc").renderInertia("nfc").as("pages:nfc");
+
+router
+  .get("/company/participants", [CompaniesController, "showParticipants"])
+  .as("pages:company.participants");
