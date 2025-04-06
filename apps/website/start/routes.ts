@@ -17,8 +17,7 @@ const AuthenticationController = () => import("#controllers/authentication_contr
 const OrdersController = () => import("#controllers/orders_controller");
 const TicketsController = () => import("#controllers/tickets_controller");
 const ProfilesController = () => import("#controllers/profiles_controller");
-const CvsController = () => import("#controllers/cvs_controller");
-
+const UsersController = () => import("#controllers/users_controller");
 const StoreController = () => import("#controllers/store_controller");
 const ReferralsController = () => import("#controllers/referrals_controller");
 
@@ -221,21 +220,17 @@ router
 
 router
   .group(() => {
-    router.get("/cv/name", [CvsController, "showName"]);
-    router.post("/cv/upload", [CvsController, "upload"]);
-    router.delete("cv/delete", [CvsController, "delete"]);
-    router.get("cv/uploads/*", ({ request, response }) => {
-      const filePath = `${request.param("*").join(sep)}_resume.pdf`;
-      const PATH_TRAVERSAL_REGEX = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
-      const normalizedPath = normalize(filePath);
-      if (PATH_TRAVERSAL_REGEX.test(normalizedPath)) {
-        return response.badRequest("Malformed path");
-      }
-      const absolutePath = app.makePath("storage/uploads/cvs", normalizedPath);
-      return response.download(absolutePath);
-    });
+    router.post("/cv/upload", [UsersController, "storeCV"]).as("actions:cv_upload");
+    router.delete("cv/delete", [UsersController, "deleteCV"]).as("actions:cv_delete");
+    router.get("/cv/name", [UsersController, "showCVName"]).as("actions:cv_name");
+    router.get("/:id/cv/download", [UsersController, "downloadCV"]).use(middleware.company());
+
+    // Avatar endpoints
+    router.get("/avatar/name", [UsersController, "showAvatarName"]).as("actions:avatar_name");
+    router.post("/avatar/upload", [UsersController, "storeAvatar"]).as("actions:avatar_upload");
+    router.delete("/avatar/delete", [UsersController, "deleteAvatar"]).as("actions:avatar_delete");
   })
-  .use([middleware.auth(), middleware.wip()])
+  .use(middleware.auth())
   .prefix("user");
 
 router
