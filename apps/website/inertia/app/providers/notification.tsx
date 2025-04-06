@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useToast } from "~/hooks/use_toast";
 import type { SharedProps } from "@adonisjs/inertia/types";
 
-export default function NotificationsProvider({ children }: { children?: React.ReactNode }) {
+export default function ToastNotificationsProvider({ children }: { children?: React.ReactNode }) {
   const { toast } = useToast();
 
   useEffect(() => {
