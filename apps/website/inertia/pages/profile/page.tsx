@@ -102,6 +102,7 @@ export default function ProfilePage(
             {isUser && (
               <Link
                 route="pages:profile.edit"
+                params={{ section: "profile" }}
                 className={cn(buttonVariants({ variant: "default" }), "w-full")}
               >
                 <Pencil />

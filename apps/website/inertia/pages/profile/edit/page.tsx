@@ -3,15 +3,12 @@ import ProfilesController from "#controllers/profiles_controller";
 import ParticipantProfile from "#models/participant_profile";
 import Page from "~/components/common/page";
 import Container from "~/components/common/containers";
-import { Card, CardHeader } from "~/components/ui/card";
+import { Card } from "~/components/ui/card";
 import { cn } from "~/lib/utils";
-import { useState } from "react";
 import ProfileInfoForm from "~/components/profile/1_profile_info";
 import TbdInfoForm from "~/components/profile/2_tbd_info";
 import AccountInfoForm from "~/components/profile/3_account_info";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
-import { VerticalTabs, VerticalTabsContent, VerticalTabsList } from "~/components/ui/vertical-tabs";
-import { Link } from "@inertiajs/react";
+import { Link } from "@tuyau/inertia/react";
 
 export default function ProfileEditPage(
   props: InferPageProps<ProfilesController, "index"> & {
@@ -43,12 +40,13 @@ export default function ProfileEditPage(
                 <div className="bg-muted text-muted-foreground inline-flex h-fit items-center justify-center rounded-lg p-1 md:flex-col md:p-0">
                   {Object.entries(sections).map(([key, value]) => (
                     <Link
+                      route="pages:profile.edit"
+                      params={{ section: key }}
                       className={cn(
                         "flex h-[60px] cursor-pointer items-center px-12 text-3xl md:w-full md:py-2",
                         key === activeSection && "bg-enei-blue text-white",
                       )}
                       preserveScroll
-                      href={key}
                     >
                       {value}
                     </Link>
