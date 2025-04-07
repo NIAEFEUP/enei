@@ -25,7 +25,7 @@ export default class EventService {
           .where("products.product_group_id", event.productGroupId)
           .preload("product")
           .preload("order")
-      ).length === 0
+      ).length > 0
     );
   }
 

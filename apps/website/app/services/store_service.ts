@@ -25,7 +25,6 @@ export class StoreService {
       user.useTransaction(trx);
       user.points = user.points - product.points;
 
-      console.log("USER:  ", user);
       await user.save();
 
       product.useTransaction(trx);
