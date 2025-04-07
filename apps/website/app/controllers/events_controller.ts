@@ -38,6 +38,7 @@ export default class EventsController {
       .preload("productGroup", (q) => {
         q.preload("products");
       })
+      .preload("product")
       .firstOrFail();
 
     const user = auth.user;

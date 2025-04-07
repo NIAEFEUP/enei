@@ -56,6 +56,9 @@ export default function PointsRegistrationConfirmationModal({
       onClose={onClose}
       onSubmit={handleRegister}
     >
+      {event.product && (
+        <p className="mb-4 font-bold">Será cobrada uma caução de {event.product.points} bytes.</p>
+      )}
       <p className="leading-tight">
         Depois de te inscreveres, se precisares de cancelar a tua inscrição por algum motivo, terás
         de enviar um email para{" "}
