@@ -33,7 +33,7 @@ export default function PaidRegistrationConfirmationModal({
   onClose,
   event,
 }: PaidRegistrationConfirmationModalProps) {
-  const auth = useAuth({ only: ["authenticated"] });
+  const auth = useAuth();
 
   const { toast } = useToast();
 
@@ -91,12 +91,14 @@ export default function PaidRegistrationConfirmationModal({
       onSubmit={() => {}}
       showConfirmation={false}
     >
-      <BillingForm
-        paymentHandler={handleSubmit}
-        user={auth.user as User}
-        itemId={event.id}
-        showTitle={false}
-      />
+      {auth.state === "authenticated" && (
+        <BillingForm
+          paymentHandler={handleSubmit}
+          user={auth.user as User}
+          itemId={event.id}
+          showTitle={false}
+        />
+      )}
     </RegistrationConfirmationModal>
   );
 }

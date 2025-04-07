@@ -6,7 +6,7 @@ import { BaseSeeder } from "@adonisjs/lucid/seeders";
 
 export default class extends BaseSeeder {
   async run() {
-    const rallyTascasEvent = await Event.findOrFail(47);
+    const rallyTascasEvent = await Event.findOrFail(48);
 
     const rallyTascasGroup = await ProductGroup.create({
       name: "Rally tascas",

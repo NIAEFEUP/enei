@@ -685,7 +685,7 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
+      price: Money.fromCents(0),
     });
   }
 }
