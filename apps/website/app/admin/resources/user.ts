@@ -15,6 +15,9 @@ const UserResource = createResource({
       speakerProfileId: {
         reference: "speaker_profiles",
       },
+      staffProfileId: {
+        reference: "staff_profiles",
+      },
       referringPromoterId: {
         reference: "users",
       },
