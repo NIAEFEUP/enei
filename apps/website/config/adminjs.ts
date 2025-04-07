@@ -38,7 +38,7 @@ const resources = [
   UserActivityResource,
   UserResource,
   CompanyResource,
-  RepresentativeProfileResource
+  RepresentativeProfileResource,
 ];
 
 const adminjsConfig = {
