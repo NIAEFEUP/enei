@@ -52,22 +52,24 @@ export default class extends BaseSeeder {
     const company = await Company.create({
       name: "ENEI",
       logo: "/images/logo-blue.svg",
-    })
+    });
 
     const companyRepresentative = await User.create({
       email: "company@eneiconf.pt",
       emailVerifiedAt: DateTime.now(),
-    })
+    });
 
     const companyRepresentativeProfile = await RepresentativeProfile.create({
       firstName: "João",
       lastName: "Silva",
       jobTitle: "CEO",
       ORCIDLink: "https://orcid.org/0000-0002-1825-0097",
-    })
+    });
 
-    await companyRepresentative.related("representativeProfile").associate(companyRepresentativeProfile)
+    await companyRepresentative
+      .related("representativeProfile")
+      .associate(companyRepresentativeProfile);
 
-    await companyRepresentativeProfile.related("company").associate(company)
+    await companyRepresentativeProfile.related("company").associate(company);
   }
 }

@@ -5,9 +5,7 @@ import Company from "#models/company";
 const CompanyResource = createResource({
   model: Company,
   options: {
-    properties: {
-
-    },
+    properties: {},
   },
   features: [
     targetRelationFeature(),
