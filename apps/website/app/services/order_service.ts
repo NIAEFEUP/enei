@@ -1,5 +1,5 @@
 import { Money } from "#lib/payments/money.js";
-import Order from "#models/order";
+import Order, { type OrderStatus } from "#models/order";
 import OrderProduct from "#models/order_product";
 import Product from "#models/product";
 import ProductGroup from "#models/product_group";
@@ -114,13 +114,11 @@ export class OrderService {
     user: User,
     product: ProductDetails,
     pointsUsed: number = 0,
+    status: OrderStatus = "draft",
     trx?: TransactionClientContract,
   ) {
     // Create the order and associated products
-    const order = await Order.create(
-      { userId: user.id, status: "draft", pointsUsed },
-      { client: trx },
-    );
+    const order = await Order.create({ userId: user.id, status, pointsUsed }, { client: trx });
 
     await OrderProduct.create(
       {

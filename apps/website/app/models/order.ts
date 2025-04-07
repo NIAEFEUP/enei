@@ -7,7 +7,12 @@ import Payment from "./payment.js";
 import * as is from "@sindresorhus/is";
 import type { CreateReadonlyModel } from "../../types/lucid.js";
 
-type OrderStatus = "draft" | "pending-payment" | "canceled" | "pending-delivery" | "delivered";
+export type OrderStatus =
+  | "draft"
+  | "pending-payment"
+  | "canceled"
+  | "pending-delivery"
+  | "delivered";
 
 export type ReadonlyOrder = CreateReadonlyModel<Order>;
 

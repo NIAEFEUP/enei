@@ -5,8 +5,6 @@ import type { MBWayOrder } from "../../types/order.js";
 import { PaymentService } from "./payment_service.js";
 import Product from "#models/product";
 import OrderProduct from "#models/order_product";
-import PointsService from "./points_service.js";
-import { UserActivityType } from "../../types/user_activity.js";
 import db from "@adonisjs/lucid/services/db";
 
 export default class EventService {
@@ -83,6 +81,7 @@ export default class EventService {
             quantity: 1,
           },
           event.product.points,
+          "delivered",
           trx,
         );
       }
