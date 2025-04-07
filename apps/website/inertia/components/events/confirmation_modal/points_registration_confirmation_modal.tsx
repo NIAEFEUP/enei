@@ -4,9 +4,12 @@ import { buttonVariants } from "~/components/ui/button";
 import Event from "#models/event";
 import { useToast } from "~/hooks/use_toast";
 import { useForm } from "@inertiajs/react";
+import { Dispatch } from "react";
+import { SetStateAction } from "jotai/vanilla";
 
 interface PointRegistrationConfirmationModalProps {
   isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   isLoading: boolean;
   onClose: () => void;
   event: Event;
@@ -14,6 +17,7 @@ interface PointRegistrationConfirmationModalProps {
 
 export default function PointsRegistrationConfirmationModal({
   isOpen,
+  setIsOpen,
   isLoading,
   onClose,
   event,
@@ -27,7 +31,7 @@ export default function PointsRegistrationConfirmationModal({
   const handleRegister = async () => {
     post(`/events/${event.id}/register`, {
       onSuccess: () => {
-        // setRegistrationConfirmationModalOpen(false);
+        setIsOpen(false);
         toast({
           title: "Sucesso",
           description: "Estás inscrito. Diverte-te!",

@@ -7,9 +7,12 @@ import { useTuyau } from "~/hooks/use_tuyau";
 import { useForm } from "@inertiajs/react";
 import Event from "#models/event";
 import { ProductDetails } from "../../../../types/product";
+import { Dispatch } from "react";
+import { SetStateAction } from "jotai/vanilla";
 
 interface PaidRegistrationConfirmationModalProps {
   isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   isLoading: boolean;
   onClose: () => void;
   event: Event;
@@ -25,6 +28,7 @@ interface EventRegistrationForm {
 
 export default function PaidRegistrationConfirmationModal({
   isOpen,
+  setIsOpen,
   isLoading,
   onClose,
   event,
@@ -61,6 +65,7 @@ export default function PaidRegistrationConfirmationModal({
 
     post(tuyau.$url("actions:events.register", { params: { id: itemId } }), {
       onSuccess: () => {
+        setIsOpen(false);
         toast({
           title: "Pagamento realizado com sucesso",
           description: "Obrigado por se inscrever!",
@@ -68,6 +73,7 @@ export default function PaidRegistrationConfirmationModal({
         });
       },
       onError: () => {
+        setIsOpen(false);
         toast({
           title: "Ocorreu um erro ao realizar o pagamento",
           description: "Por favor, tente novamente.",

@@ -322,6 +322,7 @@ export default function EventRegistrationPage({
               {price > 0 ? (
                 <PaidRegistrationConfirmationModal
                   isOpen={registrationConfirmationModalOpen}
+                  setIsOpen={setRegistrationConfirmationModalOpen}
                   isLoading={processing}
                   onClose={() => setRegistrationConfirmationModalOpen(false)}
                   event={event}
@@ -329,6 +330,7 @@ export default function EventRegistrationPage({
               ) : (
                 <PointsRegistrationConfirmationModal
                   isOpen={registrationConfirmationModalOpen}
+                  setIsOpen={setRegistrationConfirmationModalOpen}
                   isLoading={processing}
                   onClose={() => setRegistrationConfirmationModalOpen(false)}
                   event={event}
