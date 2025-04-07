@@ -5,17 +5,19 @@ import BillingForm from "~/components/payments/billing_form";
 import { useToast } from "~/hooks/use_toast";
 import { useTuyau } from "~/hooks/use_tuyau";
 import { useForm } from "@inertiajs/react";
-import Event from "#models/event";
 import { ProductDetails } from "../../../../types/product";
 import { Dispatch } from "react";
 import { SetStateAction } from "jotai/vanilla";
+import type { Serialize } from "@tuyau/utils/types";
+import { MBWayOrder } from "../../../../types/order";
+import { EventDto } from "../../../../app/dto/events/event";
 
 interface PaidRegistrationConfirmationModalProps {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isLoading: boolean;
   onClose: () => void;
-  event: Event;
+  event: Serialize<EventDto>;
 }
 
 interface EventRegistrationForm {
@@ -51,7 +53,7 @@ export default function PaidRegistrationConfirmationModal({
     user: User,
     itemId: number,
     enableBillingInfo: boolean,
-    billingInfo,
+    billingInfo: MBWayOrder,
     number: string,
   ) => {
     data.name = "";

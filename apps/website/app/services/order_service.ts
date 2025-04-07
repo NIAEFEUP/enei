@@ -20,7 +20,7 @@ export class OrderService {
     return orderProducts.length < product.maxOrder;
   }
 
-  static getPointOrdersForUser(user: User) {
+  getPointOrdersForUser(user: User) {
     return OrderProduct.query()
       .join("orders", "order_products.order_id", "orders.id")
       .join("products", "order_products.product_id", "products.id")
@@ -31,7 +31,7 @@ export class OrderService {
       .preload("order");
   }
 
-  static async buildProductDetails(
+  async buildProductDetails(
     user: User,
     products: Array<ProductDetails>,
   ): Promise<{
@@ -110,7 +110,7 @@ export class OrderService {
     return { productDetails, description, totalAmount };
   }
 
-  static async createOrder(
+  async createOrder(
     user: User,
     product: ProductDetails,
     pointsUsed: number = 0,

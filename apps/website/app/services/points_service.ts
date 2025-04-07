@@ -2,7 +2,6 @@ import db from "@adonisjs/lucid/services/db";
 import {
   UserActivityType,
   type ReferralDescription,
-  type RegisteredInEventDescription,
   type UserActivityDescription,
 } from "../../types/user_activity.js";
 import User from "#models/user";

@@ -3,9 +3,9 @@ import Event from "#models/event";
 import EventService from "#services/event_service";
 import User from "#models/user";
 import { inject } from "@adonisjs/core";
-import { createMBWayOrderValidator, eventMBWayOrderValidator } from "#validators/order";
-import type { OrderService } from "#services/order_service";
+import { eventMBWayOrderValidator } from "#validators/order";
 import PointsService from "#services/points_service";
+import { EventDto } from "../dto/events/event.js";
 
 @inject()
 export default class EventsController {
@@ -46,7 +46,7 @@ export default class EventsController {
     const isRegistered = user ? await this.eventService.isRegistered(user, event) : false;
 
     return inertia.render("events/show", {
-      event,
+      event: new EventDto(event).toJSON(),
       formattedDate: event.getFormattedDate(),
       formattedTime: event.getFormattedTime(),
       price:
@@ -59,7 +59,7 @@ export default class EventsController {
 
   async register({ request, params, response, auth }: HttpContext) {
     // Get the authenticated user
-    const user = auth.user;
+    const user = auth.getUserOrFail();
 
     try {
       const { products, name, nif, address, mobileNumber } =

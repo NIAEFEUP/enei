@@ -1,18 +1,19 @@
 import RegistrationConfirmationModal from "./registration_confirmation_modal";
 import { cn } from "~/lib/utils";
 import { buttonVariants } from "~/components/ui/button";
-import Event from "#models/event";
 import { useToast } from "~/hooks/use_toast";
 import { useForm } from "@inertiajs/react";
 import { Dispatch } from "react";
 import { SetStateAction } from "jotai/vanilla";
+import { Serialize } from "@tuyau/utils/types";
+import { EventDto } from "../../../../app/dto/events/event";
 
 interface PointRegistrationConfirmationModalProps {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isLoading: boolean;
   onClose: () => void;
-  event: Event;
+  event: Serialize<EventDto>;
 }
 
 export default function PointsRegistrationConfirmationModal({

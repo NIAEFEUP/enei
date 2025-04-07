@@ -12,7 +12,6 @@ import { Button, buttonVariants } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { useState } from "react";
-import { useToast } from "~/hooks/use_toast";
 import { cn } from "~/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 import Page from "~/components/common/page";
@@ -20,16 +19,8 @@ import { useForm } from "@inertiajs/react";
 import Container from "~/components/common/containers";
 import PaidRegistrationConfirmationModal from "~/components/events/confirmation_modal/paid_registration_confirmation_modal";
 import PointsRegistrationConfirmationModal from "~/components/events/confirmation_modal/points_registration_confirmation_modal";
-import Event from "#models/event";
-import { Money } from "#lib/payments/money.js";
-
-interface EventRegistrationProps {
-  event: Event;
-  formattedDate: string;
-  formattedTime: string;
-  price: number;
-  isRegistered: boolean;
-}
+import { InferPageProps } from "@adonisjs/inertia/types";
+import type EventsController from "#controllers/events_controller";
 
 export default function EventRegistrationPage({
   event,
@@ -37,8 +28,7 @@ export default function EventRegistrationPage({
   formattedTime,
   price,
   isRegistered,
-}: EventRegistrationProps) {
-  const [ticketsRemaining, setTicketsRemaining] = useState(event.ticketsRemaining);
+}: InferPageProps<EventsController, "show">) {
   const [registrationConfirmationModalOpen, setRegistrationConfirmationModalOpen] = useState(false);
 
   const { processing } = useForm({});
@@ -237,7 +227,7 @@ export default function EventRegistrationPage({
                   <Button
                     onClick={() => handleRegisterClick()}
                     disabled={
-                      ticketsRemaining <= 0
+                      event.ticketsRemaining <= 0
                       || !event.requiresRegistration
                       || !event.isAcceptingRegistrations
                       || processing
@@ -247,7 +237,7 @@ export default function EventRegistrationPage({
                   >
                     {processing && <Loader2 className="animate-spin" />}
                     {event.requiresRegistration
-                      ? ticketsRemaining > 0
+                      ? event.ticketsRemaining > 0
                         ? price > 0
                           ? "Comprar"
                           : "Inscrever"
@@ -310,7 +300,7 @@ export default function EventRegistrationPage({
                   <Ticket className="h-4 w-4" />
                   <span>
                     {event.isAcceptingRegistrations ? (
-                      <>{ticketsRemaining} lugares disponíveis</>
+                      <>{event.ticketsRemaining} lugares disponíveis</>
                     ) : (
                       <>De momento, não estamos a aceitar inscrições</>
                     )}

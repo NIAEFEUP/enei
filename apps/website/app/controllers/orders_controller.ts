@@ -1,13 +1,10 @@
 import type { HttpContext } from "@adonisjs/core/http";
 import Order from "#models/order";
 import OrderProduct from "#models/order_product";
-import Product from "#models/product";
-import ProductGroup from "#models/product_group";
 import { createMBWayOrderValidator } from "#validators/order";
 import { inject } from "@adonisjs/core";
 import { PaymentService } from "#services/payment_service";
 
-import { Money } from "#lib/payments/money.js";
 import { OrderService } from "#services/order_service";
 
 @inject()
@@ -28,10 +25,8 @@ export default class OrdersController {
       const { products, nif, address, mobileNumber, name } =
         await request.validateUsing(createMBWayOrderValidator);
 
-      const { productDetails, description, totalAmount } = await OrderService.buildProductDetails(
-        authUser,
-        products,
-      );
+      const { productDetails, description, totalAmount } =
+        await this.orderService.buildProductDetails(authUser, products);
 
       // Create the order and associated products
       const order = await Order.create({ userId: authUser.id, status: "draft", pointsUsed: 0 });
@@ -44,7 +39,7 @@ export default class OrdersController {
         });
       }
 
-      PaymentService.create(
+      this.paymentService.create(
         order,
         totalAmount,
         mobileNumber,

@@ -9,8 +9,6 @@
 import router from "@adonisjs/core/services/router";
 import { middleware } from "#start/kernel";
 import { emailVerificationThrottle, sendForgotPasswordThrottle } from "#start/limiter";
-import { sep, normalize } from "node:path";
-import app from "@adonisjs/core/services/app";
 
 const EventsController = () => import("#controllers/events_controller");
 const AuthenticationController = () => import("#controllers/authentication_controller");

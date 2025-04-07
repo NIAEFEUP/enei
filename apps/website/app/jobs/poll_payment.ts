@@ -1,16 +1,20 @@
 import { Job } from "adonisjs-jobs";
-import ConfirmPaymentNotification from "#mails/confirm_payment_notification";
-import mail from "@adonisjs/mail/services/main";
 import User from "#models/user";
 import Payment from "#models/payment";
 import OrderProduct from "#models/order_product";
 import app from "@adonisjs/core/services/app";
 import { PaymentService } from "#services/payment_service";
+import { createTuyau } from "@tuyau/client";
 
 type PollPaymentPayload = {
   paymentId: number;
   baseUrl: string;
 };
+
+async function crateTuyau(baseUrl: string) {
+  const { api } = await import("#.adonisjs/api");
+  return createTuyau({ baseUrl, api });
+}
 
 export default class PollPayment extends Job {
   async handle({ paymentId, baseUrl }: PollPaymentPayload) {

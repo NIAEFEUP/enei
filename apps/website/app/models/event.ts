@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
-import { BaseModel, belongsTo, column, hasOne, manyToMany } from "@adonisjs/lucid/orm";
+import { BaseModel, belongsTo, column, manyToMany } from "@adonisjs/lucid/orm";
 import SpeakerProfile from "./speaker_profile.js";
-import type { BelongsTo, HasOne, ManyToMany } from "@adonisjs/lucid/types/relations";
+import type { BelongsTo, ManyToMany } from "@adonisjs/lucid/types/relations";
 import User from "./user.js";
 import type { Money } from "#lib/payments/money.js";
 import { money } from "#lib/lucid/decorators.js";
@@ -25,7 +25,7 @@ export default class Event extends BaseModel {
   declare description: string | null;
 
   @column()
-  declare type: string;
+  declare type: "workshop" | "other" | "night" | "talk" | "networking" | "competition" | "meal";
 
   @column()
   declare companyImage: string;
