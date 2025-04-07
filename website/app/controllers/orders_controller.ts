@@ -9,9 +9,7 @@ import ProductGroup from '#models/product_group'
 import { createMBWayOrderValidator } from '#validators/order'
 import UpdateOrderStatus from '../jobs/update_order_status.js'
 export default class OrdersController {
-  index({ inertia }: HttpContext) {
-    return inertia.render('payments')
-  }
+
 
   public async createMBWay({ request, auth, response }: HttpContext) {
     const authUser = auth.user
@@ -180,5 +178,21 @@ export default class OrdersController {
       return response.notFound({ message: 'Order not found' })
     }
     return inertia.render('payments/show', { order })
+  }
+
+  public async index({ inertia, auth, response }: HttpContext) {
+    const authUser = auth.user
+
+    if (!authUser) {
+      return response.status(401).json({
+        message: 'Unauthorized',
+      })
+    }
+
+ 
+    // Find all orders for the authenticated user
+    const orders = await Order.query().where('user_id', authUser.id).orderBy('created_at', 'desc')
+
+    return inertia.render('payments/orders', { orders })
   }
 }

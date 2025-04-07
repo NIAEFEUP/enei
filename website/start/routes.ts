@@ -151,7 +151,6 @@ router
 
 router
   .group(() => {
-    //router.get('/', [OrdersController, 'index']) acho que isto já nao e usado
     router.post('/mbway', [OrdersController, 'createMBWay'])
     router.get('/:id', [OrdersController, 'show']).as('payment.show')
   })
@@ -203,6 +202,7 @@ router
 
 router
   .group(() => {
+    router.get('/myOrders', [OrdersController, 'index']) .as('pages:orders')
     router.get('/cv/name', [CvsController, 'showName'])
     router.post('/cv/upload', [CvsController, 'upload'])
     router.delete('cv/delete', [CvsController, 'delete'])
@@ -217,7 +217,7 @@ router
       return response.download(absolutePath)
     })
   })
-  .use([middleware.auth(), middleware.wip()])
+  .use([middleware.auth()])
   .prefix('user')
 
 router

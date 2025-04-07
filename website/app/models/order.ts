@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
-
+import { BaseModel,column } from '@adonisjs/lucid/orm'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import User from './user.js'
 export default class Order extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
@@ -31,4 +32,6 @@ export default class Order extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  declare user: BelongsTo<typeof User>
 }

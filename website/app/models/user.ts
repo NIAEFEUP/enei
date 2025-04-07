@@ -7,6 +7,7 @@ import type { BelongsTo, HasMany, ManyToMany } from '@adonisjs/lucid/types/relat
 import PromoterProfile from './promoter_profile.js'
 import ParticipantProfile from './participant_profile.js'
 import Event from './event.js'
+import Order from './order.js'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -49,6 +50,13 @@ export default class User extends BaseModel {
   @manyToMany (() => Event)
   declare eventsRegistered: ManyToMany<typeof Event>
 
+  @hasMany(() => Order, {
+    foreignKey: 'userId',
+    localKey: 'id'
+  })
+  declare orders: HasMany<typeof Order>
+
+  
   @column()
   declare referrerId: number | null
 
