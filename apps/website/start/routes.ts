@@ -271,6 +271,7 @@ router
   .group(() => {
     router.on("/scan").renderInertia("qrscanner").as("pages:staff.qrcode.scan");
   })
+  .use([middleware.auth(), middleware.staff()])
   .prefix("/qrcode");
 
 router.on("/nfc").renderInertia("nfc").as("pages:nfc");
