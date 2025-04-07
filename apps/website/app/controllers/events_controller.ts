@@ -5,6 +5,7 @@ import User from "#models/user";
 import { inject } from "@adonisjs/core";
 import { createMBWayOrderValidator, eventMBWayOrderValidator } from "#validators/order";
 import type { OrderService } from "#services/order_service";
+import PointsService from "#services/points_service";
 
 @inject()
 export default class EventsController {
@@ -76,6 +77,10 @@ export default class EventsController {
 
       if (!event.requiresRegistration) {
         return response.badRequest("Este evento não requer registo");
+      }
+
+      if (PointsService.userWillExceededNegativePoints(user, event)) {
+        return response.badRequest("Excedeste os pontos negativos com cauções");
       }
 
       // Register

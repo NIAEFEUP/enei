@@ -6,6 +6,7 @@ import {
   type UserActivityDescription,
 } from "../../types/user_activity.js";
 import User from "#models/user";
+import type Event from "#models/event";
 
 /**
  * This service will be responsible for handling how many points a certain event
@@ -21,6 +22,14 @@ export default class PointsService {
       },
     ],
   ]);
+
+  static userWillExceededNegativePoints(user: User, event: Event) {
+    event.loadOnce("product");
+
+    if (!event.product) return user.points < -7500;
+
+    return user.points - event.product.points < -7500;
+  }
 
   async referralPointAttribution(referral: UserActivityDescription) {
     const referralDescription = referral.description as ReferralDescription;

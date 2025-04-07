@@ -6,6 +6,7 @@ import { PaymentService } from "./payment_service.js";
 import Product from "#models/product";
 import OrderProduct from "#models/order_product";
 import db from "@adonisjs/lucid/services/db";
+import PointsService from "./points_service.js";
 
 export default class EventService {
   async isRegistered(user: User, event: Event) {
@@ -90,6 +91,9 @@ export default class EventService {
 
       event.ticketsRemaining--;
       await event.useTransaction(trx).save();
+
+      user.points -= event.product.points;
+      await user.useTransaction(trx).save();
     });
   }
 }
