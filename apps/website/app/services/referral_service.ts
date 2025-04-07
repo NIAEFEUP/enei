@@ -1,6 +1,9 @@
 import User from "#models/user";
 import Sqids from "sqids";
 import { buildUrl } from "../url.js";
+import UserActivity from "#events/user_activity";
+import { UserActivityType, type ReferralDescription } from "../../types/user_activity.js";
+import app from "@adonisjs/core/services/app";
 import { Bouncer } from "@adonisjs/bouncer";
 import UserPolicy from "../policies/user_policy.js";
 
@@ -26,6 +29,7 @@ export default class ReferralService {
   }
 
   async canUserRefer(user: User) {
+    if (app.inDev) return true;
     return await new Bouncer(user).with(UserPolicy).allows("refer");
   }
 
@@ -94,57 +98,34 @@ export default class ReferralService {
     }
   }
 
-  // To be moved to the points system, not implemented at the referral system level
-  // async handlePointAttribution(referredUser: User, referralCode: string) {
-  //   // referredUser must be a participant
-  //   if (!referredUser.isParticipant())
-  //     return
+  async handlePointAttribution(referredUser: User, referrer: User) {
+    const referralCode = await this.#getReferralCode(referrer);
+    if (!referralCode) return;
 
-  //   const referralUserId = ReferralService.decode(referralCode)
-  //   if (!referralUserId) return
+    // referredUser must be a participant
+    if (!referredUser.isParticipant()) return;
 
-  //   const referralUser = await User.find(referralUserId)
-  //   if (!referralUser) return
+    const referralUserId = this.#decode(referralCode);
+    if (!referralUserId) return;
 
-  //   if (referralUser.isPromoter()) {
+    const referralUser = await User.find(referralUserId);
+    if (!referralUser) return;
 
-  //     // If the referralUser is a promoter
-  //     // give points to the referralUser
-  //     await db.transaction(async (trx) => {
-  //       referralUser.useTransaction(trx)
-  //       referredUser.useTransaction(trx)
-
-  //       referralUser.points += POINTS_FOR_PROMOTER
-
-  //       await referredUser.related('rootReferrer').associate(referralUser)
-  //       await referredUser.related('referrer').associate(referralUser)
-  //       referralUser.save()
-  //     })
-  //   } else if (referralUser.isParticipant()) {
-  //     const referralPromoter: User | null = referralUser.rootReferrerId !== null
-  //       ? await User.find(referralUser.rootReferrerId)
-  //       : null;
-
-  //     // If the referralUser is a participant and was
-  //     // previously referred by a promoter, give points
-  //     // to the referralUser and to the promoter, else
-  //     // give only to the referralUser
-  //     await db.transaction(async (trx) => {
-  //       referralUser.useTransaction(trx)
-  //       referredUser.useTransaction(trx)
-  //       referralPromoter?.useTransaction(trx)
-
-  //       referralUser.points += POINTS_FOR_PARTICIPANT
-  //       if (referralPromoter !== null && referralPromoter.isPromoter()) {
-  //         await referredUser.related('referredByPromoter').associate(referralPromoter)
-  //         referralPromoter.points += POINTS_FOR_PROMOTER - POINTS_FOR_PARTICIPANT
-  //         referralPromoter.save()
-  //       }
-  //       await referralUser.save()
-
-  //       await referredUser.related('referredByUser').associate(referralUser)
-  //       await referredUser.save()
-  //     })
-  //   }
-  // }
+    UserActivity.dispatch(referredUser, {
+      description: {
+        type: UserActivityType.Referral,
+        referralCode,
+        referralUser,
+        referredUser,
+        referralIsPromoter: referralUser.isPromoter(),
+        referralReferencedByPromoter: referralUser.referringPromoterId !== null,
+        promoterId: referralUser.referringPromoterId,
+        pointsToReferralUser: referralUser.points,
+        pointsToPromoter:
+          referralUser.referringPromoterId !== null
+            ? referralUser.referringPromoter?.points
+            : undefined,
+      } as ReferralDescription,
+    });
+  }
 }
