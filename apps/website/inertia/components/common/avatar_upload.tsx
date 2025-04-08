@@ -4,8 +4,7 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { useEffect } from "react";
 import { useTuyau } from "~/hooks/use_tuyau";
-
-const CvUpload = () => {
+const AvatarUpload = () => {
   const tuyau = useTuyau();
   const [fetchedName, setfetchedName] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -15,15 +14,16 @@ const CvUpload = () => {
   useEffect(() => {
     const fetchFileName = async () => {
       try {
-        const response = await axios.get(tuyau.$url("actions:cv_name"));
+        const response = await axios.get(tuyau.$url("actions:avatar_name"));
         setFileName(response.data.fileName);
+        setfetchedName(true);
       } catch (error) {
         setFileName(null);
+        setfetchedName(true);
       }
     };
 
     fetchFileName();
-    setfetchedName(true);
   }, [uploading]);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -39,10 +39,10 @@ const CvUpload = () => {
     setUploading(true);
 
     const formData = new FormData();
-    formData.append("cv", file);
+    formData.append("avatar", file);
 
     try {
-      await axios.post(tuyau.$url("actions:cv_upload"), formData, {
+      await axios.post(tuyau.$url("actions:avatar_upload"), formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -56,13 +56,11 @@ const CvUpload = () => {
   const handleDelete = async () => {
     setUploading(true);
     try {
-      await axios.delete(tuyau.$url("actions:cv_delete"), {
+      await axios.delete(tuyau.$url("actions:avatar_delete"), {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      setFile(null);
     } catch (error) {
     } finally {
       setUploading(false);
@@ -75,14 +73,14 @@ const CvUpload = () => {
         <div className="flex flex-row gap-2">
           <Input className="w-64" type="text" value={fileName} disabled />
           <Button onClick={handleDelete} disabled={uploading || !fetchedName}>
-            {uploading ? "Uploading..." : "Clear CV"}
+            {uploading ? "Uploading..." : "Clear avatar"}
           </Button>
         </div>
       ) : (
         <div className="flex flex-row gap-2">
-          <Input className="w-64" type="file" accept=".pdf" onChange={handleFileChange} />
+          <Input className="w-64" type="file" accept="image/*" onChange={handleFileChange} />
           <Button onClick={handleUpload} disabled={uploading || !fetchedName}>
-            {uploading ? "Uploading..." : "Upload CV"}
+            {uploading ? "Uploading..." : "Upload avatar"}
           </Button>
         </div>
       )}
@@ -90,4 +88,4 @@ const CvUpload = () => {
   );
 };
 
-export default CvUpload;
+export default AvatarUpload;

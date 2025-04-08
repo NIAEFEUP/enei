@@ -673,5 +673,18 @@ export default class extends BaseSeeder {
       ticketsTotal: 1000,
       price: 0,
     });
+
+    await Event.create({
+      title: "eduTAP – A Sneak Peek into the Future of Campus Cards",
+      description:
+        "Universities still use **plastic campus cards**, but **digital lifestyles** demand an upgrade. **eduTAP** replaces them with **secure digital wallet passes**, enabling **seamless, private, and interoperable access** to **Higher Education services**. This talk covers **eduTAP’s architecture, real-world use, and role in cross-border mobility** via **eduGAIN standards**. More than a **tech upgrade**, **eduTAP redefines student IDs** for a **smarter, connected campus**.",
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 14, hour: 11, minute: 30 }),
+      duration: 30,
+      type: "talk",
+      location: "Auditório - FEUP",
+      registrationRequirements: "",
+      requiresRegistration: false,
+      price: 0,
+    });
   }
 }

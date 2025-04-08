@@ -20,11 +20,10 @@ const AuthenticationController = () => import("#controllers/authentication_contr
 const OrdersController = () => import("#controllers/orders_controller");
 const TicketsController = () => import("#controllers/tickets_controller");
 const ProfilesController = () => import("#controllers/profiles_controller");
-const CvsController = () => import("#controllers/cvs_controller");
-
+const UsersController = () => import("#controllers/users_controller");
 const StoreController = () => import("#controllers/store_controller");
 const ReferralsController = () => import("#controllers/referrals_controller");
-
+const LeaderboardController = () => import("#controllers/leaderboard_controller");
 const ProductReservationController = () => import("#controllers/product_reservation_controller");
 
 router.on("/").renderInertia("home").as("pages:home");
@@ -222,7 +221,8 @@ router
         middleware.automaticSubmit(),
       ]);
 
-    router.get("/u/:slug/cv", [CvsController, "show"]).as("pages:profile.cv.show");
+    // TODO: CvsController was deleted, this needs to be reimplemented
+    // router.get("/u/:slug/cv", [CvsController, "show"]).as("pages:profile.cv.show");
     router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
   })
   .use(middleware.wip());
@@ -258,11 +258,25 @@ router.on("/faq").renderInertia("faq").as("pages:faq").use(middleware.wip());
 
 router
   .group(() => {
-    router.get("/cv/name", [CvsController, "showName"]).as("actions:cv.name");
-    router.post("/cv/upload", [CvsController, "upload"]).as("actions:cv.upload");
-    router.delete("cv/delete", [CvsController, "delete"]).as("actions:cv.delete");
+    router.on("/").renderInertia("cv").as("pages:cv");
   })
-  .use([middleware.auth(), middleware.wip()])
+  .use([middleware.auth(), middleware.verifiedEmail()])
+  .prefix("cv") // dummy route for testing
+  .use(middleware.wip());
+
+router
+  .group(() => {
+    router.post("/cv/upload", [UsersController, "storeCV"]).as("actions:cv_upload");
+    router.delete("cv/delete", [UsersController, "deleteCV"]).as("actions:cv_delete");
+    router.get("/cv/name", [UsersController, "showCVName"]).as("actions:cv_name");
+    router.get("/:id/cv/download", [UsersController, "downloadCV"]).use(middleware.company());
+
+    // Avatar endpoints
+    router.get("/avatar/name", [UsersController, "showAvatarName"]).as("actions:avatar_name");
+    router.post("/avatar/upload", [UsersController, "storeAvatar"]).as("actions:avatar_upload");
+    router.delete("/avatar/delete", [UsersController, "deleteAvatar"]).as("actions:avatar_delete");
+  })
+  .use(middleware.auth())
   .prefix("user");
 
 router
@@ -277,14 +291,26 @@ router
 
 // Referrals
 router
-  .get("/referrals", [ReferralsController, "showReferralLink"])
-  .middleware(middleware.auth())
-  .as("pages:referrals");
+  .group(() => {
+    router.get("/", [ReferralsController, "showReferralLink"]).as("pages:referrals");
+    router
+      .post("/event/points/trigger/:id", [ReferralsController, "referralPointsAttribution"])
+      .as("actions:referrals.event.pointattribution.trigger")
+      .use(middleware.apiKeyProtected());
+  })
+  .prefix("/referrals")
+  .middleware(middleware.auth());
 
 router
   .route(`/r/:referralCode`, ["GET", "POST"], [ReferralsController, "link"])
   .middleware([middleware.automaticSubmit(), middleware.silentAuth()])
   .as("actions:referrals.link");
+
+router
+  .group(() => {
+    router.get("/", [LeaderboardController, "index"]).as("pages:leaderboard");
+  })
+  .prefix("/leaderboard");
 
 router
   .group(() => {
