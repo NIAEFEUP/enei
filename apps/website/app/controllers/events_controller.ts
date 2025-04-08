@@ -9,7 +9,7 @@ import ParticipantProfile from "#models/participant_profile";
 export default class EventsController {
   constructor(private eventService: EventService) {}
   async index({ inertia }: HttpContext) {
-    const events = await Event.query().preload("speakers");
+    const events = await Event.query().preload("speakers").orderBy("id");
     return inertia.render("events", {
       currentDay: new Date().toDateString(),
       events: events.map((event) => ({
@@ -30,10 +30,13 @@ export default class EventsController {
       })),
     });
   }
-  async show({ inertia, params }: HttpContext) {
+  async show({ inertia, params, auth }: HttpContext) {
     const event = await Event.findOrFail(params.id);
 
     const speakers = await event.related("speakers").query();
+    const user = auth.user;
+
+    const isRegistered = user ? await this.eventService.isRegistered(user, event) : false;
 
     return inertia.render("events/show", {
       eventId: event.id,
@@ -44,6 +47,7 @@ export default class EventsController {
       location: event.location,
       type: event.type,
       companyImage: event.companyImage,
+      extraInfo: event.extraInfo,
       speakers: speakers.map((speaker) => ({
         firstName: speaker.firstName,
         lastName: speaker.lastName,
@@ -55,6 +59,8 @@ export default class EventsController {
       requiresRegistration: event.requiresRegistration,
       ticketsRemaining: event.ticketsRemaining,
       price: event.price,
+      isAcceptingRegistrations: event.isAcceptingRegistrations,
+      isRegistered: isRegistered,
     });
   }
 
@@ -65,6 +71,9 @@ export default class EventsController {
     // Get the event and check if it is possible do register
     const event = await Event.findOrFail(params.id);
 
+    if (!event.isAcceptingRegistrations) {
+      return response.badRequest("Este evento ainda não tem as inscrições abertas");
+    }
     if (event.ticketsRemaining <= 0) {
       return response.badRequest("Já não há bilhetes disponíveis para este evento");
     }
