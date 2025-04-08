@@ -88,8 +88,12 @@ export default class EventsController {
       return response.badRequest("Utilizador não encontrado");
     }
     
-    if(await this.eventService.isRegistered(user, event)) {
+    if(!this.eventService.isRegistered(user, event)) {
       return response.badRequest("Utilizador não registado no evento");
+    }
+
+    if(await this.eventService.isCheckedIn(user, event)) {
+      return response.badRequest("Utilizador já checked in");
     }
 
     await this.eventService.checkin(user!, event);

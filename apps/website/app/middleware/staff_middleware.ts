@@ -6,7 +6,8 @@ export default class StaffMiddleware {
     const user = ctx.auth.getUserOrFail();
 
     if (!user.isStaff()) {
-      return ctx.response.redirect().toRoute("pages:signup");
+      ctx.session.flashErrors({ message: "Unauthorized"})
+      return ctx.response.redirect().back()
     }
 
     return await next();

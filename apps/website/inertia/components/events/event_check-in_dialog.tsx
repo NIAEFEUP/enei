@@ -28,26 +28,28 @@ export default function EventCheckInDialog(
   });
 
   const handleCheckIN = (slug: string) => {
-    post(tuyau.$url("actions:events.checkin", { params: { slug }}), {
-      onSuccess: () => {
-        toast({
-          title: "Utilizador checked-in com sucesso",
-          description: `${eventTitle}`,
-          duration: 5000,
-        });
-
-        setOpen(false);
-      },
-      onError: () => {
-        toast({
-          title: "Erro ao dar check-in ao utilizador",
-          description: `${eventTitle}`,
-          duration: 5000,
-        });
-
-        setOpen(false);
-      }
-    })
+    try {
+      post(tuyau.$url("actions:events.checkin", { params: { slug }}), {
+        onSuccess: () => {
+          toast({
+            title: "Success",
+            description: "Check-in successful!",
+          });
+          setOpen(false);
+        },
+        onError: (errors) => {
+          toast({
+            title: "Error",
+            description: errors.message || "Failed to check-in",
+          });
+        }
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+      });
+    }
   }
 
   return <Dialog open={isOpen} onOpenChange={() => setOpen(false)}>

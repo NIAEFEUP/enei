@@ -202,11 +202,9 @@ router
       .as("actions:events.tickets");
 
     router
-      .get("/:slug/check-in", [EventsController, "checkin"])
+      .post("/:slug/check-in", [EventsController, "checkin"])
       .as("actions:events.checkin")
-      .use([
-        middleware.staff(),
-      ])
+      .use(middleware.staff())
 
     router
       .get("/:id/is-registered", [EventsController, "isRegistered"])

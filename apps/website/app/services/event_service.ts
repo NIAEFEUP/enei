@@ -16,7 +16,7 @@ export default class EventService {
     const isChecked = await event
       .related("checkedInUsers")
       .query()
-      .where("id", event.id)
+      .where("id", user.id)
       .first();
 
     return !!isChecked
