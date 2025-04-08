@@ -40,6 +40,7 @@ interface Participant {
 
 interface ParticipantsTableProps {
   participants: Participant[];
+  onToggleLike: (participantId: number, liked: boolean) => void;
 }
 
 const columns: ColumnDef<Participant>[] = [
@@ -116,7 +117,7 @@ const columns: ColumnDef<Participant>[] = [
           {likedBy.length > 0 ? (
             <span className="text-enei-blue text-sm font-medium">{likedBy.join(", ")}</span>
           ) : (
-            <span className="text-muted-foreground text-sm font-medium">—</span>
+            <span className="text-enei-blue text-sm font-medium">-</span>
           )}
         </div>
       );
@@ -128,7 +129,9 @@ const columns: ColumnDef<Participant>[] = [
     cell: ({ row }) => {
       const [liked, setLiked] = React.useState(row.original.isLiked);
 
-      const toggleLike = () => setLiked((prev) => !prev);
+      const toggleLike = () => {
+        return setLiked((prev) => !prev);
+      };
 
       return (
         <DropdownMenu>

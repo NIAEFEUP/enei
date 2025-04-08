@@ -2,6 +2,7 @@ import type User from "#models/user";
 import { inject } from "@adonisjs/core";
 import { StoreService } from "./store_service.js";
 import type { UserActivityInformation } from "../../types/user_activity.js";
+import UserActivity from "#models/user_activity";
 
 @inject()
 export class UserActivityService {
@@ -19,5 +20,21 @@ export class UserActivityService {
     });
 
     return information;
+  }
+
+  async logCompanyLike({
+    userId,
+    companyId,
+    likedByName,
+  }: {
+    userId: number;
+    companyId: number;
+    likedByName: string;
+  }) {
+    return await UserActivity.create({
+      userId,
+      type: "company_like",
+      description: { company_id: companyId, liked_by: likedByName },
+    });
   }
 }
