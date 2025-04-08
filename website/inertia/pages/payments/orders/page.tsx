@@ -1,17 +1,13 @@
-'use client'
-import { InferPageProps } from '@adonisjs/inertia/types'
-import OrdersController from '#controllers/orders_controller'
+import { Button } from '~/components/ui/button'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFileInvoice } from '@fortawesome/free-solid-svg-icons'
 import BaseLayout from '~/layouts/base'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "~/components/ui/table"
+import OrderInfoDialog from '~/components/payments/order_info_dialog'
+import Product from '#models/product'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '~/components/ui/table'
+import { jsPDF } from 'jspdf'
 
-interface Order {
+export interface Order {
   id: number
   requestId: string
   userId: number
@@ -21,11 +17,64 @@ interface Order {
   total: number
   createdAt: string
   updatedAt: string
+  products: Product[]
 }
 
 export default function Payments({
   orders,
-}: InferPageProps<OrdersController,'index'> & { orders: Order[] }) {
+}:  { orders: Order[] }) {
+  
+  const generateInvoice = (order: Order) => {
+    const doc = new jsPDF()
+    
+    doc.setFontSize(24)
+    doc.setTextColor(0, 0, 0)
+    doc.text('ENEI', 105, 20, { align: 'center' })
+    
+    doc.setFontSize(20)
+    doc.text('Invoice', 105, 30, { align: 'center' })
+    
+    doc.setFontSize(12)
+    doc.text(`Invoice #: ${order.id}`, 14, 45)
+    doc.text(`Request ID: ${order.requestId}`, 14, 52)
+    doc.text(`Issue Date: ${new Date().toLocaleDateString()}`, 14, 59)
+    doc.text(`Purchase Date: ${new Date(order.createdAt).toLocaleDateString()}`, 14, 66)
+    doc.text(`NIF: ${order.nif}`, 14, 73)
+    doc.text(`Status: ${order.status}`, 14, 80)
+    doc.text(`Address: ${order.address}`, 14, 87)
+
+    doc.setDrawColor(0, 0, 0)
+    doc.line(14, 90, 196, 90)
+
+    doc.setFontSize(14)
+    doc.text('Products', 14, 100)
+
+    doc.setFontSize(11)
+    doc.text('Item', 14, 110)
+    doc.text('Price', 170, 110, { align: 'right' })
+    
+    let yPosition = 118
+    order.products.forEach((product) => {
+      doc.text(product.name, 14, yPosition)
+      doc.text(`€${product.price.toFixed(2)}`, 170, yPosition, { align: 'right' })
+      yPosition += 8
+    })
+
+    doc.setDrawColor(0, 0, 0)
+    doc.line(14, yPosition + 3, 196, yPosition + 3)
+
+    doc.setFontSize(14)
+    doc.setFont('helvetica', 'bold')
+    doc.text('Total:', 140, yPosition + 15)
+    doc.text(`€${order.total.toFixed(2)}`, 170, yPosition + 15, { align: 'right' })
+
+    doc.setFontSize(10)
+    doc.setFont('helvetica', 'normal')
+    doc.text('ENEI - Encontro Nacional de Estudantes de Informática', 105, 280, { align: 'center' })
+    
+    doc.save(`ENEI_Invoice_${order.id}.pdf`)
+  }
+
   return (
     <BaseLayout
       title="Orders"
@@ -39,10 +88,10 @@ export default function Payments({
               <TableRow>
                 <TableHead>ID</TableHead>
                 <TableHead>Request ID</TableHead>
-                <TableHead>NIF</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Total</TableHead>
-                <TableHead>Created At</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -50,10 +99,20 @@ export default function Payments({
                 <TableRow key={order.id}>
                   <TableCell>{order.id}</TableCell>
                   <TableCell>{order.requestId}</TableCell>
-                  <TableCell>{order.nif}</TableCell>
                   <TableCell>{order.status}</TableCell>
-                  <TableCell>${order.total != null ? order.total.toFixed(2) : '0.00'}</TableCell>
+                  <TableCell>{order.total != null ? order.total.toFixed(2) : '0.00'} € </TableCell>
                   <TableCell>{new Date(order.createdAt).toLocaleDateString()}</TableCell>
+                  <TableCell className="flex items-center space-x-2">
+                    <OrderInfoDialog order={order} />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      title="Download Invoice"
+                      onClick={() => generateInvoice(order)}
+                    >
+                      <FontAwesomeIcon icon={faFileInvoice} />
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -61,5 +120,5 @@ export default function Payments({
         </div>
       </div>
     </BaseLayout>
-  );
+  )
 }

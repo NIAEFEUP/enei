@@ -188,11 +188,12 @@ export default class OrdersController {
         message: 'Unauthorized',
       })
     }
-
- 
-    // Find all orders for the authenticated user
-    const orders = await Order.query().where('user_id', authUser.id).orderBy('created_at', 'desc')
-
+    
+    await authUser.load('orders', (ordersQuery) => {
+      ordersQuery.preload('products')
+    })
+    
+    const orders = authUser.orders
     return inertia.render('payments/orders', { orders })
   }
 }

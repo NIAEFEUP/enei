@@ -69,6 +69,7 @@ export default class User extends BaseModel {
     localKey: 'id',
     foreignKey: 'referrerId',
   })
+  
   declare referrals: HasMany<typeof User>
 
   // PromoterProfile
