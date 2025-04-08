@@ -7,10 +7,6 @@ import { UserService } from "#services/user_service";
 export default class UsersController {
   constructor(private userService: UserService) {}
 
-  async showCV({ inertia }: HttpContext) {
-    return inertia.render("cv");
-  }
-
   async storeCV({ request, response, auth }: HttpContext) {
     const user = auth.user;
     const cv = request.file("cv")!;

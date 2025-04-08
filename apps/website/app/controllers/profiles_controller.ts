@@ -302,4 +302,28 @@ export default class ProfilesController {
       });
     }
   }
+
+  async showCV({ params, response }: HttpContext) {
+    const { slug } = params;
+
+    let user;
+    try {
+      const profile = await ParticipantProfile.findBy("slug", slug);
+      await profile!.load("user");
+      user = profile!.user;
+    } catch {
+      response.notFound("Participante não encontrado");
+      return;
+    }
+
+    const userCV = await this.userService.getCV(user!);
+    if (!userCV) {
+      return response.notFound("Ficheiro não encontrado");
+    }
+    const { file, fileName } = userCV;
+
+    response.type("application/pdf");
+    response.header("Content-Disposition", `inline; filename="${fileName}"`);
+    return response.stream(file);
+  }
 }

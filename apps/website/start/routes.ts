@@ -221,8 +221,7 @@ router
         middleware.automaticSubmit(),
       ]);
 
-    // TODO: CvsController was deleted, this needs to be reimplemented
-    // router.get("/u/:slug/cv", [CvsController, "show"]).as("pages:profile.cv.show");
+    router.get("/u/:slug/cv", [ProfilesController, "showCV"]).as("pages:profile.cv.show");
     router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
   })
   .use(middleware.wip());
@@ -255,14 +254,6 @@ router
   .prefix("events");
 
 router.on("/faq").renderInertia("faq").as("pages:faq").use(middleware.wip());
-
-router
-  .group(() => {
-    router.on("/").renderInertia("cv").as("pages:cv");
-  })
-  .use([middleware.auth(), middleware.verifiedEmail()])
-  .prefix("cv") // dummy route for testing
-  .use(middleware.wip());
 
 router
   .group(() => {
