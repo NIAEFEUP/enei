@@ -42,7 +42,12 @@ const SocialItem = ({ icon: Icon, link }: SocialIconProps) => {
       <span className="h-9 w-9">
         <Icon className="h-9 w-9" />
       </span>
-      <a href={link} className="text-sm font-bold" target="_blank" rel="noopener noreferrer">
+      <a
+        href={link}
+        className="break-all text-sm font-bold"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {link}
       </a>
     </li>
@@ -118,7 +123,6 @@ export default function ProfilePage(
                 </Link>
               )}
 
-              {/* FIXME: On chrome, the text does not wrap, for some reason. */}
               <ul className="mt-7 flex flex-col gap-5">
                 {socials.length > 0
                   && socials.map((social: SocialIconProps) => <SocialItem {...social} />)}
