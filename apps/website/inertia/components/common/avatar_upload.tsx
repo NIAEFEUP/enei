@@ -4,12 +4,18 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { useEffect } from "react";
 import { useTuyau } from "~/hooks/use_tuyau";
-const AvatarUpload = () => {
+
+type AvatarUploadProps = {
+  onUploadComplete: () => void;
+};
+
+const AvatarUpload = ({ onUploadComplete }: AvatarUploadProps) => {
   const tuyau = useTuyau();
   const [fetchedName, setfetchedName] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   useEffect(() => {
     const fetchFileName = async () => {
@@ -25,6 +31,7 @@ const AvatarUpload = () => {
 
     fetchFileName();
   }, [uploading]);
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       setFile(event.target.files[0]);
@@ -47,9 +54,16 @@ const AvatarUpload = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+      setErrorMsg("");
     } catch (error) {
+      if (error.response.data) {
+        setErrorMsg(error.response.data);
+      } else {
+        setErrorMsg("Não foi possível guardar essa imagem.");
+      }
     } finally {
       setUploading(false);
+      onUploadComplete();
     }
   };
 
@@ -61,30 +75,36 @@ const AvatarUpload = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+      setFile(null);
     } catch (error) {
     } finally {
       setUploading(false);
+      onUploadComplete();
+      setErrorMsg("");
     }
   };
 
   return (
-    <div className="flex flex-col gap-2">
-      {fileName ? (
-        <div className="flex flex-row gap-2">
-          <Input className="w-64" type="text" value={fileName} disabled />
-          <Button onClick={handleDelete} disabled={uploading || !fetchedName}>
-            {uploading ? "Uploading..." : "Clear avatar"}
-          </Button>
-        </div>
-      ) : (
-        <div className="flex flex-row gap-2">
-          <Input className="w-64" type="file" accept="image/*" onChange={handleFileChange} />
-          <Button onClick={handleUpload} disabled={uploading || !fetchedName}>
-            {uploading ? "Uploading..." : "Upload avatar"}
-          </Button>
-        </div>
-      )}
-    </div>
+    <>
+      <div className="flex flex-col gap-2">
+        {fileName ? (
+          <div className="flex flex-row gap-2">
+            <Input className="w-64" type="text" value={fileName} disabled />
+            <Button onClick={handleDelete} disabled={uploading || !fetchedName}>
+              {uploading ? "Uploading..." : "Clear avatar"}
+            </Button>
+          </div>
+        ) : (
+          <div className="flex flex-row gap-2">
+            <Input className="w-64" type="file" accept="image/*" onChange={handleFileChange} />
+            <Button onClick={handleUpload} disabled={uploading || !fetchedName}>
+              {uploading ? "Uploading..." : "Upload avatar"}
+            </Button>
+          </div>
+        )}
+      </div>
+      {errorMsg && <p className="mt-4 text-center text-sm text-red-600">{errorMsg}</p>}
+    </>
   );
 };
 

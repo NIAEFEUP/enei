@@ -264,6 +264,7 @@ router
 
     // Avatar endpoints
     router.get("/avatar/name", [UsersController, "showAvatarName"]).as("actions:avatar_name");
+    router.get("/avatar", [UsersController, "showAvatar"]).as("actions:avatar.show");
     router.post("/avatar/upload", [UsersController, "storeAvatar"]).as("actions:avatar_upload");
     router.delete("/avatar/delete", [UsersController, "deleteAvatar"]).as("actions:avatar_delete");
   })

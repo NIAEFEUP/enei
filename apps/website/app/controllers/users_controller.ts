@@ -10,6 +10,7 @@ export default class UsersController {
   async storeCV({ request, response, auth }: HttpContext) {
     const user = auth.user;
     const cv = request.file("cv")!;
+    if (cv.hasErrors) return response.badRequest("Unsupported file format");
     await this.userService.storeCV(user!, cv);
     return response.ok({ message: "CV uploaded" });
   }
@@ -46,9 +47,23 @@ export default class UsersController {
     return response.stream(file);
   }
 
-  async showAvatar({ inertia }: HttpContext) {
-    return inertia.render("avatar");
+  async showAvatar({ response, auth }: HttpContext) {
+    const user = auth.user;
+
+    if (user!.avatar === null) {
+      return response.notFound("File not found");
+    }
+    const userAvatar = await this.userService.getAvatar(user!);
+
+    if (!userAvatar) {
+      return response.notFound("File not found");
+    }
+    const { file, fileName } = userAvatar;
+
+    response.header("Content-Disposition", `inline; filename="${fileName}"`);
+    return response.stream(file);
   }
+
   async storeAvatar({ request, response, auth }: HttpContext) {
     if (!request.file("avatar")) {
       return response.badRequest("No file uploaded");
@@ -58,6 +73,10 @@ export default class UsersController {
       size: "2mb",
       extnames: ["jpg", "jpeg", "png"],
     })!;
+
+    // If an image is uploaded with an extname error, the whole website crashes
+    if (avatar.hasErrors) return response.badRequest(avatar.errors.at(0)?.message);
+
     await this.userService.storeAvatar(user!, avatar);
     return response.ok({ message: "Avatar uploaded" });
   }
