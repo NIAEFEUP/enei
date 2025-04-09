@@ -1,1 +1,9 @@
-website/node_modules
+node_modules
+build
+.direnv
+.git
+.gitignore
+*.md
+
+apps/website/.adonisjs
+apps/website/.adminjs

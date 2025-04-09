@@ -107,9 +107,9 @@ type EventsIdIsregisteredbyemailGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/events_controller.ts').default['isRegisteredByEmail'], false>
 }
-type EventsIdCheckoutGetHead = {
+type UserMyordersGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/controllers/events_controller.ts').default['showPayment'], false>
+  response: MakeTuyauResponse<import('../app/controllers/orders_controller.ts').default['index'], false>
 }
 type UserCvNameGetHead = {
   request: unknown
@@ -290,15 +290,15 @@ export interface ApiDefinition {
         '$get': EventsIdIsregisteredbyemailGetHead;
         '$head': EventsIdIsregisteredbyemailGetHead;
       };
-      'checkout': {
-        '$url': {
-        };
-        '$get': EventsIdCheckoutGetHead;
-        '$head': EventsIdCheckoutGetHead;
-      };
     };
   };
   'user': {
+    'myOrders': {
+      '$url': {
+      };
+      '$get': UserMyordersGetHead;
+      '$head': UserMyordersGetHead;
+    };
     'cv': {
       'name': {
         '$url': {
@@ -589,13 +589,6 @@ const routes = [
     types: {} as EventsIdIsregisteredbyemailGetHead,
   },
   {
-    params: ["id"],
-    name: 'eventCheckout',
-    path: '/events/:id/checkout',
-    method: ["GET","HEAD"],
-    types: {} as EventsIdCheckoutGetHead,
-  },
-  {
     params: [],
     name: 'pages:faq',
     path: '/faq',
@@ -608,6 +601,13 @@ const routes = [
     path: '/cv',
     method: ["GET","HEAD"],
     types: {} as unknown,
+  },
+  {
+    params: [],
+    name: 'pages:orders',
+    path: '/user/myOrders',
+    method: ["GET","HEAD"],
+    types: {} as UserMyordersGetHead,
   },
   {
     params: [],
