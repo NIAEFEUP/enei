@@ -326,4 +326,31 @@ export default class ProfilesController {
     response.header("Content-Disposition", `inline; filename="${fileName}"`);
     return response.stream(file);
   }
+
+  async showAvatar({ params, response }: HttpContext) {
+    const { slug } = params;
+
+    let user;
+    try {
+      const profile = await ParticipantProfile.findBy("slug", slug);
+      await profile!.load("user");
+      user = profile!.user;
+    } catch {
+      response.notFound("Participante não encontrado");
+      return;
+    }
+
+    if (user!.avatar === null) {
+      return response.notFound("Ficheiro não encontrado");
+    }
+    const userAvatar = await this.userService.getAvatar(user!);
+
+    if (!userAvatar) {
+      return response.notFound("Ficheiro não encontrado");
+    }
+    const { file, fileName } = userAvatar;
+
+    response.header("Content-Disposition", `inline; filename="${fileName}"`);
+    return response.stream(file);
+  }
 }
