@@ -23,6 +23,8 @@ interface EventsPageProps {
 }
 
 export default function EventsPageApril13({ events }: EventsPageProps) {
+  console.log("events: ", events)
+
   return (
     <div className="md:grid-rows-14 flex flex-col space-y-4 md:grid md:grid-cols-4 md:gap-4 md:space-y-0">
       <div className="col-span-4 col-start-1 row-start-1">
@@ -277,8 +279,9 @@ export default function EventsPageApril13({ events }: EventsPageProps) {
           title={"Jantar de Networking powered by Ordem dos Engenheiros da Região Norte (OERN)"}
           type={"networking"}
           time={"20:00 - 23:00"}
-          location={"TBD"}
+          location={"R. de Rodrigues Sampaio 123"}
           speakers={[]}
+          onClick={() => router.visit(`/events/${events[20].id}`)}
         />
       </div>
 

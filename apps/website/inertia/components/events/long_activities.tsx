@@ -42,7 +42,7 @@ export default function LongActivities({ currentActiveIndex, eventsByDay }: Long
             title={"Check-in"}
             type={"other"}
             time={"9:00 - 21:30"}
-            location={"TBD"}
+            location={"ISEP (manhã) | FEUP (tarde)"}
             speakers={[]}
           />
           <EventCard
@@ -70,7 +70,7 @@ export default function LongActivities({ currentActiveIndex, eventsByDay }: Long
             title={"Check-in"}
             type={"other"}
             time={"9:00 - 21:30"}
-            location={"TBD"}
+            location={"ISEP (manhã) | FEUP (tarde)"}
             speakers={[]}
           />
           <EventCard
@@ -98,7 +98,7 @@ export default function LongActivities({ currentActiveIndex, eventsByDay }: Long
             title={"Check-in"}
             type={"other"}
             time={"9:00 - 12:00"}
-            location={"TBD - FEUP"}
+            location={"ISEP (manhã) | FEUP (tarde)"}
             speakers={[]}
           />
           <EventCard
@@ -107,6 +107,14 @@ export default function LongActivities({ currentActiveIndex, eventsByDay }: Long
             time={"9:30 - 14:00"}
             location={"Corredor B - FEUP"}
             speakers={[]}
+          />
+          <EventCard
+            title={events[11].title}
+            type={events[11].type}
+            time={events[11].time}
+            location={events[11].location}
+            speakers={events[11].speakers}
+            onClick={() => router.visit(`/events/${events[11].id}`)}
           />
         </div>
       )}

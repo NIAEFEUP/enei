@@ -15,7 +15,7 @@ interface Speaker {
 interface Event {
   id: number;
   title: string;
-  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other";
+  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other" | "painel";
   date: string;
   time: string;
   location: string;
