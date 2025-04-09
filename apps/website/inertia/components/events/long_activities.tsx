@@ -48,7 +48,7 @@ export default function LongActivities({ currentActiveIndex, eventsByDay }: Long
           <EventCard
             title={"Feira de Emprego"}
             type={"networking"}
-            time={"14:00 - 18:30"}
+            time={"13:30 - 19:00"}
             location={"Corredor B - FEUP"}
             speakers={[]}
           />
