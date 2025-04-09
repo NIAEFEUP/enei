@@ -7,7 +7,6 @@ import Page from "~/components/common/page";
 import Container from "~/components/common/containers";
 import { getUniversityById } from "~/lib/enei/signup/universities";
 import {
-  User,
   Github,
   Linkedin,
   Globe,
@@ -26,6 +25,7 @@ import { ENEI_EDITIONS } from "~/lib/enei/signup/editions";
 import { useTuyau } from "~/hooks/use_tuyau";
 import ProfileActivityInfo from "~/components/profile/profile_activity_info";
 import { useAuth } from "~/hooks/use_auth";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 
 export const ProfileContext = createContext<{ slug: string | number }>({
   slug: "",
@@ -108,10 +108,16 @@ export default function ProfilePage(
         <Container className="mt-8 grid min-h-screen max-w-7xl grid-cols-1 gap-16 md:grid-cols-[auto_1fr]">
           <section className="bg-dark-cyan hidden h-full w-[22rem] bg-opacity-20 p-12 md:block">
             <div className="sticky top-28">
-              <div className="bg-enei-blue mb-12 size-fit overflow-clip rounded-full">
-                <User className="text-enei-beige h-64 w-64" />
-              </div>
-
+              <Avatar className="mb-12 size-fit">
+                <AvatarImage
+                  src="/user/avatar"
+                  alt={profile.slug}
+                  className="text-enei-beige h-64 w-64"
+                />
+                <AvatarFallback className="bg-enei-blue text-enei-beige h-64 w-64">
+                  {profile.slug}
+                </AvatarFallback>
+              </Avatar>
               {isUser && (
                 <Link
                   route="pages:profile.edit"

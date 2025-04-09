@@ -38,6 +38,8 @@ import { ENEI_EDITIONS } from "~/lib/enei/signup/editions";
 import { Textarea } from "../ui/textarea";
 import CvUpload from "../common/cv_upload";
 import { IsVisibleDisclaimer } from "./visibility_disclaimer";
+import AvatarUpload from "../common/avatar_upload";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 type ProfileInfoProps = {
   profile: ParticipantProfile;
@@ -71,37 +73,114 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
     });
   };
 
+  const [cacheBuster, setCacheBuster] = useState(Date.now());
+
+  const refreshAvatar = () => {
+    setCacheBuster(Date.now()); // update with current timestamp
+  };
+
   return (
     <Form {...form}>
       <IsVisibleDisclaimer />
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="flex gap-2">
-          <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field }) => (
-              <FormItem className="flex-1">
-                <FormLabel>Primeiro Nome</FormLabel>
-                <FormControl>
-                  <Input placeholder="Joca" type="text" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field }) => (
-              <FormItem className="flex-1">
-                <FormLabel>Último Nome</FormLabel>
-                <FormControl>
-                  <Input placeholder="Costa" type="text" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2">
+        <div className="grid grid-cols-[1fr_auto] gap-4">
+          <div className="flex flex-col gap-2">
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>Primeiro Nome</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Joca" type="text" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>Último Nome</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Costa" type="text" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="github"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>URL do teu GitHub</FormLabel>
+                  <FormControl>
+                    <Input placeholder="https://github.com/NIAEFEUP" type="text" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="linkedin"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>URL do teu Linkedin</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="https://www.linkedin.com/in/oteunome"
+                      type="text"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="website"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>URL do teu Website Pessoal</FormLabel>
+                  <FormControl>
+                    <Input placeholder="https://ni.fe.up.pt" type="text" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Avatar className="size-fit self-center">
+              <AvatarImage
+                src={"/user/avatar" + "#" + cacheBuster}
+                alt={profile.slug}
+                className="text-enei-beige h-64 w-64"
+              />
+              <AvatarFallback className="bg-enei-blue text-enei-beige h-64 w-64">
+                {profile.slug}
+              </AvatarFallback>
+            </Avatar>
+            <FormItem className="flex-1">
+              <FormLabel>Foto de Perfil</FormLabel>
+              <FormControl>
+                <AvatarUpload onUploadComplete={refreshAvatar} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+            <FormItem className="flex-1">
+              <FormLabel>Currículo</FormLabel>
+              <FormControl>
+                <CvUpload />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          </div>
         </div>
         <FormField
           control={form.control}
@@ -254,58 +333,6 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="github"
-          render={({ field }) => (
-            <FormItem className="flex-1">
-              <FormLabel>URL do teu GitHub</FormLabel>
-              <FormControl>
-                <Input placeholder="https://github.com/NIAEFEUP" type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="linkedin"
-          render={({ field }) => (
-            <FormItem className="flex-1">
-              <FormLabel>URL do teu Linkedin</FormLabel>
-              <FormControl>
-                <Input placeholder="https://www.linkedin.com/in/oteunome" type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="website"
-          render={({ field }) => (
-            <FormItem className="flex-1">
-              <FormLabel>URL do teu Website Pessoal</FormLabel>
-              <FormControl>
-                <Input placeholder="https://ni.fe.up.pt" type="text" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormItem className="flex-1">
-          <FormLabel>Currículo</FormLabel>
-          <FormControl>
-            <CvUpload />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-        {/* TODO: */}
-        <div className="hidden">
-          <br />
-          foto de perfil: // TODO
-        </div>
-
         <div className="mt-16 flex w-full justify-center">
           <Button type="submit" disabled={!form.formState.isDirty}>
             Guardar Alterações
