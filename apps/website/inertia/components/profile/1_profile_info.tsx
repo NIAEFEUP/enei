@@ -174,7 +174,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
               </FormControl>
               <FormMessage />
             </FormItem>
-            <FormItem className="flex-1">
+            <FormItem className="mb-2 flex-1">
               <FormLabel>Currículo</FormLabel>
               <FormControl>
                 <CvUpload />

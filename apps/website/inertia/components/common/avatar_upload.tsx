@@ -97,7 +97,7 @@ const AvatarUpload = ({ onUploadComplete }: AvatarUploadProps) => {
         ) : (
           <div className="flex flex-row gap-2">
             <Input className="w-64" type="file" accept="image/*" onChange={handleFileChange} />
-            <Button onClick={handleUpload} disabled={uploading || !fetchedName}>
+            <Button onClick={handleUpload} disabled={uploading || !fetchedName || !file}>
               {uploading ? "Uploading..." : "Upload avatar"}
             </Button>
           </div>
