@@ -11,6 +11,7 @@ const CvUpload = () => {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   useEffect(() => {
     const fetchFileName = async () => {
@@ -48,6 +49,11 @@ const CvUpload = () => {
         },
       });
     } catch (error) {
+      if (error.response.data) {
+        setErrorMsg(error.response.data);
+      } else {
+        setErrorMsg("Não foi possível guardar o ficheiro.");
+      }
     } finally {
       setUploading(false);
     }
@@ -66,6 +72,7 @@ const CvUpload = () => {
     } catch (error) {
     } finally {
       setUploading(false);
+      setErrorMsg("");
     }
   };
 

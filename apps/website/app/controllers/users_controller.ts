@@ -9,8 +9,11 @@ export default class UsersController {
 
   async storeCV({ request, response, auth }: HttpContext) {
     const user = auth.user;
-    const cv = request.file("cv")!;
-    if (cv.hasErrors) return response.badRequest("Unsupported file format");
+    const cv = request.file("cv", {
+      extnames: ["pdf"],
+      size: "10mb",
+    })!;
+    if (cv.hasErrors) return response.badRequest(cv.errors.at(0)?.message);
     await this.userService.storeCV(user!, cv);
     return response.ok({ message: "CV uploaded" });
   }

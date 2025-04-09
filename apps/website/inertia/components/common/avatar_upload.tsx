@@ -59,7 +59,7 @@ const AvatarUpload = ({ onUploadComplete }: AvatarUploadProps) => {
       if (error.response.data) {
         setErrorMsg(error.response.data);
       } else {
-        setErrorMsg("Não foi possível guardar essa imagem.");
+        setErrorMsg("Não foi possível guardar a imagem.");
       }
     } finally {
       setUploading(false);
@@ -79,8 +79,8 @@ const AvatarUpload = ({ onUploadComplete }: AvatarUploadProps) => {
     } catch (error) {
     } finally {
       setUploading(false);
-      onUploadComplete();
       setErrorMsg("");
+      onUploadComplete();
     }
   };
 
