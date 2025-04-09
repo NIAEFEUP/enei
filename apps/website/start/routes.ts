@@ -222,6 +222,9 @@ router
       ]);
 
     router.get("/u/:slug/cv", [ProfilesController, "showCV"]).as("pages:profile.cv.show");
+    router
+      .get("/u/:slug/avatar", [ProfilesController, "showAvatar"])
+      .as("pages:profile.avatar.show");
     router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
   })
   .use(middleware.wip());
@@ -257,16 +260,16 @@ router.on("/faq").renderInertia("faq").as("pages:faq").use(middleware.wip());
 
 router
   .group(() => {
-    router.post("/cv/upload", [UsersController, "storeCV"]).as("actions:cv_upload");
-    router.delete("cv/delete", [UsersController, "deleteCV"]).as("actions:cv_delete");
-    router.get("/cv/name", [UsersController, "showCVName"]).as("actions:cv_name");
+    router.post("/cv/upload", [UsersController, "storeCV"]).as("actions:cv.upload");
+    router.delete("cv/delete", [UsersController, "deleteCV"]).as("actions:cv.delete");
+    router.get("/cv/name", [UsersController, "showCVName"]).as("actions:cv.name");
     router.get("/:id/cv/download", [UsersController, "downloadCV"]).use(middleware.company());
 
     // Avatar endpoints
-    router.get("/avatar/name", [UsersController, "showAvatarName"]).as("actions:avatar_name");
+    router.get("/avatar/name", [UsersController, "showAvatarName"]).as("actions:avatar.name");
     router.get("/avatar", [UsersController, "showAvatar"]).as("actions:avatar.show");
-    router.post("/avatar/upload", [UsersController, "storeAvatar"]).as("actions:avatar_upload");
-    router.delete("/avatar/delete", [UsersController, "deleteAvatar"]).as("actions:avatar_delete");
+    router.post("/avatar/upload", [UsersController, "storeAvatar"]).as("actions:avatar.upload");
+    router.delete("/avatar/delete", [UsersController, "deleteAvatar"]).as("actions:avatar.delete");
   })
   .use(middleware.auth())
   .prefix("user");

@@ -16,7 +16,7 @@ const CvUpload = () => {
   useEffect(() => {
     const fetchFileName = async () => {
       try {
-        const response = await axios.get(tuyau.$url("actions:cv_name"));
+        const response = await axios.get(tuyau.$url("actions:cv.name"));
         setFileName(response.data.fileName);
       } catch (error) {
         setFileName(null);

@@ -20,7 +20,7 @@ const AvatarUpload = ({ onUploadComplete }: AvatarUploadProps) => {
   useEffect(() => {
     const fetchFileName = async () => {
       try {
-        const response = await axios.get(tuyau.$url("actions:avatar_name"));
+        const response = await axios.get(tuyau.$url("actions:avatar.name"));
         setFileName(response.data.fileName);
         setfetchedName(true);
       } catch (error) {
@@ -49,7 +49,7 @@ const AvatarUpload = ({ onUploadComplete }: AvatarUploadProps) => {
     formData.append("avatar", file);
 
     try {
-      await axios.post(tuyau.$url("actions:avatar_upload"), formData, {
+      await axios.post(tuyau.$url("actions:avatar.upload"), formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -70,7 +70,7 @@ const AvatarUpload = ({ onUploadComplete }: AvatarUploadProps) => {
   const handleDelete = async () => {
     setUploading(true);
     try {
-      await axios.delete(tuyau.$url("actions:avatar_delete"), {
+      await axios.delete(tuyau.$url("actions:avatar.delete"), {
         headers: {
           "Content-Type": "multipart/form-data",
         },

@@ -157,9 +157,8 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
           </div>
           <div className="flex flex-col gap-2">
             <Avatar className="size-fit self-center">
-              {/*TODO: useTuyau*/}
               <AvatarImage
-                src={"/user/avatar" + "#" + cacheBuster}
+                src={tuyau.$url("actions:avatar.show") + "#" + cacheBuster}
                 alt={profile.slug}
                 className="text-enei-beige h-64 w-64 object-cover"
               />
