@@ -109,10 +109,11 @@ export default function ProfilePage(
           <section className="bg-dark-cyan hidden h-full w-[22rem] bg-opacity-20 p-12 md:block">
             <div className="sticky top-28">
               <Avatar className="mb-12 size-fit">
+                {/*TODO: useTuyau*/}
                 <AvatarImage
                   src="/user/avatar"
                   alt={profile.slug}
-                  className="text-enei-beige h-64 w-64"
+                  className="text-enei-beige h-64 w-64 object-cover"
                 />
                 <AvatarFallback className="bg-enei-blue text-enei-beige h-64 w-64">
                   {profile.slug}
