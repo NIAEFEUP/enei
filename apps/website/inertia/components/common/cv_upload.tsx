@@ -43,7 +43,7 @@ const CvUpload = () => {
     formData.append("cv", file);
 
     try {
-      await axios.post(tuyau.$url("actions:cv_upload"), formData, {
+      await axios.post(tuyau.$url("actions:cv.upload"), formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -62,7 +62,7 @@ const CvUpload = () => {
   const handleDelete = async () => {
     setUploading(true);
     try {
-      await axios.delete(tuyau.$url("actions:cv_delete"), {
+      await axios.delete(tuyau.$url("actions:cv.delete"), {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -77,23 +77,26 @@ const CvUpload = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2">
-      {fileName ? (
-        <div className="flex flex-row gap-2">
-          <Input className="w-64" type="text" value={fileName} disabled />
-          <Button onClick={handleDelete} disabled={uploading || !fetchedName}>
-            {uploading ? "Uploading..." : "Clear CV"}
-          </Button>
-        </div>
-      ) : (
-        <div className="flex flex-row gap-2">
-          <Input className="w-64" type="file" accept=".pdf" onChange={handleFileChange} />
-          <Button onClick={handleUpload} disabled={uploading || !fetchedName || !file}>
-            {uploading ? "Uploading..." : "Upload CV"}
-          </Button>
-        </div>
-      )}
-    </div>
+    <>
+      <div className="flex flex-col gap-2">
+        {fileName ? (
+          <div className="flex flex-row gap-2">
+            <Input className="w-64" type="text" value={fileName} disabled />
+            <Button onClick={handleDelete} disabled={uploading || !fetchedName}>
+              {uploading ? "Uploading..." : "Clear CV"}
+            </Button>
+          </div>
+        ) : (
+          <div className="flex flex-row gap-2">
+            <Input className="w-64" type="file" accept=".pdf" onChange={handleFileChange} />
+            <Button onClick={handleUpload} disabled={uploading || !fetchedName || !file}>
+              {uploading ? "Uploading..." : "Upload CV"}
+            </Button>
+          </div>
+        )}
+      </div>
+      {errorMsg && <p className="mt-4 text-center text-sm text-red-600">{errorMsg}</p>}
+    </>
   );
 };
 
