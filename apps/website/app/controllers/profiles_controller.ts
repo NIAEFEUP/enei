@@ -127,7 +127,9 @@ export default class ProfilesController {
     const userNumber =
       (Number.parseInt(userMd5.replace(/[^1-9]/g, "").substring(0, 3)) + user.id) % 1000;
     const userCode = userNumber.toString().padStart(3, "0");
-    formattedData.slug = createSlug(`${formattedData.firstName} ${formattedData.lastName} ${userCode}`);
+    formattedData.slug = createSlug(
+      `${formattedData.firstName} ${formattedData.lastName} ${userCode}`,
+    );
 
     const profile = await createProfileValidator.validate(formattedData);
 
