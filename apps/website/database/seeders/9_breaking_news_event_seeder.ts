@@ -55,7 +55,7 @@ export default class extends BaseSeeder {
     const ruiNascimentoSpeaker = await SpeakerProfile.findOrFail(41);
 
     ruiNascimentoSpeaker.profilePicture = "/images/speakers/rui-nascimento.png";
-    ruiNascimentoSpeaker.save();
+    await ruiNascimentoSpeaker.save();
 
     // Kevel competition
     await Event.create({
