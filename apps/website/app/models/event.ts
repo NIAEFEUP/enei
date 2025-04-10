@@ -66,6 +66,9 @@ export default class Event extends BaseModel {
   @column()
   declare price: number;
 
+  @column()
+  declare productId: number;
+
   public getFormattedDate() {
     return this.date.toFormat("dd-MM-yyyy");
   }

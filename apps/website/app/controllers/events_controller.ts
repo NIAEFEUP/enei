@@ -2,6 +2,7 @@ import type { HttpContext } from "@adonisjs/core/http";
 import Event from "#models/event";
 import EventService from "#services/event_service";
 import User from "#models/user";
+import Product from '#models/product'
 import { inject } from "@adonisjs/core";
 
 @inject()
@@ -26,6 +27,7 @@ export default class EventsController {
           profilePicture: speaker.profilePicture,
           company: speaker.company,
         })),
+        productId: event.productId,
       })),
     });
   }
@@ -58,6 +60,7 @@ export default class EventsController {
       requiresRegistration: event.requiresRegistration,
       ticketsRemaining: event.ticketsRemaining,
       price: event.price,
+      productId: event.productId,
       isAcceptingRegistrations: event.isAcceptingRegistrations,
       isRegistered: isRegistered,
     });
@@ -123,4 +126,10 @@ export default class EventsController {
 
     return response.ok({ isRegistered: isRegistered });
   }
+
+  async showPayment({ inertia,auth,  params }: HttpContext) {
+    const product = await Product.find(params.id)
+
+    return inertia.render('payments', { product: product, user: auth.user })
+    }
 }

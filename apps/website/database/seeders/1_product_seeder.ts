@@ -4,6 +4,16 @@ import Product from "#models/product";
 export default class ProductSeeder extends BaseSeeder {
   public async run() {
     await Product.create({
+      name: 'Cheira a Computação Quântica',
+      description:
+        'Este bilhete dá-te acesso a um cheirinho de Computação Quântica',
+      price: 0.01,
+      stock: 50,
+      currency: 'points',
+      maxOrder: 1,
+      image: 'hyprxmouse.png',
+    })
+    await Product.create({
       name: "Bilhete Early Bird - Com Alojamento",
       description:
         "Inclui:<br />• Pequenos-almoços, almoços e jantares durante o período do evento<br />• Acesso a coffee breaks e sessão de cocktails<br />• Acesso a workshops, palestras e outros<br />• Acesso a festas noturnas e outras atividades recreativas (exceto Rally Tascas) <br />• Alojamento em Pavilhão",

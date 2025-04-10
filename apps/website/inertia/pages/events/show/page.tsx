@@ -21,7 +21,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/comp
 import Page from "~/components/common/page";
 import { useForm } from "@inertiajs/react";
 import Container from "~/components/common/containers";
-
+import {Link} from '@tuyau/inertia/react'
 interface Speaker {
   firstName: string;
   lastName: string;
@@ -45,6 +45,7 @@ interface EventRegistrationProps {
   requiresRegistration: boolean;
   ticketsRemaining: number;
   price: number;
+  productId: number;
   isAcceptingRegistrations: boolean;
   isRegistered: boolean;
 }
@@ -63,6 +64,7 @@ export default function EventRegistrationPage({
   registrationRequirements,
   requiresRegistration,
   ticketsRemaining,
+  productId,
   price,
   isAcceptingRegistrations,
   isRegistered,
@@ -281,28 +283,41 @@ export default function EventRegistrationPage({
               {/* Button to register */}
               {!isRegistered && (
                 <div className="flex justify-center">
-                  <Button
-                    onClick={() => handleRegisterClick()}
-                    disabled={
-                      ticketsRemaining <= 0
-                      || !requiresRegistration
-                      || !isAcceptingRegistrations
-                      || processing
-                    }
-                    className="px-4"
-                    style={{ backgroundColor: activityColors[type] }}
-                  >
-                    {processing && <Loader2 className="animate-spin" />}
-                    {requiresRegistration
-                      ? ticketsRemaining > 0
-                        ? price > 0
-                          ? "Comprar"
-                          : "Inscrever"
-                        : "Esgotado"
-                      : "Inscrição não necessária"}
-                  </Button>
+                  {requiresRegistration && ticketsRemaining > 0 && price > 0 && productId ? (
+                  <Link
+                      as="button"
+                      route="eventCheckout"
+                      params={{ id: productId}}
+                      disabled={ticketsRemaining <= 0 || !requiresRegistration}
+                      className="px-4 py-1 text-white rounded"
+                      style={{ backgroundColor: activityColors[type] }}
+                    >
+                      {processing && <Loader2 className="animate-spin" />}
+                      Comprar
+                    </Link>
+                  ) : (
+                    <Button
+                      onClick={() => handleRegisterClick()}
+                      disabled={
+                        ticketsRemaining <= 0 ||
+                        !requiresRegistration ||
+                        !isAcceptingRegistrations ||
+                        processing
+                      }
+                      className="px-4"
+                      style={{ backgroundColor: activityColors[type] }}
+                    >
+                      {processing && <Loader2 className="animate-spin" />}
+                      {requiresRegistration
+                        ? ticketsRemaining > 0
+                          ? "Inscrever"
+                          : "Esgotado"
+                        : "Inscrição não necessária"}
+                    </Button>
+                  )}
                 </div>
               )}
+
               {/* Temporary indication that registration is not possible yet */}
               {/* <div className="flex justify-center">
                 <Button
@@ -314,6 +329,7 @@ export default function EventRegistrationPage({
                 </Button>
               </div> */}
               {/* Indicator if the user is registered */}
+              
               {isRegistered && (
                 <div className="flex justify-center">
                   <TooltipProvider>

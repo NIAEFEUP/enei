@@ -205,6 +205,10 @@ router
       .get("/:id/is-registered-by-email", [EventsController, "isRegisteredByEmail"])
       .as("actions:events.isRegisteredByEmail")
       .use([middleware.companyBearerAuth(), middleware.wip()]);
+    router
+      .get('/:id/checkout', [EventsController, 'showPayment'])
+      .as('eventCheckout')
+      .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   })
   .prefix("events");
 

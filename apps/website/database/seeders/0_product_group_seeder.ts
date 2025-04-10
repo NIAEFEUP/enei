@@ -7,6 +7,8 @@ export default class ProductGroupSeeder extends BaseSeeder {
         name: "Tickets",
         maxAmountPerGroup: 1,
       },
+
     ]);
+
   }
 }

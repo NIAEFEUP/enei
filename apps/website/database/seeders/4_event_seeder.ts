@@ -23,6 +23,7 @@ export default class extends BaseSeeder {
       ticketsRemaining: 20,
       ticketsTotal: 20,
       price: 0,
+      productId: 1,
     });
 
     await Event.create({
