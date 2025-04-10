@@ -7,21 +7,32 @@ import { UserActivityService } from "#services/user_activity_service";
 export default class CompaniesController {
   constructor(private userActivityService: UserActivityService) {}
 
-  async likeParticipant({ request, auth, response }: HttpContext) {
+  async toggleParticipantLike({ request, auth, response }: HttpContext) {
     const { participantId } = request.only(["participantId"]);
 
-    // TODO: improve auth to check if user is from a company
     const companyUser = auth.user!;
-    const likedParticipant = await User.findOrFail(participantId);
+
+    // Return unauthorized if the user is not a company representative
+    if (!companyUser.representativeProfileId) {
+      console.log("User is not a company representative");
+      return response.unauthorized("You are not authorized to like participants.");
+    }
+
+    await companyUser.load("representativeProfile");
+    console.log("Company user:", companyUser.representativeProfile);
 
     this.userActivityService.logCompanyLike({
-      userId: likedParticipant.id,
-      companyId: companyUser.id, // change this to use a company id
+      userId: participantId,
+      companyId: companyUser.representativeProfile?.companyId,
       likedByName:
-        companyUser.participantProfile.firstName + " " + companyUser.participantProfile.lastName,
+        companyUser.representativeProfile?.firstName
+        + " "
+        + companyUser.representativeProfile?.lastName,
     });
 
-    return response.redirect().back();
+    return response.json({
+      isLiked: true, // TODO: change this to the actual liked status
+    });
   }
 
   async showParticipants({ inertia, params }: HttpContext) {
@@ -34,13 +45,13 @@ export default class CompaniesController {
       allParticipants: participants.map((participant) => ({
         id: participant.id,
         name: `${participant.participantProfile.firstName} ${participant.participantProfile.lastName}`,
-        photoUrl: null,
+        photoUrl: null, // TODO: add photo when available
         faculty: participant.participantProfile.university,
         course: participant.participantProfile.course,
         year: participant.participantProfile.curricularYear,
-        cvLink: null,
+        cvLink: null, // TODO: add when cv is available
         likedBy: [],
-        isLiked: false,
+        isLiked: false, // TODO: hardcoded for now
       })),
     });
   }

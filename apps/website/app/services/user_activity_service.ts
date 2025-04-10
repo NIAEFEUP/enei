@@ -31,10 +31,13 @@ export class UserActivityService {
     companyId: number;
     likedByName: string;
   }) {
+    console.log("userId", userId);
+    console.log("companyId", companyId);
+    console.log("likedByName", likedByName);
     return await UserActivity.create({
       userId,
       type: "company_like",
-      description: { company_id: companyId, liked_by: likedByName },
+      description: { companyId: companyId, likedBy: likedByName },
     });
   }
 }

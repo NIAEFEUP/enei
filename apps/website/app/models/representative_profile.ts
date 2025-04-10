@@ -29,7 +29,7 @@ export default class RepresentativeProfile extends BaseModel {
   @column()
   declare jobTitle: string;
 
-  @column()
+  @column({ columnName: "ORCID_link" })
   declare ORCIDLink: string | null;
 
   @belongsTo(() => Company)

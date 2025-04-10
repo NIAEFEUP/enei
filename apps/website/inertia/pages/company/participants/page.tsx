@@ -45,7 +45,7 @@ export default function CompanyParticipantsPage({ allParticipants }: Participant
             </TabsTrigger>
           </TabsList>
           <TabsContent value="all-participants">
-            <ParticipantsTable participants={allParticipants}></ParticipantsTable>
+            <ParticipantsTable participants={allParticipants} />
           </TabsContent>
         </Tabs>
       </Container>

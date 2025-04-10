@@ -25,6 +25,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import axios from "axios";
+import { useTuyau } from "~/hooks/use_tuyau";
 
 interface Participant {
   id: number;
@@ -40,7 +42,6 @@ interface Participant {
 
 interface ParticipantsTableProps {
   participants: Participant[];
-  onToggleLike: (participantId: number, liked: boolean) => void;
 }
 
 const columns: ColumnDef<Participant>[] = [
@@ -128,9 +129,17 @@ const columns: ColumnDef<Participant>[] = [
     header: "",
     cell: ({ row }) => {
       const [liked, setLiked] = React.useState(row.original.isLiked);
+      const tuyau = useTuyau();
 
-      const toggleLike = () => {
-        return setLiked((prev) => !prev);
+      const toggleLike = async () => {
+        try {
+          const response = await axios.post(tuyau.$url("actions:company.like.participant"), {
+            participantId: row.original.id,
+          });
+          setLiked(response.data.isLiked);
+        } catch (error) {
+          console.error("Error liking participant:", error);
+        }
       };
 
       return (
@@ -141,8 +150,8 @@ const columns: ColumnDef<Participant>[] = [
               <MoreHorizontal />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="">
-            <DropdownMenuItem onClick={toggleLike} className="cursor-pointer">
+          <DropdownMenuContent onClick={toggleLike} align="end" className="">
+            <DropdownMenuItem className="cursor-pointer">
               {liked ? <HeartOff className="mr-2 h-4 w-4" /> : <Heart className="mr-2 h-4 w-4" />}
               Like
             </DropdownMenuItem>

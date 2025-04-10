@@ -285,5 +285,12 @@ router
 router.on("/nfc").renderInertia("nfc").as("pages:nfc");
 
 router
-  .get("/company/participants", [CompaniesController, "showParticipants"])
-  .as("pages:company.participants");
+  .group(() => {
+    router
+      .get("/participants", [CompaniesController, "showParticipants"])
+      .as("pages:company.participants");
+    router
+      .post("/participants/like", [CompaniesController, "toggleParticipantLike"])
+      .as("actions:company.like.participant");
+  })
+  .prefix("/company");
