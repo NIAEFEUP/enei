@@ -132,6 +132,17 @@ const env = await defineEnv(new URL("../", import.meta.url), "INERTIA_PUBLIC_", 
 
     /*
     |----------------------------------------------------------
+    | Variables for configuring S3 storage
+    |----------------------------------------------------------
+    */
+    S3_KEY: vine.string(),
+    S3_SECRET: vine.string(),
+    S3_REGION: vine.string(),
+    S3_BUCKET: vine.string(),
+    S3_ENDPOINT: vine.string(),
+
+    /*
+    |----------------------------------------------------------
     | Variables for configuring the proxy-level trust,
     | used for determining the base URL of the application.
     |----------------------------------------------------------
