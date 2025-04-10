@@ -6,7 +6,7 @@ export default class CompanyRepresentativeSetPasswordNotification extends ReactN
   }
 
   async prepare() {
-    this.message.to(this.props.email).subject("Definir palavra-passe");
+    this.message.to(this.props.email).subject("A sua conta no ENEI 2025 foi criada!");
 
     await this.jsx(
       () => import("#resources/emails/auth/company_representative_set_password"),

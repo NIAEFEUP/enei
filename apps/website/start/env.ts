@@ -125,13 +125,6 @@ const env = await defineEnv(new URL("../", import.meta.url), "INERTIA_PUBLIC_", 
 
     /*
     |----------------------------------------------------------
-    | Variables with api keys for calling protected routes
-    |----------------------------------------------------------
-    */
-    JOBS_API_KEY: vine.string(),
-
-    /*
-    |----------------------------------------------------------
     | Variables for configuring the API endpoints for Kevel
     |----------------------------------------------------------
     */
