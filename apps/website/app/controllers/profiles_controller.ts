@@ -15,6 +15,7 @@ import { md5 } from "js-md5";
 import { emailEditValidator } from "#validators/profile";
 import ChangeEmailRequest from "#models/email_change";
 import db from "@adonisjs/lucid/services/db";
+import UserPolicy from "#policies/user_policy";
 
 function toParticipantProfileFormat(data: any): Partial<ParticipantProfile> {
   if ("curricularYear" in data) {
@@ -303,7 +304,7 @@ export default class ProfilesController {
     }
   }
 
-  async showCV({ params, response }: HttpContext) {
+  async showCV({ auth, bouncer, params, response }: HttpContext) {
     const { slug } = params;
 
     let user;
@@ -314,6 +315,10 @@ export default class ProfilesController {
     } catch {
       response.notFound("Participante não encontrado");
       return;
+    }
+
+    if (!auth.user || !user || (await bouncer.with(UserPolicy).denies("seeCV", user))) {
+      return response.forbidden("Acesso negado");
     }
 
     const userCV = await this.userService.getCV(user!);
