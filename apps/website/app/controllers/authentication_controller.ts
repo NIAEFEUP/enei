@@ -92,7 +92,7 @@ export default class AuthenticationController {
       return response.redirect().toRoute("actions:auth.forgot-password.success");
     } catch (error) {
       console.error(error);
-    }
+      return response.status(500).send('Internal Server Error');
   }
 
   async showForgotPasswordPage({ inertia }: HttpContext) {
