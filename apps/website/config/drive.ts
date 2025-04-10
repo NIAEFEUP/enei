@@ -16,7 +16,20 @@ const driveConfig = defineConfig({
       routeBasePath: "/uploads",
       visibility: "public",
     }),
+
+    spaces: services.s3({
+      credentials: {
+        accessKeyId: env.get('SPACES_KEY'),
+        secretAccessKey: env.get('SPACES_SECRET'),
+      },
+      region: env.get('SPACES_REGION'),
+      bucket: env.get('SPACES_BUCKET'),
+      endpoint: env.get('SPACES_ENDPOINT'),
+      visibility: 'public',
+    }),
+
   },
+  
 });
 
 export default driveConfig;
