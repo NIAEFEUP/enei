@@ -220,6 +220,7 @@ router
 
 router
   .group(() => {
+    router.get('/myOrders', [OrdersController, 'index']) .as('pages:orders')
     router.get("/cv/name", [CvsController, "showName"]);
     router.post("/cv/upload", [CvsController, "upload"]);
     router.delete("cv/delete", [CvsController, "delete"]);
