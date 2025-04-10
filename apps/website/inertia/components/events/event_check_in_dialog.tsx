@@ -10,11 +10,7 @@ interface EventCheckInDialogProps {
   setOpen: (open: boolean) => void;
 }
 
-export default function EventCheckInDialog({
-  isOpen,
-  eventID,
-  setOpen,
-}: EventCheckInDialogProps) {
+export default function EventCheckInDialog({ isOpen, eventID, setOpen }: EventCheckInDialogProps) {
   if (!isOpen) {
     return null;
   }
