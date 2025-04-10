@@ -5,9 +5,7 @@ import User from "./user.js";
 // import Event from './event.js'
 import Company from "./company.js";
 
-export default class SpeakerProfile extends BaseModel {
-  public static table = "speaker_profiles";
-
+export default class RepresentativeProfile extends BaseModel {
   @column({ isPrimary: true })
   declare id: number;
 
@@ -20,7 +18,7 @@ export default class SpeakerProfile extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime;
 
-  // Speaker Info
+  // Representative Info
 
   @column()
   declare firstName: string;
@@ -32,19 +30,7 @@ export default class SpeakerProfile extends BaseModel {
   declare jobTitle: string;
 
   @column()
-  declare profilePicture: string;
-
-  @column()
-  declare speakerRole: "keynote_speaker" | "panelist" | "moderator";
-
-  @column()
   declare ORCIDLink: string | null;
-
-  @column()
-  declare companyId: number | null;
-
-  @column()
-  declare about: string | null;
 
   @belongsTo(() => Company)
   declare company: BelongsTo<typeof Company>;
@@ -52,4 +38,9 @@ export default class SpeakerProfile extends BaseModel {
   // To uncomment when Events are created
   // @hasMany(() => Event)
   // declare participatingEvents: HasMany<typeof Event>
+
+  // Functions
+  static async getCompanyRepresentatives(companyId: number) {
+    return this.query().where("company_id", companyId);
+  }
 }

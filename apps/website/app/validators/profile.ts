@@ -11,7 +11,6 @@ export const createProfileValidator = vine.compile(
   vine.object({
     firstName: vine.string(),
     lastName: vine.string(),
-    slug: vine.string(),
     dateOfBirth: vine
       .date({ formats: { utc: true } })
       .transform((date) => DateTime.fromJSDate(date)),
@@ -37,5 +36,45 @@ export const createProfileValidator = vine.compile(
 export const hasTicketValidator = vine.compile(
   vine.object({
     email: vine.string().email(),
+  }),
+);
+
+export const updateProfileValidator = vine.compile(
+  vine.object({
+    firstName: vine.string().optional(),
+    lastName: vine.string().optional(),
+    dateOfBirth: vine
+      .date({ formats: { utc: true } })
+      .transform((date) => DateTime.fromJSDate(date))
+      .optional(),
+    phone: vine.string().mobile().optional(),
+    university: vine
+      .string()
+      .in(universities.map((val) => val.id))
+      .optional(),
+    course: vine.string().optional(),
+    curricularYear: vine.string().in(["1", "2", "3", "4", "5", "already-finished"]).optional(),
+    finishedAt: vine.number().range([1930, new Date().getFullYear()]).nullable().optional(),
+    municipality: vine
+      .string()
+      .in(districts.map((dist) => dist.id))
+      .optional(),
+    shirtSize: vine.string().in(shirts).optional(),
+    dietaryRestrictions: vine.string().trim().escape().nullable().optional(),
+    isVegetarian: vine.boolean().optional(),
+    isVegan: vine.boolean().optional(),
+    transports: vine.array(vine.string().in(transports.map((item) => item.id))).optional(),
+    heardAboutEnei: vine
+      .string()
+      .in(heardaboutfrom.map((item) => item.value))
+      .optional(),
+    reasonForSignup: vine.string().nullable().optional(),
+    attendedBeforeEditions: vine
+      .array(vine.string().in(editions.map((item) => item.year.toString())))
+      .optional(),
+    about: vine.string().optional().optional(),
+    github: vine.string().url().nullable().optional(),
+    linkedin: vine.string().url().nullable().optional(),
+    website: vine.string().url().nullable().optional(),
   }),
 );
