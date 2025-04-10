@@ -81,10 +81,10 @@ CREATE SCHEMA public;
 EOF
 
 print "Dumping production database..."
-run_command PGHOST="$PROD_POSTGRES_HOST" PGPORT="$PROD_POSTGRES_PORT" PGUSER="$PROD_POSTGRES_USER" PGPASSWORD="$PROD_POSTGRES_PASSWORD" PGDATABASE="$PROD_POSTGRES_DATABASE" pg_dump -v -f "$POSTGRES_DATA_DIR/production.sql"
+run_command PGHOST="$PROD_POSTGRES_HOST" PGPORT="$PROD_POSTGRES_PORT" PGUSER="$PROD_POSTGRES_USER" PGPASSWORD="$PROD_POSTGRES_PASSWORD" PGDATABASE="$PROD_POSTGRES_DATABASE" pg_dump -Ft -v -f "$POSTGRES_DATA_DIR/production.sql.gz"
 
 print "Restoring production database on next environment..."
-run_command cat "$POSTGRES_DATA_DIR/production.sql" | psql -v ON_ERROR_STOP=1
+run_command pg_restore -v -e "$POSTGRES_DATA_DIR/production.sql.gz"
 
 pop_indent
 
