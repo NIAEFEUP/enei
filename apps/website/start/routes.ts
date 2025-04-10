@@ -14,7 +14,7 @@ import {
   sendChangePasswordThrottle,
   sendForgotPasswordThrottle,
 } from "#start/limiter";
-import CompanyController from "#controllers/companies_controller";
+const CompanyController = () => import("#controllers/companies_controller")
 
 const EventsController = () => import("#controllers/events_controller");
 const AuthenticationController = () => import("#controllers/authentication_controller");
