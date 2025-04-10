@@ -133,7 +133,6 @@ export default function Home() {
               <p className="text-enei-beige mt-2 text-2xl [text-shadow:_0_4px_4px_rgb(0_0_0_/_25%)] md:text-4xl">
                 Porto 2025 | 11-14 de abril
               </p>
-              <Countdown />
             </div>
           </section>
         </Container>
