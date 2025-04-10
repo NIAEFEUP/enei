@@ -1,5 +1,9 @@
 import type User from "#models/user";
 
+export type UserActivityInformation = {
+  [key: string]: any;
+};
+
 export enum UserActivityType {
   Referral = "referral",
   AttendEvent = "attend_event",
