@@ -73,7 +73,7 @@ export default function ProfilePage(
 ) {
   const tuyau = useTuyau();
   const auth = useAuth();
-  const { profile, isUser, activityInformation } = props;
+  const { profile, isUser } = props;
 
   const profileEditions = ENEI_EDITIONS.filter((edition) =>
     profile.attendedBeforeEditions.includes(edition.value),
@@ -227,7 +227,7 @@ export default function ProfilePage(
           </section>
           <section>
             {auth.state === "authenticated" && auth.user?.role === "staff" && (
-              <ProfileActivityInfo activityInformation={activityInformation} />
+              <ProfileActivityInfo />
             )}
           </section>
         </Container>
