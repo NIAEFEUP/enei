@@ -11,7 +11,7 @@ export default function CompanyActivities({ events }: CompanyActivitiesProps) {
         <section>
           <h3 className="text-persian-orange text-2xl font-bold uppercase">Bancas e Atividades</h3>
           <div>
-            {events.map((event) => (
+            {events.map((_) => (
               <p>Hello</p>
             ))}
           </div>

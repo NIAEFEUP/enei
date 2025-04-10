@@ -29,7 +29,7 @@ export default function ProfilePage(
 ) {
   const tuyau = useTuyau();
   const auth = useAuth();
-  const { user, isUser, activityInformation } = props;
+  const { user, isUser } = props;
 
   return (
     <ProfileContext.Provider value={{ slug: user.slug ?? "" }}>

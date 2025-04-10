@@ -1,6 +1,5 @@
 import { cva } from "class-variance-authority";
 import { cn } from "~/lib/utils";
-import { buttonVariants } from "../ui/button";
 
 const sponsorsVariant = cva("text-md", {
   variants: {
@@ -17,7 +16,7 @@ const sponsorsVariant = cva("text-md", {
 });
 
 interface CompanySponsorsProps {
-  sponsor: string;
+  sponsor: "default" | "gold" | "silver" | "bronze";
 }
 
 export default function CompanySponsorText({ sponsor }: CompanySponsorsProps) {

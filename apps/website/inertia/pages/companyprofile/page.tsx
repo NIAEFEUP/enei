@@ -1,17 +1,14 @@
 import Company from "#models/company";
-import Event from "#models/event";
 import Container from "~/components/common/containers";
 import Page from "~/components/common/page";
-import CompanyActivities from "~/components/company/company_activites";
 import CompanyRepresentatives from "~/components/company/company_representatives";
 import CompanySponsorText from "~/components/company/company_sponsors";
 
 interface CompanyProfileProps {
   company: Company;
-  events: Event[];
 }
 
-export default function CompanyProfile({ company, events }: CompanyProfileProps) {
+export default function CompanyProfile({ company }: CompanyProfileProps) {
   return (
     <Page title="Perfil de empresa" variant="beige">
       <Container className="flex w-1/2 flex-col gap-y-8">

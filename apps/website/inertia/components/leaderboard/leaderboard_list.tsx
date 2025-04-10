@@ -26,7 +26,7 @@ export default function LeaderboardList({ leaderboard }: LeaderbordListProps) {
       </TableHeader>
       <TableBody className="border-t-enei-blue border-t-[0.15em]">
         {leaderboard?.map((user, idx) => {
-          const slug = user.participantProfile.slug ?? " ";
+          const slug = user.slug ?? " ";
 
           return (
             <TableRow key={user.id}>

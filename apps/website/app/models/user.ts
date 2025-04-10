@@ -11,7 +11,6 @@ import StaffProfile from "./staff_profile.js";
 import { attachment } from "@jrmc/adonis-attachment";
 import type { Attachment } from "@jrmc/adonis-attachment/types/attachment";
 
-import { Github, Globe, Linkedin } from "lucide-react";
 import SpeakerProfile from "./speaker_profile.js";
 import RepresentativeProfile from "./representative_profile.js";
 

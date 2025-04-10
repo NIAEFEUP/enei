@@ -10,8 +10,6 @@ import {
 } from "#validators/profile";
 import { inject } from "@adonisjs/core";
 import type { HttpContext } from "@adonisjs/core/http";
-import createSlug from "slug";
-import { md5 } from "js-md5";
 import { emailEditValidator } from "#validators/profile";
 import ChangeEmailRequest from "#models/email_change";
 import db from "@adonisjs/lucid/services/db";

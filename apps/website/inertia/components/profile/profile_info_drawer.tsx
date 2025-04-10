@@ -21,7 +21,7 @@ function ProfileInfoDrawer({ profile }: ProfileInfoDrawerProps) {
             <Button asChild>
               <Link
                 route="pages:profile.show"
-                params={{ slug: profile.slug ?? "" }}
+                params={{ slug: profile.user.slug ?? "" }}
                 target="_blank"
               >
                 <p>Ir para o perfil</p>
