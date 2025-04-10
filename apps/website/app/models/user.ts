@@ -8,6 +8,9 @@ import PromoterProfile from "./promoter_profile.js";
 import ParticipantProfile from "./participant_profile.js";
 import Event from "./event.js";
 import StaffProfile from "./staff_profile.js";
+import RepresentativeProfile from "./representative_profile.js";
+import { attachment } from "@jrmc/adonis-attachment";
+import type { Attachment } from "@jrmc/adonis-attachment/types/attachment";
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -50,6 +53,11 @@ export default class User extends BaseModel {
   @manyToMany(() => Event)
   declare eventsRegistered: ManyToMany<typeof Event>;
 
+  @manyToMany(() => Event, {
+    pivotTable: "event_checkins",
+  })
+  public checkedInEvents!: ManyToMany<typeof Event>;
+
   @column()
   declare referrerId: number | null;
 
@@ -72,6 +80,12 @@ export default class User extends BaseModel {
   @belongsTo(() => PromoterProfile)
   declare promoterProfile: BelongsTo<typeof PromoterProfile>;
 
+  @belongsTo(() => RepresentativeProfile)
+  declare representativeProfile: BelongsTo<typeof RepresentativeProfile>;
+
+  @column()
+  declare representativeProfileId: number | null;
+
   // ParticipantProfile
 
   @column()
@@ -92,17 +106,29 @@ export default class User extends BaseModel {
   @belongsTo(() => StaffProfile)
   declare staffProfile: BelongsTo<typeof StaffProfile>;
 
+  // Attachments
+  @attachment({
+    folder: "resumes",
+  })
+  declare resume: Attachment | null;
+
+  @attachment({
+    folder: "avatars",
+    variants: ["thumbnail"],
+  })
+  declare avatar: Attachment | null;
+
   // Functions
 
   get role() {
+    if (this.isStaff()) return "staff" as const;
     if (this.isParticipant()) return "participant" as const;
     if (this.isPromoter()) return "promoter" as const;
-    if (this.isStaff()) return "staff" as const;
     return "unknown" as const;
   }
 
   isStaff() {
-    return this.staffProfile;
+    return this.staffProfileId;
   }
 
   isPromoter() {

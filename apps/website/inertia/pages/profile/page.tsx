@@ -50,7 +50,7 @@ export default function ProfilePage(
   props: InferPageProps<ProfilesController, "index"> & { profile: ParticipantProfile },
 ) {
   const auth = useAuth();
-  const { profile, isUser, activityInformation } = props;
+  const { profile, isUser } = props;
 
   const [windowHref, setWindowHref] = useState("");
 
@@ -153,7 +153,7 @@ export default function ProfilePage(
           </section>
           <section>
             {auth.state === "authenticated" && auth.user?.role === "staff" && (
-              <ProfileActivityInfo activityInformation={activityInformation} />
+              <ProfileActivityInfo />
             )}
           </section>
         </Container>
