@@ -34,6 +34,6 @@ export default class EventService {
     await event.related("checkedInUsers").attach({
       [user.id] : { checked_in_at: new Date() },
     });
-    event.save()
+    await event.save()
   }
 }
