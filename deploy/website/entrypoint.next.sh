@@ -86,6 +86,11 @@ run_command PGHOST="$PROD_POSTGRES_HOST" PGPORT="$PROD_POSTGRES_PORT" PGUSER="$P
 print "Restoring production database on next environment..."
 run_command pg_restore -v -e -d "$PGDATABASE" "$POSTGRES_DATA_DIR/production.sql.gz"
 
+if [ -n "$NEXT_POST_RESTORE_COMMANDS" ]; then
+    print "Running post-restore commands..."
+    run_command echo "$NEXT_POST_RESTORE_COMMANDS" | psql -v ON_ERROR_STOP=1
+fi
+ 
 pop_indent
 
 print ">> Environment variables"
@@ -157,6 +162,11 @@ if [ "$ON_STARTUP_MIGRATE" = "true" ]; then
     print "Migrating database..."
     run_command node ace migration:$mode --force
 
+    if [ -n "$NEXT_POST_MIGRATE_COMMANDS" ]; then
+        print "Running post-migrate commands..."
+        run_command echo "$NEXT_POST_MIGRATE_COMMANDS" | psql -v ON_ERROR_STOP=1
+    fi
+    
     pop_indent
 fi
 
