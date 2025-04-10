@@ -11,7 +11,11 @@ import hash from "@adonisjs/core/services/hash";
 const RepresentativeProfileResource = createResource({
   model: RepresentativeProfile,
   options: {
-    properties: {},
+    properties: {
+      companyId: {
+        reference: "companies",
+      },
+    },
     actions: {
       new: {
         after: async (response, request, context) => {
