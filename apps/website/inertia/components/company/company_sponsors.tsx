@@ -1,3 +1,4 @@
+import { SponsorVariant } from "#models/company";
 import { cva } from "class-variance-authority";
 import { cn } from "~/lib/utils";
 
@@ -16,7 +17,7 @@ const sponsorsVariant = cva("text-md", {
 });
 
 interface CompanySponsorsProps {
-  sponsor: "default" | "gold" | "silver" | "bronze";
+  sponsor: SponsorVariant;
 }
 
 export default function CompanySponsorText({ sponsor }: CompanySponsorsProps) {

@@ -4,6 +4,8 @@ import RepresentativeProfile from "./representative_profile.js";
 import type { HasMany } from "@adonisjs/lucid/types/relations";
 import SpeakerProfile from "./speaker_profile.js";
 
+export type SponsorVariant = "default" | "gold" | "silver" | "bronze";
+
 export default class Company extends BaseModel {
   @column({ isPrimary: true })
   declare id: number;
@@ -21,7 +23,7 @@ export default class Company extends BaseModel {
   declare logo: string;
 
   @column()
-  declare sponsor: string;
+  declare sponsor: SponsorVariant;
 
   @column()
   declare about: string;
