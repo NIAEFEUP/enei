@@ -20,14 +20,14 @@ export default class CompaniesController {
 
     await companyUser.load("representativeProfile");
 
-    this.userActivityService.logCompanyLike({
+    const likeStatus = this.userActivityService.toggleCompanyLike({
       userId: participantId,
       companyId: companyUser.representativeProfile?.companyId,
       likedById: companyUser.id,
     });
 
     return response.json({
-      isLiked: true, // TODO: change this to the actual liked status
+      isLiked: likeStatus,
     });
   }
 
