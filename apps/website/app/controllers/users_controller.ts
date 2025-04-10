@@ -2,6 +2,7 @@ import { inject } from "@adonisjs/core";
 import type { HttpContext } from "@adonisjs/core/http";
 import User from "#models/user";
 import { UserService } from "#services/user_service";
+import UserPolicy from "#policies/user_policy";
 
 @inject()
 export default class UsersController {
@@ -34,20 +35,6 @@ export default class UsersController {
       return response.notFound("File not found");
     }
     return response.ok({ fileName });
-  }
-
-  async downloadCV({ response, auth }: HttpContext) {
-    const userId = auth.user!.id;
-    const user = await User.find(userId);
-    const userCV = await this.userService.getCV(user!);
-    if (!userCV) {
-      return response.notFound("File not found");
-    }
-    const { file, fileName } = userCV;
-
-    response.type("application/pdf");
-    response.header("Content-Disposition", `inline; filename="${fileName}"`);
-    return response.stream(file);
   }
 
   async showAvatar({ response, auth }: HttpContext) {
