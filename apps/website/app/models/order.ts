@@ -1,7 +1,6 @@
 import { DateTime } from "luxon";
 import { BaseModel, column, manyToMany, belongsTo } from "@adonisjs/lucid/orm";
-import type { ManyToMany,BelongsTo } from "@adonisjs/lucid/types/relations";
-import Product from "./product.js";
+import type { ManyToMany, BelongsTo } from "@adonisjs/lucid/types/relations";
 import User from "./user.js";
 
 export default class Order extends BaseModel {
