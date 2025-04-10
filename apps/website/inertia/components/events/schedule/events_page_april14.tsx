@@ -140,6 +140,7 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           time={events[11].time}
           location={events[11].location}
           speakers={[]}
+          onClick={() => router.visit(`/events/${events[11].id}`)}
         />
       </div>
       <div className="col-span-2 col-start-1 row-start-8">
