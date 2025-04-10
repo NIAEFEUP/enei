@@ -1,6 +1,6 @@
-import { TZDateMini } from "@date-fns/tz";
-import { useCountdown } from "~/hooks/use_countdown";
-import { useEnvironment } from "~/hooks/use_env";
+// import { TZDateMini } from "@date-fns/tz";
+// import { useCountdown } from "~/hooks/use_countdown";
+// import { useEnvironment } from "~/hooks/use_env";
 import { cn } from "~/lib/utils";
 import background from "~/images/background.jpeg";
 import Page from "~/components/common/page";
@@ -11,72 +11,72 @@ import Highlights from "~/components/home/highlights/highlights";
 import Statistics from "~/components/home/statistics";
 import Partners from "~/components/home/partners/partners";
 
-function useUtcTarget() {
-  return useEnvironment((env) =>
-    new TZDateMini(env.INERTIA_PUBLIC_EVENT_COUNTDOWN_DATE, env.INERTIA_PUBLIC_TZ).getTime(),
-  );
-}
+// function useUtcTarget() {
+//   return useEnvironment((env) =>
+//     new TZDateMini(env.INERTIA_PUBLIC_EVENT_COUNTDOWN_DATE, env.INERTIA_PUBLIC_TZ).getTime(),
+//   );
+// }
 
-function Countdown() {
-  const utcTarget = useUtcTarget();
-  const timeLeft = useCountdown({ utcTarget, resolution: 1000 });
+// function _Countdown() {
+//   const utcTarget = useUtcTarget();
+//   const timeLeft = useCountdown({ utcTarget, resolution: 1000 });
 
-  return (
-    <div
-      className={cn(
-        "mt-10 grid w-fit grid-cols-2 gap-4 transition-opacity duration-1000 sm:grid-cols-4",
-        !timeLeft && "opacity-0",
-      )}
-    >
-      <div className="bg-enei-beige w-24 bg-opacity-[62%] text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)] md:w-32">
-        <p className="font-space-grotesk text-enei-blue mt-10 text-4xl font-bold tabular-nums [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca] md:text-6xl">
-          {timeLeft?.days.toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          })}
-        </p>
-        <p className="text-enei-blue mb-3 mt-5 text-base font-bold [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca] md:text-xl">
-          DIAS
-        </p>
-      </div>
-      <div className="bg-enei-beige w-24 bg-opacity-[62%] text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)] md:w-32">
-        <p className="font-space-grotesk text-enei-blue mt-10 text-4xl font-bold tabular-nums [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca] md:text-6xl">
-          {timeLeft?.hours.toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          })}
-        </p>
-        <p className="text-enei-blue mb-3 mt-5 text-base font-bold [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca] md:text-xl">
-          HORAS
-        </p>
-      </div>
+//   return (
+//     <div
+//       className={cn(
+//         "mt-10 grid w-fit grid-cols-2 gap-4 transition-opacity duration-1000 sm:grid-cols-4",
+//         !timeLeft && "opacity-0",
+//       )}
+//     >
+//       <div className="bg-enei-beige w-24 bg-opacity-[62%] text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)] md:w-32">
+//         <p className="font-space-grotesk text-enei-blue mt-10 text-4xl font-bold tabular-nums [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca] md:text-6xl">
+//           {timeLeft?.days.toLocaleString("en-US", {
+//             minimumIntegerDigits: 2,
+//             useGrouping: false,
+//           })}
+//         </p>
+//         <p className="text-enei-blue mb-3 mt-5 text-base font-bold [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca] md:text-xl">
+//           DIAS
+//         </p>
+//       </div>
+//       <div className="bg-enei-beige w-24 bg-opacity-[62%] text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)] md:w-32">
+//         <p className="font-space-grotesk text-enei-blue mt-10 text-4xl font-bold tabular-nums [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca] md:text-6xl">
+//           {timeLeft?.hours.toLocaleString("en-US", {
+//             minimumIntegerDigits: 2,
+//             useGrouping: false,
+//           })}
+//         </p>
+//         <p className="text-enei-blue mb-3 mt-5 text-base font-bold [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca] md:text-xl">
+//           HORAS
+//         </p>
+//       </div>
 
-      <div className="bg-enei-beige w-24 bg-opacity-[62%] text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)] md:w-32">
-        <p className="font-space-grotesk text-enei-blue mt-10 text-4xl font-bold tabular-nums [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca] md:text-6xl">
-          {timeLeft?.minutes.toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          })}
-        </p>
-        <p className="text-enei-blue mb-3 mt-5 text-base font-bold [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca] md:text-xl">
-          MINUTOS
-        </p>
-      </div>
+//       <div className="bg-enei-beige w-24 bg-opacity-[62%] text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)] md:w-32">
+//         <p className="font-space-grotesk text-enei-blue mt-10 text-4xl font-bold tabular-nums [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca] md:text-6xl">
+//           {timeLeft?.minutes.toLocaleString("en-US", {
+//             minimumIntegerDigits: 2,
+//             useGrouping: false,
+//           })}
+//         </p>
+//         <p className="text-enei-blue mb-3 mt-5 text-base font-bold [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca] md:text-xl">
+//           MINUTOS
+//         </p>
+//       </div>
 
-      <div className="bg-enei-beige w-24 bg-opacity-[62%] text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)] md:w-32">
-        <p className="font-space-grotesk text-enei-blue mt-10 text-4xl font-bold tabular-nums [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca] md:text-6xl">
-          {timeLeft?.seconds.toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          })}
-        </p>
-        <p className="text-enei-blue mb-3 mt-5 text-base font-bold [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca] md:text-xl">
-          SEGUNDOS
-        </p>
-      </div>
-    </div>
-  );
-}
+//       <div className="bg-enei-beige w-24 bg-opacity-[62%] text-center shadow-[0_4px_4px_rgba(0_0_0_/_25%)] md:w-32">
+//         <p className="font-space-grotesk text-enei-blue mt-10 text-4xl font-bold tabular-nums [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca] md:text-6xl">
+//           {timeLeft?.seconds.toLocaleString("en-US", {
+//             minimumIntegerDigits: 2,
+//             useGrouping: false,
+//           })}
+//         </p>
+//         <p className="text-enei-blue mb-3 mt-5 text-base font-bold [text-shadow:_-1px_0_#efe3ca,_0_1px_#efe3ca,_1px_0_#efe3ca,_0_-1px_#efe3ca] md:text-xl">
+//           SEGUNDOS
+//         </p>
+//       </div>
+//     </div>
+//   );
+// }
 
 function BackgroundGradient({ className }: { className?: string }) {
   return (
