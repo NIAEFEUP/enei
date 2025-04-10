@@ -108,14 +108,6 @@ export default function LongActivities({ currentActiveIndex, eventsByDay }: Long
             location={"Corredor B - FEUP"}
             speakers={[]}
           />
-          <EventCard
-            title={events[11].title}
-            type={events[11].type}
-            time={events[11].time}
-            location={events[11].location}
-            speakers={events[11].speakers}
-            onClick={() => router.visit(`/events/${events[11].id}`)}
-          />
         </div>
       )}
     </div>
