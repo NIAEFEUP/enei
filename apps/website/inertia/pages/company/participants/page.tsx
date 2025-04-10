@@ -17,9 +17,11 @@ interface Participant {
 
 interface ParticipantsPageProps {
   allParticipants: Participant[];
+  checkedParticipants: Participant[];
+  likedParticipants: Participant[];
 }
 
-export default function CompanyParticipantsPage({ allParticipants }: ParticipantsPageProps) {
+export default function CompanyParticipantsPage({ allParticipants, checkedParticipants, likedParticipants }: ParticipantsPageProps) {
   return (
     <Page title="Participantes" variant="beige" className="bg-enei-beige">
       <Container>
@@ -46,6 +48,12 @@ export default function CompanyParticipantsPage({ allParticipants }: Participant
           </TabsList>
           <TabsContent value="all-participants">
             <ParticipantsTable participants={allParticipants} />
+          </TabsContent>
+          <TabsContent value="checked-participants">
+            <ParticipantsTable participants={checkedParticipants} />
+          </TabsContent>
+          <TabsContent value="liked-participants">
+            <ParticipantsTable participants={likedParticipants} />
           </TabsContent>
         </Tabs>
       </Container>

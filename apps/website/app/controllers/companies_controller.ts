@@ -65,8 +65,7 @@ export default class CompaniesController {
       .whereNotNull("participant_profile_id")
       .orderBy("id");
 
-    return inertia.render("company/participants", {
-      allParticipants: await Promise.all(
+    const allParticipants = await Promise.all(
         participants.map(async (participant) => {
           const likes = await this.userActivityService.getCompanyLikes(
             participant.id,
@@ -96,7 +95,11 @@ export default class CompaniesController {
             isLiked: await this.userActivityService.isLiked(participant.id, companyUser.id),
           };
         }),
-      ),
+      );
+    return inertia.render("company/participants", {
+      allParticipants: allParticipants,
+      checkedParticipants: [],
+      likedParticipants: allParticipants.filter((p) => p.isLiked),
     });
   }
 }
