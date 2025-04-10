@@ -17,14 +17,14 @@ const driveConfig = defineConfig({
       visibility: "public",
     }),
 
-    spaces: services.s3({
+    s3: services.s3({
       credentials: {
-        accessKeyId: env.get('SPACES_KEY'),
-        secretAccessKey: env.get('SPACES_SECRET'),
+        accessKeyId: env.get('S3_KEY'),
+        secretAccessKey: env.get('S3_SECRET'),
       },
-      region: env.get('SPACES_REGION'),
-      bucket: env.get('SPACES_BUCKET'),
-      endpoint: env.get('SPACES_ENDPOINT'),
+      region: env.get('S3_REGION'),
+      bucket: env.get('S3_BUCKET'),
+      endpoint: env.get('S3_ENDPOINT'),
       visibility: 'public',
     }),
 
