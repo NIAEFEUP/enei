@@ -14,7 +14,7 @@ interface Speaker {
 interface EventCardProps {
   id?: number;
   title: string;
-  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other";
+  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other" | "painel";
   time: string;
   location: string;
   speakers: Speaker[];
