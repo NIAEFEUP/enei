@@ -21,6 +21,8 @@ import { attachmentManager } from "@jrmc/adonis-attachment";
 import type { MultipartFile } from "@adonisjs/core/bodyparser";
 import drive from "@adonisjs/drive/services/main";
 import Sqids from "sqids";
+import slug from "slug";
+import { md5 } from "js-md5";
 
 export const changeEmailSqids = new Sqids({
   minLength: 4,
@@ -28,7 +30,7 @@ export const changeEmailSqids = new Sqids({
 
 @inject()
 export class UserService {
-  constructor(private logger: Logger) {}
+  constructor(private logger: Logger) { }
 
   async storeCV(user: User, cv: MultipartFile) {
     try {
@@ -210,5 +212,15 @@ export class UserService {
   async sendEmailChangedConfirmationEmail(oldEmail: string, newEmail: string) {
     const listener = new SendEmailChangedConfirmationEmail();
     listener.handle(new UserEmailChangedConfirmation(oldEmail, newEmail));
+  }
+
+  async createSlug(user: User, firstName: string, lastName: string) {
+    const userMd5 = md5(slug(`${firstName} ${lastName}`));
+    const userNumber =
+      (Number.parseInt(userMd5.replace(/[^1-9]/g, "").substring(0, 3)) + user.id) % 1000;
+    const userCode = userNumber.toString().padStart(3, "0");
+
+    user.slug = slug(`${firstName} ${lastName} ${userCode}`);
+    await user.save()
   }
 }

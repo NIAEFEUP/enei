@@ -11,6 +11,9 @@ import StaffProfile from "./staff_profile.js";
 import { attachment } from "@jrmc/adonis-attachment";
 import type { Attachment } from "@jrmc/adonis-attachment/types/attachment";
 
+import { Github, Globe, Linkedin } from "lucide-react";
+import RepresentativeProfile from "./representative_profile.js";
+
 export default class User extends BaseModel {
   @column({ isPrimary: true })
   declare id: number;
@@ -91,6 +94,15 @@ export default class User extends BaseModel {
   @column()
   declare staffProfileId: number | undefined;
 
+  @column()
+  declare slug: string;
+
+  @belongsTo(() => RepresentativeProfile)
+  declare representativeProfile: BelongsTo<typeof RepresentativeProfile>;
+
+  @column()
+  declare representativeProfileId: number | null;
+
   @belongsTo(() => StaffProfile)
   declare staffProfile: BelongsTo<typeof StaffProfile>;
 
@@ -111,8 +123,13 @@ export default class User extends BaseModel {
   get role() {
     if (this.isParticipant()) return "participant" as const;
     if (this.isPromoter()) return "promoter" as const;
+    if (this.isRepresentative()) return "representative" as const;
     if (this.isStaff()) return "staff" as const;
     return "unknown" as const;
+  }
+
+  isRepresentative() {
+    return this.representativeProfileId;
   }
 
   isStaff() {
@@ -143,6 +160,35 @@ export default class User extends BaseModel {
 
   wasReferred() {
     return this.referrerId !== null;
+  }
+
+  get socials() {
+    const socials = [];
+
+    if (this.role === "participant") {
+      if (this.participantProfile.github)
+        socials.push({ icon: Github, link: this.participantProfile.github });
+      if (this.participantProfile.linkedin)
+        socials.push({ icon: Linkedin, link: this.participantProfile.linkedin });
+      if (this.participantProfile.website)
+        socials.push({ icon: Globe, link: this.participantProfile.website });
+    }
+
+    return socials;
+  }
+
+  static getName(user: User) {
+    if (user.participantProfile)
+      return {
+        firstName: user.participantProfile.firstName,
+        lastName: user.participantProfile.lastName,
+      };
+
+    if (user.representativeProfile)
+      return {
+        firstName: user.representativeProfile,
+        lastName: user.representativeProfile.lastName,
+      };
   }
 
   static async hasPurchasedTicket(user: User) {

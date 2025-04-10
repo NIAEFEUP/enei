@@ -17,7 +17,9 @@ export default defineConfig({
     react(),
     adonisjs({ entrypoints: ["inertia/app/app.tsx"], reload: ["resources/views/**/*.edge"] }),
   ],
-
+  esbuild: {
+    target: 'esnext'
+  },
   /**
    * Define aliases for importing modules from
    * your frontend code
