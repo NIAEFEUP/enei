@@ -88,7 +88,7 @@ run_command pg_restore -v -e -d "$PGDATABASE" "$POSTGRES_DATA_DIR/production.sql
 
 if [ -n "$NEXT_POST_RESTORE_COMMANDS" ]; then
     print "Running post-restore commands..."
-    run_command echo "$NEXT_POST_RESTORE_COMMANDS" | psql -v ON_ERROR_STOP=1
+    run_command 'echo "$NEXT_POST_RESTORE_COMMANDS" | psql -v ON_ERROR_STOP=1'
 fi
  
 pop_indent
@@ -164,7 +164,7 @@ if [ "$ON_STARTUP_MIGRATE" = "true" ]; then
 
     if [ -n "$NEXT_POST_MIGRATE_COMMANDS" ]; then
         print "Running post-migrate commands..."
-        run_command echo "$NEXT_POST_MIGRATE_COMMANDS" | psql -v ON_ERROR_STOP=1
+        run_command 'echo "$NEXT_POST_MIGRATE_COMMANDS" | psql -v ON_ERROR_STOP=1'
     fi
     
     pop_indent
