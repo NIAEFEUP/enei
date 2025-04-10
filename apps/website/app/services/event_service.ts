@@ -19,7 +19,7 @@ export default class EventService {
       .where("user_id", user.id)
       .first();
 
-    return !!isChecked
+    return !!isChecked;
   }
 
   async register(user: User, event: Event) {
@@ -32,8 +32,8 @@ export default class EventService {
 
   async checkin(user: User, event: Event) {
     await event.related("checkedInUsers").attach({
-      [user.id] : { checked_in_at: new Date() },
+      [user.id]: { checked_in_at: new Date() },
     });
-    await event.save()
+    await event.save();
   }
 }

@@ -1,7 +1,4 @@
-import {
-  Dialog,
-  DialogContent
-} from "~/components/ui/dialog";
+import { Dialog, DialogContent } from "~/components/ui/dialog";
 import CredentialScanner from "../credentials/scanner";
 import { useTuyau } from "~/hooks/use_tuyau";
 import { useForm } from "@inertiajs/react";
@@ -10,14 +7,14 @@ import { toast } from "~/hooks/use_toast";
 interface EventCheckInDialogProps {
   isOpen: boolean;
   eventID: number;
-  eventTitle: string;
   setOpen: (open: boolean) => void;
 }
 
-
-export default function EventCheckInDialog(
-  {isOpen, eventID, eventTitle, setOpen} : EventCheckInDialogProps
-) {
+export default function EventCheckInDialog({
+  isOpen,
+  eventID,
+  setOpen,
+}: EventCheckInDialogProps) {
   if (!isOpen) {
     return null;
   }
@@ -30,7 +27,7 @@ export default function EventCheckInDialog(
 
   const handleCheckIN = (slug: string) => {
     try {
-      post(tuyau.$url("actions:events.checkin", { params: { slug }}), {
+      post(tuyau.$url("actions:events.checkin", { params: { slug } }), {
         onSuccess: () => {
           toast({
             title: "Success",
@@ -43,7 +40,7 @@ export default function EventCheckInDialog(
             title: "Error",
             description: errors.message || "Failed to check-in",
           });
-        }
+        },
       });
     } catch (error) {
       toast({
@@ -51,11 +48,13 @@ export default function EventCheckInDialog(
         description: "An unexpected error occurred",
       });
     }
-  }
+  };
 
-  return <Dialog open={isOpen} onOpenChange={() => setOpen(false)}>
-    <DialogContent className="w-96 h-96">
-      <CredentialScanner onScan={(slug) => handleCheckIN(slug)}/>
-    </DialogContent>
-  </Dialog>
+  return (
+    <Dialog open={isOpen} onOpenChange={() => setOpen(false)}>
+      <DialogContent className="h-96 w-96">
+        <CredentialScanner onScan={(slug) => handleCheckIN(slug)} />
+      </DialogContent>
+    </Dialog>
+  );
 }

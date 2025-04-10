@@ -100,9 +100,9 @@ export default class User extends BaseModel {
   // Functions
 
   get role() {
+    if (this.isStaff()) return "staff" as const;
     if (this.isParticipant()) return "participant" as const;
     if (this.isPromoter()) return "promoter" as const;
-    if (this.isStaff()) return "staff" as const;
     return "unknown" as const;
   }
 

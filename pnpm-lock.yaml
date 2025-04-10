@@ -8514,10 +8514,6 @@ packages:
     resolution: {integrity: sha512-yGSza74xk0UG8k+pLh5oeoYirvIiWo5t0/o3zHHAO2tRDiZcxWP7fywNlXhqb6/r6sWvwi+RsyQMWhVLe4BVuA==}
     engines: {node: '>=10'}
 
-  type-fest@4.36.0:
-    resolution: {integrity: sha512-3T/PUdKTCnkUmhQU6FFJEHsLwadsRegktX3TNHk+2JJB9HlA8gp1/VXblXVDI93kSnXF2rdPx0GMbHtJIV2LPg==}
-    engines: {node: '>=16'}
-
   type-fest@4.38.0:
     resolution: {integrity: sha512-2dBz5D5ycHIoliLYLi0Q2V7KRaDlH0uWIvmk7TYlAg5slqwiPv1ezJdZm1QEM0xgk29oYWMCbIG7E6gHpvChlg==}
     engines: {node: '>=16'}
@@ -17823,8 +17819,6 @@ snapshots:
 
   type-fest@1.4.0: {}
 
-  type-fest@4.36.0: {}
-
   type-fest@4.38.0: {}
 
   type-is@1.6.18:
@@ -18131,8 +18125,4 @@ snapshots:
   zxing-wasm@2.1.0(@types/emscripten@1.40.0):
     dependencies:
       '@types/emscripten': 1.40.0
-<<<<<<< HEAD
       type-fest: 4.38.0
-=======
-      type-fest: 4.36.0
->>>>>>> develop

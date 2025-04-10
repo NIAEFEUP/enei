@@ -17,11 +17,11 @@ export default class extends BaseSeeder {
 
     const dep = await Department.create({
       id: 99,
-      name: "Test Department"
-    })
+      name: "Test Department",
+    });
 
     await staffProfile.related("department").associate(dep);
-    
+
     await staffUser.related("staffProfile").associate(staffProfile);
 
     await staffUser.related("accounts").create({
