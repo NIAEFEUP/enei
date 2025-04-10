@@ -4,17 +4,19 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { useEffect } from "react";
 import { useTuyau } from "~/hooks/use_tuyau";
+
 const CvUpload = () => {
   const tuyau = useTuyau();
   const [fetchedName, setfetchedName] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   useEffect(() => {
     const fetchFileName = async () => {
       try {
-        const response = await axios.get(tuyau.$url("actions:cv_name"));
+        const response = await axios.get(tuyau.$url("actions:cv.name"));
         setFileName(response.data.fileName);
       } catch (error) {
         setFileName(null);
@@ -41,12 +43,17 @@ const CvUpload = () => {
     formData.append("cv", file);
 
     try {
-      await axios.post(tuyau.$url("actions:cv_upload"), formData, {
+      await axios.post(tuyau.$url("actions:cv.upload"), formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
     } catch (error) {
+      if (error.response.data) {
+        setErrorMsg(error.response.data);
+      } else {
+        setErrorMsg("Não foi possível guardar o ficheiro.");
+      }
     } finally {
       setUploading(false);
     }
@@ -55,35 +62,41 @@ const CvUpload = () => {
   const handleDelete = async () => {
     setUploading(true);
     try {
-      await axios.delete(tuyau.$url("actions:cv_delete"), {
+      await axios.delete(tuyau.$url("actions:cv.delete"), {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+
+      setFile(null);
     } catch (error) {
     } finally {
       setUploading(false);
+      setErrorMsg("");
     }
   };
 
   return (
-    <div className="flex flex-col gap-2">
-      {fileName ? (
-        <div className="flex flex-row gap-2">
-          <Input className="w-64" type="text" value={fileName} disabled />
-          <Button onClick={handleDelete} disabled={uploading || !fetchedName}>
-            {uploading ? "Uploading..." : "Clear CV"}
-          </Button>
-        </div>
-      ) : (
-        <div className="flex flex-row gap-2">
-          <Input className="w-64" type="file" accept=".pdf" onChange={handleFileChange} />
-          <Button onClick={handleUpload} disabled={uploading || !fetchedName}>
-            {uploading ? "Uploading..." : "Upload CV"}
-          </Button>
-        </div>
-      )}
-    </div>
+    <>
+      <div className="flex flex-col gap-2">
+        {fileName ? (
+          <div className="flex flex-row gap-2">
+            <Input className="w-64" type="text" value={fileName} disabled />
+            <Button onClick={handleDelete} disabled={uploading || !fetchedName}>
+              {uploading ? "Uploading..." : "Clear CV"}
+            </Button>
+          </div>
+        ) : (
+          <div className="flex flex-row gap-2">
+            <Input className="w-64" type="file" accept=".pdf" onChange={handleFileChange} />
+            <Button onClick={handleUpload} disabled={uploading || !fetchedName || !file}>
+              {uploading ? "Uploading..." : "Upload CV"}
+            </Button>
+          </div>
+        )}
+      </div>
+      {errorMsg && <p className="mt-4 text-center text-sm text-red-600">{errorMsg}</p>}
+    </>
   );
 };
 
