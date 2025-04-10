@@ -93,6 +93,7 @@ export default class EventsController {
     
     const event = await Event.findOrFail(eventID)
     const profile = await ParticipantProfile.findBy("slug", params.slug)
+    // FIXME: change this to User when slug in user is ready
 
     if (!profile) {
       session.flashErrors({ message: "Participante não encontrado"})
