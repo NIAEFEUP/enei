@@ -19,7 +19,11 @@ const RepresentativeProfileResource = createResource({
     },
     actions: {
       new: {
-        after: async (response: ActionResponse, _request: ActionRequest, context: ActionContext) => {
+        after: async (
+          response: ActionResponse,
+          _request: ActionRequest,
+          context: ActionContext,
+        ) => {
           const newProfile = context.record?.params;
           if (!newProfile) return;
 
