@@ -60,7 +60,7 @@ export class PaymentService {
     if (apiResponse.status === 200) {
       const { RequestId } = apiResponse.data;
 
-      const paymentId = await db.transaction(async (trx) => {
+      const requestId = await db.transaction(async (trx) => {
         const invoiceInfo = await InvoiceInfo.create(
           {
             name: userMetadata.name,
@@ -83,24 +83,22 @@ export class PaymentService {
           { client: trx },
         );
 
-        return payment.id;
+        return payment.requestId;
       });
 
       order.status = "pending-payment";
       await order.save();
 
       await PollPaymentJob.dispatch(
-        { paymentId: paymentId, baseUrl: "123" },
+        { requestId, baseUrl: env.get("INERTIA_PUBLIC_APP_URL") },
         { delay: 10000 },
-      ).catch((error) => {
-        console.error("Error dispatching job", error);
-      });
+      );
     }
   }
 
-  async getStatus(payment: Payment): Promise<PaymentStatus> {
+  async getStatus(requestId: string): Promise<PaymentStatus> {
     const apiResponse = await axios.get(
-      `https://api.ifthenpay.com/spg/payment/mbway/status?mbWayKey=${env.get("IFTHENPAY_MBWAY_KEY")}&requestId=${payment.requestId}`,
+      `https://api.ifthenpay.com/spg/payment/mbway/status?mbWayKey=${env.get("IFTHENPAY_MBWAY_KEY")}&requestId=${requestId}`,
     );
 
     if (apiResponse.status === 200) {

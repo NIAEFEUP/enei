@@ -7,6 +7,17 @@ import type { Money } from "#lib/payments/money.js";
 import { money } from "#lib/lucid/decorators.js";
 import ProductGroup from "./product_group.js";
 import Product from "./product.js";
+import { relations } from "#lib/lucid/relations.js";
+import { lazy } from "#lib/lazy.js";
+
+const eventRelations = lazy(() =>
+  relations(Event, (r) => [
+    r.belongsTo("product"),
+    r.belongsTo("productGroup"),
+    r.many("registeredUsers"),
+    r.many("speakers"),
+  ]),
+);
 
 export default class Event extends BaseModel {
   @column({ isPrimary: true })
@@ -93,5 +104,9 @@ export default class Event extends BaseModel {
   public getFormattedTime() {
     const endTime = this.date.plus({ minutes: this.duration });
     return `${this.date.toFormat("HH:mm")} - ${endTime.toFormat("HH:mm")}`;
+  }
+
+  get $relations() {
+    return eventRelations.get().for(this);
   }
 }

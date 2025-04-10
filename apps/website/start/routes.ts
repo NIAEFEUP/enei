@@ -21,6 +21,7 @@ const ReferralsController = () => import("#controllers/referrals_controller");
 
 const LeaderboardController = () => import("#controllers/leaderboard_controller");
 const ProductReservationController = () => import("#controllers/product_reservation_controller");
+const PaymentsController = () => import("#controllers/payments_controller");
 
 router.on("/").renderInertia("home").as("pages:home");
 
@@ -155,7 +156,8 @@ router
   .group(() => {
     //router.get('/', [OrdersController, 'index']) acho que isto já nao e usado
     router.post("/mbway", [OrdersController, "createMBWay"]);
-    router.get("/:id", [OrdersController, "show"]).as("payment.show");
+    router.get("/:paymentId", [OrdersController, "show"]).as("payment.show");
+    router.post("/callback", [PaymentsController, "callback"]).as("actions:payment.callback");
   })
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix("payment");

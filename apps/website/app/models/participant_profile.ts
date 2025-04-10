@@ -3,6 +3,12 @@ import { BaseModel, column, hasOne } from "@adonisjs/lucid/orm";
 import User from "./user.js";
 import type { HasOne } from "@adonisjs/lucid/types/relations";
 import { json } from "#lib/lucid/decorators.js";
+import { lazy } from "#lib/lazy.js";
+import { relations } from "#lib/lucid/relations.js";
+
+const participantProfileRelations = lazy(() =>
+  relations(ParticipantProfile, (r) => [r.hasOne("user")]),
+);
 
 export default class ParticipantProfile extends BaseModel {
   @column({ isPrimary: true })
@@ -96,4 +102,8 @@ export default class ParticipantProfile extends BaseModel {
 
   @column()
   declare website: string | null;
+
+  get $relations() {
+    return participantProfileRelations.get().for(this);
+  }
 }

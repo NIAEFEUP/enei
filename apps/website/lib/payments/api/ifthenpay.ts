@@ -14,6 +14,7 @@ const createNewPaymentValidator = z
   .object({
     RequestId: z.string(),
     Status: z.union([
+      z.literal("-1").transform(() => "bad-request" as const),
       z.literal("000").transform(() => "issued" as const),
       z.literal("100").transform(() => "temporarily-unavailable" as const),
       z.literal("122").transform(() => "blocked" as const),
@@ -31,10 +32,6 @@ export async function createNewPayment(payload: CreateNewPaymentPayload) {
     body: JSON.stringify(payload),
   });
 
-  if (response.status !== 200) {
-    throw new Error("Ifthenpay API returned an error", { cause: response });
-  }
-
   return createNewPaymentValidator.parseAsync(await response.json());
 }
 
@@ -48,6 +45,7 @@ const checkPaymentValidator = z
   .object({
     CreatedAt: z.coerce.date(),
     Status: z.union([
+      z.literal("-1").transform(() => "bad-request" as const),
       z.literal("000").transform(() => "approved" as const),
       z.literal("020").transform(() => "rejected" as const),
       z.literal("101").transform(() => "expired" as const),
@@ -58,14 +56,10 @@ const checkPaymentValidator = z
   .transform((res) => ({ createdAt: res.CreatedAt, status: res.Status }));
 
 export async function checkPayment(payload: CheckPaymentPayload) {
-  const response = await fetch("https://api.ifthenpay.com/spg/payment/mbway", {
-    method: "GET",
-    body: new URLSearchParams(payload),
-  });
+  const url = new URL("https://api.ifthenpay.com/spg/payment/mbway/status");
+  url.search = new URLSearchParams(payload).toString();
 
-  if (response.status !== 200) {
-    throw new Error("Ifthenpay API returned an error", { cause: response });
-  }
+  const response = await fetch(url);
 
   return checkPaymentValidator.parseAsync(await response.json());
 }

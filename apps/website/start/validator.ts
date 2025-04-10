@@ -1,3 +1,6 @@
+// import { createRelations } from "#lib/lucid/relations.js";
+import Account from "#models/account";
+import User from "#models/user";
 import vine, { SimpleMessagesProvider } from "@vinejs/vine";
 
 vine.convertEmptyStringsToNull = true;
@@ -17,3 +20,5 @@ vine.messagesProvider = new SimpleMessagesProvider(
   },
   fields,
 );
+
+// createRelations(Account)(await Account.findOrFail("credentials:test@eneiconf.pt"));

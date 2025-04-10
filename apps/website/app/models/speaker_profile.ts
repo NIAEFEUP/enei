@@ -2,6 +2,10 @@ import { DateTime } from "luxon";
 import { BaseModel, column, manyToMany } from "@adonisjs/lucid/orm";
 import Event from "./event.js";
 import type { ManyToMany } from "@adonisjs/lucid/types/relations";
+import { lazy } from "#lib/lazy.js";
+import { relations } from "#lib/lucid/relations.js";
+
+const speakerProfileRelations = lazy(() => relations(SpeakerProfile, (r) => [r.many("events")]));
 
 export default class SpeakerProfile extends BaseModel {
   @column({ isPrimary: true })
@@ -25,11 +29,15 @@ export default class SpeakerProfile extends BaseModel {
   @manyToMany(() => Event, {
     pivotTable: "event_speakers",
   })
-  public events!: ManyToMany<typeof Event>;
+  declare events: ManyToMany<typeof Event>;
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime;
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime;
+
+  get $relations() {
+    return speakerProfileRelations.get().for(this);
+  }
 }

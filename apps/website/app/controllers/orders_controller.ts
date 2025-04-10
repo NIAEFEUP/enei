@@ -3,7 +3,7 @@ import Order from "#models/order";
 import OrderProduct from "#models/order_product";
 import { createMBWayOrderValidator } from "#validators/order";
 import { inject } from "@adonisjs/core";
-import { PaymentService } from "#services/payment_service";
+import { PaymentService } from "../services/payment_service.js";
 
 import { OrderService } from "#services/order_service";
 
@@ -18,6 +18,10 @@ export default class OrdersController {
     return inertia.render("payments");
   }
 
+  async create({ request, auth, response }: HttpContext) {
+    const user = auth.getUserOrFail();
+  }
+
   public async createMBWay({ request, auth, response }: HttpContext) {
     const authUser = auth.getUserOrFail();
 
@@ -25,6 +29,7 @@ export default class OrdersController {
       const { products, nif, address, mobileNumber, name } =
         await request.validateUsing(createMBWayOrderValidator);
 
+      console.log({ products, nif, address, mobileNumber });
       const { productDetails, description, totalAmount } =
         await this.orderService.buildProductDetails(authUser, products);
 

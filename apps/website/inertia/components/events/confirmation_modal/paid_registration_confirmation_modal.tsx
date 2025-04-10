@@ -65,6 +65,8 @@ export default function PaidRegistrationConfirmationModal({
       quantity: product.stock,
     }));
 
+    console.log("modal", { data });
+
     post(tuyau.$url("actions:events.register", { params: { id: itemId } }), {
       onSuccess: () => {
         setIsOpen(false);

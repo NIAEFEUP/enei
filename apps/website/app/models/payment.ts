@@ -2,12 +2,13 @@ import { DateTime } from "luxon";
 import { BaseModel, belongsTo, column } from "@adonisjs/lucid/orm";
 import type { BelongsTo } from "@adonisjs/lucid/types/relations";
 import InvoiceInfo from "./invoice_info.js";
-import * as is from "@sindresorhus/is";
 import type { StrictExclude, StrictExtract } from "#lib/types.js";
 import type { CreateReadonlyModel } from "../../types/lucid.js";
 import Order from "./order.js";
 import { Money } from "#lib/payments/money.js";
 import { money } from "#lib/lucid/decorators.js";
+import { lazy } from "#lib/lazy.js";
+import { relations } from "#lib/lucid/relations.js";
 
 export type PaymentStatus = "pending" | "successful" | "declined" | "expired" | "unknown";
 
@@ -26,6 +27,10 @@ export type ReadonlyPayment = CreateReadonlyModel<
       reason: Payment["reason"];
     }
 >;
+
+const paymentRelations = lazy(() =>
+  relations(Payment, (r) => [r.belongsTo("invoiceInfo"), r.belongsTo("order")]),
+);
 
 export default class Payment extends BaseModel {
   @column({ isPrimary: true })
@@ -66,26 +71,6 @@ export default class Payment extends BaseModel {
   }
 
   get $relations() {
-    return new (class {
-      constructor(private payment: Payment) {}
-
-      async invoiceInfo() {
-        if (is.isNullOrUndefined(this.payment.invoiceInfoId)) {
-          return null;
-        } else if (is.isNullOrUndefined(this.payment.invoiceInfo)) {
-          await this.payment.loadOnce("invoiceInfo");
-        }
-
-        return this.payment.invoiceInfo;
-      }
-
-      async order() {
-        if (is.isNullOrUndefined(this.payment.order)) {
-          await this.payment.loadOnce("order");
-        }
-
-        return this.payment.order;
-      }
-    })(this);
+    return paymentRelations.get().for(this);
   }
 }

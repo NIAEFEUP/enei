@@ -18,3 +18,11 @@ export const paymentValidator = vine.compile(
       }),
   }),
 );
+
+export const paymentCallbackValidator = vine.compile(
+  vine.object({
+    requestId: vine.number().exists({ column: "request_id", table: "payments" }),
+    status: vine.enum<PaymentStatus[]>(["declined", "expired", "pending", "successful", "unknown"]),
+    reason: vine.string().optional(),
+  }),
+);

@@ -2,7 +2,7 @@ import User from "#models/user";
 import Event from "#models/event";
 import { OrderService } from "./order_service.js";
 import type { MBWayOrder } from "../../types/order.js";
-import { PaymentService } from "./payment_service.js";
+import { PaymentService } from "../services/payment_service.js";
 import Product from "#models/product";
 import OrderProduct from "#models/order_product";
 import db from "@adonisjs/lucid/services/db";

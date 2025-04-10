@@ -3,10 +3,12 @@ import { BaseModel, column, hasMany } from "@adonisjs/lucid/orm";
 import Payment from "./payment.js";
 import type { CreateReadonlyModel } from "../../types/lucid.js";
 import type { HasMany } from "@adonisjs/lucid/types/relations";
-import * as is from "@sindresorhus/is";
+import { lazy } from "#lib/lazy.js";
+import { relations } from "#lib/lucid/relations.js";
 
 export type ReadonlyInvoiceInfo = CreateReadonlyModel<InvoiceInfo>;
 
+const invoiceInfoRelations = lazy(() => relations(InvoiceInfo, (r) => [r.many("payments")]));
 export default class InvoiceInfo extends BaseModel {
   @column({ isPrimary: true })
   declare id: number;
@@ -41,16 +43,6 @@ export default class InvoiceInfo extends BaseModel {
   }
 
   get $relations() {
-    return new (class {
-      constructor(private invoiceInfo: InvoiceInfo) {}
-
-      async payments() {
-        if (is.isNullOrUndefined(this.invoiceInfo.payments)) {
-          await this.invoiceInfo.loadOnce("payments");
-        }
-
-        return this.invoiceInfo.payments;
-      }
-    })(this);
+    return invoiceInfoRelations.get().for(this);
   }
 }
