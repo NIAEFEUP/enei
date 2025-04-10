@@ -21,4 +21,8 @@ export default class UserPolicy extends BasePolicy {
   async beLinked(user: User) {
     return !user.isPromoter() && !user.wasReferred() && !(await User.hasPurchasedTicket(user));
   }
+
+  async seeCV(user: User, cvOwner: User) {
+    return user.isStaff() || user.id === cvOwner.id; // TODO: Add company that has been visited
+  }
 }

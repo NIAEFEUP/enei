@@ -283,6 +283,9 @@ importers:
       jotai:
         specifier: ^2.11.1
         version: 2.12.2(@types/react@19.0.12)(react@19.0.0)
+      js-md5:
+        specifier: ^0.8.3
+        version: 0.8.3
       leaflet-geosearch:
         specifier: ^4.0.0
         version: 4.2.0
@@ -6324,6 +6327,9 @@ packages:
   js-git@0.7.8:
     resolution: {integrity: sha512-+E5ZH/HeRnoc/LW0AmAyhU+mNcWBzAKE+30+IDMLSLbbK+Tdt02AdkOKq9u15rlJsDEGFqtgckc8ZM59LhhiUA==}
 
+  js-md5@0.8.3:
+    resolution: {integrity: sha512-qR0HB5uP6wCuRMrWPTrkMaev7MJZwJuuw4fnwAzRgP4J4/F8RwtodOKpGp4XpqsLBFzzgqIO42efFAyz2Et6KQ==}
+
   js-stringify@1.0.2:
     resolution: {integrity: sha512-rtS5ATOo2Q5k1G+DADISilDA6lv79zIiwFd6CcjuIxGKLFm5C+RLImRscVap9k55i+MOZwgliw+NejvkLuGD5g==}
 
@@ -8553,10 +8559,6 @@ packages:
   type-fest@1.4.0:
     resolution: {integrity: sha512-yGSza74xk0UG8k+pLh5oeoYirvIiWo5t0/o3zHHAO2tRDiZcxWP7fywNlXhqb6/r6sWvwi+RsyQMWhVLe4BVuA==}
     engines: {node: '>=10'}
-
-  type-fest@4.36.0:
-    resolution: {integrity: sha512-3T/PUdKTCnkUmhQU6FFJEHsLwadsRegktX3TNHk+2JJB9HlA8gp1/VXblXVDI93kSnXF2rdPx0GMbHtJIV2LPg==}
-    engines: {node: '>=16'}
 
   type-fest@4.38.0:
     resolution: {integrity: sha512-2dBz5D5ycHIoliLYLi0Q2V7KRaDlH0uWIvmk7TYlAg5slqwiPv1ezJdZm1QEM0xgk29oYWMCbIG7E6gHpvChlg==}
@@ -15411,6 +15413,8 @@ snapshots:
       git-sha1: 0.1.2
       pako: 0.2.9
 
+  js-md5@0.8.3: {}
+
   js-stringify@1.0.2: {}
 
   js-tokens@4.0.0: {}
@@ -17892,8 +17896,6 @@ snapshots:
 
   type-fest@1.4.0: {}
 
-  type-fest@4.36.0: {}
-
   type-fest@4.38.0: {}
 
   type-is@1.6.18:
@@ -18200,4 +18202,4 @@ snapshots:
   zxing-wasm@2.1.0(@types/emscripten@1.40.0):
     dependencies:
       '@types/emscripten': 1.40.0
-      type-fest: 4.36.0
+      type-fest: 4.38.0

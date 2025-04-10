@@ -115,8 +115,8 @@ export default class ReferralService {
       description: {
         type: UserActivityType.Referral,
         referralCode,
-        referralUser,
-        referredUser,
+        referralUserId: referralUser.id,
+        referredUserId: referredUser.id,
         referralIsPromoter: referralUser.isPromoter(),
         referralReferencedByPromoter: referralUser.referringPromoterId !== null,
         promoterId: referralUser.referringPromoterId,

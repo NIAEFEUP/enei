@@ -1,19 +1,18 @@
 import { inject } from "@adonisjs/core";
 import type { HttpContext } from "@adonisjs/core/http";
-import User from "#models/user";
 import { UserService } from "#services/user_service";
 
 @inject()
 export default class UsersController {
   constructor(private userService: UserService) {}
 
-  async showCV({ inertia }: HttpContext) {
-    return inertia.render("cv");
-  }
-
   async storeCV({ request, response, auth }: HttpContext) {
     const user = auth.user;
-    const cv = request.file("cv")!;
+    const cv = request.file("cv", {
+      extnames: ["pdf"],
+      size: "10mb",
+    })!;
+    if (cv.hasErrors) return response.badRequest(cv.errors.at(0)?.message);
     await this.userService.storeCV(user!, cv);
     return response.ok({ message: "CV uploaded" });
   }
@@ -36,23 +35,23 @@ export default class UsersController {
     return response.ok({ fileName });
   }
 
-  async downloadCV({ response, auth }: HttpContext) {
-    const userId = auth.user!.id;
-    const user = await User.find(userId);
-    const userCV = await this.userService.getCV(user!);
-    if (!userCV) {
+  async showAvatar({ response, auth }: HttpContext) {
+    const user = auth.user;
+
+    if (user!.avatar === null) {
       return response.notFound("File not found");
     }
-    const { file, fileName } = userCV;
+    const userAvatar = await this.userService.getAvatar(user!);
 
-    response.type("application/pdf");
+    if (!userAvatar) {
+      return response.notFound("File not found");
+    }
+    const { file, fileName } = userAvatar;
+
     response.header("Content-Disposition", `inline; filename="${fileName}"`);
     return response.stream(file);
   }
 
-  async showAvatar({ inertia }: HttpContext) {
-    return inertia.render("avatar");
-  }
   async storeAvatar({ request, response, auth }: HttpContext) {
     if (!request.file("avatar")) {
       return response.badRequest("No file uploaded");
@@ -62,6 +61,10 @@ export default class UsersController {
       size: "2mb",
       extnames: ["jpg", "jpeg", "png"],
     })!;
+
+    // If an image is uploaded with an extname error, the whole website crashes
+    if (avatar.hasErrors) return response.badRequest(avatar.errors.at(0)?.message);
+
     await this.userService.storeAvatar(user!, avatar);
     return response.ok({ message: "Avatar uploaded" });
   }

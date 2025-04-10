@@ -12,9 +12,19 @@ import app from "@adonisjs/core/services/app";
 import { inject } from "@adonisjs/core";
 import { Logger } from "@adonisjs/core/logger";
 import PromoterProfile from "#models/promoter_profile";
+import UserChangeEmailRequest from "#events/user_change_email";
+import SendChangeEmailEmail from "#listeners/send_change_email_email";
+import ChangeEmailRequest from "#models/email_change";
+import UserEmailChangedConfirmation from "#events/user_email_changed";
+import SendEmailChangedConfirmationEmail from "#listeners/send_email_changed_email";
 import { attachmentManager } from "@jrmc/adonis-attachment";
 import type { MultipartFile } from "@adonisjs/core/bodyparser";
 import drive from "@adonisjs/drive/services/main";
+import Sqids from "sqids";
+
+export const changeEmailSqids = new Sqids({
+  minLength: 4,
+});
 
 @inject()
 export class UserService {
@@ -175,5 +185,30 @@ export class UserService {
   async sendForgotPasswordEmail(email: string) {
     const listener = new SendForgotPasswordEmail();
     listener.handle(new UserForgotPassword(email));
+  }
+
+  async sendChangeEmailEmail(userId: number, oldEmail: string, newEmail: string) {
+    const committedChangeEmail = await db.transaction(async (trx) => {
+      await ChangeEmailRequest.query({ client: trx })
+        .where("user_id", userId)
+        .andWhere("performed", false)
+        .update({ canceled: true });
+
+      return await ChangeEmailRequest.create({ userId, oldEmail, newEmail }, { client: trx });
+    });
+
+    const listener = new SendChangeEmailEmail();
+    listener.handle(
+      new UserChangeEmailRequest(
+        changeEmailSqids.encode([committedChangeEmail.id]),
+        oldEmail,
+        newEmail,
+      ),
+    );
+  }
+
+  async sendEmailChangedConfirmationEmail(oldEmail: string, newEmail: string) {
+    const listener = new SendEmailChangedConfirmationEmail();
+    listener.handle(new UserEmailChangedConfirmation(oldEmail, newEmail));
   }
 }

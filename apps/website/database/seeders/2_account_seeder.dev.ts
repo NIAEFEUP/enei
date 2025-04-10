@@ -31,18 +31,22 @@ export default class extends BaseSeeder {
       lastName: "Costa",
       dateOfBirth: DateTime.fromObject({ year: 2003, month: 5, day: 9 }),
       phone: "+351917777777",
-      slug: "1234",
+      slug: "jorge-costa",
       university: "pt.up.fe",
       course: "M.EIC",
       curricularYear: "2",
       finishedAt: null,
-      municipality: "Braga",
+      municipality: "braga",
       heardAboutEnei: "friends",
       shirtSize: "M",
       isVegetarian: false,
       isVegan: false,
-      transports: ["a-pe"],
+      transports: ["carro"],
       attendedBeforeEditions: [],
+      about:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc laoreet eu enim vel semper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum eu est vitae ex sodales consequat.",
+      github: "https://github.com/JorgeCostaDevPT",
+      website: "https://eneiconf.pt",
     });
 
     // const profile = await PromoterProfile.create({})

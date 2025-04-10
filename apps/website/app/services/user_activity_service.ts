@@ -1,7 +1,7 @@
 import User from "#models/user";
 import { inject } from "@adonisjs/core";
 import { StoreService } from "./store_service.js";
-import type { UserActivityInformation } from "../../types/user_activity.js";
+import type { UserActivityDescription } from "../../types/user_activity.js";
 import UserActivity from "#models/user_activity";
 
 @inject()
@@ -13,7 +13,7 @@ export class UserActivityService {
   }
 
   async getActivityInformation(user: User) {
-    const information: UserActivityInformation = {};
+    const information: Record<string, UserActivityDescription> = {};
 
     this.resourceMap.forEach(async (resource, key) => {
       information[key] = await resource(user);

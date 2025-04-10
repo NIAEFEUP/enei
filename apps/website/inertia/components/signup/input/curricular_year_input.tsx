@@ -1,3 +1,4 @@
+import { cva, VariantProps } from "class-variance-authority";
 import { useState } from "react";
 import {
   Select,
@@ -24,11 +25,37 @@ interface CurricularYearSelectorProps {
 
 const LAST_YEAR_LIST = Array.from({ length: 75 }, (_, i) => (2025 - i).toString());
 
+const inputVariants = cva("", {
+  variants: {
+    variant: {
+      default: "bg-white text-enei-blue",
+      blue: "bg-enei-blue text-enei-beige border-enei-blue",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+});
+
+const inputContentVariants = cva("", {
+  variants: {
+    variant: {
+      default: "bg-white text-enei-blue",
+      blue: "bg-enei-blue text-enei-beige focus:bg-enei-beige focus:text-enei-blue",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+});
+
 const CurricularYearSelector = ({
   disabled,
   onCurricularYearChange,
   defaultValue,
-}: CurricularYearSelectorProps) => {
+  variant,
+}: CurricularYearSelectorProps
+  & VariantProps<typeof inputVariants & typeof inputContentVariants>) => {
   const [selectedCurricularYear, setCurricularYear] = useState<string | null>(defaultValue[0]);
   const [, setSelectedLastYear] = useState<number | null>(defaultValue[1]);
 
@@ -57,12 +84,16 @@ const CurricularYearSelector = ({
     <div className="flex gap-4">
       {/* Curricular Year Selector */}
       <Select defaultValue={defaultValue[0] || ""} onValueChange={handleCurricularYearSelect}>
-        <SelectTrigger disabled={disabled}>
+        <SelectTrigger disabled={disabled} className={inputVariants({ variant })}>
           <SelectValue placeholder="Ano Curricular" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className={inputVariants({ variant })}>
           {curricularYears.map((year) => (
-            <SelectItem key={year.value} value={year.value}>
+            <SelectItem
+              key={year.value}
+              value={year.value}
+              className={inputContentVariants({ variant })}
+            >
               {year.label}
             </SelectItem>
           ))}
@@ -71,13 +102,13 @@ const CurricularYearSelector = ({
 
       {/* State Selector - Only shown if degree already finished */}
       {selectedCurricularYear === "already-finished" && (
-        <Select onValueChange={handleLastYearSelect}>
-          <SelectTrigger>
+        <Select defaultValue={defaultValue[1]?.toString()} onValueChange={handleLastYearSelect}>
+          <SelectTrigger className={inputVariants({ variant })}>
             <SelectValue placeholder="Ano de Conclusão" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className={inputVariants({ variant })}>
             {LAST_YEAR_LIST.map((year) => (
-              <SelectItem key={year} value={year}>
+              <SelectItem key={year} value={year} className={inputContentVariants({ variant })}>
                 {year}
               </SelectItem>
             ))}
