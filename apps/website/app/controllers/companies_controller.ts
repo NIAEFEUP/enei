@@ -5,7 +5,7 @@ import { UserActivityService } from "#services/user_activity_service";
 
 @inject()
 export default class CompaniesController {
-  constructor(private userActivityService: UserActivityService) {}
+  constructor(private userActivityService: UserActivityService) { }
 
   async toggleParticipantLike({ request, auth, response }: HttpContext) {
     const { participantId } = request.only(["participantId"]);
@@ -19,15 +19,11 @@ export default class CompaniesController {
     }
 
     await companyUser.load("representativeProfile");
-    console.log("Company user:", companyUser.representativeProfile);
 
     this.userActivityService.logCompanyLike({
       userId: participantId,
       companyId: companyUser.representativeProfile?.companyId,
-      likedByName:
-        companyUser.representativeProfile?.firstName
-        + " "
-        + companyUser.representativeProfile?.lastName,
+      likedById: companyUser.id,
     });
 
     return response.json({

@@ -49,5 +49,5 @@ export type CompletedChallengeDescription = {
 
 export type CompanyLikeDescription = {
   companyId: number;
-  likedBy: string;
+  likedBy: number;
 };

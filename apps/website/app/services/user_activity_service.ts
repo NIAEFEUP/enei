@@ -25,19 +25,16 @@ export class UserActivityService {
   async logCompanyLike({
     userId,
     companyId,
-    likedByName,
+    likedById,
   }: {
     userId: number;
     companyId: number;
-    likedByName: string;
+    likedById: number;
   }) {
-    console.log("userId", userId);
-    console.log("companyId", companyId);
-    console.log("likedByName", likedByName);
     return await UserActivity.create({
       userId,
       type: "company_like",
-      description: { companyId: companyId, likedBy: likedByName },
+      description: { companyId: companyId, likedBy: likedById },
     });
   }
 }
