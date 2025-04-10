@@ -26,14 +26,15 @@ export default class PointsService {
 
     if (referralDescription.referralIsPromoter) {
       await db.transaction(async (trx) => {
-        const user = referralDescription.referralUser.useTransaction(trx);
+        const user = await User.findOrFail(referralDescription.referralUserId, { client: trx });
+        
         user.points +=
           PointsService.pointsRegistry.get(UserActivityType.Referral)?.["promoter"] ?? 0;
         await user.save();
       });
     } else {
       await db.transaction(async (trx) => {
-        const referralUser = referralDescription.referralUser.useTransaction(trx);
+        const referralUser = await User.findOrFail(referralDescription.referralUserId, { client: trx });
         referralUser.points +=
           PointsService.pointsRegistry.get(UserActivityType.Referral)?.["participant"] ?? 0;
         await referralUser.save();
