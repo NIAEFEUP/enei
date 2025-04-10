@@ -72,7 +72,7 @@ export PGHOST="$POSTGRES_HOST"
 export PGPORT="$POSTGRES_PORT"
 export PGUSER="$POSTGRES_USER"
 export PGPASSWORD="$POSTGRES_PASSWORD"
-export PGDATABASE="$POSTGRES_DATABASE"
+export PGDATABASE="$POSTGRES_DB"
 
 print "Recreating database schema..."
 run_command psql -v ON_ERROR_STOP=1 <<EOF
