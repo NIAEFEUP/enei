@@ -3,6 +3,7 @@ import Event from "#models/event";
 import EventService from "#services/event_service";
 import User from "#models/user";
 import { inject } from "@adonisjs/core";
+import ParticipantProfile from "#models/participant_profile";
 
 @inject()
 export default class EventsController {
@@ -34,6 +35,7 @@ export default class EventsController {
 
     const speakers = await event.related("speakers").query();
     const user = auth.user;
+    await user?.load("staffProfile");
 
     const isRegistered = user ? await this.eventService.isRegistered(user, event) : false;
 
@@ -85,6 +87,35 @@ export default class EventsController {
     await this.eventService.register(user!, event);
 
     return response.redirect().toRoute("pages:events.show", { id: event.id });
+  }
+
+  async checkin({ response, request, params, session }: HttpContext) {
+    const eventID = request.input("eventID");
+
+    const event = await Event.findOrFail(eventID);
+    const profile = await ParticipantProfile.findBy("slug", params.slug);
+    // FIXME: change this to User when slug in user is ready
+
+    if (!profile) {
+      session.flashErrors({ message: "Participante não encontrado" });
+      return response.redirect().back();
+    }
+
+    const user = await User.findBy("participantProfileId", profile?.id);
+
+    if (!this.eventService.isRegistered(user!, event)) {
+      session.flashErrors({ message: "Participante não registado no evento" });
+      return response.redirect().back();
+    }
+
+    if (await this.eventService.isCheckedIn(user!, event)) {
+      session.flashErrors({ message: "Participante já checked-in" });
+      return response.redirect().back();
+    }
+
+    await this.eventService.checkin(user!, event);
+
+    return response.redirect().back();
   }
 
   async ticketsRemaining({ response, params }: HttpContext) {

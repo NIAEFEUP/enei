@@ -53,6 +53,11 @@ export default class User extends BaseModel {
   @manyToMany(() => Event)
   declare eventsRegistered: ManyToMany<typeof Event>;
 
+  @manyToMany(() => Event, {
+    pivotTable: "event_checkins",
+  })
+  public checkedInEvents!: ManyToMany<typeof Event>;
+
   @column()
   declare referrerId: number | null;
 
@@ -116,14 +121,14 @@ export default class User extends BaseModel {
   // Functions
 
   get role() {
+    if (this.isStaff()) return "staff" as const;
     if (this.isParticipant()) return "participant" as const;
     if (this.isPromoter()) return "promoter" as const;
-    if (this.isStaff()) return "staff" as const;
     return "unknown" as const;
   }
 
   isStaff() {
-    return this.staffProfile;
+    return this.staffProfileId;
   }
 
   isPromoter() {
