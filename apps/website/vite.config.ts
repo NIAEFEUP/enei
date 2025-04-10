@@ -18,7 +18,7 @@ export default defineConfig({
     adonisjs({ entrypoints: ["inertia/app/app.tsx"], reload: ["resources/views/**/*.edge"] }),
   ],
   esbuild: {
-    target: 'esnext'
+    target: "esnext",
   },
   /**
    * Define aliases for importing modules from

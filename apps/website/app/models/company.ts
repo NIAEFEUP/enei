@@ -1,5 +1,8 @@
 import { DateTime } from "luxon";
-import { BaseModel, column } from "@adonisjs/lucid/orm";
+import { BaseModel, column, hasMany } from "@adonisjs/lucid/orm";
+import RepresentativeProfile from "./representative_profile.js";
+import type { HasMany } from "@adonisjs/lucid/types/relations";
+import SpeakerProfile from "./speaker_profile.js";
 
 export default class Company extends BaseModel {
   @column({ isPrimary: true })
@@ -17,6 +20,20 @@ export default class Company extends BaseModel {
   @column()
   declare logo: string;
 
-  // @hasMany(() => RepresentativeProfile)
-  // declare representativeProfiles: HasMany<typeof RepresentativeProfile>;
+  @column()
+  declare sponsor: string;
+
+  @column()
+  declare about: string;
+
+  @hasMany(() => RepresentativeProfile)
+  declare representativeProfiles: HasMany<typeof RepresentativeProfile>;
+
+  static async getEvents(company: Company) {
+    const speakerProfiles = await SpeakerProfile.query()
+      .where("company", company.name)
+      .preload("events");
+
+    return speakerProfiles ? speakerProfiles.map((profile) => profile.events).flat() : [];
+  }
 }

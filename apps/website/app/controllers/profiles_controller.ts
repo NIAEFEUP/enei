@@ -45,7 +45,9 @@ export default class ProfilesController {
     const user = auth.getUserOrFail();
 
     await user.load("participantProfile");
-    await user.load("representativeProfile");
+    await user.load("speakerProfile", (q) => {
+      q.preload("events");
+    });
 
     if (!user?.participantProfile && !user?.representativeProfile)
       return response.redirect().toRoute("pages:signup");
@@ -68,7 +70,9 @@ export default class ProfilesController {
     const authUser = auth.getUserOrFail();
     const user = await User.findByOrFail("slug", params.slug);
     await user.load("participantProfile");
-    await user.load("representativeProfile");
+    await user.load("speakerProfile", (q) => {
+      q.preload("events");
+    });
 
     const isUser = user.id === authUser.id;
     const activityInformation = await this.userActivityService.getActivityInformation(user);

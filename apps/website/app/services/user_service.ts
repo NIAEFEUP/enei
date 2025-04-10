@@ -30,7 +30,7 @@ export const changeEmailSqids = new Sqids({
 
 @inject()
 export class UserService {
-  constructor(private logger: Logger) { }
+  constructor(private logger: Logger) {}
 
   async storeCV(user: User, cv: MultipartFile) {
     try {
@@ -221,6 +221,6 @@ export class UserService {
     const userCode = userNumber.toString().padStart(3, "0");
 
     user.slug = slug(`${firstName} ${lastName} ${userCode}`);
-    await user.save()
+    await user.save();
   }
 }

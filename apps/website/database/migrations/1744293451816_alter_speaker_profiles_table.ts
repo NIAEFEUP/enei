@@ -1,23 +1,25 @@
 import { BaseSchema } from "@adonisjs/lucid/schema";
 
 export default class extends BaseSchema {
-  protected tableName = "users";
+  protected tableName = "speaker_profiles";
 
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.string("slug").nullable();
-      table
-        .integer("representative_profile_id")
-        .references("id")
-        .inTable("representative_profiles");
+      table.string("about");
       table.integer("speaker_profile_id").references("id").inTable("speaker_profiles");
+      table.string("github");
+      table.string("linkedin");
+      table.string("website");
     });
   }
 
   async down() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.dropColumn("slug");
-      table.dropColumn("representative_profile_id");
+      table.dropColumn("about");
+      table.dropColumn("speaker_profile_id");
+      table.dropColumn("github");
+      table.dropColumn("linkedin");
+      table.dropColumn("website");
     });
   }
 }

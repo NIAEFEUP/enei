@@ -13,6 +13,8 @@ import type { Attachment } from "@jrmc/adonis-attachment/types/attachment";
 
 import { Github, Globe, Linkedin } from "lucide-react";
 import RepresentativeProfile from "./representative_profile.js";
+import SpeakerProfile from "./speaker_profile.js";
+import { useQueryParams } from "adminjs";
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -84,6 +86,12 @@ export default class User extends BaseModel {
 
   @belongsTo(() => ParticipantProfile)
   declare participantProfile: BelongsTo<typeof ParticipantProfile>;
+
+  @column()
+  declare speakerProfileId: number | null;
+
+  @belongsTo(() => SpeakerProfile)
+  declare speakerProfile: BelongsTo<typeof SpeakerProfile>;
 
   @column()
   declare points: number;
@@ -162,22 +170,35 @@ export default class User extends BaseModel {
     return this.referrerId !== null;
   }
 
-  get socials() {
+  static socials(user: User) {
     const socials = [];
 
-    if (this.role === "participant") {
-      if (this.participantProfile.github)
-        socials.push({ icon: Github, link: this.participantProfile.github });
-      if (this.participantProfile.linkedin)
-        socials.push({ icon: Linkedin, link: this.participantProfile.linkedin });
-      if (this.participantProfile.website)
-        socials.push({ icon: Globe, link: this.participantProfile.website });
+    if (user.role === "participant") {
+      if (user.participantProfile.github)
+        socials.push({ icon: Github, link: user.participantProfile.github });
+      if (user.participantProfile.linkedin)
+        socials.push({ icon: Linkedin, link: user.participantProfile.linkedin });
+      if (user.participantProfile.website)
+        socials.push({ icon: Globe, link: user.participantProfile.website });
+    }
+
+    if (user.role === "representative") {
+      if (user.representativeProfile.ORCIDLink) {
+        socials.push({ icon: Github, link: user.representativeProfile.ORCIDLink });
+      }
     }
 
     return socials;
   }
 
   static getName(user: User) {
+    if (user.speakerProfile) {
+      return {
+        firstName: user.speakerProfile.firstName,
+        lastName: user.speakerProfile.lastName,
+      };
+    }
+
     if (user.participantProfile)
       return {
         firstName: user.participantProfile.firstName,
@@ -186,7 +207,7 @@ export default class User extends BaseModel {
 
     if (user.representativeProfile)
       return {
-        firstName: user.representativeProfile,
+        firstName: user.representativeProfile.firstName,
         lastName: user.representativeProfile.lastName,
       };
   }

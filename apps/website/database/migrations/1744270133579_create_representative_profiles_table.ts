@@ -1,11 +1,11 @@
-import { BaseSchema } from '@adonisjs/lucid/schema'
+import { BaseSchema } from "@adonisjs/lucid/schema";
 
 export default class extends BaseSchema {
-  protected tableName = 'representative_profiles'
+  protected tableName = "representative_profiles";
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
+      table.increments("id");
 
       table.timestamps({ defaultToNow: true });
 
@@ -15,10 +15,10 @@ export default class extends BaseSchema {
       table.string("ORCID_link");
       table.integer("company_id").references("id").inTable("companies");
       table.string("email").unique().nullable();
-    })
+    });
   }
 
   async down() {
-    this.schema.dropTable(this.tableName)
+    this.schema.dropTable(this.tableName);
   }
 }

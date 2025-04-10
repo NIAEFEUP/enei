@@ -20,21 +20,18 @@ const SocialItem = ({ icon: Icon, link }: SocialIconProps) => {
 };
 
 interface ProfileSocialsProps {
-  user: User
+  user: User;
 }
 
-export default function ProfileSocials({
-    user
-}: ProfileSocialsProps) {
-    const socials = user.socials
+export default function ProfileSocials({ user }: ProfileSocialsProps) {
+  const socials = User.socials(user);
 
-    return (
-        <>
-
-            <ul className="mt-7 flex flex-col gap-5">
-                {socials.length > 0
-                    && socials.map((social: SocialIconProps) => <SocialItem {...social} />)}
-            </ul>
-        </>
-    )
+  return (
+    <>
+      <ul className="mt-7 flex flex-col gap-5">
+        {socials?.length > 0
+          && socials?.map((social: SocialIconProps) => <SocialItem {...social} />)}
+      </ul>
+    </>
+  );
 }
