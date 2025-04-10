@@ -54,7 +54,7 @@ export default defineConfig({
     () => import("@adonisjs/drive/drive_provider"),
     () => import("@adonisjs/bouncer/bouncer_provider"),
     {
-      file: () => import("@adminjs/adonis/adminjs_provider"),
+      file: () => import("./providers/adminjs.js"),
       environment: ["web"],
     },
   ],
