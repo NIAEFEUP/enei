@@ -29,8 +29,6 @@ export class UserActivityService {
       .andWhereRaw(`description->>'likedBy' = ?`, [likedById.toString()])
       .first();
 
-    console.log("like", !!like);
-
     return !!like;
   }
 
