@@ -9,9 +9,25 @@ import ProductGroup from "#models/product_group";
 import { createMBWayOrderValidator } from "#validators/order";
 import UpdateOrderStatus from "../jobs/update_order_status.js";
 export default class OrdersController {
-  index({ inertia }: HttpContext) {
-    return inertia.render("payments");
+  
+  public async index({ inertia, auth, response }: HttpContext) {
+    const authUser = auth.user
+
+    if (!authUser) {
+      return response.status(401).json({
+        message: 'Unauthorized',
+      })
+    }
+
+    await authUser.load('orders', (ordersQuery) => {
+      ordersQuery.preload('products')
+    })
+
+    const orders = authUser.orders
+    return inertia.render('payments/orders', { orders })
   }
+
+
 
   public async createMBWay({ request, auth, response }: HttpContext) {
     const authUser = auth.user;

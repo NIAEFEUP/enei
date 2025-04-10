@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 import { BaseModel, belongsTo, column, hasMany, manyToMany } from "@adonisjs/lucid/orm";
 import Account from "./account.js";
+import Order from "./order.js";
 import { UserTypes } from "../../types/user.js";
 import PromoterInfo from "./promoter_info.js";
 import type { BelongsTo, HasMany, ManyToMany } from "@adonisjs/lucid/types/relations";
@@ -91,6 +92,12 @@ export default class User extends BaseModel {
 
   @belongsTo(() => StaffProfile)
   declare staffProfile: BelongsTo<typeof StaffProfile>;
+
+  @hasMany(() => Order, {
+    foreignKey: 'userId',
+    localKey: 'id'
+  })
+  declare orders: HasMany<typeof Order>
 
   // Functions
 
