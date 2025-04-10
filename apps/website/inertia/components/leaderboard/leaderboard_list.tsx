@@ -7,7 +7,7 @@ import {
   TableRow,
 } from "~/components/ui/table";
 
-import User from "#models/user";
+import type User from "#models/user";
 import { Link } from "@tuyau/inertia/react";
 
 interface LeaderbordListProps {

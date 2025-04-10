@@ -1,4 +1,4 @@
-import RepresentativeProfile from "#models/representative_profile";
+import type RepresentativeProfile from "#models/representative_profile";
 
 interface CompanyRepresentativesProps {
   representatives: RepresentativeProfile[];

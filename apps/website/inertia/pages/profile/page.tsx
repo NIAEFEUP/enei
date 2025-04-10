@@ -14,7 +14,6 @@ import { useAuth } from "~/hooks/use_auth";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import ProfileSocials from "~/components/profile/profile_socials";
 import type User from "#models/user";
-import ProfileAbout from "~/components/profile/about/profile_about";
 
 export const ProfileContext = createContext<{ slug: string | number }>({
   slug: "",
@@ -71,7 +70,7 @@ export default function ProfilePage(
 
           <section>
             {auth.state === "authenticated" && auth.user?.role === "staff" && (
-              <ProfileActivityInfo activityInformation={activityInformation} />
+              <ProfileActivityInfo />
             )}
           </section>
         </Container>

@@ -1,4 +1,4 @@
-import User from "#models/user"
+import type User from "#models/user"
 import ParticipantProfileAbout from "./participant_profile_about"
 import SpeakerProfileAbout from "./speaker_profile_about"
 

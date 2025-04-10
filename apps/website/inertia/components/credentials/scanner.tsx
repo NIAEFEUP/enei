@@ -6,18 +6,20 @@ interface CredentialScannerProps {
 
 function CredentialScanner({ onScan }: CredentialScannerProps) {
   return (
-    <Scanner
-      key={"credential-scanner"}
-      onScan={(data: IDetectedBarcode[]) => {
-        const value = data[0].rawValue.split("/");
-        const slug = value[value.length - 1];
+    <div className="w-64">
+      <Scanner
+        key={"credential-scanner"}
+        onScan={(data: IDetectedBarcode[]) => {
+          const value = data[0].rawValue.split("/");
+          const slug = value[value.length - 1];
 
-        onScan(slug);
-      }}
-      components={{ audio: false }}
-      allowMultiple={true}
-      scanDelay={0}
-    />
+          onScan(slug);
+        }}
+        components={{ audio: false }}
+        allowMultiple={true}
+        scanDelay={0}
+      />
+    </div>
   );
 }
 

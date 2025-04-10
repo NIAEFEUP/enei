@@ -13,9 +13,7 @@ const EmailChangedConfirmation = ({
   email,
   oldEmail,
   newEmail,
-  confirmationLink,
-  cancelationLink,
-}: EmailChangeProps) => {
+}: EmailChangedConfirmationProps) => {
   return (
     <BaseLayout>
       <Body>

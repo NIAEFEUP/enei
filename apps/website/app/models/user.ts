@@ -12,9 +12,8 @@ import { attachment } from "@jrmc/adonis-attachment";
 import type { Attachment } from "@jrmc/adonis-attachment/types/attachment";
 
 import { Github, Globe, Linkedin } from "lucide-react";
-import RepresentativeProfile from "./representative_profile.js";
 import SpeakerProfile from "./speaker_profile.js";
-import { useQueryParams } from "adminjs";
+import RepresentativeProfile from "./representative_profile.js";
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -57,6 +56,11 @@ export default class User extends BaseModel {
   @manyToMany(() => Event)
   declare eventsRegistered: ManyToMany<typeof Event>;
 
+  @manyToMany(() => Event, {
+    pivotTable: "event_checkins",
+  })
+  public checkedInEvents!: ManyToMany<typeof Event>;
+
   @column()
   declare referrerId: number | null;
 
@@ -78,6 +82,12 @@ export default class User extends BaseModel {
 
   @belongsTo(() => PromoterProfile)
   declare promoterProfile: BelongsTo<typeof PromoterProfile>;
+
+  @belongsTo(() => RepresentativeProfile)
+  declare representativeProfile: BelongsTo<typeof RepresentativeProfile>;
+
+  @column()
+  declare representativeProfileId: number | null;
 
   // ParticipantProfile
 
@@ -105,12 +115,6 @@ export default class User extends BaseModel {
   @column()
   declare slug: string;
 
-  @belongsTo(() => RepresentativeProfile)
-  declare representativeProfile: BelongsTo<typeof RepresentativeProfile>;
-
-  @column()
-  declare representativeProfileId: number | null;
-
   @belongsTo(() => StaffProfile)
   declare staffProfile: BelongsTo<typeof StaffProfile>;
 
@@ -129,10 +133,10 @@ export default class User extends BaseModel {
   // Functions
 
   get role() {
+    if (this.isStaff()) return "staff" as const;
     if (this.isParticipant()) return "participant" as const;
     if (this.isPromoter()) return "promoter" as const;
     if (this.isRepresentative()) return "representative" as const;
-    if (this.isStaff()) return "staff" as const;
     return "unknown" as const;
   }
 
@@ -141,7 +145,7 @@ export default class User extends BaseModel {
   }
 
   isStaff() {
-    return this.staffProfile;
+    return !!this.staffProfile;
   }
 
   isPromoter() {
@@ -168,27 +172,6 @@ export default class User extends BaseModel {
 
   wasReferred() {
     return this.referrerId !== null;
-  }
-
-  static socials(user: User) {
-    const socials = [];
-
-    if (user.role === "participant") {
-      if (user.participantProfile.github)
-        socials.push({ icon: Github, link: user.participantProfile.github });
-      if (user.participantProfile.linkedin)
-        socials.push({ icon: Linkedin, link: user.participantProfile.linkedin });
-      if (user.participantProfile.website)
-        socials.push({ icon: Globe, link: user.participantProfile.website });
-    }
-
-    if (user.role === "representative") {
-      if (user.representativeProfile.ORCIDLink) {
-        socials.push({ icon: Github, link: user.representativeProfile.ORCIDLink });
-      }
-    }
-
-    return socials;
   }
 
   static getName(user: User) {

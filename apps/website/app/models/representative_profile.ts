@@ -1,11 +1,16 @@
 import { DateTime } from "luxon";
-import { BaseModel, belongsTo, column } from "@adonisjs/lucid/orm";
+import { BaseModel, belongsTo, column, hasOne } from "@adonisjs/lucid/orm";
+import type { BelongsTo, HasOne } from "@adonisjs/lucid/types/relations";
+import User from "./user.js";
+// import Event from './event.js'
 import Company from "./company.js";
-import type { BelongsTo } from "@adonisjs/lucid/types/relations";
 
 export default class RepresentativeProfile extends BaseModel {
   @column({ isPrimary: true })
   declare id: number;
+
+  @hasOne(() => User)
+  declare user: HasOne<typeof User>;
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime;
@@ -24,7 +29,7 @@ export default class RepresentativeProfile extends BaseModel {
   @column()
   declare jobTitle: string;
 
-  @column()
+  @column({ columnName: "ORCID_link" })
   declare ORCIDLink: string | null;
 
   @belongsTo(() => Company)
@@ -36,7 +41,7 @@ export default class RepresentativeProfile extends BaseModel {
   @column()
   declare email: string | null;
 
-  //To uncomment when Events are created
+  // To uncomment when Events are created
   // @hasMany(() => Event)
   // declare participatingEvents: HasMany<typeof Event>
 

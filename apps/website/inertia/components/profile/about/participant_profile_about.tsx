@@ -1,4 +1,4 @@
-import ParticipantProfile from "#models/participant_profile";
+import type ParticipantProfile from "#models/participant_profile";
 import axios from "axios";
 import {
   ExternalLink,

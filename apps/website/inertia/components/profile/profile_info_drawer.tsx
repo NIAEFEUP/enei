@@ -1,4 +1,4 @@
-import ParticipantProfile from "#models/participant_profile";
+import type ParticipantProfile from "#models/participant_profile";
 import { Link } from "@tuyau/inertia/react";
 import { User } from "lucide-react";
 import { useState } from "react";

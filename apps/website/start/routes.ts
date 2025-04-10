@@ -253,6 +253,11 @@ router
     router.get("/:id/tickets", [EventsController, "ticketsRemaining"]).as("actions:events.tickets");
 
     router
+      .post("/:slug/check-in", [EventsController, "checkin"])
+      .as("actions:events.checkin")
+      .use(middleware.staff());
+
+    router
       .get("/:id/is-registered", [EventsController, "isRegistered"])
       .as("actions:events.isRegistered");
 
@@ -270,7 +275,6 @@ router
     router.post("/cv/upload", [UsersController, "storeCV"]).as("actions:cv.upload");
     router.delete("cv/delete", [UsersController, "deleteCV"]).as("actions:cv.delete");
     router.get("/cv/name", [UsersController, "showCVName"]).as("actions:cv.name");
-    router.get("/:id/cv/download", [UsersController, "downloadCV"]).use(middleware.company());
 
     // Avatar endpoints
     router.get("/avatar/name", [UsersController, "showAvatarName"]).as("actions:avatar.name");

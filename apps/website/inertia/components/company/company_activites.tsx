@@ -1,4 +1,4 @@
-import Event from "#models/event";
+import type Event from "#models/event";
 
 interface CompanyActivitiesProps {
   events: Event[];

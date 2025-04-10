@@ -1,4 +1,5 @@
-import User from "#models/user";
+import type User from "#models/user";
+import { Github, Globe, Linkedin } from "lucide-react";
 import { SocialIconProps } from "~/pages/profile/page";
 
 const SocialItem = ({ icon: Icon, link }: SocialIconProps) => {
@@ -23,8 +24,30 @@ interface ProfileSocialsProps {
   user: User;
 }
 
+function getUserSocials(user: User) {
+  const socials = [];
+
+  if (user.role === "participant") {
+    if (user.participantProfile.github)
+      socials.push({ icon: Github, link: user.participantProfile.github });
+    if (user.participantProfile.linkedin)
+      socials.push({ icon: Linkedin, link: user.participantProfile.linkedin });
+    if (user.participantProfile.website)
+      socials.push({ icon: Globe, link: user.participantProfile.website });
+  }
+
+  if (user.role === "representative") {
+    if (user.representativeProfile.ORCIDLink) {
+      socials.push({ icon: Github, link: user.representativeProfile.ORCIDLink });
+    }
+  }
+
+  return socials;
+}
+
+
 export default function ProfileSocials({ user }: ProfileSocialsProps) {
-  const socials = User.socials(user);
+  const socials = getUserSocials(user);
 
   return (
     <>

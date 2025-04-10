@@ -109,5 +109,23 @@ export default class extends BaseSeeder {
 
     await speakerUser.related("speakerProfile").associate(speakerUserProfile);
     await mockCompanyEvent.related("speakers").attach([speakerUserProfile.id]);
+
+    const companyRepresentative = await User.create({
+      email: "company@eneiconf.pt",
+      emailVerifiedAt: DateTime.now(),
+    });
+
+    const companyRepresentativeProfile = await RepresentativeProfile.create({
+      firstName: "João",
+      lastName: "Silva",
+      jobTitle: "CEO",
+      ORCIDLink: "https://orcid.org/0000-0002-1825-0097",
+    });
+
+    await companyRepresentative
+      .related("representativeProfile")
+      .associate(companyRepresentativeProfile);
+
+    await companyRepresentativeProfile.related("company").associate(company);
   }
 }

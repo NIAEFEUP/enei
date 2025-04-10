@@ -1,4 +1,4 @@
-import SpeakerProfile from "#models/speaker_profile";
+import type SpeakerProfile from "#models/speaker_profile";
 import SpeakerProfileEvents from "./speaker_profile_events";
 
 interface SpeakerProfileAboutProps {

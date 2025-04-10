@@ -7,6 +7,7 @@ import {
   Info,
   ClipboardCheck,
   Loader2,
+  QrCode,
 } from "lucide-react";
 import { Button, buttonVariants } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -22,6 +23,8 @@ import Page from "~/components/common/page";
 import { Link, useForm } from "@inertiajs/react";
 import Container from "~/components/common/containers";
 import { useTuyau } from "~/hooks/use_tuyau";
+import EventCheckInDialog from "~/components/events/event_check_in_dialog";
+import { useAuth } from "~/hooks/use_auth";
 
 interface Speaker {
   firstName: string;
@@ -70,9 +73,13 @@ export default function EventRegistrationPage({
   isRegistered,
 }: EventRegistrationProps) {
   const [registrationConfirmationModalOpen, setRegistrationConfirmationModalOpen] = useState(false);
+
+  const [scannerModalOpen, setScannerModalOpen] = useState(false);
+
   const { toast } = useToast();
 
   const tuyau = useTuyau();
+  const auth = useAuth();
 
   const { post, processing } = useForm({});
 
@@ -288,7 +295,7 @@ export default function EventRegistrationPage({
               )}
               {/* Button to register */}
               {!isRegistered && (
-                <div className="flex justify-center">
+                <div className="flex items-center justify-center gap-3">
                   <Button
                     onClick={() => handleRegisterClick()}
                     disabled={
@@ -309,6 +316,10 @@ export default function EventRegistrationPage({
                         : "Esgotado"
                       : "Inscrição não necessária"}
                   </Button>
+
+                  {auth.state === "authenticated" && auth.user.role === "staff" && (
+                    <QrCode onClick={() => setScannerModalOpen(true)} />
+                  )}
                 </div>
               )}
               {/* Temporary indication that registration is not possible yet */}
@@ -379,6 +390,13 @@ export default function EventRegistrationPage({
                 onClose={() => setRegistrationConfirmationModalOpen(false)}
                 onSubmit={handleRegister}
               />
+              {auth.state === "authenticated" && auth.user.role === "staff" && (
+                <EventCheckInDialog
+                  isOpen={scannerModalOpen}
+                  setOpen={setScannerModalOpen}
+                  eventID={eventId}
+                />
+              )}
             </CardContent>
           </Card>
         </div>
