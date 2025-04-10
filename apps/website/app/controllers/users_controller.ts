@@ -1,8 +1,6 @@
 import { inject } from "@adonisjs/core";
 import type { HttpContext } from "@adonisjs/core/http";
-import User from "#models/user";
 import { UserService } from "#services/user_service";
-import UserPolicy from "#policies/user_policy";
 
 @inject()
 export default class UsersController {

@@ -128,7 +128,7 @@ export default class User extends BaseModel {
   }
 
   isStaff() {
-    return this.staffProfileId;
+    return !!this.staffProfile;
   }
 
   isPromoter() {

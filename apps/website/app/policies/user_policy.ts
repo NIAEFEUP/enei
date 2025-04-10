@@ -23,6 +23,6 @@ export default class UserPolicy extends BasePolicy {
   }
 
   async seeCV(user: User, cvOwner: User) {
-    return user.isStaff() || user.id == cvOwner.id; // TODO: Add company that has been visited
+    return user.isStaff() || user.id === cvOwner.id; // TODO: Add company that has been visited
   }
 }
