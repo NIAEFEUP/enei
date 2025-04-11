@@ -15,6 +15,7 @@ import {
   sendForgotPasswordThrottle,
 } from "#start/limiter";
 
+
 const EventsController = () => import("#controllers/events_controller");
 const AuthenticationController = () => import("#controllers/authentication_controller");
 const OrdersController = () => import("#controllers/orders_controller");
@@ -25,6 +26,7 @@ const StoreController = () => import("#controllers/store_controller");
 const ReferralsController = () => import("#controllers/referrals_controller");
 const LeaderboardController = () => import("#controllers/leaderboard_controller");
 const ProductReservationController = () => import("#controllers/product_reservation_controller");
+const CompaniesController = () => import("#controllers/companies_controller");
 
 router.on("/").renderInertia("home").as("pages:home");
 
@@ -328,3 +330,14 @@ router
   .prefix("/credentials");
 
 router.on("/nfc").renderInertia("nfc").as("pages:nfc");
+
+router
+  .group(() => {
+    router
+      .get("/participants", [CompaniesController, "showParticipants"])
+      .as("pages:company.participants");
+    router
+      .post("/participants/like", [CompaniesController, "toggleParticipantLike"])
+      .as("actions:company.like.participant");
+  })
+  .prefix("/company");
