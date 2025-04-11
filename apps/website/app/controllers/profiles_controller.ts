@@ -121,8 +121,6 @@ export default class ProfilesController {
       return response.redirect().back();
     }
 
-    this.userService.createSlug(user, formattedData.firstName ?? "", formattedData.lastName ?? "");
-
     const profile = await createProfileValidator.validate(formattedData);
 
     const profileAdd = new ParticipantProfile();

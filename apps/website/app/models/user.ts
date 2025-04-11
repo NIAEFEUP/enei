@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { BaseModel, belongsTo, column, hasMany, manyToMany } from "@adonisjs/lucid/orm";
+import { BaseModel, beforeSave, belongsTo, column, hasMany, manyToMany } from "@adonisjs/lucid/orm";
 import Account from "./account.js";
 import { UserTypes } from "../../types/user.js";
 import PromoterInfo from "./promoter_info.js";
@@ -10,9 +10,10 @@ import Event from "./event.js";
 import StaffProfile from "./staff_profile.js";
 import { attachment } from "@jrmc/adonis-attachment";
 import type { Attachment } from "@jrmc/adonis-attachment/types/attachment";
-
 import SpeakerProfile from "./speaker_profile.js";
 import RepresentativeProfile from "./representative_profile.js";
+import slug from "slug";
+import { md5 } from "js-md5";
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -129,6 +130,34 @@ export default class User extends BaseModel {
   })
   declare avatar: Attachment | null;
 
+  // Hooks
+
+  @beforeSave()
+  public static async createSlug(user: User) {
+    await Promise.allSettled([
+      user.load("participantProfile"),
+      user.load("representativeProfile"),
+      user.load("speakerProfile"),
+    ]);
+
+    const profile = user.participantProfile ?? user.representativeProfile ?? user.speakerProfile;
+
+    if (user.$dirty.slug || profile.$dirty.firstName || profile.$dirty.lastName) {
+      if (profile) {
+        const { firstName, lastName } = profile;
+
+        const userMd5 = md5(slug(`${firstName} ${lastName}`));
+        const userNumber =
+          (Number.parseInt(userMd5.replace(/[^1-9]/g, "").substring(0, 3)) + user.id) % 1000;
+        const userCode = userNumber.toString().padStart(3, "0");
+
+        user.slug = slug(`${firstName} ${lastName} ${userCode}`);
+      } else {
+        user.slug = null;
+      }
+    }
+  }
+
   // Functions
 
   get role() {
@@ -140,7 +169,7 @@ export default class User extends BaseModel {
   }
 
   isRepresentative() {
-    return this.representativeProfileId;
+    return this.representativeProfileId !== null;
   }
 
   isStaff() {
