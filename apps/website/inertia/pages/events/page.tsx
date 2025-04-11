@@ -1,5 +1,5 @@
 import { DaySelector } from "~/components/events/day_selector";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LongActivities from "~/components/events/long_activities";
 import EventsProgram from "~/components/events/schedule/events_program";
 import Page from "~/components/common/page";
@@ -53,12 +53,15 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
     new Date("2025-04-13").toDateString(),
     new Date("2025-04-14").toDateString(),
   ];
-  for (const [i, eneiDate] of eneiDates.entries()) {
-    if (currentDay === eneiDate) {
-      setCurrentActiveIndex(i);
-      break;
+
+  useEffect(() => {
+    for (const [i, eneiDate] of eneiDates.entries()) {
+      if (currentDay === eneiDate) {
+        setCurrentActiveIndex(i);
+        break;
+      }
     }
-  }
+  }, [currentDay, eneiDates])
 
   return (
     <Page title="Eventos" variant="beige" className="bg-enei-beige">
