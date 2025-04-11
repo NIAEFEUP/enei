@@ -2,14 +2,14 @@ import type { HttpContext } from "@adonisjs/core/http";
 import Order from "#models/order";
 // import OrderProduct from "#models/order_product";
 // import { createMBWayOrderValidator } from "#validators/order";
-import { inject } from "@adonisjs/core";
+// import { inject } from "@adonisjs/core";
 // import { PaymentService } from "../services/payment_service.js";
 
-import { OrderService } from "#services/order_service";
+// import { OrderService } from "#services/order_service";
 
-@inject()
+// @inject()
 export default class OrdersController {
-  public constructor(private orderService: OrderService) {}
+  public constructor() {}
 
   index({ inertia }: HttpContext) {
     return inertia.render("payments");
