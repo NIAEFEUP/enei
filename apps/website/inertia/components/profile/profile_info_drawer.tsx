@@ -1,35 +1,46 @@
-import ParticipantProfile from "#models/participant_profile";
+import type ParticipantProfile from "#models/participant_profile";
 import { Link } from "@tuyau/inertia/react";
-import { User } from "@enei/shadcn/icons";
-import { useState } from "react";
-import { Drawer, DrawerContent } from "@enei/shadcn/ui/drawer";
-import { Button } from "@enei/shadcn/ui/button";
+import { User } from "lucide-react";
+import { Drawer, DrawerContent } from "~/components/ui/drawer";
+import CredentialWriter from "../credentials/writer";
 
 interface ProfileInfoDrawerProps {
   profile: ParticipantProfile;
+  onClose: () => void;
 }
 
-function ProfileInfoDrawer({ profile }: ProfileInfoDrawerProps) {
-  const [open, setOpen] = useState<boolean>(true);
-
+function ProfileInfoDrawer({ profile, onClose }: ProfileInfoDrawerProps) {
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
+    <Drawer
+      defaultOpen={true}
+      onOpenChange={(open) => {
+        if (!open) {
+          setTimeout(() => {
+            onClose();
+          }, 300);
+        }
+      }}
+    >
       <DrawerContent className="bg-enei-beige text-enei-blue absolute gap-4 p-4">
-        <div className="mx-auto flex w-1/4 flex-row items-center justify-between">
-          <User className="h-48 w-48"></User>
-          <div className="flex flex-col gap-1">
-            <Button asChild>
-              <Link
-                route="pages:profile.show"
-                params={{ slug: profile.slug ?? "" }}
-                target="_blank"
-              >
-                <p>Ir para o perfil</p>
-              </Link>
-            </Button>
-            <p className="">{`${profile.firstName} ${profile.lastName}`}</p>
-            <p className="">{`${profile.university} | ${profile.course}`}</p>
+        <div className="mx-auto flex w-full max-w-96 flex-col items-center gap-2">
+          <div className="relative flex flex-row items-center">
+            <User className="size-16" />
+            <div className="flex flex-col">
+              <p>
+                <Link
+                  className="after:absolute after:inset-0 hover:underline"
+                  route="pages:profile.show"
+                  params={{ slug: profile.user.slug ?? "" }}
+                  target="_blank"
+                >
+                  {profile.firstName} {profile.lastName}
+                </Link>
+              </p>
+              <p>{profile.user.slug}</p>
+            </div>
           </div>
+
+          <CredentialWriter slug={profile.user.slug ?? ""} />
         </div>
       </DrawerContent>
     </Drawer>

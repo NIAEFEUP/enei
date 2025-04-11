@@ -20,5 +20,14 @@
     "prettier": "^3.5.3",
     "typescript": "catalog:"
   },
-  "packageManager": "pnpm@10.7.1"
+  "packageManager": "pnpm@10.7.1",
+  "pnpm": {
+    "overrides": {
+      "strtok3": "8.0.1"
+    },
+    "neverBuiltDependencies": [],
+    "patchedDependencies": {
+      "@adminjs/adonis": "patches/@adminjs__adonis.patch"
+    }
+  }
 }

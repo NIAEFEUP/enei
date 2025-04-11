@@ -24,22 +24,12 @@ import { cn } from "@enei/shadcn/cn";
 import { Input } from "@enei/shadcn/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EducationInfo, educationInfoSchema } from "~/pages/signup/schema";
-import { getUniversityById, universities } from "~/lib/enei/signup/universities";
-import { useMemo } from "react";
-import { useStepper } from "@enei/shadcn/ui/preview/stepper";
+import { universities } from "~/lib/enei/signup/universities";
+import { useStepper } from "../ui/stepper";
 import { useAtom, useSetAtom } from "jotai/react";
 import { educationInfoAtom } from "~/pages/signup/atoms";
 import StepperFormActions from "./actions";
-
-function UniversitySelection({ value }: { value?: string }) {
-  const name = useMemo(() => value && getUniversityById(value)?.name, [value]);
-
-  return name ? (
-    <span className="max-w-full overflow-hidden text-ellipsis">{name}</span>
-  ) : (
-    <span>Selecionar Universidade...</span>
-  );
-}
+import UniversitySelection from "./common/university_selection";
 
 function EducationInfoForm() {
   const { nextStep } = useStepper();

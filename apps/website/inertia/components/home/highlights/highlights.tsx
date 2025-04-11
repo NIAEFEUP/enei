@@ -40,7 +40,7 @@ export default function Highlights() {
               <HighlightCard
                 title="AI, Copilots, and the future of software development"
                 person="Eddie Aftandilian"
-                schedule="12 Abril - Auditório ISEP - 15:15"
+                schedule="12 Abril - Auditório FEUP - 15:15"
                 type={EventType.Talk}
                 image="eddie-aftandilian.jpg"
               />
@@ -49,7 +49,7 @@ export default function Highlights() {
               <HighlightCard
                 title="CRDTs: Building blocks for high availability and beyond"
                 person="Carlos Baquero, Nuno Preguiça"
-                schedule="13 Abril - Auditório FEUP - 15:15"
+                schedule="12 Abril - Auditório FEUP - 17:45"
                 type={EventType.Talk}
                 image="baqueropreguica.jpg"
               />
@@ -76,7 +76,7 @@ export default function Highlights() {
               <HighlightCard
                 title="Cyberwarfare: Who Needs a Gun when you have a Keyboard?"
                 person="Haider Abbas"
-                schedule="13 Abril - Auditório FEUP - 14:00"
+                schedule="13 Abril - Auditório FEUP - 13:45"
                 type={EventType.Talk}
                 image="haider-abbas.jpg"
               />

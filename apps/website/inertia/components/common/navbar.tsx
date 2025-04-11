@@ -1,4 +1,5 @@
 import { useForm } from "@inertiajs/react";
+import { QRCodeSVG } from "qrcode.react";
 import { Link } from "@tuyau/inertia/react";
 import { Button, buttonVariants } from "@enei/shadcn/ui/button";
 import { useAuth } from "~/hooks/use_auth";
@@ -7,8 +8,10 @@ import { cn } from "@enei/shadcn/cn";
 import Container from "./containers";
 import { useEffect, useState } from "react";
 import { NotificationContainer } from "../notifications";
-import { VariantProps } from "class-variance-authority";
-import { QrCode } from "@enei/shadcn/icons";
+import { QrCode } from "lucide-react";
+import { Dialog, DialogTrigger, DialogContent } from "../ui/dialog";
+import { useIsMobile } from "~/hooks/use_mobile";
+import MobileNavbar from "./mobile_navbar";
 
 /*
 import { Menu } from "@enei/shadcn/icons";
@@ -36,7 +39,7 @@ type PageRoute = {
 
 */
 
-function LoginButton() {
+export function LoginButton() {
   return (
     <Link route="pages:auth.login" className={buttonVariants()}>
       Entrar
@@ -44,7 +47,7 @@ function LoginButton() {
   );
 }
 
-function LogoutButton() {
+export function LogoutButton() {
   const tuyau = useTuyau();
   const { post } = useForm();
 
@@ -64,6 +67,8 @@ export function Navbar({ className }: { className?: string }) {
   const auth = useAuth();
   const [onTop, setOnTop] = useState(true);
 
+  const tuyau = useTuyau();
+
   useEffect(() => {
     const controller = new AbortController();
 
@@ -77,6 +82,11 @@ export function Navbar({ className }: { className?: string }) {
 
     return () => controller.abort();
   }, []);
+
+  const isMobile = useIsMobile();
+
+  const bgColor = variant === "blue" ? "enei-blue" : "enei-beige";
+  const textColor = variant === "blue" ? "enei-beige" : "enei-blue";
 
   return (
     <>
@@ -98,40 +108,91 @@ export function Navbar({ className }: { className?: string }) {
               />
               <span className="sr-only">Ir para a página inicial</span>
             </Link>
-            <div className="flex items-center justify-between gap-4">
-              <div className={auth.state === "authenticated" ? "block" : "hidden"}>
-                <Link
-                  route="pages:staff.qrcode.scan"
-                  className={cn(buttonVariants({ variant: "link" }))}
-                >
-                  <QrCode />
-                </Link>
-              </div>
-              <div>
-                <Link route="pages:store" className={cn(buttonVariants({ variant: "link" }))}>
-                  <span>Loja</span>
-                </Link>
-              </div>
-              <div className={auth.state === "authenticated" ? "block" : "hidden"}>
-                <Link
-                  route="pages:referrals"
-                  className={cn(buttonVariants({ variant: "link" }), `p-0`)}
-                >
-                  Referenciações
-                </Link>
-              </div>
-
-              <Link route="pages:events" className={cn(buttonVariants({ variant: "link" }), `p-0`)}>
-                Programa
-              </Link>
-              <div>
-                {auth.state === "authenticated" ? (
-                  <LogoutButton />
-                ) : (
-                  auth.state === "unauthenticated" && <LoginButton />
+            {isMobile ? (
+              <>
+                <MobileNavbar />
+              </>
+            ) : (
+              <div className="flex items-center justify-between gap-4">
+                {auth.state === "authenticated" && auth.user.slug && (
+                  <div>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button className="w-fit">
+                          <QrCode />
+                          Código QR
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="w-4/5 max-w-96 pt-12 sm:w-96">
+                        {auth.state === "authenticated" && (
+                          <>
+                            <QRCodeSVG
+                              value={`${tuyau.$url("pages:profile.show", { params: { slug: auth.user.slug } })}`}
+                              className="aspect-square h-full w-full"
+                            />
+                            <p className="text-center"> {auth.user.slug}</p>
+                          </>
+                        )}
+                      </DialogContent>
+                    </Dialog>
+                  </div>
                 )}
+                <div className={auth.state === "authenticated" ? "block" : "hidden"}>
+                  <Link
+                    route="pages:profile.default"
+                    className={cn(buttonVariants({ variant: "link" }), `text-${textColor} p-0`)}
+                  >
+                    <span>Perfil</span>
+                  </Link>
+                </div>
+                <div
+                  className={
+                    auth.state === "authenticated" && auth.user.role === "staff"
+                      ? "block"
+                      : "hidden"
+                  }
+                >
+                  <Link
+                    route="pages:staff.credentials.scan"
+                    className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
+                  >
+                    <QrCode />
+                  </Link>
+                </div>
+                <div>
+                  <Link
+                    route="pages:store"
+                    className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
+                  >
+                    <span>Loja</span>
+                  </Link>
+                </div>
+                <div className={auth.state === "authenticated" ? "block" : "hidden"}>
+                  <Link
+                    route="pages:referrals"
+                    className={cn(buttonVariants({ variant: "link" }), `text-${textColor} p-0`)}
+                  >
+                    Referenciações
+                  </Link>
+                </div>
+
+                <Link
+                  route="pages:events"
+                  className={cn(buttonVariants({ variant: "link" }), `text-${textColor} p-0`)}
+                >
+                  Programa
+                </Link>
+                <div>
+                  {auth.state === "authenticated" ? (
+                    <LogoutButton />
+                  ) : (
+                    auth.state === "unauthenticated" && (
+                      <LoginButton />
+                    )
+                  )}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </Container>
       </nav>

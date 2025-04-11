@@ -3,12 +3,13 @@ import Event from "#models/event";
 import EventService from "#services/event_service";
 import User from "#models/user";
 import { inject } from "@adonisjs/core";
+import ParticipantProfile from "#models/participant_profile";
 
 @inject()
 export default class EventsController {
   constructor(private eventService: EventService) {}
   async index({ inertia }: HttpContext) {
-    const events = await Event.query().preload("speakers");
+    const events = await Event.query().preload("speakers").orderBy("id");
     return inertia.render("events", {
       currentDay: new Date().toDateString(),
       events: events.map((event) => ({
@@ -23,16 +24,21 @@ export default class EventsController {
           firstName: speaker.firstName,
           lastName: speaker.lastName,
           jobTitle: speaker.jobTitle,
+          user: speaker.user,
           profilePicture: speaker.profilePicture,
           company: speaker.company,
         })),
       })),
     });
   }
-  async show({ inertia, params }: HttpContext) {
+  async show({ inertia, params, auth }: HttpContext) {
     const event = await Event.findOrFail(params.id);
 
     const speakers = await event.related("speakers").query();
+    const user = auth.user;
+    await user?.load("staffProfile");
+
+    const isRegistered = user ? await this.eventService.isRegistered(user, event) : false;
 
     return inertia.render("events/show", {
       eventId: event.id,
@@ -43,17 +49,21 @@ export default class EventsController {
       location: event.location,
       type: event.type,
       companyImage: event.companyImage,
+      extraInfo: event.extraInfo,
       speakers: speakers.map((speaker) => ({
         firstName: speaker.firstName,
         lastName: speaker.lastName,
         jobTitle: speaker.jobTitle,
         profilePicture: speaker.profilePicture,
+        user: speaker.user,
         company: speaker.company,
       })),
       registrationRequirements: event.registrationRequirements,
       requiresRegistration: event.requiresRegistration,
       ticketsRemaining: event.ticketsRemaining,
       price: event.price,
+      isAcceptingRegistrations: event.isAcceptingRegistrations,
+      isRegistered: isRegistered,
     });
   }
 
@@ -64,6 +74,9 @@ export default class EventsController {
     // Get the event and check if it is possible do register
     const event = await Event.findOrFail(params.id);
 
+    if (!event.isAcceptingRegistrations) {
+      return response.badRequest("Este evento ainda não tem as inscrições abertas");
+    }
     if (event.ticketsRemaining <= 0) {
       return response.badRequest("Já não há bilhetes disponíveis para este evento");
     }
@@ -76,6 +89,35 @@ export default class EventsController {
     await this.eventService.register(user!, event);
 
     return response.redirect().toRoute("pages:events.show", { id: event.id });
+  }
+
+  async checkin({ response, request, params, session }: HttpContext) {
+    const eventID = request.input("eventID");
+
+    const event = await Event.findOrFail(eventID);
+    const profile = await ParticipantProfile.findBy("slug", params.slug);
+    // FIXME: change this to User when slug in user is ready
+
+    if (!profile) {
+      session.flashErrors({ message: "Participante não encontrado" });
+      return response.redirect().back();
+    }
+
+    const user = await User.findBy("participantProfileId", profile?.id);
+
+    if (!this.eventService.isRegistered(user!, event)) {
+      session.flashErrors({ message: "Participante não registado no evento" });
+      return response.redirect().back();
+    }
+
+    if (await this.eventService.isCheckedIn(user!, event)) {
+      session.flashErrors({ message: "Participante já checked-in" });
+      return response.redirect().back();
+    }
+
+    await this.eventService.checkin(user!, event);
+
+    return response.redirect().back();
   }
 
   async ticketsRemaining({ response, params }: HttpContext) {

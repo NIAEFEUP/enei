@@ -12,10 +12,116 @@ import app from "@adonisjs/core/services/app";
 import { inject } from "@adonisjs/core";
 import { Logger } from "@adonisjs/core/logger";
 import PromoterProfile from "#models/promoter_profile";
+import UserChangeEmailRequest from "#events/user_change_email";
+import SendChangeEmailEmail from "#listeners/send_change_email_email";
+import ChangeEmailRequest from "#models/email_change";
+import UserEmailChangedConfirmation from "#events/user_email_changed";
+import SendEmailChangedConfirmationEmail from "#listeners/send_email_changed_email";
+import { attachmentManager } from "@jrmc/adonis-attachment";
+import type { MultipartFile } from "@adonisjs/core/bodyparser";
+import drive from "@adonisjs/drive/services/main";
+import Sqids from "sqids";
+import slug from "slug";
+import { md5 } from "js-md5";
+
+export const changeEmailSqids = new Sqids({
+  minLength: 4,
+});
 
 @inject()
 export class UserService {
   constructor(private logger: Logger) {}
+
+  async storeCV(user: User, cv: MultipartFile) {
+    try {
+      user.resume = await attachmentManager.createFromFile(cv);
+      await user.save();
+      return user;
+    } catch (error) {
+      this.logger.error(error);
+      throw error;
+    }
+  }
+  async deleteCV(user: User) {
+    try {
+      user.resume = null;
+      await user.save();
+      return user;
+    } catch (error) {
+      this.logger.error(error);
+      throw error;
+    }
+  }
+
+  async getCVName(user: User) {
+    try {
+      if (user.resume === null) {
+        return null;
+      }
+      return user.resume.originalName;
+    } catch (error) {
+      this.logger.error(error);
+      throw error;
+    }
+  }
+
+  async getCV(user: User) {
+    if (user.resume === null) {
+      return null;
+    }
+    const filePath = user.resume.path;
+    if (!filePath) {
+      return null;
+    }
+    const file = await drive.use().getStream(filePath);
+    return { file, fileName: user.resume.originalName };
+  }
+
+  async storeAvatar(user: User, avatar: MultipartFile) {
+    try {
+      user.avatar = await attachmentManager.createFromFile(avatar);
+      await user.save();
+      return user;
+    } catch (error) {
+      this.logger.error(error);
+      throw error;
+    }
+  }
+
+  async deleteAvatar(user: User) {
+    try {
+      user.avatar = null;
+      await user.save();
+      return user;
+    } catch (error) {
+      this.logger.error(error);
+      throw error;
+    }
+  }
+
+  async getAvatarName(user: User) {
+    try {
+      if (user.avatar === null) {
+        return null;
+      }
+      return user.avatar.originalName;
+    } catch (error) {
+      this.logger.error(error);
+      throw error;
+    }
+  }
+
+  async getAvatar(user: User) {
+    if (user.avatar === null) {
+      return null;
+    }
+    const filePath = user.avatar.path;
+    if (!filePath) {
+      return null;
+    }
+    const file = await drive.use().getStream(filePath);
+    return { file, fileName: user.avatar.originalName };
+  }
 
   async getUserWithCredentials(email: string, password: string) {
     try {
@@ -81,5 +187,40 @@ export class UserService {
   async sendForgotPasswordEmail(email: string) {
     const listener = new SendForgotPasswordEmail();
     listener.handle(new UserForgotPassword(email));
+  }
+
+  async sendChangeEmailEmail(userId: number, oldEmail: string, newEmail: string) {
+    const committedChangeEmail = await db.transaction(async (trx) => {
+      await ChangeEmailRequest.query({ client: trx })
+        .where("user_id", userId)
+        .andWhere("performed", false)
+        .update({ canceled: true });
+
+      return await ChangeEmailRequest.create({ userId, oldEmail, newEmail }, { client: trx });
+    });
+
+    const listener = new SendChangeEmailEmail();
+    listener.handle(
+      new UserChangeEmailRequest(
+        changeEmailSqids.encode([committedChangeEmail.id]),
+        oldEmail,
+        newEmail,
+      ),
+    );
+  }
+
+  async sendEmailChangedConfirmationEmail(oldEmail: string, newEmail: string) {
+    const listener = new SendEmailChangedConfirmationEmail();
+    listener.handle(new UserEmailChangedConfirmation(oldEmail, newEmail));
+  }
+
+  async createSlug(user: User, firstName: string, lastName: string) {
+    const userMd5 = md5(slug(`${firstName} ${lastName}`));
+    const userNumber =
+      (Number.parseInt(userMd5.replace(/[^1-9]/g, "").substring(0, 3)) + user.id) % 1000;
+    const userCode = userNumber.toString().padStart(3, "0");
+
+    user.slug = slug(`${firstName} ${lastName} ${userCode}`);
+    await user.save();
   }
 }

@@ -12,7 +12,9 @@ export default defineConfig({
     inertia({ ssr: { enabled: true, entrypoint: "inertia/app/ssr.tsx" } }),
     adonisjs({ entrypoints: ["inertia/app/app.tsx"], reload: ["resources/views/**/*.edge"] }),
   ],
-
+  esbuild: {
+    target: "esnext",
+  },
   /**
    * Define aliases for importing modules from
    * your frontend code

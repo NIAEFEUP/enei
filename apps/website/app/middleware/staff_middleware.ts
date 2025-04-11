@@ -4,9 +4,11 @@ import type { NextFn } from "@adonisjs/core/types/http";
 export default class StaffMiddleware {
   async handle(ctx: HttpContext, next: NextFn) {
     const user = ctx.auth.getUserOrFail();
+    await user.loadOnce("staffProfile");
 
     if (!user.isStaff()) {
-      return ctx.response.redirect().toRoute("pages:signup");
+      ctx.session.flashErrors({ message: "Unauthorized" });
+      return ctx.response.redirect().back();
     }
 
     return await next();

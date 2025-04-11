@@ -2,13 +2,8 @@ import { TabsContent } from "@enei/shadcn/ui/tabs";
 import { Tabs, TabsList, TabsTrigger } from "@enei/shadcn/ui/tabs";
 import StoreReservedProducts from "./store_reserved_products";
 import Container from "../common/containers";
-import { UserActivityInformation } from "../../../types/user_activity";
 
-interface ProfileActivityInfoProps {
-  activityInformation: UserActivityInformation;
-}
-
-export default function ProfileActivityInfo({ activityInformation }: ProfileActivityInfoProps) {
+export default function ProfileActivityInfo() {
   return (
     <Tabs defaultValue="events">
       <TabsList className="w-full">
@@ -24,7 +19,7 @@ export default function ProfileActivityInfo({ activityInformation }: ProfileActi
       </TabsContent>
       <TabsContent value="store" className="mt-4">
         <Container className="grid grid-cols-1 justify-center gap-12 sm:grid-cols-2 lg:grid-cols-4">
-          <StoreReservedProducts products={activityInformation?.store} />
+          <StoreReservedProducts products={[]} />
         </Container>
       </TabsContent>
     </Tabs>

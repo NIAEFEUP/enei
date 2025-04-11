@@ -19,6 +19,8 @@ export const http = defineConfig({
   generateRequestId: true,
   allowMethodSpoofing: false,
 
+  trustProxy: env.get("TRUST_PROXY"),
+
   /**
    * Enabling async local storage will let you access HTTP context
    * from anywhere inside your application.

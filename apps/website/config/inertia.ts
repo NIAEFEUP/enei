@@ -6,7 +6,7 @@ import type { InferSharedProps } from "@adonisjs/inertia/types";
 export type AuthenticationData =
   | { state: "disabled" }
   | { state: "unauthenticated" }
-  | { state: "authenticated"; user: Pick<User, "email" | "role"> };
+  | { state: "authenticated"; user: Pick<User, "email" | "role" | "slug"> };
 
 const inertiaConfig = defineConfig({
   /**
@@ -28,7 +28,10 @@ const inertiaConfig = defineConfig({
 
       if (!user) return { state: "unauthenticated" };
       await user.load("participantProfile");
-      return { state: "authenticated", user: { email: user.email, role: user.role } };
+      return {
+        state: "authenticated",
+        user: { email: user.email, role: user.role, slug: user.slug },
+      };
     },
   },
 
