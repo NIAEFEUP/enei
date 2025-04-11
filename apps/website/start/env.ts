@@ -128,7 +128,7 @@ const env = await defineEnv(new URL("../", import.meta.url), "INERTIA_PUBLIC_", 
     | Variables for configuring the API endpoints for Kevel
     |----------------------------------------------------------
     */
-    COMPANY_BEARER_TOKEN: vine.string(),
+    COMPANY_API_TOKEN: vine.string(),
 
     /*
     |----------------------------------------------------------

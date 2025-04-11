@@ -54,7 +54,7 @@ router.use([
 export const middleware = router.named({
   staff: () => import("#middleware/staff_middleware"),
   hasPurchasedTicket: () => import("#middleware/has_purchased_ticket_middleware"),
-  companyBearerAuth: () => import("#middleware/company_bearer_auth_middleware"),
+  companyBearerAuth: () => import("#middleware/company_auth_middleware"),
   wip: () => import("#middleware/wip_middleware"),
   noVerifiedEmail: () => import("#middleware/auth/no_verified_email_middleware"),
   verifiedEmail: () => import("#middleware/auth/verified_email_middleware"),
