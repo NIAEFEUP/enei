@@ -123,7 +123,7 @@ export default class Event extends BaseModel {
   }
 
   get isPaid() {
-    return false
+    return false;
   }
 
   public getFormattedTime() {

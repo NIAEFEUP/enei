@@ -89,7 +89,6 @@ export class OrderService {
       .preload("order");
   }
 
-
   async buildProductDetails(
     user: User,
     products: Array<ProductDetails>,
@@ -160,7 +159,7 @@ export class OrderService {
       }
 
       productDetails.push({ productId: product.id, quantity });
-      totalAmount = totalAmount + product.price * quantity; 
+      totalAmount = totalAmount + product.price * quantity;
       description += `${product.name} x${quantity}, `;
     }
 
