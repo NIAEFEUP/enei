@@ -174,10 +174,7 @@ export default function EventRegistrationPage({
                     <Info className="h-5 w-5" />
                     <p className="text-lg font-semibold">Acerca do Evento</p>
                   </h1>
-                  <div
-                    className="prose"
-                    dangerouslySetInnerHTML={{ __html: description }}
-                  />
+                  <div className="prose" dangerouslySetInnerHTML={{ __html: description }} />
                 </div>
               )}
               {/* {isRegistered && (
