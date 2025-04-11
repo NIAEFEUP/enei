@@ -48,8 +48,8 @@ export default class Payment extends BaseModel {
   @column()
   declare requestId: string;
 
-  @money()
-  declare amount: Money;
+  @column()
+  declare amount: number;
 
   @column()
   declare reason: string | null;
