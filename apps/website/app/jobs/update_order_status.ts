@@ -30,6 +30,7 @@ export default class UpdateOrderStatus extends Job {
         return;
       }
 
+      // @ts-ignore
       if (order.status !== "Pending") {
         this.logger.info(`Order status is no longer pending: ${order.status}`);
         return; // Exit if the status is no longer "Pending"
@@ -54,6 +55,7 @@ export default class UpdateOrderStatus extends Job {
           order.status = status;
           await order.save();
           this.logger.info(`Order status updated to: ${order.status}`);
+          // @ts-ignore
           if (order.status === "Success") {
             this.logger.info(`Gonna send mail: ${order.status}`);
             const products = await db

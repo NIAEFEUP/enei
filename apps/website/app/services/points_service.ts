@@ -5,10 +5,7 @@ import {
   type UserActivityDescription,
 } from "../../types/user_activity.js";
 import User from "#models/user";
-import type Event from "#models/event";
-import Order from "#models/order";
-import Product from "#models/product";
-import OrderProduct from "#models/order_product";
+import Event from "#models/event";
 
 /**
  * This service will be responsible for handling how many points a certain event
@@ -51,6 +48,14 @@ export default class PointsService {
       // user.useTransaction(trx).points += points;
       // await user.save();
     })
+  }
+
+  static userWillExceededNegativePoints(user: User, event: Event) {
+    event.loadOnce("product");
+
+    if (!event.product) return user.points < -7500;
+
+    return user.points - event.product.points < -7500;
   }
 
   async referralPointAttribution(referral: UserActivityDescription) {

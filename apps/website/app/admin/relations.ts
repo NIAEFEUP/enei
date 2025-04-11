@@ -5,7 +5,7 @@ import {
   type OneToManyRelationOptions,
   type RelationsFeatureOptions,
 } from "@adminjs/relations";
-import componentLoader from "./component_loader.js";
+import { componentLoader } from "./component_loader.js";
 
 export const owningRelationFeature = (
   relations: RelationsFeatureOptions<

@@ -1,6 +1,6 @@
 import type { AdminJSProviderConfig } from "@adminjs/adonis";
 
-import componentLoader from "../app/admin/component_loader.js";
+import { componentLoader } from "../app/admin/component_loader.js";
 import authProvider from "../app/admin/auth.js";
 
 import AccountResource from "../app/admin/resources/account.js";
@@ -18,6 +18,8 @@ import SpeakerProfileResource from "../app/admin/resources/speaker_profile.js";
 import StaffProfileResource from "../app/admin/resources/staff_profile.js";
 import UserActivityResource from "../app/admin/resources/user_activity.js";
 import UserResource from "../app/admin/resources/user.js";
+import PaymentResource from "../app/admin/resources/payment.js";
+import InvoiceInfoResource from "../app/admin/resources/invoice_info.js";
 import CompanyResource from "../app/admin/resources/company.js";
 import RepresentativeProfileResource from "../app/admin/resources/representative_profile.js";
 
@@ -29,6 +31,7 @@ const resources = [
   EventUserResource,
   OrderProductResource,
   OrderResource,
+  PaymentResource,
   ParticipantProfileResource,
   ProductGroupResource,
   ProductResource,
@@ -37,6 +40,7 @@ const resources = [
   StaffProfileResource,
   UserActivityResource,
   UserResource,
+  InvoiceInfoResource,
   CompanyResource,
   RepresentativeProfileResource,
 ];

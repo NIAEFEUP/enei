@@ -203,3 +203,32 @@
     background-repeat: repeat-x;
   }
 }
+
+.prose {
+  @apply space-y-2;
+  @apply text-black;
+
+  a {
+    @apply focus-visible:ring-ring text-primary inline-flex h-auto items-center justify-center gap-2 whitespace-nowrap text-wrap rounded-md p-0 pl-1 text-sm font-medium underline-offset-4 transition-colors hover:underline focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50;
+
+    &:focus-visible {
+      @apply ring-ring;
+    }
+  }
+
+  p {
+    @apply max-w-[70ch];
+  }
+
+  svg {
+    @apply pointer-events-none size-4 shrink-0;
+  }
+
+  ul {
+    @apply flex list-inside list-disc flex-col gap-2;
+  }
+
+  li {
+    @apply text-sm;
+  }
+}

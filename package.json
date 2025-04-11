@@ -27,7 +27,7 @@
     },
     "neverBuiltDependencies": [],
     "patchedDependencies": {
-      "@adminjs/adonis": "patches/@adminjs__adonis.patch"
+      "@adonisjs/lucid": "patches/@adonisjs__lucid.patch"
     }
   }
 }

@@ -159,7 +159,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
             <Avatar className="size-fit self-center">
               <AvatarImage
                 src={tuyau.$url("actions:avatar.show") + "#" + cacheBuster}
-                alt={profile.user.slug}
+                alt={profile.user.slug ?? ""}
                 className="text-enei-beige h-64 w-64 object-cover"
               />
               <AvatarFallback className="bg-enei-blue text-enei-beige h-64 w-64">

@@ -11,6 +11,7 @@ interface BillingInformationFormProps {
     address: string;
   };
   onBillingInfoChange: (field: string, value: string) => void;
+  showTitle?: boolean;
 }
 
 export default function BillingInformationForm({
@@ -18,14 +19,16 @@ export default function BillingInformationForm({
   setEnableBillingInfo,
   billingInfo,
   onBillingInfoChange,
+  showTitle = true,
 }: BillingInformationFormProps) {
   const handleInputChange = (key: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     onBillingInfoChange(key, event.target.value);
   };
+
   return (
-    <section>
+    <div>
       {/* Checkbox */}
-      <h2 className="mb-4 text-xl font-semibold">2. Dados de faturação</h2>
+      {showTitle && <h2 className="mb-4 text-xl font-semibold">2. Dados de faturação</h2>}
       <div className="mb-4 flex items-center space-x-2">
         <Checkbox
           id="billingAddress"
@@ -68,6 +71,6 @@ export default function BillingInformationForm({
           />
         </div>
       </div>
-    </section>
+    </div>
   );
 }

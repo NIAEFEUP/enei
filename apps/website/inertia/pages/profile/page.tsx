@@ -1,20 +1,15 @@
 import { InferPageProps } from "@adonisjs/inertia/types";
 import ProfilesController from "#controllers/profiles_controller";
-import { buttonVariants } from "~/components/ui/button";
 import Page from "~/components/common/page";
 import Container from "~/components/common/containers";
 
-import { LucideProps, Pencil } from "lucide-react";
+import { LucideProps } from "lucide-react";
 import { createContext } from "react";
-import { Link } from "@tuyau/inertia/react";
-import { cn } from "~/lib/utils";
-import { useTuyau } from "~/hooks/use_tuyau";
-import ProfileActivityInfo from "~/components/profile/profile_activity_info";
-import { useAuth } from "~/hooks/use_auth";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import ProfileSocials from "~/components/profile/profile_socials";
 import type User from "#models/user";
 import ProfileAbout from "~/components/profile/about/profile_about";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { useTuyau } from "~/hooks/use_tuyau";
 
 export const ProfileContext = createContext<{ slug: string | number }>({
   slug: "",
@@ -29,8 +24,7 @@ export default function ProfilePage(
   props: InferPageProps<ProfilesController, "index"> & { user: User },
 ) {
   const tuyau = useTuyau();
-  const auth = useAuth();
-  const { user, isUser } = props;
+  const { user } = props;
 
   return (
     <ProfileContext.Provider value={{ slug: user.slug ?? "" }}>
@@ -40,8 +34,10 @@ export default function ProfilePage(
             <div className="sticky top-28">
               <Avatar className="mb-12 size-fit">
                 <AvatarImage
-                  src={tuyau.$url("pages:profile.avatar.show", { params: { slug: user.slug } })}
-                  alt={user.slug}
+                  src={tuyau.$url("pages:profile.avatar.show", {
+                    params: { slug: user.slug ?? "" },
+                  })}
+                  alt={user.slug ?? ""}
                   className="text-enei-beige h-64 w-64 object-cover"
                 />
                 <AvatarFallback className="bg-enei-blue text-enei-beige h-64 w-64">
