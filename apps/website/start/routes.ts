@@ -231,8 +231,7 @@ router.group(() => {
     .use(middleware.wip());
   router
     .get("/u/:slug/info", [ProfilesController, "getInfo"])
-    .as("actions:profile.info")
-    .use(middleware.wip());
+    .as("actions:profile.info");
 });
 
 router
