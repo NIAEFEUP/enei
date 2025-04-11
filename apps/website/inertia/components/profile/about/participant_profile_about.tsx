@@ -7,13 +7,13 @@ import {
   LucideProps,
   Maximize2,
   Minimize2,
-} from "lucide-react";
+} from "@enei/shadcn/icons";
 import { useEffect, useState } from "react";
-import { Button, buttonVariants } from "~/components/ui/button";
+import { Button, buttonVariants } from "@enei/shadcn/ui/button";
 import { useTuyau } from "~/hooks/use_tuyau";
 import { ENEI_EDITIONS } from "~/lib/enei/signup/editions";
 import { getUniversityById } from "~/lib/enei/signup/universities";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 
 interface RoundBadgeProps {
   icon: React.FC<LucideProps>;

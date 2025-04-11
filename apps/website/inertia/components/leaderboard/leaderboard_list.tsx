@@ -5,7 +5,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "~/components/ui/table";
+} from "@enei/shadcn/ui/table";
 
 import type User from "#models/user";
 import { Link } from "@tuyau/inertia/react";

@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
-import { Checkbox } from "../ui/checkbox";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { Input } from "../ui/input";
-import MultipleSelector from "../ui/multiple-selector";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Checkbox } from "@enei/shadcn/ui/checkbox";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@enei/shadcn/ui/form";
+import { Input } from "@enei/shadcn/ui/input";
+import MultipleSelector from "@enei/shadcn/ui/multiple-selector";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@enei/shadcn/ui/select";
 import { LogisticsInfo, logisticsInfoSchema } from "~/pages/signup/schema";
 import sizes from "#data/enei/signup/shirts.json" with { type: "json" };
 import { zodResolver } from "@hookform/resolvers/zod";

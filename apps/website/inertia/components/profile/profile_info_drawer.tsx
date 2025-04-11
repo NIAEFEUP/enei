@@ -1,6 +1,6 @@
 import { Link } from "@tuyau/inertia/react";
-import { User as UserIcon } from "lucide-react";
-import { Drawer, DrawerContent } from "~/components/ui/drawer";
+import { User as UserIcon } from "@enei/shadcn/icons";
+import { Drawer, DrawerContent } from "@enei/shadcn/ui/drawer";
 import CredentialWriter from "../credentials/writer";
 import User from "#models/user";
 

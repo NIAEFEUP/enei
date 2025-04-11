@@ -1,6 +1,6 @@
 import { PageProps } from "@adonisjs/inertia/types";
 import type ParticipantProfile from "#models/participant_profile";
-import { Button, buttonVariants } from "~/components/ui/button";
+import { Button, buttonVariants } from "@enei/shadcn/ui/button";
 import {
   Form,
   FormControl,
@@ -9,13 +9,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
+} from "@enei/shadcn/ui/form";
 import { format } from "date-fns";
-import { Input } from "~/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
-import { Checkbox } from "~/components/ui/checkbox";
-import { cn } from "~/lib/utils";
-import MultipleSelector from "~/components/ui/multiple-selector";
+import { Input } from "@enei/shadcn/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@enei/shadcn/ui/popover";
+import { Checkbox } from "@enei/shadcn/ui/checkbox";
+import { cn } from "@enei/shadcn/cn";
+// import MultipleSelector from "@enei/shadcn/ui/multiple-selector";
 import {
   CommonInfo,
   commonSchema,
@@ -29,13 +29,13 @@ import { router, usePage } from "@inertiajs/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Textarea } from "../ui/textarea";
+import { Textarea } from "@enei/shadcn/ui/textarea";
 import { IsNotVisibleDisclaimer } from "./visibility_disclaimer";
-import { Calendar } from "../ui/calendar";
-import { CalendarIcon } from "lucide-react";
+import { Calendar } from "@enei/shadcn/ui/calendar";
+import { CalendarIcon } from "@enei/shadcn/icons";
 import { pt } from "date-fns/locale";
-import { PhoneInput } from "~/components/ui/phone-input/phone-input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { PhoneInput } from "@enei/shadcn/phone-input/phone-input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@enei/shadcn/ui/select";
 import { TRANSPORTS } from "~/lib/enei/signup/transports";
 import districts from "#data/enei/districts.json" with { type: "json" };
 
@@ -273,7 +273,7 @@ const TbdInfoForm = ({ profile }: TbdInfoProps) => {
               <FormItem>
                 <FormLabel>Como estou a pensar deslocar-me para o evento</FormLabel>
                 <FormControl>
-                  <MultipleSelector
+                  {/* <MultipleSelector
                     {...field}
                     defaultOptions={TRANSPORTS}
                     placeholder="Selecionar meios de transporte"
@@ -287,7 +287,7 @@ const TbdInfoForm = ({ profile }: TbdInfoProps) => {
                         Sem resultados
                       </p>
                     }
-                  />
+                  /> */}
                 </FormControl>
                 <FormMessage />
               </FormItem>

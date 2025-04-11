@@ -1,4 +1,4 @@
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "@enei/shadcn/icons";
 
 export const IsVisibleDisclaimer = () => {
   return (

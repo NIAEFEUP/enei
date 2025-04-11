@@ -8,10 +8,10 @@ import {
   ClipboardCheck,
   Loader2,
   QrCode,
-} from "lucide-react";
-import { Button, buttonVariants } from "~/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+} from "@enei/shadcn/icons";
+import { Button, buttonVariants } from "@enei/shadcn/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@enei/shadcn/ui/avatar";
+import { Card, CardContent, CardHeader, CardTitle } from "@enei/shadcn/ui/card";
 import { useState } from "react";
 import { useToast } from "~/hooks/use_toast";
 import { cn } from "@enei/shadcn/cn";

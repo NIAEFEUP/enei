@@ -1,5 +1,5 @@
 import { IDetectedBarcode, Scanner } from "@yudiel/react-qr-scanner";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@enei/shadcn/ui/tabs";
 import NFC from "./nfc";
 
 interface CredentialScannerProps {

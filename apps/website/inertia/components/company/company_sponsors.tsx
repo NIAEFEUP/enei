@@ -1,6 +1,6 @@
 import { SponsorVariant } from "#models/company";
 import { cva } from "class-variance-authority";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 
 const sponsorsVariant = cva("text-md", {
   variants: {

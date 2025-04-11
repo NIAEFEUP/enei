@@ -1,10 +1,9 @@
-import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "../ui/sheet";
-import { Button, buttonVariants } from "../ui/button";
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
-import { QrCode } from "lucide-react";
+import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@enei/shadcn/ui/sheet";
+import { Button, buttonVariants } from "@enei/shadcn/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@enei/shadcn/ui/dialog";
+import { AlignJustify, QrCode } from "@enei/shadcn/icons";
 import { useAuth } from "~/hooks/use_auth";
-import { cn } from "~/lib/utils";
+import { cn } from "@enei/shadcn/cn";
 import { QRCodeSVG } from "qrcode.react";
 import { useTuyau } from "~/hooks/use_tuyau";
 import { Link } from "@tuyau/inertia/react";
@@ -19,7 +18,7 @@ export default function MobileNavbar() {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline">
-          <HamburgerMenuIcon className="bg-transparent" />
+          <AlignJustify className="bg-transparent" />
         </Button>
       </SheetTrigger>
       <SheetContent className="flex flex-col gap-y-4">
@@ -86,11 +85,11 @@ export default function MobileNavbar() {
             Programa
           </Link>
 
-          {auth.state === "unauthenticated" && <LoginButton variant="outline" />}
+          {auth.state === "unauthenticated" && <LoginButton />}
 
           {auth.state === "authenticated" && (
             <div className="flex justify-center">
-              <LogoutButton variant="outline" />
+              <LogoutButton />
             </div>
           )}
         </div>

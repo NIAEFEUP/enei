@@ -1,4 +1,4 @@
-import { Dialog, DialogContent } from "~/components/ui/dialog";
+import { Dialog, DialogContent } from "@enei/shadcn/ui/dialog";
 import CredentialScanner from "../credentials/scanner";
 import { useTuyau } from "~/hooks/use_tuyau";
 import { useForm } from "@inertiajs/react";

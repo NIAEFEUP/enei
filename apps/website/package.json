@@ -16,7 +16,7 @@
     "test": "node ace test",
     "lint:fix": "eslint . --fix",
     "lint": "eslint . --max-warnings 0",
-    "typecheck": "tsc -p . -p ./inertia --noEmit",
+    "typecheck": "tsc -b . -b ./inertia",
     "prepare": "sh -c './scripts/prepare.sh'",
     "run": ""
   },
@@ -101,7 +101,7 @@
     "@aws-sdk/s3-request-presigner": "^3.787.0",
     "@babel/plugin-syntax-import-assertions": "^7.26.0",
     "@date-fns/tz": "^1.2.0",
-    "@enei/shadcn": "workspace:^",
+    "@enei/shadcn": "workspace:*",
     "@hookform/resolvers": "^3.10.0",
     "@icons-pack/react-simple-icons": "^12.3.0",
     "@inertiajs/react": "^2.0.3",

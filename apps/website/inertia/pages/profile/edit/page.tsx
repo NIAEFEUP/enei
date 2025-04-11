@@ -3,7 +3,7 @@ import ProfilesController from "#controllers/profiles_controller";
 import ParticipantProfile from "#models/participant_profile";
 import Page from "~/components/common/page";
 import Container from "~/components/common/containers";
-import { Card } from "~/components/ui/card";
+import { Card } from "@enei/shadcn/ui/card";
 import ProfileInfoForm from "~/components/profile/1_profile_info";
 import TbdInfoForm from "~/components/profile/2_tbd_info";
 import AccountInfoForm from "~/components/profile/3_account_info";

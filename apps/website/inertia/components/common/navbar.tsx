@@ -8,8 +8,8 @@ import { cn } from "@enei/shadcn/cn";
 import Container from "./containers";
 import { useEffect, useState } from "react";
 import { NotificationContainer } from "../notifications";
-import { QrCode } from "lucide-react";
-import { Dialog, DialogTrigger, DialogContent } from "../ui/dialog";
+import { QrCode } from "@enei/shadcn/icons";
+import { Dialog, DialogTrigger, DialogContent } from "@enei/shadcn/ui/dialog";
 import { useIsMobile } from "~/hooks/use_mobile";
 import MobileNavbar from "./mobile_navbar";
 

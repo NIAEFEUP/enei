@@ -1,5 +1,3 @@
-"use client";
-
 import { ChevronRight, type LucideIcon } from "@enei/shadcn/icons";
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@enei/shadcn/ui/collapsible";

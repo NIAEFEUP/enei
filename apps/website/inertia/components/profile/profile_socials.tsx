@@ -1,5 +1,5 @@
 import type User from "#models/user";
-import { Github, Globe, Linkedin } from "lucide-react";
+import { Github, Globe, Linkedin } from "@enei/shadcn/icons";
 import { SocialIconProps } from "~/pages/profile/page";
 
 const SocialItem = ({ icon: Icon, link }: SocialIconProps) => {

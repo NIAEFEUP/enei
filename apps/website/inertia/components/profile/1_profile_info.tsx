@@ -1,6 +1,6 @@
 import { PageProps } from "@adonisjs/inertia/types";
 import type ParticipantProfile from "#models/participant_profile";
-import { Button } from "~/components/ui/button";
+import { Button } from "@enei/shadcn/ui/button";
 import {
   Form,
   FormControl,
@@ -8,7 +8,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
+} from "@enei/shadcn/ui/form";
 import {
   Command,
   CommandEmpty,
@@ -16,17 +16,17 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "~/components/ui/command";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { Input } from "~/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
-import { Checkbox } from "~/components/ui/checkbox";
-import { cn } from "~/lib/utils";
+} from "@enei/shadcn/ui/command";
+import { Check, ChevronsUpDown } from "@enei/shadcn/icons";
+import { Input } from "@enei/shadcn/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@enei/shadcn/ui/popover";
+import { Checkbox } from "@enei/shadcn/ui/checkbox";
+import { cn } from "@enei/shadcn/cn";
 import CurricularYearSelector, {
   CurricularYearSelectorType,
 } from "~/components/signup/input/curricular_year_input";
 import UniversitySelection from "~/components/signup/common/university_selection";
-import MultipleSelector from "~/components/ui/multiple-selector";
+// import MultipleSelector from "@enei/shadcn/ui/multiple-selector";
 import { CommonInfo, commonSchema, profileToCommonInfo } from "./common/common_info";
 import { useTuyau } from "~/hooks/use_tuyau";
 import { router, usePage } from "@inertiajs/react";
@@ -35,11 +35,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { universities } from "~/lib/enei/signup/universities";
 import { ENEI_EDITIONS } from "~/lib/enei/signup/editions";
-import { Textarea } from "../ui/textarea";
+import { Textarea } from "@enei/shadcn/ui/textarea";
 import CvUpload from "../common/cv_upload";
 import { IsVisibleDisclaimer } from "./visibility_disclaimer";
 import AvatarUpload from "../common/avatar_upload";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@enei/shadcn/ui/avatar";
 
 type ProfileInfoProps = {
   profile: ParticipantProfile;
@@ -300,7 +300,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
               <FormItem>
                 <FormLabel>Em qual edição?</FormLabel>
                 <FormControl>
-                  <MultipleSelector
+                  {/* <MultipleSelector
                     {...field}
                     defaultOptions={ENEI_EDITIONS}
                     emptyIndicator={
@@ -308,7 +308,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
                         Sem resultados
                       </p>
                     }
-                  />
+                  /> */}
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -3,7 +3,6 @@ import Event from "#models/event";
 import EventService from "#services/event_service";
 import User from "#models/user";
 import { inject } from "@adonisjs/core";
-import ParticipantProfile from "#models/participant_profile";
 
 @inject()
 export default class EventsController {

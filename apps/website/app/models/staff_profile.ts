@@ -14,9 +14,6 @@ export default class StaffProfile extends BaseModel {
   declare department: BelongsTo<typeof Department>;
 
   @column()
-  declare departmentId: number;
-
-  @column()
   declare isAdmin: boolean;
 
   @column.dateTime({ autoCreate: true })

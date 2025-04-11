@@ -1,9 +1,9 @@
-import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
+import { Button } from "@enei/shadcn/ui/button";
+import { Input } from "@enei/shadcn/ui/input";
 import { useTuyau } from "~/hooks/use_tuyau";
 import { useForm } from "@inertiajs/react";
 import { useToast } from "~/hooks/use_toast";
-import { Label } from "../ui/label";
+import { Label } from "@enei/shadcn/ui/label";
 
 const AccountInfoForm = () => {
   const tuyau = useTuyau();

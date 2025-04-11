@@ -1,4 +1,4 @@
-import { Option } from "~/components/ui/multiple-selector";
+import { Option } from "@enei/shadcn/ui/multiple-selector";
 import editions from "#data/enei/editions.json" with { type: "json" };
 
 export const ENEI_EDITIONS: Option[] = editions

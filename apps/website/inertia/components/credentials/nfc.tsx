@@ -1,7 +1,7 @@
 /// <reference types="@types/w3c-web-nfc"/>
 
 import { useCallback, useEffect, useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "@enei/shadcn/ui/button";
 
 type NFCProps = {
   onRead?: (data: NDEFMessage) => void;
