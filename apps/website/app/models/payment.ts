@@ -12,22 +12,21 @@ import { relations } from "#lib/lucid/relations.js";
 
 export type PaymentStatus = "pending" | "successful" | "declined" | "expired" | "unknown";
 
-export type ReadonlyPayment = 
-  CreateReadonlyModel<
-    Payment,
-    | {
-        status: StrictExclude<Payment["status"], "declined" | "unknown">;
-        reason: StrictExtract<Payment["reason"], null>;
-      }
-    | {
-        status: StrictExtract<Payment["status"], "unknown">;
-        reason: StrictExclude<Payment["reason"], null>;
-      }
-    | {
-        status: StrictExtract<Payment["status"], "declined">;
-        reason: Payment["reason"];
-      }
-  >;
+export type ReadonlyPayment = CreateReadonlyModel<
+  Payment,
+  | {
+      status: StrictExclude<Payment["status"], "declined" | "unknown">;
+      reason: StrictExtract<Payment["reason"], null>;
+    }
+  | {
+      status: StrictExtract<Payment["status"], "unknown">;
+      reason: StrictExclude<Payment["reason"], null>;
+    }
+  | {
+      status: StrictExtract<Payment["status"], "declined">;
+      reason: Payment["reason"];
+    }
+>;
 
 const paymentRelations = lazy(() =>
   relations(Payment, (r) => [r.belongsTo("invoiceInfo"), r.belongsTo("order")]),

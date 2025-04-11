@@ -34,7 +34,9 @@ export default function ProfilePage(
             <div className="sticky top-28">
               <Avatar className="mb-12 size-fit">
                 <AvatarImage
-                  src={tuyau.$url("pages:profile.avatar.show", { params: { slug: user.slug ?? ""} })}
+                  src={tuyau.$url("pages:profile.avatar.show", {
+                    params: { slug: user.slug ?? "" },
+                  })}
                   alt={user.slug ?? ""}
                   className="text-enei-beige h-64 w-64 object-cover"
                 />

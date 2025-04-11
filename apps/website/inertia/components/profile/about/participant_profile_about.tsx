@@ -41,7 +41,7 @@ export default function ParticipantProfileAbout({ profile }: ParticipantProfileA
     const fetchFileName = async () => {
       try {
         const response = await axios.get(
-          tuyau.$url("pages:profile.cv.show", { params: { slug: profile.user.slug ?? ""} }),
+          tuyau.$url("pages:profile.cv.show", { params: { slug: profile.user.slug ?? "" } }),
         );
 
         setHasCv(response.status === 200);
@@ -118,7 +118,9 @@ export default function ParticipantProfileAbout({ profile }: ParticipantProfileA
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href={tuyau.$url("pages:profile.cv.show", { params: { slug: profile.user.slug ?? ""} })}
+              href={tuyau.$url("pages:profile.cv.show", {
+                params: { slug: profile.user.slug ?? "" },
+              })}
               className={cn(buttonVariants({ variant: "default" }))}
             >
               Abrir noutro separador
@@ -133,7 +135,9 @@ export default function ParticipantProfileAbout({ profile }: ParticipantProfileA
             )}
           >
             <object
-              data={tuyau.$url("pages:profile.cv.show", { params: { slug: profile.user.slug ?? ""} })}
+              data={tuyau.$url("pages:profile.cv.show", {
+                params: { slug: profile.user.slug ?? "" },
+              })}
               type="application/pdf"
               width="100%"
               height="100%"

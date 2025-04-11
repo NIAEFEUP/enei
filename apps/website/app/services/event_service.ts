@@ -14,16 +14,16 @@ export default class EventService {
   }
 
   async isRegisteredInPaidEvent(user: User, event: Event) {
-      const orderProducts = await OrderProduct.query()
-          .join("orders", "order_products.order_id", "orders.id")
-          .join("products", "order_products.product_id", "products.id")
-          .where("user_id", user.id)
-          .whereIn("orders.status", ["delivery", "pending-delivery"])
-          .where("products.product_group_id", event.productGroupId)
-          .preload("product")
-          .preload("order")
-      
-      return orderProducts.length > 0
+    const orderProducts = await OrderProduct.query()
+      .join("orders", "order_products.order_id", "orders.id")
+      .join("products", "order_products.product_id", "products.id")
+      .where("user_id", user.id)
+      .whereIn("orders.status", ["delivery", "pending-delivery"])
+      .where("products.product_group_id", event.productGroupId)
+      .preload("product")
+      .preload("order");
+
+    return orderProducts.length > 0;
   }
 
   async isRegisteredInFreeEvent(user: User, event: Event) {

@@ -8,7 +8,10 @@ export class ProductService {
   }
 
   async getPointProducts(user: User | undefined = undefined) {
-    return this.applyRestrictions(await Product.query().whereNotNull("points").where("category", "store"), user);
+    return this.applyRestrictions(
+      await Product.query().whereNotNull("points").where("category", "store"),
+      user,
+    );
   }
 
   async getRealCurrencyProducts(user: User | undefined = undefined) {

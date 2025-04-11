@@ -20,29 +20,24 @@ export const paymentValidator = vine.compile(
 );
 
 export const paymentCallbackValidator = vine.compile(
-  vine.object({
-    requestId: vine.number().exists({ column: "request_id", table: "payments" }),
-  })
-  .merge(
-    vine.group([
-      vine.group.if(
-        (value) => 'status' in value && value.status === "declined",
-        {
+  vine
+    .object({
+      requestId: vine.number().exists({ column: "request_id", table: "payments" }),
+    })
+    .merge(
+      vine.group([
+        vine.group.if((value) => "status" in value && value.status === "declined", {
           status: vine.literal("declined"),
           reason: vine.string().optional(),
-        },
-      ),
-      vine.group.if(
-        (value) => 'status' in value && value.status === "unknown",
-        {
+        }),
+        vine.group.if((value) => "status" in value && value.status === "unknown", {
           status: vine.literal("unknown"),
           reason: vine.string(),
-        },
-      ),
-      vine.group.else({
-        status: vine.enum(["pending", "successful", "expired"]),
-        reason: vine.literal(undefined).optional(),
-      })
-    ]),
-  )
+        }),
+        vine.group.else({
+          status: vine.enum(["pending", "successful", "expired"]),
+          reason: vine.literal(undefined).optional(),
+        }),
+      ]),
+    ),
 );

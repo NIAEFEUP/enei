@@ -139,11 +139,7 @@ export default function EventRegistrationPage({
                     <Info className="h-5 w-5" />
                     <p className="text-lg font-semibold">Acerca do Evento</p>
                   </h1>
-                  <div
-                    className="prose"
-                    dangerouslySetInnerHTML={{ __html: event.description }}
-                  />
-       
+                  <div className="prose" dangerouslySetInnerHTML={{ __html: event.description }} />
                 </div>
               )}
               {/* {isRegistered && (
@@ -195,7 +191,7 @@ export default function EventRegistrationPage({
                     {event.speakers.map((speaker) => (
                       <Link
                         href={tuyau.$url("pages:profile.show", {
-                          params: { slug: speaker?.slug ?? "s"},
+                          params: { slug: speaker?.slug ?? "s" },
                         })}
                       >
                         <div

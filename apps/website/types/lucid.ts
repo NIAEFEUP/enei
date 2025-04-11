@@ -7,9 +7,9 @@ export type CreateReadonlyModel<
 > = Readonly<
   EqualsOrNever<ModelAttributes<T>, FlattenUnion<ModelAttributes<T> & Overrides>> extends never
     ? never
-    : ModelAttributes<T> & Overrides & (
-      T extends { readonly $relations: infer Relations }
-        ? { readonly $relations: Relations }
-        : never
-    )
+    : ModelAttributes<T>
+        & Overrides
+        & (T extends { readonly $relations: infer Relations }
+          ? { readonly $relations: Relations }
+          : never)
 >;

@@ -20,11 +20,15 @@ const RepresentativeProfileResource = createResource({
     },
     actions: {
       new: {
-        after: async (response: ActionResponse, _request: ActionRequest, context: ActionContext) => {
-          const newProfile = context.record?.params
+        after: async (
+          response: ActionResponse,
+          _request: ActionRequest,
+          context: ActionContext,
+        ) => {
+          const newProfile = context.record?.params;
 
-          if(!newProfile) return;
-          
+          if (!newProfile) return;
+
           await db.transaction(async (trx) => {
             const user = await User.create(
               {

@@ -7,7 +7,9 @@ import type { HasOne, ManyToMany } from "@adonisjs/lucid/types/relations";
 import User from "./user.js";
 import Company from "./company.js";
 
-const speakerProfileRelations = lazy(() => relations(SpeakerProfile, (r) => [r.many("events"), r.hasOne("user")]));
+const speakerProfileRelations = lazy(() =>
+  relations(SpeakerProfile, (r) => [r.many("events"), r.hasOne("user")]),
+);
 
 export default class SpeakerProfile extends BaseModel {
   @column({ isPrimary: true })

@@ -39,7 +39,15 @@ export default class Event extends BaseModel {
   declare description: string | null;
 
   @column()
-  declare type: "workshop" | "other" | "night" | "talk" | "networking" | "competition" | "meal" | "painel";
+  declare type:
+    | "workshop"
+    | "other"
+    | "night"
+    | "talk"
+    | "networking"
+    | "competition"
+    | "meal"
+    | "painel";
 
   @column()
   declare companyImage: string;

@@ -10,8 +10,7 @@ import { inject } from "@adonisjs/core";
 
 @inject()
 export class OrderService {
-  constructor(
-  ) {}
+  constructor() {}
 
   // async createOrderFromCart(user: User) {
   //   const cart = await this.cartService.getCartForUser(user);
@@ -22,10 +21,10 @@ export class OrderService {
   //       reason: "cart-empty",
   //     } as const;
   //   }
-    
+
   //   cart.status = "processing";
   //   await cart.save();
-    
+
   //   const products = await cart.$relations.products();
 
   //   const [totalPoints, _totalMoney] = products.reduce(
@@ -42,28 +41,25 @@ export class OrderService {
   //     return
   //   }
 
-    // if (totalMoney.isGreaterThan(Money.zero)) {
-    //   // // FIXME
-    //   // const payment = await PaymentService.create(
-    //   //   cart,
-    //   //   totalMoney,
-    //   //   "",
-    //   //   "Compra de itens",
-    //   //   user.email,
-    //   //   null,
-    //   //   null,
-    //   //   user.name,
-    //   // );
+  // if (totalMoney.isGreaterThan(Money.zero)) {
+  //   // // FIXME
+  //   // const payment = await PaymentService.create(
+  //   //   cart,
+  //   //   totalMoney,
+  //   //   "",
+  //   //   "Compra de itens",
+  //   //   user.email,
+  //   //   null,
+  //   //   null,
+  //   //   user.name,
+  //   // );
 
-    //   cart.status = "pending-payment";
-    //   await cart.save();
-    //   await cart.related("payments").save(payment);
+  //   cart.status = "pending-payment";
+  //   await cart.save();
+  //   await cart.related("payments").save(payment);
 
-    //   return;
-    // }
-
-    
-
+  //   return;
+  // }
 
   //}
 

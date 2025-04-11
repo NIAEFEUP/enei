@@ -35,11 +35,11 @@ export class CartService {
     const cart = await this.getCartForUser(user);
 
     if (quantity <= 0) {
-        await cart.related("products").detach([product.id]);
+      await cart.related("products").detach([product.id]);
     } else {
-        await cart.related("products").attach({
-            [product.id]: { quantity },
-        });
+      await cart.related("products").attach({
+        [product.id]: { quantity },
+      });
     }
   }
 }

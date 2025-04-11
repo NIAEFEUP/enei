@@ -22,9 +22,9 @@ export type ReadonlyOrder = CreateReadonlyModel<Order>;
 
 const orderRelations = lazy(() =>
   relations(Order, (r) => [
-    r.many("payments"), 
+    r.many("payments"),
     r.withExtras<{ quantity: number }>().many("products"),
-    r.requiredBelongsTo("user")
+    r.requiredBelongsTo("user"),
   ]),
 );
 

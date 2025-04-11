@@ -8,7 +8,11 @@ import Event from "./event.js";
 import SpeakerProfile from "./speaker_profile.js";
 
 const companyRelations = lazy(() =>
-  relations(Company, (r) => [r.many("representativeProfiles"), r.many("representativeProfiles"), r.many("events")]),
+  relations(Company, (r) => [
+    r.many("representativeProfiles"),
+    r.many("representativeProfiles"),
+    r.many("events"),
+  ]),
 );
 
 export type CVPermissions = "all" | "visited" | "none";

@@ -201,9 +201,15 @@ export function relations<
     withExtras<Extras extends Record<string, unknown>>() {
       return {
         many(relationName) {
-          return define.many(relationName) as [typeof relationName, RelationLoader<ParentModel, WithExtras<InstanceType<ParentModel>[typeof relationName], Extras>>]
+          return define.many(relationName) as [
+            typeof relationName,
+            RelationLoader<
+              ParentModel,
+              WithExtras<InstanceType<ParentModel>[typeof relationName], Extras>
+            >,
+          ];
         },
-      }
+      };
     },
   };
 

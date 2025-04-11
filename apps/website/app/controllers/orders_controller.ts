@@ -9,16 +9,13 @@ import { OrderService } from "#services/order_service";
 
 @inject()
 export default class OrdersController {
-  public constructor(
-    private orderService: OrderService,
-  ) {}
+  public constructor(private orderService: OrderService) {}
 
   index({ inertia }: HttpContext) {
     return inertia.render("payments");
   }
 
-  async create({}: HttpContext) {
-  }
+  async create({}: HttpContext) {}
 
   public async createMBWay({ request, auth, response }: HttpContext) {
     const authUser = auth.getUserOrFail();

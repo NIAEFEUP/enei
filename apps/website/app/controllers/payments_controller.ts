@@ -7,8 +7,7 @@ import * as is from "@sindresorhus/is";
 
 @inject()
 export default class PaymentsController {
-  constructor(
-  ) {}
+  constructor() {}
 
   async callback({ request, response }: HttpContext) {
     const data = await request.validateUsing(paymentCallbackValidator);
@@ -21,7 +20,7 @@ export default class PaymentsController {
     payment.status = data.status;
     payment.reason = is.isNullOrUndefined(data.reason) ? null : data.reason;
     await payment.save();
-    
+
     const [success] = await PaymentStatusUpdated.tryDispatch(payment);
     if (!success) {
       return response.internalServerError({ success: false });
