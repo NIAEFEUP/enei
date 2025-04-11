@@ -142,7 +142,14 @@ export default class User extends BaseModel {
 
     const profile = user.participantProfile ?? user.representativeProfile ?? user.speakerProfile;
 
-    if (user.$dirty.slug || profile.$dirty.firstName || profile.$dirty.lastName) {
+    if (
+      user.$dirty.slug
+      || user.$dirty.participantProfileId
+      || user.$dirty.representativeProfileId
+      || user.$dirty.speakerProfileId
+      || profile?.$dirty.firstName
+      || profile?.$dirty.lastName
+    ) {
       if (profile) {
         const { firstName, lastName } = profile;
 
