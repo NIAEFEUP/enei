@@ -1,12 +1,12 @@
-import { BaseSchema } from '@adonisjs/lucid/schema'
+import { BaseSchema } from "@adonisjs/lucid/schema";
 
 export default class extends BaseSchema {
-  protected tableName = 'companies'
+  protected tableName = "companies";
 
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.string("cv_permissions").defaultTo("none")
-    })
+      table.string("cv_permissions").defaultTo("none");
+    });
   }
 
   async down() {

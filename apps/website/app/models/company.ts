@@ -1,8 +1,14 @@
 import { DateTime } from "luxon";
-import { BaseModel, column, hasMany, hasOne } from "@adonisjs/lucid/orm";
-import type { HasMany, HasOne } from "@adonisjs/lucid/types/relations";
+import { BaseModel, column, hasMany, hasOne, manyToMany } from "@adonisjs/lucid/orm";
+import type {
+  HasMany,
+  HasOne,
+  ManyToMany,
+  ManyToManyQueryBuilderContract,
+} from "@adonisjs/lucid/types/relations";
 import User from "./user.js";
 import RepresentativeProfile from "./representative_profile.js";
+import Event from "./event.js";
 
 export type CVPermissions = "all" | "visited" | "none";
 
@@ -30,4 +36,9 @@ export default class Company extends BaseModel {
 
   @hasMany(() => RepresentativeProfile)
   declare representativeProfiles: HasMany<typeof RepresentativeProfile>;
+
+  @manyToMany(() => Event, {
+    pivotTable: "event_companies",
+  })
+  public events!: ManyToMany<typeof Event>;
 }

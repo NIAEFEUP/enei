@@ -3,6 +3,7 @@ import { BaseModel, column, manyToMany } from "@adonisjs/lucid/orm";
 import SpeakerProfile from "./speaker_profile.js";
 import type { ManyToMany } from "@adonisjs/lucid/types/relations";
 import User from "./user.js";
+import Company from "./company.js";
 
 export default class Event extends BaseModel {
   @column({ isPrimary: true })
@@ -55,6 +56,11 @@ export default class Event extends BaseModel {
     pivotTable: "event_checkins",
   })
   public checkedInUsers!: ManyToMany<typeof User>;
+
+  @manyToMany(() => Company, {
+    pivotTable: "event_companies",
+  })
+  public companies!: ManyToMany<typeof Company>;
 
   @column()
   declare registrationRequirements: string;
