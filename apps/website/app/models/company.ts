@@ -1,23 +1,16 @@
 import { DateTime } from "luxon";
-import { BaseModel, column, hasMany, hasOne, manyToMany } from "@adonisjs/lucid/orm";
-import type {
-  HasMany,
-  HasOne,
-  ManyToMany,
-  ManyToManyQueryBuilderContract,
-} from "@adonisjs/lucid/types/relations";
-import User from "./user.js";
+import { BaseModel, column, hasMany, manyToMany } from "@adonisjs/lucid/orm";
+import type { HasMany, ManyToMany } from "@adonisjs/lucid/types/relations";
 import RepresentativeProfile from "./representative_profile.js";
 import Event from "./event.js";
+import SpeakerProfile from "./speaker_profile.js";
 
 export type CVPermissions = "all" | "visited" | "none";
+export type SponsorVariant = "default" | "gold" | "silver" | "bronze";
 
 export default class Company extends BaseModel {
   @column({ isPrimary: true })
   declare id: number;
-
-  @hasOne(() => User)
-  declare user: HasOne<typeof User>;
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime;
@@ -34,6 +27,12 @@ export default class Company extends BaseModel {
   @column()
   declare logo: string;
 
+  @column()
+  declare sponsor: SponsorVariant;
+
+  @column()
+  declare about: string;
+
   @hasMany(() => RepresentativeProfile)
   declare representativeProfiles: HasMany<typeof RepresentativeProfile>;
 
@@ -41,4 +40,12 @@ export default class Company extends BaseModel {
     pivotTable: "event_companies",
   })
   public events!: ManyToMany<typeof Event>;
+
+  static async getEvents(company: Company) {
+    const speakerProfiles = await SpeakerProfile.query()
+      .where("company", company.name)
+      .preload("events");
+
+    return speakerProfiles ? speakerProfiles.map((profile) => profile.events).flat() : [];
+  }
 }

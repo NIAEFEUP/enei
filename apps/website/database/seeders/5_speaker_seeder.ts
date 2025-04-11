@@ -117,6 +117,11 @@ export default class extends BaseSeeder {
       company: "Paulo Games Productions",
     });
 
+    // const nunofonseca = await User.create({
+    //   email: "nunofonseca@gmail.com",
+    //   slug: "nunofonseca",
+    // });
+
     await SpeakerProfile.create({
       firstName: "Nuno",
       lastName: "Fonseca",
@@ -124,6 +129,8 @@ export default class extends BaseSeeder {
       profilePicture: "/images/speakers/nuno-fonseca.jpg",
       company: "Sound Particles",
     });
+
+    // nunofonseca.related("speakerProfile").associate(nunoSpeakerProfile);
 
     await SpeakerProfile.create({
       firstName: "Eddie",

@@ -14,6 +14,7 @@ import {
   sendChangePasswordThrottle,
   sendForgotPasswordThrottle,
 } from "#start/limiter";
+const CompanyController = () => import("#controllers/companies_controller");
 
 const EventsController = () => import("#controllers/events_controller");
 const AuthenticationController = () => import("#controllers/authentication_controller");
@@ -231,6 +232,12 @@ router
 
 router
   .group(() => {
+    router.get("/:name", [CompanyController, "profile"]).as("pages:company-profile");
+  })
+  .prefix("/company");
+
+router
+  .group(() => {
     router.get("/", [EventsController, "index"]).as("pages:events");
 
     router.get("/:id", [EventsController, "show"]).as("pages:events.show");
@@ -322,9 +329,9 @@ router
 
 router
   .group(() => {
-    router.on("/scan").renderInertia("qrscanner").as("pages:staff.qrcode.scan");
+    router.on("/scan").renderInertia("credentials").as("pages:staff.credentials.scan");
   })
   .use([middleware.auth(), middleware.staff()])
-  .prefix("/qrcode");
+  .prefix("/credentials");
 
 router.on("/nfc").renderInertia("nfc").as("pages:nfc");

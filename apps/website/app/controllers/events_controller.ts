@@ -24,6 +24,7 @@ export default class EventsController {
           firstName: speaker.firstName,
           lastName: speaker.lastName,
           jobTitle: speaker.jobTitle,
+          user: speaker.user,
           profilePicture: speaker.profilePicture,
           company: speaker.company,
         })),
@@ -54,6 +55,7 @@ export default class EventsController {
         lastName: speaker.lastName,
         jobTitle: speaker.jobTitle,
         profilePicture: speaker.profilePicture,
+        user: speaker.user,
         company: speaker.company,
       })),
       registrationRequirements: event.registrationRequirements,
@@ -93,15 +95,7 @@ export default class EventsController {
     const eventID = request.input("eventID");
 
     const event = await Event.findOrFail(eventID);
-    const profile = await ParticipantProfile.findBy("slug", params.slug);
-    // FIXME: change this to User when slug in user is ready
-
-    if (!profile) {
-      session.flashErrors({ message: "Participante não encontrado" });
-      return response.redirect().back();
-    }
-
-    const user = await User.findBy("participantProfileId", profile?.id);
+    const user = await User.findBy("slug", params.slug);
 
     if (!this.eventService.isRegistered(user!, event)) {
       session.flashErrors({ message: "Participante não registado no evento" });
