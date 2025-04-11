@@ -33,7 +33,7 @@ export default class EventsController {
   async show({ inertia, params, auth }: HttpContext) {
     const event = await Event.findOrFail(params.id);
 
-    const speakers = await event.related("speakers").query();
+    const speakers = await event.related("speakers").query().preload("user");
     const user = auth.user;
     await user?.load("staffProfile");
 
