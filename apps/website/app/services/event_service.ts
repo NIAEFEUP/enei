@@ -4,15 +4,15 @@ import EventCheckinListener from "#listeners/event_checkin_listeners";
 import EventCheckin from "#events/event_checkin";
 import { OrderService } from "./order_service.js";
 import type { MBWayOrder } from "../../types/order.js";
-import { PaymentService } from "../services/payment_service.js";
-import Product from "#models/product";
 import OrderProduct from "#models/order_product";
 import db from "@adonisjs/lucid/services/db";
+import { DateTime } from "luxon";
+import Product from "#models/product";
 
 export default class EventService {
   async isRegistered(user: User, event: Event) {
-    if (event.price.toCents() > 0) return this.isRegisteredInPaidEvent(user, event);
-    else return this.isRegisteredInFreeEvent(user, event);
+    // if (event.price.toCents() > 0) return this.isRegisteredInPaidEvent(user, event);
+    return this.isRegisteredInFreeEvent(user, event);
   }
 
   async isRegisteredInPaidEvent(user: User, event: Event) {
@@ -38,9 +38,9 @@ export default class EventService {
     return !!isRegistered;
   }
 
-  async register(user: User, event: Event, data: MBWayOrder | null) {
-    if (event.price.toCents() > 0) this.paidRegistration(user, event, data);
-    else this.freeRegistration(user, event);
+  async register(user: User, event: Event, _data: MBWayOrder | null) {
+    // if (event.price.toCents() > 0) this.paidRegistration(user, event, data);
+    await this.freeRegistration(user, event);
   }
 
   async isCheckedIn(user: User, event: Event) {
@@ -53,31 +53,31 @@ export default class EventService {
     return !!isChecked;
   }
 
-  private async paidRegistration(user: User, event: Event, data: MBWayOrder | null) {
-    const { products, name, nif, address, mobileNumber } = data!;
+  // private async paidRegistration(user: User, event: Event, data: MBWayOrder | null) {
+  //   const { products, name, nif, address, mobileNumber } = data!;
 
-    if (!mobileNumber) return;
+  //   if (!mobileNumber) return;
 
-    // 1. See if user already enrolled
-    if (await this.isRegistered(user, event)) return;
+  //   // 1. See if user already enrolled
+  //   if (await this.isRegistered(user, event)) return;
 
-    // 2. Issue order creation and job spawning to pay
-    for (const product of products) {
-      const order = await OrderService.createOrder(user, product);
-      const productModel = await Product.findOrFail(product.productId);
+  //   // 2. Issue order creation and job spawning to pay
+  //   for (const product of products) {
+  //     const order = await OrderService.createOrder(user, product);
+  //     const productModel = await Product.findOrFail(product.productId);
 
-      await PaymentService.create(
-        order,
-        productModel.price,
-        mobileNumber,
-        "",
-        user.email,
-        nif,
-        address,
-        name,
-      );
-    }
-  }
+  //     await PaymentService.create(
+  //       order,
+  //       productModel.price,
+  //       mobileNumber,
+  //       "",
+  //       user.email,
+  //       nif,
+  //       address,
+  //       name,
+  //     );
+  //   }
+  // }
 
   private async freeRegistration(user: User, event: Event) {
     await event.loadOnce("product"); // deposits will be a product associated with the event
@@ -108,17 +108,14 @@ export default class EventService {
 
   async checkin(user: User, event: Event) {
     await event.related("checkedInUsers").attach({
-      [user.id]: { checked_in_at: new Date() },
+      [user.id]: { checked_in_at: DateTime.now() },
     });
     await event.save();
+    const product = await Product.find(event.participationProductId);
 
     const listener = new EventCheckinListener()
-    listener.handle(
-      new EventCheckin(this.getPoints(event, user), user)
+    await listener.handle(
+      new EventCheckin(product, user)
     )
-  }
-
-  getPoints(event: Event, user: User) {
-    return 0
   }
 }

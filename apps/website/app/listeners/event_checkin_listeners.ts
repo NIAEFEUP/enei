@@ -5,7 +5,7 @@ export default class EventCheckinListener {
     async handle(checkin: EventCheckin) {
         await PointsService.eventCheckinPointAttribution(
             checkin.user,
-            checkin.points
+            checkin.participationProduct
         )
     }
 }

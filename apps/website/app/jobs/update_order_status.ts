@@ -64,6 +64,7 @@ export default class UpdateOrderStatus extends Job {
               .where("order_products.order_id", order.id)
               .select("products.*", "order_products.quantity as quantity");
 
+            // @ts-ignore
             const total = order.total;
             const orderId = order.id;
 

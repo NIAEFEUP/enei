@@ -16,7 +16,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.zero,
     });
 
     const speakerProfile1 = await SpeakerProfile.create({
@@ -70,7 +69,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 200,
       ticketsTotal: 200,
-      price: Money.zero,
     });
   }
 }

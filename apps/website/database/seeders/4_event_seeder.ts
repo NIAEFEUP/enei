@@ -23,7 +23,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -38,7 +37,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -53,7 +51,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -66,7 +63,6 @@ export default class extends BaseSeeder {
       location: "Auditório - ISEP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -79,7 +75,6 @@ export default class extends BaseSeeder {
       location: "Auditório - ISEP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -92,7 +87,6 @@ export default class extends BaseSeeder {
       location: "Auditório - ISEP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     /*
@@ -112,7 +106,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -127,7 +120,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -142,7 +134,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -156,7 +147,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -169,7 +159,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -182,7 +171,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     /*
@@ -202,7 +190,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -217,7 +204,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -231,7 +217,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -244,7 +229,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -257,7 +241,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -270,7 +253,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     /*
@@ -291,7 +273,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -306,7 +287,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -320,7 +300,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -333,7 +312,6 @@ export default class extends BaseSeeder {
       location: "Auditório - ISEP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -346,7 +324,6 @@ export default class extends BaseSeeder {
       location: "Auditório - ISEP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -359,7 +336,6 @@ export default class extends BaseSeeder {
       location: "Auditório - ISEP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     /*
@@ -379,7 +355,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -394,7 +369,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -409,7 +383,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -422,7 +395,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -435,7 +407,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -448,7 +419,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     /*
@@ -469,7 +439,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -484,7 +453,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -498,7 +466,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -511,7 +478,6 @@ export default class extends BaseSeeder {
       location: "TBD - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -524,7 +490,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -536,7 +501,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     /*
@@ -557,7 +521,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -572,7 +535,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -587,7 +549,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -600,7 +561,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -612,7 +572,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -625,7 +584,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -638,7 +596,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     /*
@@ -657,7 +614,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -672,7 +628,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 1000,
       ticketsTotal: 1000,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -685,7 +640,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: Money.fromCents(0),
     });
   }
 }

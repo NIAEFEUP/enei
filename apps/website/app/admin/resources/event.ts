@@ -15,6 +15,12 @@ const EventResource = createResource({
       productGroupId: {
         reference: "product_groups",
       },
+      participationProductId: {
+        reference: "products",
+      },
+      price: {
+        type: "number"
+      }
     },
   },
   features: [

@@ -15,7 +15,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 1000,
       ticketsTotal: 1000,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -29,7 +28,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 1000,
       ticketsTotal: 1000,
-      price: Money.fromCents(500),
     });
 
     await Event.create({
@@ -42,7 +40,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 1000,
       ticketsTotal: 1000,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -55,7 +52,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 1000,
       ticketsTotal: 1000,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -68,7 +64,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 1000,
       ticketsTotal: 1000,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -81,7 +76,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 1000,
       ticketsTotal: 1000,
-      price: Money.fromCents(0),
     });
 
     await Event.create({
@@ -94,7 +88,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 1000,
       ticketsTotal: 1000,
-      price: Money.fromCents(0),
     });
   }
 }

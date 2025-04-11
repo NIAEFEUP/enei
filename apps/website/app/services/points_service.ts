@@ -6,6 +6,9 @@ import {
 } from "../../types/user_activity.js";
 import User from "#models/user";
 import Event from "#models/event";
+import Order from "#models/order";
+import Product from "#models/product";
+import OrderProduct from "#models/order_product";
 
 /**
  * This service will be responsible for handling how many points a certain event
@@ -22,31 +25,26 @@ export default class PointsService {
     ],
   ]);
 
-  static async eventCheckinPointAttribution(user: User, points: number) {
+  static async eventCheckinPointAttribution(user: User, participationProduct: Product | null) {
+    if(!participationProduct) return
+
     await db.transaction(async (trx) => {
-      // const order = await Order.create({
-      //   userId: user.id,
-      //   name: "Event Checkin"
-      // }, { client: trx })
-      // const product = await Product.create({
-      //   name: "Event",
-      //   description: "Event Checkin",
-      //   currency: "points",
-      //   price: -points,
-      // }, {
-      //   client: trx
-      // })
+      const order = await Order.create({
+        userId: user.id,
+        status: "delivered",
+        pointsUsed: participationProduct.points,
+      }, { client: trx })
 
-      // await OrderProduct.create({
-      //   orderId: order.id,
-      //   productId: product.id,
-      //   quantity: 1,
-      // }, {
-      //   client: trx
-      // });
+      await OrderProduct.create({
+        orderId: order.id,
+        productId: participationProduct.id,
+        quantity: 1
+      }, {
+        client: trx
+      });
 
-      // user.useTransaction(trx).points += points;
-      // await user.save();
+      user.useTransaction(trx).points -= participationProduct.points;
+      await user.save();
     })
   }
 

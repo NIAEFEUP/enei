@@ -105,7 +105,7 @@ export default class EventsController {
     const eventID = request.input("eventID");
 
     const event = await Event.findOrFail(eventID);
-    const user = await User.findBy("slug", params.slug);
+    const user = await User.findByOrFail("slug", params.slug);
 
     if (!this.eventService.isRegistered(user!, event)) {
       session.flashErrors({ message: "Participante não registado no evento" });
