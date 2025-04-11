@@ -26,8 +26,10 @@ export function json(options?: Partial<ColumnOptions>) {
 export function money(options?: Partial<ColumnOptions>) {
   return typed<Money>({
     ...options,
-    serialize: (val: Money | number) => (typeof val === "number" || typeof val === "string") ? val : val.toEuros(),
-    prepare: (val: Money | number) => (typeof val === "number" || typeof val === "string") ? val : val.toCents(),
+    serialize: (val: Money | number) =>
+      typeof val === "number" || typeof val === "string" ? val : val.toEuros(),
+    prepare: (val: Money | number) =>
+      typeof val === "number" || typeof val === "string" ? val : val.toCents(),
     consume: (cents: number) => Money.fromCents(cents),
   });
 }

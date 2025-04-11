@@ -14,7 +14,7 @@ const ProductResource = createResource({
       },
       restrictions: {
         type: "key-value",
-      }
+      },
     },
   },
   features: [

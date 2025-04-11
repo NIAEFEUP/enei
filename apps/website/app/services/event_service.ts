@@ -113,9 +113,7 @@ export default class EventService {
     await event.save();
     const product = await Product.find(event.participationProductId);
 
-    const listener = new EventCheckinListener()
-    await listener.handle(
-      new EventCheckin(product, user)
-    )
+    const listener = new EventCheckinListener();
+    await listener.handle(new EventCheckin(product, user));
   }
 }

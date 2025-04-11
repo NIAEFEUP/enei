@@ -98,7 +98,6 @@ export default class Event extends BaseModel {
   @column()
   declare ticketsRemaining: number;
 
-
   @column()
   declare participationProductId: number | null;
 
