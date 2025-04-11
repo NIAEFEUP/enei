@@ -1,4 +1,4 @@
-import ParticipantProfile from "#models/participant_profile";
+import type ParticipantProfile from "#models/participant_profile";
 import { Link } from "@tuyau/inertia/react";
 import { User } from "lucide-react";
 import { Drawer, DrawerContent } from "~/components/ui/drawer";
@@ -30,17 +30,17 @@ function ProfileInfoDrawer({ profile, onClose }: ProfileInfoDrawerProps) {
                 <Link
                   className="after:absolute after:inset-0 hover:underline"
                   route="pages:profile.show"
-                  params={{ slug: profile.slug ?? "" }}
+                  params={{ slug: profile.user.slug ?? "" }}
                   target="_blank"
                 >
                   {profile.firstName} {profile.lastName}
                 </Link>
               </p>
-              <p>{profile.slug}</p>
+              <p>{profile.user.slug}</p>
             </div>
           </div>
 
-          <CredentialWriter slug={profile.slug ?? ""} />
+          <CredentialWriter slug={profile.user.slug ?? ""} />
         </div>
       </DrawerContent>
     </Drawer>

@@ -14,6 +14,7 @@ import {
   sendChangePasswordThrottle,
   sendForgotPasswordThrottle,
 } from "#start/limiter";
+const CompanyController = () => import("#controllers/companies_controller")
 
 const EventsController = () => import("#controllers/events_controller");
 const AuthenticationController = () => import("#controllers/authentication_controller");
@@ -228,6 +229,12 @@ router
     router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
   })
   .use(middleware.wip());
+
+router
+  .group(() => {
+    router.get("/:name", [CompanyController, "profile"]).as("pages:company-profile");
+  })
+  .prefix("/company");
 
 router
   .group(() => {

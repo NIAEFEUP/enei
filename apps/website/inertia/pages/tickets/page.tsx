@@ -3,7 +3,7 @@
 import type { InferPageProps } from "@adonisjs/inertia/types";
 import { Link } from "@tuyau/inertia/react";
 import { Card, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
-import TicketsController from "#controllers/tickets_controller";
+import type TicketsController from "#controllers/tickets_controller";
 import Page from "~/components/common/page";
 import Container from "~/components/common/containers";
 import { cn } from "~/lib/utils";

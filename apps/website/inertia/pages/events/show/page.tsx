@@ -20,16 +20,19 @@ import { cn } from "~/lib/utils";
 import RegistrationConfirmationModal from "~/components/events/registration_confirmation_modal";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 import Page from "~/components/common/page";
-import { useForm } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import Container from "~/components/common/containers";
+import { useTuyau } from "~/hooks/use_tuyau";
 import EventCheckInDialog from "~/components/events/event_check_in_dialog";
 import { useAuth } from "~/hooks/use_auth";
+import User from "#models/user";
 
 interface Speaker {
   firstName: string;
   lastName: string;
   jobTitle: string;
   profilePicture: string;
+  user: User;
   company: string;
 }
 
@@ -76,6 +79,7 @@ export default function EventRegistrationPage({
 
   const { toast } = useToast();
 
+  const tuyau = useTuyau();
   const auth = useAuth();
 
   const { post, processing } = useForm({});
@@ -225,35 +229,39 @@ export default function EventRegistrationPage({
                   </h1>
                   <div className="flex flex-wrap gap-4">
                     {speakers.map((speaker) => (
-                      <div
-                        key={speaker.firstName + speaker.lastName}
-                        className={cn(
-                          "flex w-auto items-center gap-4 rounded-lg border p-4",
-                          activityClassesPrimary[type],
-                        )}
+                      <Link
+                        href={tuyau.$url("pages:profile.show", { params: { slug: speaker.user.slug } })}
                       >
-                        <Avatar className="h-12 w-12">
-                          <AvatarImage
-                            src={speaker.profilePicture}
-                            alt={speaker.firstName}
-                            className="object-cover"
-                          />
-                          <AvatarFallback>{speaker.firstName[0]}</AvatarFallback>
-                        </Avatar>
-                        <div className="space-y-1">
-                          <h3 className="font-medium">
-                            {speaker.firstName + " " + speaker.lastName}
-                          </h3>
-                          <div className="flex flex-row">
-                            {speaker.jobTitle && (
-                              <p className="text-sm text-black">{speaker.jobTitle}</p>
-                            )}
-                            {speaker.company && (
-                              <p className="text-sm text-black">{", " + speaker.company}</p>
-                            )}
+                        <div
+                          key={speaker.firstName + speaker.lastName}
+                          className={cn(
+                            "flex w-auto items-center gap-4 rounded-lg border p-4",
+                            activityClassesPrimary[type],
+                          )}
+                        >
+                          <Avatar className="h-12 w-12">
+                            <AvatarImage
+                              src={speaker.profilePicture}
+                              alt={speaker.firstName}
+                              className="object-cover"
+                            />
+                            <AvatarFallback>{speaker.firstName[0]}</AvatarFallback>
+                          </Avatar>
+                          <div className="space-y-1">
+                            <h3 className="font-medium">
+                              {speaker.firstName + " " + speaker.lastName}
+                            </h3>
+                            <div className="flex flex-row">
+                              {speaker.jobTitle && (
+                                <p className="text-sm text-black">{speaker.jobTitle}</p>
+                              )}
+                              {speaker.company && (
+                                <p className="text-sm text-black">{", " + speaker.company}</p>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </Link>
                     ))}
                   </div>{" "}
                 </div>
