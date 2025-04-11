@@ -118,7 +118,7 @@ export default class User extends BaseModel {
   declare staffProfile: BelongsTo<typeof StaffProfile>;
 
   // Attachments
-  
+
   @attachment({
     folder: "resumes",
   })
