@@ -80,35 +80,35 @@ export default class extends BaseSeeder {
 
     await representativeProfile.related("company").associate(company);
 
-    const mockCompanyEvent = await Event.create({
-      id: 600,
-      title: "AI4Cyber",
-      description:
-        "Com a crescente digitalização e a sofisticação dos ataques, a Inteligência Artificial surge como solução disruptiva para a cibersegurança. No entanto, é essencial considerar também as vulnerabilidades e novos vetores de ataque que a IA introduz. Esta palestra aborda ambas as perspetivas: o uso da IA na cibersegurança e a segurança da própria IA.",
-      date: DateTime.fromObject({ year: 2025, month: 4, day: 14, hour: 9, minute: 30 }),
-      duration: 30,
-      type: "talk",
-      location: "Auditório - FEUP",
-      registrationRequirements: "",
-      requiresRegistration: false,
-      price: 0,
-    });
+    // const mockCompanyEvent = await Event.create({
+    //   id: 600,
+    //   title: "AI4Cyber",
+    //   description:
+    //     "Com a crescente digitalização e a sofisticação dos ataques, a Inteligência Artificial surge como solução disruptiva para a cibersegurança. No entanto, é essencial considerar também as vulnerabilidades e novos vetores de ataque que a IA introduz. Esta palestra aborda ambas as perspetivas: o uso da IA na cibersegurança e a segurança da própria IA.",
+    //   date: DateTime.fromObject({ year: 2025, month: 4, day: 14, hour: 9, minute: 30 }),
+    //   duration: 30,
+    //   type: "talk",
+    //   location: "Auditório - FEUP",
+    //   registrationRequirements: "",
+    //   requiresRegistration: false,
+    //   price: 0,
+    // });
 
     const speakerUser = await User.create({
       email: "speakeruser@eneiconf.pt",
       slug: "speakeruser",
     });
 
-    const speakerUserProfile = await SpeakerProfile.create({
-      id: 500,
-      firstName: "Nome",
-      lastName: "Apelido",
-      jobTitle: "CEO",
-      company: "enei",
-    });
+    // const speakerUserProfile = await SpeakerProfile.create({
+    //   id: 500,
+    //   firstName: "Nome",
+    //   lastName: "Apelido",
+    //   jobTitle: "CEO",
+    //   company: "enei",
+    // });
 
-    await speakerUser.related("speakerProfile").associate(speakerUserProfile);
-    await mockCompanyEvent.related("speakers").attach([speakerUserProfile.id]);
+    // await speakerUser.related("speakerProfile").associate(speakerUserProfile);
+    // await mockCompanyEvent.related("speakers").attach([speakerUserProfile.id]);
 
     const companyRepresentative = await User.create({
       email: "company@eneiconf.pt",

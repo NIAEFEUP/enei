@@ -122,13 +122,13 @@ export default class extends BaseSeeder {
     //   slug: "nunofonseca",
     // });
 
-    // const nunoSpeakerProfile = await SpeakerProfile.create({
-    //   firstName: "Nuno",
-    //   lastName: "Fonseca",
-    //   jobTitle: "Fundador & CEO",
-    //   profilePicture: "/images/speakers/nuno-fonseca.jpg",
-    //   company: "Sound Particles",
-    // });
+    const _nunoSpeakerProfile = await SpeakerProfile.create({
+      firstName: "Nuno",
+      lastName: "Fonseca",
+      jobTitle: "Fundador & CEO",
+      profilePicture: "/images/speakers/nuno-fonseca.jpg",
+      company: "Sound Particles",
+    });
 
     // nunofonseca.related("speakerProfile").associate(nunoSpeakerProfile);
 

@@ -37,7 +37,7 @@ export default class User extends BaseModel {
   declare accounts: HasMany<typeof Account>;
 
   @column()
-  declare slug: string;
+  declare slug: string | null;
 
   // Referrals
 
