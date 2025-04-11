@@ -8,7 +8,7 @@ export default function EventsPageApril11() {
           title={"Boas-Vindas"}
           type={"other"}
           time={"14:00 - 18:30"}
-          location={"TBD - ISEP"}
+          location={"Jardim do ISEP"}
           speakers={[]}
         />
       </div>
@@ -17,7 +17,7 @@ export default function EventsPageApril11() {
           title={"Check-in"}
           type={"other"}
           time={"14:00 - 23:30"}
-          location={"TBD - ISEP"}
+          location={"Auditório Magno - ISEP"}
           speakers={[]}
         />
       </div>
@@ -26,7 +26,7 @@ export default function EventsPageApril11() {
           title={"Sessão de Abertura"}
           type={"other"}
           time={"18:30 - 20:00"}
-          location={"Auditório - ISEP"}
+          location={"Auditório Magno - ISEP"}
           speakers={[]}
         />
       </div>

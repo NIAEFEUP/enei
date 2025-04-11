@@ -1,15 +1,15 @@
-import type ParticipantProfile from "#models/participant_profile";
 import { Link } from "@tuyau/inertia/react";
-import { User } from "lucide-react";
+import { User as UserIcon } from "lucide-react";
 import { Drawer, DrawerContent } from "~/components/ui/drawer";
 import CredentialWriter from "../credentials/writer";
+import User from "#models/user";
 
 interface ProfileInfoDrawerProps {
-  profile: ParticipantProfile;
+  user: User;
   onClose: () => void;
 }
 
-function ProfileInfoDrawer({ profile, onClose }: ProfileInfoDrawerProps) {
+function ProfileInfoDrawer({ user, onClose }: ProfileInfoDrawerProps) {
   return (
     <Drawer
       defaultOpen={true}
@@ -24,23 +24,23 @@ function ProfileInfoDrawer({ profile, onClose }: ProfileInfoDrawerProps) {
       <DrawerContent className="bg-enei-beige text-enei-blue absolute gap-4 p-4">
         <div className="mx-auto flex w-full max-w-96 flex-col items-center gap-2">
           <div className="relative flex flex-row items-center">
-            <User className="size-16" />
+            <UserIcon className="size-16" />
             <div className="flex flex-col">
               <p>
                 <Link
                   className="after:absolute after:inset-0 hover:underline"
                   route="pages:profile.show"
-                  params={{ slug: profile.user.slug ?? "" }}
+                  params={{ slug: user.slug ?? "" }}
                   target="_blank"
                 >
-                  {profile.firstName} {profile.lastName}
+                  {user.participantProfile.firstName} {user.participantProfile.lastName}
                 </Link>
               </p>
-              <p>{profile.user.slug}</p>
+              <p>{user.slug}</p>
             </div>
           </div>
 
-          <CredentialWriter slug={profile.user.slug ?? ""} />
+          <CredentialWriter slug={user.slug ?? ""} />
         </div>
       </DrawerContent>
     </Drawer>

@@ -3,20 +3,18 @@ import type { NextFn } from "@adonisjs/core/types/http";
 import env from "#start/env";
 import { safeEqual } from "@adonisjs/core/helpers";
 
-export default class CompanyBearerAuthMiddleware {
+export default class CompanyAuthMiddleware {
   async handle(ctx: HttpContext, next: NextFn) {
     /**
      * Middleware logic goes here (before the next call)
      */
-    const authHeader = ctx.request.header("Authorization");
+    const token = ctx.request.header("X-API-Token");
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    if (!token) {
       return ctx.response.unauthorized({ error: "Missing or invalid Authorization header" });
     }
 
-    const token = authHeader.replace("Bearer ", "");
-
-    if (!safeEqual(env.get("COMPANY_BEARER_TOKEN"), token)) {
+    if (!safeEqual(env.get("COMPANY_API_TOKEN"), token)) {
       return ctx.response.unauthorized({ error: "Invalid token" });
     }
 

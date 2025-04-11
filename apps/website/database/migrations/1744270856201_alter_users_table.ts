@@ -17,7 +17,7 @@ export default class extends BaseSchema {
   async down() {
     this.schema.alterTable(this.tableName, (table) => {
       table.dropColumn("slug");
-      table.dropColumn("representative_profile_id");
+      table.dropColumn("speaker_profile_id");
     });
   }
 }
