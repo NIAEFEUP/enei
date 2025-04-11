@@ -19,18 +19,14 @@ export default class OrdersController {
 
   public async createMBWay(_ctx: HttpContext) {
     // const authUser = auth.getUserOrFail();
-
     // try {
     //   const { products, nif, address, mobileNumber, name } =
     //     await request.validateUsing(createMBWayOrderValidator);
-
     //   console.log({ products, nif, address, mobileNumber });
     //   const { productDetails, description, totalAmount } =
     //     await this.orderService.buildProductDetails(authUser, products);
-
     //   // Create the order and associated products
     //   const order = await Order.create({ userId: authUser.id, status: "draft", pointsUsed: 0 });
-
     //   for (const { productId, quantity } of productDetails) {
     //     await OrderProduct.create({
     //       orderId: order.id,
@@ -38,7 +34,6 @@ export default class OrdersController {
     //       quantity,
     //     });
     //   }
-
     //   PaymentService.create(
     //     order,
     //     totalAmount,
