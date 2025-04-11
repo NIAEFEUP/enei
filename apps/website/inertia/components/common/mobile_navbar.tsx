@@ -1,4 +1,4 @@
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "../ui/sheet";
 import { Button, buttonVariants } from "../ui/button";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
@@ -8,6 +8,7 @@ import { cn } from "~/lib/utils";
 import { QRCodeSVG } from "qrcode.react";
 import { useTuyau } from "~/hooks/use_tuyau";
 import { Link } from "@tuyau/inertia/react";
+import { LoginButton, LogoutButton } from "./navbar";
 
 export default function MobileNavbar() {
     const auth = useAuth();
@@ -56,7 +57,7 @@ export default function MobileNavbar() {
                         }
                     >
                         <Link
-                            route="pages:staff.qrcode.scan"
+                            route="pages:staff.credentials.scan"
                             className={cn(buttonVariants({ variant: "link" }), `text-enei-blue`)}
                         >
                             <QrCode />
@@ -83,6 +84,14 @@ export default function MobileNavbar() {
                     >
                         Programa
                     </Link>
+                    
+                    {auth.state === "unauthenticated" && <LoginButton variant="outline" />}
+
+                    {auth.state === "authenticated" && 
+                        <div className="flex justify-center">
+                            <LogoutButton variant="outline" />
+                        </div>
+                    }
                 </div>
             </SheetContent>
         </Sheet>

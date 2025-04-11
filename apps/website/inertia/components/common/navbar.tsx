@@ -11,10 +11,8 @@ import { NotificationContainer } from "../notifications";
 import { VariantProps } from "class-variance-authority";
 import { QrCode } from "lucide-react";
 import { Dialog, DialogTrigger, DialogContent } from "../ui/dialog";
-import { useBaseUrl } from "~/hooks/use_base_url";
 import { useIsMobile } from "~/hooks/use_mobile";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "../ui/sheet";
-import MobileNavbar from "./mobile-navbar";
+import MobileNavbar from "./mobile_navbar";
 
 /*
 import { Menu } from "lucide-react";
@@ -42,7 +40,7 @@ type PageRoute = {
 
 */
 
-function LoginButton({ variant }: { variant?: VariantProps<typeof buttonVariants>["variant"] }) {
+export function LoginButton({ variant }: { variant?: VariantProps<typeof buttonVariants>["variant"] }) {
   return (
     <Link route="pages:auth.login" className={buttonVariants({ variant })}>
       Entrar
@@ -50,7 +48,7 @@ function LoginButton({ variant }: { variant?: VariantProps<typeof buttonVariants
   );
 }
 
-function LogoutButton({ variant }: { variant?: VariantProps<typeof buttonVariants>["variant"] }) {
+export function LogoutButton({ variant }: { variant?: VariantProps<typeof buttonVariants>["variant"] }) {
   const tuyau = useTuyau();
   const { post } = useForm();
 
@@ -150,7 +148,7 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
                   }
                 >
                   <Link
-                    route="pages:staff.qrcode.scan"
+                    route="pages:staff.credentials.scan"
                     className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
                   >
                     <QrCode />
