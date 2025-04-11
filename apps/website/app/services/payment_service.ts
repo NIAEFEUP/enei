@@ -6,7 +6,6 @@ import PollPaymentJob from "../jobs/poll_payment.js";
 import db from "@adonisjs/lucid/services/db";
 import InvoiceInfo from "#models/invoice_info";
 import Payment, { type PaymentStatus } from "#models/payment";
-import { Money } from "#lib/payments/money.js";
 import app from "@adonisjs/core/services/app";
 import { paymentValidator } from "#validators/payment";
 
@@ -27,7 +26,7 @@ type UserMetadata = {
 export class PaymentService {
   static async create(
     order: Order,
-    productAmount: Money,
+    productAmount: number,
     mobileNumber: string,
     description: string,
     email: string,
@@ -38,7 +37,7 @@ export class PaymentService {
     const data = {
       mbWayKey: env.get("IFTHENPAY_MBWAY_KEY"),
       orderId: order.id,
-      amount: productAmount.toEuros(),
+      amount: productAmount,
       mobileNumber,
       description,
     };
@@ -75,7 +74,7 @@ export class PaymentService {
           {
             status: "pending",
             requestId: RequestId,
-            amount: Money.fromEuros(data.amount),
+            amount: data.amount, 
             orderId: order.id,
             invoiceInfoId: invoiceInfo.id,
             reason: null,

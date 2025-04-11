@@ -5,8 +5,6 @@ import InvoiceInfo from "./invoice_info.js";
 import type { StrictExclude, StrictExtract } from "#lib/types.js";
 import type { CreateReadonlyModel } from "../../types/lucid.js";
 import Order from "./order.js";
-import { Money } from "#lib/payments/money.js";
-import { money } from "#lib/lucid/decorators.js";
 import { lazy } from "#lib/lazy.js";
 import { relations } from "#lib/lucid/relations.js";
 
