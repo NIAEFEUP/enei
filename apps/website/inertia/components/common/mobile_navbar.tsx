@@ -27,27 +27,29 @@ export default function MobileNavbar() {
           {auth.state === "authenticated" && <Link route="pages:profile.default">Perfil</Link>}
         </SheetHeader>
         <div className="flex flex-col justify-center gap-y-4">
-          <div className={auth.state === "authenticated" ? "mx-auto block" : "mx-auto hidden"}>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className="w-fit">
-                  <QrCode />
-                  Código QR
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="w-4/5 max-w-96 pt-12 sm:w-96">
-                {auth.state === "authenticated" && (
-                  <>
-                    <QRCodeSVG
-                      value={`${tuyau.$url("pages:profile.show", { params: { slug: auth.user.slug } })}`}
-                      className="aspect-square h-full w-full"
-                    />
-                    <p className="text-center"> {auth.user.slug}</p>
-                  </>
-                )}
-              </DialogContent>
-            </Dialog>
-          </div>
+          {auth.state === "authenticated" && auth.user.slug && (
+            <div className="mx-auto block">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="w-fit">
+                    <QrCode />
+                    Código QR
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="w-4/5 max-w-96 pt-12 sm:w-96">
+                  {auth.state === "authenticated" && (
+                    <>
+                      <QRCodeSVG
+                        value={`${tuyau.$url("pages:profile.show", { params: { slug: auth.user.slug } })}`}
+                        className="aspect-square h-full w-full"
+                      />
+                      <p className="text-center"> {auth.user.slug}</p>
+                    </>
+                  )}
+                </DialogContent>
+              </Dialog>
+            </div>
+          )}
 
           <div
             className={
