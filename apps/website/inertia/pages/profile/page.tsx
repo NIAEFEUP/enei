@@ -48,7 +48,7 @@ export default function ProfilePage(
                   {user.slug}
                 </AvatarFallback>
               </Avatar>
-              {isUser && (
+              {/* {isUser && (
                 <Link
                   route="pages:profile.edit"
                   params={{ section: "profile" }}
@@ -57,7 +57,7 @@ export default function ProfilePage(
                   <Pencil />
                   <p>Editar Informações</p>
                 </Link>
-              )}
+              )} */}
 
               <ProfileSocials user={user as User} />
             </div>
@@ -69,11 +69,11 @@ export default function ProfilePage(
             </header>
           </section>
 
-          <section>
+          {/* <section>
             {auth.state === "authenticated" && auth.user?.role === "staff" && (
               <ProfileActivityInfo />
             )}
-          </section>
+          </section> */}
         </Container>
       </Page>
     </ProfileContext.Provider>
