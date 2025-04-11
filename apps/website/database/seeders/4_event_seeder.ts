@@ -641,5 +641,17 @@ export default class extends BaseSeeder {
       registrationRequirements: "",
       requiresRegistration: false,
     });
+
+    await Event.create({
+      title: "Sessão de Abertura",
+      description: "",
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 11, hour: 18, minute: 30}),
+      duration: 90,
+      type: "other",
+      location: "Auditório Magno - ISEP",
+      registrationRequirements: "",
+      requiresRegistration: false,
+      price: 0
+    })
   }
 }
