@@ -17,7 +17,7 @@ export default class StoreController {
     const user = auth.user!;
 
     // Orders products by price in non-increasing order
-    products.sort((a, b) => b.price.subtract(a.price).toCents());
+    products.sort((a, b) => b.price - a.price);
 
     return inertia.render("store", { products, user });
   }

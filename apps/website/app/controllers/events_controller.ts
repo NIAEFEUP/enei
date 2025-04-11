@@ -37,9 +37,6 @@ export default class EventsController {
     const event = await Event.query()
       .where("id", params.id)
       .preload("speakers")
-      .preload("productGroup", (q) => {
-        q.preload("products");
-      })
       .preload("product")
       .firstOrFail();
 
@@ -52,10 +49,7 @@ export default class EventsController {
       event: new EventDto(event).toJSON(),
       formattedDate: event.getFormattedDate(),
       formattedTime: event.getFormattedTime(),
-      price:
-        event.productGroup?.products?.length > 0
-          ? event.productGroup.products[0].price.toEuros()
-          : 0,
+      price: 0,
       isRegistered: isRegistered,
     });
   }

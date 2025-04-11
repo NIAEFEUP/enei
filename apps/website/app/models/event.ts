@@ -123,7 +123,7 @@ export default class Event extends BaseModel {
   }
 
   get isPaid() {
-    return this.productGroup?.products?.filter((product) => product.price.toCents() > 0).length > 0;
+    return false
   }
 
   public getFormattedTime() {

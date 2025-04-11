@@ -4,9 +4,8 @@ import type { ModelAttributes } from "@adonisjs/lucid/types/model";
 import type { ManyToMany } from "@adonisjs/lucid/types/relations";
 
 import type { ProductRestrictions } from "../../types/product.js";
-import { json, money } from "#lib/lucid/decorators.js";
+import { json } from "#lib/lucid/decorators.js";
 import Order from "./order.js";
-import { Money } from "#lib/payments/money.js";
 import { lazy } from "#lib/lazy.js";
 import { relations } from "#lib/lucid/relations.js";
 
@@ -24,8 +23,8 @@ export default class Product extends BaseModel {
   @column()
   declare description: string;
 
-  @money()
-  declare price: Money;
+  @column()
+  declare price: number;
 
   @column()
   declare points: number;

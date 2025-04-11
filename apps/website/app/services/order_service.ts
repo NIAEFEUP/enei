@@ -1,12 +1,15 @@
-import { Money } from "#lib/payments/money.js";
-import Order, { type OrderStatus } from "#models/order";
+import Order from "#models/order";
 import OrderProduct from "#models/order_product";
 import Product from "#models/product";
 import ProductGroup from "#models/product_group";
 import type User from "#models/user";
 import type { TransactionClientContract } from "@adonisjs/lucid/types/database";
-import type { ProductDetails } from "../../types/product.js";
 import { inject } from "@adonisjs/core";
+
+type ProductDetails = {
+  productId: number;
+  quantity: number;
+};
 
 @inject()
 export class OrderService {
@@ -86,17 +89,18 @@ export class OrderService {
       .preload("order");
   }
 
+
   async buildProductDetails(
     user: User,
     products: Array<ProductDetails>,
   ): Promise<{
     productDetails: Array<ProductDetails>;
     description: string;
-    totalAmount: Money;
+    totalAmount: number;
   }> {
     const productDetails = [];
 
-    let totalAmount = Money.fromCents(0);
+    let totalAmount = 0;
     let description = "";
 
     for (const productItem of products) {
@@ -128,7 +132,7 @@ export class OrderService {
         return {
           productDetails: [],
           description: "",
-          totalAmount: Money.fromCents(0),
+          totalAmount: 0,
         };
       }
 
@@ -150,13 +154,13 @@ export class OrderService {
           return {
             productDetails: [],
             description: "",
-            totalAmount: Money.fromCents(0),
+            totalAmount: 0,
           };
         }
       }
 
       productDetails.push({ productId: product.id, quantity });
-      totalAmount = totalAmount.add(product.price.multiply(quantity));
+      totalAmount = totalAmount + product.price * quantity; 
       description += `${product.name} x${quantity}, `;
     }
 
@@ -169,7 +173,7 @@ export class OrderService {
     user: User,
     product: ProductDetails,
     pointsUsed: number = 0,
-    status: OrderStatus = "draft",
+    status: Order["status"] = "draft",
     trx?: TransactionClientContract,
   ) {
     // Create the order and associated products

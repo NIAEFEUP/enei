@@ -10,7 +10,7 @@ export class ProductDto {
       updatedAt: this.product.updatedAt.toISO(),
       name: this.product.name,
       description: this.product.description,
-      price: this.product.price.toCents(),
+      price: this.product.price,
       stock: this.product.stock,
       maxOrder: this.product.maxOrder,
       image: this.product.image,
