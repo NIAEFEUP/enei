@@ -20,7 +20,7 @@
     />
 
     @if(app.inDev)
-      {{-- <script crossOrigin="anonymous" src="//unpkg.com/react-scan/dist/auto.global.js"></script> --}}
+      <script crossOrigin="anonymous" src="//unpkg.com/react-scan/dist/auto.global.js"></script>
     @end
     
     @viteReactRefresh()
@@ -28,7 +28,7 @@
     @vite(['inertia/app/app.tsx', `inertia/pages/${page.component}/page.tsx`])
   </head>
 
-  <body>
+  <body class="{{ $theme }}">
     @inertia()
   </body>
 

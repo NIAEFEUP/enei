@@ -5,7 +5,7 @@
 
 @source "../**/*.tsx";
 
-@custom-variant attention (&:is(.attention *));
+@custom-variant attention (&:is(.attention *)); 
 
 :root {
   /* --background: oklch(1 0 0); */
@@ -48,8 +48,8 @@
 
 .attention {
   /* --background: oklch(0.145 0 0); */
-  --background: var(--color-enei-indigo-blue);
-  --foreground: oklch(0.985 0 0);
+  --background: var(--color-enei-raisin-black);
+  --foreground: var(--color-enei-pearl);
   /* --card: oklch(0.145 0 0); */
   --card: var(--color-white);
   /* --card-foreground: oklch(0.985 0 0); */
@@ -66,7 +66,6 @@
   /* --muted-foreground: oklch(0.708 0 0); */
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
   /* --destructive: oklch(0.396 0.141 25.723); */
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.637 0.237 25.331);
@@ -78,9 +77,9 @@
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
+  --sidebar: var(--background);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary: var(--color-enei-dark-cyan);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.269 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
@@ -90,6 +89,10 @@
   & [data-slot="card"] {
     --primary: var(--color-enei-indigo-blue);
     --primary-foreground: var(--color-white);
+  }
+
+  & [data-slot="sidebar-wrapper"] {
+    --background: var(--color-enei-indigo-blue);
   }
 }
 

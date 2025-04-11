@@ -22,7 +22,8 @@ import {
 } from "@enei/shadcn/ui/breadcrumb";
 import { Separator } from "@enei/shadcn/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@enei/shadcn/ui/sidebar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Head } from "@inertiajs/react";
 
 function useUtcTarget() {
   return useEnvironment((env) =>
@@ -130,33 +131,37 @@ function ClientOnly({ children }: { children?: React.ReactNode }) {
 export default function Home() {
   return (
     <div className="attention">
-      <SidebarProvider>
-        <AppSidebar side="right" variant="inset" />
-        <SidebarInset>
-          <header className="mb-2 flex h-16 shrink-0 items-center gap-2 px-4 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-            {/* <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">Building Your Application</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb> */}
-            <img src="/images/logo-white.svg" alt="ENEI 2025" className="h-10 w-auto px-1" />
-          </header>
-          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-            <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-              <div className="bg-muted/50 aspect-video rounded-xl" />
-              <div className="bg-muted/50 aspect-video rounded-xl" />
-              <div className="bg-muted/50 aspect-video rounded-xl" />
+      <div className="isolate absolute inset-0 bg-background -mr-(--removed-body-scroll-bar-size)" />
+      <div className="isolate">
+        <SidebarProvider>
+          <AppSidebar side="right" variant="inset" />
+          <SidebarInset>
+            <header className="mb-2 flex h-16 shrink-0 items-center justify-between gap-2 px-4 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+              {/* <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem className="hidden md:block">
+                    <BreadcrumbLink href="#">Building Your Application</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator className="hidden md:block" />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb> */}
+              <img src="/images/logo-white.svg" alt="ENEI 2025" className="h-10 w-auto px-1" />
+              <SidebarTrigger className="size-8 rotate-180 -mr-2" />
+            </header>
+            <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+              <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+                <div className="bg-muted/50 aspect-video rounded-xl" />
+                <div className="bg-muted/50 aspect-video rounded-xl" />
+                <div className="bg-muted/50 aspect-video rounded-xl" />
+              </div>
+              <div className="bg-muted/50 #md:min-h-min min-h-[100vh] flex-1 rounded-xl" />
             </div>
-            <div className="bg-muted/50 #md:min-h-min min-h-[100vh] flex-1 rounded-xl" />
-          </div>
-        </SidebarInset>
-      </SidebarProvider>
+          </SidebarInset>
+        </SidebarProvider>
+      </div>
     </div>
     // <Page title="Home" variant="beige" background="beige">
     //   <Background />

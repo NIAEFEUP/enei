@@ -38,3 +38,5 @@ export default class Account extends compose(BaseModel, AuthFinder) {
     return this.findForAuth(["id"], `credentials:${email}`);
   }
 }
+
+new Account().isDirty
