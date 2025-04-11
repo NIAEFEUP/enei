@@ -23,6 +23,19 @@ export default class UserPolicy extends BasePolicy {
   }
 
   async seeCV(user: User, cvOwner: User) {
-    return user.isStaff() || user.id === cvOwner.id; // TODO: Add company that has been visited
+    if (user.isCompanyRepresentative()) {
+      await user.load("representativeProfile");
+      await user.representativeProfile.load("company")
+
+      if (user.representativeProfile.company.cvPermissions === "all") {
+        return true;
+      } else if (user.representativeProfile.company.cvPermissions === "visited") {
+        // TODO:Check if has been visited
+        return false
+      } else {
+        return false
+      }
+    }
+    return user.isStaff() || user.id === cvOwner.id;
   }
 }
