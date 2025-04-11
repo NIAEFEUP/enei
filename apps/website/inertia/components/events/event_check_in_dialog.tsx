@@ -29,7 +29,6 @@ export default function EventCheckInDialog({ isOpen, eventID, setOpen }: EventCh
             title: "Success",
             description: "Check-in successful!",
           });
-          setOpen(false);
         },
         onError: (errors) => {
           toast({
