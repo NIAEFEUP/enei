@@ -153,12 +153,20 @@ export default class User extends BaseModel {
       if (profile) {
         const { firstName, lastName } = profile;
 
-        const userMd5 = md5(slug(`${firstName} ${lastName}`));
-        const userNumber =
-          (Number.parseInt(userMd5.replace(/[^1-9]/g, "").substring(0, 3)) + user.id) % 1000;
-        const userCode = userNumber.toString().padStart(3, "0");
+        while (true) {
+          // Generate a random slug
+          const userCode = (1 + Math.floor(998 * Math.random())).toString().padStart(3, "0");
+          const parts = slug(`${firstName} ${lastName} ${userCode}`).split("-");
 
-        user.slug = slug(`${firstName} ${lastName} ${userCode}`);
+          const possibleSlug = [parts[1], parts.at(-2), parts.at(-1)].join("-");
+          if (await User.query().where("slug", possibleSlug).first() === null) {
+            user.slug = possibleSlug;
+            break;
+          }
+        }
+        
+        const parts = user.slug.split("-");
+        user.slug = [parts[1], parts.at(-2), parts.at(-1)].join("-");
       } else {
         user.slug = null;
       }
