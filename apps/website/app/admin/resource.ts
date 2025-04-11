@@ -27,16 +27,16 @@ const beforeEdit: Before = async (request, context) => {
       // @ts-expect-error: See above
       (type === "_date" || type === "_datetime")
       && flat.get(request.payload, property.path())
-    )
+    ) {
       flat.set(
         request.payload,
         property.path(),
         DateTime.fromISO(flat.get(request.payload, property.path())),
       );
-  }
 
-  delete request.payload.createdAt;
-  delete request.payload.updatedAt;
+      delete request.payload[property.path()];
+    }
+  }
 
   return request;
 };

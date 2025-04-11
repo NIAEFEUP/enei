@@ -25,7 +25,7 @@ export class EventDto {
       requiresRegistration: this.event.requiresRegistration,
       ticketsRemaining: this.event.ticketsRemaining,
       ticketsTotal: this.event.ticketsTotal,
-      price: this.event.price.toCents(),
+      price: 0,//this.event.price.toCents(),
       speakers: new ArrayDto(SpeakerProfileDto, this.event.speakers).toJSON(),
       product: is.isNullOrUndefined(this.event.product)
         ? null

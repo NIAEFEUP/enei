@@ -3,8 +3,6 @@ import { BaseModel, belongsTo, column, manyToMany } from "@adonisjs/lucid/orm";
 import SpeakerProfile from "./speaker_profile.js";
 import type { BelongsTo, ManyToMany } from "@adonisjs/lucid/types/relations";
 import User from "./user.js";
-import type { Money } from "#lib/payments/money.js";
-import { money } from "#lib/lucid/decorators.js";
 import ProductGroup from "./product_group.js";
 import Product from "./product.js";
 import { relations } from "#lib/lucid/relations.js";
@@ -19,6 +17,7 @@ const eventRelations = lazy(() =>
     r.many("registeredUsers"),
     r.many("speakers"),
     r.many("companies"),
+    r.belongsTo("participationProduct"),
   ]),
 );
 
@@ -99,8 +98,14 @@ export default class Event extends BaseModel {
   @column()
   declare ticketsRemaining: number;
 
-  @money()
-  declare price: Money;
+
+  @column()
+  declare participationProductId: number | null;
+
+  @belongsTo(() => Product, {
+    foreignKey: "participationProductId",
+  })
+  declare participationProduct: BelongsTo<typeof Product>;
 
   @column()
   declare productGroupId: number;

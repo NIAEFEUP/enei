@@ -23,6 +23,7 @@ interface EventsPageProps {
 }
 
 export default function EventsPageApril12({ events }: EventsPageProps) {
+  console.log("EVENTS: ", events)
   return (
     <div className="md:grid-rows-15 flex flex-col space-y-4 md:grid md:grid-cols-4 md:gap-4 md:space-y-0">
       <div className="col-span-4 col-start-1 row-start-1">
@@ -284,7 +285,7 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
         />
       </div>
 
-      <div className="row-start-54 col-span-4 col-start-1">
+      {/* <div className="row-start-54 col-span-4 col-start-1">
         <EventCard
           id={events[21].id}
           title={events[21].title}
@@ -294,7 +295,7 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
           speakers={events[21].speakers}
           onClick={() => router.visit(`/events/${events[21].id}`)}
         />
-      </div>
+      </div> */}
     </div>
   );
 }
