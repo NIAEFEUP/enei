@@ -229,9 +229,7 @@ router.group(() => {
     .get("/u/:slug/avatar", [ProfilesController, "showAvatar"])
     .as("pages:profile.avatar.show")
     .use(middleware.wip());
-  router
-    .get("/u/:slug/info", [ProfilesController, "getInfo"])
-    .as("actions:profile.info");
+  router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
 });
 
 router
