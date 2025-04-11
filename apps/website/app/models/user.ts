@@ -13,7 +13,6 @@ import type { Attachment } from "@jrmc/adonis-attachment/types/attachment";
 import SpeakerProfile from "./speaker_profile.js";
 import RepresentativeProfile from "./representative_profile.js";
 import slug from "slug";
-import { md5 } from "js-md5";
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -119,6 +118,7 @@ export default class User extends BaseModel {
   declare staffProfile: BelongsTo<typeof StaffProfile>;
 
   // Attachments
+  
   @attachment({
     folder: "resumes",
   })
