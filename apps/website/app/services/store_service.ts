@@ -56,10 +56,10 @@ export class StoreService {
   }
 
   async getReservedProducts(user: User) {
-    const userOrders = await OrderService.getPointOrdersForUser(user);
-    return userOrders.map((orderProduct) => ({
-      order: orderProduct.order,
-      product: orderProduct.product,
-    }));
+    // const userOrders = await OrderService.getPointOrdersForUser(user);
+    // return userOrders.map((orderProduct) => ({
+    //   order: orderProduct.order,
+    //   product: orderProduct.product,
+    // }));
   }
 }

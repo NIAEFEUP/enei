@@ -6,8 +6,71 @@ import ProductGroup from "#models/product_group";
 import type User from "#models/user";
 import type { TransactionClientContract } from "@adonisjs/lucid/types/database";
 import type { ProductDetails } from "../../types/product.js";
+import { CartService } from "./cart_service.js";
+import { inject } from "@adonisjs/core";
+import type { PaymentService } from "./payment_service.js";
 
+@inject()
 export class OrderService {
+  constructor(
+    private cartService: CartService,
+    private paymentService: PaymentService
+  ) {}
+
+  async createOrderFromCart(user: User) {
+    const cart = await this.cartService.getCartForUser(user);
+
+    if (await cart.isEmpty()) {
+      return {
+        success: false,
+        reason: "cart-empty",
+      } as const;
+    }
+    
+    cart.status = "processing";
+    await cart.save();
+    
+    const products = await cart.$relations.products();
+
+    const [totalPoints, totalMoney] = products.reduce(
+      ([prevPoints, prevMoney], product) => [prevPoints + product.points * product.$extras.quantity, prevMoney.add(product.price)],
+      [0, Money.zero]
+    );
+
+    cart.pointsUsed = totalPoints;
+    await cart.save();
+
+    const validationResult = this.validate(cart);
+    if (!validationResult.success) {
+
+      return
+    }
+
+    if (totalMoney.isGreaterThan(Money.zero)) {
+      // FIXME
+      const payment = await this.paymentService.create(
+        cart,
+        totalMoney,
+        "",
+        "Compra de itens",
+        user.email,
+        null,
+        null,
+        user.name,
+      );
+
+      cart.status = "pending-payment";
+      await cart.save();
+      await cart.related("payments").save(payment);
+
+      return;
+    }
+
+    
+
+
+  }
+
   async checkUserMaxOrders(user: User | null, product: Product | null) {
     if (!user || !product) return false;
 

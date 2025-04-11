@@ -10,7 +10,6 @@ import { UserService } from "#services/user_service";
 import { inject } from "@adonisjs/core";
 import UserRequestedVerificationEmail from "#events/user_requested_verification_email";
 import Account from "#models/account";
-import { createRelations } from "#lib/lucid/relations.js";
 
 @inject()
 export default class AuthenticationController {

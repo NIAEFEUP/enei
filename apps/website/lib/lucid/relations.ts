@@ -20,27 +20,45 @@ type RelationLoader<ParentModel extends LucidModel, Return> = (
   this: RelationLoaderThisType<ParentModel>,
 ) => Promise<Return>;
 
+type WithExtras<
+  Relation,
+  Extras extends Record<string, unknown>,
+> = Relation extends (infer Instance)[]
+  ? (Omit<Instance, "$extras"> & { $extras: Extras })[] & Omit<Relation, number>
+  : never;
+
 type DefineRelationships<ParentModel extends LucidModel> = {
-  belongsTo: <Name extends ExtractRelations<ParentModel, OptionalBelongsTo<LucidModel>>>(
+  belongsTo: <Name extends ExtractRelationKeys<ParentModel, OptionalBelongsTo<LucidModel>>>(
     relationName: Name,
   ) => [Name, RelationLoader<ParentModel, InstanceType<ParentModel>[Name] | null>];
 
-  requiredBelongsTo: <Name extends ExtractRelations<ParentModel, RequiredBelongsTo<LucidModel>>>(
+  requiredBelongsTo: <Name extends ExtractRelationKeys<ParentModel, RequiredBelongsTo<LucidModel>>>(
     relationName: Name,
   ) => [Name, RelationLoader<ParentModel, InstanceType<ParentModel>[Name]>];
 
-  hasOne: <Name extends ExtractRelations<ParentModel, HasOne<LucidModel>>>(
+  hasOne: <Name extends ExtractRelationKeys<ParentModel, HasOne<LucidModel>>>(
     relationName: Name,
   ) => [Name, RelationLoader<ParentModel, InstanceType<ParentModel>[Name] | null>];
 
   many: <
-    Name extends ExtractRelations<
+    Name extends ExtractRelationKeys<
       ParentModel,
       HasMany<LucidModel> | HasManyThrough<LucidModel> | ManyToMany<LucidModel>
     >,
   >(
     relationName: Name,
   ) => [Name, RelationLoader<ParentModel, InstanceType<ParentModel>[Name]>];
+
+  withExtras: <Extras extends Record<string, unknown> = {}>() => {
+    many: <
+      Name extends ExtractRelationKeys<
+        ParentModel,
+        HasMany<LucidModel> | HasManyThrough<LucidModel> | ManyToMany<LucidModel>
+      >,
+    >(
+      relationName: Name,
+    ) => [Name, RelationLoader<ParentModel, WithExtras<InstanceType<ParentModel>[Name], Extras>>];
+  };
 };
 
 type InstanceOf<ParentModel extends LucidModel> = Pick<
@@ -48,7 +66,7 @@ type InstanceOf<ParentModel extends LucidModel> = Pick<
   keyof LucidRow | Exclude<keyof InstanceType<ParentModel>, `$${string}`>
 >;
 
-type ExtractRelations<
+type ExtractRelationKeys<
   ParentModel extends LucidModel,
   RelationType extends ModelRelationTypes = ModelRelationTypes,
 > = string
@@ -57,16 +75,16 @@ type ExtractRelations<
 
 type ExtractMissingRelations<
   ParentModel extends LucidModel,
-  Definitions extends [ExtractRelations<ParentModel>, RelationLoader<ParentModel, unknown>][],
+  Definitions extends [ExtractRelationKeys<ParentModel>, RelationLoader<ParentModel, unknown>][],
 > = Exclude<
-  ExtractRelations<ParentModel>,
+  ExtractRelationKeys<ParentModel>,
   Definitions extends never[] ? never : Definitions extends [infer Keys, unknown][] ? Keys : never
 >;
 
 export function relations<
   ParentModel extends LucidModel,
   const Definitions extends [
-    ExtractRelations<ParentModel>,
+    ExtractRelationKeys<ParentModel>,
     RelationLoader<ParentModel, unknown>,
   ][] = never,
 >(
@@ -178,6 +196,14 @@ export function relations<
           return this["~row"][relationName];
         },
       ] as const;
+    },
+
+    withExtras<Extras extends Record<string, unknown>>() {
+      return {
+        many(relationName) {
+          return define.many(relationName) as [typeof relationName, RelationLoader<ParentModel, WithExtras<InstanceType<ParentModel>[typeof relationName], Extras>>]
+        },
+      }
     },
   };
 

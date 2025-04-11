@@ -3,6 +3,12 @@ import { BaseModel, column, hasMany, hasOne } from "@adonisjs/lucid/orm";
 import type { HasMany, HasOne } from "@adonisjs/lucid/types/relations";
 import User from "./user.js";
 import RepresentativeProfile from "./representative_profile.js";
+import { relations } from "#lib/lucid/relations.js";
+import { lazy } from "#lib/lazy.js";
+
+const companyRelations = lazy(() =>
+  relations(Company, (r) => [r.hasOne("user"), r.many("representativeProfiles")]),
+);
 
 export default class Company extends BaseModel {
   @column({ isPrimary: true })
@@ -25,4 +31,8 @@ export default class Company extends BaseModel {
 
   @hasMany(() => RepresentativeProfile)
   declare representativeProfiles: HasMany<typeof RepresentativeProfile>;
+
+  get $relations() {
+    return companyRelations.get().for(this);
+  }
 }

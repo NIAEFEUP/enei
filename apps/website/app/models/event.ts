@@ -12,6 +12,7 @@ import { lazy } from "#lib/lazy.js";
 
 const eventRelations = lazy(() =>
   relations(Event, (r) => [
+    r.many("checkedInUsers"),
     r.belongsTo("product"),
     r.belongsTo("productGroup"),
     r.many("registeredUsers"),
@@ -36,7 +37,7 @@ export default class Event extends BaseModel {
   declare description: string | null;
 
   @column()
-  declare type: "workshop" | "other" | "night" | "talk" | "networking" | "competition" | "meal";
+  declare type: "workshop" | "other" | "night" | "talk" | "networking" | "competition" | "meal" | "painel";
 
   @column()
   declare companyImage: string;
