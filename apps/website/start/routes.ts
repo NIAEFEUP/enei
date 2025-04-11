@@ -165,69 +165,75 @@ router
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix("payment");
 
-router
-  .group(() => {
-    router.get("/u/:slug", [ProfilesController, "index"]).as("pages:profile.show");
-    router
-      .post("/u/:slug/product/collect", [ProductReservationController, "collect"])
-      .as("actions:profile.product.collect")
-      .use(middleware.staff());
-    router
-      .get("/profile", [ProfilesController, "default"])
-      .as("pages:profile.default")
-      .use([middleware.auth(), middleware.verifiedEmail()]);
-    router
-      .get("/profile/edit/:section", [ProfilesController, "edit"])
-      .as("pages:profile.edit")
-      .use([middleware.auth(), middleware.verifiedEmail(), middleware.wip()]);
-    router
-      .patch("/profile/edit", [ProfilesController, "update"])
-      .as("actions:profile.update")
-      .use([middleware.auth(), middleware.verifiedEmail(), middleware.wip()]);
+router.group(() => {
+  router.get("/u/:slug", [ProfilesController, "index"]).as("pages:profile.show");
+  router
+    .post("/u/:slug/product/collect", [ProductReservationController, "collect"])
+    .as("actions:profile.product.collect")
+    .use(middleware.staff());
+  router
+    .get("/profile", [ProfilesController, "default"])
+    .as("pages:profile.default")
+    .use([middleware.auth(), middleware.verifiedEmail()]);
+  router
+    .get("/profile/edit/:section", [ProfilesController, "edit"])
+    .as("pages:profile.edit")
+    .use([middleware.auth(), middleware.verifiedEmail(), middleware.wip()]);
+  router
+    .patch("/profile/edit", [ProfilesController, "update"])
+    .as("actions:profile.update")
+    .use([middleware.auth(), middleware.verifiedEmail(), middleware.wip()]);
 
-    router
-      .post("/profile/edit/password", [ProfilesController, "sendEditPassword"])
-      .as("actions:profile.change-password.send")
-      .use([
-        middleware.requireAuthenticationEnabled(),
-        middleware.auth(),
-        sendChangePasswordThrottle,
-      ]).use(middleware.wip());
-    router
-      .post("/profile/edit/email", [ProfilesController, "sendEditEmail"])
-      .as("actions:profile.edit-email.send")
-      .use([middleware.requireAuthenticationEnabled(), middleware.auth(), sendChangeEmailThrottle]).use(middleware.wip());
-    router
-      .route(
-        "profile/edit/email/callback/confirm",
-        ["GET", "POST"],
-        [ProfilesController, "callbackForEmailChangeConfirmation"],
-      )
-      .as("actions:profile.edit-email.confirm.callback")
-      .middleware([
-        middleware.requireAuthenticationEnabled(),
-        middleware.verifyUrlSignature(),
-        middleware.automaticSubmit(),
-      ]).use(middleware.wip());
-    router
-      .route(
-        "profile/edit/email/callback/cancel",
-        ["GET", "POST"],
-        [ProfilesController, "callbackForEmailChangeCancelation"],
-      )
-      .as("actions:profile.edit-email.cancel.callback")
-      .middleware([
-        middleware.requireAuthenticationEnabled(),
-        middleware.verifyUrlSignature(),
-        middleware.automaticSubmit(),
-      ]).use(middleware.wip());
+  router
+    .post("/profile/edit/password", [ProfilesController, "sendEditPassword"])
+    .as("actions:profile.change-password.send")
+    .use([middleware.requireAuthenticationEnabled(), middleware.auth(), sendChangePasswordThrottle])
+    .use(middleware.wip());
+  router
+    .post("/profile/edit/email", [ProfilesController, "sendEditEmail"])
+    .as("actions:profile.edit-email.send")
+    .use([middleware.requireAuthenticationEnabled(), middleware.auth(), sendChangeEmailThrottle])
+    .use(middleware.wip());
+  router
+    .route(
+      "profile/edit/email/callback/confirm",
+      ["GET", "POST"],
+      [ProfilesController, "callbackForEmailChangeConfirmation"],
+    )
+    .as("actions:profile.edit-email.confirm.callback")
+    .middleware([
+      middleware.requireAuthenticationEnabled(),
+      middleware.verifyUrlSignature(),
+      middleware.automaticSubmit(),
+    ])
+    .use(middleware.wip());
+  router
+    .route(
+      "profile/edit/email/callback/cancel",
+      ["GET", "POST"],
+      [ProfilesController, "callbackForEmailChangeCancelation"],
+    )
+    .as("actions:profile.edit-email.cancel.callback")
+    .middleware([
+      middleware.requireAuthenticationEnabled(),
+      middleware.verifyUrlSignature(),
+      middleware.automaticSubmit(),
+    ])
+    .use(middleware.wip());
 
-    router.get("/u/:slug/cv", [ProfilesController, "showCV"]).as("pages:profile.cv.show").use(middleware.wip());
-    router
-      .get("/u/:slug/avatar", [ProfilesController, "showAvatar"])
-      .as("pages:profile.avatar.show").use(middleware.wip());
-    router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info").use(middleware.wip());
-  })
+  router
+    .get("/u/:slug/cv", [ProfilesController, "showCV"])
+    .as("pages:profile.cv.show")
+    .use(middleware.wip());
+  router
+    .get("/u/:slug/avatar", [ProfilesController, "showAvatar"])
+    .as("pages:profile.avatar.show")
+    .use(middleware.wip());
+  router
+    .get("/u/:slug/info", [ProfilesController, "getInfo"])
+    .as("actions:profile.info")
+    .use(middleware.wip());
+});
 
 router
   .group(() => {
