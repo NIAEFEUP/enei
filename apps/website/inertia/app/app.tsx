@@ -17,8 +17,6 @@ import { registerSW } from "virtual:pwa-register";
 
 const appName = import.meta.env.VITE_APP_NAME || "ENEI";
 
-console.log("rip");
-
 if ("serviceWorker" in navigator) {
   registerSW();
 }
