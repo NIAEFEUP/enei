@@ -179,11 +179,11 @@ router
     router
       .get("/profile/edit/:section", [ProfilesController, "edit"])
       .as("pages:profile.edit")
-      .use([middleware.auth(), middleware.verifiedEmail()]);
+      .use([middleware.auth(), middleware.verifiedEmail(), middleware.wip()]);
     router
       .patch("/profile/edit", [ProfilesController, "update"])
       .as("actions:profile.update")
-      .use([middleware.auth(), middleware.verifiedEmail()]);
+      .use([middleware.auth(), middleware.verifiedEmail(), middleware.wip()]);
 
     router
       .post("/profile/edit/password", [ProfilesController, "sendEditPassword"])
@@ -192,11 +192,11 @@ router
         middleware.requireAuthenticationEnabled(),
         middleware.auth(),
         sendChangePasswordThrottle,
-      ]);
+      ]).use(middleware.wip());
     router
       .post("/profile/edit/email", [ProfilesController, "sendEditEmail"])
       .as("actions:profile.edit-email.send")
-      .use([middleware.requireAuthenticationEnabled(), middleware.auth(), sendChangeEmailThrottle]);
+      .use([middleware.requireAuthenticationEnabled(), middleware.auth(), sendChangeEmailThrottle]).use(middleware.wip());
     router
       .route(
         "profile/edit/email/callback/confirm",
@@ -208,7 +208,7 @@ router
         middleware.requireAuthenticationEnabled(),
         middleware.verifyUrlSignature(),
         middleware.automaticSubmit(),
-      ]);
+      ]).use(middleware.wip());
     router
       .route(
         "profile/edit/email/callback/cancel",
@@ -220,15 +220,14 @@ router
         middleware.requireAuthenticationEnabled(),
         middleware.verifyUrlSignature(),
         middleware.automaticSubmit(),
-      ]);
+      ]).use(middleware.wip());
 
-    router.get("/u/:slug/cv", [ProfilesController, "showCV"]).as("pages:profile.cv.show");
+    router.get("/u/:slug/cv", [ProfilesController, "showCV"]).as("pages:profile.cv.show").use(middleware.wip());
     router
       .get("/u/:slug/avatar", [ProfilesController, "showAvatar"])
-      .as("pages:profile.avatar.show");
-    router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
+      .as("pages:profile.avatar.show").use(middleware.wip());
+    router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info").use(middleware.wip());
   })
-  .use(middleware.wip());
 
 router
   .group(() => {

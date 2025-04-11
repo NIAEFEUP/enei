@@ -68,14 +68,14 @@ export default class ProfilesController {
   }
 
   async index({ auth, inertia, params }: HttpContext) {
-    const authUser = auth.getUserOrFail();
+    const authUser = auth.user;
     const user = await User.findByOrFail("slug", params.slug);
     await user.load("participantProfile");
     await user.load("speakerProfile", (q) => {
       q.preload("events");
     });
 
-    const isUser = user.id === authUser.id;
+    const isUser = authUser !== undefined && user.id === authUser.id;
     const activityInformation = await this.userActivityService.getActivityInformation(user);
 
     return inertia.render("profile", { user, isUser, activityInformation });
