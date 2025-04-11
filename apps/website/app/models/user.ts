@@ -168,7 +168,7 @@ export default class User extends BaseModel {
           .padStart(3, "0");
         const parts = slug(`${firstName} ${lastName} ${userCode}`).split("-");
 
-        const possibleSlug = [parts[1], parts.at(-2), parts.at(-1)].join("-");
+        const possibleSlug = [parts[0], parts.at(-2), parts.at(-1)].join("-");
         user.slug = possibleSlug;
       } else {
         user.slug = null;

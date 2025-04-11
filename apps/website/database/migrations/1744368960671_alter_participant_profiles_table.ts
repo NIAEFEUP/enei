@@ -14,15 +14,16 @@ export default class extends BaseSchema {
 
       console.debug(users.map((user) => user.id));
 
-      await Promise.allSettled(
-        users.map((user) => {
-          user.slug = "slug";
-          return user.save();
-        }),
-      );
-
-      // Hate this
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      let count = 0;
+      for (const user of users) {
+        count++;
+        if (count % 100 === 0) {
+          console.debug(count);
+        }
+        
+        user.slug = "slug";
+        await user.save();
+      }
     });
   }
 
