@@ -87,6 +87,8 @@ export default class ProfilesController {
 
     if (!user?.participantProfile) return response.redirect().toRoute("pages:signup");
 
+    await user.participantProfile.load("user");
+
     return inertia.render("profile/edit", {
       profile: user!.participantProfile!,
       section: params.section,
