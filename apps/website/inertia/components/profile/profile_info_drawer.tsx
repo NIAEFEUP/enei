@@ -50,7 +50,7 @@ function ProfileInfoDrawer({ profile, onClose }: ProfileInfoDrawerProps) {
               {
                 recordType: "url",
                 data: tuyau.$url("pages:profile.show", {
-                  params: { slug: profile.slug ?? "" },
+                  params: { slug: profile.user.slug ?? "" },
                 }),
               },
             ],
