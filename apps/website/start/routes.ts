@@ -329,9 +329,9 @@ router
 
 router
   .group(() => {
-    router.on("/scan").renderInertia("qrscanner").as("pages:staff.qrcode.scan");
+    router.on("/scan").renderInertia("credentials").as("pages:staff.credentials.scan");
   })
   .use([middleware.auth(), middleware.staff()])
-  .prefix("/qrcode");
+  .prefix("/credentials");
 
 router.on("/nfc").renderInertia("nfc").as("pages:nfc");

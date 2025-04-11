@@ -25,13 +25,14 @@ import Container from "~/components/common/containers";
 import { useTuyau } from "~/hooks/use_tuyau";
 import EventCheckInDialog from "~/components/events/event_check_in_dialog";
 import { useAuth } from "~/hooks/use_auth";
+import User from "#models/user";
 
 interface Speaker {
   firstName: string;
   lastName: string;
   jobTitle: string;
   profilePicture: string;
-  slug: string;
+  user: User;
   company: string;
 }
 
@@ -229,7 +230,7 @@ export default function EventRegistrationPage({
                   <div className="flex flex-wrap gap-4">
                     {speakers.map((speaker) => (
                       <Link
-                        href={tuyau.$url("pages:profile.show", { params: { slug: speaker.slug } })}
+                        href={tuyau.$url("pages:profile.show", { params: { slug: speaker.user.slug } })}
                       >
                         <div
                           key={speaker.firstName + speaker.lastName}

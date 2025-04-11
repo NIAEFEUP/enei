@@ -1,8 +1,9 @@
 import { DateTime } from "luxon";
-import { BaseModel, column, manyToMany } from "@adonisjs/lucid/orm";
+import { BaseModel, column, hasOne, manyToMany } from "@adonisjs/lucid/orm";
 import Event from "./event.js";
-import type { ManyToMany } from "@adonisjs/lucid/types/relations";
+import type { HasOne, ManyToMany } from "@adonisjs/lucid/types/relations";
 import Company from "./company.js";
+import User from "./user.js";
 
 export default class SpeakerProfile extends BaseModel {
   @column({ isPrimary: true })
@@ -28,6 +29,9 @@ export default class SpeakerProfile extends BaseModel {
 
   @column()
   declare linkedin: string | null;
+
+  @hasOne(() => User)
+  declare user: HasOne<typeof User>;
 
   @column()
   declare website: string | null;
