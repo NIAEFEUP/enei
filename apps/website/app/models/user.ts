@@ -128,7 +128,7 @@ export default class User extends BaseModel {
   }
 
   isStaff() {
-    return !!this.staffProfile;
+    return this.staffProfileId !== null;
   }
 
   isPromoter() {
@@ -137,6 +137,10 @@ export default class User extends BaseModel {
 
   isParticipant() {
     return this.participantProfileId !== null;
+  }
+
+  isCompanyRepresentative() {
+    return this.representativeProfileId !== null
   }
 
   isEmailVerified() {
