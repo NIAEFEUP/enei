@@ -20,7 +20,7 @@ export default class extends BaseSchema {
         if (count % 100 === 0) {
           console.debug(count);
         }
-        
+
         user.slug = "slug";
         await user.save();
       }
