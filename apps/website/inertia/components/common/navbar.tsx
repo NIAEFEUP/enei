@@ -110,7 +110,7 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
                 }
               >
                 <Link
-                  route="pages:staff.qrcode.scan"
+                  route="pages:staff.credentials.scan"
                   className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
                 >
                   <QrCode />
