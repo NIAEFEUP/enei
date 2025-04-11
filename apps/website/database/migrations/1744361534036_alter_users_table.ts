@@ -5,7 +5,7 @@ export default class extends BaseSchema {
   protected tableName = "users";
 
   async up() {
-    this.schema.alterTable(this.tableName, async (table) => {
+    this.schema.alterTable(this.tableName, async () => {
       const users = await User.all();
 
       for (const user of users) {
@@ -15,7 +15,7 @@ export default class extends BaseSchema {
         console.log("participant profile: ", user.participantProfile);
 
         if (user.participantProfile) {
-          user.slug = user.participantProfile.slug;
+          user.slug = user.slug;
           await user.save();
         }
       }
@@ -23,7 +23,7 @@ export default class extends BaseSchema {
   }
 
   async down() {
-    this.schema.alterTable(this.tableName, async (table) => {
+    this.schema.alterTable(this.tableName, async () => {
       await User.query().update({ slug: null });
     });
   }
