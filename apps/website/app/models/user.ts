@@ -114,9 +114,6 @@ export default class User extends BaseModel {
   @column()
   declare staffProfileId: number | undefined;
 
-  @column()
-  declare slug: string;
-
   @belongsTo(() => StaffProfile)
   declare staffProfile: BelongsTo<typeof StaffProfile>;
 
