@@ -15,9 +15,9 @@ overrides:
   strtok3: 8.0.1
 
 patchedDependencies:
-  '@adminjs/adonis':
-    hash: 34afa3dea7eb1cf1153321a1f1330769bd95f81df8cc40aaa147ba37ff3cd9f9
-    path: patches/@adminjs__adonis.patch
+  '@adonisjs/lucid':
+    hash: 1e263bb5bd66e9b5cc77281ea9fd4e5947cb0eddd6c6b121dcb939b1341be0c2
+    path: patches/@adonisjs__lucid.patch
 
 importers:
 
@@ -40,7 +40,7 @@ importers:
     dependencies:
       '@adminjs/adonis':
         specifier: ^1.1.0
-        version: 1.1.1(patch_hash=34afa3dea7eb1cf1153321a1f1330769bd95f81df8cc40aaa147ba37ff3cd9f9)(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))(@adonisjs/session@7.5.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))(edge.js@6.2.1))(reflect-metadata@0.2.2)
+        version: 1.1.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/lucid@21.6.1(patch_hash=1e263bb5bd66e9b5cc77281ea9fd4e5947cb0eddd6c6b121dcb939b1341be0c2)(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))(@adonisjs/session@7.5.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))(edge.js@6.2.1))(reflect-metadata@0.2.2)
       '@adminjs/design-system':
         specifier: ^4.1.1
         version: 4.1.1(@babel/core@7.26.10)(@types/react@19.0.12)(prop-types@15.8.1)(react-dom@19.0.0(react@19.0.0))(react-is@18.3.1)(react@19.0.0)
@@ -52,7 +52,7 @@ importers:
         version: 5.1.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))
       '@adonisjs/auth':
         specifier: ^9.3.1
-        version: 9.3.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))(@adonisjs/session@7.5.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))(edge.js@6.2.1))(@japa/plugin-adonisjs@4.0.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@japa/runner@4.2.0))
+        version: 9.3.2(f032f8ad33fb2f087d0582d1bfd52f70)
       '@adonisjs/bouncer':
         specifier: ^3.1.5
         version: 3.1.5(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(edge.js@6.2.1)
@@ -70,10 +70,10 @@ importers:
         version: 3.1.1(8531e844b213012a89533f718715ca8f)
       '@adonisjs/limiter':
         specifier: ^2.3.3
-        version: 2.3.3(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))
+        version: 2.3.3(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/lucid@21.6.1(patch_hash=1e263bb5bd66e9b5cc77281ea9fd4e5947cb0eddd6c6b121dcb939b1341be0c2)(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))
       '@adonisjs/lucid':
         specifier: ^21.6.0
-        version: 21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1)
+        version: 21.6.1(patch_hash=1e263bb5bd66e9b5cc77281ea9fd4e5947cb0eddd6c6b121dcb939b1341be0c2)(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1)
       '@adonisjs/mail':
         specifier: ^9.2.2
         version: 9.2.2(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@aws-sdk/client-ses@3.775.0)(@types/luxon@3.4.2)(@types/node@22.13.13)(dayjs@1.11.13)(edge.js@6.2.1)(luxon@3.6.0)(moment@2.30.1)
@@ -115,7 +115,7 @@ importers:
         version: 2.0.5(react@19.0.0)
       '@jrmc/adonis-attachment':
         specifier: ^3.2.2
-        version: 3.2.2(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/drive@3.4.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@aws-sdk/client-s3@3.787.0)(@aws-sdk/s3-request-presigner@3.787.0))(@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))
+        version: 3.2.2(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/drive@3.4.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@aws-sdk/client-s3@3.787.0)(@aws-sdk/s3-request-presigner@3.787.0))(@adonisjs/lucid@21.6.1(patch_hash=1e263bb5bd66e9b5cc77281ea9fd4e5947cb0eddd6c6b121dcb939b1341be0c2)(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))
       '@radix-ui/react-accordion':
         specifier: ^1.2.2
         version: 1.2.3(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -206,6 +206,9 @@ importers:
       '@react-email/render':
         specifier: 1.0.4
         version: 1.0.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@sindresorhus/is':
+        specifier: ^7.0.1
+        version: 7.0.1
       '@tanstack/react-virtual':
         specifier: ^3.11.2
         version: 3.13.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -7679,7 +7682,6 @@ packages:
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
     deprecated: |-
       You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
-
       (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qrcode.react@4.2.0:
@@ -9093,14 +9095,14 @@ packages:
 
 snapshots:
 
-  '@adminjs/adonis@1.1.1(patch_hash=34afa3dea7eb1cf1153321a1f1330769bd95f81df8cc40aaa147ba37ff3cd9f9)(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))(@adonisjs/session@7.5.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))(edge.js@6.2.1))(reflect-metadata@0.2.2)':
+  '@adminjs/adonis@1.1.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/lucid@21.6.1(patch_hash=1e263bb5bd66e9b5cc77281ea9fd4e5947cb0eddd6c6b121dcb939b1341be0c2)(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))(@adonisjs/session@7.5.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))(edge.js@6.2.1))(reflect-metadata@0.2.2)':
     dependencies:
       '@adonisjs/core': 6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)
       '@adonisjs/session': 7.5.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))(edge.js@6.2.1)
       knex-schema-inspector: 3.1.0
       reflect-metadata: 0.2.2
     optionalDependencies:
-      '@adonisjs/lucid': 21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1)
+      '@adonisjs/lucid': 21.6.1(patch_hash=1e263bb5bd66e9b5cc77281ea9fd4e5947cb0eddd6c6b121dcb939b1341be0c2)(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1)
 
   '@adminjs/design-system@4.1.1(@babel/core@7.26.10)(@types/react@19.0.12)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)':
     dependencies:
@@ -9256,14 +9258,14 @@ snapshots:
     transitivePeerDependencies:
       - babel-plugin-macros
 
-  '@adonisjs/auth@9.3.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))(@adonisjs/session@7.5.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))(edge.js@6.2.1))(@japa/plugin-adonisjs@4.0.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@japa/runner@4.2.0))':
+  '@adonisjs/auth@9.3.2(f032f8ad33fb2f087d0582d1bfd52f70)':
     dependencies:
       '@adonisjs/core': 6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)
       '@adonisjs/presets': 2.6.4(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))
       '@poppinss/utils': 6.9.2
       basic-auth: 2.0.1
     optionalDependencies:
-      '@adonisjs/lucid': 21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1)
+      '@adonisjs/lucid': 21.6.1(patch_hash=1e263bb5bd66e9b5cc77281ea9fd4e5947cb0eddd6c6b121dcb939b1341be0c2)(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1)
       '@adonisjs/session': 7.5.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))(edge.js@6.2.1)
       '@japa/plugin-adonisjs': 4.0.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@japa/runner@4.2.0)
     transitivePeerDependencies:
@@ -9444,12 +9446,12 @@ snapshots:
       locate-path: 7.2.0
       qs: 6.14.0
 
-  '@adonisjs/limiter@2.3.3(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))':
+  '@adonisjs/limiter@2.3.3(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/lucid@21.6.1(patch_hash=1e263bb5bd66e9b5cc77281ea9fd4e5947cb0eddd6c6b121dcb939b1341be0c2)(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))(@adonisjs/redis@9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))':
     dependencies:
       '@adonisjs/core': 6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)
       rate-limiter-flexible: 5.0.5
     optionalDependencies:
-      '@adonisjs/lucid': 21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1)
+      '@adonisjs/lucid': 21.6.1(patch_hash=1e263bb5bd66e9b5cc77281ea9fd4e5947cb0eddd6c6b121dcb939b1341be0c2)(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1)
       '@adonisjs/redis': 9.2.0(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))
 
   '@adonisjs/logger@6.0.6':
@@ -9458,7 +9460,7 @@ snapshots:
       abstract-logging: 2.0.1
       pino: 9.6.0
 
-  '@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1)':
+  '@adonisjs/lucid@21.6.1(patch_hash=1e263bb5bd66e9b5cc77281ea9fd4e5947cb0eddd6c6b121dcb939b1341be0c2)(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1)':
     dependencies:
       '@adonisjs/core': 6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)
       '@adonisjs/presets': 2.6.4(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))
@@ -11709,11 +11711,11 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@jrmc/adonis-attachment@3.2.2(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/drive@3.4.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@aws-sdk/client-s3@3.787.0)(@aws-sdk/s3-request-presigner@3.787.0))(@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))':
+  '@jrmc/adonis-attachment@3.2.2(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/drive@3.4.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@aws-sdk/client-s3@3.787.0)(@aws-sdk/s3-request-presigner@3.787.0))(@adonisjs/lucid@21.6.1(patch_hash=1e263bb5bd66e9b5cc77281ea9fd4e5947cb0eddd6c6b121dcb939b1341be0c2)(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))':
     dependencies:
       '@adonisjs/core': 6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)
       '@adonisjs/drive': 3.4.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@aws-sdk/client-s3@3.787.0)(@aws-sdk/s3-request-presigner@3.787.0)
-      '@adonisjs/lucid': 21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1)
+      '@adonisjs/lucid': 21.6.1(patch_hash=1e263bb5bd66e9b5cc77281ea9fd4e5947cb0eddd6c6b121dcb939b1341be0c2)(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1)
       '@poppinss/defer': 1.1.1
       exifreader: 4.26.1
       file-type: 19.6.0

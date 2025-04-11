@@ -13,66 +13,26 @@ import { Button, buttonVariants } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { useState } from "react";
-import { useToast } from "~/hooks/use_toast";
 import { cn } from "~/lib/utils";
-// import { Tooltip } from '~/components/ui/tooltip'
-// import { TooltipContent, TooltipProvider, TooltipTrigger } from '@radix-ui/react-tooltip'
-import RegistrationConfirmationModal from "~/components/events/registration_confirmation_modal";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 import Page from "~/components/common/page";
 import { Link, useForm } from "@inertiajs/react";
 import Container from "~/components/common/containers";
+import { InferPageProps } from "@adonisjs/inertia/types";
+import type EventsController from "#controllers/events_controller";
 import { useTuyau } from "~/hooks/use_tuyau";
 import EventCheckInDialog from "~/components/events/event_check_in_dialog";
 import { useAuth } from "~/hooks/use_auth";
-import User from "#models/user";
-
-interface Speaker {
-  firstName: string;
-  lastName: string;
-  jobTitle: string;
-  profilePicture: string;
-  user: User;
-  company: string;
-}
-
-interface EventRegistrationProps {
-  eventId: number;
-  title: string;
-  description?: string;
-  date: string;
-  time: string;
-  location: string;
-  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other";
-  companyImage: string;
-  speakers: Speaker[];
-  extraInfo?: string;
-  registrationRequirements: string;
-  requiresRegistration: boolean;
-  ticketsRemaining: number;
-  price: number;
-  isAcceptingRegistrations: boolean;
-  isRegistered: boolean;
-}
+import { useToast } from "~/hooks/use_toast";
+import RegistrationConfirmationModal from "~/components/events/confirmation_modal/registration_confirmation_modal";
 
 export default function EventRegistrationPage({
-  eventId,
-  title,
-  description,
-  date,
-  time,
-  location,
-  type,
-  companyImage,
-  speakers,
-  extraInfo,
-  registrationRequirements,
-  requiresRegistration,
-  ticketsRemaining,
+  event,
+  formattedDate,
+  formattedTime,
   price,
-  isAcceptingRegistrations,
   isRegistered,
-}: EventRegistrationProps) {
+}: InferPageProps<EventsController, "show">) {
   const [registrationConfirmationModalOpen, setRegistrationConfirmationModalOpen] = useState(false);
 
   const [scannerModalOpen, setScannerModalOpen] = useState(false);
@@ -85,7 +45,7 @@ export default function EventRegistrationPage({
   const { post, processing } = useForm({});
 
   const handleRegister = () => {
-    post(`/events/${eventId}/register`, {
+    post(`/events/${event.id}/register/`, {
       onSuccess: () => {
         setRegistrationConfirmationModalOpen(false);
         toast({
@@ -117,6 +77,7 @@ export default function EventRegistrationPage({
     networking: "border-enei-blue",
     competition: "border-enei-blue",
     meal: "border-enei-blue",
+    painel: "border-enei-blue",
   };
 
   const activityColors = {
@@ -127,6 +88,7 @@ export default function EventRegistrationPage({
     networking: "#000000",
     competition: "#000000",
     meal: "#000000",
+    painel: "#000000",
   };
 
   return (
@@ -138,27 +100,30 @@ export default function EventRegistrationPage({
               {/* Title and important information (date, time, location) */}
               <div className="flex flex-row justify-between">
                 <div>
-                  <CardTitle className="text-2xl font-bold" style={{ color: activityColors[type] }}>
-                    {title}
+                  <CardTitle
+                    className="text-2xl font-bold"
+                    style={{ color: activityColors[event.type] }}
+                  >
+                    {event.title}
                   </CardTitle>
                   <div className="text-muted-foreground mt-4 flex flex-col gap-2 sm:flex-row sm:gap-6">
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4" />
-                      <span>{date}</span>
+                      <span>{formattedDate}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Clock className="h-4 w-4" />
-                      <span>{time}</span>
+                      <span>{formattedTime}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <MapPin className="h-4 w-4" />
-                      <span>{location}</span>
+                      <span>{event.location}</span>
                     </div>
                   </div>
                 </div>
-                {companyImage && (
+                {event.companyImage && (
                   <img
-                    src={companyImage}
+                    src={event.companyImage}
                     alt="Company Logo"
                     className="max-h-16 w-auto object-contain"
                   />
@@ -167,14 +132,18 @@ export default function EventRegistrationPage({
             </CardHeader>
             {/* Event Description */}
 
-            <CardContent className="mt-2 space-y-4" style={{ color: activityColors[type] }}>
-              {description && (
+            <CardContent className="mt-2 space-y-4" style={{ color: activityColors[event.type] }}>
+              {event.description && (
                 <div>
                   <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
                     <Info className="h-5 w-5" />
                     <p className="text-lg font-semibold">Acerca do Evento</p>
                   </h1>
-                  <div className="prose" dangerouslySetInnerHTML={{ __html: description }} />
+                  <div
+                    className="prose"
+                    dangerouslySetInnerHTML={{ __html: event.description }}
+                  />
+       
                 </div>
               )}
               {/* {isRegistered && (
@@ -214,26 +183,26 @@ export default function EventRegistrationPage({
                 </div>
               )} */}
               {/* Speakers (if applicable) */}
-              {speakers.length > 0 && (
+              {event.speakers.length > 0 && (
                 <div>
                   <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
                     <Users className="h-5 w-5" />
                     <p className="text-lg font-semibold">
-                      {speakers.length === 1 ? "Orador" : "Oradores"}
+                      {event.speakers.length === 1 ? "Orador" : "Oradores"}
                     </p>
                   </h1>
                   <div className="flex flex-wrap gap-4">
-                    {speakers.map((speaker) => (
+                    {event.speakers.map((speaker) => (
                       <Link
                         href={tuyau.$url("pages:profile.show", {
-                          params: { slug: speaker.user.slug },
+                          params: { slug: speaker?.slug ?? "s"},
                         })}
                       >
                         <div
                           key={speaker.firstName + speaker.lastName}
                           className={cn(
                             "flex w-auto items-center gap-4 rounded-lg border p-4",
-                            activityClassesPrimary[type],
+                            activityClassesPrimary[event.type],
                           )}
                         >
                           <Avatar className="h-12 w-12">
@@ -264,17 +233,17 @@ export default function EventRegistrationPage({
                 </div>
               )}
               {/* Registration Requirements (if applicable) */}
-              {registrationRequirements && (
+              {event.registrationRequirements && (
                 <>
                   <h1 className="mb-3 flex items-center gap-2 text-lg font-semibold">
                     <ClipboardCheck className="h-5 w-5" />
                     <p className="text-lg font-semibold">Requisitos de Inscrição</p>
                   </h1>
-                  <p className="text-black">{registrationRequirements}</p>
+                  <p className="text-black">{event.registrationRequirements}</p>
                 </>
               )}
               {/* Extra Information */}
-              {extraInfo && isRegistered && (
+              {event.extraInfo && isRegistered && (
                 <div>
                   <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
                     <Info className="h-5 w-5" />
@@ -282,13 +251,13 @@ export default function EventRegistrationPage({
                       Informação complementar para participantes
                     </p>
                   </h2>
-                  <div dangerouslySetInnerHTML={{ __html: extraInfo }} />
+                  <div dangerouslySetInnerHTML={{ __html: event.extraInfo }} />
                 </div>
               )}
               {/* Price Display */}
               {price > 0 && (
                 <div className="flex items-center justify-center gap-2 py-2 text-lg font-medium">
-                  <span>{price.toFixed(2)}€</span>
+                  <span>{price}€</span>
                 </div>
               )}
               {/* Button to register */}
@@ -297,17 +266,17 @@ export default function EventRegistrationPage({
                   <Button
                     onClick={() => handleRegisterClick()}
                     disabled={
-                      ticketsRemaining <= 0
-                      || !requiresRegistration
-                      || !isAcceptingRegistrations
+                      event.ticketsRemaining <= 0
+                      || !event.requiresRegistration
+                      || !event.isAcceptingRegistrations
                       || processing
                     }
                     className="px-4"
-                    style={{ backgroundColor: activityColors[type] }}
+                    style={{ backgroundColor: activityColors[event.type] }}
                   >
                     {processing && <Loader2 className="animate-spin" />}
-                    {requiresRegistration
-                      ? ticketsRemaining > 0
+                    {event.requiresRegistration
+                      ? event.ticketsRemaining > 0
                         ? price > 0
                           ? "Comprar"
                           : "Inscrever"
@@ -341,7 +310,7 @@ export default function EventRegistrationPage({
                             buttonVariants({ variant: "default" }),
                             "px-4 aria-disabled:pointer-events-none aria-disabled:opacity-50",
                           )}
-                          style={{ backgroundColor: activityColors[type] }}
+                          style={{ backgroundColor: activityColors[event.type] }}
                           aria-disabled={processing || isRegistered}
                         >
                           {processing && <Loader2 className="animate-spin" />}
@@ -367,13 +336,14 @@ export default function EventRegistrationPage({
                   </TooltipProvider>
                 </div>
               )}
+
               {/* Seats Available (the empty element is a weird fix...) */}
-              {requiresRegistration ? (
+              {event.requiresRegistration ? (
                 <div className="text-muted-foreground flex items-center justify-center gap-2 text-sm">
                   <Ticket className="h-4 w-4" />
                   <span>
-                    {isAcceptingRegistrations ? (
-                      <>{ticketsRemaining} lugares disponíveis</>
+                    {event.isAcceptingRegistrations ? (
+                      <>{event.ticketsRemaining} lugares disponíveis</>
                     ) : (
                       <>De momento, não estamos a aceitar inscrições</>
                     )}
@@ -387,12 +357,14 @@ export default function EventRegistrationPage({
                 isLoading={processing}
                 onClose={() => setRegistrationConfirmationModalOpen(false)}
                 onSubmit={handleRegister}
-              />
+              >
+                <p className="font-bold">Vais pagar uma caução de {event.product?.points} bytes.</p>
+              </RegistrationConfirmationModal>
               {auth.state === "authenticated" && auth.user.role === "staff" && (
                 <EventCheckInDialog
                   isOpen={scannerModalOpen}
                   setOpen={setScannerModalOpen}
-                  eventID={eventId}
+                  eventID={event.id}
                 />
               )}
             </CardContent>

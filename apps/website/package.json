@@ -18,7 +18,8 @@
     "lint": "eslint . --max-warnings 0",
     "typecheck": "tsc -p . -p ./inertia --noEmit",
     "prepare": "sh -c './scripts/prepare.sh'",
-    "run": ""
+    "format": "pnpm run -w format",
+    "format:fix": "pnpm run -w format:fix"
   },
   "imports": {
     "#.adonisjs/*": "./.adonisjs/*.ts",
@@ -133,6 +134,7 @@
     "@radix-ui/react-tooltip": "^1.1.7",
     "@react-email/components": "0.0.32",
     "@react-email/render": "1.0.4",
+    "@sindresorhus/is": "^7.0.1",
     "@tanstack/react-virtual": "^3.11.2",
     "@tuyau/client": "^0.2.4",
     "@tuyau/core": "^0.3.0",

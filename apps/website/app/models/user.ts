@@ -1,18 +1,37 @@
 import { DateTime } from "luxon";
-import { BaseModel, beforeSave, belongsTo, column, hasMany, manyToMany } from "@adonisjs/lucid/orm";
+import { BaseModel, beforeSave, column, hasMany, manyToMany } from "@adonisjs/lucid/orm";
 import Account from "./account.js";
 import { UserTypes } from "../../types/user.js";
-import PromoterInfo from "./promoter_info.js";
 import type { BelongsTo, HasMany, ManyToMany } from "@adonisjs/lucid/types/relations";
 import PromoterProfile from "./promoter_profile.js";
 import ParticipantProfile from "./participant_profile.js";
 import Event from "./event.js";
 import StaffProfile from "./staff_profile.js";
+import RepresentativeProfile from "./representative_profile.js";
 import { attachment } from "@jrmc/adonis-attachment";
 import type { Attachment } from "@jrmc/adonis-attachment/types/attachment";
+import { belongsTo } from "#lib/lucid/decorators.js";
+import { lazy } from "#lib/lazy.js";
+import { relations } from "#lib/lucid/relations.js";
 import SpeakerProfile from "./speaker_profile.js";
-import RepresentativeProfile from "./representative_profile.js";
 import slug from "slug";
+
+const userRelations = lazy(() =>
+  relations(User, (r) => [
+    r.many("accounts"),
+    r.many("eventsRegistered"),
+    r.many("indirectReferrals"),
+    r.belongsTo("participantProfile"),
+    r.belongsTo("promoterProfile"),
+    r.many("referrals"),
+    r.belongsTo("referrer"),
+    r.belongsTo("referringPromoter"),
+    r.belongsTo("staffProfile"),
+    r.belongsTo("speakerProfile"),
+    r.many("checkedInEvents"),
+    r.belongsTo("representativeProfile"),
+  ]),
+);
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -107,9 +126,6 @@ export default class User extends BaseModel {
 
   @column()
   declare points: number;
-
-  @belongsTo(() => PromoterInfo)
-  declare promoterInfo: BelongsTo<typeof PromoterInfo>;
 
   @column()
   declare staffProfileId: number | undefined;
@@ -215,7 +231,7 @@ export default class User extends BaseModel {
 
     if (this.participantProfile) groups.push(UserTypes.PARTICIPANT);
 
-    if (this.promoterInfo) groups.push(UserTypes.PROMOTER);
+    // if (this.promoterInfo) groups.push(UserTypes.PROMOTER);
 
     return groups;
   }
@@ -260,5 +276,9 @@ export default class User extends BaseModel {
   static async getReferrer(user: User) {
     await user.load("referrer");
     return user.referrer;
+  }
+
+  get $relations() {
+    return userRelations.get().for(this);
   }
 }

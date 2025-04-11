@@ -93,8 +93,8 @@ export default class AuthenticationController {
     } catch (error) {
       console.error(error);
     }
-
-    return response.status(500).send("Internal Server Error");
+    
+    return response.status(500).send('Internal Server Error');
   }
 
   async showForgotPasswordPage({ inertia }: HttpContext) {
