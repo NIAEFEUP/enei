@@ -112,6 +112,9 @@ importers:
       '@inertiajs/react':
         specifier: ^2.0.3
         version: 2.0.5(react@19.0.0)
+      '@jrmc/adonis-attachment':
+        specifier: ^3.2.2
+        version: 3.2.2(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/drive@3.4.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))(@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))
       '@radix-ui/react-accordion':
         specifier: ^1.2.2
         version: 1.2.3(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -283,6 +286,9 @@ importers:
       jotai:
         specifier: ^2.11.1
         version: 2.12.2(@types/react@19.0.12)(react@19.0.0)
+      js-md5:
+        specifier: ^0.8.3
+        version: 0.8.3
       leaflet-geosearch:
         specifier: ^4.0.0
         version: 4.2.0
@@ -331,6 +337,9 @@ importers:
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
+      sharp:
+        specifier: ^0.33.5
+        version: 0.33.5
       slug:
         specifier: ^10.0.0
         version: 10.0.0
@@ -401,6 +410,9 @@ importers:
       '@types/slug':
         specifier: ^5.0.9
         version: 5.0.9
+      '@types/w3c-web-nfc':
+        specifier: ^1.0.4
+        version: 1.0.4
       '@vitejs/plugin-react':
         specifier: ^4.3.4
         version: 4.3.4(vite@6.2.3(@types/node@22.13.13)(jiti@1.21.7)(yaml@2.7.0))
@@ -2416,6 +2428,14 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
+  '@jrmc/adonis-attachment@3.2.2':
+    resolution: {integrity: sha512-iyUpI5Z+c3wIBSKm/LV5K8IOTF2LUBzGqNB1QrUw7z1bFlMsLrPREs/4OvsqCA4MMNTkT9OzYC1MIsndPjWtbQ==}
+    engines: {node: '>=20.12.0'}
+    peerDependencies:
+      '@adonisjs/core': ^6.12.1
+      '@adonisjs/drive': ^3.2.0
+      '@adonisjs/lucid': ^20.6.0 || ^21.0.0
+
   '@juggle/resize-observer@3.4.0':
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
 
@@ -2565,6 +2585,10 @@ packages:
   '@poppinss/colors@4.1.4':
     resolution: {integrity: sha512-FA+nTU8p6OcSH4tLDY5JilGYr1bVWHpNmcLr7xmMEdbWmKHa+3QZ+DqefrXKmdjO/brHTnQZo20lLSjaO7ydog==}
     engines: {node: '>=18.16.0'}
+
+  '@poppinss/defer@1.1.1':
+    resolution: {integrity: sha512-ijTvg5/eduj7gPfHH2k3qId9GvCTQIDOZw+BjlEYE2T4zycqMUG0WX4GwSQHdBSzxbLEn4lavtGmUsjRDBBBKQ==}
+    engines: {node: '>=20.6.0'}
 
   '@poppinss/dumper@0.6.3':
     resolution: {integrity: sha512-iombbn8ckOixMtuV1p3f8jN6vqhXefNjJttoPaJDMeIk/yIGhkkL3OrHkEjE9SRsgoAx1vBUU2GtgggjvA5hCA==}
@@ -4390,6 +4414,9 @@ packages:
   '@types/validator@13.12.3':
     resolution: {integrity: sha512-2ipwZ2NydGQJImne+FhNdhgRM37e9lCev99KnqkbFHd94Xn/mErARWI1RSLem1QA19ch5kOhzIZd7e8CA2FI8g==}
 
+  '@types/w3c-web-nfc@1.0.4':
+    resolution: {integrity: sha512-AxTfPROOzdBhpBhrmwNn19gk36nK9SwRppSVe2C2y0TFuz/nzJ1m9oYC5DNoMeajEhHL44M+zxcH8GTkhgYteQ==}
+
   '@typescript-eslint/eslint-plugin@8.28.0':
     resolution: {integrity: sha512-lvFK3TCGAHsItNdWZ/1FkvpzCxTHUVuFrdnOGLMa0GGCFIbCgQWVk3CzCGdA7kM3qGVc+dfW9tr0Z/sHnGDFyg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -4455,6 +4482,10 @@ packages:
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0 || ^6.0.0
+
+  '@xmldom/xmldom@0.9.8':
+    resolution: {integrity: sha512-p96FSY54r+WJ50FIOsCOjyj/wavs8921hG5+kVMmZgKcvIKxMXHTrjNJvRgWa/zuX3B6t2lijLNFaOyuxUH+2A==}
+    engines: {node: '>=14.6'}
 
   '@yudiel/react-qr-scanner@2.2.1':
     resolution: {integrity: sha512-5tmzoi9d8mqqaxKTxfI9kulS3N3Kph75AOqwU2lnl4IMwjmLcTXS8IyecDUvzFNuoMNhCpofrqqGueXm8IXkjA==}
@@ -5633,6 +5664,9 @@ packages:
     resolution: {integrity: sha512-EHlpxMCpHWSAh1dgS6bVeoLAXGnJNdR93aabr4QCGbzOM73o5XmRfM/e5FUqsw3aagP8S8XEWUWFAxnRBnAF0Q==}
     engines: {node: ^18.19.0 || >=20.5.0}
 
+  exifreader@4.26.1:
+    resolution: {integrity: sha512-5u7LooUryPAhdQ/Wn5n/P8WsWJ/DxZ5AToc7gTDlzN41QlecGFEt3y+rXpaOe7GhxZ8cD5t8E7yqrq0oZeVHmw==}
+
   expand-template@2.0.3:
     resolution: {integrity: sha512-XYfuKMvj4O35f/pOXLObndIRvyQ+/+6AhODh+OKWj9S9498pHHn/IMszH+gt0fBCRWMNfk1ZSp5x3AifmnI2vg==}
     engines: {node: '>=6'}
@@ -5713,6 +5747,10 @@ packages:
   file-selector@2.1.2:
     resolution: {integrity: sha512-QgXo+mXTe8ljeqUFaX3QVHc5osSItJ/Km+xpocx0aSqWGMSCf6qYs/VnzZgS864Pjn5iceMRFigeAV7AfTlaig==}
     engines: {node: '>= 12'}
+
+  file-type@19.6.0:
+    resolution: {integrity: sha512-VZR5I7k5wkD0HgFnMsq5hOsSc710MJMu5Nc5QYsbe38NN5iPV/XTObYLc/cpttRTf6lX538+5uO1ZQRhYibiZQ==}
+    engines: {node: '>=18'}
 
   file-type@20.4.1:
     resolution: {integrity: sha512-hw9gNZXUfZ02Jo0uafWLaFVPter5/k2rfcrjFJJHX/77xtSDOfJuEFb6oKlFV86FLP1SuyHMW1PSk0U9M5tKkQ==}
@@ -6429,6 +6467,9 @@ packages:
 
   js-git@0.7.8:
     resolution: {integrity: sha512-+E5ZH/HeRnoc/LW0AmAyhU+mNcWBzAKE+30+IDMLSLbbK+Tdt02AdkOKq9u15rlJsDEGFqtgckc8ZM59LhhiUA==}
+
+  js-md5@0.8.3:
+    resolution: {integrity: sha512-qR0HB5uP6wCuRMrWPTrkMaev7MJZwJuuw4fnwAzRgP4J4/F8RwtodOKpGp4XpqsLBFzzgqIO42efFAyz2Et6KQ==}
 
   js-stringify@1.0.2:
     resolution: {integrity: sha512-rtS5ATOo2Q5k1G+DADISilDA6lv79zIiwFd6CcjuIxGKLFm5C+RLImRscVap9k55i+MOZwgliw+NejvkLuGD5g==}
@@ -8659,10 +8700,6 @@ packages:
   type-fest@1.4.0:
     resolution: {integrity: sha512-yGSza74xk0UG8k+pLh5oeoYirvIiWo5t0/o3zHHAO2tRDiZcxWP7fywNlXhqb6/r6sWvwi+RsyQMWhVLe4BVuA==}
     engines: {node: '>=10'}
-
-  type-fest@4.36.0:
-    resolution: {integrity: sha512-3T/PUdKTCnkUmhQU6FFJEHsLwadsRegktX3TNHk+2JJB9HlA8gp1/VXblXVDI93kSnXF2rdPx0GMbHtJIV2LPg==}
-    engines: {node: '>=16'}
 
   type-fest@4.38.0:
     resolution: {integrity: sha512-2dBz5D5ycHIoliLYLi0Q2V7KRaDlH0uWIvmk7TYlAg5slqwiPv1ezJdZm1QEM0xgk29oYWMCbIG7E6gHpvChlg==}
@@ -11666,6 +11703,16 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
+  '@jrmc/adonis-attachment@3.2.2(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@adonisjs/drive@3.4.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)))(@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1))':
+    dependencies:
+      '@adonisjs/core': 6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1)
+      '@adonisjs/drive': 3.4.1(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))
+      '@adonisjs/lucid': 21.6.1(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@adonisjs/core@6.17.2(@adonisjs/assembler@7.8.2(babel-plugin-macros@3.1.0)(typescript@5.8.2))(@vinejs/vine@3.0.1)(edge.js@6.2.1))(@vinejs/vine@3.0.1)(better-sqlite3@11.9.1)(luxon@3.6.0)(pg@8.14.1)
+      '@poppinss/defer': 1.1.1
+      exifreader: 4.26.1
+      file-type: 19.6.0
+      mime-types: 2.1.35
+
   '@juggle/resize-observer@3.4.0': {}
 
   '@lukeed/ms@2.0.2': {}
@@ -11817,6 +11864,10 @@ snapshots:
   '@poppinss/colors@4.1.4':
     dependencies:
       kleur: 4.1.5
+
+  '@poppinss/defer@1.1.1':
+    dependencies:
+      fastq: 1.19.1
 
   '@poppinss/dumper@0.6.3':
     dependencies:
@@ -13776,6 +13827,8 @@ snapshots:
 
   '@types/validator@13.12.3': {}
 
+  '@types/w3c-web-nfc@1.0.4': {}
+
   '@typescript-eslint/eslint-plugin@8.28.0(@typescript-eslint/parser@8.28.0(eslint@9.23.0(jiti@1.21.7))(typescript@5.8.2))(eslint@9.23.0(jiti@1.21.7))(typescript@5.8.2)':
     dependencies:
       '@eslint-community/regexpp': 4.12.1
@@ -13883,6 +13936,9 @@ snapshots:
       vite: 6.2.3(@types/node@22.13.13)(jiti@1.21.7)(yaml@2.7.0)
     transitivePeerDependencies:
       - supports-color
+
+  '@xmldom/xmldom@0.9.8':
+    optional: true
 
   '@yudiel/react-qr-scanner@2.2.1(@types/emscripten@1.40.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -14463,13 +14519,11 @@ snapshots:
     dependencies:
       color-name: 1.1.4
       simple-swizzle: 0.2.2
-    optional: true
 
   color@4.2.3:
     dependencies:
       color-convert: 2.0.1
       color-string: 1.9.1
-    optional: true
 
   colorette@2.0.19: {}
 
@@ -15187,6 +15241,10 @@ snapshots:
       strip-final-newline: 4.0.0
       yoctocolors: 2.1.1
 
+  exifreader@4.26.1:
+    optionalDependencies:
+      '@xmldom/xmldom': 0.9.8
+
   expand-template@2.0.3: {}
 
   extrareqp2@1.0.0(debug@4.3.7):
@@ -15255,6 +15313,13 @@ snapshots:
   file-selector@2.1.2:
     dependencies:
       tslib: 2.8.1
+
+  file-type@19.6.0:
+    dependencies:
+      get-stream: 9.0.1
+      strtok3: 8.0.1
+      token-types: 6.0.0
+      uint8array-extras: 1.4.0
 
   file-type@20.4.1:
     dependencies:
@@ -15794,8 +15859,7 @@ snapshots:
 
   is-arrayish@0.2.1: {}
 
-  is-arrayish@0.3.2:
-    optional: true
+  is-arrayish@0.3.2: {}
 
   is-binary-path@2.1.0:
     dependencies:
@@ -15908,6 +15972,8 @@ snapshots:
       culvert: 0.1.2
       git-sha1: 0.1.2
       pako: 0.2.9
+
+  js-md5@0.8.3: {}
 
   js-stringify@1.0.2: {}
 
@@ -17835,7 +17901,6 @@ snapshots:
       '@img/sharp-wasm32': 0.33.5
       '@img/sharp-win32-ia32': 0.33.5
       '@img/sharp-win32-x64': 0.33.5
-    optional: true
 
   shebang-command@2.0.0:
     dependencies:
@@ -17892,7 +17957,6 @@ snapshots:
   simple-swizzle@0.2.2:
     dependencies:
       is-arrayish: 0.3.2
-    optional: true
 
   sisteransi@1.0.5: {}
 
@@ -18392,8 +18456,6 @@ snapshots:
 
   type-fest@1.4.0: {}
 
-  type-fest@4.36.0: {}
-
   type-fest@4.38.0: {}
 
   type-is@1.6.18:
@@ -18700,4 +18762,4 @@ snapshots:
   zxing-wasm@2.1.0(@types/emscripten@1.40.0):
     dependencies:
       '@types/emscripten': 1.40.0
-      type-fest: 4.36.0
+      type-fest: 4.38.0
