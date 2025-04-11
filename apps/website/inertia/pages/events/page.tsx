@@ -1,5 +1,5 @@
 import { DaySelector } from "~/components/events/day_selector";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import LongActivities from "~/components/events/long_activities";
 import EventsProgram from "~/components/events/schedule/events_program";
 import Page from "~/components/common/page";
@@ -47,12 +47,12 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
   const eventsByDay = splitEventsByDay(events);
 
   // If the current day is an ENEI day, set the active index to the corresponding day.
-  const eneiDates = [
+  const eneiDates = useMemo(() => [
     new Date("2025-04-11").toDateString(),
     new Date("2025-04-12").toDateString(),
     new Date("2025-04-13").toDateString(),
     new Date("2025-04-14").toDateString(),
-  ];
+  ], []);
 
   useEffect(() => {
     for (const [i, eneiDate] of eneiDates.entries()) {
