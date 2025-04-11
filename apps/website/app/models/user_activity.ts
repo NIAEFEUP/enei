@@ -20,7 +20,7 @@ export default class UserActivity extends BaseModel {
   declare type: string;
 
   @json()
-  declare description: UserActivityDescription;
+  declare description: UserActivityDescription["description"];
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime;

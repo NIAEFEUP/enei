@@ -8,7 +8,12 @@
 */
 import router from "@adonisjs/core/services/router";
 import { middleware } from "#start/kernel";
-import { emailVerificationThrottle, sendForgotPasswordThrottle } from "#start/limiter";
+import {
+  emailVerificationThrottle,
+  sendChangeEmailThrottle,
+  sendChangePasswordThrottle,
+  sendForgotPasswordThrottle,
+} from "#start/limiter";
 
 const EventsController = () => import("#controllers/events_controller");
 const AuthenticationController = () => import("#controllers/authentication_controller");
@@ -18,7 +23,6 @@ const ProfilesController = () => import("#controllers/profiles_controller");
 const UsersController = () => import("#controllers/users_controller");
 const StoreController = () => import("#controllers/store_controller");
 const ReferralsController = () => import("#controllers/referrals_controller");
-
 const LeaderboardController = () => import("#controllers/leaderboard_controller");
 const ProductReservationController = () => import("#controllers/product_reservation_controller");
 const PaymentsController = () => import("#controllers/payments_controller");
@@ -174,9 +178,55 @@ router
       .as("pages:profile.default")
       .use([middleware.auth(), middleware.verifiedEmail()]);
     router
-      .get("/profile/edit", [ProfilesController, "edit"])
+      .get("/profile/edit/:section", [ProfilesController, "edit"])
       .as("pages:profile.edit")
       .use([middleware.auth(), middleware.verifiedEmail()]);
+    router
+      .patch("/profile/edit", [ProfilesController, "update"])
+      .as("actions:profile.update")
+      .use([middleware.auth(), middleware.verifiedEmail()]);
+
+    router
+      .post("/profile/edit/password", [ProfilesController, "sendEditPassword"])
+      .as("actions:profile.change-password.send")
+      .use([
+        middleware.requireAuthenticationEnabled(),
+        middleware.auth(),
+        sendChangePasswordThrottle,
+      ]);
+    router
+      .post("/profile/edit/email", [ProfilesController, "sendEditEmail"])
+      .as("actions:profile.edit-email.send")
+      .use([middleware.requireAuthenticationEnabled(), middleware.auth(), sendChangeEmailThrottle]);
+    router
+      .route(
+        "profile/edit/email/callback/confirm",
+        ["GET", "POST"],
+        [ProfilesController, "callbackForEmailChangeConfirmation"],
+      )
+      .as("actions:profile.edit-email.confirm.callback")
+      .middleware([
+        middleware.requireAuthenticationEnabled(),
+        middleware.verifyUrlSignature(),
+        middleware.automaticSubmit(),
+      ]);
+    router
+      .route(
+        "profile/edit/email/callback/cancel",
+        ["GET", "POST"],
+        [ProfilesController, "callbackForEmailChangeCancelation"],
+      )
+      .as("actions:profile.edit-email.cancel.callback")
+      .middleware([
+        middleware.requireAuthenticationEnabled(),
+        middleware.verifyUrlSignature(),
+        middleware.automaticSubmit(),
+      ]);
+
+    router.get("/u/:slug/cv", [ProfilesController, "showCV"]).as("pages:profile.cv.show");
+    router
+      .get("/u/:slug/avatar", [ProfilesController, "showAvatar"])
+      .as("pages:profile.avatar.show");
     router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
   })
   .use(middleware.wip());
@@ -195,6 +245,11 @@ router
     router.get("/:id/tickets", [EventsController, "ticketsRemaining"]).as("actions:events.tickets");
 
     router
+      .post("/:slug/check-in", [EventsController, "checkin"])
+      .as("actions:events.checkin")
+      .use(middleware.staff());
+
+    router
       .get("/:id/is-registered", [EventsController, "isRegistered"])
       .as("actions:events.isRegistered");
 
@@ -209,23 +264,15 @@ router.on("/faq").renderInertia("faq").as("pages:faq").use(middleware.wip());
 
 router
   .group(() => {
-    router.on("/").renderInertia("cv").as("pages:cv");
-  })
-  .use([middleware.auth(), middleware.verifiedEmail()])
-  .prefix("cv") // dummy route for testing
-  .use(middleware.wip());
-
-router
-  .group(() => {
-    router.post("/cv/upload", [UsersController, "storeCV"]).as("actions:cv_upload");
-    router.delete("cv/delete", [UsersController, "deleteCV"]).as("actions:cv_delete");
-    router.get("/cv/name", [UsersController, "showCVName"]).as("actions:cv_name");
-    router.get("/:id/cv/download", [UsersController, "downloadCV"]).use(middleware.company());
+    router.post("/cv/upload", [UsersController, "storeCV"]).as("actions:cv.upload");
+    router.delete("cv/delete", [UsersController, "deleteCV"]).as("actions:cv.delete");
+    router.get("/cv/name", [UsersController, "showCVName"]).as("actions:cv.name");
 
     // Avatar endpoints
-    router.get("/avatar/name", [UsersController, "showAvatarName"]).as("actions:avatar_name");
-    router.post("/avatar/upload", [UsersController, "storeAvatar"]).as("actions:avatar_upload");
-    router.delete("/avatar/delete", [UsersController, "deleteAvatar"]).as("actions:avatar_delete");
+    router.get("/avatar/name", [UsersController, "showAvatarName"]).as("actions:avatar.name");
+    router.get("/avatar", [UsersController, "showAvatar"]).as("actions:avatar.show");
+    router.post("/avatar/upload", [UsersController, "storeAvatar"]).as("actions:avatar.upload");
+    router.delete("/avatar/delete", [UsersController, "deleteAvatar"]).as("actions:avatar.delete");
   })
   .use(middleware.auth())
   .prefix("user");
@@ -274,8 +321,9 @@ router
 
 router
   .group(() => {
-    router.on("/scan").renderInertia("qrscanner").as("pages:staff.qrcode.scan");
+    router.on("/scan").renderInertia("credentials").as("pages:staff.credentials.scan");
   })
-  .prefix("/qrcode");
+  .use([middleware.auth(), middleware.staff()])
+  .prefix("/credentials");
 
 router.on("/nfc").renderInertia("nfc").as("pages:nfc");

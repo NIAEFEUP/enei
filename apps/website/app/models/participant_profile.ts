@@ -89,7 +89,7 @@ export default class ParticipantProfile extends BaseModel {
   // Profile Info
 
   @column()
-  declare slug: string | null;
+  declare slug: string;
 
   @column()
   declare about: string | null;

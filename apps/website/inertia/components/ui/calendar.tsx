@@ -6,7 +6,10 @@ import { addYears, subYears } from "date-fns";
 import { cn } from "~/lib/utils";
 import { Button, buttonVariants } from "~/components/ui/button";
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker> & { initialMonth?: Date };
+export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
+  initialMonth?: Date;
+  monthButtonClassName?: string;
+};
 
 function ChangeMonthButton({ className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
@@ -28,12 +31,21 @@ function ChangeYearButton({ className, ...props }: React.ButtonHTMLAttributes<HT
   );
 }
 
-function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
+function Calendar({
+  className,
+  classNames,
+  monthButtonClassName,
+  showOutsideDays = true,
+  ...props
+}: CalendarProps) {
   const [month, setMonth] = React.useState(() => {
     if (props.mode === "single" && props.selected) return props.selected;
 
     return props.initialMonth ?? new Date();
   });
+
+  // FIXME: The selected date is highlighted only in the previous month
+  // Select the last day of a month and switch to the next month to see it
 
   return (
     <DayPicker
@@ -78,20 +90,26 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
       components={{
         PreviousMonthButton: ({ ...props }) => (
           <div className="flex gap-1">
-            <ChangeYearButton onClick={() => setMonth((month) => subYears(month, 1))}>
+            <ChangeYearButton
+              className={cn("", monthButtonClassName)}
+              onClick={() => setMonth((month) => subYears(month, 1))}
+            >
               <ChevronsLeft className="h-full w-full" />
             </ChangeYearButton>
-            <ChangeMonthButton {...props}>
+            <ChangeMonthButton {...props} className={cn("", monthButtonClassName)}>
               <ChevronLeft className="h-full w-full" />
             </ChangeMonthButton>
           </div>
         ),
         NextMonthButton: ({ ...props }) => (
           <div className="flex gap-1">
-            <ChangeMonthButton {...props}>
+            <ChangeMonthButton {...props} className={cn("", monthButtonClassName)}>
               <ChevronRight className="h-full w-full" />
             </ChangeMonthButton>
-            <ChangeYearButton onClick={() => setMonth((month) => addYears(month, 1))}>
+            <ChangeYearButton
+              className={cn("", monthButtonClassName)}
+              onClick={() => setMonth((month) => addYears(month, 1))}
+            >
               <ChevronsRight className="h-full w-full" />
             </ChangeYearButton>
           </div>

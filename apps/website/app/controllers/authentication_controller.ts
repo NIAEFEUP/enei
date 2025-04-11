@@ -81,15 +81,21 @@ export default class AuthenticationController {
   }
 
   async callbackForForgotPassword({ request, response }: HttpContext) {
-    const { password, email } = await request.validateUsing(passwordResetValidator);
+    try {
+      const { password, email } = await request.validateUsing(passwordResetValidator);
 
-    const account = await Account.find(`credentials:${email}`);
-    if (account) {
-      account.password = password; // Auther mixin hashes it automatically on assignment
-      await account.save();
+      const account = await Account.find(`credentials:${email}`);
+      if (account) {
+        account.password = password; // Auther mixin hashes it automatically on assignment
+        await account.save();
+      }
+
+      return response.redirect().toRoute("actions:auth.forgot-password.success");
+    } catch (error) {
+      console.error(error);
     }
 
-    return response.redirect().toRoute("actions:auth.forgot-password.success");
+    return response.status(500).send("Internal Server Error");
   }
 
   async showForgotPasswordPage({ inertia }: HttpContext) {

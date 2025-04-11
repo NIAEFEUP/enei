@@ -18,6 +18,8 @@ import UserActivityResource from "../app/admin/resources/user_activity.js";
 import UserResource from "../app/admin/resources/user.js";
 import PaymentResource from "../app/admin/resources/payment.js";
 import InvoiceInfoResource from "../app/admin/resources/invoice_info.js";
+import CompanyResource from "../app/admin/resources/company.js";
+import RepresentativeProfileResource from "../app/admin/resources/representative_profile.js";
 
 const resources = [
   AccountResource,
@@ -35,6 +37,8 @@ const resources = [
   UserActivityResource,
   UserResource,
   InvoiceInfoResource,
+  CompanyResource,
+  RepresentativeProfileResource,
 ];
 
 const adminjsConfig = {

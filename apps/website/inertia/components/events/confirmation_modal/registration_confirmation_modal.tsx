@@ -14,7 +14,7 @@ interface RegistrationConfirmationModalProps {
   isLoading: boolean;
   onClose: () => void;
   onSubmit: () => void;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   showConfirmation?: boolean;
 }
 

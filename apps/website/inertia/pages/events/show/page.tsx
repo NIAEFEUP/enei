@@ -7,6 +7,7 @@ import {
   Info,
   ClipboardCheck,
   Loader2,
+  QrCode,
 } from "lucide-react";
 import { Button, buttonVariants } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -21,6 +22,37 @@ import PaidRegistrationConfirmationModal from "~/components/events/confirmation_
 import PointsRegistrationConfirmationModal from "~/components/events/confirmation_modal/points_registration_confirmation_modal";
 import { InferPageProps } from "@adonisjs/inertia/types";
 import type EventsController from "#controllers/events_controller";
+import EventCheckInDialog from "~/components/events/event_check_in_dialog";
+import { useAuth } from "~/hooks/use_auth";
+import { useToast } from "~/hooks/use_toast";
+import RegistrationConfirmationModal from "~/components/events/confirmation_modal/registration_confirmation_modal";
+
+interface Speaker {
+  firstName: string;
+  lastName: string;
+  jobTitle: string;
+  profilePicture: string;
+  company: string;
+}
+
+interface EventRegistrationProps {
+  eventId: number;
+  title: string;
+  description?: string;
+  date: string;
+  time: string;
+  location: string;
+  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other";
+  companyImage: string;
+  speakers: Speaker[];
+  extraInfo?: string;
+  registrationRequirements: string;
+  requiresRegistration: boolean;
+  ticketsRemaining: number;
+  price: number;
+  isAcceptingRegistrations: boolean;
+  isRegistered: boolean;
+}
 
 export default function EventRegistrationPage({
   event,
@@ -31,7 +63,34 @@ export default function EventRegistrationPage({
 }: InferPageProps<EventsController, "show">) {
   const [registrationConfirmationModalOpen, setRegistrationConfirmationModalOpen] = useState(false);
 
-  const { processing } = useForm({});
+  const [scannerModalOpen, setScannerModalOpen] = useState(false);
+
+  const { toast } = useToast();
+
+  const auth = useAuth();
+
+  const { post, processing } = useForm({});
+
+  const handleRegister = () => {
+    post(`/events/${event.id}/register`, {
+      onSuccess: () => {
+        setRegistrationConfirmationModalOpen(false);
+        toast({
+          title: "Sucesso",
+          description: "Estás inscrito. Diverte-te!",
+        });
+      },
+      onError: (errors) => {
+        toast({
+          title: "Erro ao registar",
+          description:
+            errors.message
+            || "Ocorreu um erro ao registar para o evento. Por favor, tenta novamente.",
+          duration: 5000,
+        });
+      },
+    });
+  };
 
   const handleRegisterClick = () => {
     setRegistrationConfirmationModalOpen(true);
@@ -223,7 +282,7 @@ export default function EventRegistrationPage({
               )}
               {/* Button to register */}
               {!isRegistered && (
-                <div className="flex justify-center">
+                <div className="flex items-center justify-center gap-3">
                   <Button
                     onClick={() => handleRegisterClick()}
                     disabled={
@@ -244,6 +303,10 @@ export default function EventRegistrationPage({
                         : "Esgotado"
                       : "Inscrição não necessária"}
                   </Button>
+
+                  {auth.state === "authenticated" && auth.user.role === "staff" && (
+                    <QrCode onClick={() => setScannerModalOpen(true)} />
+                  )}
                 </div>
               )}
               {/* Temporary indication that registration is not possible yet */}
@@ -309,21 +372,17 @@ export default function EventRegistrationPage({
               ) : (
                 <></>
               )}
-              {price > 0 ? (
-                <PaidRegistrationConfirmationModal
-                  isOpen={registrationConfirmationModalOpen}
-                  setIsOpen={setRegistrationConfirmationModalOpen}
-                  isLoading={processing}
-                  onClose={() => setRegistrationConfirmationModalOpen(false)}
-                  event={event}
-                />
-              ) : (
-                <PointsRegistrationConfirmationModal
-                  isOpen={registrationConfirmationModalOpen}
-                  setIsOpen={setRegistrationConfirmationModalOpen}
-                  isLoading={processing}
-                  onClose={() => setRegistrationConfirmationModalOpen(false)}
-                  event={event}
+              <RegistrationConfirmationModal
+                isOpen={registrationConfirmationModalOpen}
+                isLoading={processing}
+                onClose={() => setRegistrationConfirmationModalOpen(false)}
+                onSubmit={handleRegister}
+              />
+              {auth.state === "authenticated" && auth.user.role === "staff" && (
+                <EventCheckInDialog
+                  isOpen={scannerModalOpen}
+                  setOpen={setScannerModalOpen}
+                  eventID={event.id}
                 />
               )}
             </CardContent>

@@ -43,6 +43,16 @@ export default class EventService {
     else this.freeRegistration(user, event);
   }
 
+  async isCheckedIn(user: User, event: Event) {
+    const isChecked = await event
+      .related("checkedInUsers")
+      .query()
+      .where("user_id", user.id)
+      .first();
+
+    return !!isChecked;
+  }
+
   private async paidRegistration(user: User, event: Event, data: MBWayOrder | null) {
     const { products, name, nif, address, mobileNumber } = data!;
 
@@ -94,5 +104,12 @@ export default class EventService {
       user.points -= event.product.points;
       await user.useTransaction(trx).save();
     });
+  }
+
+  async checkin(user: User, event: Event) {
+    await event.related("checkedInUsers").attach({
+      [user.id]: { checked_in_at: new Date() },
+    });
+    await event.save();
   }
 }
