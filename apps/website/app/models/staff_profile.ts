@@ -13,6 +13,9 @@ export default class StaffProfile extends BaseModel {
   @column({ isPrimary: true })
   declare id: number;
 
+  @column()
+  declare departmentId: number;
+
   @belongsTo(() => Department)
   declare department: BelongsTo<typeof Department>;
 
