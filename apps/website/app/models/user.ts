@@ -163,7 +163,9 @@ export default class User extends BaseModel {
         const { firstName, lastName } = profile;
 
         // Generate a random slug
-        const userCode = Math.floor(Math.random() * 998 + 1).toString().padStart(3, "0");
+        const userCode = Math.floor(Math.random() * 998 + 1)
+          .toString()
+          .padStart(3, "0");
         const parts = slug(`${firstName} ${lastName} ${userCode}`).split("-");
 
         const possibleSlug = [parts[1], parts.at(-2), parts.at(-1)].join("-");
