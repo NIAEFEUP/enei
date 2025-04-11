@@ -47,12 +47,15 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
   const eventsByDay = splitEventsByDay(events);
 
   // If the current day is an ENEI day, set the active index to the corresponding day.
-  const eneiDates = useMemo(() => [
-    new Date("2025-04-11").toDateString(),
-    new Date("2025-04-12").toDateString(),
-    new Date("2025-04-13").toDateString(),
-    new Date("2025-04-14").toDateString(),
-  ], []);
+  const eneiDates = useMemo(
+    () => [
+      new Date("2025-04-11").toDateString(),
+      new Date("2025-04-12").toDateString(),
+      new Date("2025-04-13").toDateString(),
+      new Date("2025-04-14").toDateString(),
+    ],
+    [],
+  );
 
   useEffect(() => {
     for (const [i, eneiDate] of eneiDates.entries()) {
@@ -61,7 +64,7 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
         break;
       }
     }
-  }, [currentDay, eneiDates])
+  }, [currentDay, eneiDates]);
 
   return (
     <Page title="Eventos" variant="beige" className="bg-enei-beige">

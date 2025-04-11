@@ -4,6 +4,7 @@ import type { NextFn } from "@adonisjs/core/types/http";
 export default class StaffMiddleware {
   async handle(ctx: HttpContext, next: NextFn) {
     const user = ctx.auth.getUserOrFail();
+    await user.loadOnce("staffProfile");
 
     if (!user.isStaff()) {
       ctx.session.flashErrors({ message: "Unauthorized" });

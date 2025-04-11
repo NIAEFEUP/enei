@@ -10,8 +10,6 @@ import {
 } from "#validators/profile";
 import { inject } from "@adonisjs/core";
 import type { HttpContext } from "@adonisjs/core/http";
-import createSlug from "slug";
-import { md5 } from "js-md5";
 import { emailEditValidator } from "#validators/profile";
 import ChangeEmailRequest from "#models/email_change";
 import db from "@adonisjs/lucid/services/db";
@@ -43,47 +41,44 @@ export default class ProfilesController {
   ) {}
 
   async default({ auth, response }: HttpContext) {
-    const user = auth.user;
-    await user!.load("participantProfile");
+    const user = auth.getUserOrFail();
 
-    if (!user?.participantProfile) return response.redirect().toRoute("pages:signup");
+    await user.load("participantProfile");
+    await user.load("speakerProfile", (q) => {
+      q.preload("events");
+    });
 
-    return response
-      .redirect()
-      .toRoute("pages:profile.show", { slug: user.participantProfile.slug });
+    if (!user?.participantProfile && !user?.representativeProfile)
+      return response.redirect().toRoute("pages:signup");
+
+    return response.redirect().toRoute("pages:profile.show", { slug: user.slug });
   }
 
   async getInfo({ params, response }: HttpContext) {
-    const profile = await ParticipantProfile.findBy("slug", params.slug);
+    const user = await User.findBy("slug", params.slug);
 
-    if (!profile) {
-      response.notFound("Participante não encontrado");
+    if (!user) {
+      response.notFound("Utilizador não encontrado");
       return;
     }
 
-    return response.send({ profile: profile });
+    await user.load("participantProfile");
+
+    return response.send({ user });
   }
 
-  async index({ auth, inertia, params, response }: HttpContext) {
-    const profile = await ParticipantProfile.findBy("slug", params.slug);
+  async index({ auth, inertia, params }: HttpContext) {
+    const authUser = auth.user;
+    const user = await User.findByOrFail("slug", params.slug);
+    await user.load("participantProfile");
+    await user.load("speakerProfile", (q) => {
+      q.preload("events");
+    });
 
-    if (!profile) {
-      response.notFound("Participante não encontrado");
-      return;
-    }
+    const isUser = authUser !== undefined && user.id === authUser.id;
+    const activityInformation = await this.userActivityService.getActivityInformation(user);
 
-    await profile.load("user");
-    if (!profile.user) {
-      response.notFound("Participante não encontrado");
-      return;
-    }
-
-    const isUser = profile.user ? profile.user.id === auth.user?.id : false;
-    const activityInformation = await this.userActivityService.getActivityInformation(
-      profile.user!,
-    );
-
-    return inertia.render("profile", { profile, isUser, activityInformation });
+    return inertia.render("profile", { user, isUser, activityInformation });
   }
 
   async edit({ auth, inertia, response, params }: HttpContext) {
@@ -91,6 +86,8 @@ export default class ProfilesController {
     await user!.load("participantProfile");
 
     if (!user?.participantProfile) return response.redirect().toRoute("pages:signup");
+
+    await user.participantProfile.load("user");
 
     return inertia.render("profile/edit", {
       profile: user!.participantProfile!,
@@ -121,15 +118,10 @@ export default class ProfilesController {
     const data = request.body();
 
     const formattedData = toParticipantProfileFormat(data);
-    // encode firstName and lastName to a number under 1000
-    // Guaranteed to be unique between users with the same name (since we have under 1000 participants)
-    const userMd5 = md5(createSlug(`${formattedData.firstName} ${formattedData.lastName}`));
-    const userNumber =
-      (Number.parseInt(userMd5.replace(/[^1-9]/g, "").substring(0, 3)) + user.id) % 1000;
-    const userCode = userNumber.toString().padStart(3, "0");
-    formattedData.slug = createSlug(
-      `${formattedData.firstName} ${formattedData.lastName} ${userCode}`,
-    );
+
+    if (!formattedData.firstName || !formattedData.lastName) {
+      return response.redirect().back();
+    }
 
     const profile = await createProfileValidator.validate(formattedData);
 
@@ -311,11 +303,9 @@ export default class ProfilesController {
 
     let user;
     try {
-      const profile = await ParticipantProfile.findBy("slug", slug);
-      await profile!.load("user");
-      user = profile!.user;
+      user = await User.findBy("slug", slug);
     } catch {
-      response.notFound("Participante não encontrado");
+      response.notFound("Utilizador não encontrado");
       return;
     }
 
@@ -339,9 +329,7 @@ export default class ProfilesController {
 
     let user;
     try {
-      const profile = await ParticipantProfile.findBy("slug", slug);
-      await profile!.load("user");
-      user = profile!.user;
+      user = await User.findBy("slug", slug);
     } catch {
       response.notFound("Participante não encontrado");
       return;

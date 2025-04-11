@@ -16,22 +16,23 @@ import { useState } from "react";
 import { cn } from "~/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 import Page from "~/components/common/page";
-import { useForm } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import Container from "~/components/common/containers";
-import PaidRegistrationConfirmationModal from "~/components/events/confirmation_modal/paid_registration_confirmation_modal";
-import PointsRegistrationConfirmationModal from "~/components/events/confirmation_modal/points_registration_confirmation_modal";
 import { InferPageProps } from "@adonisjs/inertia/types";
 import type EventsController from "#controllers/events_controller";
+import { useTuyau } from "~/hooks/use_tuyau";
 import EventCheckInDialog from "~/components/events/event_check_in_dialog";
 import { useAuth } from "~/hooks/use_auth";
 import { useToast } from "~/hooks/use_toast";
 import RegistrationConfirmationModal from "~/components/events/confirmation_modal/registration_confirmation_modal";
+import User from "#models/user";
 
 interface Speaker {
   firstName: string;
   lastName: string;
   jobTitle: string;
   profilePicture: string;
+  user: User;
   company: string;
 }
 
@@ -67,6 +68,7 @@ export default function EventRegistrationPage({
 
   const { toast } = useToast();
 
+  const tuyau = useTuyau();
   const auth = useAuth();
 
   const { post, processing } = useForm({});
@@ -165,10 +167,8 @@ export default function EventRegistrationPage({
                     <p className="text-lg font-semibold">Acerca do Evento</p>
                   </h1>
                   <div
-                    className={cn(
-                      "[&_a]:focus-visible:ring-ring [&_a]:text-primary space-y-2 text-black [&_a]:inline-flex [&_a]:h-auto [&_a]:items-center [&_a]:justify-center [&_a]:gap-2 [&_a]:whitespace-nowrap [&_a]:text-wrap [&_a]:rounded-md [&_a]:p-0 [&_a]:pl-1 [&_a]:text-sm [&_a]:font-medium [&_a]:underline-offset-4 [&_a]:transition-colors [&_a]:hover:underline [&_a]:focus-visible:outline-none [&_a]:focus-visible:ring-1 [&_a]:disabled:pointer-events-none [&_a]:disabled:opacity-50 [&_li]:text-sm [&_p]:max-w-[70ch] [&_a]:[&_svg]:pointer-events-none [&_a]:[&_svg]:size-4 [&_a]:[&_svg]:shrink-0 [&_ul]:flex [&_ul]:list-inside [&_ul]:list-disc [&_ul]:flex-col [&_ul]:gap-2",
-                    )}
-                    dangerouslySetInnerHTML={{ __html: event.description }}
+                    className="prose"
+                    dangerouslySetInnerHTML={{ __html: description }}
                   />
                 </div>
               )}
@@ -218,36 +218,42 @@ export default function EventRegistrationPage({
                     </p>
                   </h1>
                   <div className="flex flex-wrap gap-4">
-                    {event.speakers.map((speaker) => (
-                      <div
-                        key={speaker.firstName + speaker.lastName}
-                        className={cn(
-                          "flex w-auto items-center gap-4 rounded-lg border p-4",
-                          activityClassesPrimary[event.type],
-                        )}
+                    {speakers.map((speaker) => (
+                      <Link
+                        href={tuyau.$url("pages:profile.show", {
+                          params: { slug: speaker.user.slug },
+                        })}
                       >
-                        <Avatar className="h-12 w-12">
-                          <AvatarImage
-                            src={speaker.profilePicture}
-                            alt={speaker.firstName}
-                            className="object-cover"
-                          />
-                          <AvatarFallback>{speaker.firstName[0]}</AvatarFallback>
-                        </Avatar>
-                        <div className="space-y-1">
-                          <h3 className="font-medium">
-                            {speaker.firstName + " " + speaker.lastName}
-                          </h3>
-                          <div className="flex flex-row">
-                            {speaker.jobTitle && (
-                              <p className="text-sm text-black">{speaker.jobTitle}</p>
-                            )}
-                            {speaker.company && (
-                              <p className="text-sm text-black">{", " + speaker.company}</p>
-                            )}
+                        <div
+                          key={speaker.firstName + speaker.lastName}
+                          className={cn(
+                            "flex w-auto items-center gap-4 rounded-lg border p-4",
+                            activityClassesPrimary[type],
+                          )}
+                        >
+                          <Avatar className="h-12 w-12">
+                            <AvatarImage
+                              src={speaker.profilePicture}
+                              alt={speaker.firstName}
+                              className="object-cover"
+                            />
+                            <AvatarFallback>{speaker.firstName[0]}</AvatarFallback>
+                          </Avatar>
+                          <div className="space-y-1">
+                            <h3 className="font-medium">
+                              {speaker.firstName + " " + speaker.lastName}
+                            </h3>
+                            <div className="flex flex-row">
+                              {speaker.jobTitle && (
+                                <p className="text-sm text-black">{speaker.jobTitle}</p>
+                              )}
+                              {speaker.company && (
+                                <p className="text-sm text-black">{", " + speaker.company}</p>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </Link>
                     ))}
                   </div>{" "}
                 </div>

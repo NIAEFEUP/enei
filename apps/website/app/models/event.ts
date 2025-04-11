@@ -9,6 +9,7 @@ import ProductGroup from "./product_group.js";
 import Product from "./product.js";
 import { relations } from "#lib/lucid/relations.js";
 import { lazy } from "#lib/lazy.js";
+import Company from "./company.js";
 
 const eventRelations = lazy(() =>
   relations(Event, (r) => [
@@ -71,6 +72,11 @@ export default class Event extends BaseModel {
     pivotTable: "event_checkins",
   })
   public checkedInUsers!: ManyToMany<typeof User>;
+
+  @manyToMany(() => Company, {
+    pivotTable: "event_companies",
+  })
+  public companies!: ManyToMany<typeof Company>;
 
   @column()
   declare registrationRequirements: string;
