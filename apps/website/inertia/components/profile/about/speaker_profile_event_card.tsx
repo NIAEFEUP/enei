@@ -10,10 +10,9 @@ export default function SpeakerProfileEventCard({ event }: SpeakerProfileEventCa
       <h2 className="text-enei-blue text-xl font-bold">{event.title}</h2>
       <p className="text-enei-blue">{event.location}</p>
       <div
-        className="text-enei-blue text-lg pr prose"
+        className="text-enei-blue pr prose text-lg"
         dangerouslySetInnerHTML={{ __html: event.description ?? "" }}
-      >
-      </div>
+      ></div>
     </div>
   );
 }

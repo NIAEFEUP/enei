@@ -143,6 +143,7 @@ export default function EventRegistrationPage({
                     className="prose"
                     dangerouslySetInnerHTML={{ __html: event.description }}
                   />
+       
                 </div>
               )}
               {/* {isRegistered && (
