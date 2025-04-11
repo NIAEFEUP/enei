@@ -55,14 +55,16 @@ export default class ProfilesController {
   }
 
   async getInfo({ params, response }: HttpContext) {
-    const profile = await ParticipantProfile.findBy("slug", params.slug);
+    const user = await User.findBy("slug", params.slug);
 
-    if (!profile) {
-      response.notFound("Participante não encontrado");
+    if (!user) {
+      response.notFound("Utilizador não encontrado");
       return;
     }
 
-    return response.send({ profile: profile });
+    await user.load("participantProfile");
+
+    return response.send({ user });
   }
 
   async index({ auth, inertia, params }: HttpContext) {
@@ -301,11 +303,9 @@ export default class ProfilesController {
 
     let user;
     try {
-      const profile = await ParticipantProfile.findBy("slug", slug);
-      await profile!.load("user");
-      user = profile!.user;
+      user = await User.findBy("slug", slug);
     } catch {
-      response.notFound("Participante não encontrado");
+      response.notFound("Utilizador não encontrado");
       return;
     }
 
@@ -329,9 +329,7 @@ export default class ProfilesController {
 
     let user;
     try {
-      const profile = await ParticipantProfile.findBy("slug", slug);
-      await profile!.load("user");
-      user = profile!.user;
+      user = await User.findBy("slug", slug);
     } catch {
       response.notFound("Participante não encontrado");
       return;
