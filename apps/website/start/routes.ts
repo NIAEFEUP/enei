@@ -178,8 +178,7 @@ router
       .as("pages:profile.edit")
       .use([middleware.auth(), middleware.verifiedEmail()]);
     router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
-  })
-  .use(middleware.wip());
+  });
 
 router
   .group(() => {
