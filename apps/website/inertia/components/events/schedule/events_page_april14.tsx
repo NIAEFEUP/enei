@@ -10,7 +10,7 @@ interface Speaker {
 interface Event {
   id: number;
   title: string;
-  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other";
+  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other" | "painel";
   date: string;
   time: string;
   location: string;
@@ -23,6 +23,8 @@ interface EventsPageProps {
 }
 
 export default function EventsPageApril14({ events }: EventsPageProps) {
+  console.log("events: ", events);
+
   return (
     <div className="flex flex-col space-y-4 md:grid md:grid-cols-4 md:grid-rows-9 md:gap-4 md:space-y-0">
       <div className="col-span-4 col-start-1 row-start-1">
@@ -131,13 +133,24 @@ export default function EventsPageApril14({ events }: EventsPageProps) {
           onClick={() => router.visit(`/events/${events[7].id}`)}
         />
       </div>
-      <div className="col-span-4 col-start-1 row-start-8">
+      <div className="col-span-2 col-start-3 row-start-8">
         <EventCard
-          title={"Painel de Empresas"}
-          type={"other"}
-          time={"12:30 - 13:30"}
-          location={"Auditório - FEUP"}
+          title={events[11].title}
+          type={events[11].type}
+          time={events[11].time}
+          location={events[11].location}
           speakers={[]}
+          onClick={() => router.visit(`/events/${events[11].id}`)}
+        />
+      </div>
+      <div className="col-span-2 col-start-1 row-start-8">
+        <EventCard
+          title={events[10].title}
+          type={events[10].type}
+          time={events[10].time}
+          location={events[10].location}
+          speakers={events[10].speakers}
+          onClick={() => router.visit(`/events/${events[10].id}`)}
         />
       </div>
       <div className="col-span-2 col-start-3 row-span-2 row-start-6">
