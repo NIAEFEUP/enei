@@ -40,7 +40,11 @@ type PageRoute = {
 
 */
 
-export function LoginButton({ variant }: { variant?: VariantProps<typeof buttonVariants>["variant"] }) {
+export function LoginButton({
+  variant,
+}: {
+  variant?: VariantProps<typeof buttonVariants>["variant"];
+}) {
   return (
     <Link route="pages:auth.login" className={buttonVariants({ variant })}>
       Entrar
@@ -48,7 +52,11 @@ export function LoginButton({ variant }: { variant?: VariantProps<typeof buttonV
   );
 }
 
-export function LogoutButton({ variant }: { variant?: VariantProps<typeof buttonVariants>["variant"] }) {
+export function LogoutButton({
+  variant,
+}: {
+  variant?: VariantProps<typeof buttonVariants>["variant"];
+}) {
   const tuyau = useTuyau();
   const { post } = useForm();
 
@@ -70,7 +78,7 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
   const auth = useAuth();
   const [onTop, setOnTop] = useState(true);
 
-  const tuyau = useTuyau()
+  const tuyau = useTuyau();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -86,7 +94,7 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
     return () => controller.abort();
   }, []);
 
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobile();
 
   const bgColor = variant === "blue" ? "enei-blue" : "enei-beige";
   const textColor = variant === "blue" ? "enei-beige" : "enei-blue";
@@ -111,11 +119,12 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
               />
               <span className="sr-only">Ir para a página inicial</span>
             </Link>
-            {isMobile ?
+            {isMobile ? (
               <>
-                <MobileNavbar /> 
+                <MobileNavbar />
               </>
-              : <div className="flex items-center justify-between gap-4">
+            ) : (
+              <div className="flex items-center justify-between gap-4">
                 <div className={auth.state === "authenticated" ? "block" : "hidden"}>
                   <Dialog>
                     <DialogTrigger asChild>
@@ -125,16 +134,19 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
                       </Button>
                     </DialogTrigger>
                     <DialogContent className="w-4/5 max-w-96 pt-12 sm:w-96">
-                      {auth.state === "authenticated" && <>
-                        <QRCodeSVG value={`${tuyau.$url("pages:profile.show", { params: { slug: auth.user.slug } })}`} className="aspect-square h-full w-full" />
-                        <p className="text-center"> {auth.user.slug}</p>
-                      </>
-                      }
+                      {auth.state === "authenticated" && (
+                        <>
+                          <QRCodeSVG
+                            value={`${tuyau.$url("pages:profile.show", { params: { slug: auth.user.slug } })}`}
+                            className="aspect-square h-full w-full"
+                          />
+                          <p className="text-center"> {auth.user.slug}</p>
+                        </>
+                      )}
                     </DialogContent>
                   </Dialog>
                 </div>
                 <div className={auth.state === "authenticated" ? "block" : "hidden"}>
-
                   <Link
                     route="pages:profile.default"
                     className={cn(buttonVariants({ variant: "link" }), `text-${textColor} p-0`)}
@@ -144,7 +156,9 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
                 </div>
                 <div
                   className={
-                    auth.state === "authenticated" && auth.user.role === "staff" ? "block" : "hidden"
+                    auth.state === "authenticated" && auth.user.role === "staff"
+                      ? "block"
+                      : "hidden"
                   }
                 >
                   <Link
@@ -187,7 +201,7 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
                   )}
                 </div>
               </div>
-            }
+            )}
           </div>
         </Container>
       </nav>

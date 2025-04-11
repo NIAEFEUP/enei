@@ -11,89 +11,90 @@ import { Link } from "@tuyau/inertia/react";
 import { LoginButton, LogoutButton } from "./navbar";
 
 export default function MobileNavbar() {
-    const auth = useAuth();
+  const auth = useAuth();
 
-    const tuyau = useTuyau()
+  const tuyau = useTuyau();
 
-    return (
-        <Sheet>
-            <SheetTrigger asChild>
-                <Button variant="outline">
-                    <HamburgerMenuIcon
-                        className="bg-transparent"
-                    />
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">
+          <HamburgerMenuIcon className="bg-transparent" />
+        </Button>
+      </SheetTrigger>
+      <SheetContent className="flex flex-col gap-y-4">
+        <SheetHeader>
+          {auth.state === "authenticated" && <Link route="pages:profile.default">Perfil</Link>}
+        </SheetHeader>
+        <div className="flex flex-col justify-center gap-y-4">
+          <div className={auth.state === "authenticated" ? "mx-auto block" : "mx-auto hidden"}>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="w-fit">
+                  <QrCode />
+                  Código QR
                 </Button>
-            </SheetTrigger>
-            <SheetContent className="flex flex-col gap-y-4">
-                <SheetHeader>
-                    {auth.state === "authenticated" &&
-                        <Link route="pages:profile.default">
-                            Perfil 
-                        </Link>
-                    }
-                </SheetHeader>
-                <div className="flex flex-col gap-y-4 justify-center">
-                    <div className={auth.state === "authenticated" ? "block mx-auto" : "hidden mx-auto"}>
-                        <Dialog>
-                            <DialogTrigger asChild>
-                                <Button className="w-fit">
-                                    <QrCode />
-                                    Código QR
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent className="w-4/5 max-w-96 pt-12 sm:w-96">
-                                {auth.state === "authenticated" && <>
-                                    <QRCodeSVG value={`${tuyau.$url("pages:profile.show", { params: { slug: auth.user.slug } })}`} className="aspect-square h-full w-full" />
-                                    <p className="text-center"> {auth.user.slug}</p>
-                                </>
-                                }
-                            </DialogContent>
-                        </Dialog>
-                    </div>
+              </DialogTrigger>
+              <DialogContent className="w-4/5 max-w-96 pt-12 sm:w-96">
+                {auth.state === "authenticated" && (
+                  <>
+                    <QRCodeSVG
+                      value={`${tuyau.$url("pages:profile.show", { params: { slug: auth.user.slug } })}`}
+                      className="aspect-square h-full w-full"
+                    />
+                    <p className="text-center"> {auth.user.slug}</p>
+                  </>
+                )}
+              </DialogContent>
+            </Dialog>
+          </div>
 
-                    <div
-                        className={
-                            auth.state === "authenticated" && auth.user.role === "staff" ? "block" : "hidden"
-                        }
-                    >
-                        <Link
-                            route="pages:staff.credentials.scan"
-                            className={cn(buttonVariants({ variant: "link" }), `text-enei-blue`)}
-                        >
-                            <QrCode />
-                        </Link>
-                    </div>
+          <div
+            className={
+              auth.state === "authenticated" && auth.user.role === "staff" ? "block" : "hidden"
+            }
+          >
+            <Link
+              route="pages:staff.credentials.scan"
+              className={cn(buttonVariants({ variant: "link" }), `text-enei-blue`)}
+            >
+              <QrCode />
+            </Link>
+          </div>
 
-                    <Link
-                        route="pages:store"
-                        className={cn(buttonVariants({ variant: "link" }), `text-enei-blue p-0`)}
-                    >
-                        Loja
-                    </Link>
+          <Link
+            route="pages:store"
+            className={cn(buttonVariants({ variant: "link" }), `text-enei-blue p-0`)}
+          >
+            Loja
+          </Link>
 
-                    <Link
-                        route="pages:referrals"
-                        className={cn(buttonVariants({ variant: "link" }), `text-enei-blue p-0 ${auth.state === "authenticated" ? "inline-flex" : "hidden"}`)}
-                    >
-                        Referenciações
-                    </Link>
+          <Link
+            route="pages:referrals"
+            className={cn(
+              buttonVariants({ variant: "link" }),
+              `text-enei-blue p-0 ${auth.state === "authenticated" ? "inline-flex" : "hidden"}`,
+            )}
+          >
+            Referenciações
+          </Link>
 
-                    <Link
-                        route="pages:events"
-                        className={cn(buttonVariants({ variant: "link" }), `text-enei-blue p-0`)}
-                    >
-                        Programa
-                    </Link>
-                    
-                    {auth.state === "unauthenticated" && <LoginButton variant="outline" />}
+          <Link
+            route="pages:events"
+            className={cn(buttonVariants({ variant: "link" }), `text-enei-blue p-0`)}
+          >
+            Programa
+          </Link>
 
-                    {auth.state === "authenticated" && 
-                        <div className="flex justify-center">
-                            <LogoutButton variant="outline" />
-                        </div>
-                    }
-                </div>
-            </SheetContent>
-        </Sheet>
-    )
+          {auth.state === "unauthenticated" && <LoginButton variant="outline" />}
+
+          {auth.state === "authenticated" && (
+            <div className="flex justify-center">
+              <LogoutButton variant="outline" />
+            </div>
+          )}
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
 }

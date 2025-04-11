@@ -28,7 +28,10 @@ const inertiaConfig = defineConfig({
 
       if (!user) return { state: "unauthenticated" };
       await user.load("participantProfile");
-      return { state: "authenticated", user: { email: user.email, role: user.role, slug: user.slug } };
+      return {
+        state: "authenticated",
+        user: { email: user.email, role: user.role, slug: user.slug },
+      };
     },
   },
 
