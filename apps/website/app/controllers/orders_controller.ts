@@ -1,9 +1,9 @@
 import type { HttpContext } from "@adonisjs/core/http";
 import Order from "#models/order";
-import OrderProduct from "#models/order_product";
-import { createMBWayOrderValidator } from "#validators/order";
+// import OrderProduct from "#models/order_product";
+// import { createMBWayOrderValidator } from "#validators/order";
 import { inject } from "@adonisjs/core";
-import { PaymentService } from "../services/payment_service.js";
+// import { PaymentService } from "../services/payment_service.js";
 
 import { OrderService } from "#services/order_service";
 
@@ -17,44 +17,44 @@ export default class OrdersController {
 
   async create({}: HttpContext) {}
 
-  public async createMBWay({ request, auth, response }: HttpContext) {
-    const authUser = auth.getUserOrFail();
+  public async createMBWay(_ctx: HttpContext) {
+    // const authUser = auth.getUserOrFail();
 
-    try {
-      const { products, nif, address, mobileNumber, name } =
-        await request.validateUsing(createMBWayOrderValidator);
+    // try {
+    //   const { products, nif, address, mobileNumber, name } =
+    //     await request.validateUsing(createMBWayOrderValidator);
 
-      console.log({ products, nif, address, mobileNumber });
-      const { productDetails, description, totalAmount } =
-        await this.orderService.buildProductDetails(authUser, products);
+    //   console.log({ products, nif, address, mobileNumber });
+    //   const { productDetails, description, totalAmount } =
+    //     await this.orderService.buildProductDetails(authUser, products);
 
-      // Create the order and associated products
-      const order = await Order.create({ userId: authUser.id, status: "draft", pointsUsed: 0 });
+    //   // Create the order and associated products
+    //   const order = await Order.create({ userId: authUser.id, status: "draft", pointsUsed: 0 });
 
-      for (const { productId, quantity } of productDetails) {
-        await OrderProduct.create({
-          orderId: order.id,
-          productId: productId,
-          quantity,
-        });
-      }
+    //   for (const { productId, quantity } of productDetails) {
+    //     await OrderProduct.create({
+    //       orderId: order.id,
+    //       productId: productId,
+    //       quantity,
+    //     });
+    //   }
 
-      PaymentService.create(
-        order,
-        totalAmount,
-        mobileNumber,
-        description,
-        authUser.email,
-        nif,
-        address,
-        name,
-      );
-    } catch (error) {
-      console.error(error);
-      return response.status(500).json({
-        message: "An error occurred while initiating the payment",
-      });
-    }
+    //   PaymentService.create(
+    //     order,
+    //     totalAmount,
+    //     mobileNumber,
+    //     description,
+    //     authUser.email,
+    //     nif,
+    //     address,
+    //     name,
+    //   );
+    // } catch (error) {
+    //   console.error(error);
+    //   return response.status(500).json({
+    //     message: "An error occurred while initiating the payment",
+    //   });
+    // }
   }
 
   public async show({ inertia, params, auth, response }: HttpContext) {
