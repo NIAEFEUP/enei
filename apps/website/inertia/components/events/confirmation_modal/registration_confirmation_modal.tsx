@@ -6,7 +6,7 @@ import {
   DialogFooter,
   DialogDescription,
 } from "~/components/ui/dialog";
-import { Button, buttonVariants } from "~/components/ui/button";
+import { Button } from "~/components/ui/button";
 import { Loader2 } from "lucide-react";
 
 interface RegistrationConfirmationModalProps {

@@ -1,10 +1,9 @@
-import { useState, useEffect, Dispatch } from "react";
+import { useState, useEffect } from "react";
 import PhoneNumberModal from "./phone_modal";
 import OrderConfirmationModal from "./order_confirmation_modal";
 import BillingInformationForm from "./billing_information_form";
 import { Separator } from "~/components/ui/separator";
 import { Button } from "~/components/ui/button";
-import { router } from "@inertiajs/react";
 import { useToast } from "~/hooks/use_toast";
 import User from "#models/user";
 
@@ -13,7 +12,7 @@ interface BillingFormProps {
     user: User,
     itemId: number,
     enableBillingInfo: boolean,
-    billingInfo,
+    billingInfo: any,
     number: string,
   ) => void;
   user: User;
@@ -29,7 +28,7 @@ export default function BillingForm({
 }: BillingFormProps) {
   const [enableBillingInfo, setEnableBillingInfo] = useState(false);
   const [phoneModalOpen, setPhoneModalOpen] = useState(false);
-  const [orderConfirmationModalOpen, setOrderConfirmationModalOpen] = useState(false);
+  const [orderConfirmationModalOpen] = useState(false);
   const [phoneModalIsLoading, setPhoneModalIsLoading] = useState(false);
   const [billingInfo, setBillingInfo] = useState({
     name: "",

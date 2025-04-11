@@ -2,7 +2,6 @@ import Product from "#models/product";
 import { BaseSeeder } from "@adonisjs/lucid/seeders";
 
 import { UserTypes } from "../../types/user.js";
-import { Money } from "#lib/payments/money.js";
 
 export default class extends BaseSeeder {
   async run() {
@@ -10,6 +9,7 @@ export default class extends BaseSeeder {
       {
         name: "Nintendo Switch Lite",
         description: "Compact and lightweight handheld gaming console.",
+        category: "store",
         points: 17500,
         stock: 1,
         maxOrder: 1,
@@ -18,6 +18,7 @@ export default class extends BaseSeeder {
       {
         name: "GoPro Hero 4K 12MP Wi-Fi Bluetooth",
         description: "High-definition action camera with Wi-Fi and Bluetooth connectivity.",
+        category: "store",
         points: 17600,
         stock: 1,
         maxOrder: 1,
@@ -26,6 +27,7 @@ export default class extends BaseSeeder {
       {
         name: 'Monitor AOC 180Hz 23.8" FullHD 0.5ms',
         description: "Fast response time gaming monitor with high refresh rate.",
+        category: "store",
         points: 14200,
         stock: 1,
         maxOrder: 1,
@@ -34,6 +36,7 @@ export default class extends BaseSeeder {
       {
         name: "Instax Mini 12",
         description: "Compact instant camera for instant photo prints.",
+        category: "store",
         points: 11800,
         stock: 1,
         maxOrder: 1,
@@ -42,6 +45,7 @@ export default class extends BaseSeeder {
       {
         name: "Sony WH-CH720N Bluetooth",
         description: "High-quality wireless headphones with Bluetooth connectivity.",
+        category: "store",
         points: 11300,
         stock: 2,
         maxOrder: 1,
@@ -50,6 +54,7 @@ export default class extends BaseSeeder {
       {
         name: "Mini projetor HD WIFI",
         description: "Projector with Wi-Fi and bluetooth connectivity.",
+        category: "store",
         points: 10900,
         stock: 1,
         maxOrder: 1,
@@ -58,6 +63,7 @@ export default class extends BaseSeeder {
       {
         name: "Telado DuckyOne2 Pro",
         description: "Ducky One 2 Pro is a powerful and versatile ducky with a built-in keyboard.",
+        category: "store",
         points: 10900,
         stock: 1,
         maxOrder: 1,
@@ -66,6 +72,7 @@ export default class extends BaseSeeder {
       {
         name: "Anbernicn Consola Portátil Retro RG35XX",
         description: "Retro gaming console with built-in keyboard.",
+        category: "store",
         points: 10900,
         stock: 1,
         maxOrder: 1,
@@ -74,6 +81,7 @@ export default class extends BaseSeeder {
       {
         name: "Raspberry Pi 4 Modelo B 2GB",
         description: "Small, powerful single-board computer for developers and hobbyists.",
+        category: "store",
         points: 9000,
         stock: 1,
         maxOrder: 1,
@@ -82,6 +90,7 @@ export default class extends BaseSeeder {
       {
         name: "Xiaomi TV Box S 8GB Google TV 4K",
         description: "4K streaming media player with Google TV.",
+        category: "store",
         points: 8700,
         stock: 1,
         maxOrder: 1,
@@ -90,6 +99,7 @@ export default class extends BaseSeeder {
       {
         name: "Coluna JBL GO 4",
         description: "Portable Bluetooth speaker with powerful sound.",
+        category: "store",
         points: 7600,
         stock: 5,
         maxOrder: 1,
@@ -98,6 +108,7 @@ export default class extends BaseSeeder {
       {
         name: "Xiaomi Smart Band 9 Active",
         description: "Smart band",
+        category: "store",
         points: 6000,
         stock: 4,
         maxOrder: 1,
@@ -106,6 +117,7 @@ export default class extends BaseSeeder {
       {
         name: "Logitech G203 Prodigy",
         description: "Wireless gaming mouse",
+        category: "store",
         points: 6000,
         stock: 3,
         maxOrder: 1,
@@ -114,6 +126,7 @@ export default class extends BaseSeeder {
       {
         name: "JLAB Go Air Pop",
         description: "",
+        category: "store",
         points: 6000,
         stock: 5,
         maxOrder: 1,
@@ -122,6 +135,7 @@ export default class extends BaseSeeder {
       {
         name: "Teclado NPLAY Control 3.1",
         description: "Gaming keyboard with RGB lighting.",
+        category: "store",
         points: 5300,
         stock: 5,
         maxOrder: 1,
@@ -130,6 +144,7 @@ export default class extends BaseSeeder {
       {
         name: "Kodak descartável",
         description: "Câmara descartável",
+        category: "store",
         points: 5300,
         stock: 4,
         maxOrder: 1,
@@ -138,6 +153,7 @@ export default class extends BaseSeeder {
       {
         name: "Raspberry Pi Zero WH 1GHz 512MB",
         description: "Ultra-small Raspberry Pi board with Wi-Fi.",
+        category: "store",
         points: 5100,
         stock: 2,
         maxOrder: 1,
@@ -146,6 +162,7 @@ export default class extends BaseSeeder {
       {
         name: "Xiaomi Redmi Buds 6 Play",
         description: "Earbuds wireless",
+        category: "store",
         points: 3900,
         stock: 3,
         maxOrder: 1,
@@ -154,6 +171,7 @@ export default class extends BaseSeeder {
       {
         name: "Power Bank Goodis 10mAh",
         description: "Power bank",
+        category: "store",
         points: 5300,
         stock: 20,
         maxOrder: 1,
@@ -162,6 +180,7 @@ export default class extends BaseSeeder {
       {
         name: "Carregador Usb-C Fast Charge",
         description: "",
+        category: "store",
         points: 4500,
         stock: 1,
         maxOrder: 1,
@@ -170,6 +189,7 @@ export default class extends BaseSeeder {
       {
         name: "LED Strip",
         description: "",
+        category: "store",
         points: 4000,
         stock: 10,
         maxOrder: 1,
@@ -178,6 +198,7 @@ export default class extends BaseSeeder {
       {
         name: "JBL T110",
         description: "",
+        category: "store",
         points: 3700,
         stock: 10,
         maxOrder: 1,
@@ -186,6 +207,7 @@ export default class extends BaseSeeder {
       {
         name: "NPLAY Glide 1.1",
         description: "",
+        category: "store",
         points: 3400,
         stock: 10,
         maxOrder: 1,
@@ -194,6 +216,7 @@ export default class extends BaseSeeder {
       {
         name: "Organizador de cabos",
         description: "",
+        category: "store",
         points: 2800,
         stock: 10,
         maxOrder: 1,
@@ -202,6 +225,7 @@ export default class extends BaseSeeder {
       {
         name: "Protetores de Cabo 20 pcs",
         description: "Cable protectors to prevent wear and tear.",
+        category: "store",
         points: 2700,
         stock: 20,
         maxOrder: 1,
@@ -210,6 +234,7 @@ export default class extends BaseSeeder {
       {
         name: "Bilhete",
         description: "",
+        category: "store",
         points: 500,
         stock: 50,
         restrictions: {

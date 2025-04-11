@@ -10,7 +10,6 @@ import { OrderService } from "#services/order_service";
 @inject()
 export default class OrdersController {
   public constructor(
-    private paymentService: PaymentService,
     private orderService: OrderService,
   ) {}
 
@@ -18,8 +17,7 @@ export default class OrdersController {
     return inertia.render("payments");
   }
 
-  async create({ request, auth, response }: HttpContext) {
-    const user = auth.getUserOrFail();
+  async create({}: HttpContext) {
   }
 
   public async createMBWay({ request, auth, response }: HttpContext) {
@@ -44,7 +42,7 @@ export default class OrdersController {
         });
       }
 
-      this.paymentService.create(
+      PaymentService.create(
         order,
         totalAmount,
         mobileNumber,

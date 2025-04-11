@@ -1,6 +1,5 @@
 import type { PaymentStatus } from "#models/payment";
 import vine from "@vinejs/vine";
-import type { Simplify } from "../../types/utils.js";
 
 const map: Record<string, { status: PaymentStatus; reason?: string | null }> = {
   "Success": { status: "successful" },

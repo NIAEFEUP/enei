@@ -45,6 +45,9 @@ export default class Product extends BaseModel {
   @column()
   declare productGroupId: number;
 
+  @column()
+  declare category: "ticket" | "store" | "hidden";
+
   @json()
   declare restrictions: ProductRestrictions | null;
 

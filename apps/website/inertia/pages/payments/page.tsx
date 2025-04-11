@@ -7,26 +7,18 @@ import axios from "axios";
 import BillingForm from "~/components/payments/billing_form";
 import User from "#models/user";
 
-interface Ticket {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-}
-
 export default function TicketSalePage(props: InferPageProps<TicketsController, "showPayment">) {
   const { user, ticket } = props;
 
   const paymentHandler = async (
-    user: User,
+    currentUser: User,
     itemId: number,
     enableBillingInfo: boolean,
-    billingInfo,
+    billingInfo: any,
     number: string,
   ) => {
     await axios.post("/payment/mbway", {
-      userId: user.id,
+      userId: currentUser.id,
       products: [{ productId: itemId, quantity: 1 }],
       name: enableBillingInfo ? billingInfo.name : null,
       nif: enableBillingInfo ? billingInfo.vat : null,

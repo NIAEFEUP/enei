@@ -16,6 +16,7 @@ export class ProductDto {
       image: this.product.image,
       hidden: this.product.hidden,
       productGroupId: this.product.productGroupId,
+      points: this.product.points,
       restrictions: this.product.restrictions,
     };
   }

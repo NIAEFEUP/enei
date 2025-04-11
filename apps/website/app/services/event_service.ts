@@ -14,9 +14,7 @@ export default class EventService {
   }
 
   async isRegisteredInPaidEvent(user: User, event: Event) {
-    return (
-      (
-        await OrderProduct.query()
+      const orderProducts = await OrderProduct.query()
           .join("orders", "order_products.order_id", "orders.id")
           .join("products", "order_products.product_id", "products.id")
           .where("user_id", user.id)
@@ -24,8 +22,8 @@ export default class EventService {
           .where("products.product_group_id", event.productGroupId)
           .preload("product")
           .preload("order")
-      ).length > 0
-    );
+      
+      return orderProducts.length > 0
   }
 
   async isRegisteredInFreeEvent(user: User, event: Event) {
@@ -66,7 +64,7 @@ export default class EventService {
       const order = await OrderService.createOrder(user, product);
       const productModel = await Product.findOrFail(product.productId);
 
-      PaymentService.create(
+      await PaymentService.create(
         order,
         productModel.price,
         mobileNumber,

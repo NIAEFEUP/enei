@@ -1,6 +1,4 @@
 // import { createRelations } from "#lib/lucid/relations.js";
-import Account from "#models/account";
-import User from "#models/user";
 import vine, { SimpleMessagesProvider } from "@vinejs/vine";
 
 vine.convertEmptyStringsToNull = true;

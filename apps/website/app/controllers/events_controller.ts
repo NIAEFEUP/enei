@@ -6,7 +6,6 @@ import { inject } from "@adonisjs/core";
 import { eventMBWayOrderValidator } from "#validators/order";
 import PointsService from "#services/points_service";
 import { EventDto } from "../dto/events/event.js";
-import ParticipantProfile from "#models/participant_profile";
 
 @inject()
 export default class EventsController {
@@ -44,7 +43,6 @@ export default class EventsController {
       .preload("product")
       .firstOrFail();
 
-    const speakers = await event.related("speakers").query().preload("user");
     const user = auth.user;
     await user?.load("staffProfile");
 

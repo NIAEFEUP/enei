@@ -18,6 +18,7 @@ const eventRelations = lazy(() =>
     r.belongsTo("productGroup"),
     r.many("registeredUsers"),
     r.many("speakers"),
+    r.many("companies"),
   ]),
 );
 

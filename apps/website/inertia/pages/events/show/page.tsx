@@ -25,35 +25,6 @@ import EventCheckInDialog from "~/components/events/event_check_in_dialog";
 import { useAuth } from "~/hooks/use_auth";
 import { useToast } from "~/hooks/use_toast";
 import RegistrationConfirmationModal from "~/components/events/confirmation_modal/registration_confirmation_modal";
-import User from "#models/user";
-
-interface Speaker {
-  firstName: string;
-  lastName: string;
-  jobTitle: string;
-  profilePicture: string;
-  user: User;
-  company: string;
-}
-
-interface EventRegistrationProps {
-  eventId: number;
-  title: string;
-  description?: string;
-  date: string;
-  time: string;
-  location: string;
-  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other";
-  companyImage: string;
-  speakers: Speaker[];
-  extraInfo?: string;
-  registrationRequirements: string;
-  requiresRegistration: boolean;
-  ticketsRemaining: number;
-  price: number;
-  isAcceptingRegistrations: boolean;
-  isRegistered: boolean;
-}
 
 export default function EventRegistrationPage({
   event,
@@ -74,7 +45,7 @@ export default function EventRegistrationPage({
   const { post, processing } = useForm({});
 
   const handleRegister = () => {
-    post(`/events/${event.id}/register`, {
+    post(`/events/${event.id}/register/`, {
       onSuccess: () => {
         setRegistrationConfirmationModalOpen(false);
         toast({
@@ -385,7 +356,9 @@ export default function EventRegistrationPage({
                 isLoading={processing}
                 onClose={() => setRegistrationConfirmationModalOpen(false)}
                 onSubmit={handleRegister}
-              />
+              >
+                <p className="font-bold">Vais pagar uma caução de {event.product?.points} bytes.</p>
+              </RegistrationConfirmationModal>
               {auth.state === "authenticated" && auth.user.role === "staff" && (
                 <EventCheckInDialog
                   isOpen={scannerModalOpen}

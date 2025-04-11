@@ -27,6 +27,9 @@ const userRelations = lazy(() =>
     r.belongsTo("referrer"),
     r.belongsTo("referringPromoter"),
     r.belongsTo("staffProfile"),
+    r.belongsTo("speakerProfile"),
+    r.many("checkedInEvents"),
+    r.belongsTo("representativeProfile"),
   ]),
 );
 
