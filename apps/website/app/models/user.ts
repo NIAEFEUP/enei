@@ -140,7 +140,7 @@ export default class User extends BaseModel {
   }
 
   isCompanyRepresentative() {
-    return this.representativeProfileId !== null
+    return this.representativeProfileId !== null;
   }
 
   isEmailVerified() {
