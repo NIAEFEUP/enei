@@ -203,3 +203,34 @@
     background-repeat: repeat-x;
   }
 }
+
+.prose {
+  @apply space-y-2;
+  @apply text-black;
+
+  a {
+    @apply focus-visible:ring-ring text-primary inline-flex h-auto items-center justify-center gap-2 whitespace-nowrap text-wrap rounded-md p-0 pl-1 text-sm font-medium underline-offset-4 transition-colors hover:underline focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50;
+
+    &:focus-visible {
+      @apply ring-ring;
+    }
+  }
+
+  p {
+    @apply max-w-[70ch];
+  }
+
+  svg {
+    @apply pointer-events-none size-4 shrink-0;
+  }
+
+  ul {
+    @apply flex list-inside list-disc flex-col gap-2;
+  }
+
+  li {
+    @apply text-sm;
+  }
+
+  focus-visible:ring-ring [&_a]:text-primary space-y-2 text-black [&_a]:inline-flex [&_a]:h-auto [&_a]:items-center [&_a]:justify-center [&_a]:gap-2 [&_a]:whitespace-nowrap [&_a]:text-wrap [&_a]:rounded-md [&_a]:p-0 [&_a]:pl-1 [&_a]:text-sm [&_a]:font-medium [&_a]:underline-offset-4 [&_a]:transition-colors [&_a]:hover:underline [&_a]:focus-visible:outline-none [&_a]:focus-visible:ring-1 [&_a]:disabled:pointer-events-none [&_a]:disabled:opacity-50 [&_li]:text-sm [&_p]:max-w-[70ch] [&_a]:[&_svg]:pointer-events-none [&_a]:[&_svg]:size-4 [&_a]:[&_svg]:shrink-0 flex list-inside list-disc [&_ul]:flex-col [&_ul]:gap-2
+}
