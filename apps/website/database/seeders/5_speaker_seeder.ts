@@ -122,7 +122,7 @@ export default class extends BaseSeeder {
     //   slug: "nunofonseca",
     // });
 
-    const _nunoSpeakerProfile = await SpeakerProfile.create({
+    await SpeakerProfile.create({
       firstName: "Nuno",
       lastName: "Fonseca",
       jobTitle: "Fundador & CEO",
