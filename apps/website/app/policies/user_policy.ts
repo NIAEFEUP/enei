@@ -1,4 +1,3 @@
-import Company from "#models/company";
 import EventCompany from "#models/event_company";
 import User from "#models/user";
 import { BasePolicy } from "@adonisjs/bouncer";
