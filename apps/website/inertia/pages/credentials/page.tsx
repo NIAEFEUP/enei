@@ -9,7 +9,7 @@ import { useTuyau } from "~/hooks/use_tuyau";
 export default function CredentialScanner() {
   const tuyau = useTuyau();
 
-  const [profile, setProfile] = useState<any>(null);
+  const [user, setUser] = useState<any>(null);
 
   return (
     <Page title="Scan de Credenciais" className="bg-enei-beige text-enei-blue" variant="beige">
@@ -19,12 +19,12 @@ export default function CredentialScanner() {
           <Scanner
             onScan={(slug: string) => {
               axios.get(tuyau.$url("actions:profile.info", { params: { slug } })).then((res) => {
-                setProfile(res.data.profile);
+                setUser(res.data.user);
               });
             }}
           />
         </div>
-        {profile && <ProfileInfoDrawer profile={profile} onClose={() => setProfile(null)} />}
+        {user && <ProfileInfoDrawer user={user} onClose={() => setUser(null)} />}
       </Container>
     </Page>
   );
