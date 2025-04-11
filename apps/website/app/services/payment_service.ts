@@ -74,7 +74,7 @@ export class PaymentService {
           {
             status: "pending",
             requestId: RequestId,
-            amount: data.amount, 
+            amount: data.amount,
             orderId: order.id,
             invoiceInfoId: invoiceInfo.id,
             reason: null,
