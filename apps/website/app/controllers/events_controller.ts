@@ -101,17 +101,13 @@ export default class EventsController {
     const event = await Event.findOrFail(eventID);
     const user = await User.findByOrFail("slug", params.slug);
 
-    if (!this.eventService.isRegistered(user!, event)) {
-      session.flashErrors({ message: "Participante não registado no evento" });
-      return response.redirect().back();
-    }
-
     if (await this.eventService.isCheckedIn(user!, event)) {
       session.flashErrors({ message: "Participante já checked-in" });
-      return response.redirect().back();
+    } else if (event.requiresRegistration && !await this.eventService.isRegistered(user!, event)) {
+      session.flashErrors({ message: "Participante não registado no evento" });
+    } else {
+      await this.eventService.checkin(user!, event);
     }
-
-    await this.eventService.checkin(user!, event);
 
     return response.redirect().back();
   }

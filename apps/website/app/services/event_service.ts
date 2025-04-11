@@ -108,8 +108,9 @@ export default class EventService {
 
   async checkin(user: User, event: Event) {
     await event.related("checkedInUsers").attach({
-      [user.id]: { checked_in_at: DateTime.now() },
+      [user.id]: { checked_in_at: DateTime.now().toISO() },
     });
+
     await event.save();
     const product = await Product.find(event.participationProductId);
 
