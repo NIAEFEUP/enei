@@ -1,9 +1,25 @@
 import { DateTime } from "luxon";
-import { BaseModel, column, manyToMany } from "@adonisjs/lucid/orm";
+import { BaseModel, belongsTo, column, manyToMany } from "@adonisjs/lucid/orm";
 import SpeakerProfile from "./speaker_profile.js";
-import type { ManyToMany } from "@adonisjs/lucid/types/relations";
+import type { BelongsTo, ManyToMany } from "@adonisjs/lucid/types/relations";
 import User from "./user.js";
+import ProductGroup from "./product_group.js";
+import Product from "./product.js";
+import { relations } from "#lib/lucid/relations.js";
+import { lazy } from "#lib/lazy.js";
 import Company from "./company.js";
+
+const eventRelations = lazy(() =>
+  relations(Event, (r) => [
+    r.many("checkedInUsers"),
+    r.belongsTo("product"),
+    r.belongsTo("productGroup"),
+    r.many("registeredUsers"),
+    r.many("speakers"),
+    r.many("companies"),
+    r.belongsTo("participationProduct"),
+  ]),
+);
 
 export default class Event extends BaseModel {
   @column({ isPrimary: true })
@@ -22,7 +38,15 @@ export default class Event extends BaseModel {
   declare description: string | null;
 
   @column()
-  declare type: string;
+  declare type:
+    | "workshop"
+    | "other"
+    | "night"
+    | "talk"
+    | "networking"
+    | "competition"
+    | "meal"
+    | "painel";
 
   @column()
   declare companyImage: string;
@@ -74,15 +98,41 @@ export default class Event extends BaseModel {
   @column()
   declare ticketsRemaining: number;
 
+
   @column()
-  declare price: number;
+  declare participationProductId: number | null;
+
+  @belongsTo(() => Product, {
+    foreignKey: "participationProductId",
+  })
+  declare participationProduct: BelongsTo<typeof Product>;
+
+  @column()
+  declare productGroupId: number;
+
+  @column()
+  declare productId: number;
+
+  @belongsTo(() => Product)
+  declare product: BelongsTo<typeof Product>;
+
+  @belongsTo(() => ProductGroup)
+  declare productGroup: BelongsTo<typeof ProductGroup>;
 
   public getFormattedDate() {
     return this.date.toFormat("dd-MM-yyyy");
   }
 
+  get isPaid() {
+    return this.productGroup?.products?.filter((product) => product.price.toCents() > 0).length > 0;
+  }
+
   public getFormattedTime() {
     const endTime = this.date.plus({ minutes: this.duration });
     return `${this.date.toFormat("HH:mm")} - ${endTime.toFormat("HH:mm")}`;
+  }
+
+  get $relations() {
+    return eventRelations.get().for(this);
   }
 }

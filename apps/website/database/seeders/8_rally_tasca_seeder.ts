@@ -1,3 +1,4 @@
+import { Money } from "#lib/payments/money.js";
 import Event from "#models/event";
 import { BaseSeeder } from "@adonisjs/lucid/seeders";
 import { DateTime } from "luxon";
@@ -14,7 +15,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 1000,
       ticketsTotal: 1000,
-      price: 0,
     });
 
     await Event.create({
@@ -22,12 +22,12 @@ export default class extends BaseSeeder {
       date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 21, minute: 30 }),
       duration: 150,
       type: "night",
+      isAcceptingRegistrations: true,
       location: "Baixa do Porto",
       registrationRequirements: "",
       requiresRegistration: true,
       ticketsRemaining: 1000,
       ticketsTotal: 1000,
-      price: 0,
     });
 
     await Event.create({
@@ -40,7 +40,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 1000,
       ticketsTotal: 1000,
-      price: 0,
     });
 
     await Event.create({
@@ -53,7 +52,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 1000,
       ticketsTotal: 1000,
-      price: 0,
     });
 
     await Event.create({
@@ -66,7 +64,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 1000,
       ticketsTotal: 1000,
-      price: 0,
     });
 
     await Event.create({
@@ -79,7 +76,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 1000,
       ticketsTotal: 1000,
-      price: 0,
     });
 
     await Event.create({
@@ -92,7 +88,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 1000,
       ticketsTotal: 1000,
-      price: 0,
     });
   }
 }
