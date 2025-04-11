@@ -106,6 +106,7 @@ export default function EventRegistrationPage({
     networking: "border-enei-blue",
     competition: "border-enei-blue",
     meal: "border-enei-blue",
+    painel: "border-enei-blue",
   };
 
   const activityColors = {
@@ -116,6 +117,7 @@ export default function EventRegistrationPage({
     networking: "#000000",
     competition: "#000000",
     meal: "#000000",
+    painel: "#000000",
   };
 
   return (
@@ -168,7 +170,7 @@ export default function EventRegistrationPage({
                   </h1>
                   <div
                     className="prose"
-                    dangerouslySetInnerHTML={{ __html: description }}
+                    dangerouslySetInnerHTML={{ __html: event.description }}
                   />
                 </div>
               )}
@@ -218,17 +220,17 @@ export default function EventRegistrationPage({
                     </p>
                   </h1>
                   <div className="flex flex-wrap gap-4">
-                    {speakers.map((speaker) => (
+                    {event.speakers.map((speaker) => (
                       <Link
                         href={tuyau.$url("pages:profile.show", {
-                          params: { slug: speaker.user.slug },
+                          params: { slug: speaker?.slug ?? "s"},
                         })}
                       >
                         <div
                           key={speaker.firstName + speaker.lastName}
                           className={cn(
                             "flex w-auto items-center gap-4 rounded-lg border p-4",
-                            activityClassesPrimary[type],
+                            activityClassesPrimary[event.type],
                           )}
                         >
                           <Avatar className="h-12 w-12">

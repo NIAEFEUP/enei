@@ -27,7 +27,6 @@
     },
     "neverBuiltDependencies": [],
     "patchedDependencies": {
-      "@adminjs/adonis": "/home/lima/programming/external/niaefeup/enei/patches/@adminjs__adonis.patch",
       "@adonisjs/lucid": "patches/@adonisjs__lucid.patch"
     }
   }

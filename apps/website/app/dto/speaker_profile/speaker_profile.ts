@@ -13,6 +13,7 @@ export class SpeakerProfileDto {
       jobTitle: this.speakerProfile.jobTitle,
       profilePicture: this.speakerProfile.profilePicture,
       company: this.speakerProfile.company,
+      slug: this.speakerProfile.user?.slug,
     };
   }
 }
