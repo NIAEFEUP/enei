@@ -138,7 +138,7 @@ export default class User extends BaseModel {
   @beforeSave()
   public static async createSlug(user: User) {
     if (user.isSlugFrozen) {
-      console.log(user.$original.slug)
+      console.log(user.$original.slug);
       user.slug = user.$original.slug;
       return;
     }
