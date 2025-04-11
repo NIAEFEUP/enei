@@ -1,0 +1,13 @@
+diff --git a/build/src/types/model.d.ts b/build/src/types/model.d.ts
+index 54724b1a8248f06a9e3f5c638b9dde5a57ac52b6..124f8c2b99a62a4d76aec07f3bdeb0315a267642 100644
+--- a/build/src/types/model.d.ts
++++ b/build/src/types/model.d.ts
+@@ -42,7 +42,7 @@ export type OptionalTypedDecorator<PropType> = <TKey extends string, TTarget ext
+  */
+ export type ModelAttributes<Model extends LucidRow> = Model['$columns'] extends undefined ? {
+     [Filtered in {
+-        [P in keyof Model]: P extends keyof LucidRow | 'serializeExtras' ? never : Model[P] extends Function | ModelRelationTypes ? never : P;
++        [P in keyof Model]: P extends keyof LucidRow | 'serializeExtras' |`$${string}` ? never : Model[P] extends Function | ModelRelationTypes ? never : P;
+     }[keyof Model]]: Model[Filtered];
+ } : Model['$columns'];
+ /**

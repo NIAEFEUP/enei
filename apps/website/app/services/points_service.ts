@@ -5,6 +5,10 @@ import {
   type UserActivityDescription,
 } from "../../types/user_activity.js";
 import User from "#models/user";
+import Event from "#models/event";
+import Order from "#models/order";
+import Product from "#models/product";
+import OrderProduct from "#models/order_product";
 
 /**
  * This service will be responsible for handling how many points a certain event
@@ -20,6 +24,37 @@ export default class PointsService {
       },
     ],
   ]);
+
+  static async eventCheckinPointAttribution(user: User, participationProduct: Product | null) {
+    if(!participationProduct) return
+
+    await db.transaction(async (trx) => {
+      const order = await Order.create({
+        userId: user.id,
+        status: "delivered",
+        pointsUsed: participationProduct.points,
+      }, { client: trx })
+
+      await OrderProduct.create({
+        orderId: order.id,
+        productId: participationProduct.id,
+        quantity: 1
+      }, {
+        client: trx
+      });
+
+      user.useTransaction(trx).points -= participationProduct.points;
+      await user.save();
+    })
+  }
+
+  static userWillExceededNegativePoints(user: User, event: Event) {
+    event.loadOnce("product");
+
+    if (!event.product) return user.points < -7500;
+
+    return user.points - event.product.points < -7500;
+  }
 
   async referralPointAttribution(referral: UserActivityDescription) {
     const referralDescription = referral.description as ReferralDescription;

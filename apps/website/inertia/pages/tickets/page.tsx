@@ -38,7 +38,7 @@ export default function SelectTicketsPage(props: InferPageProps<TicketsControlle
                     </CardDescription>
                     <p className="text-2xl font-bold">
                       <span className={cn(ticket.outOfStock && "line-through")}>
-                        {ticket.price}€
+                        {/* {tii}et.price}€ */}
                       </span>{" "}
                       {ticket.outOfStock && <span className="uppercase">Esgotado</span>}
                     </p>

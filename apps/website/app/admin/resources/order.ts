@@ -25,6 +25,13 @@ const OrderResource = createResource({
           resourceId: "products",
         },
       },
+      payments: {
+        type: "one-to-many",
+        target: {
+          resourceId: "payments",
+          joinKey: "orderId",
+        },
+      },
     }),
   ],
 });

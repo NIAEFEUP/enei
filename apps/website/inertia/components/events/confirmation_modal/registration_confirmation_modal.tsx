@@ -6,15 +6,16 @@ import {
   DialogFooter,
   DialogDescription,
 } from "~/components/ui/dialog";
-import { Button, buttonVariants } from "~/components/ui/button";
+import { Button } from "~/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { cn } from "~/lib/utils";
 
 interface RegistrationConfirmationModalProps {
   isOpen: boolean;
   isLoading: boolean;
   onClose: () => void;
   onSubmit: () => void;
+  children?: React.ReactNode;
+  showConfirmation?: boolean;
 }
 
 function RegistrationConfirmationModal({
@@ -22,6 +23,8 @@ function RegistrationConfirmationModal({
   isLoading,
   onClose,
   onSubmit,
+  children,
+  showConfirmation = true,
 }: RegistrationConfirmationModalProps) {
   function handleSubmit() {
     onSubmit();
@@ -37,27 +40,17 @@ function RegistrationConfirmationModal({
         <DialogHeader>
           <DialogTitle>Confirmação</DialogTitle>
         </DialogHeader>
-        <DialogDescription>
-          <p className="leading-tight">
-            Depois de te inscreveres, se precisares de cancelar a tua inscrição por algum motivo,
-            terás de enviar um email para{" "}
-            <a
-              className={cn(buttonVariants({ variant: "link" }), "p-0")}
-              href="mailto:geral@eneiconf.pt"
-            >
-              geral@eneiconf.pt
-            </a>{" "}
-            para cancelar a tua inscrição.
-          </p>
-        </DialogDescription>
+        <DialogDescription>{children}</DialogDescription>
         <DialogFooter className="mt-4">
           <Button variant="secondary" onClick={onClose}>
             Cancelar
           </Button>
-          <Button disabled={isLoading} onClick={handleSubmit}>
-            {isLoading && <Loader2 className="animate-spin" />}
-            Confirmar
-          </Button>
+          {showConfirmation && (
+            <Button disabled={isLoading} onClick={handleSubmit}>
+              {isLoading && <Loader2 className="animate-spin" />}
+              Confirmar
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

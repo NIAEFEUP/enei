@@ -23,7 +23,8 @@ export class StoreService {
       if (!product) return null;
 
       user.useTransaction(trx);
-      user.points = user.points - product.price;
+      user.points = user.points - product.points;
+
       await user.save();
 
       product.useTransaction(trx);
@@ -33,6 +34,8 @@ export class StoreService {
       const order = await Order.create(
         {
           userId: user.id,
+          pointsUsed: product.points,
+          status: "pending-delivery",
         },
         {
           client: trx,
@@ -53,7 +56,7 @@ export class StoreService {
   }
 
   async getReservedProducts(user: User) {
-    const userOrders = await OrderService.getOrdersForUser(user, ["points"]);
+    const userOrders = await OrderService.getPointOrdersForUser(user);
     return userOrders.map((orderProduct) => ({
       order: orderProduct.order,
       product: orderProduct.product,

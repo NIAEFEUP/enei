@@ -1,3 +1,4 @@
+import { Money } from "#lib/payments/money.js";
 import Event from "#models/event";
 import SpeakerProfile from "#models/speaker_profile";
 import { BaseSeeder } from "@adonisjs/lucid/seeders";
@@ -15,7 +16,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     const speakerProfile1 = await SpeakerProfile.create({
@@ -69,7 +69,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 200,
       ticketsTotal: 200,
-      price: 0,
     });
   }
 }
