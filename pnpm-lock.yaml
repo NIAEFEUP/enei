@@ -113,7 +113,7 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
       '@enei/shadcn':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../../packages/shadcn
       '@hookform/resolvers':
         specifier: ^3.10.0

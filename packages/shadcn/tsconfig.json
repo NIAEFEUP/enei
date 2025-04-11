@@ -15,10 +15,10 @@
       "#/hooks/*": ["./src/hooks/*.ts"],
       "#/lib/*": ["./src/lib/*.ts"]
     },
-
     "rootDir": "./src",
 
     // Emit
+    "noEmit": false,
     "outDir": "./dist",
 
     // Interop Constraints
