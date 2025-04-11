@@ -1,3 +1,4 @@
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { defineConfig } from "vite";
 import { getDirname } from "@adonisjs/core/helpers";
 import inertia from "@adonisjs/inertia/client";
@@ -12,10 +13,15 @@ export default defineConfig({
       plugins: [tailwindcss(), autoprefixer()],
     },
   },
+
   plugins: [
     inertia({ ssr: { enabled: true, entrypoint: "inertia/app/ssr.tsx" } }),
     react(),
     adonisjs({ entrypoints: ["inertia/app/app.tsx"], reload: ["resources/views/**/*.edge"] }),
+    sentryVitePlugin({
+      org: "enei",
+      project: "frontend"
+    })
   ],
   esbuild: {
     target: "esnext",
@@ -29,4 +35,8 @@ export default defineConfig({
       "~/": `${getDirname(import.meta.url)}/inertia/`,
     },
   },
+
+  build: {
+    sourcemap: true
+  }
 });

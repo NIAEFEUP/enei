@@ -1,4 +1,4 @@
-import { defineConfig } from "@adonisjs/core/app";
+import { defineConfig } from "@adonisjs/core/app"
 
 export default defineConfig({
   /*
@@ -60,6 +60,7 @@ export default defineConfig({
       file: () => import("@adminjs/adonis/adminjs_provider"),
       environment: ["web"],
     },
+    () => import('@benhepburn/adonis-sentry/sentry_provider')
   ],
 
   /*
@@ -126,4 +127,4 @@ export default defineConfig({
   hooks: {
     onBuildStarting: [() => import("@adonisjs/vite/build_hook")],
   },
-});
+})

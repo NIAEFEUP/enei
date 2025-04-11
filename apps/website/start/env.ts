@@ -148,6 +148,10 @@ const env = await defineEnv(new URL("../", import.meta.url), "INERTIA_PUBLIC_", 
     S3_BUCKET: vine.string(),
     S3_ENDPOINT: vine.string(),
 
+    SENTRY_AUTH_TOKEN: vine.string(),
+    SENTRY_DSN: vine.string(),
+    SENTRY_TRACES_SAMPLE_RATE: vine.number(),
+
     /*
     |----------------------------------------------------------
     | Variables for configuring the proxy-level trust,
