@@ -130,10 +130,19 @@ export default class User extends BaseModel {
   })
   declare avatar: Attachment | null;
 
+  @column()
+  declare isSlugFrozen: boolean;
+
   // Hooks
 
   @beforeSave()
   public static async createSlug(user: User) {
+    if (user.isSlugFrozen) {
+      console.log(user.$original.slug)
+      user.slug = user.$original.slug;
+      return;
+    }
+
     await Promise.allSettled([
       user.load("participantProfile"),
       user.load("representativeProfile"),
@@ -153,20 +162,12 @@ export default class User extends BaseModel {
       if (profile) {
         const { firstName, lastName } = profile;
 
-        while (true) {
-          // Generate a random slug
-          const userCode = (1 + Math.floor(998 * Math.random())).toString().padStart(3, "0");
-          const parts = slug(`${firstName} ${lastName} ${userCode}`).split("-");
+        // Generate a random slug
+        const userCode = user.id.toString().padStart(3, "0");
+        const parts = slug(`${firstName} ${lastName} ${userCode}`).split("-");
 
-          const possibleSlug = [parts[1], parts.at(-2), parts.at(-1)].join("-");
-          if (await User.query().where("slug", possibleSlug).first() === null) {
-            user.slug = possibleSlug;
-            break;
-          }
-        }
-        
-        const parts = user.slug.split("-");
-        user.slug = [parts[1], parts.at(-2), parts.at(-1)].join("-");
+        const possibleSlug = [parts[1], parts.at(-2), parts.at(-1)].join("-");
+        user.slug = possibleSlug;
       } else {
         user.slug = null;
       }
