@@ -9,8 +9,10 @@ export default class extends BaseSchema {
 
       for (const product of products) {
         if (product.currency === "points") {
-          product.points = product.price;
-          await product.save();
+          await this.db.query()
+            .from(this.tableName)
+            .update({ points: product.price })
+            .where("id", product.id);
         }
       }
     });
