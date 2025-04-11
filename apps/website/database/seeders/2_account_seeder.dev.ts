@@ -1,5 +1,7 @@
 import { logger } from "#lib/adonisjs/logger.js";
+import Company from "#models/company";
 import ParticipantProfile from "#models/participant_profile";
+import RepresentativeProfile from "#models/representative_profile";
 // import PromoterProfile from '#models/promoter_profile'
 import User from "#models/user";
 import app from "@adonisjs/core/services/app";
@@ -29,22 +31,49 @@ export default class extends BaseSeeder {
       lastName: "Costa",
       dateOfBirth: DateTime.fromObject({ year: 2003, month: 5, day: 9 }),
       phone: "+351917777777",
-      slug: "1234",
+      slug: "jorge-costa",
       university: "pt.up.fe",
       course: "M.EIC",
       curricularYear: "2",
       finishedAt: null,
-      municipality: "Braga",
+      municipality: "braga",
       heardAboutEnei: "friends",
       shirtSize: "M",
       isVegetarian: false,
       isVegan: false,
-      transports: ["a-pe"],
+      transports: ["carro"],
       attendedBeforeEditions: [],
+      about:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc laoreet eu enim vel semper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum eu est vitae ex sodales consequat.",
+      github: "https://github.com/JorgeCostaDevPT",
+      website: "https://eneiconf.pt",
     });
 
     // const profile = await PromoterProfile.create({})
 
     await user.related("participantProfile").associate(profile);
+
+    const company = await Company.create({
+      name: "ENEI",
+      logo: "/images/logo-blue.svg",
+    });
+
+    const companyRepresentative = await User.create({
+      email: "company@eneiconf.pt",
+      emailVerifiedAt: DateTime.now(),
+    });
+
+    const companyRepresentativeProfile = await RepresentativeProfile.create({
+      firstName: "João",
+      lastName: "Silva",
+      jobTitle: "CEO",
+      ORCIDLink: "https://orcid.org/0000-0002-1825-0097",
+    });
+
+    await companyRepresentative
+      .related("representativeProfile")
+      .associate(companyRepresentativeProfile);
+
+    await companyRepresentativeProfile.related("company").associate(company);
   }
 }

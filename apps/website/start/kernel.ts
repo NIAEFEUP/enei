@@ -52,6 +52,7 @@ router.use([
  * the routes or the routes group.
  */
 export const middleware = router.named({
+  apiKeyProtected: () => import("#middleware/api_key_protected_middleware"),
   staff: () => import("#middleware/staff_middleware"),
   hasPurchasedTicket: () => import("#middleware/has_purchased_ticket_middleware"),
   companyBearerAuth: () => import("#middleware/company_bearer_auth_middleware"),
@@ -69,4 +70,5 @@ export const middleware = router.named({
   auth: () => import("#middleware/auth/auth_middleware"),
   silentAuth: () => import("#middleware/auth/silent_auth_middleware"),
   finishRedirect: () => import("#middleware/finish_redirect_middleware"),
+  company: () => import("#middleware/auth/company_middleware"),
 });

@@ -4,7 +4,7 @@ Welcome to the ENEI 2025 repository.
 
 ENEI stands for _Encontro Nacional de Estudantes de Informática_, and it is a national event in Portugal for students of Computer Science, Informatics, and related fields.
 
-The event is organized in a joint initiative between [NIAEFEUP](https://www.niaefeup.pt/), [NEI-ISEP](https://www.nei-isep.org/), and [NGCM](https://ncgm.fe.up.pt/).
+The event is organized in a joint initiative between [NIAEFEUP](https://www.niaefeup.pt/), [NEI-ISEP](https://www.nei-isep.org/), and [NCGM](https://ncgm.fe.up.pt/).
 
 ## Structure
 

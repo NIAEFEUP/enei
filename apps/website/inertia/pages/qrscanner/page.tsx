@@ -24,7 +24,7 @@ export default function QrScanner() {
             }}
           />
         </div>
-        {profile && <ProfileInfoDrawer profile={profile} />}
+        {profile && <ProfileInfoDrawer profile={profile} onClose={() => setProfile(null)} />}
       </Container>
     </Page>
   );

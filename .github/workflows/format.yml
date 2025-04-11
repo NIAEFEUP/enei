@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -26,7 +28,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install -w --frozen-lockfile
 
       - name: Run format
         run: pnpm run format:fix
@@ -34,4 +36,4 @@ jobs:
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "style: format code"
+          commit_message: "[no ci] style: format code"
