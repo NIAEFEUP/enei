@@ -8,7 +8,8 @@ export default class extends BaseSchema {
       table
         .integer("representative_profile_id")
         .references("id")
-        .inTable("representative_profiles").defaultTo(null);
+        .inTable("representative_profiles")
+        .defaultTo(null);
     });
   }
 

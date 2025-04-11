@@ -45,7 +45,6 @@ function getUserSocials(user: User) {
   return socials;
 }
 
-
 export default function ProfileSocials({ user }: ProfileSocialsProps) {
   const socials = getUserSocials(user);
 

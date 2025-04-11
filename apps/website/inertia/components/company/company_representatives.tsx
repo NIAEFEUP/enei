@@ -11,8 +11,8 @@ export default function CompanyRepresentatives({ representatives }: CompanyRepre
       <div className="flex flex-row gap-x-4">
         {representatives.map((representative) => (
           <article className="flex flex-col">
-            <img 
-              src={representative.image ?? ""} 
+            <img
+              src={representative.image ?? ""}
               className="w-32 rounded-md"
               alt={`${representative.firstName} ${representative.lastName}`}
             />

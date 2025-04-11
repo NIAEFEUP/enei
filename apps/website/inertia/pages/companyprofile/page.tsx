@@ -25,9 +25,7 @@ export default function CompanyProfile({ company }: CompanyProfileProps) {
           />
           <section className="flex flex-col gap-y-2">
             <h3 className="text-persian-orange text-2xl font-bold uppercase">Sobre</h3>
-            <p>
-              {company.about ?? "Sem descrição."}
-            </p>
+            <p>{company.about ?? "Sem descrição."}</p>
           </section>
         </section>
         <CompanyRepresentatives representatives={company.representativeProfiles} />

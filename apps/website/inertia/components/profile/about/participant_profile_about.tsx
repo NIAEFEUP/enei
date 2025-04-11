@@ -45,7 +45,7 @@ export default function ParticipantProfileAbout({ profile }: ParticipantProfileA
         );
 
         setHasCv(response.status === 200);
-      } catch (error) { }
+      } catch (error) {}
     };
 
     fetchFileName();

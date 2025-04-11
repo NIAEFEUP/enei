@@ -230,7 +230,9 @@ export default function EventRegistrationPage({
                   <div className="flex flex-wrap gap-4">
                     {speakers.map((speaker) => (
                       <Link
-                        href={tuyau.$url("pages:profile.show", { params: { slug: speaker.user.slug } })}
+                        href={tuyau.$url("pages:profile.show", {
+                          params: { slug: speaker.user.slug },
+                        })}
                       >
                         <div
                           key={speaker.firstName + speaker.lastName}
