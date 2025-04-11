@@ -3,10 +3,10 @@ import type Product from "#models/product";
 import type User from "#models/user";
 
 export default class EventCheckin extends BaseEvent {
-    constructor(
-        public readonly participationProduct: Product | null,
-        public readonly user: User
-    ) {
-        super();
-    }
+  constructor(
+    public readonly participationProduct: Product | null,
+    public readonly user: User,
+  ) {
+    super();
+  }
 }

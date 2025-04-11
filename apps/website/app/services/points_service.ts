@@ -26,26 +26,32 @@ export default class PointsService {
   ]);
 
   static async eventCheckinPointAttribution(user: User, participationProduct: Product | null) {
-    if(!participationProduct) return
+    if (!participationProduct) return;
 
     await db.transaction(async (trx) => {
-      const order = await Order.create({
-        userId: user.id,
-        status: "delivered",
-        pointsUsed: participationProduct.points,
-      }, { client: trx })
+      const order = await Order.create(
+        {
+          userId: user.id,
+          status: "delivered",
+          pointsUsed: participationProduct.points,
+        },
+        { client: trx },
+      );
 
-      await OrderProduct.create({
-        orderId: order.id,
-        productId: participationProduct.id,
-        quantity: 1
-      }, {
-        client: trx
-      });
+      await OrderProduct.create(
+        {
+          orderId: order.id,
+          productId: participationProduct.id,
+          quantity: 1,
+        },
+        {
+          client: trx,
+        },
+      );
 
       user.useTransaction(trx).points -= participationProduct.points;
       await user.save();
-    })
+    });
   }
 
   static userWillExceededNegativePoints(user: User, event: Event) {

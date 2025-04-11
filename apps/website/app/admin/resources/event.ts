@@ -19,8 +19,8 @@ const EventResource = createResource({
         reference: "products",
       },
       price: {
-        type: "number"
-      }
+        type: "number",
+      },
     },
   },
   features: [
