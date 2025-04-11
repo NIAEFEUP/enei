@@ -1,9 +1,11 @@
 import { DateTime } from "luxon";
-import { BaseModel, column, hasMany } from "@adonisjs/lucid/orm";
+import { BaseModel, column, hasMany, manyToMany } from "@adonisjs/lucid/orm";
+import type { HasMany, ManyToMany } from "@adonisjs/lucid/types/relations";
 import RepresentativeProfile from "./representative_profile.js";
-import type { HasMany } from "@adonisjs/lucid/types/relations";
+import Event from "./event.js";
 import SpeakerProfile from "./speaker_profile.js";
 
+export type CVPermissions = "all" | "visited" | "none";
 export type SponsorVariant = "default" | "gold" | "silver" | "bronze";
 
 export default class Company extends BaseModel {
@@ -20,6 +22,9 @@ export default class Company extends BaseModel {
   declare name: string;
 
   @column()
+  declare cvPermissions: CVPermissions;
+
+  @column()
   declare logo: string;
 
   @column()
@@ -30,6 +35,11 @@ export default class Company extends BaseModel {
 
   @hasMany(() => RepresentativeProfile)
   declare representativeProfiles: HasMany<typeof RepresentativeProfile>;
+
+  @manyToMany(() => Event, {
+    pivotTable: "event_companies",
+  })
+  public events!: ManyToMany<typeof Event>;
 
   static async getEvents(company: Company) {
     const speakerProfiles = await SpeakerProfile.query()

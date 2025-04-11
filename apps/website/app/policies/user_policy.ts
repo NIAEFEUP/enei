@@ -1,3 +1,5 @@
+import Company from "#models/company";
+import EventCompany from "#models/event_company";
 import User from "#models/user";
 import { BasePolicy } from "@adonisjs/bouncer";
 
@@ -23,6 +25,26 @@ export default class UserPolicy extends BasePolicy {
   }
 
   async seeCV(user: User, cvOwner: User) {
-    return user.isStaff() || user.id === cvOwner.id; // TODO: Add company that has been visited
+    if (user.isCompanyRepresentative()) {
+      await user.load("representativeProfile");
+      await user.representativeProfile.load("company");
+
+      if (user.representativeProfile.company.cvPermissions === "all") {
+        return true;
+      } else if (user.representativeProfile.company.cvPermissions === "visited") {
+        // Check if the user has checkedin in an event the company is associated with.
+        const exists = await EventCompany.query()
+          .innerJoin("event_checkins", "event_companies.event_id", "event_checkins.event_id")
+          .where("event_checkins.user_id", cvOwner.id)
+          .andWhere("event_companies.company_id", user.representativeProfile.company.id)
+          .first();
+
+        return !!exists;
+      } else {
+        return false;
+      }
+    }
+
+    return user.isStaff() || user.id === cvOwner.id;
   }
 }

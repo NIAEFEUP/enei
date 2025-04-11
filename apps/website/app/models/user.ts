@@ -184,6 +184,10 @@ export default class User extends BaseModel {
     return this.participantProfileId !== null;
   }
 
+  isCompanyRepresentative() {
+    return this.representativeProfileId !== null;
+  }
+
   isEmailVerified() {
     return this.emailVerifiedAt !== null;
   }
