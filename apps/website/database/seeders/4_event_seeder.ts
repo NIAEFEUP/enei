@@ -1,7 +1,6 @@
 import { BaseSeeder } from "@adonisjs/lucid/seeders";
 import Event from "#models/event";
 import { DateTime } from "luxon";
-import { Money } from "#lib/payments/money.js";
 
 export default class extends BaseSeeder {
   async run() {
@@ -651,7 +650,6 @@ export default class extends BaseSeeder {
       location: "Auditório Magno - ISEP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
   }
 }

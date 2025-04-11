@@ -1,4 +1,3 @@
-import { Money } from "#lib/payments/money.js";
 import Event from "#models/event";
 import SpeakerProfile from "#models/speaker_profile";
 import { BaseSeeder } from "@adonisjs/lucid/seeders";
