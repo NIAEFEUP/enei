@@ -1,5 +1,7 @@
 import User from "#models/user";
 import Event from "#models/event";
+import EventCheckinListener from "#listeners/event_checkin_listeners";
+import EventCheckin from "#events/event_checkin";
 
 export default class EventService {
   async isRegistered(user: User, event: Event) {
@@ -35,5 +37,14 @@ export default class EventService {
       [user.id]: { checked_in_at: new Date() },
     });
     await event.save();
+
+    const listener = new EventCheckinListener()
+    listener.handle(
+      new EventCheckin(this.getPoints(event, user), user)
+    )
+  }
+
+  getPoints(event: Event, user: User) {
+    return 0
   }
 }

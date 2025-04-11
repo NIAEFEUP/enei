@@ -231,7 +231,7 @@ export default function EventRegistrationPage({
                     {speakers.map((speaker) => (
                       <Link
                         href={tuyau.$url("pages:profile.show", {
-                          params: { slug: speaker.user.slug },
+                          params: { slug: "oh no"/*speaker.user.slug*/ },
                         })}
                       >
                         <div

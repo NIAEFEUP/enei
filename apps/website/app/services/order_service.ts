@@ -1,3 +1,4 @@
+import type Event from "#models/event";
 import OrderProduct from "#models/order_product";
 import type Product from "#models/product";
 import type User from "#models/user";
