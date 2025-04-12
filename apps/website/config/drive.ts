@@ -26,6 +26,8 @@ const driveConfig = defineConfig({
       bucket: env.get("S3_BUCKET"),
       endpoint: env.get("S3_ENDPOINT"),
       visibility: "public",
+      forcePathStyle: true,
+      supportsACL: false,
     }),
   },
 });

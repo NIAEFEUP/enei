@@ -9,9 +9,9 @@ interface ProfileAboutProps {
 export default function ProfileAbout({ user }: ProfileAboutProps) {
   return (
     <>
-      {user.participantProfile && <ParticipantProfileAbout profile={user.participantProfile} />}
+      {user.participantProfile && <ParticipantProfileAbout user={user} />}
 
-      {user.speakerProfile && <SpeakerProfileAbout profile={user.speakerProfile} />}
+      {user.speakerProfile && <SpeakerProfileAbout user={user} />}
     </>
   );
 }

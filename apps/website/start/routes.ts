@@ -180,22 +180,24 @@ router.group(() => {
   router
     .get("/profile/edit/:section", [ProfilesController, "edit"])
     .as("pages:profile.edit")
-    .use([middleware.auth(), middleware.verifiedEmail(), middleware.wip()]);
+    .use([middleware.auth(), middleware.verifiedEmail()]);
   router
     .patch("/profile/edit", [ProfilesController, "update"])
     .as("actions:profile.update")
-    .use([middleware.auth(), middleware.verifiedEmail(), middleware.wip()]);
+    .use([middleware.auth(), middleware.verifiedEmail()]);
 
   router
     .post("/profile/edit/password", [ProfilesController, "sendEditPassword"])
     .as("actions:profile.change-password.send")
-    .use([middleware.requireAuthenticationEnabled(), middleware.auth(), sendChangePasswordThrottle])
-    .use(middleware.wip());
+    .use([
+      middleware.requireAuthenticationEnabled(),
+      middleware.auth(),
+      sendChangePasswordThrottle,
+    ]);
   router
     .post("/profile/edit/email", [ProfilesController, "sendEditEmail"])
     .as("actions:profile.edit-email.send")
-    .use([middleware.requireAuthenticationEnabled(), middleware.auth(), sendChangeEmailThrottle])
-    .use(middleware.wip());
+    .use([middleware.requireAuthenticationEnabled(), middleware.auth(), sendChangeEmailThrottle]);
   router
     .route(
       "profile/edit/email/callback/confirm",
@@ -207,8 +209,7 @@ router.group(() => {
       middleware.requireAuthenticationEnabled(),
       middleware.verifyUrlSignature(),
       middleware.automaticSubmit(),
-    ])
-    .use(middleware.wip());
+    ]);
   router
     .route(
       "profile/edit/email/callback/cancel",
@@ -220,17 +221,10 @@ router.group(() => {
       middleware.requireAuthenticationEnabled(),
       middleware.verifyUrlSignature(),
       middleware.automaticSubmit(),
-    ])
-    .use(middleware.wip());
+    ]);
 
-  router
-    .get("/u/:slug/cv", [ProfilesController, "showCV"])
-    .as("pages:profile.cv.show")
-    .use(middleware.wip());
-  router
-    .get("/u/:slug/avatar", [ProfilesController, "showAvatar"])
-    .as("pages:profile.avatar.show")
-    .use(middleware.wip());
+  router.get("/u/:slug/cv", [ProfilesController, "showCV"]).as("pages:profile.cv.show");
+  router.get("/u/:slug/avatar", [ProfilesController, "showAvatar"]).as("pages:profile.avatar.show");
   router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
 });
 
@@ -274,7 +268,6 @@ router.on("/faq").renderInertia("faq").as("pages:faq").use(middleware.wip());
 router
   .group(() => {
     router.post("/cv/upload", [UsersController, "storeCV"]).as("actions:cv.upload");
-    router.delete("cv/delete", [UsersController, "deleteCV"]).as("actions:cv.delete");
     router.get("/cv/name", [UsersController, "showCVName"]).as("actions:cv.name");
 
     // Avatar endpoints
