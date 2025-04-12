@@ -103,7 +103,10 @@ export default class EventsController {
 
     if (await this.eventService.isCheckedIn(user!, event)) {
       session.flashErrors({ message: "Participante já checked-in" });
-    } else if (event.requiresRegistration && !await this.eventService.isRegistered(user!, event)) {
+    } else if (
+      event.requiresRegistration
+      && !(await this.eventService.isRegistered(user!, event))
+    ) {
       session.flashErrors({ message: "Participante não registado no evento" });
     } else {
       await this.eventService.checkin(user!, event);
