@@ -4,7 +4,6 @@ import EventService from "#services/event_service";
 import User from "#models/user";
 import { inject } from "@adonisjs/core";
 import { eventMBWayOrderValidator } from "#validators/order";
-import PointsService from "#services/points_service";
 import { EventDto } from "../dto/events/event.js";
 
 @inject()
