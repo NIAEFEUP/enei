@@ -31,7 +31,10 @@ export const changeEmailSqids = new Sqids({
 
 @inject()
 export class UserService {
-  constructor(private eventService: EventService, private logger: Logger) {}
+  constructor(
+    private eventService: EventService,
+    private logger: Logger,
+  ) {}
 
   async storeCV(user: User, cv: MultipartFile) {
     const hadCV = !is.isNullOrUndefined(user.resume);
@@ -41,7 +44,7 @@ export class UserService {
       await user.save();
 
       if (!hadCV) {
-        const cvEvent = await Event.findByOrFail("type", "cv"); 
+        const cvEvent = await Event.findByOrFail("type", "cv");
         await this.eventService.checkin(user, cvEvent);
       }
 
