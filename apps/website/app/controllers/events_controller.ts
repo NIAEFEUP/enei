@@ -94,8 +94,6 @@ export default class EventsController {
     const eventID = request.input("eventID");
     const exit = request.input("exit");
 
-    console.log("EXIT: ", exit)
-
     const event = await Event.findOrFail(eventID);
     const user = await User.findByOrFail("slug", params.slug);
 
