@@ -70,3 +70,4 @@ export default class Company extends BaseModel {
     return speakerProfiles ? speakerProfiles.map((profile) => profile.events).flat() : [];
   }
 }
+

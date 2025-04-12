@@ -3,7 +3,8 @@ import { inject } from "@adonisjs/core";
 import User from "#models/user";
 import Event from "#models/event"
 import { UserActivityService } from "#services/user_activity_service";
-import Company = require("../models/company");
+import Company from "#models/company";
+
 
 @inject()
 export default class CompaniesController {
@@ -112,7 +113,7 @@ export default class CompaniesController {
         }),
       );
 
-      const event = await Event.query()
+      const associatedEvent = await Event.query()
         .where("companyId", companyUser.representativeProfile?.companyId)
         .preload("checkedInUsers", (user) => {
           user.preload("participantProfile")
@@ -121,7 +122,7 @@ export default class CompaniesController {
 
 
         const checkedParticipants = await Promise.all(
-          event?.checkedInUsers.map(async (participant) => {
+          associatedEvent?.checkedInUsers.map(async (participant) => {
             const likes = await this.userActivityService.getCompanyLikes(
               participant.id,
               companyUser.representativeProfile?.companyId,
@@ -151,6 +152,8 @@ export default class CompaniesController {
             };
           }) || []
         );
+
+    console.log(allParticipants.filter((p) => p.isLiked))
 
     return inertia.render("company/participants", {
       allParticipants: allParticipants,

@@ -14,7 +14,6 @@ import {
   sendChangePasswordThrottle,
   sendForgotPasswordThrottle,
 } from "#start/limiter";
-const CompanyController = () => import("#controllers/companies_controller");
 
 
 const EventsController = () => import("#controllers/events_controller");
@@ -171,6 +170,7 @@ router
 
 router.group(() => {
   router.get("/u/:slug", [ProfilesController, "index"]).as("pages:profile.show");
+  router.get("/representative/profile", [ProfilesController, "getRepresentativeProfile"]).as("actions:representative.info");
   router
     .post("/u/:slug/product/collect", [ProductReservationController, "collect"])
     .as("actions:profile.product.collect")
@@ -235,12 +235,6 @@ router.group(() => {
     .use(middleware.wip());
   router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
 });
- 
-  router
-  .group(() => {
-    router.get("/:name", [CompanyController, "profile"]).as("pages:company-profile");
-  })
-  .prefix("/company");
 
 router
   .group(() => {
@@ -354,5 +348,6 @@ router
     router
       .post("/participants/like", [CompaniesController, "toggleParticipantLike"])
       .as("actions:company.like.participant");
+    router.get("/:name", [CompaniesController, "profile"]).as("pages:company-profile");
   })
   .prefix("/company");
