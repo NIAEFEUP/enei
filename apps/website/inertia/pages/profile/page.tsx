@@ -10,8 +10,9 @@ import type User from "#models/user";
 import ProfileAbout from "~/components/profile/about/profile_about";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { useTuyau } from "~/hooks/use_tuyau";
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import { Link } from "@tuyau/inertia/react";
+import { cn } from "~/lib/utils";
 
 export const ProfileContext = createContext<{ slug: string | number }>({
   slug: "",
@@ -61,9 +62,28 @@ export default function ProfilePage({
           </section>
 
           <section className="flex flex-col gap-20 py-12">
-            <header>
+            <div className="flex flex-col gap-4 md:hidden">
+              <Avatar className="mb-12 size-fit mx-auto">
+                <AvatarImage
+                  src={tuyau.$url("pages:profile.avatar.show", {
+                    params: { slug: user.slug ?? "" },
+                  })}
+                  alt={user.slug ?? ""}
+                  className="text-enei-beige h-64 w-64 object-cover"
+                />
+                <AvatarFallback className="bg-enei-blue text-enei-beige h-64 w-64">
+                  {user.slug}
+                </AvatarFallback>
+              </Avatar>
+              {isUser && (
+                <Link route="pages:profile.edit" params={{ section: "profile" }} className={cn(buttonVariants(), "w-full max-w-md mx-auto")}>
+                  <span className="flex flex-row justify-center gap-2"><Pencil />Editar Informações</span>
+                </Link>
+              )}
+            </div>
+            <div>
               <ProfileAbout user={user} />
-            </header>
+            </div>
           </section>
 
           {/* <section>
