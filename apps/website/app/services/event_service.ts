@@ -116,7 +116,7 @@ export default class EventService {
       .orderBy("created_at", "desc")
 
     if (exit === (activities[activities.length - 1].description as AttendEventDescription).exit) {
-      return
+      throw new Error("Este participante já chegou na palestra")
     }
 
     const checkInTime = DateTime.now()

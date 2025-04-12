@@ -54,6 +54,28 @@ export default class ProfilesController {
     return response.redirect().toRoute("pages:profile.show", { slug: user.slug });
   }
 
+  async getRepresentativeProfile({ auth, response }: HttpContext) {
+    const user = auth.user;
+
+    if (!user) {
+      return response.unauthorized("User not authenticated");
+    }
+
+    await user.load("representativeProfile");
+
+    const representativeProfile = user.representativeProfile;
+    if (!representativeProfile) {
+      return response.notFound("Representative profile not found");
+    }
+
+    await representativeProfile.load("company");
+    await representativeProfile.company.load("event");
+
+    return response.ok({
+      representativeProfile,
+    });
+  }
+
   async getInfo({ params, response }: HttpContext) {
     const user = await User.findBy("slug", params.slug);
 

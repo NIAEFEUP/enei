@@ -76,6 +76,7 @@ export function LogoutButton({
 
 export function Navbar({ className, variant }: { className?: string; variant?: "blue" | "beige" }) {
   const auth = useAuth();
+
   const [onTop, setOnTop] = useState(true);
 
   const tuyau = useTuyau();
@@ -125,30 +126,38 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
               </>
             ) : (
               <div className="flex items-center justify-between gap-4">
-                {auth.state === "authenticated" && auth.user.slug && (
-                  <div>
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button className="w-fit">
-                          <QrCode />
-                          Código QR
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="w-4/5 max-w-96 pt-12 sm:w-96">
-                        {auth.state === "authenticated" && (
-                          <>
-                            <QRCodeSVG
-                              value={`${tuyau.$url("pages:profile.show", { params: { slug: auth.user.slug } })}`}
-                              className="aspect-square h-full w-full"
-                            />
-                            <p className="text-center"> {auth.user.slug}</p>
-                          </>
-                        )}
-                      </DialogContent>
-                    </Dialog>
-                  </div>
-                )}
-                <div className={auth.state === "authenticated" ? "block" : "hidden"}>
+                {auth.state === "authenticated"
+                  && auth.user.role !== "representative"
+                  && auth.user.slug && (
+                    <div className={`text-${textColor}`}>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button className="w-fit">
+                            <QrCode />
+                            Código QR
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="w-4/5 max-w-96 pt-12 sm:w-96">
+                          {auth.state === "authenticated" && (
+                            <>
+                              <QRCodeSVG
+                                value={`${tuyau.$url("pages:profile.show", { params: { slug: auth.user.slug } })}`}
+                                className="aspect-square h-full w-full"
+                              />
+                              <p className="text-center"> {auth.user.slug}</p>
+                            </>
+                          )}
+                        </DialogContent>
+                      </Dialog>
+                    </div>
+                  )}
+                <div
+                  className={
+                    auth.state === "authenticated" && auth.user.role !== "representative"
+                      ? "block"
+                      : "hidden"
+                  }
+                >
                   <Link
                     route="pages:profile.default"
                     className={cn(buttonVariants({ variant: "link" }), `text-${textColor} p-0`)}
@@ -156,34 +165,42 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
                     <span>Perfil</span>
                   </Link>
                 </div>
-                <div
-                  className={
-                    auth.state === "authenticated" && auth.user.role === "staff"
-                      ? "block"
-                      : "hidden"
-                  }
-                >
-                  <Link
-                    route="pages:staff.credentials.scan"
-                    className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
+                {auth.state === "authenticated" && (
+                  <div
+                    className={
+                      auth.user.role === "staff" || auth.user.role === "representative"
+                        ? "block"
+                        : "hidden"
+                    }
                   >
-                    <QrCode />
+                    <Link
+                      route={
+                        auth.user.role === "staff"
+                          ? "pages:staff.credentials.scan"
+                          : "pages:representative.qrcode.scan"
+                      }
+                      className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
+                    >
+                      <QrCode />
+                    </Link>
+                  </div>
+                )}
+
+                {auth.state === "authenticated" && auth.user.role === "representative" && (
+                  <Link
+                    route="pages:company.participants"
+                    className={cn(buttonVariants({ variant: "link" }), `text-${textColor} p-0`)}
+                  >
+                    Participantes
                   </Link>
-                </div>
+                )}
+
                 <div>
                   <Link
                     route="pages:store"
                     className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
                   >
                     <span>Loja</span>
-                  </Link>
-                </div>
-                <div className={auth.state === "authenticated" ? "block" : "hidden"}>
-                  <Link
-                    route="pages:referrals"
-                    className={cn(buttonVariants({ variant: "link" }), `text-${textColor} p-0`)}
-                  >
-                    Referenciações
                   </Link>
                 </div>
 

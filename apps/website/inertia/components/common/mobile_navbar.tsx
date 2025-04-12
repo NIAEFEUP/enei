@@ -23,46 +23,64 @@ export default function MobileNavbar() {
         </Button>
       </SheetTrigger>
       <SheetContent className="flex flex-col gap-y-4">
-        <SheetHeader>
-          {auth.state === "authenticated" && <Link route="pages:profile.default">Perfil</Link>}
-        </SheetHeader>
-        <div className="flex flex-col justify-center gap-y-4">
-          {auth.state === "authenticated" && auth.user.slug && (
-            <div className="mx-auto block">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button className="w-fit">
-                    <QrCode />
-                    Código QR
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="w-4/5 max-w-96 pt-12 sm:w-96">
-                  {auth.state === "authenticated" && (
-                    <>
-                      <QRCodeSVG
-                        value={`${tuyau.$url("pages:profile.show", { params: { slug: auth.user.slug } })}`}
-                        className="aspect-square h-full w-full"
-                      />
-                      <p className="text-center"> {auth.user.slug}</p>
-                    </>
-                  )}
-                </DialogContent>
-              </Dialog>
+        <SheetHeader>ENEI 2025</SheetHeader>
+        <div className="flex flex-col justify-center gap-y-4 text-center">
+          {auth.state === "authenticated"
+            && auth.user.role !== "representative"
+            && auth.user.slug && (
+              <div className="mx-auto block">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="w-fit">
+                      <QrCode />
+                      Código QR
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="w-4/5 max-w-96 pt-12 sm:w-96">
+                    {auth.state === "authenticated" && (
+                      <>
+                        <QRCodeSVG
+                          value={`${tuyau.$url("pages:profile.show", { params: { slug: auth.user.slug } })}`}
+                          className="aspect-square h-full w-full"
+                        />
+                        <p className="text-center"> {auth.user.slug}</p>
+                      </>
+                    )}
+                  </DialogContent>
+                </Dialog>
+              </div>
+            )}
+          <div className="mx-auto">
+            {auth.state === "authenticated" && auth.user.role !== "representative" && (
+              <Link
+                className={cn(buttonVariants({ variant: "link" }), "text-enei-blue mb-2")}
+                route="pages:profile.default"
+              >
+                Perfil
+              </Link>
+            )}
+          </div>
+
+          {auth.state === "authenticated" && (
+            <div
+              className={
+                auth.user.role === "staff" || auth.user.role === "representative"
+                  ? "mx-auto block"
+                  : "hidden"
+              }
+            >
+              <Link
+                route={
+                  auth.user.role === "staff"
+                    ? "pages:staff.credentials.scan"
+                    : "pages:representative.qrcode.scan"
+                }
+                className={cn(buttonVariants({ variant: "link" }), `text-enei-blue`)}
+              >
+                <QrCode />
+              </Link>
             </div>
           )}
-
-          <div
-            className={
-              auth.state === "authenticated" && auth.user.role === "staff" ? "block" : "hidden"
-            }
-          >
-            <Link
-              route="pages:staff.credentials.scan"
-              className={cn(buttonVariants({ variant: "link" }), `text-enei-blue`)}
-            >
-              <QrCode />
-            </Link>
-          </div>
 
           <Link
             route="pages:store"
@@ -72,21 +90,20 @@ export default function MobileNavbar() {
           </Link>
 
           <Link
-            route="pages:referrals"
-            className={cn(
-              buttonVariants({ variant: "link" }),
-              `text-enei-blue p-0 ${auth.state === "authenticated" ? "inline-flex" : "hidden"}`,
-            )}
-          >
-            Referenciações
-          </Link>
-
-          <Link
             route="pages:events"
             className={cn(buttonVariants({ variant: "link" }), `text-enei-blue p-0`)}
           >
             Programa
           </Link>
+
+          {auth.state === "authenticated" && auth.user.role === "representative" && (
+            <Link
+              route="pages:company.participants"
+              className={cn(buttonVariants({ variant: "link" }), `text-enei-blue p-0`)}
+            >
+              Participantes
+            </Link>
+          )}
 
           {auth.state === "unauthenticated" && <LoginButton variant="outline" />}
 

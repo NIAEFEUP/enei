@@ -99,10 +99,6 @@ export default class EventsController {
     const event = await Event.findOrFail(eventID);
     const user = await User.findByOrFail("slug", params.slug);
 
-    if(!this.verifyCorrectAction(event)) {
-      return response.badRequest("")
-    }
-
     if (await this.eventService.isCheckedIn(user!, event)) {
       session.flashErrors({ message: "Participante já checked-in" });
     } else if (

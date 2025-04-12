@@ -17,6 +17,13 @@ const CompanyResource = createResource({
           joinKey: "companyId",
         },
       },
+      events: {
+        type: "one-to-many",
+        target: {
+          resourceId: "events",
+          joinKey: "companyId",
+        },
+      },
     }),
   ],
 });

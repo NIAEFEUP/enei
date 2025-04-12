@@ -18,8 +18,8 @@ const EventResource = createResource({
       participationProductId: {
         reference: "products",
       },
-      price: {
-        type: "number",
+      companyId: {
+        reference: "companies",
       },
     },
   },
@@ -46,6 +46,17 @@ const EventResource = createResource({
           joinKey: "eventId",
           inverseJoinKey: "userId",
           throughResourceId: "event_users",
+        },
+      },
+      checkedInUsers: {
+        type: "many-to-many",
+        target: {
+          resourceId: "users",
+        },
+        junction: {
+          joinKey: "eventId",
+          inverseJoinKey: "userId",
+          throughResourceId: "event_checkins",
         },
       },
     }),

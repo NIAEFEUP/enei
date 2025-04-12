@@ -3,23 +3,9 @@ import { BaseModel, belongsTo, column, manyToMany } from "@adonisjs/lucid/orm";
 import SpeakerProfile from "./speaker_profile.js";
 import type { BelongsTo, ManyToMany } from "@adonisjs/lucid/types/relations";
 import User from "./user.js";
+import Company from "./company.js";
 import ProductGroup from "./product_group.js";
 import Product from "./product.js";
-import { relations } from "#lib/lucid/relations.js";
-import { lazy } from "#lib/lazy.js";
-import Company from "./company.js";
-
-const eventRelations = lazy(() =>
-  relations(Event, (r) => [
-    r.many("checkedInUsers"),
-    r.belongsTo("product"),
-    r.belongsTo("productGroup"),
-    r.many("registeredUsers"),
-    r.many("speakers"),
-    r.many("companies"),
-    r.belongsTo("participationProduct"),
-  ]),
-);
 
 export default class Event extends BaseModel {
   @column({ isPrimary: true })
@@ -87,6 +73,12 @@ export default class Event extends BaseModel {
   public companies!: ManyToMany<typeof Company>;
 
   @column()
+  declare companyId: number | null;
+
+  @belongsTo(() => Company)
+  declare company: BelongsTo<typeof Company>;
+
+  @column()
   declare registrationRequirements: string;
 
   @column()
@@ -129,9 +121,5 @@ export default class Event extends BaseModel {
   public getFormattedTime() {
     const endTime = this.date.plus({ minutes: this.duration });
     return `${this.date.toFormat("HH:mm")} - ${endTime.toFormat("HH:mm")}`;
-  }
-
-  get $relations() {
-    return eventRelations.get().for(this);
   }
 }

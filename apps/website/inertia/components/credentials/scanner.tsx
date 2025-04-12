@@ -1,12 +1,19 @@
 import { IDetectedBarcode, Scanner } from "@yudiel/react-qr-scanner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import NFC from "./nfc";
+import { useToast } from "~/hooks/use_toast";
+import { cn } from "~/lib/utils";
+import { useIsMobile } from "~/hooks/use_mobile";
 
 interface CredentialScannerProps {
   onScan: (slug: string) => void;
 }
 
 function CredentialScanner({ onScan }: CredentialScannerProps) {
+  const { toast } = useToast();
+
+  const isMobile = useIsMobile();
+
   return (
     <Tabs defaultValue="qr">
       <TabsList className="w-full">
@@ -16,6 +23,19 @@ function CredentialScanner({ onScan }: CredentialScannerProps) {
       <TabsContent value="qr">
         <Scanner
           key={"credential-scanner"}
+          classNames={{ video: cn(!isMobile && "-scale-x-100") }}
+          onError={async () => {
+            const perm = await navigator.permissions.query({ name: "camera" });
+            if (perm.state === "prompt") {
+              await navigator.mediaDevices.getUserMedia({ video: true });
+            } else if (perm.state === "denied") {
+              toast({
+                title: "Erro de permissões",
+                description:
+                  "O browser não permitiu o acesso à câmara do dispositivo. Por favor, contacte a staff do evento.",
+              });
+            }
+          }}
           onScan={(data: IDetectedBarcode[]) => {
             const value = data[0].rawValue.split("/");
             const slug = value[value.length - 1];

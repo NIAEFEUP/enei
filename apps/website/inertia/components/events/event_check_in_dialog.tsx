@@ -3,8 +3,6 @@ import CredentialScanner from "../credentials/scanner";
 import { useTuyau } from "~/hooks/use_tuyau";
 import { useForm } from "@inertiajs/react";
 import { toast } from "~/hooks/use_toast";
-import { useState } from "react";
-import { boolean } from "zod";
 import { Checkbox } from "../ui/checkbox";
 
 interface EventCheckInDialogProps {
