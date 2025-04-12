@@ -2,8 +2,7 @@ import { InferPageProps } from "@adonisjs/inertia/types";
 import ProfilesController from "#controllers/profiles_controller";
 import Page from "~/components/common/page";
 import Container from "~/components/common/containers";
-import { buttonVariants } from "~/components/ui/button";
-import { cn } from "~/lib/utils";
+
 import { LucideProps } from "lucide-react";
 import { createContext } from "react";
 import ProfileSocials from "~/components/profile/profile_socials";
@@ -11,8 +10,6 @@ import type User from "#models/user";
 import ProfileAbout from "~/components/profile/about/profile_about";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { useTuyau } from "~/hooks/use_tuyau";
-import { Link } from "@tuyau/inertia/react";
-import { Pencil } from "lucide-react";
 
 export const ProfileContext = createContext<{ slug: string | number }>({
   slug: "",
@@ -24,10 +21,10 @@ export interface SocialIconProps {
 }
 
 export default function ProfilePage(
-  props: InferPageProps<ProfilesController, "index"> & { user: User, isUser: boolean },
+  props: InferPageProps<ProfilesController, "index"> & { user: User },
 ) {
   const tuyau = useTuyau();
-  const { user, isUser } = props;
+  const { user } = props;
 
   return (
     <ProfileContext.Provider value={{ slug: user.slug ?? "" }}>
@@ -47,7 +44,7 @@ export default function ProfilePage(
                   {user.slug}
                 </AvatarFallback>
               </Avatar>
-              {isUser && (
+              {/* {isUser && (
                 <Link
                   route="pages:profile.edit"
                   params={{ section: "profile" }}
@@ -56,7 +53,7 @@ export default function ProfilePage(
                   <Pencil />
                   <p>Editar Informações</p>
                 </Link>
-              )} 
+              )} */}
 
               <ProfileSocials user={user as User} />
             </div>
