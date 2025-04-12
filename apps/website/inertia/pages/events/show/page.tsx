@@ -251,7 +251,7 @@ export default function EventRegistrationPage({
                       Informação complementar para participantes
                     </p>
                   </h2>
-                  <div dangerouslySetInnerHTML={{ __html: event.extraInfo }} />
+                  <div className="prose" dangerouslySetInnerHTML={{ __html: event.extraInfo }} />
                 </div>
               )}
               {/* Price Display */}
