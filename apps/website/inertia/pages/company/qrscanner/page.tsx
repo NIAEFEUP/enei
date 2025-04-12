@@ -24,7 +24,7 @@ export default function RepresentativeQrScanner() {
   }, [representativeProfile]);
 
   useEffect(() => {
-    console.log("hey")
+    console.log("hey");
     axios
       .get(tuyau.$url("actions:representative.info"))
       .then((res) => {
@@ -43,10 +43,10 @@ export default function RepresentativeQrScanner() {
       toast({
         className: "bg-red-300 border border-red-400",
         title: "Erro",
-        description: "Aconteceu um problema ao ler o código QR. Por favor, tente novamente."
+        description: "Aconteceu um problema ao ler o código QR. Por favor, tente novamente.",
       });
 
-      router.visit(document.location.href, { preserveState: false })
+      router.visit(document.location.href, { preserveState: false });
       return;
     }
 
