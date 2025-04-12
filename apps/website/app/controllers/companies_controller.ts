@@ -107,6 +107,7 @@ export default class CompaniesController {
                 id: participant.id,
                 name: `${participant.participantProfile.firstName} ${participant.participantProfile.lastName}`,
                 photoUrl: null, // TODO: add photo when available
+                slug: participant.slug,
                 faculty: participant.participantProfile.university,
                 course: participant.participantProfile.course,
                 year: participant.participantProfile.curricularYear,

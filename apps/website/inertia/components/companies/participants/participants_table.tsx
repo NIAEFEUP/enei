@@ -145,6 +145,8 @@ const columns: ColumnDef<Participant>[] = [
         }
       };
 
+      console.log("ROW: ", row.original)
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
