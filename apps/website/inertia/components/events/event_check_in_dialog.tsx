@@ -4,6 +4,7 @@ import { useTuyau } from "~/hooks/use_tuyau";
 import { useForm } from "@inertiajs/react";
 import { toast } from "~/hooks/use_toast";
 import { Checkbox } from "../ui/checkbox";
+import { useCallback, useState, } from "react";
 
 interface EventCheckInDialogProps {
   isOpen: boolean;
@@ -12,21 +13,17 @@ interface EventCheckInDialogProps {
 }
 
 export default function EventCheckInDialog({ isOpen, eventID, setOpen }: EventCheckInDialogProps) {
-  if (!isOpen) {
-    return null;
-  }
-
   const tuyau = useTuyau();
 
-  const { post, data, setData } = useForm<{
-    eventID: number;
-    exit: boolean;
-  }>({
-    eventID: eventID,
-    exit: false,
-  })
+  const [exit, setExit] = useState(false);
 
-  const handleCheckIN = (slug: string) => {
+  const { post, transform } = useForm({})
+
+  transform(() => ({
+    eventID, exit
+  }))
+
+  const handleCheckIN = useCallback((slug: string) => {
     try {
       post(tuyau.$url("actions:events.checkin", { params: { slug } }), {
         onSuccess: () => {
@@ -48,7 +45,11 @@ export default function EventCheckInDialog({ isOpen, eventID, setOpen }: EventCh
         description: "An unexpected error occurred",
       });
     }
-  };
+  }, [tuyau, post]);
+
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={() => setOpen(false)}>
@@ -56,8 +57,8 @@ export default function EventCheckInDialog({ isOpen, eventID, setOpen }: EventCh
         <div className="flex flex-row gap-x-4">
           <Checkbox
             id="exit-checkbox"
-            checked={data.exit}
-            onCheckedChange={(val: boolean) => setData("exit", val)}
+            checked={exit}
+            onCheckedChange={(val: boolean) => setExit(val)}
           />
           <label
             htmlFor="exit-checkbox"
@@ -66,7 +67,7 @@ export default function EventCheckInDialog({ isOpen, eventID, setOpen }: EventCh
             Saída na palestra
           </label>
         </div>
-        <CredentialScanner onScan={(slug) => handleCheckIN(slug)} />
+        <CredentialScanner onScan={handleCheckIN} />
       </DialogContent>
     </Dialog>
   );
