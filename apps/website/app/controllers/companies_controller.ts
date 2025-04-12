@@ -29,7 +29,6 @@ export default class CompaniesController {
     const companyUser = auth.user!;
 
     if (!companyUser.representativeProfileId) {
-      console.log("User is not a company representative");
       return response.unauthorized("You are not authorized to like participants.");
     }
 
@@ -46,15 +45,12 @@ export default class CompaniesController {
       companyUser.representativeProfile?.companyId,
     );
 
-    console.log(userLikes);
-
     const likeNames = await Promise.all(
       userLikes.map(async (user) => {
         if (!user.representativeProfileId) {
           return null;
         }
         await user.load("representativeProfile");
-        console.log("user", user.representativeProfile);
         return user.representativeProfile.firstName + " " + user.representativeProfile.lastName;
       }),
     );
@@ -69,7 +65,6 @@ export default class CompaniesController {
     const companyUser = auth.getUserOrFail();
 
     if (!companyUser.representativeProfileId) {
-      console.log("User is not a company representative");
       return response.unauthorized("You are not authorized to view participants.");
     }
 
