@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import NFC from "./nfc";
 import { useToast } from "~/hooks/use_toast";
 import { cn } from "~/lib/utils";
+import { useIsMobile } from "~/hooks/use_mobile";
 
 interface CredentialScannerProps {
   onScan: (slug: string) => void;
@@ -10,6 +11,8 @@ interface CredentialScannerProps {
 
 function CredentialScanner({ onScan }: CredentialScannerProps) {
   const { toast } = useToast();
+
+  const isMobile = useIsMobile();
 
   return (
     <Tabs defaultValue="qr">
@@ -20,7 +23,7 @@ function CredentialScanner({ onScan }: CredentialScannerProps) {
       <TabsContent value="qr">
         <Scanner
           key={"credential-scanner"}
-          classNames={{ video: cn("-scale-x-100") }}
+          classNames={{ video: cn(!isMobile && "-scale-x-100") }}
           onError={async () => {
             const perm = await navigator.permissions.query({ name: "camera" });
             if (perm.state === "prompt") {

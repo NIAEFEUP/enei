@@ -24,12 +24,6 @@ export default function RepresentativeQrScanner() {
   }, [representativeProfile]);
 
   useEffect(() => {
-<<<<<<< HEAD
-    console.log("hey");
-||||||| parent of 745c2b0d ([no ci] fix: more descriptive message)
-    console.log("hey")
-=======
->>>>>>> 745c2b0d ([no ci] fix: more descriptive message)
     axios
       .get(tuyau.$url("actions:representative.info"))
       .then((res) => {
