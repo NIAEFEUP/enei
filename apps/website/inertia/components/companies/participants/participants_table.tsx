@@ -216,7 +216,7 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="text-center">
-                 Não foram encontrados participantes.
+                  Não foram encontrados participantes.
                 </TableCell>
               </TableRow>
             )}
