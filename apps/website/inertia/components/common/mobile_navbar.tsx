@@ -60,7 +60,7 @@ export default function MobileNavbar() {
             <div
               className={
                 auth.user.role === "staff" || auth.user.role === "representative"
-                  ? "block"
+                  ? "block mx-auto"
                   : "hidden"
               }
             >

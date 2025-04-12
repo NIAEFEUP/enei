@@ -129,7 +129,7 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
                 {auth.state === "authenticated"
                   && auth.user.role !== "representative"
                   && auth.user.slug && (
-                    <div>
+                    <div className={`text-${textColor}`}>
                       <Dialog>
                         <DialogTrigger asChild>
                           <Button className="w-fit">
@@ -179,7 +179,7 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
                           ? "pages:staff.credentials.scan"
                           : "pages:representative.qrcode.scan"
                       }
-                      className={cn(buttonVariants({ variant: "link" }), `text-enei-blue`)}
+                      className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
                     >
                       <QrCode />
                     </Link>
@@ -189,7 +189,7 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
                 {auth.state === "authenticated" && auth.user.role === "representative" && (
                   <Link
                     route="pages:company.participants"
-                    className={cn(buttonVariants({ variant: "link" }), `text-enei-blue p-0`)}
+                    className={cn(buttonVariants({ variant: "link" }), `text-${textColor} p-0`)}
                   >
                     Participantes
                   </Link>
