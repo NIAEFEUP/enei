@@ -4,7 +4,6 @@ import type { HasMany, HasOne } from "@adonisjs/lucid/types/relations";
 import User from "./user.js";
 import Event from "./event.js";
 import RepresentativeProfile from "./representative_profile.js";
-import ParticipantProfile from "./participant_profile.js";
 
 export default class Company extends BaseModel {
   @column({ isPrimary: true })
