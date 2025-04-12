@@ -185,6 +185,8 @@ router
       .patch("/profile/edit", [ProfilesController, "update"])
       .as("actions:profile.update")
       .use([middleware.auth(), middleware.verifiedEmail()]);
+    
+    router.get("/representative/profile", [ProfilesController, "getRepresentativeProfile"]).as("actions:representative.info")
 
     router
       .post("/profile/edit/password", [ProfilesController, "sendEditPassword"])
@@ -250,7 +252,7 @@ router
     router
       .post("/:slug/check-in", [EventsController, "checkin"])
       .as("actions:events.checkin")
-      .use(middleware.staff());
+      .use(middleware.staffOrRepresentative());
 
     router
       .get("/:id/is-registered", [EventsController, "isRegistered"])
@@ -301,7 +303,7 @@ router
   })
   .prefix("/referrals")
   .middleware(middleware.auth());
-
+1
 router
   .route(`/r/:referralCode`, ["GET", "POST"], [ReferralsController, "link"])
   .middleware([middleware.automaticSubmit(), middleware.silentAuth()])
@@ -321,6 +323,13 @@ router
       .middleware(middleware.companyBearerAuth());
   })
   .prefix("api");
+
+router
+  .group(() => {
+    router.on("/scan").renderInertia("company/qrscanner").as("pages:representative.qrcode.scan");
+  })
+  .use([middleware.auth(), middleware.representative()])
+  .prefix("/representative");
 
 router
   .group(() => {

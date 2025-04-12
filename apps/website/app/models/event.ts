@@ -1,8 +1,9 @@
 import { DateTime } from "luxon";
-import { BaseModel, column, manyToMany } from "@adonisjs/lucid/orm";
+import { BaseModel, belongsTo, column, manyToMany } from "@adonisjs/lucid/orm";
 import SpeakerProfile from "./speaker_profile.js";
-import type { ManyToMany } from "@adonisjs/lucid/types/relations";
+import type { BelongsTo, ManyToMany } from "@adonisjs/lucid/types/relations";
 import User from "./user.js";
+import Company from "./company.js";
 
 export default class Event extends BaseModel {
   @column({ isPrimary: true })
@@ -55,6 +56,12 @@ export default class Event extends BaseModel {
     pivotTable: "event_checkins",
   })
   public checkedInUsers!: ManyToMany<typeof User>;
+
+  @column()
+  declare companyId: number | null;
+
+  @belongsTo(() => Company)
+  declare company: BelongsTo<typeof Company>;
 
   @column()
   declare registrationRequirements: string;

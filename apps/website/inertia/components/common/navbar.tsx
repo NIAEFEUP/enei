@@ -64,6 +64,9 @@ function LogoutButton({ variant }: { variant?: VariantProps<typeof buttonVariant
 
 export function Navbar({ className, variant }: { className?: string; variant?: "blue" | "beige" }) {
   const auth = useAuth();
+
+  console.log(auth)
+
   const [onTop, setOnTop] = useState(true);
 
   useEffect(() => {
@@ -119,6 +122,18 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
               >
                 <Link
                   route="pages:staff.qrcode.scan"
+                  className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
+                >
+                  <QrCode />
+                </Link>
+              </div>
+              <div
+                className={
+                  auth.state === "authenticated" && auth.user.role === "representative" ? "block" : "hidden"
+                }
+              >
+                <Link
+                  route="pages:representative.qrcode.scan"
                   className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
                 >
                   <QrCode />

@@ -7,6 +7,7 @@ import User from "#models/user";
 import app from "@adonisjs/core/services/app";
 import { BaseSeeder } from "@adonisjs/lucid/seeders";
 import { DateTime } from "luxon";
+import Event from "#models/event";
 
 export default class extends BaseSeeder {
   async run() {
@@ -52,33 +53,5 @@ export default class extends BaseSeeder {
     // const profile = await PromoterProfile.create({})
 
     await user.related("participantProfile").associate(profile);
-
-    const company = await Company.create({
-      name: "ENEI",
-      logo: "/images/logo-blue.svg",
-    });
-
-    const companyRepresentative = await User.create({
-      email: "company@eneiconf.pt",
-      emailVerifiedAt: DateTime.now(),
-    });
-
-    await companyRepresentative.related("accounts").create({
-      id: `credentials:company@eneiconf.pt`,
-      password: "password",
-    });
-
-    const companyRepresentativeProfile = await RepresentativeProfile.create({
-      firstName: "João",
-      lastName: "Silva",
-      jobTitle: "CEO",
-      ORCIDLink: "https://orcid.org/0000-0002-1825-0097",
-    });
-
-    await companyRepresentative
-      .related("representativeProfile")
-      .associate(companyRepresentativeProfile);
-
-    await companyRepresentativeProfile.related("company").associate(company);
   }
 }
