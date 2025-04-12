@@ -60,12 +60,14 @@ export class UserActivityService {
       .andWhereRaw(`description->>'companyId' = ?`, [companyId]);
 
     const users = await Promise.all(
-      likes.map((like) => {
-        if (like.description.type !== UserActivityType.CompanyLike) return null;
+      likes
+        .map((like) => {
+          if (like.description.type !== UserActivityType.CompanyLike) return null;
 
-        const likedById = like.description.likedBy;
-        return User.findOrFail(likedById);
-      }).filter((user) => user !== null),
+          const likedById = like.description.likedBy;
+          return User.findOrFail(likedById);
+        })
+        .filter((user) => user !== null),
     );
     return users;
   }
