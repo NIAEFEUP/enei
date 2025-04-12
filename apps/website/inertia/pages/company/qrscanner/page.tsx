@@ -40,8 +40,7 @@ export default function RepresentativeQrScanner() {
   const handleCheckIN = (slug: string) => {
     try {
       post(tuyau.$url("actions:events.checkin", { params: { slug } }), {
-        onSuccess: (response) => {
-          console.log(response);
+        onSuccess: (_) => {
           toast({
             title: "Success",
             description: "Participante adicionado à banca!",
