@@ -152,8 +152,6 @@ export default class CompaniesController {
           }) || []
         );
 
-    console.log(allParticipants.filter((p) => p.isLiked))
-
     return inertia.render("company/participants", {
       allParticipants: allParticipants,
       checkedParticipants: checkedParticipants,
