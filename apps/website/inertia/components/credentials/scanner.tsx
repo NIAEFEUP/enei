@@ -2,6 +2,7 @@ import { IDetectedBarcode, Scanner } from "@yudiel/react-qr-scanner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import NFC from "./nfc";
 import { useToast } from "~/hooks/use_toast";
+import { cn } from "~/lib/utils";
 
 interface CredentialScannerProps {
   onScan: (slug: string) => void;
@@ -19,6 +20,7 @@ function CredentialScanner({ onScan }: CredentialScannerProps) {
       <TabsContent value="qr">
         <Scanner
           key={"credential-scanner"}
+          classNames={{ video: cn("-scale-x-100") }}
           onError={async () => {
             const perm = await navigator.permissions.query({ name: "camera" });
             if (perm.state === "prompt") {

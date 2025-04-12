@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Container from "~/components/common/containers";
@@ -13,7 +13,7 @@ export default function RepresentativeQrScanner() {
   const [representativeProfile, setRepresentativeProfile] = useState<any>(null);
   const [profile, setProfile] = useState<any>(null);
 
-  const { post, setData } = useForm({
+  const { data, post, setData } = useForm({
     eventID: null,
   });
 
@@ -24,6 +24,7 @@ export default function RepresentativeQrScanner() {
   }, [representativeProfile]);
 
   useEffect(() => {
+    console.log("hey")
     axios
       .get(tuyau.$url("actions:representative.info"))
       .then((res) => {
@@ -38,10 +39,20 @@ export default function RepresentativeQrScanner() {
   }, []);
 
   const handleCheckIN = (slug: string) => {
+    if (data.eventID === null) {
+      toast({
+        className: "bg-red-300 border border-red-400",
+        title: "Erro",
+        description: "Aconteceu um problema ao ler o código QR. Por favor, tente novamente."
+      });
+
+      router.visit(document.location.href, { preserveState: false })
+      return;
+    }
+
     try {
       post(tuyau.$url("actions:events.checkin", { params: { slug } }), {
-        onSuccess: (response) => {
-          console.log(response);
+        onSuccess: () => {
           toast({
             title: "Success",
             description: "Participante adicionado à banca!",
