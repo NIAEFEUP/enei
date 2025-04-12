@@ -32,17 +32,8 @@ export class UserService {
 
   async storeCV(user: User, cv: MultipartFile) {
     try {
+      if (user.resume) attachmentManager.delete(user.resume);
       user.resume = await attachmentManager.createFromFile(cv);
-      await user.save();
-      return user;
-    } catch (error) {
-      this.logger.error(error);
-      throw error;
-    }
-  }
-  async deleteCV(user: User) {
-    try {
-      user.resume = null;
       await user.save();
       return user;
     } catch (error) {
@@ -77,6 +68,7 @@ export class UserService {
 
   async storeAvatar(user: User, avatar: MultipartFile) {
     try {
+      if (user.avatar) attachmentManager.delete(user.avatar);
       user.avatar = await attachmentManager.createFromFile(avatar);
       await user.save();
       return user;

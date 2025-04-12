@@ -4,6 +4,7 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { useEffect } from "react";
 import { useTuyau } from "~/hooks/use_tuyau";
+import { Trash } from "lucide-react";
 
 type AvatarUploadProps = {
   onUploadComplete: () => void;
@@ -11,9 +12,9 @@ type AvatarUploadProps = {
 
 const AvatarUpload = ({ onUploadComplete }: AvatarUploadProps) => {
   const tuyau = useTuyau();
-  const [fetchedName, setfetchedName] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string>("");
 
@@ -22,15 +23,13 @@ const AvatarUpload = ({ onUploadComplete }: AvatarUploadProps) => {
       try {
         const response = await axios.get(tuyau.$url("actions:avatar.name"));
         setFileName(response.data.fileName);
-        setfetchedName(true);
       } catch (error) {
         setFileName(null);
-        setfetchedName(true);
       }
     };
 
     fetchFileName();
-  }, [uploading]);
+  }, [uploading, deleting]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -68,7 +67,7 @@ const AvatarUpload = ({ onUploadComplete }: AvatarUploadProps) => {
   };
 
   const handleDelete = async () => {
-    setUploading(true);
+    setDeleting(true);
     try {
       await axios.delete(tuyau.$url("actions:avatar.delete"), {
         headers: {
@@ -78,7 +77,7 @@ const AvatarUpload = ({ onUploadComplete }: AvatarUploadProps) => {
       setFile(null);
     } catch (error) {
     } finally {
-      setUploading(false);
+      setDeleting(false);
       setErrorMsg("");
       onUploadComplete();
     }
@@ -87,18 +86,6 @@ const AvatarUpload = ({ onUploadComplete }: AvatarUploadProps) => {
   return (
     <>
       <div className="flex flex-col gap-2">
-        {fileName ? (
-          <div className="flex flex-col gap-2 lg:flex-row">
-            <Input className="w-full lg:w-64" type="text" value={fileName} disabled />
-            <Button
-              className="w-full lg:w-48"
-              onClick={handleDelete}
-              disabled={uploading || !fetchedName}
-            >
-              {uploading ? "Uploading..." : "Clear avatar"}
-            </Button>
-          </div>
-        ) : (
           <div className="flex flex-col gap-2 lg:flex-row">
             <Input
               className="w-full lg:w-64"
@@ -107,14 +94,23 @@ const AvatarUpload = ({ onUploadComplete }: AvatarUploadProps) => {
               onChange={handleFileChange}
             />
             <Button
-              className="w-full lg:w-48"
+              className="w-full lg:w-38"
               onClick={handleUpload}
-              disabled={uploading || !fetchedName || !file}
+              disabled={uploading || deleting || !file}
             >
-              {uploading ? "Uploading..." : "Upload avatar"}
+              {uploading ? "A carregar..." : "Carregar foto"}
             </Button>
+            {fileName && (
+              <Button
+                variant="destructive"
+                className="w-9"
+                onClick={handleDelete}
+                disabled={uploading || deleting}
+              >
+                <Trash className="h-4 w-4" />
+              </Button>
+            )}
           </div>
-        )}
       </div>
       {errorMsg && <p className="mt-4 text-center text-sm text-red-600">{errorMsg}</p>}
     </>

@@ -17,12 +17,6 @@ export default class UsersController {
     return response.ok({ message: "CV uploaded" });
   }
 
-  async deleteCV({ response, auth }: HttpContext) {
-    const user = auth.user;
-    await this.userService.deleteCV(user!);
-    return response.ok({ message: "CV deleted" });
-  }
-
   async showCVName({ response, auth }: HttpContext) {
     const user = auth.user;
     if (user!.resume === null) {
