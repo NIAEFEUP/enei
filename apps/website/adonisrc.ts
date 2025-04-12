@@ -54,7 +54,6 @@ export default defineConfig({
     () => import("@adonisjs/redis/redis_provider"),
     () => import("@adonisjs/drive/drive_provider"),
     () => import("@jrmc/adonis-attachment/attachment_provider"),
-    () => import("@adonisjs/drive/drive_provider"),
     () => import("@adonisjs/bouncer/bouncer_provider"),
     {
       file: () => import("@adminjs/adonis/adminjs_provider"),
