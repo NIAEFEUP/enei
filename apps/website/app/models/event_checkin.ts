@@ -1,18 +1,18 @@
-import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { DateTime } from "luxon";
+import { BaseModel, column } from "@adonisjs/lucid/orm";
 
 export default class EventCheckin extends BaseModel {
-  static table = 'event_checkins'
+  static table = "event_checkins";
 
   @column({ isPrimary: true })
-  declare id: number
+  declare id: number;
 
   @column()
-  declare eventId: number
+  declare eventId: number;
 
   @column()
-  declare userId: number
+  declare userId: number;
 
   @column.dateTime({ autoCreate: true })
-  declare checkedInAt: DateTime
+  declare checkedInAt: DateTime;
 }
