@@ -13,6 +13,8 @@ const companyRelations = lazy(() =>
     r.many("representativeProfiles"),
     r.many("representativeProfiles"),
     r.many("events"),
+    r.hasOne("event"),
+    r.hasOne("user")
   ]),
 );
 

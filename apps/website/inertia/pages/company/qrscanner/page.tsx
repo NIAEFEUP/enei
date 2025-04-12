@@ -1,4 +1,3 @@
-import Company from "#models/company";
 import { useForm } from "@inertiajs/react";
 import axios from "axios";
 import { useEffect, useState } from "react";

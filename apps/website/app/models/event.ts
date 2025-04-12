@@ -122,8 +122,4 @@ export default class Event extends BaseModel {
     const endTime = this.date.plus({ minutes: this.duration });
     return `${this.date.toFormat("HH:mm")} - ${endTime.toFormat("HH:mm")}`;
   }
-
-  get $relations() {
-    return eventRelations.get().for(this);
-  }
 }

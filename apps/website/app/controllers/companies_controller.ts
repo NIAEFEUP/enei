@@ -67,21 +67,23 @@ export default class CompaniesController {
   }
 
   async showParticipants({ inertia, auth, response }: HttpContext) {
-    const companyUser = auth.user!;
+    const companyUser = auth.getUserOrFail();
 
     if (!companyUser.representativeProfileId) {
       console.log("User is not a company representative");
       return response.unauthorized("You are not authorized to view participants.");
     }
 
-    await companyUser.load("representativeProfile");
+    await companyUser.load("representativeProfile", (q) => {
+      q.preload("company")
+    });
 
     const participants = await User.query()
       .preload("participantProfile")
       .whereNotNull("participant_profile_id")
       .orderBy("id");
 
-    const allParticipants = await Promise.all(
+    const allParticipants = companyUser.representativeProfile.company.sponsor === "bronze" ? null : await Promise.all(
         participants.map(async (participant) => {
           const likes = await this.userActivityService.getCompanyLikes(
             participant.id,
@@ -153,12 +155,10 @@ export default class CompaniesController {
           }) || []
         );
 
-    console.log(allParticipants.filter((p) => p.isLiked))
-
     return inertia.render("company/participants", {
       allParticipants: allParticipants,
       checkedParticipants: checkedParticipants,
-      likedParticipants: allParticipants.filter((p) => p.isLiked),
+      likedParticipants: allParticipants?.filter((p) => p.isLiked),
     });
   }
 }

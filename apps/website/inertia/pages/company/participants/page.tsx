@@ -47,7 +47,7 @@ export default function CompanyParticipantsPage({ allParticipants, checkedPartic
             </TabsTrigger>
           </TabsList>
           <TabsContent value="all-participants">
-            <ParticipantsTable participants={allParticipants} />
+            {allParticipants && <ParticipantsTable participants={allParticipants} />}
           </TabsContent>
           <TabsContent value="checked-participants">
             <ParticipantsTable participants={checkedParticipants} />

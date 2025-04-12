@@ -342,12 +342,14 @@ router.on("/nfc").renderInertia("nfc").as("pages:nfc");
 
 router
   .group(() => {
-    router
-      .get("/participants", [CompaniesController, "showParticipants"])
-      .as("pages:company.participants");
-    router
-      .post("/participants/like", [CompaniesController, "toggleParticipantLike"])
-      .as("actions:company.like.participant");
+    router.group(() => {
+      router
+        .get("/participants", [CompaniesController, "showParticipants"])
+        .as("pages:company.participants");
+      router
+        .post("/participants/like", [CompaniesController, "toggleParticipantLike"])
+        .as("actions:company.like.participant");
+    }).use(middleware.representative())
     router.get("/:name", [CompaniesController, "profile"]).as("pages:company-profile");
   })
-  .prefix("/company");
+  .prefix("/company")
