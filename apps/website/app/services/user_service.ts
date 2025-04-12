@@ -22,8 +22,6 @@ import type { MultipartFile } from "@adonisjs/core/bodyparser";
 import drive from "@adonisjs/drive/services/main";
 import Sqids from "sqids";
 import * as is from "@sindresorhus/is";
-import Product from "#models/product";
-import { OrderService } from "./order_service.js";
 import Event from "#models/event";
 import EventService from "./event_service.js";
 
