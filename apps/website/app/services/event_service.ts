@@ -106,7 +106,7 @@ export default class EventService {
   }
 
   async checkInWithTimeAttendance(user: User, event: Event, exit: boolean | undefined) {
-    if(!exit) return
+    if(exit === undefined) return
 
     const activities = await UserActivity
       .query()
@@ -115,8 +115,8 @@ export default class EventService {
       .andWhereRaw(`(description->'event'->>'id')::int = ?`, [event.id])
       .orderBy("created_at", "desc")
 
-    if (exit === (activities[activities.length - 1].description as AttendEventDescription).exit) {
-      throw new Error("Este participante já chegou na palestra")
+    if (activities.length > 0 && exit === (activities[activities.length - 1].description as AttendEventDescription).exit) {
+      return
     }
 
     const checkInTime = DateTime.now()
