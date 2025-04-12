@@ -48,6 +48,17 @@ const EventResource = createResource({
           throughResourceId: "event_users",
         },
       },
+      checkedInUsers: {
+        type: "many-to-many",
+        target: {
+          resourceId: "users",
+        },
+        junction: {
+          joinKey: "eventId",
+          inverseJoinKey: "userId",
+          throughResourceId: "event_checkins",
+        },
+      }
     }),
   ],
 });
