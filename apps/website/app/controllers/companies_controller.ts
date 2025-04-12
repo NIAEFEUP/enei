@@ -151,7 +151,7 @@ export default class CompaniesController {
           course: participant.participantProfile.course,
           year: participant.participantProfile.curricularYear,
           cvLink: null, // TODO: add when cv is available
-          likedBy: likedBy.filter((name) => name !== null),
+          likedBy: likedBy.filter((name) => name !== null).join(", "),
           isLiked: await this.userActivityService.isLiked(participant.id, companyUser.id),
         };
       }) || [],
