@@ -23,11 +23,13 @@ export default function MobileNavbar() {
         </Button>
       </SheetTrigger>
       <SheetContent className="flex flex-col gap-y-4">
-        <SheetHeader>
-          ENEI 2025
-        </SheetHeader>
+        <SheetHeader>ENEI 2025</SheetHeader>
         <div className="flex flex-col justify-center gap-y-4">
-          {auth.state === "authenticated"  && auth.user.role !== "representative" && <Link className="mb-2" route="pages:profile.default">Perfil</Link>}
+          {auth.state === "authenticated" && auth.user.role !== "representative" && (
+            <Link className="mb-2" route="pages:profile.default">
+              Perfil
+            </Link>
+          )}
           {auth.state === "authenticated"
             && auth.user.role !== "representative"
             && auth.user.slug && (
@@ -54,8 +56,7 @@ export default function MobileNavbar() {
               </div>
             )}
 
-          {auth.state === "authenticated" && 
-          (
+          {auth.state === "authenticated" && (
             <div
               className={
                 auth.user.role === "staff" || auth.user.role === "representative"
