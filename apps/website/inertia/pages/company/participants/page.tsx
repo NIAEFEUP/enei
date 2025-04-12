@@ -26,7 +26,7 @@ export default function CompanyParticipantsPage({
   checkedParticipants,
   likedParticipants,
 }: ParticipantsPageProps) {
-  console.log({allParticipants, checkedParticipants, likedParticipants})
+  console.log({ allParticipants, checkedParticipants, likedParticipants });
   return (
     <Page title="Participantes" variant="beige" className="bg-enei-beige">
       <Container>

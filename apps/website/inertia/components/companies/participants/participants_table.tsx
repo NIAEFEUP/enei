@@ -189,15 +189,18 @@ const columns: ColumnDef<Participant>[] = [
 ];
 
 export function ParticipantsTable({ participants }: ParticipantsTableProps) {
-  const t = useMemo(() => [
-    ...structuredClone(participants), 
-    ...structuredClone(participants), 
-    ...structuredClone(participants), 
-    ...structuredClone(participants), 
-    ...structuredClone(participants), 
-    ...structuredClone(participants), 
-    ...structuredClone(participants), 
-  ], [participants]);
+  const t = useMemo(
+    () => [
+      ...structuredClone(participants),
+      ...structuredClone(participants),
+      ...structuredClone(participants),
+      ...structuredClone(participants),
+      ...structuredClone(participants),
+      ...structuredClone(participants),
+      ...structuredClone(participants),
+    ],
+    [participants],
+  );
   const table = useReactTable({
     data: t,
     columns,
@@ -266,14 +269,21 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
             )}
           </TableBody>
         </Table>
-        <Pagination className={cn("mt-4 w-full mx-0")}>
-          <PaginationContent className="flex flex-row justify-between max-w-lg w-full">
+        <Pagination className={cn("mx-0 mt-4 w-full")}>
+          <PaginationContent className="flex w-full max-w-lg flex-row justify-between">
             {table.getCanPreviousPage() ? (
               <PaginationItem onClick={() => table.previousPage()}>
                 <PaginationPrevious className="text-enei-blue cursor-pointer select-none rounded" />
               </PaginationItem>
-            ): (<div/>)}
-            <div className={cn("flex flex-row gap-2", {"pl-28": !table.getCanPreviousPage(), "pr-28": !table.getCanNextPage()})}>
+            ) : (
+              <div />
+            )}
+            <div
+              className={cn("flex flex-row gap-2", {
+                "pl-28": !table.getCanPreviousPage(),
+                "pr-28": !table.getCanNextPage(),
+              })}
+            >
               {hasMoreBefore && (
                 <PaginationItem>
                   <PaginationEllipsis className="text-enei-blue cursor-pointer select-none rounded" />
@@ -302,7 +312,9 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
               <PaginationItem onClick={() => table.nextPage()}>
                 <PaginationNext className="text-enei-blue cursor-pointer select-none rounded" />
               </PaginationItem>
-            ): (<div />)}
+            ) : (
+              <div />
+            )}
           </PaginationContent>
         </Pagination>
       </div>
