@@ -63,7 +63,7 @@ export default function ProfilePage({
 
           <section className="flex flex-col gap-20 py-12">
             <div className="flex flex-col gap-4 md:hidden">
-              <Avatar className="mb-12 size-fit mx-auto">
+              <Avatar className="mx-auto mb-12 size-fit">
                 <AvatarImage
                   src={tuyau.$url("pages:profile.avatar.show", {
                     params: { slug: user.slug ?? "" },
@@ -76,8 +76,15 @@ export default function ProfilePage({
                 </AvatarFallback>
               </Avatar>
               {isUser && (
-                <Link route="pages:profile.edit" params={{ section: "profile" }} className={cn(buttonVariants(), "w-full max-w-md mx-auto")}>
-                  <span className="flex flex-row justify-center gap-2"><Pencil />Editar Informações</span>
+                <Link
+                  route="pages:profile.edit"
+                  params={{ section: "profile" }}
+                  className={cn(buttonVariants(), "mx-auto w-full max-w-md")}
+                >
+                  <span className="flex flex-row justify-center gap-2">
+                    <Pencil />
+                    Editar Informações
+                  </span>
                 </Link>
               )}
             </div>
