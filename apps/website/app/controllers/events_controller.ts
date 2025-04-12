@@ -75,11 +75,7 @@ export default class EventsController {
       if (!event.requiresRegistration) {
         return response.badRequest("Este evento não requer registo");
       }
-
-      if (PointsService.userWillExceededNegativePoints(user, event)) {
-        return response.badRequest("Excedeste os pontos negativos com cauções");
-      }
-
+      
       // Register
       await this.eventService.register(user!, event, {
         products: products ?? [],

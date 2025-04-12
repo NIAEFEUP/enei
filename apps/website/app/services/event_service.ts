@@ -8,6 +8,7 @@ import OrderProduct from "#models/order_product";
 import db from "@adonisjs/lucid/services/db";
 import { DateTime } from "luxon";
 import Product from "#models/product";
+import PointsService from "./points_service.js";
 
 export default class EventService {
   async isRegistered(user: User, event: Event) {
@@ -101,8 +102,10 @@ export default class EventService {
       event.ticketsRemaining--;
       await event.useTransaction(trx).save();
 
-      user.points -= event.product.points;
-      await user.useTransaction(trx).save();
+      // limwa: Name is a bit wrong here, this function actually just gives the points of a product to a user
+      // and creates an order for it 
+      const product = await Product.find(event.productId);
+      await PointsService.eventCheckinPointAttribution(user, product);
     });
   }
 
