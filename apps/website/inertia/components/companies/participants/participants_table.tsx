@@ -155,17 +155,19 @@ const columns: ColumnDef<Participant>[] = [
               {liked ? <HeartOff className="mr-2 h-4 w-4" /> : <Heart className="mr-2 h-4 w-4" />}
               Like
             </DropdownMenuItem>
-            {row.original.cvLink && (<DropdownMenuItem className="flex flex-row">
-              <a
-                href={row.original.cvLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-row"
-              >
-                <FileUser className="mr-2 h-4 w-4" />
-                CV
-              </a>
-            </DropdownMenuItem>)}
+            {row.original.cvLink && (
+              <DropdownMenuItem className="flex flex-row">
+                <a
+                  href={row.original.cvLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-row"
+                >
+                  <FileUser className="mr-2 h-4 w-4" />
+                  CV
+                </a>
+              </DropdownMenuItem>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       );
