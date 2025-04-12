@@ -103,7 +103,7 @@ export default class EventService {
       await event.useTransaction(trx).save();
 
       // limwa: Name is a bit wrong here, this function actually just gives the points of a product to a user
-      // and creates an order for it 
+      // and creates an order for it
       const product = await Product.find(event.productId);
       await PointsService.eventCheckinPointAttribution(user, product);
     });

@@ -75,7 +75,7 @@ export default class EventsController {
       if (!event.requiresRegistration) {
         return response.badRequest("Este evento não requer registo");
       }
-      
+
       // Register
       await this.eventService.register(user!, event, {
         products: products ?? [],
