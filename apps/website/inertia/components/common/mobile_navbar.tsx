@@ -25,13 +25,6 @@ export default function MobileNavbar() {
       <SheetContent className="flex flex-col gap-y-4">
         <SheetHeader>ENEI 2025</SheetHeader>
         <div className="flex flex-col justify-center gap-y-4 text-center">
-          <div className="mx-auto">
-            {auth.state === "authenticated" && auth.user.role !== "representative" && (
-              <Link className="mb-2" route="pages:profile.default">
-                Perfil
-              </Link>
-            )}
-          </div>
           {auth.state === "authenticated"
             && auth.user.role !== "representative"
             && auth.user.slug && (
@@ -57,6 +50,7 @@ export default function MobileNavbar() {
                 </Dialog>
               </div>
             )}
+          <div className="mx-auto">{auth.state === "authenticated"  && auth.user.role !== "representative" && <Link className={cn(buttonVariants({ variant: "link" }), "text-enei-blue mb-2")} route="pages:profile.default">Perfil</Link>}</div>
 
           {auth.state === "authenticated" && (
             <div
