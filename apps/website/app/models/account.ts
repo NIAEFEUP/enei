@@ -1,11 +1,13 @@
 import { DateTime } from "luxon";
-import { BaseModel, belongsTo, column } from "@adonisjs/lucid/orm";
-import type { BelongsTo } from "@adonisjs/lucid/types/relations";
+import { BaseModel, column } from "@adonisjs/lucid/orm";
 import type { SocialProviders } from "@adonisjs/ally/types";
 import { compose } from "@adonisjs/core/helpers";
 import hash from "@adonisjs/core/services/hash";
 import User from "./user.js";
 import { withAuthFinder } from "@adonisjs/auth/mixins/lucid";
+import { belongsTo, type RequiredBelongsTo } from "#lib/lucid/decorators.js";
+import { lazy } from "#lib/lazy.js";
+import { relations } from "#lib/lucid/relations.js";
 
 const AuthFinder = withAuthFinder(() => hash.use("scrypt"), {
   uids: ["id"],
@@ -14,6 +16,8 @@ const AuthFinder = withAuthFinder(() => hash.use("scrypt"), {
 
 type AccountProvider = "credentials" | keyof SocialProviders;
 type AccountId = `${AccountProvider}:${string}`;
+
+const accountRelations = lazy(() => relations(Account, (r) => [r.requiredBelongsTo("user")]));
 
 export default class Account extends compose(BaseModel, AuthFinder) {
   @column({ isPrimary: true })
@@ -31,8 +35,14 @@ export default class Account extends compose(BaseModel, AuthFinder) {
   @column()
   declare userId: number;
 
-  @belongsTo(() => User)
-  declare user: BelongsTo<typeof User>;
+  @belongsTo(() => User, {
+    meta: { required: true },
+  })
+  declare user: RequiredBelongsTo<typeof User>;
+
+  get $relations() {
+    return accountRelations.get().for(this);
+  }
 
   static findByCredentials(email: string) {
     return this.findForAuth(["id"], `credentials:${email}`);

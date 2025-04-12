@@ -28,9 +28,10 @@ export default class StoreController {
       ...request.all(),
     });
 
-    const product = await Product.find(params.id);
+    const product = await Product.findBy({ id: params.id, category: "store" });
     if (!(await this.orderService.checkUserMaxOrders(auth.user!, product))) {
       session.flashErrors({ maxOrder: "Já adquiriste a quantia máxima permitida deste produto" });
+      return response.redirect().back();
     }
 
     if (auth.user!.points < cost) {

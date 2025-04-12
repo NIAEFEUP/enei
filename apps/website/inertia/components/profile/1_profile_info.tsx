@@ -1,5 +1,5 @@
 import { PageProps } from "@adonisjs/inertia/types";
-import ParticipantProfile from "#models/participant_profile";
+import type ParticipantProfile from "#models/participant_profile";
 import { Button } from "~/components/ui/button";
 import {
   Form,
@@ -159,11 +159,11 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
             <Avatar className="size-fit self-center">
               <AvatarImage
                 src={tuyau.$url("actions:avatar.show") + "#" + cacheBuster}
-                alt={profile.slug}
+                alt={profile.user.slug ?? ""}
                 className="text-enei-beige h-64 w-64 object-cover"
               />
               <AvatarFallback className="bg-enei-blue text-enei-beige h-64 w-64">
-                {profile.slug}
+                {profile.user.slug}
               </AvatarFallback>
             </Avatar>
             <FormItem className="flex-1">

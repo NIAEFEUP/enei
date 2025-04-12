@@ -18,7 +18,7 @@ interface Speaker {
 interface Event {
   id: number;
   title: string;
-  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other";
+  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other" | "painel";
   date: string;
   time: string;
   location: string;
@@ -42,13 +42,13 @@ export default function LongActivities({ currentActiveIndex, eventsByDay }: Long
             title={"Check-in"}
             type={"other"}
             time={"9:00 - 21:30"}
-            location={"TBD"}
+            location={"ISEP (manhã) | FEUP (tarde)"}
             speakers={[]}
           />
           <EventCard
             title={"Feira de Emprego"}
             type={"networking"}
-            time={"14:00 - 18:30"}
+            time={"13:30 - 19:00"}
             location={"Corredor B - FEUP"}
             speakers={[]}
           />
@@ -70,13 +70,13 @@ export default function LongActivities({ currentActiveIndex, eventsByDay }: Long
             title={"Check-in"}
             type={"other"}
             time={"9:00 - 21:30"}
-            location={"TBD"}
+            location={"ISEP (manhã) | FEUP (tarde)"}
             speakers={[]}
           />
           <EventCard
             title={"Feira de Emprego"}
             type={"networking"}
-            time={"14:00 - 18:30"}
+            time={"13:30 - 19:30"}
             location={"Corredor B - FEUP"}
             speakers={[]}
           />
@@ -98,7 +98,7 @@ export default function LongActivities({ currentActiveIndex, eventsByDay }: Long
             title={"Check-in"}
             type={"other"}
             time={"9:00 - 12:00"}
-            location={"TBD - FEUP"}
+            location={"ISEP (manhã) | FEUP (tarde)"}
             speakers={[]}
           />
           <EventCard

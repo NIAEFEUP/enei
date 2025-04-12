@@ -3,10 +3,25 @@ import { inject } from "@adonisjs/core";
 import User from "#models/user";
 import Event from "#models/event"
 import { UserActivityService } from "#services/user_activity_service";
+import Company = require("../models/company");
 
 @inject()
 export default class CompaniesController {
   constructor(private userActivityService: UserActivityService) { }
+
+  async profile({ params, inertia }: HttpContext) {
+    const { name } = params;
+
+    const company = await Company.findByOrFail("name", name);
+    await company.load("representativeProfiles");
+
+    const events = await Company.getEvents(company);
+
+    return inertia.render("companyprofile", {
+      company,
+      events,
+    });
+  }
 
   async toggleParticipantLike({ request, auth, response }: HttpContext) {
     const { participantId } = request.only(["participantId"]);

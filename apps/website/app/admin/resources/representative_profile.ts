@@ -8,6 +8,7 @@ import db from "@adonisjs/lucid/services/db";
 import crypto from "node:crypto";
 import hash from "@adonisjs/core/services/hash";
 import type { ActionContext, ActionRequest, ActionResponse } from "adminjs";
+import { DateTime } from "luxon";
 
 const RepresentativeProfileResource = createResource({
   model: RepresentativeProfile,
@@ -25,12 +26,14 @@ const RepresentativeProfileResource = createResource({
           context: ActionContext,
         ) => {
           const newProfile = context.record?.params;
+
           if (!newProfile) return;
 
           await db.transaction(async (trx) => {
             const user = await User.create(
               {
                 email: newProfile.email,
+                emailVerifiedAt: DateTime.now(),
               },
               { client: trx },
             );

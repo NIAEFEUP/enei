@@ -4,6 +4,8 @@ import SpeakerProfile from "./speaker_profile.js";
 import type { BelongsTo, ManyToMany } from "@adonisjs/lucid/types/relations";
 import User from "./user.js";
 import Company from "./company.js";
+import ProductGroup from "./product_group.js";
+import Product from "./product.js";
 
 export default class Event extends BaseModel {
   @column({ isPrimary: true })
@@ -22,7 +24,15 @@ export default class Event extends BaseModel {
   declare description: string | null;
 
   @column()
-  declare type: string;
+  declare type:
+    | "workshop"
+    | "other"
+    | "night"
+    | "talk"
+    | "networking"
+    | "competition"
+    | "meal"
+    | "painel";
 
   @column()
   declare companyImage: string;
@@ -57,6 +67,11 @@ export default class Event extends BaseModel {
   })
   public checkedInUsers!: ManyToMany<typeof User>;
 
+  @manyToMany(() => Company, {
+    pivotTable: "event_companies",
+  })
+  public companies!: ManyToMany<typeof Company>;
+
   @column()
   declare companyId: number | null;
 
@@ -76,14 +91,39 @@ export default class Event extends BaseModel {
   declare ticketsRemaining: number;
 
   @column()
-  declare price: number;
+  declare participationProductId: number | null;
+
+  @belongsTo(() => Product, {
+    foreignKey: "participationProductId",
+  })
+  declare participationProduct: BelongsTo<typeof Product>;
+
+  @column()
+  declare productGroupId: number;
+
+  @column()
+  declare productId: number;
+
+  @belongsTo(() => Product)
+  declare product: BelongsTo<typeof Product>;
+
+  @belongsTo(() => ProductGroup)
+  declare productGroup: BelongsTo<typeof ProductGroup>;
 
   public getFormattedDate() {
     return this.date.toFormat("dd-MM-yyyy");
   }
 
+  get isPaid() {
+    return false;
+  }
+
   public getFormattedTime() {
     const endTime = this.date.plus({ minutes: this.duration });
     return `${this.date.toFormat("HH:mm")} - ${endTime.toFormat("HH:mm")}`;
+  }
+
+  get $relations() {
+    return eventRelations.get().for(this);
   }
 }

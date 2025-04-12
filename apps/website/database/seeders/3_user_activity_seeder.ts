@@ -5,7 +5,7 @@ import { UserActivityType } from "../../types/user_activity.js";
 export default class extends BaseSeeder {
   async run() {
     await UserActivity.create({
-      type: "referral",
+      type: UserActivityType.Referral,
       description: {
         type: UserActivityType.Referral,
         referralCode: "123",

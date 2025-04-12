@@ -14,6 +14,7 @@ import {
   sendChangePasswordThrottle,
   sendForgotPasswordThrottle,
 } from "#start/limiter";
+const CompanyController = () => import("#controllers/companies_controller");
 
 
 const EventsController = () => import("#controllers/events_controller");
@@ -27,6 +28,7 @@ const ReferralsController = () => import("#controllers/referrals_controller");
 const LeaderboardController = () => import("#controllers/leaderboard_controller");
 const ProductReservationController = () => import("#controllers/product_reservation_controller");
 const CompaniesController = () => import("#controllers/companies_controller");
+const PaymentsController = () => import("#controllers/payments_controller");
 
 router.on("/").renderInertia("home").as("pages:home");
 
@@ -161,10 +163,78 @@ router
   .group(() => {
     //router.get('/', [OrdersController, 'index']) acho que isto já nao e usado
     router.post("/mbway", [OrdersController, "createMBWay"]);
-    router.get("/:id", [OrdersController, "show"]).as("payment.show");
+    router.get("/:paymentId", [OrdersController, "show"]).as("payment.show");
+    router.post("/callback", [PaymentsController, "callback"]).as("actions:payment.callback");
   })
   .use([middleware.auth(), middleware.verifiedEmail(), middleware.participant()])
   .prefix("payment");
+
+router.group(() => {
+  router.get("/u/:slug", [ProfilesController, "index"]).as("pages:profile.show");
+  router
+    .post("/u/:slug/product/collect", [ProductReservationController, "collect"])
+    .as("actions:profile.product.collect")
+    .use(middleware.staff());
+  router
+    .get("/profile", [ProfilesController, "default"])
+    .as("pages:profile.default")
+    .use([middleware.auth(), middleware.verifiedEmail()]);
+  router
+    .get("/profile/edit/:section", [ProfilesController, "edit"])
+    .as("pages:profile.edit")
+    .use([middleware.auth(), middleware.verifiedEmail(), middleware.wip()]);
+  router
+    .patch("/profile/edit", [ProfilesController, "update"])
+    .as("actions:profile.update")
+    .use([middleware.auth(), middleware.verifiedEmail(), middleware.wip()]);
+
+  router
+    .post("/profile/edit/password", [ProfilesController, "sendEditPassword"])
+    .as("actions:profile.change-password.send")
+    .use([middleware.requireAuthenticationEnabled(), middleware.auth(), sendChangePasswordThrottle])
+    .use(middleware.wip());
+  router
+    .post("/profile/edit/email", [ProfilesController, "sendEditEmail"])
+    .as("actions:profile.edit-email.send")
+    .use([middleware.requireAuthenticationEnabled(), middleware.auth(), sendChangeEmailThrottle])
+    .use(middleware.wip());
+  router
+    .route(
+      "profile/edit/email/callback/confirm",
+      ["GET", "POST"],
+      [ProfilesController, "callbackForEmailChangeConfirmation"],
+    )
+    .as("actions:profile.edit-email.confirm.callback")
+    .middleware([
+      middleware.requireAuthenticationEnabled(),
+      middleware.verifyUrlSignature(),
+      middleware.automaticSubmit(),
+    ])
+    .use(middleware.wip());
+  router
+    .route(
+      "profile/edit/email/callback/cancel",
+      ["GET", "POST"],
+      [ProfilesController, "callbackForEmailChangeCancelation"],
+    )
+    .as("actions:profile.edit-email.cancel.callback")
+    .middleware([
+      middleware.requireAuthenticationEnabled(),
+      middleware.verifyUrlSignature(),
+      middleware.automaticSubmit(),
+    ])
+    .use(middleware.wip());
+
+  router
+    .get("/u/:slug/cv", [ProfilesController, "showCV"])
+    .as("pages:profile.cv.show")
+    .use(middleware.wip());
+  router
+    .get("/u/:slug/avatar", [ProfilesController, "showAvatar"])
+    .as("pages:profile.avatar.show")
+    .use(middleware.wip());
+  router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
+});
 
 router
   .group(() => {
@@ -230,23 +300,25 @@ router
       .get("/u/:slug/avatar", [ProfilesController, "showAvatar"])
       .as("pages:profile.avatar.show");
     router.get("/u/:slug/info", [ProfilesController, "getInfo"]).as("actions:profile.info");
+  });
+ 
+  router
+  .group(() => {
+    router.get("/:name", [CompanyController, "profile"]).as("pages:company-profile");
   })
-  .use(middleware.wip());
+  .prefix("/company");
 
 router
   .group(() => {
     router.get("/", [EventsController, "index"]).as("pages:events");
 
     router.get("/:id", [EventsController, "show"]).as("pages:events.show");
-    router
-      .post("/:id/register", [EventsController, "register"])
-      .as("actions:events.register")
-      .use([
-        middleware.auth(),
-        middleware.verifiedEmail(),
-        middleware.participant(),
-        middleware.hasPurchasedTicket(),
-      ]);
+    router.post("/:id/register", [EventsController, "register"]).as("actions:events.register").use([
+      middleware.auth(),
+      middleware.verifiedEmail(),
+      middleware.participant(),
+      //middleware.hasPurchasedTicket(),
+    ]);
     router.get("/:id/tickets", [EventsController, "ticketsRemaining"]).as("actions:events.tickets");
 
     router
@@ -333,10 +405,10 @@ router
 
 router
   .group(() => {
-    router.on("/scan").renderInertia("qrscanner").as("pages:staff.qrcode.scan");
+    router.on("/scan").renderInertia("credentials").as("pages:staff.credentials.scan");
   })
   .use([middleware.auth(), middleware.staff()])
-  .prefix("/qrcode");
+  .prefix("/credentials");
 
 router.on("/nfc").renderInertia("nfc").as("pages:nfc");
 

@@ -14,7 +14,7 @@ import { z } from "zod";
 import sizes from "#data/enei/signup/shirts.json" with { type: "json" };
 import heardaboutfrom from "#data/enei/signup/heard-about.json" with { type: "json" };
 import { Option } from "~/components/ui/multiple-selector";
-import ParticipantProfile from "#models/participant_profile";
+import type ParticipantProfile from "#models/participant_profile";
 import { TRANSPORTS } from "~/lib/enei/signup/transports";
 import { ENEI_EDITIONS } from "~/lib/enei/signup/editions";
 

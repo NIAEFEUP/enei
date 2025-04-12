@@ -1,4 +1,4 @@
-import OrderProduct from "#models/order_product";
+import type OrderProduct from "#models/order_product";
 import PointsStoreProductCollectCard from "../store/card/product_collect_card";
 
 interface StoreReservedProductsProps {

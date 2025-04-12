@@ -41,6 +41,9 @@ export default class RepresentativeProfile extends BaseModel {
   @column()
   declare email: string | null;
 
+  @column()
+  declare image: string | null;
+
   // To uncomment when Events are created
   // @hasMany(() => Event)
   // declare participatingEvents: HasMany<typeof Event>

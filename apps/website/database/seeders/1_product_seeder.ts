@@ -7,9 +7,8 @@ export default class ProductSeeder extends BaseSeeder {
       name: "Bilhete Early Bird - Com Alojamento",
       description:
         "Inclui:<br />• Pequenos-almoços, almoços e jantares durante o período do evento<br />• Acesso a coffee breaks e sessão de cocktails<br />• Acesso a workshops, palestras e outros<br />• Acesso a festas noturnas e outras atividades recreativas (exceto Rally Tascas) <br />• Alojamento em Pavilhão",
-      price: 35,
+      price: 3500,
       stock: 100,
-      currency: "EUR",
       maxOrder: 1,
       productGroupId: 1,
       image: "/favicon.svg",
@@ -18,9 +17,8 @@ export default class ProductSeeder extends BaseSeeder {
       name: "Bilhete Early Bird - Sem Alojamento",
       description:
         "Inclui:<br />• Pequenos-almoços, almoços e jantares durante o período do evento<br />• Acesso a coffee breaks e sessão de cocktails<br />• Acesso a workshops, palestras e outros<br />• Acesso a festas noturnas e outras atividades recreativas (exceto Rally Tascas)",
-      price: 30,
+      price: 3000,
       stock: 50,
-      currency: "EUR",
       maxOrder: 1,
       productGroupId: 1,
       image: "/favicon.svg",

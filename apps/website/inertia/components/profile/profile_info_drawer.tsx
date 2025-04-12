@@ -1,19 +1,15 @@
-import ParticipantProfile from "#models/participant_profile";
 import { Link } from "@tuyau/inertia/react";
-import { User } from "lucide-react";
+import { User as UserIcon } from "lucide-react";
 import { Drawer, DrawerContent } from "~/components/ui/drawer";
-import { Button } from "~/components/ui/button";
-import NFC from "../credentials/nfc";
-import { useTuyau } from "~/hooks/use_tuyau";
+import CredentialWriter from "../credentials/writer";
+import User from "#models/user";
 
 interface ProfileInfoDrawerProps {
-  profile: ParticipantProfile;
+  user: User;
   onClose: () => void;
 }
 
-function ProfileInfoDrawer({ profile, onClose }: ProfileInfoDrawerProps) {
-  const tuyau = useTuyau();
-
+function ProfileInfoDrawer({ user, onClose }: ProfileInfoDrawerProps) {
   return (
     <Drawer
       defaultOpen={true}
@@ -26,36 +22,26 @@ function ProfileInfoDrawer({ profile, onClose }: ProfileInfoDrawerProps) {
       }}
     >
       <DrawerContent className="bg-enei-beige text-enei-blue absolute gap-4 p-4">
-        <div className="mx-auto flex w-1/4 flex-row items-center justify-between">
-          <User className="h-48 w-48"></User>
-          <div className="flex flex-col gap-1">
-            <Button asChild>
-              <Link
-                route="pages:profile.show"
-                params={{ slug: profile.slug ?? "" }}
-                target="_blank"
-              >
-                <p>Ir para o perfil</p>
-              </Link>
-            </Button>
-            <p className="">{`${profile.firstName} ${profile.lastName}`}</p>
-            <p className="">{`${profile.university} | ${profile.course}`}</p>
+        <div className="mx-auto flex w-full max-w-96 flex-col items-center gap-2">
+          <div className="relative flex flex-row items-center">
+            <UserIcon className="size-16" />
+            <div className="flex flex-col">
+              <p>
+                <Link
+                  className="after:absolute after:inset-0 hover:underline"
+                  route="pages:profile.show"
+                  params={{ slug: user.slug ?? "" }}
+                  target="_blank"
+                >
+                  {user.participantProfile.firstName} {user.participantProfile.lastName}
+                </Link>
+              </p>
+              <p>{user.slug}</p>
+            </div>
           </div>
-        </div>
 
-        <NFC
-          makeReadOnly
-          writeValue={{
-            records: [
-              {
-                recordType: "url",
-                data: tuyau.$url("pages:profile.show", {
-                  params: { slug: profile.slug ?? "" },
-                }),
-              },
-            ],
-          }}
-        />
+          <CredentialWriter slug={user.slug ?? ""} />
+        </div>
       </DrawerContent>
     </Drawer>
   );

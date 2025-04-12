@@ -3,7 +3,9 @@ import Event from "#models/event";
 import EventService from "#services/event_service";
 import User from "#models/user";
 import { inject } from "@adonisjs/core";
-import ParticipantProfile from "#models/participant_profile";
+import { eventMBWayOrderValidator } from "#validators/order";
+import PointsService from "#services/points_service";
+import { EventDto } from "../dto/events/event.js";
 
 @inject()
 export default class EventsController {
@@ -24,6 +26,7 @@ export default class EventsController {
           firstName: speaker.firstName,
           lastName: speaker.lastName,
           jobTitle: speaker.jobTitle,
+          user: speaker.user,
           profilePicture: speaker.profilePicture,
           company: speaker.company,
         })),
@@ -31,82 +34,79 @@ export default class EventsController {
     });
   }
   async show({ inertia, params, auth }: HttpContext) {
-    const event = await Event.findOrFail(params.id);
+    const event = await Event.query()
+      .where("id", params.id)
+      .preload("speakers")
+      .preload("product")
+      .firstOrFail();
 
-    const speakers = await event.related("speakers").query();
     const user = auth.user;
     await user?.load("staffProfile");
 
     const isRegistered = user ? await this.eventService.isRegistered(user, event) : false;
 
     return inertia.render("events/show", {
-      eventId: event.id,
-      title: event.title,
-      description: event.description,
-      date: event.getFormattedDate(),
-      time: event.getFormattedTime(),
-      location: event.location,
-      type: event.type,
-      companyImage: event.companyImage,
-      extraInfo: event.extraInfo,
-      speakers: speakers.map((speaker) => ({
-        firstName: speaker.firstName,
-        lastName: speaker.lastName,
-        jobTitle: speaker.jobTitle,
-        profilePicture: speaker.profilePicture,
-        company: speaker.company,
-      })),
-      registrationRequirements: event.registrationRequirements,
-      requiresRegistration: event.requiresRegistration,
-      ticketsRemaining: event.ticketsRemaining,
-      price: event.price,
-      isAcceptingRegistrations: event.isAcceptingRegistrations,
+      event: new EventDto(event).toJSON(),
+      formattedDate: event.getFormattedDate(),
+      formattedTime: event.getFormattedTime(),
+      price: 0,
       isRegistered: isRegistered,
     });
   }
 
-  async register({ response, params, auth }: HttpContext) {
+  async register({ request, params, response, auth }: HttpContext) {
     // Get the authenticated user
-    const user = auth.user;
+    const user = auth.getUserOrFail();
 
-    // Get the event and check if it is possible do register
-    const event = await Event.findOrFail(params.id);
+    try {
+      const { products, name, nif, address, mobileNumber } =
+        await request.validateUsing(eventMBWayOrderValidator);
 
-    if (!event.isAcceptingRegistrations) {
-      return response.badRequest("Este evento ainda não tem as inscrições abertas");
+      // Get the event and check if it is possible do register
+      const event = await Event.findOrFail(params.id);
+
+      if (!event.isAcceptingRegistrations) {
+        return response.badRequest("Este evento ainda não tem as inscrições abertas");
+      }
+      if (event.ticketsRemaining <= 0) {
+        return response.badRequest("Já não há bilhetes disponíveis para este evento");
+      }
+
+      if (!event.requiresRegistration) {
+        return response.badRequest("Este evento não requer registo");
+      }
+
+      if (PointsService.userWillExceededNegativePoints(user, event)) {
+        return response.badRequest("Excedeste os pontos negativos com cauções");
+      }
+
+      // Register
+      await this.eventService.register(user!, event, {
+        products: products ?? [],
+        name: name ?? "",
+        nif: nif ?? "",
+        address: address ?? "",
+        mobileNumber,
+      });
+
+      return response.redirect().toRoute("pages:events.show", { id: event.id });
+    } catch (error) {
+      console.error(error);
     }
-    if (event.ticketsRemaining <= 0) {
-      return response.badRequest("Já não há bilhetes disponíveis para este evento");
-    }
-
-    if (!event.requiresRegistration) {
-      return response.badRequest("Este evento não requer registo");
-    }
-
-    // Register
-    await this.eventService.register(user!, event);
-
-    return response.redirect().toRoute("pages:events.show", { id: event.id });
   }
 
   async checkin({ response, request, params, session }: HttpContext) {
     const eventID = request.input("eventID");
 
     const event = await Event.findOrFail(eventID);
-    const profile = await ParticipantProfile.findBy("slug", "jorge-costa");
-
-    // FIXME: change this to User when slug in user is ready
-
-    if (!profile) {
-      session.flashErrors({ message: "Participante não encontrado" });
-      return response.redirect().back();
-    }
-
-    const user = await User.findBy("participantProfileId", profile?.id);
+    const user = await User.findByOrFail("slug", params.slug);
 
     if (await this.eventService.isCheckedIn(user!, event)) {
       session.flashErrors({ message: "Participante já checked-in" });
-    } else if (event.requiresRegistration && !await this.eventService.isRegistered(user!, event)) {
+    } else if (
+      event.requiresRegistration
+      && !(await this.eventService.isRegistered(user!, event))
+    ) {
       session.flashErrors({ message: "Participante não registado no evento" });
     } else {
       await this.eventService.checkin(user!, event);
