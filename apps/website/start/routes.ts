@@ -265,7 +265,6 @@ router.on("/faq").renderInertia("faq").as("pages:faq").use(middleware.wip());
 router
   .group(() => {
     router.post("/cv/upload", [UsersController, "storeCV"]).as("actions:cv.upload");
-    router.delete("cv/delete", [UsersController, "deleteCV"]).as("actions:cv.delete");
     router.get("/cv/name", [UsersController, "showCVName"]).as("actions:cv.name");
 
     // Avatar endpoints
