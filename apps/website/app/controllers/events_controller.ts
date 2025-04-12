@@ -8,7 +8,7 @@ import { EventDto } from "../dto/events/event.js";
 
 @inject()
 export default class EventsController {
-  constructor(private eventService: EventService) {}
+  constructor(private eventService: EventService) { }
   async index({ inertia }: HttpContext) {
     const events = await Event.query().preload("speakers").orderBy("id");
     return inertia.render("events", {
@@ -92,6 +92,9 @@ export default class EventsController {
 
   async checkin({ response, request, params, session }: HttpContext) {
     const eventID = request.input("eventID");
+    const exit = request.input("exit");
+
+    console.log("EXIT: ", exit)
 
     const event = await Event.findOrFail(eventID);
     const user = await User.findByOrFail("slug", params.slug);
