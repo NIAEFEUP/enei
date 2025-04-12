@@ -124,11 +124,16 @@ export default class User extends BaseModel {
     if (this.isStaff()) return "staff" as const;
     if (this.isParticipant()) return "participant" as const;
     if (this.isPromoter()) return "promoter" as const;
+    if (this.isRepresentative()) return "representative" as const;
     return "unknown" as const;
   }
 
+  isRepresentative() {
+    return this.representativeProfileId !== null;
+  }
+
   isStaff() {
-    return !!this.staffProfile;
+    return this.staffProfileId !== null;
   }
 
   isPromoter() {
@@ -149,6 +154,8 @@ export default class User extends BaseModel {
     if (this.participantProfile) groups.push(UserTypes.PARTICIPANT);
 
     if (this.promoterInfo) groups.push(UserTypes.PROMOTER);
+
+    if (this.representativeProfile) groups.push(UserTypes.REPRESENTATIVE)
 
     return groups;
   }
