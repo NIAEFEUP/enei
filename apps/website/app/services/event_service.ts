@@ -110,7 +110,9 @@ export default class EventService {
   }
 
   async checkin(user: User, event: Event) {
-    console.log("saving");
+    if (await this.isCheckedIn(user, event))
+      return;
+
     await event.related("checkedInUsers").attach({
       [user.id]: { checked_in_at: DateTime.now().toISO() },
     });
