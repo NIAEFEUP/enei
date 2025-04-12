@@ -64,6 +64,12 @@ export default class Event extends BaseModel {
   declare extraInfo: string | null;
 
   @column()
+  declare entryCheckedInAt: DateTime | null;
+
+  @column()
+  declare exitCheckedInAt: DateTime | null;
+
+  @column()
   declare isAcceptingRegistrations: boolean;
 
   @manyToMany(() => SpeakerProfile, {

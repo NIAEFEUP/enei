@@ -8,10 +8,15 @@ import OrderProduct from "#models/order_product";
 import db from "@adonisjs/lucid/services/db";
 import { DateTime } from "luxon";
 import Product from "#models/product";
+import UserActivity from "#models/user_activity";
+import { UserActivityType, type AttendEventDescription } from "../../types/user_activity.js";
+
+export const types_with_time_attendance = ["talk"]
 
 export default class EventService {
+  private ATTENDANCE_LIMIT = 80;
+
   async isRegistered(user: User, event: Event) {
-    // if (event.price.toCents() > 0) return this.isRegisteredInPaidEvent(user, event);
     return this.isRegisteredInFreeEvent(user, event);
   }
 
@@ -39,45 +44,22 @@ export default class EventService {
   }
 
   async register(user: User, event: Event, _data: MBWayOrder | null) {
-    // if (event.price.toCents() > 0) this.paidRegistration(user, event, data);
     await this.freeRegistration(user, event);
   }
 
   async isCheckedIn(user: User, event: Event) {
-    const isChecked = await event
-      .related("checkedInUsers")
-      .query()
-      .where("user_id", user.id)
-      .first();
+    if (types_with_time_attendance.includes(event.type)) {
+      return event.entryCheckedInAt && event.exitCheckedInAt
+    } else {
+      const isChecked = await event
+        .related("checkedInUsers")
+        .query()
+        .where("user_id", user.id)
+        .first();
 
-    return !!isChecked;
+      return !!isChecked;
+    }
   }
-
-  // private async paidRegistration(user: User, event: Event, data: MBWayOrder | null) {
-  //   const { products, name, nif, address, mobileNumber } = data!;
-
-  //   if (!mobileNumber) return;
-
-  //   // 1. See if user already enrolled
-  //   if (await this.isRegistered(user, event)) return;
-
-  //   // 2. Issue order creation and job spawning to pay
-  //   for (const product of products) {
-  //     const order = await OrderService.createOrder(user, product);
-  //     const productModel = await Product.findOrFail(product.productId);
-
-  //     await PaymentService.create(
-  //       order,
-  //       productModel.price,
-  //       mobileNumber,
-  //       "",
-  //       user.email,
-  //       nif,
-  //       address,
-  //       name,
-  //     );
-  //   }
-  // }
 
   private async freeRegistration(user: User, event: Event) {
     await event.loadOnce("product"); // deposits will be a product associated with the event
@@ -106,13 +88,65 @@ export default class EventService {
     });
   }
 
-  async checkin(user: User, event: Event) {
+  async registerCheckinInDb(user: User, event: Event) {
     await event.related("checkedInUsers").attach({
       [user.id]: { checked_in_at: DateTime.now() },
     });
-    await event.save();
-    const product = await Product.find(event.participationProductId);
+  }
 
+  async checkin(user: User, event: Event) {
+    if(!types_with_time_attendance.includes(event.type)) {
+      await this.registerCheckinInDb(user, event)
+    }
+
+    if (types_with_time_attendance.includes(event.type)) {
+      this.checkInWithTimeAttendance(user, event)
+    } else {
+      this.checkInWithPointsGiving(user, event)
+    }
+  }
+
+  async checkInWithTimeAttendance(user: User, event: Event) {
+    const activities = await UserActivity
+      .query()
+      .where("user_id", user.id)
+      .whereRaw(`description->>'type' = ?`, ['attend_event'])
+      .andWhereRaw(`(description->'event'->>'id')::int = ?`, [event.id])
+
+    const checkInTime = DateTime.now()
+
+    const activity = await UserActivity.create({
+      userId: user.id,
+      type: UserActivityType.AttendEvent,
+      description: {
+        type: UserActivityType.AttendEvent,
+        event: event,
+        timestamp: checkInTime.toISO(),
+        exit: activities.length > 0 ? !(activities[activities.length - 1].description as AttendEventDescription).exit : false,
+      }
+    })
+    activities.push(activity)
+
+    let absence = 0;
+    for (let i = 0; i < activities.length - 1; i++) {
+      const attendEventDescription = activities[i].description as AttendEventDescription
+      const nextAttendEventDescription = activities[i + 1].description as AttendEventDescription
+
+      absence += (DateTime.fromISO(nextAttendEventDescription.timestamp).toSeconds() - DateTime.fromISO(attendEventDescription.timestamp).toSeconds())
+    }
+
+    const attendancePercentage = ((absence) / (event.duration * 60)) * 100
+
+    if (attendancePercentage >= this.ATTENDANCE_LIMIT) {
+      const checkedUser = await event.related("checkedInUsers").query().where("user_id", user.id).first()
+      if(!checkedUser) this.registerCheckinInDb(user, event)
+
+      this.checkInWithPointsGiving(user, event)
+    }
+  }
+
+  async checkInWithPointsGiving(user: User, event: Event) {
+    const product = await Product.find(event.participationProductId);
     const listener = new EventCheckinListener();
     await listener.handle(new EventCheckin(product, user));
   }
