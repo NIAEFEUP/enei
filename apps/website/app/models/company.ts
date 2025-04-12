@@ -6,7 +6,6 @@ import Event from "./event.js";
 import RepresentativeProfile from "./representative_profile.js";
 import { relations } from "#lib/lucid/relations.js";
 import { lazy } from "#lib/lazy.js";
-import Event from "./event.js";
 import SpeakerProfile from "./speaker_profile.js";
 
 const companyRelations = lazy(() =>
