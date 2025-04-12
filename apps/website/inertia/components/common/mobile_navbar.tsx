@@ -50,7 +50,16 @@ export default function MobileNavbar() {
                 </Dialog>
               </div>
             )}
-          <div className="mx-auto">{auth.state === "authenticated"  && auth.user.role !== "representative" && <Link className={cn(buttonVariants({ variant: "link" }), "text-enei-blue mb-2")} route="pages:profile.default">Perfil</Link>}</div>
+          <div className="mx-auto">
+            {auth.state === "authenticated" && auth.user.role !== "representative" && (
+              <Link
+                className={cn(buttonVariants({ variant: "link" }), "text-enei-blue mb-2")}
+                route="pages:profile.default"
+              >
+                Perfil
+              </Link>
+            )}
+          </div>
 
           {auth.state === "authenticated" && (
             <div
