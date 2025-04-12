@@ -15,7 +15,6 @@ import {
   sendForgotPasswordThrottle,
 } from "#start/limiter";
 
-
 const EventsController = () => import("#controllers/events_controller");
 const AuthenticationController = () => import("#controllers/authentication_controller");
 const OrdersController = () => import("#controllers/orders_controller");
@@ -170,7 +169,9 @@ router
 
 router.group(() => {
   router.get("/u/:slug", [ProfilesController, "index"]).as("pages:profile.show");
-  router.get("/representative/profile", [ProfilesController, "getRepresentativeProfile"]).as("actions:representative.info");
+  router
+    .get("/representative/profile", [ProfilesController, "getRepresentativeProfile"])
+    .as("actions:representative.info");
   router
     .post("/u/:slug/product/collect", [ProductReservationController, "collect"])
     .as("actions:profile.product.collect")
@@ -303,7 +304,7 @@ router
   })
   .prefix("/referrals")
   .middleware(middleware.auth());
-1
+1;
 router
   .route(`/r/:referralCode`, ["GET", "POST"], [ReferralsController, "link"])
   .middleware([middleware.automaticSubmit(), middleware.silentAuth()])
@@ -342,14 +343,16 @@ router.on("/nfc").renderInertia("nfc").as("pages:nfc");
 
 router
   .group(() => {
-    router.group(() => {
-      router
-        .get("/participants", [CompaniesController, "showParticipants"])
-        .as("pages:company.participants");
-      router
-        .post("/participants/like", [CompaniesController, "toggleParticipantLike"])
-        .as("actions:company.like.participant");
-    }).use(middleware.representative())
+    router
+      .group(() => {
+        router
+          .get("/participants", [CompaniesController, "showParticipants"])
+          .as("pages:company.participants");
+        router
+          .post("/participants/like", [CompaniesController, "toggleParticipantLike"])
+          .as("actions:company.like.participant");
+      })
+      .use(middleware.representative());
     router.get("/:name", [CompaniesController, "profile"]).as("pages:company-profile");
   })
-  .prefix("/company")
+  .prefix("/company");

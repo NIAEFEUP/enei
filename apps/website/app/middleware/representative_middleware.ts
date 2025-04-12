@@ -7,7 +7,6 @@ export default class RepresentativeMiddleware {
 
     if (user.isRepresentative()) {
       return await next();
-      
     } else {
       ctx.session.flashErrors({ message: "Unauthorized" });
       return ctx.response.redirect().back();

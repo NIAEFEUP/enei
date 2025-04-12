@@ -52,18 +52,24 @@ export default function MobileNavbar() {
           )}
 
           {auth.state === "authenticated" && (
-          <div
-            className={
-              (auth.user.role === "staff" || auth.user.role === "representative") ? "block" : "hidden"
-            }
-          >
-            <Link
-              route={auth.user.role === "staff" ? "pages:staff.credentials.scan" : "pages:representative.qrcode.scan"}
-              className={cn(buttonVariants({ variant: "link" }), `text-enei-blue`)}
+            <div
+              className={
+                auth.user.role === "staff" || auth.user.role === "representative"
+                  ? "block"
+                  : "hidden"
+              }
             >
-              <QrCode />
-            </Link>
-          </div>
+              <Link
+                route={
+                  auth.user.role === "staff"
+                    ? "pages:staff.credentials.scan"
+                    : "pages:representative.qrcode.scan"
+                }
+                className={cn(buttonVariants({ variant: "link" }), `text-enei-blue`)}
+              >
+                <QrCode />
+              </Link>
+            </div>
           )}
 
           <Link

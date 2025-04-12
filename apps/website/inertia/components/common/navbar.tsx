@@ -77,7 +77,7 @@ export function LogoutButton({
 export function Navbar({ className, variant }: { className?: string; variant?: "blue" | "beige" }) {
   const auth = useAuth();
 
-  console.log(auth)
+  console.log(auth);
 
   const [onTop, setOnTop] = useState(true);
 
@@ -160,29 +160,33 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
                   </Link>
                 </div>
                 <div
-                className={
-                  auth.state === "authenticated" && auth.user.role === "staff" ? "block" : "hidden"
-                }
-              >
-                <Link
-                  route="pages:staff.credentials.scan"
-                  className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
+                  className={
+                    auth.state === "authenticated" && auth.user.role === "staff"
+                      ? "block"
+                      : "hidden"
+                  }
                 >
-                  <QrCode />
-                </Link>
-              </div>
-              <div
-                className={
-                  auth.state === "authenticated" && auth.user.role === "representative" ? "block" : "hidden"
-                }
-              >
-                <Link
-                  route="pages:representative.qrcode.scan"
-                  className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
+                  <Link
+                    route="pages:staff.credentials.scan"
+                    className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
+                  >
+                    <QrCode />
+                  </Link>
+                </div>
+                <div
+                  className={
+                    auth.state === "authenticated" && auth.user.role === "representative"
+                      ? "block"
+                      : "hidden"
+                  }
                 >
-                  <QrCode />
-                </Link>
-              </div>
+                  <Link
+                    route="pages:representative.qrcode.scan"
+                    className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
+                  >
+                    <QrCode />
+                  </Link>
+                </div>
                 <div>
                   <Link
                     route="pages:store"

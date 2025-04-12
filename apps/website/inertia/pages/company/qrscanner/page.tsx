@@ -19,7 +19,7 @@ export default function RepresentativeQrScanner() {
 
   useEffect(() => {
     if (representativeProfile?.company?.event?.id) {
-      setData('eventID', representativeProfile.company.event.id);
+      setData("eventID", representativeProfile.company.event.id);
     }
   }, [representativeProfile]);
 
@@ -36,12 +36,12 @@ export default function RepresentativeQrScanner() {
         });
       });
   }, []);
-  
+
   const handleCheckIN = (slug: string) => {
     try {
       post(tuyau.$url("actions:events.checkin", { params: { slug } }), {
         onSuccess: (response) => {
-          console.log(response)
+          console.log(response);
           toast({
             title: "Success",
             description: "Participante adicionado à banca!",
@@ -60,9 +60,7 @@ export default function RepresentativeQrScanner() {
         description: "An unexpected error occurred",
       });
     }
-    
   };
-  
 
   return (
     <Page title="QRCode Scanner" className="bg-enei-beige text-enei-blue" variant="beige">

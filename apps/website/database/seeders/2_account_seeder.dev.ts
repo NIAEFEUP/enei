@@ -88,13 +88,13 @@ export default class extends BaseSeeder {
 
     const companyEvent = await Event.create({
       title: "Banca - Blip",
-      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 13, minute: 30}),
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 12, hour: 13, minute: 30 }),
       duration: 330,
       type: "painel",
       location: "Corredor B - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-    })
+    });
 
     await companyEvent.related("company").associate(company);
   }

@@ -233,7 +233,7 @@ export default class User extends BaseModel {
 
     // if (this.promoterInfo) groups.push(UserTypes.PROMOTER);
 
-    if (this.representativeProfile) groups.push(UserTypes.REPRESENTATIVE)
+    if (this.representativeProfile) groups.push(UserTypes.REPRESENTATIVE);
 
     return groups;
   }

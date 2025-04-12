@@ -14,7 +14,7 @@ const companyRelations = lazy(() =>
     r.many("representativeProfiles"),
     r.many("events"),
     r.hasOne("event"),
-    r.hasOne("user")
+    r.hasOne("user"),
   ]),
 );
 
@@ -72,4 +72,3 @@ export default class Company extends BaseModel {
     return speakerProfiles ? speakerProfiles.map((profile) => profile.events).flat() : [];
   }
 }
-

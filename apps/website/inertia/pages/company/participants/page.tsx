@@ -21,7 +21,11 @@ interface ParticipantsPageProps {
   likedParticipants: Participant[];
 }
 
-export default function CompanyParticipantsPage({ allParticipants, checkedParticipants, likedParticipants }: ParticipantsPageProps) {
+export default function CompanyParticipantsPage({
+  allParticipants,
+  checkedParticipants,
+  likedParticipants,
+}: ParticipantsPageProps) {
   return (
     <Page title="Participantes" variant="beige" className="bg-enei-beige">
       <Container>
