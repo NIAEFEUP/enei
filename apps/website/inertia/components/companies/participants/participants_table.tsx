@@ -27,6 +27,17 @@ import {
 import axios from "axios";
 import { useTuyau } from "~/hooks/use_tuyau";
 import { router } from "@inertiajs/react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "~/components/ui/pagination";
+import { useMemo } from "react";
+import { cn } from "~/lib/utils";
 
 interface Participant {
   id: number;
@@ -178,13 +189,46 @@ const columns: ColumnDef<Participant>[] = [
 ];
 
 export function ParticipantsTable({ participants }: ParticipantsTableProps) {
+  const t = useMemo(() => [
+    ...structuredClone(participants), 
+    ...structuredClone(participants), 
+    ...structuredClone(participants), 
+    ...structuredClone(participants), 
+    ...structuredClone(participants), 
+    ...structuredClone(participants), 
+    ...structuredClone(participants), 
+  ], [participants]);
   const table = useReactTable({
-    data: participants,
+    data: t,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+      pagination: {
+        pageSize: 10,
+      },
+    },
   });
 
+  const currentPage = table.getState().pagination.pageIndex;
+
+  const [hasMoreBefore, hasMoreAfter, possiblePages] = useMemo(() => {
+    let firstPage = Math.max(0, currentPage - 2);
+    let lastPage = Math.min(table.getPageCount() - 1, currentPage + 2);
+
+    const hasBefore = firstPage > 0;
+    const hasAfter = lastPage < table.getPageCount() - 1;
+
+    return [
+      hasBefore,
+      hasAfter,
+      Array.from({ length: lastPage - firstPage + 1 }, (_, i) => firstPage + i),
+    ];
+  }, [table, currentPage]);
+
+  console.log({ hasMoreBefore, hasMoreAfter, possiblePages });
+
+  console.log(table.getState().pagination.pageIndex);
   return (
     <div className="w-full overflow-x-auto">
       <div className="mt-4 rounded-md">
@@ -222,6 +266,45 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
             )}
           </TableBody>
         </Table>
+        <Pagination className={cn("mt-4 w-full mx-0")}>
+          <PaginationContent className="flex flex-row justify-between max-w-lg w-full">
+            {table.getCanPreviousPage() ? (
+              <PaginationItem onClick={() => table.previousPage()}>
+                <PaginationPrevious className="text-enei-blue cursor-pointer select-none rounded" />
+              </PaginationItem>
+            ): (<div/>)}
+            <div className={cn("flex flex-row gap-2", {"pl-28": !table.getCanPreviousPage(), "pr-28": !table.getCanNextPage()})}>
+              {hasMoreBefore && (
+                <PaginationItem>
+                  <PaginationEllipsis className="text-enei-blue cursor-pointer select-none rounded" />
+                </PaginationItem>
+              )}
+              <>
+                {possiblePages.map((page) => (
+                  <PaginationItem key={page} onClick={() => table.setPageIndex(page)}>
+                    <PaginationLink
+                      className={cn("text-enei-blue cursor-pointer select-none rounded", {
+                        "bg-muted/50": page === currentPage,
+                      })}
+                    >
+                      {page + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+              </>
+              {hasMoreAfter && (
+                <PaginationItem>
+                  <PaginationEllipsis className="text-enei-blue cursor-pointer select-none rounded" />
+                </PaginationItem>
+              )}
+            </div>
+            {table.getCanNextPage() ? (
+              <PaginationItem onClick={() => table.nextPage()}>
+                <PaginationNext className="text-enei-blue cursor-pointer select-none rounded" />
+              </PaginationItem>
+            ): (<div />)}
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   );

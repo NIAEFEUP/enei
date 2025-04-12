@@ -80,6 +80,8 @@ export default class CompaniesController {
     const participants = await User.query()
       .preload("participantProfile")
       .whereNotNull("participant_profile_id")
+      .join("participant_profiles", "participant_profiles.id", "users.participant_profile_id")
+      .whereNotNull("participant_profiles.purchased_ticket")
       .orderBy("id");
 
     const allParticipants =
