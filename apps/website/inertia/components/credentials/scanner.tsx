@@ -9,7 +9,6 @@ interface CredentialScannerProps {
 
 function CredentialScanner({ onScan }: CredentialScannerProps) {
   const { toast } = useToast();
-  
 
   return (
     <Tabs defaultValue="qr">
@@ -21,14 +20,15 @@ function CredentialScanner({ onScan }: CredentialScannerProps) {
         <Scanner
           key={"credential-scanner"}
           onError={async () => {
-            const perm = await navigator.permissions.query({ name: "camera" })
+            const perm = await navigator.permissions.query({ name: "camera" });
             if (perm.state === "prompt") {
               await navigator.mediaDevices.getUserMedia({ video: true });
             } else if (perm.state === "denied") {
               toast({
                 title: "Erro de permissões",
-                description: "O browser não permitiu o acesso à câmara do dispositivo. Por favor, contacte a staff do evento.",
-              })
+                description:
+                  "O browser não permitiu o acesso à câmara do dispositivo. Por favor, contacte a staff do evento.",
+              });
             }
           }}
           onScan={(data: IDetectedBarcode[]) => {
