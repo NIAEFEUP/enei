@@ -42,7 +42,8 @@ export default function RepresentativeQrScanner() {
       toast({
         className: "bg-red-300 border border-red-400",
         title: "Erro",
-        description: "Aconteceu um problema ao ler o código QR. Por favor, tente novamente. Se o problema persistir, entre em contato com a staff do evento.",
+        description:
+          "Aconteceu um problema ao ler o código QR. Por favor, tente novamente. Se o problema persistir, entre em contato com a staff do evento.",
       });
 
       router.visit(document.location.href, { preserveState: false });
