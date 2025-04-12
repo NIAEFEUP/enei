@@ -8,14 +8,14 @@
 |
 */
 
-import router from "@adonisjs/core/services/router";
-import server from "@adonisjs/core/services/server";
+import router from "@adonisjs/core/services/router"
+import server from "@adonisjs/core/services/server"
 
 /**
  * The error handler is used to convert an exception
  * to a HTTP response.
  */
-server.errorHandler(() => import("#exceptions/handler"));
+server.errorHandler(() => import("#exceptions/handler"))
 
 /**
  * The server middleware stack runs middleware on all the HTTP
@@ -28,7 +28,7 @@ server.use([
   () => import("@adonisjs/cors/cors_middleware"),
   () => import("@adonisjs/vite/vite_middleware"),
   () => import("@adonisjs/inertia/inertia_middleware"),
-]);
+])
 
 /**
  * The router middleware stack runs middleware on all the HTTP
@@ -45,7 +45,7 @@ router.use([
   () => import("#middleware/update_logger_storage_middleware"),
   () => import("#middleware/link_to_user_middleware"),
   () => import("#middleware/initialize_bouncer_middleware"),
-]);
+])
 
 /**
  * Named middleware collection must be explicitly assigned to
@@ -54,6 +54,8 @@ router.use([
 export const middleware = router.named({
   apiKeyProtected: () => import("#middleware/api_key_protected_middleware"),
   staff: () => import("#middleware/staff_middleware"),
+  representative: () => import("#middleware/representative_middleware"),
+  staffOrRepresentative: () => import("#middleware/staff_or_representative_middleware"),
   hasPurchasedTicket: () => import("#middleware/has_purchased_ticket_middleware"),
   companyBearerAuth: () => import("#middleware/company_auth_middleware"),
   wip: () => import("#middleware/wip_middleware"),
@@ -71,4 +73,4 @@ export const middleware = router.named({
   silentAuth: () => import("#middleware/auth/silent_auth_middleware"),
   finishRedirect: () => import("#middleware/finish_redirect_middleware"),
   company: () => import("#middleware/auth/company_middleware"),
-});
+})

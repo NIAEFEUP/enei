@@ -14,7 +14,7 @@ import {
   sendChangePasswordThrottle,
   sendForgotPasswordThrottle,
 } from "#start/limiter";
-const CompanyController = () => import("#controllers/companies_controller");
+
 
 const EventsController = () => import("#controllers/events_controller");
 const AuthenticationController = () => import("#controllers/authentication_controller");
@@ -26,6 +26,7 @@ const StoreController = () => import("#controllers/store_controller");
 const ReferralsController = () => import("#controllers/referrals_controller");
 const LeaderboardController = () => import("#controllers/leaderboard_controller");
 const ProductReservationController = () => import("#controllers/product_reservation_controller");
+const CompaniesController = () => import("#controllers/companies_controller");
 const PaymentsController = () => import("#controllers/payments_controller");
 
 router.on("/").renderInertia("home").as("pages:home");
@@ -169,6 +170,7 @@ router
 
 router.group(() => {
   router.get("/u/:slug", [ProfilesController, "index"]).as("pages:profile.show");
+  router.get("/representative/profile", [ProfilesController, "getRepresentativeProfile"]).as("actions:representative.info");
   router
     .post("/u/:slug/product/collect", [ProductReservationController, "collect"])
     .as("actions:profile.product.collect")
@@ -236,12 +238,6 @@ router.group(() => {
 
 router
   .group(() => {
-    router.get("/:name", [CompanyController, "profile"]).as("pages:company-profile");
-  })
-  .prefix("/company");
-
-router
-  .group(() => {
     router.get("/", [EventsController, "index"]).as("pages:events");
 
     router.get("/:id", [EventsController, "show"]).as("pages:events.show");
@@ -256,7 +252,7 @@ router
     router
       .post("/:slug/check-in", [EventsController, "checkin"])
       .as("actions:events.checkin")
-      .use(middleware.staff());
+      .use(middleware.staffOrRepresentative());
 
     router
       .get("/:id/is-registered", [EventsController, "isRegistered"])
@@ -307,7 +303,7 @@ router
   })
   .prefix("/referrals")
   .middleware(middleware.auth());
-
+1
 router
   .route(`/r/:referralCode`, ["GET", "POST"], [ReferralsController, "link"])
   .middleware([middleware.automaticSubmit(), middleware.silentAuth()])
@@ -330,9 +326,30 @@ router
 
 router
   .group(() => {
+    router.on("/scan").renderInertia("company/qrscanner").as("pages:representative.qrcode.scan");
+  })
+  .use([middleware.auth(), middleware.representative()])
+  .prefix("/representative");
+
+router
+  .group(() => {
     router.on("/scan").renderInertia("credentials").as("pages:staff.credentials.scan");
   })
   .use([middleware.auth(), middleware.staff()])
   .prefix("/credentials");
 
 router.on("/nfc").renderInertia("nfc").as("pages:nfc");
+
+router
+  .group(() => {
+    router.group(() => {
+      router
+        .get("/participants", [CompaniesController, "showParticipants"])
+        .as("pages:company.participants");
+      router
+        .post("/participants/like", [CompaniesController, "toggleParticipantLike"])
+        .as("actions:company.like.participant");
+    }).use(middleware.representative())
+    router.get("/:name", [CompaniesController, "profile"]).as("pages:company-profile");
+  })
+  .prefix("/company")

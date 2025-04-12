@@ -1,10 +1,11 @@
 import { DateTime } from "luxon";
-import { BaseModel, column, hasMany, manyToMany } from "@adonisjs/lucid/orm";
-import type { HasMany, ManyToMany } from "@adonisjs/lucid/types/relations";
+import { BaseModel, column, hasMany, hasOne, manyToMany } from "@adonisjs/lucid/orm";
+import type { HasMany, HasOne, ManyToMany } from "@adonisjs/lucid/types/relations";
+import User from "./user.js";
+import Event from "./event.js";
 import RepresentativeProfile from "./representative_profile.js";
 import { relations } from "#lib/lucid/relations.js";
 import { lazy } from "#lib/lazy.js";
-import Event from "./event.js";
 import SpeakerProfile from "./speaker_profile.js";
 
 const companyRelations = lazy(() =>
@@ -12,6 +13,8 @@ const companyRelations = lazy(() =>
     r.many("representativeProfiles"),
     r.many("representativeProfiles"),
     r.many("events"),
+    r.hasOne("event"),
+    r.hasOne("user")
   ]),
 );
 
@@ -21,6 +24,12 @@ export type SponsorVariant = "default" | "gold" | "silver" | "bronze";
 export default class Company extends BaseModel {
   @column({ isPrimary: true })
   declare id: number;
+
+  @hasOne(() => User)
+  declare user: HasOne<typeof User>;
+
+  @hasOne(() => Event)
+  declare event: HasOne<typeof Event>;
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime;
@@ -63,3 +72,4 @@ export default class Company extends BaseModel {
     return speakerProfiles ? speakerProfiles.map((profile) => profile.events).flat() : [];
   }
 }
+

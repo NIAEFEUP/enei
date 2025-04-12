@@ -9,6 +9,7 @@ export enum UserActivityType {
   Referral = "referral",
   AttendEvent = "attend_event",
   CompanyVisit = "company_visit",
+  CompanyLike = "company_like",
   CompletedChallenge = "completed_challenge",
   RegisteredInEvent = "registered_in_event",
 }
@@ -18,6 +19,7 @@ export type UserActivityDescription = {
     | ReferralDescription
     | AttendEventDescription
     | CompanyVisitDescription
+    | CompanyLikeDescription
     | CompletedChallengeDescription
     | RegisteredInEventDescription;
 };
@@ -52,4 +54,9 @@ export type CompanyVisitDescription = {
 
 export type CompletedChallengeDescription = {
   type: UserActivityType.CompletedChallenge;
+};
+
+export type CompanyLikeDescription = {
+  companyId: number;
+  likedBy: number;
 };
