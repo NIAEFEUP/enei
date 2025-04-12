@@ -77,8 +77,6 @@ export function LogoutButton({
 export function Navbar({ className, variant }: { className?: string; variant?: "blue" | "beige" }) {
   const auth = useAuth();
 
-  console.log(auth);
-
   const [onTop, setOnTop] = useState(true);
 
   const tuyau = useTuyau();
