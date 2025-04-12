@@ -49,17 +49,13 @@ export default class EventService {
   }
 
   async isCheckedIn(user: User, event: Event) {
-    if (types_with_time_attendance.includes(event.type)) {
-      return event.entryCheckedInAt && event.exitCheckedInAt
-    } else {
-      const isChecked = await event
-        .related("checkedInUsers")
-        .query()
-        .where("user_id", user.id)
-        .first();
+    const isChecked = await event
+      .related("checkedInUsers")
+      .query()
+      .where("user_id", user.id)
+      .first();
 
-      return !!isChecked;
-    }
+    return !!isChecked;
   }
 
   private async freeRegistration(user: User, event: Event) {
@@ -97,24 +93,31 @@ export default class EventService {
     });
   }
 
-  async checkin(user: User, event: Event) {
-    if(!types_with_time_attendance.includes(event.type)) {
+  async checkin(user: User, event: Event, exit?: boolean) {
+    if (!types_with_time_attendance.includes(event.type)) {
       await this.registerCheckinInDb(user, event)
     }
 
     if (types_with_time_attendance.includes(event.type)) {
-      this.checkInWithTimeAttendance(user, event)
+      this.checkInWithTimeAttendance(user, event, exit)
     } else {
       this.checkInWithPointsGiving(user, event)
     }
   }
 
-  async checkInWithTimeAttendance(user: User, event: Event) {
+  async checkInWithTimeAttendance(user: User, event: Event, exit: boolean | undefined) {
+    if(!exit) return
+
     const activities = await UserActivity
       .query()
       .where("user_id", user.id)
       .whereRaw(`description->>'type' = ?`, ['attend_event'])
       .andWhereRaw(`(description->'event'->>'id')::int = ?`, [event.id])
+      .orderBy("created_at", "desc")
+
+    if (exit === (activities[activities.length - 1].description as AttendEventDescription).exit) {
+      return
+    }
 
     const checkInTime = DateTime.now()
 
@@ -125,7 +128,7 @@ export default class EventService {
         type: UserActivityType.AttendEvent,
         event: event,
         timestamp: checkInTime.toISO(),
-        exit: activities.length > 0 ? !(activities[activities.length - 1].description as AttendEventDescription).exit : false,
+        exit: exit
       }
     })
     activities.push(activity)
@@ -142,7 +145,7 @@ export default class EventService {
 
     if (attendancePercentage >= this.ATTENDANCE_LIMIT) {
       const checkedUser = await event.related("checkedInUsers").query().where("user_id", user.id).first()
-      if(!checkedUser) this.registerCheckinInDb(user, event)
+      if (!checkedUser) this.registerCheckinInDb(user, event)
 
       this.checkInWithPointsGiving(user, event)
     }
