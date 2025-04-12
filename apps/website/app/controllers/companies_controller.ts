@@ -13,7 +13,6 @@ export default class CompaniesController {
 
     const companyUser = auth.user!;
 
-    // Return unauthorized if the user is not a company representative
     if (!companyUser.representativeProfileId) {
       console.log("User is not a company representative");
       return response.unauthorized("You are not authorized to like participants.");
@@ -27,11 +26,12 @@ export default class CompaniesController {
       companyUser.id,
     );
 
-    // Get all likes a company made to a participant
     const userLikes = await this.userActivityService.getCompanyLikes(
       participantId,
       companyUser.representativeProfile?.companyId,
     );
+
+    console.log(userLikes)
 
     const likeNames = await Promise.all(
       userLikes.map(async (user) => {
@@ -53,7 +53,6 @@ export default class CompaniesController {
   async showParticipants({ inertia, auth, response }: HttpContext) {
     const companyUser = auth.user!;
 
-    // Return unauthorized if the user is not a company representative
     if (!companyUser.representativeProfileId) {
       console.log("User is not a company representative");
       return response.unauthorized("You are not authorized to view participants.");
@@ -137,6 +136,8 @@ export default class CompaniesController {
             };
           }) || []
         );
+
+    console.log(allParticipants.filter((p) => p.isLiked))
 
     return inertia.render("company/participants", {
       allParticipants: allParticipants,

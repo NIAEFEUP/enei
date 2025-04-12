@@ -26,28 +26,25 @@ export class UserActivityService {
     const like = await UserActivity.query()
       .where("user_id", userId)
       .where("type", "company_like")
-      .andWhereRaw(`description->>'likedBy' = ?`, [likedById.toString()])
+      .andWhereRaw(`description->>'likedBy' = ?`, [likedById])
       .first();
 
     return !!like;
   }
 
   async toggleCompanyLike(userId: number, companyId: number, likedById: number) {
-    // Check if there is already a like from the company representative to the participant
     const existingLike = await UserActivity.query()
       .where("user_id", userId)
       .where("type", "company_like")
-      .andWhereRaw(`description->>'companyId' = ?`, [companyId.toString()])
-      .andWhereRaw(`description->>'likedBy' = ?`, [likedById.toString()])
+      .andWhereRaw(`description->>'companyId' = ?`, [companyId])
+      .andWhereRaw(`description->>'likedBy' = ?`, [likedById])
       .first();
 
-    // If there is an existing like, delete it
     if (existingLike) {
       await existingLike.delete();
       return false;
     }
 
-    // If there is no existing like, create a new one
     await UserActivity.create({
       userId,
       type: "company_like",
@@ -60,7 +57,7 @@ export class UserActivityService {
     const likes = await UserActivity.query()
       .where("user_id", userId)
       .where("type", "company_like")
-      .andWhereRaw(`description->>'companyId' = ?`, [companyId.toString()]);
+      .andWhereRaw(`description->>'companyId' = ?`, [companyId]);
 
     const users = await Promise.all(
       likes.map((like) => {
