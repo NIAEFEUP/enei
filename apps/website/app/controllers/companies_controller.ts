@@ -80,9 +80,10 @@ export default class CompaniesController {
     const participants = await User.query()
       .preload("participantProfile")
       .whereNotNull("participant_profile_id")
+      .select("users.*")
       .join("participant_profiles", "participant_profiles.id", "users.participant_profile_id")
       .whereNotNull("participant_profiles.purchased_ticket")
-      .orderBy("id");
+      .orderBy("users.id");
 
     const allParticipants =
       companyUser.representativeProfile.company.sponsor === "bronze"
