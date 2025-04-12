@@ -139,6 +139,10 @@ export default class CompaniesController {
             return user.representativeProfile.firstName + " " + user.representativeProfile.lastName;
           }),
         );
+        const user = await User.findBy('participantProfileId', participant.id);
+        if(!user) {
+          return null;
+        }
 
         return {
           id: participant.id,
@@ -150,6 +154,7 @@ export default class CompaniesController {
           cvLink: null, // TODO: add when cv is available
           likedBy: likedBy.filter((name) => name !== null),
           isLiked: await this.userActivityService.isLiked(participant.id, companyUser.id),
+          slug : user.slug
         };
       }) || [],
     );

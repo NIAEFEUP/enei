@@ -27,6 +27,8 @@ import {
 import axios from "axios";
 import { useTuyau } from "~/hooks/use_tuyau";
 import { router } from "@inertiajs/react";
+import { Link } from "@tuyau/inertia/react";
+
 
 interface Participant {
   id: number;
@@ -38,6 +40,7 @@ interface Participant {
   cvLink?: string;
   likedBy: string[];
   isLiked: boolean;
+  slug: string;
 }
 
 interface ParticipantsTableProps {
@@ -168,6 +171,11 @@ const columns: ColumnDef<Participant>[] = [
                 </a>
               </DropdownMenuItem>
             )}
+            <DropdownMenuItem className="cursor-pointer">
+            <Link className="text-enei-blue" route="pages:profile.show" params={{ slug: row.original.slug }}>
+              Ver perfil
+            </Link>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
