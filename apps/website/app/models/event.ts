@@ -46,7 +46,8 @@ export default class Event extends BaseModel {
     | "networking"
     | "competition"
     | "meal"
-    | "painel";
+    | "painel"
+    | "cv";
 
   @column()
   declare companyImage: string;
