@@ -93,7 +93,8 @@ export default class EventsController {
     const eventID = request.input("eventID");
 
     const event = await Event.findOrFail(eventID);
-    const profile = await ParticipantProfile.findBy("slug", params.slug);
+    const profile = await ParticipantProfile.findBy("slug", "jorge-costa");
+
     // FIXME: change this to User when slug in user is ready
 
     if (!profile) {
@@ -103,19 +104,13 @@ export default class EventsController {
 
     const user = await User.findBy("participantProfileId", profile?.id);
 
-    if (!await this.eventService.isRegistered(user!, event)) {
-      session.flashErrors({ message: "Participante não registado no evento" });
-      return response.redirect().back();
-    }
-
     if (await this.eventService.isCheckedIn(user!, event)) {
       session.flashErrors({ message: "Participante já checked-in" });
-      return response.redirect().back();
+    } else if (event.requiresRegistration && !await this.eventService.isRegistered(user!, event)) {
+      session.flashErrors({ message: "Participante não registado no evento" });
+    } else {
+      await this.eventService.checkin(user!, event);
     }
-
-    console.log("Teste")
-
-    await this.eventService.checkin(user!, event);
 
     return response.redirect().back();
   }

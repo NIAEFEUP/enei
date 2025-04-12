@@ -37,36 +37,31 @@ export default function RepresentativeQrScanner() {
         });
       });
   }, []);
-
-  useEffect(() => {
-    axios
-      .get(tuyau.$url("actions:representative.info"))
-      .then((res) => {
-        setRepresentativeProfile(res.data.representativeProfile);
-      })
-      .catch(() => {
-        toast({
-          title: "Error",
-          description: "Não foi possível carregar o perfil de representante",
-        });
-      });
-  }, []);
   
   const handleCheckIN = (slug: string) => {
-    post(tuyau.$url("actions:events.checkin", { params: { slug } }), {
-      onSuccess: () => {
-        toast({
-          title: "Success",
-          description: "Participante adicionado à banca!",
-        });
-      },
-      onError: (errors) => {
-        toast({
-          title: "Error",
-          description: errors.message || "Erro ao adicionar o participante à banca",
-        });
-      },
-    });
+    try {
+      post(tuyau.$url("actions:events.checkin", { params: { slug } }), {
+        onSuccess: (response) => {
+          console.log(response)
+          toast({
+            title: "Success",
+            description: "Participante adicionado à banca!",
+          });
+        },
+        onError: (errors) => {
+          toast({
+            title: "Error",
+            description: errors.message || "Participante já adicionado à banca!",
+          });
+        },
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+      });
+    }
+    
   };
   
 
@@ -78,9 +73,6 @@ export default function RepresentativeQrScanner() {
           <CredentialScanner
             onScan={(slug: string) => {
               handleCheckIN(slug);
-              axios.get(tuyau.$url("actions:profile.info", { params: { slug } })).then((res) => {
-                setProfile(res.data.profile);
-              });
             }}
           />
         </div>
