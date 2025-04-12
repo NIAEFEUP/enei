@@ -7,7 +7,6 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import * as React from "react";
 import {
   Table,
   TableBody,
@@ -27,6 +26,7 @@ import {
 } from "~/components/ui/dropdown-menu";
 import axios from "axios";
 import { useTuyau } from "~/hooks/use_tuyau";
+import { router } from "@inertiajs/react";
 
 interface Participant {
   id: number;
@@ -128,15 +128,15 @@ const columns: ColumnDef<Participant>[] = [
     id: "actions",
     header: "",
     cell: ({ row }) => {
-      const [liked, setLiked] = React.useState(row.original.isLiked);
+      const liked = row.original.isLiked;
       const tuyau = useTuyau();
 
       const toggleLike = async () => {
         try {
-          const response = await axios.post(tuyau.$url("actions:company.like.participant"), {
+          await axios.post(tuyau.$url("actions:company.like.participant"), {
             participantId: row.original.id,
           });
-          setLiked(response.data.isLiked);
+          router.reload();
         } catch (error) {
           console.error("Error liking participant:", error);
         }
@@ -216,7 +216,7 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="text-center">
-                  No participants found.
+                 Não foram encontrados participantes.
                 </TableCell>
               </TableRow>
             )}
