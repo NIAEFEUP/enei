@@ -7,7 +7,7 @@ interface SpeakerProfileAboutProps {
 
 export default function SpeakerProfileAbout({ user }: SpeakerProfileAboutProps) {
   const profile = user.speakerProfile;
-  
+
   return (
     <section>
       <p className="text-5xl font-bold uppercase">{`${profile.firstName} ${profile.lastName}`}</p>

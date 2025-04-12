@@ -86,31 +86,31 @@ const AvatarUpload = ({ onUploadComplete }: AvatarUploadProps) => {
   return (
     <>
       <div className="flex flex-col gap-2">
-          <div className="flex flex-col gap-2 lg:flex-row">
-            <Input
-              className="w-full lg:w-64"
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-            />
+        <div className="flex flex-col gap-2 lg:flex-row">
+          <Input
+            className="w-full lg:w-64"
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+          <Button
+            className="lg:w-38 w-full"
+            onClick={handleUpload}
+            disabled={uploading || deleting || !file}
+          >
+            {uploading ? "A carregar..." : "Carregar foto"}
+          </Button>
+          {fileName && (
             <Button
-              className="w-full lg:w-38"
-              onClick={handleUpload}
-              disabled={uploading || deleting || !file}
+              variant="destructive"
+              className="w-9"
+              onClick={handleDelete}
+              disabled={uploading || deleting}
             >
-              {uploading ? "A carregar..." : "Carregar foto"}
+              <Trash className="h-4 w-4" />
             </Button>
-            {fileName && (
-              <Button
-                variant="destructive"
-                className="w-9"
-                onClick={handleDelete}
-                disabled={uploading || deleting}
-              >
-                <Trash className="h-4 w-4" />
-              </Button>
-            )}
-          </div>
+          )}
+        </div>
       </div>
       {errorMsg && <p className="mt-4 text-center text-sm text-red-600">{errorMsg}</p>}
     </>

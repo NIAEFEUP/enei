@@ -100,7 +100,7 @@ export default function ParticipantProfileAbout({ user }: ParticipantProfileAbou
 
       {hasCv && (
         <div>
-          <h3 className="text-persian-orange mt-5 mb-5 text-3xl font-bold uppercase">Currículo</h3>
+          <h3 className="text-persian-orange mb-5 mt-5 text-3xl font-bold uppercase">Currículo</h3>
           <div className="mb-4 flex flex-row flex-wrap gap-4 gap-y-2">
             {cvExpanded ? (
               <Button
