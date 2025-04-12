@@ -149,7 +149,7 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
                     </Dialog>
                   </div>
                 )}
-                <div className={auth.state === "authenticated" ? "block" : "hidden"}>
+                <div className={auth.state === "authenticated" && auth.user.role !== "representative" ? "block" : "hidden"}>
                   <Link
                     route="pages:profile.default"
                     className={cn(buttonVariants({ variant: "link" }), `text-${textColor} p-0`)}
