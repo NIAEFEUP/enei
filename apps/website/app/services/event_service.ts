@@ -10,6 +10,7 @@ import { DateTime } from "luxon";
 import Product from "#models/product";
 import UserActivity from "#models/user_activity";
 import { UserActivityType, type AttendEventDescription } from "../../types/user_activity.js";
+import PointsService from "./points_service.js";
 
 export const types_with_time_attendance = ["talk"]
 
@@ -83,14 +84,16 @@ export default class EventService {
       event.ticketsRemaining--;
       await event.useTransaction(trx).save();
 
-      user.points -= event.product.points;
-      await user.useTransaction(trx).save();
+      // limwa: Name is a bit wrong here, this function actually just gives the points of a product to a user
+      // and creates an order for it
+      const product = await Product.find(event.productId);
+      await PointsService.eventCheckinPointAttribution(user, product);
     });
   }
 
   async registerCheckinInDb(user: User, event: Event) {
     await event.related("checkedInUsers").attach({
-      [user.id]: { checked_in_at: DateTime.now() },
+      [user.id]: { checked_in_at: DateTime.now().toISO() },
     });
   }
 

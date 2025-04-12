@@ -66,7 +66,11 @@ export default function EventRegistrationPage({
   };
 
   const handleRegisterClick = () => {
-    setRegistrationConfirmationModalOpen(true);
+    if (event.product) {
+      setRegistrationConfirmationModalOpen(true);
+    } else {
+      handleRegister();
+    }
   };
 
   const activityClassesPrimary = {
@@ -247,7 +251,7 @@ export default function EventRegistrationPage({
                       Informação complementar para participantes
                     </p>
                   </h2>
-                  <div dangerouslySetInnerHTML={{ __html: event.extraInfo }} />
+                  <div className="prose" dangerouslySetInnerHTML={{ __html: event.extraInfo }} />
                 </div>
               )}
               {/* Price Display */}
@@ -348,6 +352,7 @@ export default function EventRegistrationPage({
               ) : (
                 <></>
               )}
+
               <RegistrationConfirmationModal
                 isOpen={registrationConfirmationModalOpen}
                 isLoading={processing}
@@ -356,6 +361,7 @@ export default function EventRegistrationPage({
               >
                 <p className="font-bold">Vais pagar uma caução de {event.product?.points} bytes.</p>
               </RegistrationConfirmationModal>
+
               {auth.state === "authenticated" && auth.user.role === "staff" && (
                 <EventCheckInDialog
                   isOpen={scannerModalOpen}

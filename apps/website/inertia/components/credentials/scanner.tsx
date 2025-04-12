@@ -24,7 +24,7 @@ function CredentialScanner({ onScan }: CredentialScannerProps) {
           }}
           components={{ audio: false }}
           allowMultiple={true}
-          scanDelay={2500}
+          scanDelay={1500}
         />
       </TabsContent>
       <TabsContent value="nfc">

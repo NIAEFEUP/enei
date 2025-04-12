@@ -4,7 +4,6 @@ import EventService from "#services/event_service";
 import User from "#models/user";
 import { inject } from "@adonisjs/core";
 import { eventMBWayOrderValidator } from "#validators/order";
-import PointsService from "#services/points_service";
 import { EventDto } from "../dto/events/event.js";
 
 @inject()
@@ -76,10 +75,6 @@ export default class EventsController {
         return response.badRequest("Este evento não requer registo");
       }
 
-      if (PointsService.userWillExceededNegativePoints(user, event)) {
-        return response.badRequest("Excedeste os pontos negativos com cauções");
-      }
-
       // Register
       await this.eventService.register(user!, event, {
         products: products ?? [],
@@ -101,17 +96,16 @@ export default class EventsController {
     const event = await Event.findOrFail(eventID);
     const user = await User.findByOrFail("slug", params.slug);
 
-    if (!this.eventService.isRegistered(user!, event)) {
-      session.flashErrors({ message: "Participante não registado no evento" });
-      return response.redirect().back();
-    }
-
     if (await this.eventService.isCheckedIn(user!, event)) {
       session.flashErrors({ message: "Participante já checked-in" });
-      return response.redirect().back();
+    } else if (
+      event.requiresRegistration
+      && !(await this.eventService.isRegistered(user!, event))
+    ) {
+      session.flashErrors({ message: "Participante não registado no evento" });
+    } else {
+      await this.eventService.checkin(user!, event);
     }
-
-    await this.eventService.checkin(user!, event);
 
     return response.redirect().back();
   }
