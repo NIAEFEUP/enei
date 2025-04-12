@@ -23,7 +23,7 @@ const EventResource = createResource({
       },
       companyId: {
         reference: "companies",
-      }
+      },
     },
   },
   features: [

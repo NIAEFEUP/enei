@@ -22,8 +22,8 @@ const CompanyResource = createResource({
         target: {
           resourceId: "events",
           joinKey: "companyId",
-        }
-      }
+        },
+      },
     }),
   ],
 });
