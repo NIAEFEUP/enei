@@ -230,5 +230,9 @@
 
   li {
     @apply text-sm;
+
+    p {
+      @apply contents;
+    }
   }
 }
