@@ -1,5 +1,4 @@
 import {
-  flat,
   mergeResourceOptions,
   type Before,
   type FeatureType,
@@ -26,13 +25,9 @@ const beforeEdit: Before = async (request, context) => {
     if (
       // @ts-expect-error: See above
       (type === "_date" || type === "_datetime")
-      && flat.get(request.payload, property.path())
+      && request.payload[property.path()]
     ) {
-      flat.set(
-        request.payload,
-        property.path(),
-        DateTime.fromISO(flat.get(request.payload, property.path())),
-      );
+        request.payload[property.path()] = DateTime.fromISO(request.payload[property.path()])
 
       delete request.payload[property.path()];
     }

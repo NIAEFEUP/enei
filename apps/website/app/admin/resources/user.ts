@@ -1,6 +1,7 @@
 import User from "#models/user";
 import { createResource } from "../resource.js";
 import { owningRelationFeature, targetRelationFeature } from "../relations.js";
+import { attachmentsFeature } from "../attachments.js";
 
 const UserResource = createResource({
   model: User,
@@ -11,6 +12,9 @@ const UserResource = createResource({
       },
       promoterProfileId: {
         reference: "promoter_profiles",
+      },
+      representativeProfileId: {
+        reference: "representative_profiles",
       },
       speakerProfileId: {
         reference: "speaker_profiles",
@@ -27,6 +31,7 @@ const UserResource = createResource({
     },
   },
   features: [
+    attachmentsFeature("avatar", "resume"),
     targetRelationFeature(),
     owningRelationFeature({
       accounts: {

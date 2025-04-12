@@ -27,7 +27,7 @@ interface ProfileSocialsProps {
 function getUserSocials(user: User) {
   const socials = [];
 
-  if (user.role === "participant") {
+  if (user.role === "participant" || user.role === "staff") {
     if (user.participantProfile.github)
       socials.push({ icon: Github, link: user.participantProfile.github });
     if (user.participantProfile.linkedin)
