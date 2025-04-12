@@ -126,7 +126,7 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
               </>
             ) : (
               <div className="flex items-center justify-between gap-4">
-                {auth.state === "authenticated" && auth.user.slug && (
+                {auth.state === "authenticated" && auth.user.role !== "representative" && auth.user.slug && (
                   <div>
                     <Dialog>
                       <DialogTrigger asChild>
@@ -157,48 +157,42 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
                     <span>Perfil</span>
                   </Link>
                 </div>
-                <div
-                  className={
-                    auth.state === "authenticated" && auth.user.role === "staff"
-                      ? "block"
-                      : "hidden"
-                  }
-                >
-                  <Link
-                    route="pages:staff.credentials.scan"
-                    className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
+                {auth.state === "authenticated" && (
+                  <div
+                    className={
+                      auth.user.role === "staff" || auth.user.role === "representative"
+                        ? "block"
+                        : "hidden"
+                    }
                   >
-                    <QrCode />
-                  </Link>
-                </div>
-                <div
-                  className={
-                    auth.state === "authenticated" && auth.user.role === "representative"
-                      ? "block"
-                      : "hidden"
-                  }
-                >
+                    <Link
+                      route={
+                        auth.user.role === "staff"
+                          ? "pages:staff.credentials.scan"
+                          : "pages:representative.qrcode.scan"
+                      }
+                      className={cn(buttonVariants({ variant: "link" }), `text-enei-blue`)}
+                    >
+                      <QrCode />
+                    </Link>
+                  </div>
+                )}
+
+                {auth.state === "authenticated" && auth.user.role === "representative" && (
                   <Link
-                    route="pages:representative.qrcode.scan"
-                    className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
+                    route="pages:company.participants"
+                    className={cn(buttonVariants({ variant: "link" }), `text-enei-blue p-0`)}
                   >
-                    <QrCode />
+                    Participantes
                   </Link>
-                </div>
+                )}
+
                 <div>
                   <Link
                     route="pages:store"
                     className={cn(buttonVariants({ variant: "link" }), `text-${textColor}`)}
                   >
                     <span>Loja</span>
-                  </Link>
-                </div>
-                <div className={auth.state === "authenticated" ? "block" : "hidden"}>
-                  <Link
-                    route="pages:referrals"
-                    className={cn(buttonVariants({ variant: "link" }), `text-${textColor} p-0`)}
-                  >
-                    Referenciações
                   </Link>
                 </div>
 

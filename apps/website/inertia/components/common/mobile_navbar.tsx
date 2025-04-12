@@ -27,29 +27,31 @@ export default function MobileNavbar() {
           {auth.state === "authenticated" && <Link route="pages:profile.default">Perfil</Link>}
         </SheetHeader>
         <div className="flex flex-col justify-center gap-y-4">
-          {auth.state === "authenticated" && auth.user.slug && (
-            <div className="mx-auto block">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button className="w-fit">
-                    <QrCode />
-                    Código QR
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="w-4/5 max-w-96 pt-12 sm:w-96">
-                  {auth.state === "authenticated" && (
-                    <>
-                      <QRCodeSVG
-                        value={`${tuyau.$url("pages:profile.show", { params: { slug: auth.user.slug } })}`}
-                        className="aspect-square h-full w-full"
-                      />
-                      <p className="text-center"> {auth.user.slug}</p>
-                    </>
-                  )}
-                </DialogContent>
-              </Dialog>
-            </div>
-          )}
+          {auth.state === "authenticated"
+            && auth.user.role !== "representative"
+            && auth.user.slug && (
+              <div className="mx-auto block">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="w-fit">
+                      <QrCode />
+                      Código QR
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="w-4/5 max-w-96 pt-12 sm:w-96">
+                    {auth.state === "authenticated" && (
+                      <>
+                        <QRCodeSVG
+                          value={`${tuyau.$url("pages:profile.show", { params: { slug: auth.user.slug } })}`}
+                          className="aspect-square h-full w-full"
+                        />
+                        <p className="text-center"> {auth.user.slug}</p>
+                      </>
+                    )}
+                  </DialogContent>
+                </Dialog>
+              </div>
+            )}
 
           {auth.state === "authenticated" && (
             <div
@@ -80,21 +82,20 @@ export default function MobileNavbar() {
           </Link>
 
           <Link
-            route="pages:referrals"
-            className={cn(
-              buttonVariants({ variant: "link" }),
-              `text-enei-blue p-0 ${auth.state === "authenticated" ? "inline-flex" : "hidden"}`,
-            )}
-          >
-            Referenciações
-          </Link>
-
-          <Link
             route="pages:events"
             className={cn(buttonVariants({ variant: "link" }), `text-enei-blue p-0`)}
           >
             Programa
           </Link>
+
+          {auth.state === "authenticated" && auth.user.role === "representative" && (
+            <Link
+              route="pages:company.participants"
+              className={cn(buttonVariants({ variant: "link" }), `text-enei-blue p-0`)}
+            >
+              Participantes
+            </Link>
+          )}
 
           {auth.state === "unauthenticated" && <LoginButton variant="outline" />}
 
