@@ -67,7 +67,7 @@ const UserResource = createResource({
           inverseJoinKey: "eventId",
           throughResourceId: "event_checkins",
         },
-      }
+      },
     }),
   ],
 });
