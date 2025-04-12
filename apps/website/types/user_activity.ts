@@ -57,6 +57,7 @@ export type CompletedChallengeDescription = {
 };
 
 export type CompanyLikeDescription = {
+  type: UserActivityType.CompanyLike;
   companyId: number;
   likedBy: number;
 };
