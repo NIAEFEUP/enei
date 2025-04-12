@@ -21,6 +21,9 @@ const EventResource = createResource({
       price: {
         type: "number",
       },
+      companyId: {
+        reference: "companies",
+      }
     },
   },
   features: [
