@@ -22,6 +22,8 @@ import PaymentResource from "../app/admin/resources/payment.js";
 import InvoiceInfoResource from "../app/admin/resources/invoice_info.js";
 import CompanyResource from "../app/admin/resources/company.js";
 import RepresentativeProfileResource from "../app/admin/resources/representative_profile.js";
+import EventCheckinsResource from "../app/admin/resources/event_checkins.js";
+import type { ResourceWithOptions } from "adminjs";
 
 const resources = [
   AccountResource,
@@ -29,6 +31,7 @@ const resources = [
   EventResource,
   EventSpeakerResource,
   EventUserResource,
+  EventCheckinsResource,
   OrderProductResource,
   OrderResource,
   PaymentResource,
@@ -43,7 +46,7 @@ const resources = [
   InvoiceInfoResource,
   CompanyResource,
   RepresentativeProfileResource,
-];
+] satisfies ResourceWithOptions[];
 
 const adminjsConfig = {
   adapter: {

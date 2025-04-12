@@ -2,30 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import { useEffect } from "react";
 import { useTuyau } from "~/hooks/use_tuyau";
 
 const CvUpload = () => {
   const tuyau = useTuyau();
-  const [fetchedName, setfetchedName] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [fileName, setFileName] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string>("");
 
-  useEffect(() => {
-    const fetchFileName = async () => {
-      try {
-        const response = await axios.get(tuyau.$url("actions:cv.name"));
-        setFileName(response.data.fileName);
-      } catch (error) {
-        setFileName(null);
-      }
-    };
-
-    fetchFileName();
-    setfetchedName(true);
-  }, [uploading]);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       setFile(event.target.files[0]);
@@ -48,9 +32,15 @@ const CvUpload = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+      setFile(null);
+      setErrorMsg("");
     } catch (error) {
       if (error.response.data) {
-        setErrorMsg(error.response.data);
+        if (error.response.data.status === 413) {
+          setErrorMsg("O ficheiro é demasiado grande.");
+        } else {
+          setErrorMsg(error.response.data.message);
+        }
       } else {
         setErrorMsg("Não foi possível guardar o ficheiro.");
       }
@@ -59,41 +49,15 @@ const CvUpload = () => {
     }
   };
 
-  const handleDelete = async () => {
-    setUploading(true);
-    try {
-      await axios.delete(tuyau.$url("actions:cv.delete"), {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      setFile(null);
-    } catch (error) {
-    } finally {
-      setUploading(false);
-      setErrorMsg("");
-    }
-  };
-
   return (
     <>
       <div className="flex flex-col gap-2">
-        {fileName ? (
-          <div className="flex flex-row gap-2">
-            <Input className="w-64" type="text" value={fileName} disabled />
-            <Button onClick={handleDelete} disabled={uploading || !fetchedName}>
-              {uploading ? "Uploading..." : "Clear CV"}
-            </Button>
-          </div>
-        ) : (
-          <div className="flex flex-row gap-2">
-            <Input className="w-64" type="file" accept=".pdf" onChange={handleFileChange} />
-            <Button onClick={handleUpload} disabled={uploading || !fetchedName || !file}>
-              {uploading ? "Uploading..." : "Upload CV"}
-            </Button>
-          </div>
-        )}
+        <div className="flex flex-col gap-2 lg:flex-row">
+          <Input className="w-full lg:w-64" type="file" accept=".pdf" onChange={handleFileChange} />
+          <Button className="w-full lg:w-48" onClick={handleUpload} disabled={uploading || !file}>
+            {uploading ? "A carregar..." : "Carregar CV"}
+          </Button>
+        </div>
       </div>
       {errorMsg && <p className="mt-4 text-center text-sm text-red-600">{errorMsg}</p>}
     </>

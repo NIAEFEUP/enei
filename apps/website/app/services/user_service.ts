@@ -21,6 +21,9 @@ import { attachmentManager } from "@jrmc/adonis-attachment";
 import type { MultipartFile } from "@adonisjs/core/bodyparser";
 import drive from "@adonisjs/drive/services/main";
 import Sqids from "sqids";
+import * as is from "@sindresorhus/is";
+import Event from "#models/event";
+import EventService from "./event_service.js";
 
 export const changeEmailSqids = new Sqids({
   minLength: 4,
@@ -28,22 +31,23 @@ export const changeEmailSqids = new Sqids({
 
 @inject()
 export class UserService {
-  constructor(private logger: Logger) {}
+  constructor(
+    private eventService: EventService,
+    private logger: Logger,
+  ) {}
 
   async storeCV(user: User, cv: MultipartFile) {
+    const hadCV = !is.isNullOrUndefined(user.resume);
     try {
+      if (user.resume) attachmentManager.delete(user.resume);
       user.resume = await attachmentManager.createFromFile(cv);
       await user.save();
-      return user;
-    } catch (error) {
-      this.logger.error(error);
-      throw error;
-    }
-  }
-  async deleteCV(user: User) {
-    try {
-      user.resume = null;
-      await user.save();
+
+      if (!hadCV) {
+        const cvEvent = await Event.findByOrFail("type", "cv");
+        await this.eventService.checkin(user, cvEvent);
+      }
+
       return user;
     } catch (error) {
       this.logger.error(error);
@@ -77,6 +81,7 @@ export class UserService {
 
   async storeAvatar(user: User, avatar: MultipartFile) {
     try {
+      if (user.avatar) attachmentManager.delete(user.avatar);
       user.avatar = await attachmentManager.createFromFile(avatar);
       await user.save();
       return user;

@@ -82,6 +82,7 @@ export default function EventRegistrationPage({
     competition: "border-enei-blue",
     meal: "border-enei-blue",
     painel: "border-enei-blue",
+    cv: "border-transparent",
   };
 
   const activityColors = {
@@ -93,6 +94,7 @@ export default function EventRegistrationPage({
     competition: "#000000",
     meal: "#000000",
     painel: "#000000",
+    cv: "#00000000",
   };
 
   return (
