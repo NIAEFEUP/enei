@@ -6,16 +6,16 @@ import { OrderService } from "./order_service.js";
 import type { MBWayOrder } from "../../types/order.js";
 import OrderProduct from "#models/order_product";
 import db from "@adonisjs/lucid/services/db";
-import { DateTime } from "luxon";
+import { DateTime, Duration } from "luxon";
 import Product from "#models/product";
 import UserActivity from "#models/user_activity";
 import { UserActivityType, type AttendEventDescription } from "../../types/user_activity.js";
 import PointsService from "./points_service.js";
 
-export const types_with_time_attendance = ["talk"]
+export const typesWithTimeAttendance = ["talk"];
 
 export default class EventService {
-  private ATTENDANCE_LIMIT = 80;
+  private ATTENDANCE_LIMIT = 66.666;
 
   async isRegistered(user: User, event: Event) {
     return this.isRegisteredInFreeEvent(user, event);
@@ -94,60 +94,125 @@ export default class EventService {
   }
 
   async checkin(user: User, event: Event, exit?: boolean) {
-    if (!types_with_time_attendance.includes(event.type)) {
-      await this.registerCheckinInDb(user, event)
-    }
-
-    if (types_with_time_attendance.includes(event.type)) {
-      this.checkInWithTimeAttendance(user, event, exit)
+    if (typesWithTimeAttendance.includes(event.type)) {
+      this.checkInWithTimeAttendance(user, event, exit);
     } else {
-      this.checkInWithPointsGiving(user, event)
+      await this.registerCheckinInDb(user, event);
+      this.checkInWithPointsGiving(user, event);
     }
   }
 
   async checkInWithTimeAttendance(user: User, event: Event, exit: boolean | undefined) {
-    if(exit === undefined) return
+    if (exit === undefined) return;
 
-    const activities = await UserActivity
-      .query()
-      .where("user_id", user.id)
-      .whereRaw(`description->>'type' = ?`, ['attend_event'])
-      .andWhereRaw(`(description->'event'->>'id')::int = ?`, [event.id])
-      .orderBy("created_at", "desc")
-
-    if (activities.length > 0 && exit === (activities[activities.length - 1].description as AttendEventDescription).exit) {
-      return
-    }
-
-    const checkInTime = DateTime.now()
-
-    const activity = await UserActivity.create({
+    await UserActivity.create({
       userId: user.id,
       type: UserActivityType.AttendEvent,
       description: {
         type: UserActivityType.AttendEvent,
-        event: event,
-        timestamp: checkInTime.toISO(),
-        exit: exit
+        event: event.id,
+        timestamp: DateTime.now().toISO(),
+        exit: exit,
+      },
+    });
+  }
+
+  async checkInBasedOnTimeAttendance(user: User) {
+    console.debug("Calculating attendance for user", user.id);
+
+    const activities = await UserActivity.query()
+      .where("user_id", user.id)
+      .andWhere("type", UserActivityType.AttendEvent)
+      .orderBy(db.raw("description->>'timestamp'"), "asc");
+
+    console.debug("Found", activities.length, "activities for user", user.id);
+
+    const intervals: [string, string][] = [];
+    let nextInterval: [string, string] | string | null = null;
+    for (const activity of activities) {
+      const description = activity.description as AttendEventDescription;
+
+      if (description.exit) {
+        if (nextInterval) {
+          const start: string = Array.isArray(nextInterval) ? nextInterval[0] : nextInterval;
+          nextInterval = [start, description.timestamp];
+        }
+      } else {
+        if (Array.isArray(nextInterval)) {
+          intervals.push(nextInterval);
+          nextInterval = null;
+        }
+
+        if (nextInterval === null) nextInterval = description.timestamp;
       }
-    })
-    activities.push(activity)
+    }
+    if (Array.isArray(nextInterval)) intervals.push(nextInterval);
 
-    let absence = 0;
-    for (let i = 0; i < activities.length - 1; i++) {
-      const attendEventDescription = activities[i].description as AttendEventDescription
-      const nextAttendEventDescription = activities[i + 1].description as AttendEventDescription
+    console.debug("Found", intervals.length, "intervals for user", user.id);
 
-      absence += (DateTime.fromISO(nextAttendEventDescription.timestamp).toSeconds() - DateTime.fromISO(attendEventDescription.timestamp).toSeconds())
+    const attendance: Map<number, Duration> = new Map();
+    for (const [start, end] of intervals) {
+      const startTime = DateTime.fromISO(start);
+      const endTime = DateTime.fromISO(end);
+
+      console.debug("Interval from", startTime.toISO(), "to", endTime.toISO());
+
+      const events = await Event.query()
+        .where((q) =>
+          q
+            .where(db.raw("date + (duration::int * interval '1 minute')").wrap("(", ")"), ">=", start)
+            .orWhere(
+              db.raw("actual_date + (duration::int * interval '1 minute')").wrap("(", ")"),
+              ">=",
+              start,
+            ),
+        )
+        .andWhere((q) => q.where("date", "<=", end).orWhere("actual_date", "<=", end))
+        .andWhereIn("type", typesWithTimeAttendance);
+
+      console.debug("Found", events.length, "events in interval");
+
+      for (const event of events) {
+        const eventStart = event.actualDate ?? event.date;
+        const eventEnd = event.date.plus({ minutes: event.duration });
+
+        const overlapStart = DateTime.max(startTime, eventStart);
+        const overlapEnd = DateTime.min(endTime, eventEnd);
+        const overlapDuration = overlapEnd.diff(overlapStart, "minutes");
+
+        const oldAttendance = attendance.get(event.id);
+        const newAttendance = oldAttendance ? oldAttendance.plus(overlapDuration) : overlapDuration;
+        attendance.set(event.id, newAttendance);
+
+        console.debug(
+          "Event",
+          event.id,
+          "from",
+          eventStart.toISO(),
+          "to",
+          eventEnd.toISO(),
+          "has",
+          overlapDuration.toISO(),
+          "of overlap from",
+          overlapStart.toISO(),
+          "to",
+          overlapEnd.toISO(),
+        );
+      }
     }
 
-    const attendancePercentage = ((absence) / (event.duration * 60)) * 100
+    for (const [eventId, duration] of attendance) {
+      const event = await Event.findOrFail(eventId);
 
-    if (attendancePercentage >= this.ATTENDANCE_LIMIT) {
-      const checkedUser = await event.related("checkedInUsers").query().where("user_id", user.id).first()
-      if (!checkedUser) this.registerCheckinInDb(user, event)
+      const percentage = (duration.as("minutes") / event.duration) * 100;
 
-      this.checkInWithPointsGiving(user, event)
+      console.debug("Event", event.id, "has", percentage, "% of attendance");
+
+      if (percentage >= this.ATTENDANCE_LIMIT && !(await this.isCheckedIn(user, event))) {
+        console.debug("User", user.id, "has checked in to event", event.id);
+        await this.registerCheckinInDb(user, event);
+        await this.checkInWithPointsGiving(user, event);
+      }
     }
   }
 
