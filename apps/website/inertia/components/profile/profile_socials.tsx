@@ -32,10 +32,10 @@ interface ProfileSocialsProps {
 
 export default function ProfileSocials({ user }: ProfileSocialsProps) {
   const socials = [
-    {icon: Github, link: user.participantProfile?.github },
-    {icon: Linkedin, link: user.participantProfile?.linkedin },
-    {icon: Globe, link: user.participantProfile?.website },
-    {icon: Book, link: user.representativeProfile?.ORCIDLink },
+    { icon: Github, link: user.participantProfile?.github },
+    { icon: Linkedin, link: user.participantProfile?.linkedin },
+    { icon: Globe, link: user.participantProfile?.website },
+    { icon: Book, link: user.representativeProfile?.ORCIDLink },
   ] satisfies SocialIconProps[];
 
   return <ul className="mt-7 flex flex-col gap-5">{socials?.map(SocialItem)}</ul>;
