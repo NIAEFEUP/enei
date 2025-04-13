@@ -3,7 +3,7 @@ import ProfilesController from "#controllers/profiles_controller";
 import Page from "~/components/common/page";
 import Container from "~/components/common/containers";
 
-import { LucideProps, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { createContext } from "react";
 import ProfileSocials from "~/components/profile/profile_socials";
 import type User from "#models/user";
@@ -17,11 +17,6 @@ import { cn } from "~/lib/utils";
 export const ProfileContext = createContext<{ slug: string | number }>({
   slug: "",
 });
-
-export interface SocialIconProps {
-  icon: React.FC<LucideProps>;
-  link: string;
-}
 
 export default function ProfilePage({
   user,
