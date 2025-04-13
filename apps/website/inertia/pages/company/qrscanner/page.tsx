@@ -84,9 +84,7 @@ export default function RepresentativeQrScanner() {
             }}
           />
         </div>
-        {profile && (
-          <ProfileInfoDrawer user={profile.user} onClose={() => setProfile(null)} />
-        )}
+        {profile && <ProfileInfoDrawer user={profile.user} onClose={() => setProfile(null)} />}
       </Container>
     </Page>
   );

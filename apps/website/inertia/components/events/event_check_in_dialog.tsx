@@ -4,7 +4,7 @@ import { useTuyau } from "~/hooks/use_tuyau";
 import { useForm } from "@inertiajs/react";
 import { toast } from "~/hooks/use_toast";
 import { Checkbox } from "../ui/checkbox";
-import { useCallback, useState, } from "react";
+import { useCallback, useState } from "react";
 
 interface EventCheckInDialogProps {
   isOpen: boolean;
@@ -17,35 +17,39 @@ export default function EventCheckInDialog({ isOpen, eventID, setOpen }: EventCh
 
   const [exit, setExit] = useState(false);
 
-  const { post, transform } = useForm({})
+  const { post, transform } = useForm({});
 
   transform(() => ({
-    eventID, exit
-  }))
+    eventID,
+    exit,
+  }));
 
-  const handleCheckIN = useCallback((slug: string) => {
-    try {
-      post(tuyau.$url("actions:events.checkin", { params: { slug } }), {
-        onSuccess: () => {
-          toast({
-            title: "Success",
-            description: "Check-in successful!",
-          });
-        },
-        onError: (errors) => {
-          toast({
-            title: "Error",
-            description: errors.message || "Failed to check-in",
-          });
-        },
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "An unexpected error occurred",
-      });
-    }
-  }, [tuyau, post]);
+  const handleCheckIN = useCallback(
+    (slug: string) => {
+      try {
+        post(tuyau.$url("actions:events.checkin", { params: { slug } }), {
+          onSuccess: () => {
+            toast({
+              title: "Success",
+              description: "Check-in successful!",
+            });
+          },
+          onError: (errors) => {
+            toast({
+              title: "Error",
+              description: errors.message || "Failed to check-in",
+            });
+          },
+        });
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "An unexpected error occurred",
+        });
+      }
+    },
+    [tuyau, post],
+  );
 
   if (!isOpen) {
     return null;

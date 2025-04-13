@@ -8,7 +8,7 @@ import { EventDto } from "../dto/events/event.js";
 
 @inject()
 export default class EventsController {
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService) {}
   async index({ inertia }: HttpContext) {
     const events = await Event.query().preload("speakers").orderBy("id");
     return inertia.render("events", {
@@ -35,9 +35,7 @@ export default class EventsController {
   async show({ inertia, params, auth }: HttpContext) {
     const event = await Event.query()
       .where("id", params.id)
-      .preload("speakers", async (query) => 
-        await query.preload("user")
-      )
+      .preload("speakers", async (query) => await query.preload("user"))
       .preload("product")
       .firstOrFail();
 

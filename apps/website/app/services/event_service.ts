@@ -138,8 +138,7 @@ export default class EventService {
         if (nextInterval) {
           if (description.event !== undefined)
             intervals.push([nextInterval, description.timestamp]);
-          else
-            logger().debug("Skipped interval from", nextInterval, "to", description.timestamp);
+          else logger().debug("Skipped interval from", nextInterval, "to", description.timestamp);
 
           nextInterval = null;
         }
@@ -161,7 +160,11 @@ export default class EventService {
       const events = await Event.query()
         .where((q) =>
           q
-            .where(db.raw("date + (duration::int * interval '1 minute')").wrap("(", ")"), ">=", start)
+            .where(
+              db.raw("date + (duration::int * interval '1 minute')").wrap("(", ")"),
+              ">=",
+              start,
+            )
             .orWhere(
               db.raw("actual_date + (duration::int * interval '1 minute')").wrap("(", ")"),
               ">=",
