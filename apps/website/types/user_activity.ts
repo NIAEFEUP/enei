@@ -46,6 +46,9 @@ export type ReferralDescription = {
 
 export type AttendEventDescription = {
   type: UserActivityType.AttendEvent;
+  exit: boolean;
+  event?: number;
+  timestamp: string;
 };
 
 export type CompanyVisitDescription = {

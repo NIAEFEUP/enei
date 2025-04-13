@@ -6,13 +6,19 @@ import { OrderService } from "./order_service.js";
 import type { MBWayOrder } from "../../types/order.js";
 import OrderProduct from "#models/order_product";
 import db from "@adonisjs/lucid/services/db";
-import { DateTime } from "luxon";
+import { DateTime, Duration } from "luxon";
 import Product from "#models/product";
+import UserActivity from "#models/user_activity";
+import { UserActivityType, type AttendEventDescription } from "../../types/user_activity.js";
 import PointsService from "./points_service.js";
+import { logger } from "#lib/adonisjs/logger.js";
+
+export const typesWithTimeAttendance = ["talk"];
 
 export default class EventService {
+  private ATTENDANCE_LIMIT = 66.666;
+
   async isRegistered(user: User, event: Event) {
-    // if (event.price.toCents() > 0) return this.isRegisteredInPaidEvent(user, event);
     return this.isRegisteredInFreeEvent(user, event);
   }
 
@@ -40,7 +46,6 @@ export default class EventService {
   }
 
   async register(user: User, event: Event, _data: MBWayOrder | null) {
-    // if (event.price.toCents() > 0) this.paidRegistration(user, event, data);
     await this.freeRegistration(user, event);
   }
 
@@ -53,32 +58,6 @@ export default class EventService {
 
     return !!isChecked;
   }
-
-  // private async paidRegistration(user: User, event: Event, data: MBWayOrder | null) {
-  //   const { products, name, nif, address, mobileNumber } = data!;
-
-  //   if (!mobileNumber) return;
-
-  //   // 1. See if user already enrolled
-  //   if (await this.isRegistered(user, event)) return;
-
-  //   // 2. Issue order creation and job spawning to pay
-  //   for (const product of products) {
-  //     const order = await OrderService.createOrder(user, product);
-  //     const productModel = await Product.findOrFail(product.productId);
-
-  //     await PaymentService.create(
-  //       order,
-  //       productModel.price,
-  //       mobileNumber,
-  //       "",
-  //       user.email,
-  //       nif,
-  //       address,
-  //       name,
-  //     );
-  //   }
-  // }
 
   private async freeRegistration(user: User, event: Event) {
     await event.loadOnce("product"); // deposits will be a product associated with the event
@@ -109,16 +88,137 @@ export default class EventService {
     });
   }
 
-  async checkin(user: User, event: Event) {
-    if (await this.isCheckedIn(user, event)) return;
-
+  async registerCheckinInDb(user: User, event: Event) {
     await event.related("checkedInUsers").attach({
       [user.id]: { checked_in_at: DateTime.now().toISO() },
     });
+  }
 
-    await event.save();
+  async checkin(user: User, event: Event, exit?: boolean) {
+    if (typesWithTimeAttendance.includes(event.type)) {
+      this.checkInWithTimeAttendance(user, event, exit);
+    } else if (!(await this.isCheckedIn(user, event))) {
+      await this.registerCheckinInDb(user, event);
+      this.checkInWithPointsGiving(user, event);
+    }
+  }
+
+  async checkInWithTimeAttendance(user: User, event: Event, exit: boolean | undefined) {
+    if (exit === undefined) return;
+
+    await UserActivity.create({
+      userId: user.id,
+      type: UserActivityType.AttendEvent,
+      description: {
+        type: UserActivityType.AttendEvent,
+        event: event.id,
+        timestamp: DateTime.now().toISO(),
+        exit: exit,
+      },
+    });
+  }
+
+  async checkInBasedOnTimeAttendance(user: User) {
+    logger().debug("Calculating attendance for user", user.id);
+
+    const activities = await UserActivity.query()
+      .where("user_id", user.id)
+      .andWhere("type", UserActivityType.AttendEvent)
+      .orderBy(db.raw("description->>'timestamp'"), "asc");
+
+    logger().debug("Found", activities.length, "activities for user", user.id);
+
+    const intervals: [string, string][] = [];
+    let nextInterval: string | null = null;
+    for (const activity of activities) {
+      const description = activity.description as AttendEventDescription;
+
+      if (description.exit) {
+        // Exit, only count the first
+        if (nextInterval) {
+          if (description.event !== undefined)
+            intervals.push([nextInterval, description.timestamp]);
+          else
+            logger().debug("Skipped interval from", nextInterval, "to", description.timestamp);
+
+          nextInterval = null;
+        }
+      } else {
+        // Enter, only count the first
+        if (nextInterval === null) nextInterval = description.timestamp;
+      }
+    }
+
+    logger().debug("Found", intervals.length, "intervals for user", user.id);
+
+    const attendance: Map<number, Duration> = new Map();
+    for (const [start, end] of intervals) {
+      const startTime = DateTime.fromISO(start);
+      const endTime = DateTime.fromISO(end);
+
+      logger().debug("Interval from", startTime.toISO(), "to", endTime.toISO());
+
+      const events = await Event.query()
+        .where((q) =>
+          q
+            .where(db.raw("date + (duration::int * interval '1 minute')").wrap("(", ")"), ">=", start)
+            .orWhere(
+              db.raw("actual_date + (duration::int * interval '1 minute')").wrap("(", ")"),
+              ">=",
+              start,
+            ),
+        )
+        .andWhere((q) => q.where("date", "<=", end).orWhere("actual_date", "<=", end))
+        .andWhereIn("type", typesWithTimeAttendance);
+
+      logger().debug("Found", events.length, "events in interval");
+
+      for (const event of events) {
+        const eventStart = event.actualDate ?? event.date;
+        const eventEnd = event.date.plus({ minutes: event.duration });
+
+        const overlapStart = DateTime.max(startTime, eventStart);
+        const overlapEnd = DateTime.min(endTime, eventEnd);
+        const overlapDuration = overlapEnd.diff(overlapStart, "minutes");
+
+        const oldAttendance = attendance.get(event.id);
+        const newAttendance = oldAttendance ? oldAttendance.plus(overlapDuration) : overlapDuration;
+        attendance.set(event.id, newAttendance);
+
+        logger().debug(
+          "Event",
+          event.id,
+          "from",
+          eventStart.toISO(),
+          "to",
+          eventEnd.toISO(),
+          "has",
+          overlapDuration.toISO(),
+          "of overlap from",
+          overlapStart.toISO(),
+          "to",
+          overlapEnd.toISO(),
+        );
+      }
+    }
+
+    for (const [eventId, duration] of attendance) {
+      const event = await Event.findOrFail(eventId);
+
+      const percentage = (duration.as("minutes") / event.duration) * 100;
+
+      logger().debug("Event", event.id, "has", percentage, "% of attendance");
+
+      if (percentage >= this.ATTENDANCE_LIMIT && !(await this.isCheckedIn(user, event))) {
+        logger().debug("User", user.id, "has checked in to event", event.id);
+        await this.registerCheckinInDb(user, event);
+        await this.checkInWithPointsGiving(user, event);
+      }
+    }
+  }
+
+  async checkInWithPointsGiving(user: User, event: Event) {
     const product = await Product.find(event.participationProductId);
-
     const listener = new EventCheckinListener();
     await listener.handle(new EventCheckin(product, user));
   }
