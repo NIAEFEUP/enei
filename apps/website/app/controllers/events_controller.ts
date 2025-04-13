@@ -35,7 +35,9 @@ export default class EventsController {
   async show({ inertia, params, auth }: HttpContext) {
     const event = await Event.query()
       .where("id", params.id)
-      .preload("speakers")
+      .preload("speakers", async (query) => 
+        await query.preload("user")
+      )
       .preload("product")
       .firstOrFail();
 
