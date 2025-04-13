@@ -40,6 +40,9 @@ export default class Event extends BaseModel {
   @column.dateTime()
   declare date: DateTime;
 
+  @column.dateTime()
+  declare actualDate: DateTime | null;
+
   @column()
   declare duration: number;
 
