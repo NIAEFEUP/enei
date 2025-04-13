@@ -126,7 +126,7 @@ const UserResource = createResource({
             `
               update users
               set points = (
-                select COALESCE(sum(orders.points_used), 0) as total_points
+                select COALESCE(-1 * sum(orders.points_used), 0) as total_points
                 from orders where orders.user_id = users.id
               )
               where id = ?
