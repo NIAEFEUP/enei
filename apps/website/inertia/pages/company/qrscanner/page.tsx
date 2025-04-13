@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import Container from "~/components/common/containers";
 import Page from "~/components/common/page";
 import CredentialScanner from "~/components/credentials/scanner";
-import ProfileInfoDrawer from "~/components/profile/profile_info_drawer";
+// import ProfileInfoDrawer from "~/components/profile/profile_info_drawer";
 import { toast } from "~/hooks/use_toast";
 import { useTuyau } from "~/hooks/use_tuyau";
 
 export default function RepresentativeQrScanner() {
   const tuyau = useTuyau();
   const [representativeProfile, setRepresentativeProfile] = useState<any>(null);
-  const [profile, setProfile] = useState<any>(null);
+  // const [profile, setProfile] = useState<any>(null);
 
   const { data, post, setData } = useForm({
     eventID: null,
@@ -84,7 +84,7 @@ export default function RepresentativeQrScanner() {
             }}
           />
         </div>
-        {profile && <ProfileInfoDrawer profile={profile} onClose={() => setProfile(null)} />}
+        {/* {profile && <ProfileInfoDrawer profile={profile} onClose={() => setProfile(null)} />} */}
       </Container>
     </Page>
   );
