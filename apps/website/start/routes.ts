@@ -279,9 +279,7 @@ router
 router
   .group(() => {
     router.get("/", [StoreController, "index"]).as("pages:store");
-    router
-      .post("/products/:id/buy/", [StoreController, "buy"])
-      .as("actions:store.buy")
+    router.post("/products/:id/buy/", [StoreController, "buy"]).as("actions:store.buy");
   })
   .prefix("/store");
 
