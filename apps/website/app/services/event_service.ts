@@ -128,25 +128,25 @@ export default class EventService {
     console.debug("Found", activities.length, "activities for user", user.id);
 
     const intervals: [string, string][] = [];
-    let nextInterval: [string, string] | string | null = null;
+    let nextInterval: string | null = null;
     for (const activity of activities) {
       const description = activity.description as AttendEventDescription;
 
       if (description.exit) {
+        // Exit, only count the first
         if (nextInterval) {
-          const start: string = Array.isArray(nextInterval) ? nextInterval[0] : nextInterval;
-          nextInterval = [start, description.timestamp];
-        }
-      } else {
-        if (Array.isArray(nextInterval)) {
-          intervals.push(nextInterval);
+          if (description.event !== undefined)
+            intervals.push([nextInterval, description.timestamp]);
+          else
+            console.debug("Skipped interval from", nextInterval, "to", description.timestamp);
+
           nextInterval = null;
         }
-
+      } else {
+        // Enter, only count the first
         if (nextInterval === null) nextInterval = description.timestamp;
       }
     }
-    if (Array.isArray(nextInterval)) intervals.push(nextInterval);
 
     console.debug("Found", intervals.length, "intervals for user", user.id);
 
