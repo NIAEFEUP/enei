@@ -3,7 +3,7 @@ import type { DateTime } from "luxon";
 
 export default class EventUser extends BaseModel {
   static table = "event_users";
-  
+
   @column({ isPrimary: true })
   declare id: number;
 
