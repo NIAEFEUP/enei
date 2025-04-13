@@ -2,9 +2,6 @@ import User from "#models/user";
 import { createResource } from "../resource.js";
 import { owningRelationFeature, targetRelationFeature } from "../relations.js";
 import db from "@adonisjs/lucid/services/db";
-import OrderProduct from "#models/order_product";
-import Order from "#models/order";
-import Event from "#models/event";
 
 const UserResource = createResource({
   model: User,
@@ -43,13 +40,22 @@ const UserResource = createResource({
             return;
           }
 
-          await OrderProduct.query({ client: trx })
-            .delete()
-            .whereIn("order_id", Order.query().select("id").where("user_id", userId))
-            .andWhereIn(
-              "product_id",
-              Event.query().select("id").distinct().whereNotNull("product_id"),
-            );
+          await trx.rawQuery(
+            `
+            delete from order_products
+            where order_products.order_id in (
+              select orders.id
+              from orders
+              where orders.user_id = ?
+            )
+            and order_products.product_id in (
+              select distinct events.product_id
+              from events
+              where events.product_id is not null
+            )
+            `,
+            [userId],
+          );
 
           await trx.rawQuery(
             `
@@ -87,19 +93,20 @@ const UserResource = createResource({
             [userId, userId],
           );
 
-          await Order.query({ client: trx })
-            .delete()
-            .where("user_id", userId)
-            .andWhereIn(
-              "id",
-              trx.raw(`
-                select orders.id
-                except select order_id
-                from order_products
-                group by order_id
-                having count(*) > 0
-              `),
-            );
+          await trx.rawQuery(
+            `
+            delete from orders
+            where orders.user_id = ?
+            and id in (
+              select orders.id
+              except select order_id
+              from order_products
+              group by order_id
+              having count(*) > 0
+            )
+            `,
+            [userId],
+          );
 
           await trx.rawQuery(
             `
@@ -113,7 +120,9 @@ const UserResource = createResource({
             [userId],
           );
 
-          const {rows: [{points}]} = await trx.rawQuery(
+          const {
+            rows: [{ points }],
+          } = await trx.rawQuery(
             `
               update users
               set points = (
@@ -132,7 +141,7 @@ const UserResource = createResource({
 
           return {
             record: context.record?.toJSON(context.currentAdmin),
-          }
+          };
         },
       },
     },
