@@ -96,10 +96,10 @@ export default class EventService {
 
   async checkin(user: User, event: Event, exit?: boolean) {
     if (typesWithTimeAttendance.includes(event.type)) {
-      this.checkInWithTimeAttendance(user, event, exit);
+      await this.checkInWithTimeAttendance(user, event, exit);
     } else if (!(await this.isCheckedIn(user, event))) {
       await this.registerCheckinInDb(user, event);
-      this.checkInWithPointsGiving(user, event);
+      await this.checkInWithPointsGiving(user, event);
     }
   }
 
