@@ -52,6 +52,9 @@ const UserResource = createResource({
               select distinct events.product_id
               from events
               where events.product_id is not null
+                union select distinct events.participation_product_id
+              from events
+              where events.participation_product_id is not null
             )
             `,
             [userId],
@@ -60,13 +63,21 @@ const UserResource = createResource({
           await trx.rawQuery(
             `
             with product_requirements as (
-              select
-                events.product_id as product_id,
-                count(*) as quantity,
-                ROW_NUMBER() over (order by events.product_id) as rn
-              from events join event_users on event_users.event_id = events.id
-              where event_users.user_id = ? and events.product_id is not null
-              group by events.product_id
+              select *, ROW_NUMBER() over (order by product_id) as rn
+                from (
+                    select
+                        events.product_id as product_id,
+                        count(*) as quantity
+                    from events join event_users on event_users.event_id = events.id
+                    where event_users.user_id = ? and events.product_id is not null
+                    group by events.product_id
+                    union select
+                        events.participation_product_id as product_id,
+                        count(*) as quantity
+                    from events join event_checkins on event_checkins.event_id = events.id
+                    where event_checkins.user_id = ? and events.participation_product_id is not null
+                    group by events.participation_product_id
+                )
             ),
             new_orders_without_rn as (
               insert into orders (status, user_id, created_at, updated_at, points_used)
@@ -88,9 +99,9 @@ const UserResource = createResource({
               NOW() as created_at,
               NOW() as updated_at
             from new_orders
-            join product_requirements on product_requirements.rn = new_orders.rn;
+            join product_requirements on product_requirements.rn = new_orders.rn
           `,
-            [userId, userId],
+            [userId, userId, userId],
           );
 
           await trx.rawQuery(
@@ -110,12 +121,11 @@ const UserResource = createResource({
 
           await trx.rawQuery(
             `
-              update orders
-              set points_used = (
-                select COALESCE(sum(products.points * order_products.quantity), 0) as total_points
-                from order_products join products on products.id = order_products.product_id and order_products.order_id = orders.id
-              )
-              where orders.user_id = ?
+            update orders
+            set points_used = (
+              select COALESCE(sum(products.points * order_products.quantity), 0) as total_points from order_products join products on products.id = order_products.product_id and order_products.order_id = orders.id
+            )
+            where orders.user_id = ?
             `,
             [userId],
           );
