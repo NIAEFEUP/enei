@@ -124,8 +124,6 @@ const columns: ColumnDef<Participant>[] = [
     header: "Gostado por",
     cell: ({ row }) => {
       const likedBy = row.original.likedBy;
-      console.log("LIKED BY: ", likedBy)
-      console.log("LIKED BY: ", typeof likedBy)
       return (
         <div className="flex items-center">
           {likedBy.length > 0 ? (
