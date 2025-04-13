@@ -80,9 +80,10 @@ export default class CompaniesController {
     const participants = await User.query()
       .preload("participantProfile")
       .whereNotNull("participant_profile_id")
+      .select("users.*")
       .join("participant_profiles", "participant_profiles.id", "users.participant_profile_id")
       .whereNotNull("participant_profiles.purchased_ticket")
-      .orderBy("id");
+      .orderBy("users.id");
 
     const allParticipants =
       companyUser.representativeProfile.company.sponsor === "bronze"
@@ -150,7 +151,7 @@ export default class CompaniesController {
           course: participant.participantProfile.course,
           year: participant.participantProfile.curricularYear,
           cvLink: null, // TODO: add when cv is available
-          likedBy: likedBy.filter((name) => name !== null),
+          likedBy: likedBy.filter((name) => name !== null).join(", "),
           isLiked: await this.userActivityService.isLiked(participant.id, companyUser.id),
         };
       }) || [],

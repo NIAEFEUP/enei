@@ -1,4 +1,4 @@
-import type ParticipantProfile from "#models/participant_profile";
+import type User from "#models/user";
 import axios from "axios";
 import {
   ExternalLink,
@@ -30,10 +30,12 @@ const RoundBadge = ({ icon: Icon, text }: RoundBadgeProps) => {
 };
 
 interface ParticipantProfileAboutProps {
-  profile: ParticipantProfile;
+  user: User;
 }
 
-export default function ParticipantProfileAbout({ profile }: ParticipantProfileAboutProps) {
+export default function ParticipantProfileAbout({ user }: ParticipantProfileAboutProps) {
+  const profile = user.participantProfile;
+
   const [hasCv, setHasCv] = useState<boolean>(false);
   const [cvExpanded, setCvExpanded] = useState<boolean>(false);
 
@@ -41,11 +43,13 @@ export default function ParticipantProfileAbout({ profile }: ParticipantProfileA
     const fetchFileName = async () => {
       try {
         const response = await axios.get(
-          tuyau.$url("pages:profile.cv.show", { params: { slug: profile.user.slug ?? "" } }),
+          tuyau.$url("pages:profile.cv.show", { params: { slug: user.slug ?? "" } }),
         );
 
         setHasCv(response.status === 200);
-      } catch (error) {}
+      } catch (error) {
+        console.error("Error fetching CV:", error);
+      }
     };
 
     fetchFileName();
@@ -96,7 +100,7 @@ export default function ParticipantProfileAbout({ profile }: ParticipantProfileA
 
       {hasCv && (
         <div>
-          <h3 className="text-persian-orange mb-5 text-3xl font-bold uppercase">Currículo</h3>
+          <h3 className="text-persian-orange mb-5 mt-5 text-3xl font-bold uppercase">Currículo</h3>
           <div className="mb-4 flex flex-row flex-wrap gap-4 gap-y-2">
             {cvExpanded ? (
               <Button
@@ -119,7 +123,7 @@ export default function ParticipantProfileAbout({ profile }: ParticipantProfileA
               target="_blank"
               rel="noopener noreferrer"
               href={tuyau.$url("pages:profile.cv.show", {
-                params: { slug: profile.user.slug ?? "" },
+                params: { slug: user.slug ?? "" },
               })}
               className={cn(buttonVariants({ variant: "default" }))}
             >
@@ -136,7 +140,7 @@ export default function ParticipantProfileAbout({ profile }: ParticipantProfileA
           >
             <object
               data={tuyau.$url("pages:profile.cv.show", {
-                params: { slug: profile.user.slug ?? "" },
+                params: { slug: user.slug ?? "" },
               })}
               type="application/pdf"
               width="100%"

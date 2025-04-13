@@ -57,6 +57,17 @@ const UserResource = createResource({
           resourceId: "users",
         },
       },
+      registeredInEvents: {
+        type: "many-to-many",
+        target: {
+          resourceId: "events",
+        },
+        junction: {
+          joinKey: "userId",
+          inverseJoinKey: "eventId",
+          throughResourceId: "event_users",
+        },
+      },
       checkedInEvents: {
         type: "many-to-many",
         target: {

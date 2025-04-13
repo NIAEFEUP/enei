@@ -5,6 +5,9 @@ const OrderProductResource = createResource({
   model: OrderProduct,
   options: {
     properties: {
+      quantity: {
+        type: "number",
+      },
       orderId: {
         reference: "orders",
       },

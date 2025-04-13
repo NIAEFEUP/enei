@@ -189,20 +189,8 @@ const columns: ColumnDef<Participant>[] = [
 ];
 
 export function ParticipantsTable({ participants }: ParticipantsTableProps) {
-  const t = useMemo(
-    () => [
-      ...structuredClone(participants),
-      ...structuredClone(participants),
-      ...structuredClone(participants),
-      ...structuredClone(participants),
-      ...structuredClone(participants),
-      ...structuredClone(participants),
-      ...structuredClone(participants),
-    ],
-    [participants],
-  );
   const table = useReactTable({
-    data: t,
+    data: participants,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),

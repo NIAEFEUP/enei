@@ -9,6 +9,7 @@ import Event from "#models/event";
 import Order from "#models/order";
 import Product from "#models/product";
 import OrderProduct from "#models/order_product";
+import type { TransactionClientContract } from "@adonisjs/lucid/types/database";
 
 /**
  * This service will be responsible for handling how many points a certain event
@@ -92,5 +93,51 @@ export default class PointsService {
         }
       });
     }
+  }
+
+  async recalculateUserPoints(user: User, trx: TransactionClientContract) {
+    await trx.rawQuery(
+      `
+      update orders
+      set points_used = (
+        select COALESCE(sum(products.points * order_products.quantity), 0) as total_points from order_products join products on products.id = order_products.product_id and order_products.order_id = orders.id
+      )
+      where orders.user_id = ?;
+      `,
+      [user.id],
+    );
+
+    await trx.rawQuery(
+      `
+      update users
+      set points = (
+        select COALESCE(-1 * sum(orders.points_used), 0) as total_points
+        from orders where orders.user_id = users.id
+      )
+      where users.id = ?;
+      `,
+      [user.id],
+    );
+  }
+
+  async recalculateAllUserPoints(trx: TransactionClientContract) {
+    await trx.rawQuery(
+      `
+      update orders
+      set points_used = (
+        select COALESCE(sum(products.points * order_products.quantity), 0) as total_points from order_products join products on products.id = order_products.product_id and order_products.order_id = orders.id
+      );
+      `,
+    );
+
+    await trx.rawQuery(
+      `
+      update users
+      set points = (
+        select COALESCE(-1 * sum(orders.points_used), 0) as total_points
+        from orders where orders.user_id = users.id
+      );
+      `,
+    );
   }
 }
