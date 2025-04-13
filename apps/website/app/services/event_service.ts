@@ -11,6 +11,7 @@ import Product from "#models/product";
 import UserActivity from "#models/user_activity";
 import { UserActivityType, type AttendEventDescription } from "../../types/user_activity.js";
 import PointsService from "./points_service.js";
+import { logger } from "#lib/adonisjs/logger.js";
 
 export const typesWithTimeAttendance = ["talk"];
 
@@ -118,14 +119,14 @@ export default class EventService {
   }
 
   async checkInBasedOnTimeAttendance(user: User) {
-    console.debug("Calculating attendance for user", user.id);
+    logger().debug("Calculating attendance for user", user.id);
 
     const activities = await UserActivity.query()
       .where("user_id", user.id)
       .andWhere("type", UserActivityType.AttendEvent)
       .orderBy(db.raw("description->>'timestamp'"), "asc");
 
-    console.debug("Found", activities.length, "activities for user", user.id);
+    logger().debug("Found", activities.length, "activities for user", user.id);
 
     const intervals: [string, string][] = [];
     let nextInterval: string | null = null;
@@ -138,7 +139,7 @@ export default class EventService {
           if (description.event !== undefined)
             intervals.push([nextInterval, description.timestamp]);
           else
-            console.debug("Skipped interval from", nextInterval, "to", description.timestamp);
+            logger().debug("Skipped interval from", nextInterval, "to", description.timestamp);
 
           nextInterval = null;
         }
@@ -148,14 +149,14 @@ export default class EventService {
       }
     }
 
-    console.debug("Found", intervals.length, "intervals for user", user.id);
+    logger().debug("Found", intervals.length, "intervals for user", user.id);
 
     const attendance: Map<number, Duration> = new Map();
     for (const [start, end] of intervals) {
       const startTime = DateTime.fromISO(start);
       const endTime = DateTime.fromISO(end);
 
-      console.debug("Interval from", startTime.toISO(), "to", endTime.toISO());
+      logger().debug("Interval from", startTime.toISO(), "to", endTime.toISO());
 
       const events = await Event.query()
         .where((q) =>
@@ -170,7 +171,7 @@ export default class EventService {
         .andWhere((q) => q.where("date", "<=", end).orWhere("actual_date", "<=", end))
         .andWhereIn("type", typesWithTimeAttendance);
 
-      console.debug("Found", events.length, "events in interval");
+      logger().debug("Found", events.length, "events in interval");
 
       for (const event of events) {
         const eventStart = event.actualDate ?? event.date;
@@ -184,7 +185,7 @@ export default class EventService {
         const newAttendance = oldAttendance ? oldAttendance.plus(overlapDuration) : overlapDuration;
         attendance.set(event.id, newAttendance);
 
-        console.debug(
+        logger().debug(
           "Event",
           event.id,
           "from",
@@ -206,10 +207,10 @@ export default class EventService {
 
       const percentage = (duration.as("minutes") / event.duration) * 100;
 
-      console.debug("Event", event.id, "has", percentage, "% of attendance");
+      logger().debug("Event", event.id, "has", percentage, "% of attendance");
 
       if (percentage >= this.ATTENDANCE_LIMIT && !(await this.isCheckedIn(user, event))) {
-        console.debug("User", user.id, "has checked in to event", event.id);
+        logger().debug("User", user.id, "has checked in to event", event.id);
         await this.registerCheckinInDb(user, event);
         await this.checkInWithPointsGiving(user, event);
       }
