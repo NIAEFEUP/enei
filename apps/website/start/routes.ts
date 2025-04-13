@@ -282,7 +282,6 @@ router
     router
       .post("/products/:id/buy/", [StoreController, "buy"])
       .as("actions:store.buy")
-      .use(middleware.wip());
   })
   .prefix("/store");
 
