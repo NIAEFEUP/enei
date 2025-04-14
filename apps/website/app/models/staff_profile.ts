@@ -16,7 +16,7 @@ export default class StaffProfile extends BaseModel {
 
   @column()
   declare isCoordinator: boolean;
-  
+
   @column()
   declare departmentId: number;
 

@@ -10,11 +10,14 @@ export default function Footer() {
       <div className="enei-footer-waves absolute inset-x-0 bottom-full h-52" />
       <div className="text-enei-beige from-enei-blue to-enei-blue/50 h-60 bg-black bg-gradient-to-b">
         <div className="flex flex-col space-y-4 pt-12">
-          <div className="flex flex-col space-y-1 mb-3">
+          <div className="mb-3 flex flex-col space-y-1">
             <a href="/regulamento-sistema-pontos.pdf" className="mx-auto hover:underline">
               Regulamento do Sistema de Pontos
             </a>
-            <Link route="pages:team" className={cn(buttonVariants({ variant: "link" }), "p-0 text-enei-beige")}>
+            <Link
+              route="pages:team"
+              className={cn(buttonVariants({ variant: "link" }), "text-enei-beige p-0")}
+            >
               Equipa
             </Link>
           </div>

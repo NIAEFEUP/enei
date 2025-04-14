@@ -20,7 +20,7 @@ export default function TeamPersonSocials({ person }: TeamPersonSocialsProps) {
     <div className="flex flex-row gap-x-2">
       {socials.map((social: string) => {
         // @ts-ignore
-        if (social in person.participantProfile && person.participantProfile[social]) { 
+        if (social in person.participantProfile && person.participantProfile[social]) {
           // @ts-ignore
           return socialComponentMap[social];
         }
