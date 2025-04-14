@@ -24,10 +24,6 @@ export default class TeamController {
                     fields: [
                       "firstName",
                       "lastName",
-                      "university",
-                      "course",
-                      "curricularYear",
-                      "attendedBeforeEditions",
                       "github",
                       "linkedin",
                       "website",
