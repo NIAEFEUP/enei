@@ -96,7 +96,9 @@ const columns: ColumnDef<Participant>[] = [
           {faculty ? (
             <Tooltip>
               <TooltipContent>{faculty.name}</TooltipContent>
-              <TooltipTrigger><span className="text-enei-blue text-sm font-medium">{faculty.shortName}</span></TooltipTrigger>
+              <TooltipTrigger>
+                <span className="text-enei-blue text-sm font-medium">{faculty.shortName}</span>
+              </TooltipTrigger>
             </Tooltip>
           ) : (
             <span className="text-enei-blue text-sm font-medium">-</span>
