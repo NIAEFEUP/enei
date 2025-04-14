@@ -157,10 +157,6 @@ export default class CompaniesController {
             return user.representativeProfile.firstName + " " + user.representativeProfile.lastName;
           }),
         );
-        const user = await User.findBy("participantProfileId", participant.id);
-        if (!user) {
-          return null;
-        }
 
         const photoUrl =
           participant.slug
