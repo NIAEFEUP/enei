@@ -1,4 +1,3 @@
-
 module.exports = {
   apps: /** @type {import('pm2').StartOptions[]} */ ([
     {
@@ -18,7 +17,7 @@ module.exports = {
       name: "enei-attendance",
       cron: "*/15 * * * *",
       script: "./ace.js",
-      args: "db:seed -f database/seeders/99_check_in_based_on_time_attendance_recurring_seeder.js"
-    }
+      args: "db:seed -f database/seeders/99_check_in_based_on_time_attendance_recurring_seeder.js",
+    },
   ]),
 };
