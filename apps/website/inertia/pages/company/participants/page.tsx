@@ -13,6 +13,7 @@ interface Participant {
   cvLink: string;
   likedBy: string[];
   isLiked: boolean;
+  slug: string;
 }
 
 interface ParticipantsPageProps {
@@ -26,7 +27,6 @@ export default function CompanyParticipantsPage({
   checkedParticipants,
   likedParticipants,
 }: ParticipantsPageProps) {
-  console.log({ allParticipants, checkedParticipants, likedParticipants });
   return (
     <Page title="Participantes" variant="beige" className="bg-enei-beige">
       <Container>
