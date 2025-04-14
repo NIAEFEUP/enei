@@ -13,6 +13,7 @@ interface Participant {
   cvLink: string;
   likedBy: string[];
   isLiked: boolean;
+  slug: string;
 }
 
 interface ParticipantsPageProps {
