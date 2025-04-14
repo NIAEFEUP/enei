@@ -2,23 +2,16 @@ import { useForm } from "react-hook-form";
 import { Checkbox } from "../ui/checkbox";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
-import MultipleSelector, { Option } from "../ui/multiple-selector";
+import MultipleSelector from "../ui/multiple-selector";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { LogisticsInfo, logisticsInfoSchema } from "~/pages/signup/schema";
-import transports from "#data/enei/signup/transports.json" with { type: "json" };
 import sizes from "#data/enei/signup/shirts.json" with { type: "json" };
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStepper } from "../ui/stepper";
 import { useAtom, useSetAtom } from "jotai/react";
 import { logisticsInfoAtom } from "~/pages/signup/atoms";
 import StepperFormActions from "./actions";
-
-const TRANSPORTS: Option[] = transports.map(({ id, description }) => {
-  return {
-    label: description,
-    value: id,
-  };
-});
+import { TRANSPORTS } from "~/lib/enei/signup/transports";
 
 const SIZES = sizes;
 

@@ -1,7 +1,40 @@
+import type Event from "#models/event";
+import type User from "#models/user";
+
+export type UserActivityInformation = {
+  [key: string]: any;
+};
+
+export enum UserActivityType {
+  Referral = "referral",
+  AttendEvent = "attend_event",
+  CompanyVisit = "company_visit",
+  CompanyLike = "company_like",
+  CompletedChallenge = "completed_challenge",
+  RegisteredInEvent = "registered_in_event",
+}
+
 export type UserActivityDescription = {
+  description:
+    | ReferralDescription
+    | AttendEventDescription
+    | CompanyVisitDescription
+    | CompanyLikeDescription
+    | CompletedChallengeDescription
+    | RegisteredInEventDescription;
+};
+
+export type RegisteredInEventDescription = {
+  type: UserActivityType.RegisteredInEvent;
+  event: Event;
+  user: User;
+};
+
+export type ReferralDescription = {
+  type: UserActivityType.Referral;
   referralCode: string;
-  referralUserId: number; // The user that has the referral link may not be a promoter (e.g. may not be a student associatio)
-  referredUserId: number;
+  referralUserId: User["id"]; // The user that has the referral link may not be a promoter (e.g. may not be a student associatio)
+  referredUserId: User["id"];
   // promoterId is used to determine if the referralUser is the promoter or only if the referral user was referred by the promoter
   // thus giving the points to the promoter
   referralIsPromoter: boolean;
@@ -11,6 +44,23 @@ export type UserActivityDescription = {
   pointsToPromoter?: number;
 };
 
-export type UserActivityInformation = {
-  [key: string]: any;
+export type AttendEventDescription = {
+  type: UserActivityType.AttendEvent;
+  exit: boolean;
+  event?: number;
+  timestamp: string;
+};
+
+export type CompanyVisitDescription = {
+  type: UserActivityType.CompanyVisit;
+};
+
+export type CompletedChallengeDescription = {
+  type: UserActivityType.CompletedChallenge;
+};
+
+export type CompanyLikeDescription = {
+  type: UserActivityType.CompanyLike;
+  companyId: number;
+  likedBy: number;
 };

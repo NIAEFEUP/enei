@@ -1,3 +1,4 @@
+import InvitedAssociations from "../invited_associations/invited_associations";
 import BronzePartners from "./bronze_partners";
 import Collaborators from "./collaborators";
 import GoldPartners from "./gold_partners";
@@ -21,6 +22,7 @@ export default function Partners() {
       <div className="mt-[5em] flex w-full flex-col gap-y-16 md:mt-[10em]">
         <Sponsors />
         <InstitutionalPartners />
+        <InvitedAssociations />
         <Orgs />
         <Collaborators />
         <Organizers />

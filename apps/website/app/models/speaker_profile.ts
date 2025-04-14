@@ -1,7 +1,15 @@
 import { DateTime } from "luxon";
-import { BaseModel, column, manyToMany } from "@adonisjs/lucid/orm";
+import { BaseModel, column, hasOne, manyToMany } from "@adonisjs/lucid/orm";
 import Event from "./event.js";
-import type { ManyToMany } from "@adonisjs/lucid/types/relations";
+import { lazy } from "#lib/lazy.js";
+import { relations } from "#lib/lucid/relations.js";
+import type { HasOne, ManyToMany } from "@adonisjs/lucid/types/relations";
+import User from "./user.js";
+import Company from "./company.js";
+
+const speakerProfileRelations = lazy(() =>
+  relations(SpeakerProfile, (r) => [r.many("events"), r.hasOne("user")]),
+);
 
 export default class SpeakerProfile extends BaseModel {
   @column({ isPrimary: true })
@@ -22,14 +30,37 @@ export default class SpeakerProfile extends BaseModel {
   @column()
   declare company: string;
 
+  @column()
+  declare github: string;
+
+  @column()
+  declare linkedin: string | null;
+
+  @hasOne(() => User)
+  declare user: HasOne<typeof User>;
+
+  @column()
+  declare website: string | null;
+
+  @column()
+  declare about: string;
+
   @manyToMany(() => Event, {
     pivotTable: "event_speakers",
   })
-  public events!: ManyToMany<typeof Event>;
+  declare events: ManyToMany<typeof Event>;
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime;
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime;
+
+  get $relations() {
+    return speakerProfileRelations.get().for(this);
+  }
+
+  static async company(speaker: SpeakerProfile) {
+    return await Company.findByOrFail("name", speaker.company);
+  }
 }

@@ -1,5 +1,5 @@
 import { DaySelector } from "~/components/events/day_selector";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import LongActivities from "~/components/events/long_activities";
 import EventsProgram from "~/components/events/schedule/events_program";
 import Page from "~/components/common/page";
@@ -15,7 +15,7 @@ interface Speaker {
 interface Event {
   id: number;
   title: string;
-  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other";
+  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other" | "painel";
   date: string;
   time: string;
   location: string;
@@ -47,18 +47,24 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
   const eventsByDay = splitEventsByDay(events);
 
   // If the current day is an ENEI day, set the active index to the corresponding day.
-  const eneiDates = [
-    new Date("2025-04-11").toDateString(),
-    new Date("2025-04-12").toDateString(),
-    new Date("2025-04-13").toDateString(),
-    new Date("2025-04-14").toDateString(),
-  ];
-  for (const [i, eneiDate] of eneiDates.entries()) {
-    if (currentDay === eneiDate) {
-      setCurrentActiveIndex(i);
-      break;
+  const eneiDates = useMemo(
+    () => [
+      new Date("2025-04-11").toDateString(),
+      new Date("2025-04-12").toDateString(),
+      new Date("2025-04-13").toDateString(),
+      new Date("2025-04-14").toDateString(),
+    ],
+    [],
+  );
+
+  useEffect(() => {
+    for (const [i, eneiDate] of eneiDates.entries()) {
+      if (currentDay === eneiDate) {
+        setCurrentActiveIndex(i);
+        break;
+      }
     }
-  }
+  }, [currentDay, eneiDates]);
 
   return (
     <Page title="Eventos" variant="beige" className="bg-enei-beige">
@@ -94,7 +100,7 @@ export default function EventsPage({ currentDay, events }: EventsPageProps) {
           </div>
           */}
 
-            <LongActivities currentActiveIndex={currentActiveIndex} />
+            <LongActivities currentActiveIndex={currentActiveIndex} eventsByDay={eventsByDay} />
 
             <EventsProgram currentActiveIndex={currentActiveIndex} eventsByDay={eventsByDay} />
           </Card>

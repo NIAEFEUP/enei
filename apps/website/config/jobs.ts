@@ -9,6 +9,10 @@ const jobsConfig = defineConfig({
     family: 0,
   },
 
+  workerOptions: {
+    autorun: false,
+  },
+
   queue: env.get("REDIS_QUEUE", "default"),
 
   queues: ["default"],

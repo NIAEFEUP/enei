@@ -1,9 +1,10 @@
 import type { AdminJSProviderConfig } from "@adminjs/adonis";
 
-import componentLoader from "../app/admin/component_loader.js";
+import { componentLoader } from "../app/admin/component_loader.js";
 import authProvider from "../app/admin/auth.js";
 
 import AccountResource from "../app/admin/resources/account.js";
+import DepartmentResource from "../app/admin/resources/department.js";
 import EventResource from "../app/admin/resources/event.js";
 import EventSpeakerResource from "../app/admin/resources/event_speaker.js";
 import EventUserResource from "../app/admin/resources/event_user.js";
@@ -14,24 +15,38 @@ import ProductGroupResource from "../app/admin/resources/product_group.js";
 import ProductResource from "../app/admin/resources/product.js";
 import PromoterProfileResource from "../app/admin/resources/promoter_profile.js";
 import SpeakerProfileResource from "../app/admin/resources/speaker_profile.js";
+import StaffProfileResource from "../app/admin/resources/staff_profile.js";
 import UserActivityResource from "../app/admin/resources/user_activity.js";
 import UserResource from "../app/admin/resources/user.js";
+import PaymentResource from "../app/admin/resources/payment.js";
+import InvoiceInfoResource from "../app/admin/resources/invoice_info.js";
+import CompanyResource from "../app/admin/resources/company.js";
+import RepresentativeProfileResource from "../app/admin/resources/representative_profile.js";
+import EventCheckinsResource from "../app/admin/resources/event_checkins.js";
+import type { ResourceWithOptions } from "adminjs";
 
 const resources = [
   AccountResource,
+  DepartmentResource,
   EventResource,
   EventSpeakerResource,
   EventUserResource,
+  EventCheckinsResource,
   OrderProductResource,
   OrderResource,
+  PaymentResource,
   ParticipantProfileResource,
   ProductGroupResource,
   ProductResource,
   PromoterProfileResource,
   SpeakerProfileResource,
+  StaffProfileResource,
   UserActivityResource,
   UserResource,
-];
+  InvoiceInfoResource,
+  CompanyResource,
+  RepresentativeProfileResource,
+] satisfies ResourceWithOptions[];
 
 const adminjsConfig = {
   adapter: {

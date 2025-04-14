@@ -121,14 +121,46 @@ const env = await defineEnv(new URL("../", import.meta.url), "INERTIA_PUBLIC_", 
     | Variables for configuring the drive package
     |----------------------------------------------------------
     */
-    DRIVE_DISK: vine.enum(["fs"]),
+    DRIVE_DISK: vine.enum(["fs", "s3"]),
+
+    /*
+    |----------------------------------------------------------
+    | Variables with api keys for calling protected routes
+    |----------------------------------------------------------
+    */
+    JOBS_API_KEY: vine.string(),
 
     /*
     |----------------------------------------------------------
     | Variables for configuring the API endpoints for Kevel
     |----------------------------------------------------------
     */
-    COMPANY_BEARER_TOKEN: vine.string(),
+    COMPANY_API_TOKEN: vine.string(),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring S3 storage
+    |----------------------------------------------------------
+    */
+    S3_KEY: vine.string(),
+    S3_SECRET: vine.string(),
+    S3_REGION: vine.string(),
+    S3_BUCKET: vine.string(),
+    S3_ENDPOINT: vine.string(),
+
+    /*
+    |----------------------------------------------------------
+    | Variables for configuring the proxy-level trust,
+    | used for determining the base URL of the application.
+    |----------------------------------------------------------
+    */
+    TRUST_PROXY: vine.union([
+      vine.union.if(
+        (_, field) => field.isDefined,
+        vine.unionOfTypes([vine.boolean(), vine.string().ipAddress(4)]),
+      ),
+      vine.union.else(vine.literal(undefined).optional()),
+    ]),
   });
 });
 

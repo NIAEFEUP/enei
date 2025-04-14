@@ -14,11 +14,10 @@ interface Speaker {
 interface EventCardProps {
   id?: number;
   title: string;
-  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other";
+  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other" | "painel";
   time: string;
   location: string;
   speakers: Speaker[];
-  allowClick?: boolean;
   onClick?: () => void;
 }
 
@@ -28,7 +27,6 @@ export default function EventCard({
   time,
   location,
   speakers,
-  allowClick = false,
   onClick,
 }: EventCardProps) {
   const [isRegistered] = useState(false);
@@ -56,6 +54,7 @@ export default function EventCard({
     meal: "bg-enei-meal",
     competition: "bg-enei-competition",
     networking: "bg-enei-networking",
+    painel: "bg-enei-other",
     other: "bg-enei-other",
   };
 
@@ -66,6 +65,7 @@ export default function EventCard({
     meal: "text-enei-blue",
     competition: "text-enei-blue",
     networking: "text-enei-blue",
+    painel: "text-enei-blue",
     other: "text-enei-blue",
   };
 
@@ -76,6 +76,7 @@ export default function EventCard({
     meal: "bg-enei-beige",
     competition: "bg-enei-beige",
     networking: "bg-enei-beige",
+    painel: "bg-enei-beige",
     other: "bg-enei-beige",
   };
 
@@ -86,6 +87,7 @@ export default function EventCard({
     meal: "text-enei-beige",
     competition: "text-enei-beige",
     networking: "text-enei-blue",
+    painel: "text-enei-beige",
     other: "text-enei-beige",
   };
 
@@ -96,15 +98,15 @@ export default function EventCard({
     meal: "Refeição",
     competition: "Competição",
     networking: "Networking",
+    painel: "Painel",
     other: "Outro",
   };
 
   return (
-    <div
-      onClick={allowClick ? onClick : undefined}
-      className={cn("h-full w-full", allowClick && "cursor-pointer")}
-    >
-      <Card className={cn("h-full w-full space-y-3 border-none p-3", cardBackground[type])}>
+    <div onClick={onClick} className={cn("h-full w-full", onClick && "cursor-pointer")}>
+      <Card
+        className={cn("h-full min-h-48 w-full space-y-3 border-none p-3", cardBackground[type])}
+      >
         <CardTitle className={cn("text-xl", textColor[type])}>{title}</CardTitle>
         <div className="flex flex-row gap-3">
           <Badge className={cn("pointer-events-none", textColorBadge[type], badgeColor[type])}>

@@ -10,7 +10,7 @@ interface Speaker {
 interface Event {
   id: number;
   title: string;
-  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other";
+  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other" | "painel";
   date: string;
   time: string;
   location: string;
@@ -23,6 +23,8 @@ interface EventsPageProps {
 }
 
 export default function EventsPageApril13({ events }: EventsPageProps) {
+  console.log("events: ", events);
+
   return (
     <div className="md:grid-rows-14 flex flex-col space-y-4 md:grid md:grid-cols-4 md:gap-4 md:space-y-0">
       <div className="col-span-4 col-start-1 row-start-1">
@@ -252,11 +254,13 @@ export default function EventsPageApril13({ events }: EventsPageProps) {
       </div>
       <div className="col-span-1 col-start-1 row-start-13">
         <EventCard
-          title={"Sessão de Cocktails"}
-          type={"networking"}
-          time={"18:00 - 19:30"}
-          location={"Coffee Lounge - FEUP"}
-          speakers={[]}
+          id={events[19].id}
+          title={events[19].title}
+          type={events[19].type}
+          time={events[19].time}
+          location={events[19].location}
+          speakers={events[19].speakers}
+          onClick={() => router.visit(`/events/${events[19].id}`)}
         />
       </div>
 
@@ -275,8 +279,9 @@ export default function EventsPageApril13({ events }: EventsPageProps) {
           title={"Jantar de Networking powered by Ordem dos Engenheiros da Região Norte (OERN)"}
           type={"networking"}
           time={"20:00 - 23:00"}
-          location={"TBD"}
+          location={"R. de Rodrigues Sampaio 123"}
           speakers={[]}
+          onClick={() => router.visit(`/events/${events[20].id}`)}
         />
       </div>
 

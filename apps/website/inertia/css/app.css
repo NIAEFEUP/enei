@@ -31,10 +31,10 @@
     --secondary: var(--enei-beige);
     /* --secondary-foreground: 222.2 47.4% 11.2%; */
     --secondary-foreground: var(--enei-blue);
-    --muted: 210 40% 96.1%;
+    --muted: 71.25 12.12% 74.12%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 71.25 12.12% 74.12%;
+    --accent-foreground: var(--enei-blue);
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
@@ -201,5 +201,38 @@
     background-position: bottom center;
     background-size: contain cover;
     background-repeat: repeat-x;
+  }
+}
+
+.prose {
+  @apply space-y-2;
+  @apply text-black;
+
+  a {
+    @apply focus-visible:ring-ring text-primary inline-flex h-auto items-center justify-center gap-2 whitespace-nowrap text-wrap rounded-md p-0 pl-1 text-sm font-medium underline-offset-4 transition-colors hover:underline focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50;
+
+    &:focus-visible {
+      @apply ring-ring;
+    }
+  }
+
+  p {
+    @apply max-w-[70ch];
+  }
+
+  svg {
+    @apply pointer-events-none size-4 shrink-0;
+  }
+
+  ul {
+    @apply flex list-inside list-disc flex-col gap-2;
+  }
+
+  li {
+    @apply text-sm;
+
+    p {
+      @apply contents;
+    }
   }
 }

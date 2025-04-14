@@ -10,7 +10,7 @@ interface Speaker {
 interface Event {
   id: number;
   title: string;
-  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other";
+  type: "talk" | "workshop" | "night" | "meal" | "competition" | "networking" | "other" | "painel";
   date: string;
   time: string;
   location: string;
@@ -23,6 +23,7 @@ interface EventsPageProps {
 }
 
 export default function EventsPageApril12({ events }: EventsPageProps) {
+  console.log("EVENTS: ", events);
   return (
     <div className="md:grid-rows-15 flex flex-col space-y-4 md:grid md:grid-cols-4 md:gap-4 md:space-y-0">
       <div className="col-span-4 col-start-1 row-start-1">
@@ -262,33 +263,39 @@ export default function EventsPageApril12({ events }: EventsPageProps) {
 
       <div className="row-start-14 col-span-2 col-start-1">
         <EventCard
-          title={"Rally Tascas"}
-          type={"night"}
-          time={"21:30 - 00:00"}
-          location={"Baixa do Porto"}
-          speakers={[]}
+          id={events[19].id}
+          title={events[19].title}
+          type={events[19].type}
+          time={events[19].time}
+          location={events[19].location}
+          speakers={events[19].speakers}
+          onClick={() => router.visit(`/events/${events[19].id}`)}
         />
       </div>
 
       <div className="row-start-14 col-span-2 col-start-3">
         <EventCard
-          title={"Game Show"}
-          type={"night"}
-          time={"20:30 - 23:00"}
-          location={"AEFEUP"}
-          speakers={[]}
+          id={events[20].id}
+          title={events[20].title}
+          type={events[20].type}
+          time={events[20].time}
+          location={events[20].location}
+          speakers={events[20].speakers}
+          onClick={() => router.visit(`/events/${events[20].id}`)}
         />
       </div>
 
-      <div className="row-start-54 col-span-4 col-start-1">
+      {/* <div className="row-start-54 col-span-4 col-start-1">
         <EventCard
-          title={"Visita às Galerias"}
-          type={"night"}
-          time={"00:00 - 04:00"}
-          location={"Baixa do Porto"}
-          speakers={[]}
+          id={events[21].id}
+          title={events[21].title}
+          type={events[21].type}
+          time={events[21].time}
+          location={events[21].location}
+          speakers={events[21].speakers}
+          onClick={() => router.visit(`/events/${events[21].id}`)}
         />
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -7,6 +7,8 @@ import mail from "@adonisjs/mail/services/main";
 import db from "@adonisjs/lucid/services/db";
 import app from "@adonisjs/core/services/app";
 import User from "#models/user";
+import { createTuyau } from "@tuyau/client";
+import { Env } from "@adonisjs/core/env";
 
 type UpdateOrderStatusPayload = {
   requestId: string;
@@ -15,6 +17,8 @@ type UpdateOrderStatusPayload = {
 
 export default class UpdateOrderStatus extends Job {
   async handle({ requestId, email }: UpdateOrderStatusPayload) {
+    const { api } = await import("#.adonisjs/api");
+
     try {
       this.logger.info(`Processing status update for requestId: ${requestId}`);
 
@@ -26,6 +30,7 @@ export default class UpdateOrderStatus extends Job {
         return;
       }
 
+      // @ts-ignore
       if (order.status !== "Pending") {
         this.logger.info(`Order status is no longer pending: ${order.status}`);
         return; // Exit if the status is no longer "Pending"
@@ -50,6 +55,7 @@ export default class UpdateOrderStatus extends Job {
           order.status = status;
           await order.save();
           this.logger.info(`Order status updated to: ${order.status}`);
+          // @ts-ignore
           if (order.status === "Success") {
             this.logger.info(`Gonna send mail: ${order.status}`);
             const products = await db
@@ -58,6 +64,7 @@ export default class UpdateOrderStatus extends Job {
               .where("order_products.order_id", order.id)
               .select("products.*", "order_products.quantity as quantity");
 
+            // @ts-ignore
             const total = order.total;
             const orderId = order.id;
 
@@ -73,6 +80,19 @@ export default class UpdateOrderStatus extends Job {
                 await participantProfile.save();
               }
             }
+
+            const tuyau = createTuyau({
+              api,
+              baseUrl: new Env(env).get("INERTIA_PUBLIC_APP_URL") ?? "",
+            });
+
+            await axios.post(
+              tuyau.$url("actions:referrals.event.pointattribution.trigger", {
+                params: { id: order.userId },
+              }),
+              { apiKey: new Env(env).get("JOBS_API_KEY") },
+              { withXSRFToken: true, withCredentials: true },
+            );
           }
         } else {
           await UpdateOrderStatus.dispatch({ requestId, email }, { delay: 10000 }); // Retry after 5 seconds

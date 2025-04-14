@@ -12,6 +12,7 @@ COPY package.json ./
 RUN corepack install
 
 COPY pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+COPY patches/ ./patches
 RUN sed -i 's/\([@ ]\)file:/\1link:/g' pnpm-lock.yaml
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm fetch
 

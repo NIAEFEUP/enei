@@ -3,7 +3,7 @@
 import type { InferPageProps } from "@adonisjs/inertia/types";
 import { Link } from "@tuyau/inertia/react";
 import { Card, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
-import TicketsController from "#controllers/tickets_controller";
+import type TicketsController from "#controllers/tickets_controller";
 import Page from "~/components/common/page";
 import Container from "~/components/common/containers";
 import { cn } from "~/lib/utils";
@@ -38,7 +38,7 @@ export default function SelectTicketsPage(props: InferPageProps<TicketsControlle
                     </CardDescription>
                     <p className="text-2xl font-bold">
                       <span className={cn(ticket.outOfStock && "line-through")}>
-                        {ticket.price}€
+                        {/* {tii}et.price}€ */}
                       </span>{" "}
                       {ticket.outOfStock && <span className="uppercase">Esgotado</span>}
                     </p>

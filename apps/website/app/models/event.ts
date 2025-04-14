@@ -1,8 +1,11 @@
 import { DateTime } from "luxon";
-import { BaseModel, column, manyToMany } from "@adonisjs/lucid/orm";
+import { BaseModel, belongsTo, column, manyToMany } from "@adonisjs/lucid/orm";
 import SpeakerProfile from "./speaker_profile.js";
-import type { ManyToMany } from "@adonisjs/lucid/types/relations";
+import type { BelongsTo, ManyToMany } from "@adonisjs/lucid/types/relations";
 import User from "./user.js";
+import Company from "./company.js";
+import ProductGroup from "./product_group.js";
+import Product from "./product.js";
 
 export default class Event extends BaseModel {
   @column({ isPrimary: true })
@@ -18,10 +21,19 @@ export default class Event extends BaseModel {
   declare title: string;
 
   @column()
-  declare description: string;
+  declare description: string | null;
 
   @column()
-  declare type: string;
+  declare type:
+    | "workshop"
+    | "other"
+    | "night"
+    | "talk"
+    | "networking"
+    | "competition"
+    | "meal"
+    | "painel"
+    | "cv";
 
   @column()
   declare companyImage: string;
@@ -29,21 +41,46 @@ export default class Event extends BaseModel {
   @column.dateTime()
   declare date: DateTime;
 
+  @column.dateTime()
+  declare actualDate: DateTime | null;
+
   @column()
   declare duration: number;
 
   @column()
   declare location: string;
 
+  @column()
+  declare extraInfo: string | null;
+
+  @column()
+  declare isAcceptingRegistrations: boolean;
+
   @manyToMany(() => SpeakerProfile, {
     pivotTable: "event_speakers",
   })
-  public speakers!: ManyToMany<typeof SpeakerProfile>;
+  declare speakers: ManyToMany<typeof SpeakerProfile>;
 
   @manyToMany(() => User, {
     pivotTable: "event_users",
   })
-  public registeredUsers!: ManyToMany<typeof User>;
+  declare registeredUsers: ManyToMany<typeof User>;
+
+  @manyToMany(() => User, {
+    pivotTable: "event_checkins",
+  })
+  public checkedInUsers!: ManyToMany<typeof User>;
+
+  @manyToMany(() => Company, {
+    pivotTable: "event_companies",
+  })
+  public companies!: ManyToMany<typeof Company>;
+
+  @column()
+  declare companyId: number | null;
+
+  @belongsTo(() => Company)
+  declare company: BelongsTo<typeof Company>;
 
   @column()
   declare registrationRequirements: string;
@@ -58,10 +95,31 @@ export default class Event extends BaseModel {
   declare ticketsRemaining: number;
 
   @column()
-  declare price: number;
+  declare participationProductId: number | null;
+
+  @belongsTo(() => Product, {
+    foreignKey: "participationProductId",
+  })
+  declare participationProduct: BelongsTo<typeof Product>;
+
+  @column()
+  declare productGroupId: number;
+
+  @column()
+  declare productId: number;
+
+  @belongsTo(() => Product)
+  declare product: BelongsTo<typeof Product>;
+
+  @belongsTo(() => ProductGroup)
+  declare productGroup: BelongsTo<typeof ProductGroup>;
 
   public getFormattedDate() {
     return this.date.toFormat("dd-MM-yyyy");
+  }
+
+  get isPaid() {
+    return false;
   }
 
   public getFormattedTime() {

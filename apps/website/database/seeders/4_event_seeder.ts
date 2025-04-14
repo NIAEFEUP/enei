@@ -22,7 +22,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -37,7 +36,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -52,7 +50,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -65,7 +62,6 @@ export default class extends BaseSeeder {
       location: "Auditório - ISEP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     await Event.create({
@@ -78,7 +74,6 @@ export default class extends BaseSeeder {
       location: "Auditório - ISEP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     await Event.create({
@@ -91,7 +86,6 @@ export default class extends BaseSeeder {
       location: "Auditório - ISEP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     /*
@@ -111,7 +105,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -126,7 +119,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -141,7 +133,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -155,7 +146,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     await Event.create({
@@ -168,7 +158,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     await Event.create({
@@ -181,7 +170,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     /*
@@ -201,7 +189,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -216,7 +203,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -230,7 +216,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -243,7 +228,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     await Event.create({
@@ -256,7 +240,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     await Event.create({
@@ -269,7 +252,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     /*
@@ -290,7 +272,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -305,7 +286,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -319,7 +299,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -332,7 +311,6 @@ export default class extends BaseSeeder {
       location: "Auditório - ISEP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     await Event.create({
@@ -345,7 +323,6 @@ export default class extends BaseSeeder {
       location: "Auditório - ISEP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     await Event.create({
@@ -358,7 +335,6 @@ export default class extends BaseSeeder {
       location: "Auditório - ISEP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     /*
@@ -378,7 +354,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -393,7 +368,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -408,7 +382,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -421,7 +394,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     await Event.create({
@@ -434,7 +406,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     await Event.create({
@@ -447,7 +418,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     /*
@@ -468,7 +438,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -483,7 +452,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -497,7 +465,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -510,7 +477,6 @@ export default class extends BaseSeeder {
       location: "TBD - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     await Event.create({
@@ -523,7 +489,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     await Event.create({
@@ -535,7 +500,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     /*
@@ -556,7 +520,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -571,7 +534,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -586,7 +548,6 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 20,
       ticketsTotal: 20,
-      price: 0,
     });
 
     await Event.create({
@@ -599,7 +560,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     await Event.create({
@@ -611,7 +571,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     await Event.create({
@@ -624,7 +583,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     await Event.create({
@@ -637,7 +595,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     /*
@@ -656,7 +613,6 @@ export default class extends BaseSeeder {
       location: "Auditório - FEUP",
       registrationRequirements: "",
       requiresRegistration: false,
-      price: 0,
     });
 
     await Event.create({
@@ -671,7 +627,29 @@ export default class extends BaseSeeder {
       requiresRegistration: true,
       ticketsRemaining: 1000,
       ticketsTotal: 1000,
-      price: 0,
+    });
+
+    await Event.create({
+      title: "eduTAP – A Sneak Peek into the Future of Campus Cards",
+      description:
+        "Universities still use **plastic campus cards**, but **digital lifestyles** demand an upgrade. **eduTAP** replaces them with **secure digital wallet passes**, enabling **seamless, private, and interoperable access** to **Higher Education services**. This talk covers **eduTAP’s architecture, real-world use, and role in cross-border mobility** via **eduGAIN standards**. More than a **tech upgrade**, **eduTAP redefines student IDs** for a **smarter, connected campus**.",
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 14, hour: 11, minute: 30 }),
+      duration: 30,
+      type: "talk",
+      location: "Auditório - FEUP",
+      registrationRequirements: "",
+      requiresRegistration: false,
+    });
+
+    await Event.create({
+      title: "Sessão de Abertura",
+      description: "",
+      date: DateTime.fromObject({ year: 2025, month: 4, day: 11, hour: 18, minute: 30 }),
+      duration: 90,
+      type: "other",
+      location: "Auditório Magno - ISEP",
+      registrationRequirements: "",
+      requiresRegistration: false,
     });
   }
 }

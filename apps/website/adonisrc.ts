@@ -17,6 +17,7 @@ export default defineConfig({
     () => import("@tuyau/core/commands"),
     () => import("adonisjs-jobs/commands"),
     () => import("@adonisjs/bouncer/commands"),
+    () => import("@jrmc/adonis-attachment/commands"),
   ],
 
   /*
@@ -48,15 +49,16 @@ export default defineConfig({
     () => import("adonisjs-jobs/jobs_provider"),
     () => import("@adonisjs/mail/mail_provider"),
     () => import("@tuyau/core/tuyau_provider"),
-    {
-      file: () => import("@adminjs/adonis/adminjs_provider"),
-      environment: ["web"],
-    },
     () => import("@adonisjs/ally/ally_provider"),
     () => import("@adonisjs/limiter/limiter_provider"),
     () => import("@adonisjs/redis/redis_provider"),
     () => import("@adonisjs/drive/drive_provider"),
+    () => import("@jrmc/adonis-attachment/attachment_provider"),
     () => import("@adonisjs/bouncer/bouncer_provider"),
+    {
+      file: () => import("@adminjs/adonis/adminjs_provider"),
+      environment: ["web"],
+    },
   ],
 
   /*
@@ -68,8 +70,8 @@ export default defineConfig({
   |
   */
   preloads: [
-    () => import("#start/routes"),
     () => import("#start/kernel"),
+    () => import("#start/routes"),
     () => import("#start/events"),
     () => import("#start/validator"),
   ],
