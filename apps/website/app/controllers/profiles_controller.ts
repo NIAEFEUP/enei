@@ -96,36 +96,27 @@ export default class ProfilesController {
     const isUser = authUser !== undefined && user.id === authUser.id;
 
     return inertia.render("profile", {
-      user: {
-        ...user,
-        participantProfile: {
-          ...user.participantProfile,
-          shirtSize: undefined,
-          dietaryRestrictions: undefined,
-          isVegetarian: undefined,
-          isVegan: undefined,
-          transports: undefined,
-          dateOfBirth: undefined,
-          phone: undefined,
-          municipality: undefined,
-        },
-        isAdmin: undefined,
-        email: undefined,
-        emailVerifiedAt: undefined,
-        accounts: undefined,
-        orders: undefined,
-        isSlugFrozen: undefined,
-        resume: undefined,
-        checkedInEvents: undefined,
-        referrer: undefined,
-        referrals: undefined,
-        referringPromoter: undefined,
-        referrerId: undefined,
-        referringPromoterId: undefined,
-        eventsRegistered: undefined,
-        points: undefined,
-        indirectReferrals: undefined,
-      },
+      user: user.serialize({
+        fields: [
+          "id",
+          "slug",
+        ],
+        relations: {
+          participantProfile: {
+            fields: [
+              "firstName",
+              "lastName",
+              "university",
+              "course",
+              "curricularYear",
+              "attendedBeforeEditions",
+              "github",
+              "linkedin",
+              "website",
+            ]
+          }
+        }
+      }),
       isUser,
     });
   }

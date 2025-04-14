@@ -13,9 +13,30 @@ export default class TeamController {
 
     const staffByDepartment = departments.reduce(
       (acc, department) => {
-        acc[department.name] = staff.filter(
-          (member) => member.staffProfile.departmentId === department.id,
-        );
+
+        acc[department.name] = staff
+          .filter((member) => member.staffProfile.departmentId === department.id)
+          .map(
+            (user) =>
+              user.serialize({
+                fields: ["id", "slug", "avatar"],
+                relations: {
+                  participantProfile: {
+                    fields: [
+                      "firstName",
+                      "lastName",
+                      "university",
+                      "course",
+                      "curricularYear",
+                      "attendedBeforeEditions",
+                      "github",
+                      "linkedin",
+                      "website",
+                    ],
+                  },
+                },
+              }) as User,
+          );
         return acc;
       },
       {} as Record<string, User[]>,
