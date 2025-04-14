@@ -90,7 +90,7 @@ const columns: ColumnDef<Participant>[] = [
     header: "Universidade",
     cell: ({ row }) => {
       const facultyName = row.original.faculty;
-      const faculty = getUniversityById(facultyName);
+      const faculty = facultyName && getUniversityById(facultyName);
       return (
         <div className="flex items-center">
           {faculty ? (

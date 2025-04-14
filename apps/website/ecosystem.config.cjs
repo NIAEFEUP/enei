@@ -12,6 +12,6 @@ module.exports = {
       script: "./ace.js",
       args: "jobs:listen",
       autorestart: true,
-    },
+    }
   ]),
 };
