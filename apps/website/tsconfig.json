@@ -6,10 +6,7 @@
     "outDir": "./build",
     "resolveJsonModule": true,
     "verbatimModuleSyntax": true,
-    "jsx": "react-jsx",
-    "allowJs": true,
-    "checkJs": true
+    "jsx": "react-jsx"
   },
-  "include": ["ecosystem.config.cjs"],
   "exclude": ["./inertia/**/*", "node_modules", "build"]
 }
