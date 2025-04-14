@@ -13,11 +13,13 @@ module.exports = {
       args: "jobs:listen",
       autorestart: true,
     },
-    // {
-    //   name: "enei-attendance",
-    //   cron: "*/15 * * * *",
-    //   script: "./ace.js",
-    //   args: "db:seed -f database/seeders/99_check_in_based_on_time_attendance_recurring_seeder.js",
-    // },
+    {
+      name: "enei-attendance",
+      cron: "*/15 * * * *",
+      execute_command: "wait 10",
+      script: "./ace.js",
+      autostart: false,
+      args: "db:seed -f database/seeders/99_check_in_based_on_time_attendance_recurring_seeder.js",
+    },
   ]),
 };
