@@ -84,10 +84,13 @@ export default class CompaniesController {
       .whereNotNull("participant_profiles.purchased_ticket")
       .orderBy("users.id");
 
-    const canSeeAll = ["silver", "gold", "main"].includes(companyUser.representativeProfile.company.sponsor);
+    const canSeeAll = ["silver", "gold", "main"].includes(
+      companyUser.representativeProfile.company.sponsor,
+    );
     const canSeeCv = true;
 
-    const allParticipants = canSeeAll ? await Promise.all(
+    const allParticipants = canSeeAll
+      ? await Promise.all(
           participants.map(async (participant) => {
             const likes = await this.userActivityService.getCompanyLikes(
               participant.id,
@@ -110,8 +113,9 @@ export default class CompaniesController {
               && participant.avatar
               && buildUrl().params({ slug: participant.slug }).make("pages:profile.avatar.show");
 
-            const cvUrl = canSeeCv &&
-              participant.slug
+            const cvUrl =
+              canSeeCv
+              && participant.slug
               && participant.resume
               && buildUrl().params({ slug: participant.slug }).make("pages:profile.resume.show");
 
@@ -158,8 +162,9 @@ export default class CompaniesController {
           && participant.avatar
           && buildUrl().params({ slug: participant.slug }).make("pages:profile.avatar.show");
 
-        const cvUrl = canSeeCv &&
-          participant.slug
+        const cvUrl =
+          canSeeCv
+          && participant.slug
           && participant.resume
           && buildUrl().params({ slug: participant.slug }).make("pages:profile.resume.show");
 
