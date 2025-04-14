@@ -86,48 +86,51 @@ export default class CompaniesController {
       .whereNotNull("participant_profiles.purchased_ticket")
       .orderBy("users.id");
 
-    const allParticipants =
-      ["silver", "gold", "main"].includes(companyUser.representativeProfile.company.sponsor)
-        ? await Promise.all(
-            participants.map(async (participant) => {
-              const likes = await this.userActivityService.getCompanyLikes(
-                participant.id,
-                companyUser.representativeProfile?.companyId,
-              );
-              const likedBy = await Promise.all(
-                likes.map(async (user) => {
-                  if (!user.representativeProfileId) {
-                    return null;
-                  }
-                  await user.load("representativeProfile");
-                  return (
-                    user.representativeProfile.firstName + " " + user.representativeProfile.lastName
-                  );
-                }),
-              );
+    const allParticipants = ["silver", "gold", "main"].includes(
+      companyUser.representativeProfile.company.sponsor,
+    )
+      ? await Promise.all(
+          participants.map(async (participant) => {
+            const likes = await this.userActivityService.getCompanyLikes(
+              participant.id,
+              companyUser.representativeProfile?.companyId,
+            );
+            const likedBy = await Promise.all(
+              likes.map(async (user) => {
+                if (!user.representativeProfileId) {
+                  return null;
+                }
+                await user.load("representativeProfile");
+                return (
+                  user.representativeProfile.firstName + " " + user.representativeProfile.lastName
+                );
+              }),
+            );
 
-              const photoUrl = participant.slug
-                && participant.avatar
-                && buildUrl().params({ slug: participant.slug }).make("pages:profile.avatar.show");
+            const photoUrl =
+              participant.slug
+              && participant.avatar
+              && buildUrl().params({ slug: participant.slug }).make("pages:profile.avatar.show");
 
-              const cvUrl = participant.slug
-                && participant.resume
-                && buildUrl().params({ slug: participant.slug }).make("pages:profile.resume.show");
-                
-              return {
-                id: participant.id,
-                name: `${participant.participantProfile.firstName} ${participant.participantProfile.lastName}`,
-                photoUrl,
-                faculty: participant.participantProfile.university,
-                course: participant.participantProfile.course,
-                year: participant.participantProfile.curricularYear,
-                cvLink: cvUrl,
-                likedBy: likedBy.filter((name) => name !== null),
-                isLiked: await this.userActivityService.isLiked(participant.id, companyUser.id),
-              };
-            }),
-          )
-        : null;
+            const cvUrl =
+              participant.slug
+              && participant.resume
+              && buildUrl().params({ slug: participant.slug }).make("pages:profile.resume.show");
+
+            return {
+              id: participant.id,
+              name: `${participant.participantProfile.firstName} ${participant.participantProfile.lastName}`,
+              photoUrl,
+              faculty: participant.participantProfile.university,
+              course: participant.participantProfile.course,
+              year: participant.participantProfile.curricularYear,
+              cvLink: cvUrl,
+              likedBy: likedBy.filter((name) => name !== null),
+              isLiked: await this.userActivityService.isLiked(participant.id, companyUser.id),
+            };
+          }),
+        )
+      : null;
 
     const associatedEvent = await Event.query()
       .where("companyId", companyUser.representativeProfile?.companyId)
