@@ -19,7 +19,7 @@ const companyRelations = lazy(() =>
 );
 
 export type CVPermissions = "all" | "visited" | "none";
-export type SponsorVariant = "default" | "gold" | "silver" | "bronze";
+export type SponsorVariant = "main" | "gold" | "silver" | "bronze" | "other"; 
 
 export default class Company extends BaseModel {
   @column({ isPrimary: true })

@@ -84,10 +84,10 @@ export default class CompaniesController {
       .whereNotNull("participant_profiles.purchased_ticket")
       .orderBy("users.id");
 
-    const allParticipants = ["silver", "gold", "main"].includes(
-      companyUser.representativeProfile.company.sponsor,
-    )
-      ? await Promise.all(
+    const canSeeAll = ["silver", "gold", "main"].includes(companyUser.representativeProfile.company.sponsor);
+    const canSeeCv = true;
+
+    const allParticipants = canSeeAll ? await Promise.all(
           participants.map(async (participant) => {
             const likes = await this.userActivityService.getCompanyLikes(
               participant.id,
@@ -110,7 +110,7 @@ export default class CompaniesController {
               && participant.avatar
               && buildUrl().params({ slug: participant.slug }).make("pages:profile.avatar.show");
 
-            const cvUrl =
+            const cvUrl = canSeeCv &&
               participant.slug
               && participant.resume
               && buildUrl().params({ slug: participant.slug }).make("pages:profile.resume.show");
@@ -122,7 +122,7 @@ export default class CompaniesController {
               faculty: participant.participantProfile.university,
               course: participant.participantProfile.course,
               year: participant.participantProfile.curricularYear,
-              cvLink: cvUrl,
+              cvLink: cvUrl || null,
               likedBy: likedBy.filter((name) => name !== null),
               isLiked: await this.userActivityService.isLiked(participant.id, companyUser.id),
             };
@@ -158,6 +158,11 @@ export default class CompaniesController {
           && participant.avatar
           && buildUrl().params({ slug: participant.slug }).make("pages:profile.avatar.show");
 
+        const cvUrl = canSeeCv &&
+          participant.slug
+          && participant.resume
+          && buildUrl().params({ slug: participant.slug }).make("pages:profile.resume.show");
+
         return {
           id: participant.id,
           name: `${participant.participantProfile.firstName} ${participant.participantProfile.lastName}`,
@@ -165,7 +170,7 @@ export default class CompaniesController {
           faculty: participant.participantProfile.university,
           course: participant.participantProfile.course,
           year: participant.participantProfile.curricularYear,
-          cvLink: null,
+          cvLink: cvUrl || null,
           likedBy: likedBy.filter((name) => name !== null),
           isLiked: await this.userActivityService.isLiked(participant.id, companyUser.id),
         };
