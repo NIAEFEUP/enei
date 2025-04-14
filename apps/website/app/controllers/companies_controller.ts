@@ -179,7 +179,7 @@ export default class CompaniesController {
           cvLink: cvUrl || null,
           likedBy: likedBy.filter((name) => name !== null),
           isLiked: await this.userActivityService.isLiked(participant.id, companyUser.id),
-          slug: user.slug,
+          slug: participant.slug,
         };
       }) || [],
     );
