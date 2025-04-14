@@ -47,8 +47,6 @@ export default class CompaniesController {
       companyUser.representativeProfile?.companyId,
     );
 
-    console.log(userLikes);
-
     const likeNames = await Promise.all(
       userLikes.map(async (user) => {
         if (!user.representativeProfileId) {
@@ -172,7 +170,7 @@ export default class CompaniesController {
     return inertia.render("company/participants", {
       allParticipants: allParticipants,
       checkedParticipants: checkedParticipants,
-      likedParticipants: allParticipants?.filter((p) => p.isLiked),
+      likedParticipants: (allParticipants ?? checkedParticipants).filter((p) => p.isLiked),
     });
   }
 }
