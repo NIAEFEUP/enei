@@ -39,7 +39,7 @@ import {
 import { useMemo } from "react";
 import { cn } from "~/lib/utils";
 import { getUniversityById } from "~/lib/enei/signup/universities";
-import { TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 
 interface Participant {
   id: number;
@@ -94,10 +94,10 @@ const columns: ColumnDef<Participant>[] = [
       return (
         <div className="flex items-center">
           {faculty ? (
-            <TooltipProvider>
-              <TooltipContent>{faculty.shortName}</TooltipContent>
-              <TooltipTrigger>{faculty.name}</TooltipTrigger>
-            </TooltipProvider>
+              <Tooltip>
+                <TooltipContent>{faculty.shortName}</TooltipContent>
+                <TooltipTrigger>{faculty.name}</TooltipTrigger>
+              </Tooltip>
           ) : (
             <span className="text-enei-blue text-sm font-medium">-</span>
           )}
