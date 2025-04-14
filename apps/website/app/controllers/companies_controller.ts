@@ -4,6 +4,7 @@ import User from "#models/user";
 import Event from "#models/event";
 import { UserActivityService } from "#services/user_activity_service";
 import Company from "#models/company";
+import { buildUrl } from "../url.js";
 
 @inject()
 export default class CompaniesController {
@@ -46,8 +47,6 @@ export default class CompaniesController {
       companyUser.representativeProfile?.companyId,
     );
 
-    console.log(userLikes);
-
     const likeNames = await Promise.all(
       userLikes.map(async (user) => {
         if (!user.representativeProfileId) {
@@ -85,41 +84,56 @@ export default class CompaniesController {
       .whereNotNull("participant_profiles.purchased_ticket")
       .orderBy("users.id");
 
-    const allParticipants =
-      companyUser.representativeProfile.company.sponsor === "bronze"
-        ? null
-        : await Promise.all(
-            participants.map(async (participant) => {
-              const likes = await this.userActivityService.getCompanyLikes(
-                participant.id,
-                companyUser.representativeProfile?.companyId,
-              );
-              const likedBy = await Promise.all(
-                likes.map(async (user) => {
-                  if (!user.representativeProfileId) {
-                    return null;
-                  }
-                  await user.load("representativeProfile");
-                  return (
-                    user.representativeProfile.firstName + " " + user.representativeProfile.lastName
-                  );
-                }),
-              );
+    const canSeeAll = ["silver", "gold", "main"].includes(
+      companyUser.representativeProfile.company.sponsor,
+    );
+    const canSeeCv = true;
 
-              return {
-                id: participant.id,
-                name: `${participant.participantProfile.firstName} ${participant.participantProfile.lastName}`,
-                photoUrl: null, // TODO: add photo when available
-                slug: participant.slug,
-                faculty: participant.participantProfile.university,
-                course: participant.participantProfile.course,
-                year: participant.participantProfile.curricularYear,
-                cvLink: null, // TODO: add when cv is available
-                likedBy: likedBy.filter((name) => name !== null),
-                isLiked: await this.userActivityService.isLiked(participant.id, companyUser.id),
-              };
-            }),
-          );
+    const allParticipants = canSeeAll
+      ? await Promise.all(
+          participants.map(async (participant) => {
+            const likes = await this.userActivityService.getCompanyLikes(
+              participant.id,
+              companyUser.representativeProfile?.companyId,
+            );
+            const likedBy = await Promise.all(
+              likes.map(async (user) => {
+                if (!user.representativeProfileId) {
+                  return null;
+                }
+                await user.load("representativeProfile");
+                return (
+                  user.representativeProfile.firstName + " " + user.representativeProfile.lastName
+                );
+              }),
+            );
+
+            const photoUrl =
+              participant.slug
+              && participant.avatar
+              && buildUrl().params({ slug: participant.slug }).make("pages:profile.avatar.show");
+
+            const cvUrl =
+              canSeeCv
+              && participant.slug
+              && participant.resume
+              && buildUrl().params({ slug: participant.slug }).make("pages:profile.cv.show");
+
+            return {
+              id: participant.id,
+              name: `${participant.participantProfile.firstName} ${participant.participantProfile.lastName}`,
+              photoUrl,
+              faculty: participant.participantProfile.university,
+              course: participant.participantProfile.course,
+              year: participant.participantProfile.curricularYear,
+              slug: participant.slug,
+              cvLink: cvUrl || null,
+              likedBy: likedBy.filter((name) => name !== null),
+              isLiked: await this.userActivityService.isLiked(participant.id, companyUser.id),
+            };
+          }),
+        )
+      : null;
 
     const associatedEvent = await Event.query()
       .where("companyId", companyUser.representativeProfile?.companyId)
@@ -148,15 +162,26 @@ export default class CompaniesController {
           return null;
         }
 
+        const photoUrl =
+          participant.slug
+          && participant.avatar
+          && buildUrl().params({ slug: participant.slug }).make("pages:profile.avatar.show");
+
+        const cvUrl =
+          canSeeCv
+          && participant.slug
+          && participant.resume
+          && buildUrl().params({ slug: participant.slug }).make("pages:profile.cv.show");
+
         return {
           id: participant.id,
           name: `${participant.participantProfile.firstName} ${participant.participantProfile.lastName}`,
-          photoUrl: null, // TODO: add photo when available
+          photoUrl: photoUrl,
           faculty: participant.participantProfile.university,
           course: participant.participantProfile.course,
           year: participant.participantProfile.curricularYear,
-          cvLink: null, // TODO: add when cv is available
-          likedBy: likedBy.filter((name) => name !== null).join(", "),
+          cvLink: cvUrl || null,
+          likedBy: likedBy.filter((name) => name !== null),
           isLiked: await this.userActivityService.isLiked(participant.id, companyUser.id),
           slug : user.slug
         };
@@ -166,7 +191,7 @@ export default class CompaniesController {
     return inertia.render("company/participants", {
       allParticipants: allParticipants,
       checkedParticipants: checkedParticipants,
-      likedParticipants: allParticipants?.filter((p) => p.isLiked),
+      likedParticipants: (allParticipants ?? checkedParticipants).filter((p) => p.isLiked),
     });
   }
 }

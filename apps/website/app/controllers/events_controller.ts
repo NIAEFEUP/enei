@@ -35,7 +35,7 @@ export default class EventsController {
   async show({ inertia, params, auth }: HttpContext) {
     const event = await Event.query()
       .where("id", params.id)
-      .preload("speakers")
+      .preload("speakers", async (query) => await query.preload("user"))
       .preload("product")
       .firstOrFail();
 
@@ -92,6 +92,7 @@ export default class EventsController {
 
   async checkin({ response, request, params, session }: HttpContext) {
     const eventID = request.input("eventID");
+    const exit = request.input("exit");
 
     const event = await Event.findOrFail(eventID);
     const user = await User.findByOrFail("slug", params.slug);
@@ -104,7 +105,7 @@ export default class EventsController {
     ) {
       session.flashErrors({ message: "Participante não registado no evento" });
     } else {
-      await this.eventService.checkin(user!, event);
+      await this.eventService.checkin(user!, event, exit);
     }
 
     return response.redirect().back();

@@ -40,6 +40,8 @@ import {
 } from "~/components/ui/pagination";
 import { useMemo } from "react";
 import { cn } from "~/lib/utils";
+import { getUniversityById } from "~/lib/enei/signup/universities";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 
 interface Participant {
   id: number;
@@ -90,10 +92,20 @@ const columns: ColumnDef<Participant>[] = [
     accessorKey: "faculty",
     header: "Universidade",
     cell: ({ row }) => {
-      const faculty = row.original.faculty;
+      const facultyName = row.original.faculty;
+      const faculty = facultyName && getUniversityById(facultyName);
       return (
         <div className="flex items-center">
-          <span className="text-enei-blue text-sm font-medium">{faculty || "-"}</span>
+          {faculty ? (
+            <Tooltip>
+              <TooltipContent>{faculty.name}</TooltipContent>
+              <TooltipTrigger>
+                <span className="text-enei-blue text-sm font-medium">{faculty.shortName}</span>
+              </TooltipTrigger>
+            </Tooltip>
+          ) : (
+            <span className="text-enei-blue text-sm font-medium">-</span>
+          )}
         </div>
       );
     },
@@ -166,18 +178,18 @@ const columns: ColumnDef<Participant>[] = [
               <MoreHorizontal />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent onClick={toggleLike} align="end" className="">
-            <DropdownMenuItem className="cursor-pointer">
+          <DropdownMenuContent align="end" className="">
+            <DropdownMenuItem onClick={toggleLike} className="cursor-pointer">
               {liked ? <HeartOff className="mr-2 h-4 w-4" /> : <Heart className="mr-2 h-4 w-4" />}
               Like
             </DropdownMenuItem>
             {row.original.cvLink && (
-              <DropdownMenuItem className="flex flex-row">
+              <DropdownMenuItem className="grid grid-cols-1">
                 <a
                   href={row.original.cvLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-row"
+                  className="flex h-full w-full flex-row"
                 >
                   <FileUser className="mr-2 h-4 w-4" />
                   CV

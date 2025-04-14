@@ -97,8 +97,8 @@ export default function LongActivities({ currentActiveIndex, eventsByDay }: Long
           <EventCard
             title={"Check-in"}
             type={"other"}
-            time={"9:00 - 12:00"}
-            location={"ISEP (manhã) | FEUP (tarde)"}
+            time={"9:00 - 17:00"}
+            location={"FEUP"}
             speakers={[]}
           />
           <EventCard
