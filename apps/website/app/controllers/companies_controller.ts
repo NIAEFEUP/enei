@@ -109,11 +109,11 @@ export default class CompaniesController {
               return {
                 id: participant.id,
                 name: `${participant.participantProfile.firstName} ${participant.participantProfile.lastName}`,
-                photoUrl: participant.resume?.getSignedUrl(), // TODO: add photo when available
+                photoUrl: await participant.resume?.getSignedUrl(),
                 faculty: participant.participantProfile.university,
                 course: participant.participantProfile.course,
                 year: participant.participantProfile.curricularYear,
-                cvLink: participant.resume?.getSignedUrl(), // TODO: add when cv is available
+                cvLink: await participant.resume?.getSignedUrl(),
                 likedBy: likedBy.filter((name) => name !== null),
                 isLiked: await this.userActivityService.isLiked(participant.id, companyUser.id),
               };
