@@ -174,7 +174,7 @@ const columns: ColumnDef<Participant>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="">
-            <DropdownMenuItem  onClick={toggleLike} className="cursor-pointer">
+            <DropdownMenuItem onClick={toggleLike} className="cursor-pointer">
               {liked ? <HeartOff className="mr-2 h-4 w-4" /> : <Heart className="mr-2 h-4 w-4" />}
               Like
             </DropdownMenuItem>
@@ -184,7 +184,7 @@ const columns: ColumnDef<Participant>[] = [
                   href={row.original.cvLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-row w-full h-full"
+                  className="flex h-full w-full flex-row"
                 >
                   <FileUser className="mr-2 h-4 w-4" />
                   CV
