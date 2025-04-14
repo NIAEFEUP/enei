@@ -34,9 +34,7 @@ function toParticipantProfileFormat(data: any): Partial<ParticipantProfile> {
 
 @inject()
 export default class ProfilesController {
-  constructor(
-    private userService: UserService,
-  ) {}
+  constructor(private userService: UserService) {}
 
   async default({ auth, response }: HttpContext) {
     const user = auth.getUserOrFail();
