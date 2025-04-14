@@ -98,9 +98,40 @@ export default class ProfilesController {
     });
 
     const isUser = authUser !== undefined && user.id === authUser.id;
-    const activityInformation = await this.userActivityService.getActivityInformation(user);
 
-    return inertia.render("profile", { user, isUser, activityInformation });
+    return inertia.render("profile", {
+      user: {
+        ...user,
+        participantProfile: {
+          ...user.participantProfile,
+          shirtSize: undefined,
+          dietaryRestrictions: undefined,
+          isVegetarian: undefined,
+          isVegan: undefined,
+          transports: undefined,
+          dateOfBirth: undefined,
+          phone: undefined,
+          municipality: undefined,
+        },
+        isAdmin: undefined,
+        email: undefined,
+        emailVerifiedAt: undefined,
+        accounts: undefined,
+        orders: undefined,
+        isSlugFrozen: undefined,
+        resume: undefined,
+        checkedInEvents: undefined,
+        referrer: undefined,
+        referrals: undefined,
+        referringPromoter: undefined,
+        referrerId: undefined, 
+        referringPromoterId: undefined,
+        eventsRegistered: undefined,
+        points: undefined,
+        indirectReferrals: undefined,
+      },
+      isUser
+    });
   }
 
   async edit({ auth, inertia, response, params }: HttpContext) {
