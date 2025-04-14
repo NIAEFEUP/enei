@@ -1,5 +1,4 @@
 import Department from "#models/department";
-import StaffProfile from "#models/staff_profile";
 import User from "#models/user";
 import type { HttpContext } from "@adonisjs/core/http";
 
@@ -19,7 +18,7 @@ export default class TeamController {
         );
         return acc;
       },
-      {} as Record<number, StaffProfile[]>,
+      {} as Record<string, User[]>,
     );
 
     return inertia.render("team", { departments, staffByDepartment });

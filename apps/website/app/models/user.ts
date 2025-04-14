@@ -143,6 +143,7 @@ export default class User extends BaseModel {
   @attachment({
     folder: "avatars",
     variants: ["thumbnail"],
+    preComputeUrl: true,
   })
   declare avatar: Attachment | null;
 

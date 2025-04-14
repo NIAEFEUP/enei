@@ -7,13 +7,16 @@ import { lazy } from "#lib/lazy.js";
 import { relations } from "#lib/lucid/relations.js";
 
 const staffProfileRelations = lazy(() =>
-  relations(StaffProfile, (r) => [r.belongsTo("department")]),
+  relations(StaffProfile, (r) => [r.belongsTo("department"), r.hasOne("user")]),
 );
 
 export default class StaffProfile extends BaseModel {
   @column({ isPrimary: true })
   declare id: number;
 
+  @column()
+  declare isCoordinator: boolean;
+  
   @column()
   declare departmentId: number;
 
@@ -25,6 +28,12 @@ export default class StaffProfile extends BaseModel {
 
   @column()
   declare isAdmin: boolean;
+
+  @column()
+  declare firstName: string;
+
+  @column()
+  declare lastName: string;
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime;

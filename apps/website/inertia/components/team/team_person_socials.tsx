@@ -14,12 +14,14 @@ const socialComponentMap = {
 };
 
 export default function TeamPersonSocials({ person }: TeamPersonSocialsProps) {
-  const socials = ["github", "linkedin", "website"];
+  const socials = ["github", "linkedin", "website"] as const;
 
   return (
     <div className="flex flex-row gap-x-2">
       {socials.map((social: string) => {
-        if (person.participantProfile[social]) {
+        // @ts-ignore
+        if (social in person.participantProfile && person.participantProfile[social]) { 
+          // @ts-ignore
           return socialComponentMap[social];
         }
       })}
