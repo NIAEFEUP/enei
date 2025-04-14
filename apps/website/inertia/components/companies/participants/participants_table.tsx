@@ -38,6 +38,8 @@ import {
 } from "~/components/ui/pagination";
 import { useMemo } from "react";
 import { cn } from "~/lib/utils";
+import { getUniversityById } from "~/lib/enei/signup/universities";
+import { TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 
 interface Participant {
   id: number;
@@ -87,10 +89,18 @@ const columns: ColumnDef<Participant>[] = [
     accessorKey: "faculty",
     header: "Universidade",
     cell: ({ row }) => {
-      const faculty = row.original.faculty;
+      const facultyName = row.original.faculty;
+      const faculty = getUniversityById(facultyName);
       return (
         <div className="flex items-center">
-          <span className="text-enei-blue text-sm font-medium">{faculty || "-"}</span>
+          {faculty ? (
+            <TooltipProvider>
+              <TooltipContent>{faculty.shortName}</TooltipContent> 
+              <TooltipTrigger>{faculty.name}</TooltipTrigger>
+            </TooltipProvider>
+          ) : (
+            <span className="text-enei-blue text-sm font-medium">-</span>
+          )}
         </div>
       );
     },
