@@ -67,12 +67,11 @@ export default class extends BaseSeeder {
     user2.email = "empresa@eneiconf.pt";
     user2.emailVerifiedAt = DateTime.now();
     user2.slug = "empresa";
-    
+
     await user2.related("accounts").create({
       id: `credentials:${"empresa@eneiconf.pt"}`,
       password: "password",
     });
-
 
     const representativeProfile = await RepresentativeProfile.create({
       firstName: "Empresa",

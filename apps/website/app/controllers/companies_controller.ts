@@ -157,8 +157,8 @@ export default class CompaniesController {
             return user.representativeProfile.firstName + " " + user.representativeProfile.lastName;
           }),
         );
-        const user = await User.findBy('participantProfileId', participant.id);
-        if(!user) {
+        const user = await User.findBy("participantProfileId", participant.id);
+        if (!user) {
           return null;
         }
 
@@ -183,7 +183,7 @@ export default class CompaniesController {
           cvLink: cvUrl || null,
           likedBy: likedBy.filter((name) => name !== null),
           isLiked: await this.userActivityService.isLiked(participant.id, companyUser.id),
-          slug : user.slug
+          slug: user.slug,
         };
       }) || [],
     );

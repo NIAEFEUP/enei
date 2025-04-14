@@ -168,7 +168,7 @@ const columns: ColumnDef<Participant>[] = [
         }
       };
 
-      console.log("ROW: ", row.original)
+      console.log("ROW: ", row.original);
 
       return (
         <DropdownMenu>
@@ -197,9 +197,13 @@ const columns: ColumnDef<Participant>[] = [
               </DropdownMenuItem>
             )}
             <DropdownMenuItem className="cursor-pointer">
-            <Link className="text-enei-blue" route="pages:profile.show" params={{ slug: row.original.slug }}>
-              Ver perfil
-            </Link>
+              <Link
+                className="text-enei-blue"
+                route="pages:profile.show"
+                params={{ slug: row.original.slug }}
+              >
+                Ver perfil
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
