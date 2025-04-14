@@ -21,13 +21,7 @@ export default class TeamController {
                 fields: ["id", "slug", "avatar"],
                 relations: {
                   participantProfile: {
-                    fields: [
-                      "firstName",
-                      "lastName",
-                      "github",
-                      "linkedin",
-                      "website",
-                    ],
+                    fields: ["firstName", "lastName", "github", "linkedin", "website"],
                   },
                 },
               }) as User,
