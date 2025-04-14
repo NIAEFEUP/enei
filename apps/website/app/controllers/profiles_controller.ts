@@ -124,13 +124,13 @@ export default class ProfilesController {
         referrer: undefined,
         referrals: undefined,
         referringPromoter: undefined,
-        referrerId: undefined, 
+        referrerId: undefined,
         referringPromoterId: undefined,
         eventsRegistered: undefined,
         points: undefined,
         indirectReferrals: undefined,
       },
-      isUser
+      isUser,
     });
   }
 
