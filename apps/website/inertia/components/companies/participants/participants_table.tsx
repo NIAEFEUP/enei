@@ -95,7 +95,7 @@ const columns: ColumnDef<Participant>[] = [
         <div className="flex items-center">
           {faculty ? (
             <TooltipProvider>
-              <TooltipContent>{faculty.shortName}</TooltipContent> 
+              <TooltipContent>{faculty.shortName}</TooltipContent>
               <TooltipTrigger>{faculty.name}</TooltipTrigger>
             </TooltipProvider>
           ) : (
