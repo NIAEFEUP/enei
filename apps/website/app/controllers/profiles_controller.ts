@@ -1,6 +1,5 @@
 import ParticipantProfile from "#models/participant_profile";
 import User from "#models/user";
-import { UserActivityService } from "#services/user_activity_service";
 import { changeEmailSqids, UserService } from "#services/user_service";
 import {
   createProfileValidator,
@@ -36,7 +35,6 @@ function toParticipantProfileFormat(data: any): Partial<ParticipantProfile> {
 @inject()
 export default class ProfilesController {
   constructor(
-    private userActivityService: UserActivityService,
     private userService: UserService,
   ) {}
 
