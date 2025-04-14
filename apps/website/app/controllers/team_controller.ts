@@ -13,7 +13,6 @@ export default class TeamController {
 
     const staffByDepartment = departments.reduce(
       (acc, department) => {
-
         acc[department.name] = staff
           .filter((member) => member.staffProfile.departmentId === department.id)
           .map(

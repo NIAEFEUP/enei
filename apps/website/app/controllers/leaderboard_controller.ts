@@ -12,30 +12,27 @@ export default class LeaderboardController {
     const leaderboard = await this.leaderboardService
       .getLeaderboardUsers(this.USER_LIMIT)
       .then((users) =>
-        users.map(
-          (user) => user.serialize({
-              fields: [
-                "id",
-                "slug",
-              ],
-              relations: {
-                participantProfile: {
-                  fields: [
-                    "firstName",
-                    "lastName",
-                    "university",
-                    "course",
-                    "curricularYear",
-                    "attendedBeforeEditions",
-                    "github",
-                    "linkedin",
-                    "website",
-                  ]
-                }
-              }
-            })
-          )
-        )
+        users.map((user) =>
+          user.serialize({
+            fields: ["id", "slug"],
+            relations: {
+              participantProfile: {
+                fields: [
+                  "firstName",
+                  "lastName",
+                  "university",
+                  "course",
+                  "curricularYear",
+                  "attendedBeforeEditions",
+                  "github",
+                  "linkedin",
+                  "website",
+                ],
+              },
+            },
+          }),
+        ),
+      );
     return inertia.render("leaderboard", { leaderboard });
   }
 }

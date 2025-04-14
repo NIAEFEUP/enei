@@ -97,10 +97,7 @@ export default class ProfilesController {
 
     return inertia.render("profile", {
       user: user.serialize({
-        fields: [
-          "id",
-          "slug",
-        ],
+        fields: ["id", "slug"],
         relations: {
           participantProfile: {
             fields: [
@@ -113,9 +110,9 @@ export default class ProfilesController {
               "github",
               "linkedin",
               "website",
-            ]
-          }
-        }
+            ],
+          },
+        },
       }),
       isUser,
     });
