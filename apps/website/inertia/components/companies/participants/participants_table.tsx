@@ -243,9 +243,6 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
     ];
   }, [table, currentPage]);
 
-  console.log({ hasMoreBefore, hasMoreAfter, possiblePages });
-
-  console.log(table.getState().pagination.pageIndex);
   return (
     <div className="w-full overflow-x-auto">
       <div className="mt-4 rounded-md">
