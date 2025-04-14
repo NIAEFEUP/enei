@@ -158,11 +158,6 @@ export default class CompaniesController {
           && participant.avatar
           && buildUrl().params({ slug: participant.slug }).make("pages:profile.avatar.show");
 
-        const cvUrl =
-          participant.slug
-          && participant.resume
-          && buildUrl().params({ slug: participant.slug }).make("pages:profile.resume.show");
-
         return {
           id: participant.id,
           name: `${participant.participantProfile.firstName} ${participant.participantProfile.lastName}`,
@@ -170,7 +165,7 @@ export default class CompaniesController {
           faculty: participant.participantProfile.university,
           course: participant.participantProfile.course,
           year: participant.participantProfile.curricularYear,
-          cvLink: cvUrl,
+          cvLink: null,
           likedBy: likedBy.filter((name) => name !== null),
           isLiked: await this.userActivityService.isLiked(participant.id, companyUser.id),
         };
