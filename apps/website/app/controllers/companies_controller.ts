@@ -117,7 +117,7 @@ export default class CompaniesController {
               canSeeCv
               && participant.slug
               && participant.resume
-              && buildUrl().params({ slug: participant.slug }).make("pages:profile.resume.show");
+              && buildUrl().params({ slug: participant.slug }).make("pages:profile.cv.show");
 
             return {
               id: participant.id,
@@ -166,7 +166,7 @@ export default class CompaniesController {
           canSeeCv
           && participant.slug
           && participant.resume
-          && buildUrl().params({ slug: participant.slug }).make("pages:profile.resume.show");
+          && buildUrl().params({ slug: participant.slug }).make("pages:profile.cv.show");
 
         return {
           id: participant.id,
