@@ -72,7 +72,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
     // router.patch(tuyau.$url("actions:profile.update"), payload);
   };
 
-  const [cacheBuster, setCacheBuster] = useState(Date.now());
+  const [cacheBuster, setCacheBuster] = useState(() => Date.now());
 
   const refreshAvatar = () => {
     setCacheBuster(Date.now()); // update with current timestamp
