@@ -7,7 +7,7 @@ import { cn } from "~/lib/utils";
 export default function Footer() {
   return (
     <footer className="relative">
-      <div className="enei-footer-waves absolute inset-x-0 bottom-full h-52" />
+      <div className="enei-footer-waves absolute inset-x-0 bottom-full h-32" />
       <div className="text-enei-beige from-enei-blue to-enei-blue/50 h-60 bg-black bg-gradient-to-b">
         <div className="flex flex-col space-y-4 pt-12">
           <div className="mb-3 flex flex-col space-y-1">
