@@ -48,6 +48,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
   const tuyau = useTuyau();
 
   const [initialValues] = useState<CommonInfo>(() => profileToCommonInfo(profile));
+  console.log({ profile, initialValues })
 
   const form = useForm<CommonInfo>({
     resolver: zodResolver(commonSchema),
