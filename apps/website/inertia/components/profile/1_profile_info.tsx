@@ -58,7 +58,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
   });
 
   const onSubmit = (data: CommonInfo) => {
-    console.log("pre-submit", data)
+    console.log("pre-submit", data);
     let payload: Partial<CommonInfo> = {};
 
     for (const [key, value] of Object.entries(form.formState.dirtyFields)) {
@@ -68,7 +68,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
       payload = { ...payload, [k]: data[k] };
     }
 
-    console.log("post-submit", payload)
+    console.log("post-submit", payload);
     // router.patch(tuyau.$url("actions:profile.update"), payload);
   };
 
