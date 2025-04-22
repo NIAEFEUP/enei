@@ -50,7 +50,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
 
   const { csrfToken } = usePage<PageProps & { csrfToken: string }>().props;
 
-  const [initialValues] = useState<CommonInfo>(profileToCommonInfo(profile));
+  const [initialValues] = useState<CommonInfo>(() => profileToCommonInfo(profile));
 
   const form = useForm<CommonInfo>({
     resolver: zodResolver(commonSchema),
@@ -58,6 +58,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
   });
 
   const onSubmit = (data: CommonInfo) => {
+    console.log("pre-submit", data)
     let payload: Partial<CommonInfo> = {};
 
     for (const [key, value] of Object.entries(form.formState.dirtyFields)) {
@@ -67,10 +68,8 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
       payload = { ...payload, [k]: data[k] };
     }
 
-    router.patch(tuyau.$url("actions:profile.update"), {
-      ...payload,
-      _csrf: csrfToken,
-    });
+    console.log("post-submit", payload)
+    // router.patch(tuyau.$url("actions:profile.update"), payload);
   };
 
   const [cacheBuster, setCacheBuster] = useState(Date.now());
