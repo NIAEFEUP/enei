@@ -104,6 +104,7 @@ const AvatarUpload = ({ onUploadComplete }: AvatarUploadProps) => {
             <Button
               variant="destructive"
               className="w-9"
+              type="button"
               onClick={handleDelete}
               disabled={uploading || deleting}
             >
