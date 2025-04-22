@@ -21,7 +21,7 @@ const transport = z.object({
 const shirtSize = z
   .string()
   .nonempty({ message: "Seleciona um tamanho" })
-  .refine((val) => shirts.includes(val));
+  .refine((val) => shirts.includes(val) || val === "*");
 
 const termsAndConditions = z.boolean().refine((val) => val, {
   message: "Tens de concordar com os termos e condições",
