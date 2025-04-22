@@ -54,7 +54,12 @@ const CvUpload = () => {
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-2 lg:flex-row">
           <Input className="w-full lg:w-64" type="file" accept=".pdf" onChange={handleFileChange} />
-          <Button className="w-full lg:w-48" type="button" onClick={handleUpload} disabled={uploading || !file}>
+          <Button
+            className="w-full lg:w-48"
+            type="button"
+            onClick={handleUpload}
+            disabled={uploading || !file}
+          >
             {uploading ? "A carregar..." : "Carregar CV"}
           </Button>
         </div>
