@@ -78,12 +78,9 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
   return (
     <Form {...form}>
       <IsVisibleDisclaimer />
-      <form
-        onSubmit={() => {
-          return form.handleSubmit(onSubmit, (errors) => console.log(errors))();
-        }}
-        className="flex flex-col gap-2"
-      >
+      <form onSubmit={(ev) => {
+        return form.handleSubmit(onSubmit, (errors) => console.log(errors))(ev)
+      }} className="flex flex-col gap-2">
         <div className="grid gap-4 lg:grid-cols-[1fr_auto]">
           <div className="flex flex-col gap-2">
             <FormField
