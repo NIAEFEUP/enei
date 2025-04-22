@@ -29,7 +29,6 @@ import UniversitySelection from "~/components/signup/common/university_selection
 import MultipleSelector from "~/components/ui/multiple-selector";
 import { CommonInfo, commonSchema, profileToCommonInfo } from "./common/common_info";
 import { useTuyau } from "~/hooks/use_tuyau";
-import { router, usePage } from "@inertiajs/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,8 +46,6 @@ type ProfileInfoProps = {
 
 const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
   const tuyau = useTuyau();
-
-  const { csrfToken } = usePage<PageProps & { csrfToken: string }>().props;
 
   const [initialValues] = useState<CommonInfo>(() => profileToCommonInfo(profile));
 
@@ -81,7 +78,9 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
   return (
     <Form {...form}>
       <IsVisibleDisclaimer />
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2">
+      <form onSubmit={() => {
+        return form.handleSubmit(onSubmit, (errors) => console.log(errors))()
+      }} className="flex flex-col gap-2">
         <div className="grid gap-4 lg:grid-cols-[1fr_auto]">
           <div className="flex flex-col gap-2">
             <FormField
