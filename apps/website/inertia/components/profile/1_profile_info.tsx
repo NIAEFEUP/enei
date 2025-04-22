@@ -39,6 +39,7 @@ import CvUpload from "../common/cv_upload";
 import { IsVisibleDisclaimer } from "./visibility_disclaimer";
 import AvatarUpload from "../common/avatar_upload";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { router } from "@inertiajs/react";
 
 type ProfileInfoProps = {
   profile: ParticipantProfile;
@@ -48,7 +49,6 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
   const tuyau = useTuyau();
 
   const [initialValues] = useState<CommonInfo>(() => profileToCommonInfo(profile));
-  console.log({ profile, initialValues });
 
   const form = useForm<CommonInfo>({
     resolver: zodResolver(commonSchema),
@@ -56,7 +56,6 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
   });
 
   const onSubmit = (data: CommonInfo) => {
-    console.log("pre-submit", data);
     let payload: Partial<CommonInfo> = {};
 
     for (const [key, value] of Object.entries(form.formState.dirtyFields)) {
@@ -66,8 +65,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
       payload = { ...payload, [k]: data[k] };
     }
 
-    console.log("post-submit", payload);
-    // router.patch(tuyau.$url("actions:profile.update"), payload);
+    router.patch(tuyau.$url("actions:profile.update"), payload);
   };
 
   const [cacheBuster, setCacheBuster] = useState(() => Date.now());
@@ -80,9 +78,7 @@ const ProfileInfoForm = ({ profile }: ProfileInfoProps) => {
     <Form {...form}>
       <IsVisibleDisclaimer />
       <form
-        onSubmit={(ev) => {
-          return form.handleSubmit(onSubmit, (errors) => console.log(errors))(ev);
-        }}
+        onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-2"
       >
         <div className="grid gap-4 lg:grid-cols-[1fr_auto]">

@@ -142,7 +142,7 @@ export default class ProfilesController {
 
     await user.participantProfile.merge(newFields).save();
 
-    return response.redirect().toRoute("pages:profile.default");
+    return response.redirect().back();
   }
 
   async show({ inertia }: HttpContext) {
