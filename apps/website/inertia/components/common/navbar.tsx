@@ -105,7 +105,7 @@ export function Navbar({ className, variant }: { className?: string; variant?: "
       <NotificationContainer className="relative z-20 flex w-full flex-col" />
       <nav
         className={cn(
-          "w-full transition-colors duration-300 print:hidden ",
+          "w-full transition-colors duration-300 print:hidden",
           !onTop && `bg-${bgColor} shadow-md`,
           className,
         )}
