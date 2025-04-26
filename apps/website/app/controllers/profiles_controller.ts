@@ -110,6 +110,7 @@ export default class ProfilesController {
               "github",
               "linkedin",
               "website",
+              "about",
             ],
           },
         },
