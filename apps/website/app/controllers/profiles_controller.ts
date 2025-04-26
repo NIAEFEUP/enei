@@ -162,7 +162,7 @@ export default class ProfilesController {
     }
 
     const profile = await createProfileValidator.validate(formattedData);
-
+    
     const profileAdd = new ParticipantProfile();
     profileAdd.fill(profile);
 
