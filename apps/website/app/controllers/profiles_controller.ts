@@ -156,7 +156,7 @@ export default class ProfilesController {
 
     const formattedData = toParticipantProfileFormat(data);
 
-    console.log({ data, formattedData});
+    console.log({ data, formattedData });
     if (!formattedData.firstName || !formattedData.lastName) {
       return response.redirect().back();
     }
