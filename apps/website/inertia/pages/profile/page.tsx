@@ -27,7 +27,7 @@ export default function ProfilePage({
   return (
     <ProfileContext.Provider value={{ slug: user.slug ?? "" }}>
       <Page title="Perfil" variant="beige">
-        <Container className="mt-8 grid min-h-screen max-w-7xl grid-cols-1 gap-16 md:grid-cols-[auto_1fr]">
+        <Container className="mt-8 grid h-full max-w-7xl grid-cols-1 gap-16 md:grid-cols-[auto_1fr]">
           <section className="bg-dark-cyan hidden h-full w-[22rem] bg-opacity-20 p-12 md:block">
             <div className="sticky top-28">
               <Avatar className="mb-12 size-fit">
