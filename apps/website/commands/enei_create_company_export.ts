@@ -207,7 +207,13 @@ export default class EneiCreateCompanyExport extends BaseCommand {
       const profileUrl = tuyau.u({ slug }).$url();
       const pdf = await generatePdf(
         { url: profileUrl },
-        { format: "A4", landscape: true, printBackground: true, preferCSSPageSize: true, scale: 0.9 },
+        {
+          format: "A4",
+          landscape: true,
+          printBackground: true,
+          preferCSSPageSize: true,
+          scale: 0.9,
+        },
       );
 
       const path = join(baseDir, `${slug}-profile.pdf`);
@@ -459,7 +465,9 @@ export default class EneiCreateCompanyExport extends BaseCommand {
         await writeParticipantsInformation(participants, company, setPath);
       }
 
-      const result = await zipFolder.zip(companyDir, this.output, { compression: zipFolder.COMPRESSION_LEVEL.high });
+      const result = await zipFolder.zip(companyDir, this.output, {
+        compression: zipFolder.COMPRESSION_LEVEL.high,
+      });
       if (result) {
         throw result;
       }
