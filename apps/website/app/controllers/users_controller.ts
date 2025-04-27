@@ -40,9 +40,10 @@ export default class UsersController {
     if (!userAvatar) {
       return response.notFound("File not found");
     }
-    const { file, fileName } = userAvatar;
+    const { file, fileName, mimeType } = userAvatar;
 
     response.header("Content-Disposition", `inline; filename="${fileName}"`);
+    response.header("Content-Type", mimeType);
     return response.stream(file);
   }
 
