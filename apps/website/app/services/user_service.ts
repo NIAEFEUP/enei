@@ -123,7 +123,7 @@ export class UserService {
       return null;
     }
     const file = await drive.use().getStream(filePath);
-    return { file, fileName: user.avatar.originalName };
+    return { file, fileName: user.avatar.name };
   }
 
   async getUserWithCredentials(email: string, password: string) {
