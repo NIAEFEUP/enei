@@ -61,7 +61,10 @@ export default function ParticipantProfileAbout({ user }: ParticipantProfileAbou
     profile.attendedBeforeEditions.includes(edition.value),
   ).map((edition) => edition.value);
 
-  const aboutText = useMemo(() => profile.about?.split("\n") ?? ["Sem descrição."], [profile.about]);
+  const aboutText = useMemo(
+    () => profile.about?.split("\n") ?? ["Sem descrição."],
+    [profile.about],
+  );
 
   return (
     <>
@@ -72,9 +75,7 @@ export default function ParticipantProfileAbout({ user }: ParticipantProfileAbou
       <p className="mb-4 text-xl font-bold">
         {aboutText.map((line, index) => (
           <Fragment key={index}>
-            <span>
-              {line}
-            </span>
+            <span>{line}</span>
             <br />
           </Fragment>
         ))}
