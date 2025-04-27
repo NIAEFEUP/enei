@@ -20,6 +20,9 @@
         corepack_22
         sqlite
       ];
+
+      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD = "true";
+      PUPPETEER_EXECUTABLE_PATH = "${pkgs.chromium}/bin/chromium";
     };
   };
 }
