@@ -8,7 +8,7 @@ import {
   Maximize2,
   Minimize2,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { Button, buttonVariants } from "~/components/ui/button";
 import { useTuyau } from "~/hooks/use_tuyau";
 import { ENEI_EDITIONS } from "~/lib/enei/signup/editions";
@@ -61,13 +61,24 @@ export default function ParticipantProfileAbout({ user }: ParticipantProfileAbou
     profile.attendedBeforeEditions.includes(edition.value),
   ).map((edition) => edition.value);
 
+  const aboutText = useMemo(() => profile.about?.split("\n") ?? ["Sem descrição."], [profile.about]);
+
   return (
     <>
       <p className="mb-5 text-5xl font-bold uppercase">
         {`${profile.firstName} ${profile.lastName}`}
       </p>
 
-      <p className="mb-4 text-xl font-bold">{profile.about ?? "Sem descrição."}</p>
+      <p className="mb-4 text-xl font-bold">
+        {aboutText.map((line, index) => (
+          <Fragment key={index}>
+            <span>
+              {line}
+            </span>
+            <br />
+          </Fragment>
+        ))}
+      </p>
 
       <div className="mb-4 flex flex-row flex-wrap gap-5 gap-y-2">
         <RoundBadge icon={Landmark} text={getUniversityById(profile.university)!.name} />
