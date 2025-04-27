@@ -42,9 +42,15 @@ export default class UsersController {
     }
     const { file, fileName, mimeType } = userAvatar;
 
-    response.header("Content-Disposition", `inline; filename="${fileName}"`);
     response.header("Content-Type", mimeType);
-    return response.stream(file);
+    response.header("Content-Disposition", `inline; filename="${fileName}"`);
+    
+    try {
+      return await response.stream(file);
+    } catch (error) {
+      console.log(error);
+      return response.notFound("File not found");
+    }
   }
 
   async storeAvatar({ request, response, auth }: HttpContext) {
