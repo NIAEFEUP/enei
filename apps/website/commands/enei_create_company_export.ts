@@ -10,6 +10,7 @@ import { UserActivityService } from "#services/user_activity_service";
 import EventCheckin from "#models/event_checkin";
 import * as csv from "csv";
 import universities from "#data/enei/universities.json" with { type: "json" };
+import * as zipFolder from "zip-a-folder";
 
 type GeneratePdfParameters = Parameters<typeof htmlToPdf.generatePdf>;
 function generatePdf(...fnArgs: [GeneratePdfParameters[0], GeneratePdfParameters[1]]) {
@@ -31,7 +32,7 @@ function createWorkerPool(size: number) {
     run(fn: () => Promise<void>) {
       const currentTask = workers[index];
       const nextTask = currentTask.then(() => fn());
-      workers[index] = nextTask.catch(() => {});
+      workers[index] = nextTask;
       index = (index + 1) % workers.length;
 
       return nextTask;
@@ -133,7 +134,7 @@ export default class EneiCreateCompanyExport extends BaseCommand {
       const cachedLastUpdated = cache.get(slug);
 
       if (cachedLastUpdated && lastUpdated <= cachedLastUpdated) {
-        console.log("Skipping CV download for", slug, "because it's already up to date");
+        // console.log("Skipping CV download for", slug, "because it's already up to date");
         return;
       }
 
@@ -197,7 +198,7 @@ export default class EneiCreateCompanyExport extends BaseCommand {
       const cachedLastUpdated = cache.get(slug);
 
       if (cachedLastUpdated && lastUpdated <= cachedLastUpdated) {
-        console.log("Skipping profile download for", slug, "because it's already up to date");
+        // console.log("Skipping profile download for", slug, "because it's already up to date");
         return;
       }
 
@@ -206,7 +207,7 @@ export default class EneiCreateCompanyExport extends BaseCommand {
       const profileUrl = tuyau.u({ slug }).$url();
       const pdf = await generatePdf(
         { url: profileUrl },
-        { format: "A4", landscape: true, printBackground: true, preferCSSPageSize: true },
+        { format: "A4", landscape: true, printBackground: true, preferCSSPageSize: true, scale: 0.9 },
       );
 
       const path = join(baseDir, `${slug}-profile.pdf`);
@@ -457,6 +458,13 @@ export default class EneiCreateCompanyExport extends BaseCommand {
         const company = await Company.findByOrFail("name", companyName);
         await writeParticipantsInformation(participants, company, setPath);
       }
+
+      const result = await zipFolder.zip(companyDir, this.output, { compression: zipFolder.COMPRESSION_LEVEL.high });
+      if (result) {
+        throw result;
+      }
+
+      console.log(`Successfully zipped ${companyDir} to ${this.output}`);
     }
   }
 }

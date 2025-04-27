@@ -77,7 +77,8 @@
     "tailwindcss": "^3.4.17",
     "ts-node-maintained": "^10.9.5",
     "typescript": "catalog:",
-    "vite": "^6.0.11"
+    "vite": "^6.0.11",
+    "zip-a-folder": "^3.1.9"
   },
   "dependencies": {
     "@adminjs/adonis": "^1.1.0",
