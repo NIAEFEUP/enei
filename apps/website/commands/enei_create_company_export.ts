@@ -248,12 +248,9 @@ export default class EneiCreateCompanyExport extends BaseCommand {
       return [];
     }
 
-    let baseQuery = this.getParticipants()
-      .whereIn("id", (query) => {
-        return query.select("user_id")
-          .from("event_checkins")
-          .where("event_id", company.event.id)
-      })
+    let baseQuery = this.getParticipants().whereIn("id", (query) => {
+      return query.select("user_id").from("event_checkins").where("event_id", company.event.id);
+    });
 
     return baseQuery;
   }
@@ -261,13 +258,13 @@ export default class EneiCreateCompanyExport extends BaseCommand {
   async getLikedParticipants(companyName: string) {
     const company = await Company.findByOrFail("name", companyName);
 
-    let baseQuery = this.getParticipants()
-      .whereIn("id", (query) => {
-        return query.select("user_id")
-          .from("user_activities")
-          .where("type", "company_like")
-          .andWhereRaw(`description->>'companyId' = ?`, [company.id]);
-      });
+    let baseQuery = this.getParticipants().whereIn("id", (query) => {
+      return query
+        .select("user_id")
+        .from("user_activities")
+        .where("type", "company_like")
+        .andWhereRaw(`description->>'companyId' = ?`, [company.id]);
+    });
 
     return baseQuery;
   }
@@ -324,21 +321,25 @@ export default class EneiCreateCompanyExport extends BaseCommand {
 
       const toProfileTypeFolder = join(destFolder, "by-type", "profile");
       await fsp.mkdir(toProfileTypeFolder, { recursive: true });
-      
+
       const toTypeCv = join(toCvTypeFolder, `${userPath}.pdf`);
       const toTypeProfile = join(toProfileTypeFolder, `${userPath}.pdf`);
 
       const [cv, profile] = await Promise.all([
-        fsp.copyFile(fromCv, toNameCv)
+        fsp
+          .copyFile(fromCv, toNameCv)
           .then(() => toNameCv)
           .catch(() => undefined),
-        fsp.copyFile(fromProfile, toNameProfile)
+        fsp
+          .copyFile(fromProfile, toNameProfile)
           .then(() => toNameProfile)
           .catch(() => undefined),
-        fsp.copyFile(fromCv, toTypeCv)
+        fsp
+          .copyFile(fromCv, toTypeCv)
           .then(() => toTypeCv)
           .catch(() => undefined),
-        fsp.copyFile(fromProfile, toTypeProfile)
+        fsp
+          .copyFile(fromProfile, toTypeProfile)
           .then(() => toTypeProfile)
           .catch(() => undefined),
       ]);
@@ -346,7 +347,11 @@ export default class EneiCreateCompanyExport extends BaseCommand {
       return { cv, profile };
     }
 
-    async function writeParticipantsInformation(participants: User[], company: Company, destFolder: string) {
+    async function writeParticipantsInformation(
+      participants: User[],
+      company: Company,
+      destFolder: string,
+    ) {
       await company.loadOnce("event");
 
       async function getLikes(participant: User) {
@@ -359,7 +364,7 @@ export default class EneiCreateCompanyExport extends BaseCommand {
 
             await user.load("representativeProfile");
             return user.representativeProfile.firstName + " " + user.representativeProfile.lastName;
-          })
+          }),
         );
 
         return names.filter((name) => name !== null);
@@ -398,19 +403,21 @@ export default class EneiCreateCompanyExport extends BaseCommand {
 
             "Universidade": getUniversityName(participant.participantProfile.university),
             "Curso": participant.participantProfile.course,
-            "Ano Curricular": participant.participantProfile.curricularYear === "already-finished" ? `Concluído` : participant.participantProfile.curricularYear, 
+            "Ano Curricular":
+              participant.participantProfile.curricularYear === "already-finished"
+                ? `Concluído`
+                : participant.participantProfile.curricularYear,
             "Ano de Conclusão": participant.participantProfile.finishedAt,
-            
+
             "Sobre": participant.participantProfile.about,
             "Link Github": participant.participantProfile.github,
             "Link LinkedIn": participant.participantProfile.linkedin,
             "Link Website": participant.participantProfile.website,
-            
+
             "Hora da Visita à Banca": checkin?.setZone("Europe/Lisbon").toHTTP() ?? null,
             "Likes de Representantes": likes.join(", "),
           };
-
-        })
+        }),
       );
 
       const validInformation = information.filter((info) => info !== null);
@@ -419,7 +426,7 @@ export default class EneiCreateCompanyExport extends BaseCommand {
       }
 
       const filePath = join(destFolder, "participants.csv");
-      await fsp.writeFile(filePath, csv.stringify(validInformation, { header: true }))
+      await fsp.writeFile(filePath, csv.stringify(validInformation, { header: true }));
     }
 
     for (const companyName of this.companies) {
@@ -429,9 +436,12 @@ export default class EneiCreateCompanyExport extends BaseCommand {
 
       const sets = [
         this.all && { name: "all", participants: await this.getParticipants() },
-        this.visited && { name: "visited", participants: await this.getVisitingParticipants(companyName) },
+        this.visited && {
+          name: "visited",
+          participants: await this.getVisitingParticipants(companyName),
+        },
         this.liked && { name: "liked", participants: await this.getLikedParticipants(companyName) },
-      ]
+      ];
 
       for (const set of sets) {
         if (!set) continue;
@@ -445,7 +455,7 @@ export default class EneiCreateCompanyExport extends BaseCommand {
         }
 
         const company = await Company.findByOrFail("name", companyName);
-        await writeParticipantsInformation(participants, company, setPath)
+        await writeParticipantsInformation(participants, company, setPath);
       }
     }
   }
