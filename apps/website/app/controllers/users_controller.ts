@@ -44,7 +44,7 @@ export default class UsersController {
 
     response.header("Content-Type", mimeType);
     response.header("Content-Disposition", `inline; filename="${fileName}"`);
-    
+
     try {
       return await response.stream(file);
     } catch (error) {
